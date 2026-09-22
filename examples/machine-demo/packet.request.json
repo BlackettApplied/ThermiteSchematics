@@ -1,0 +1,106 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "layout": "compact",
+  "index": true,
+  "views": [
+    {
+      "format": "schematic-view-request/0.1",
+      "root": {
+        "by": "designation",
+        "value": "M1"
+      },
+      "family": "power",
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.1",
+      "root": {
+        "by": "designation",
+        "value": "M2"
+      },
+      "family": "power",
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.1",
+      "root": {
+        "by": "designation",
+        "value": "K1"
+      },
+      "family": "control",
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.1",
+      "root": {
+        "by": "designation",
+        "value": "K2"
+      },
+      "family": "control",
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": {
+        "by": "designation",
+        "value": "LS1"
+      },
+      "intent": {
+        "kind": "trace",
+        "to": {
+          "by": "designation",
+          "value": "PLC1"
+        },
+        "includePower": true
+      },
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": {
+        "by": "designation",
+        "value": "LS2"
+      },
+      "intent": {
+        "kind": "trace",
+        "to": {
+          "by": "designation",
+          "value": "RIO1"
+        },
+        "includePower": true
+      },
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": {
+        "by": "designation",
+        "value": "CBL1"
+      },
+      "intent": {
+        "kind": "conductors"
+      },
+      "flow": "left-to-right"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "terminals"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "io"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "bom"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "cables"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "wires"
+    }
+  ]
+}

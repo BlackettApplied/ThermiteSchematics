@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "title": "LibraryFile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["types"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "types": { "type": "array" }
+  }
+}

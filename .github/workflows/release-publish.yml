@@ -1,0 +1,32 @@
+name: M8 Private Release Publisher
+on:
+  workflow_dispatch:
+    inputs:
+      gate_run_id:
+        description: Successful M8 Release Candidate workflow run ID
+        required: true
+        type: string
+permissions: {}
+
+jobs:
+  publish:
+    environment: m8-private-release
+    permissions:
+      actions: read
+      contents: write
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+      - name: Verify exact publisher toolchain
+        shell: bash
+        run: |
+          test "$(node --version)" = "v24.11.1"
+          test "$(npm --version)" = "11.6.2"
+          npm ci --ignore-scripts --no-audit --no-fund
+      - name: Publish only the successful gate payload
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/release-publish.mjs --gate-run-id "${{ inputs.gate_run_id }}"

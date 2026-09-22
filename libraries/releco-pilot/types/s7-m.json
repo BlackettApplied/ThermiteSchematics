@@ -1,0 +1,273 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:s7-m",
+      "description": "Bare eight-way screw-terminal socket for miniature two-pole C7 relays",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "S7-M",
+        "document": {
+          "url": "https://www.mkwheatingcontrols.co.uk/download/RELECO%20bases.pdf",
+          "title": "RELECO by TURCK, Sockets — S7-M",
+          "revision": "Undated historical catalog extract; Clearwater Tech footer; MKW mirror",
+          "pages": "Physical PDF page 12, exact S7-M selection, wiring diagram and outline"
+        },
+        "modelingNotes": [
+          "C.n denotes cable clamp and M.n denotes corresponding relay mating contact; C/M are authoring aliases. Manufacturer sequential/IEC mapping: 1=12, 2=22, 3=14, 4=24, 5=11, 6=21, 7=A1, 8=A2. IEC names describe the inserted relay's functions, not separate electrical points.",
+          "Manufacturer page 12 wiring diagram and top outline were visually inspected, including enlarged terminal legends. Outline is relay insertion/screw-access side. No geometric mapping of numbered mating apertures or underside orientation is asserted.",
+          "Represent each fixed socket conductor by an explicit project jumper C.1-M.1 through C.8-M.8. These are factory paths, not field-installed bridging. All eight paths remain mutually separate with no relay fitted. Singleton bus and connector metadata never create net continuity.",
+          "No relay coil, changeover contact, indicator, suppressor or optional bridging is included. The illustrated relay circuit only explains connection assignments. All passive socket points are application-dependent, including 7/A1 and 8/A2.",
+          "Catalog mirror specifies 10 A / 250 V, whereas historical QRC S7-M sheet https://releco.de/en/Relays-QRC/S7-M.pdf (84/0407, PDF1; text opened, diagram inaccessible) lists rated current 10 A and rated load 6 A / 250 V. Ratings conflict is unresolved; current and nominal_voltage are omitted. No AC-only assumption or installed supply is assigned.",
+          "Shared connection policy accommodates an explicit factory-path jumper plus external wiring and does not authorize arbitrary conductor stacking. No protective-earth or rail-bond connection is established by mechanical mounting. No successor or installed revision is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Eight documented electrical ways, each with a screw clamp and relay mating contact, yield 16 modeled endpoints. Sequential and IEC identities are evidenced by the exact S7-M diagram and outline. No separate PE, shield, signal accessory or communications interface is documented for this bare socket. C/M distinguish sides; fixed one-to-one paths require explicit jumpers. Mating-slot coordinates are not modeled."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Wire clamp 1 (IEC 12); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.2": {
+          "description": "Wire clamp 2 (IEC 22); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.3": {
+          "description": "Wire clamp 3 (IEC 14); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.4": {
+          "description": "Wire clamp 4 (IEC 24); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.5": {
+          "description": "Wire clamp 5 (IEC 11); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.6": {
+          "description": "Wire clamp 6 (IEC 21); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.7": {
+          "description": "Wire clamp 7 (IEC A1); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.8": {
+          "description": "Wire clamp 8 (IEC A2); C is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.1": {
+          "description": "Relay mating contact 1 (IEC 12); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.2": {
+          "description": "Relay mating contact 2 (IEC 22); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.3": {
+          "description": "Relay mating contact 3 (IEC 14); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.4": {
+          "description": "Relay mating contact 4 (IEC 24); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.5": {
+          "description": "Relay mating contact 5 (IEC 11); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.6": {
+          "description": "Relay mating contact 6 (IEC 21); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.7": {
+          "description": "Relay mating contact 7 (IEC A1); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.8": {
+          "description": "Relay mating contact 8 (IEC A2); M is an authoring side alias",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "C.7": "terminal",
+        "C.8": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "M.7": "terminal",
+        "M.8": "terminal"
+      },
+      "connectorPorts": {
+        "RELAY": {
+          "connector": "Releco S7-M eight-contact C7 relay interface",
+          "description": "Numbered electrical identities; no geometric slot numbering or insertion transformation asserted.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Sequential 1 / IEC 12"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Sequential 2 / IEC 22"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Sequential 3 / IEC 14"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Sequential 4 / IEC 24"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Sequential 5 / IEC 11"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Sequential 6 / IEC 21"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Sequential 7 / IEC A1"
+            },
+            "8": {
+              "terminal": "M.8",
+              "description": "Sequential 8 / IEC A2"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "C.7",
+        "C.8",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "M.7",
+        "M.8"
+      ]
+    }
+  ]
+}

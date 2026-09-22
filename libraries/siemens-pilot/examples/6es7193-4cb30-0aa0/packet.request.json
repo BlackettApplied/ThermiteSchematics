@@ -1,0 +1,265 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7193-4CB30-0AA0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "1 / EM.1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.1"
+            }
+          ],
+          "conductors": ["W1", "W9", "FIXED1"]
+        },
+        {
+          "id": "g2",
+          "label": "2 / EM.2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.2"
+            }
+          ],
+          "conductors": ["W2", "W10", "FIXED2"]
+        },
+        {
+          "id": "g3",
+          "label": "3 / EM.3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.3"
+            }
+          ],
+          "conductors": ["W3", "W11", "FIXED3"]
+        },
+        {
+          "id": "g4",
+          "label": "4 / EM.4",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.4"
+            }
+          ],
+          "conductors": ["W4", "W12", "FIXED4"]
+        },
+        {
+          "id": "g5",
+          "label": "5 / EM.5",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "5"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.5"
+            }
+          ],
+          "conductors": ["W5", "W13", "FIXED5"]
+        },
+        {
+          "id": "g6",
+          "label": "6 / EM.6",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "6"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.6"
+            }
+          ],
+          "conductors": ["W6", "W14", "FIXED6"]
+        },
+        {
+          "id": "g7",
+          "label": "7 / EM.7",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "7"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.7"
+            }
+          ],
+          "conductors": ["W7", "W15", "FIXED7"]
+        },
+        {
+          "id": "g8",
+          "label": "8 / EM.8",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "8"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "EM.8"
+            }
+          ],
+          "conductors": ["W8", "W16", "FIXED8"]
+        },
+        {
+          "id": "g9",
+          "label": "P1.L / P1.R / P1.EM",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.L"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.R"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.EM"
+            }
+          ],
+          "conductors": ["W17", "W18", "W19", "FIXED9", "FIXED10"]
+        },
+        {
+          "id": "g10",
+          "label": "P2.L / P2.R / P2.EM",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.L"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.R"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.EM"
+            }
+          ],
+          "conductors": ["W20", "W21", "W22", "FIXED11", "FIXED12"]
+        },
+        {
+          "id": "g11",
+          "label": "AUX1.L / AUX1.R",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AUX1.L"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AUX1.R"
+            }
+          ],
+          "conductors": ["W23", "W24", "FIXED13"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "3c6cca2f-3f0e-40ad-af82-d310fb7243d1",
+      "kind": "wire",
+      "designation": "W-PWR-007",
+      "endpoints": [
+        { "device": "K1", "terminal": "2/T1" },
+        { "device": "OL1", "terminal": "1/L1" }
+      ],
+      "properties": { "label": "L1-K1-OL1", "size": "10AWG", "color": "brown" }
+    },
+    {
+      "uid": "4d2e1bd4-d553-470f-8c0f-e167bdb9c25a",
+      "kind": "wire",
+      "designation": "W-PWR-008",
+      "endpoints": [
+        { "device": "K1", "terminal": "4/T2" },
+        { "device": "OL1", "terminal": "3/L2" }
+      ],
+      "properties": { "label": "L2-K1-OL1", "size": "10AWG", "color": "orange" }
+    },
+    {
+      "uid": "698ecf0f-9bc4-4361-b2ce-932d8e7dba6c",
+      "kind": "wire",
+      "designation": "W-PWR-009",
+      "endpoints": [
+        { "device": "K1", "terminal": "6/T3" },
+        { "device": "OL1", "terminal": "5/L3" }
+      ],
+      "properties": { "label": "L3-K1-OL1", "size": "10AWG", "color": "yellow" }
+    },
+    {
+      "uid": "d4489c99-98fd-4a37-871f-f6e70352dcb0",
+      "kind": "wire",
+      "designation": "W-PWR-010",
+      "endpoints": [
+        { "device": "OL1", "terminal": "2/T1" },
+        { "device": "M1", "terminal": "U" }
+      ],
+      "properties": {
+        "label": "L1-OL1-M1-U",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "3c2d75f0-b850-4641-9a65-f8247278b2f4",
+      "kind": "wire",
+      "designation": "W-PWR-011",
+      "endpoints": [
+        { "device": "OL1", "terminal": "4/T2" },
+        { "device": "M1", "terminal": "V" }
+      ],
+      "properties": {
+        "label": "L2-OL1-M1-V",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "3b359535-a301-4f5a-95b5-00f01ebc54af",
+      "kind": "wire",
+      "designation": "W-PWR-012",
+      "endpoints": [
+        { "device": "OL1", "terminal": "6/T3" },
+        { "device": "M1", "terminal": "W" }
+      ],
+      "properties": {
+        "label": "L3-OL1-M1-W",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "9c936afd-55a9-4a8a-9bc8-5689a9642ea8",
+      "kind": "wire",
+      "designation": "W-PWR-013",
+      "endpoints": [
+        { "device": "SRC1", "terminal": "PE" },
+        { "device": "M1", "terminal": "PE" }
+      ],
+      "properties": {
+        "label": "PE-SRC-M1",
+        "size": "10AWG",
+        "color": "green/yellow"
+      }
+    }
+  ]
+}

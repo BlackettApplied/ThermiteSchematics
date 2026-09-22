@@ -1,0 +1,94 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds272001r0044",
+      "description": "S202M-C4 miniature circuit breaker; two poles; C characteristic; 4 A; Icn 10 kA at 400 V AC (IEC/EN 60898-1)",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS272001R0044",
+        "document": {
+          "url": "https://library.e.abb.com/public/4337e906d80c4cf9a3a159611a3cc3ce/A_ELSB_Cat_2022_01_MCBs.pdf",
+          "title": "Electrical installation solutions for buildings — MCBs",
+          "revision": "9AKK107991A8329; 2022 file edition",
+          "pages": "1/21, 1/22, 1/28, 1/46 (physical PDF 21, 22, 28, 46)"
+        },
+        "modelingNotes": [
+          "Exact selection: S202M-C4, two poles, C characteristic, rated current 4 A. IEC/EN 60898-1: 400 V AC, 50/60 Hz, Icn 10 kA; C characteristic reference temperature 30 degrees C. Voltage is capability, not assigned supply. Other standard-dependent ratings are not flattened into this model.",
+          "Connection evidence: ABB System pro M compact, 2CSC400002D0211 (2014 file edition), printed 2/38 (PDF 64) exact selection and 11/2 (PDF 1068) visually reviewed S202 family wiring diagram: https://new.abb.com/docs/librariesprovider74/lp-materials/prom-2014-2csc400002d0211.pdf?sfvrsn=2",
+          "Numbered nodes 1-2 and 3-4 are switched breaker poles, mechanically ganged. Open is the drawing state, not a prediction of installed operating state. No fixed electrical links or phase/neutral assignments.",
+          "Each numbered shared terminal includes its cable/busbar twin entry. IEC terminal capacities: solid/stranded conductor 35 mm², flexible 25 mm², busbar 10 mm²; torque 2.8 N·m. These notes do not validate conductor selection or arbitrary wire multiplicity.",
+          "Base order only; separately fitted auxiliary contacts, signal contacts, releases and motor mechanisms are separate devices. No universally required external connection is asserted for these passive switching points."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four numbered base-breaker electrical nodes are represented, including shared cable/busbar terminal entries. No base PE, shield, communication or auxiliary terminals; separately fitted accessories are outside this exact order."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, terminal 1; shared cable/busbar terminal",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "2": {
+          "description": "Pole 1, terminal 2; shared cable/busbar terminal",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "3": {
+          "description": "Pole 2, terminal 3; shared cable/busbar terminal",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "4": {
+          "description": "Pole 2, terminal 4; shared cable/busbar terminal",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

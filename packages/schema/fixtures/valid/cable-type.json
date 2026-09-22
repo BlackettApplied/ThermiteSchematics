@@ -1,0 +1,19 @@
+{
+  "kind": "cable_type",
+  "id": "core:cable-2pair-shielded",
+  "conductors": [
+    { "id": "1", "color": "black", "size": "18AWG" },
+    { "id": "2", "color": "red", "size": "18AWG" },
+    { "id": "3", "color": "white", "size": "18AWG" },
+    { "id": "4", "color": "green", "size": "18AWG" }
+  ],
+  "shield": true,
+  "construction": {
+    "outer_diameter": "8.5 mm",
+    "jacket_material": "PVC",
+    "conductor_material": "copper",
+    "shield_construction": "overall foil with drain wire"
+  },
+  "description": "Generic two-pair shielded cable",
+  "aliases": ["two-pair instrumentation cable"]
+}

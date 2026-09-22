@@ -1,0 +1,9 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": { "name": "CLI query fixture" },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    { "name": "query", "version": "1.0.0", "path": "../query library" }
+  ]
+}

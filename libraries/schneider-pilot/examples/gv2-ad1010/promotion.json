@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:gv2-ad1010",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "GV2-AD1010"
+  },
+  "type": {
+    "path": "types/gv2-ad1010.json",
+    "sha256": "24325adb8a2917128f08f790938d5ab71951956a73e995268268fc5f77701eb4"
+  },
+  "research": {
+    "path": "research/gv2-ad1010.md",
+    "sha256": "250689c375deb4f7d0c6dab53c3024004a62ed452a5b7e946ebd74223a768cf9"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["53", "54", "97", "98"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "bf504fea4297b5ba3a03ebe0506a5fab5e35ee0ce6bc1b82a0e083c886a1d4e5",
+    "packet.request.json": "462dd1cb9297b5a1441ae4cac06fa555ff206bfc7f6bd9a1d34d6d76452d89c5",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "97f423cd51539e65a64ba376515f0096e65cad512182d86c7447acad8d32d7f3",
+    "system.json": "dd3c323904654fbaa47983f45159eb01ad30eef722f7835761ac15bcc5ac98dd"
+  }
+}

@@ -1,0 +1,1318 @@
+{
+  "objects": [
+    {
+      "uid": "d7798f20-73b8-547c-9e8a-3b7b5f4dd3e1",
+      "kind": "device",
+      "designation": "HMI1",
+      "type": "industrial-pilot:arbor-sp-151c-1n305",
+      "description": "USER SELECTED: Thermite SCADA host",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "REMOTE.1": {
+            "status": "intentionally-unused",
+            "reason": "Remote on/off switch not fitted; front power button used."
+          },
+          "REMOTE.2": {
+            "status": "intentionally-unused",
+            "reason": "Remote on/off switch not fitted."
+          },
+          "CHASSIS": {
+            "status": "deferred",
+            "reason": "Bond conductor shown, but physical shell attachment and conductor acceptance still require manufacturer/installation review."
+          }
+        },
+        "ports": {
+          "ETH1": {
+            "status": "required",
+            "reason": "SCADA network connection via KP8"
+          },
+          "ETH2": {
+            "status": "intentionally-unused",
+            "reason": "Second HMI Ethernet socket reserved for future use."
+          }
+        }
+      }
+    },
+    {
+      "uid": "1c5d0404-6312-568a-95be-38d297990a34",
+      "kind": "device",
+      "designation": "PS24",
+      "type": "console-planning:dc-feed",
+      "description": "PROPOSED 24 V source boundary with console feeder. AC-side supply selection, upstream wiring, loading and Class 2 branches remain open.",
+      "location": "Main cabinet"
+    },
+    {
+      "uid": "ce32b040-02b5-4615-b0e4-23431f04601e",
+      "kind": "device",
+      "designation": "KP8",
+      "type": "industrial-pilot:siemens-kp8-pn-8do",
+      "description": "USER SELECTED: KP8 PN; external IO.0-3 operate red, amber, green and buzzer relays. Front keys and LEDs via PROFINET; not safety.",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "1": {
+            "status": "required",
+            "reason": "Chosen X60 power input +24 V"
+          },
+          "2": {
+            "status": "required",
+            "reason": "Chosen X60 power return"
+          },
+          "3": {
+            "status": "intentionally-unused",
+            "reason": "Supply loop-through not used; no external jumper."
+          },
+          "4": {
+            "status": "intentionally-unused",
+            "reason": "Supply return loop-through not used; no external jumper."
+          },
+          "9": {
+            "status": "intentionally-unused",
+            "reason": "External I/O reserved for future use; channel configured as DO and left disconnected."
+          },
+          "10": {
+            "status": "intentionally-unused",
+            "reason": "External I/O reserved for future use; channel configured as DO and left disconnected."
+          },
+          "11": {
+            "status": "intentionally-unused",
+            "reason": "External I/O reserved for future use; channel configured as DO and left disconnected."
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "External I/O reserved for future use; channel configured as DO and left disconnected."
+          }
+        },
+        "ports": {
+          "X1P1": {
+            "status": "required",
+            "reason": "Cabinet PROFINET uplink"
+          },
+          "X1P2": {
+            "status": "required",
+            "reason": "Local HMI Ethernet patch"
+          }
+        }
+      },
+      "io": {
+        "channels": {
+          "ch0": {
+            "usage": "in-use",
+            "signal": "Red stack light relay"
+          },
+          "ch1": {
+            "usage": "in-use",
+            "signal": "Amber stack light relay"
+          },
+          "ch2": {
+            "usage": "in-use",
+            "signal": "Green stack light relay"
+          },
+          "ch3": {
+            "usage": "in-use",
+            "signal": "Buzzer relay"
+          },
+          "ch4": {
+            "usage": "spare",
+            "signal": "Future console output"
+          },
+          "ch5": {
+            "usage": "spare",
+            "signal": "Future console output"
+          },
+          "ch6": {
+            "usage": "spare",
+            "signal": "Future console output"
+          },
+          "ch7": {
+            "usage": "spare",
+            "signal": "Future console output"
+          }
+        },
+        "addressSpace": "PROFINET KP8"
+      }
+    },
+    {
+      "uid": "2d86c7d5-41a7-4bce-9fea-f3035335255c",
+      "kind": "device",
+      "designation": "XT-MC",
+      "type": "console-planning:main-strip",
+      "description": "Main-cabinet feeder landing; exact DIN blocks TBD",
+      "location": "Main cabinet"
+    },
+    {
+      "uid": "c36750e3-8e89-4ae3-a7c1-17710fe303a6",
+      "kind": "device",
+      "designation": "XT-HMI",
+      "type": "console-planning:console-strip",
+      "description": "Small DIN strip; explicit +24 V jumpers 1-2-3-4-13 and 0 V jumpers 5-6-7-8-9-10-11-12-14. Future supply 13/14.",
+      "location": "HMI console"
+    },
+    {
+      "uid": "5f598b58-6280-4e13-ab6f-001a2cb4db8e",
+      "kind": "device",
+      "designation": "PE-MC",
+      "type": "console-planning:bond-bar",
+      "description": "Main protective bonding bar; upstream protective-bond network remains to be designed",
+      "location": "Main cabinet",
+      "connectionReview": {
+        "terminals": {
+          "PE": {
+            "status": "deferred",
+            "reason": "Console bond is connected; upstream main protective bond path remains open."
+          }
+        }
+      }
+    },
+    {
+      "uid": "ab01e5c6-c769-44ca-9b1e-e7fec67dc8e4",
+      "kind": "device",
+      "designation": "PE-HMI",
+      "type": "console-planning:bond-bar",
+      "description": "Dedicated console bonding bar; retain separate from DC return",
+      "location": "HMI console"
+    },
+    {
+      "uid": "2b945011-b39e-486f-8dae-0cb427e08681",
+      "kind": "device",
+      "designation": "FRAME-HMI",
+      "type": "console-planning:console-frame",
+      "description": "Console metallic frame; actual bond attachment hardware TBD",
+      "location": "HMI console"
+    },
+    {
+      "uid": "a9faf59f-f510-4690-a744-cc81b784887c",
+      "kind": "device",
+      "designation": "F-CON",
+      "type": "console-planning:fuse-6a",
+      "description": "PROPOSED 6 A feeder protection; DC fault clearing, HMI inrush and selectivity not verified",
+      "location": "Main cabinet"
+    },
+    {
+      "uid": "0de99878-c005-4d05-b5cb-7145c2b2b49e",
+      "kind": "device",
+      "designation": "F-KP8",
+      "type": "console-planning:fuse-1a",
+      "description": "PROPOSED 1 A KP8 branch; Class 2 supply/limiter selection remains open",
+      "location": "HMI console"
+    },
+    {
+      "uid": "a0d52c93-9f5b-46f0-ba5a-e0ee8b5ad912",
+      "kind": "device",
+      "designation": "F-SL",
+      "type": "console-planning:fuse-1a",
+      "description": "PROPOSED 1 A stack branch per PATLITE diagram; Class 2 supply/limiter selection remains open",
+      "location": "HMI console"
+    },
+    {
+      "uid": "fe99ce73-342c-4acf-8b2f-b241509cabcc",
+      "kind": "device",
+      "designation": "K-R",
+      "type": "industrial-pilot:phoenix-plc-rsc-24dc-21",
+      "description": "Red stack interface relay; A1 positive / A2 return; NO 11-14",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "11": {
+            "status": "required",
+            "reason": "Fused stack supply"
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "NC contact not used in this circuit"
+          },
+          "14": {
+            "status": "required",
+            "reason": "Switched stack lead"
+          }
+        }
+      }
+    },
+    {
+      "uid": "1edf6649-844e-4e30-bfdf-faaba61d5ce0",
+      "kind": "device",
+      "designation": "K-Y",
+      "type": "industrial-pilot:phoenix-plc-rsc-24dc-21",
+      "description": "Amber stack interface relay; A1 positive / A2 return; NO 11-14",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "11": {
+            "status": "required",
+            "reason": "Fused stack supply"
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "NC contact not used in this circuit"
+          },
+          "14": {
+            "status": "required",
+            "reason": "Switched stack lead"
+          }
+        }
+      }
+    },
+    {
+      "uid": "e3f8b24c-5464-4be9-bbea-c1f6ac1b92a7",
+      "kind": "device",
+      "designation": "K-G",
+      "type": "industrial-pilot:phoenix-plc-rsc-24dc-21",
+      "description": "Green stack interface relay; A1 positive / A2 return; NO 11-14",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "11": {
+            "status": "required",
+            "reason": "Fused stack supply"
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "NC contact not used in this circuit"
+          },
+          "14": {
+            "status": "required",
+            "reason": "Switched stack lead"
+          }
+        }
+      }
+    },
+    {
+      "uid": "9c75a596-891c-4ddd-9af1-0bae52e1e22a",
+      "kind": "device",
+      "designation": "K-B",
+      "type": "industrial-pilot:phoenix-plc-rsc-24dc-21",
+      "description": "Buzzer stack interface relay; A1 positive / A2 return; NO 11-14",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "11": {
+            "status": "required",
+            "reason": "Fused stack supply"
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "NC contact not used in this circuit"
+          },
+          "14": {
+            "status": "required",
+            "reason": "Switched stack lead"
+          }
+        }
+      }
+    },
+    {
+      "uid": "c2be05ca-8a84-48f8-8582-f8539d4ab73f",
+      "kind": "device",
+      "designation": "SL1",
+      "type": "industrial-pilot:patlite-lr4-302ljbw-ryg",
+      "description": "PROPOSED: red / amber / green with installed buzzer. Factory cable flying leads; steady lamps and selected buzzer tone.",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "BLUE": {
+            "status": "intentionally-unused",
+            "reason": "No blue tier; isolate unused lead."
+          },
+          "WHITE": {
+            "status": "intentionally-unused",
+            "reason": "No white tier; isolate unused lead."
+          },
+          "BROWN": {
+            "status": "intentionally-unused",
+            "reason": "Hardware flash function not used; isolate, do not apply supply."
+          }
+        }
+      }
+    },
+    {
+      "uid": "d93123cd-c6ea-4235-8418-48963169082a",
+      "kind": "device",
+      "designation": "SW1",
+      "type": "console-planning:switch",
+      "location": "Main cabinet"
+    },
+    {
+      "uid": "46f44063-d7c3-40d5-9232-b34378595315",
+      "kind": "wire",
+      "designation": "W-C01",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "PS24",
+          "terminal": "+"
+        },
+        {
+          "device": "F-CON",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "9ad1defe-2b55-441d-ba86-288d9a30ff1f",
+      "kind": "wire",
+      "designation": "W-C02",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "F-CON",
+          "terminal": "2"
+        },
+        {
+          "device": "XT-MC",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "a909bfcf-5b08-416e-8bbb-fad556d50a15",
+      "kind": "wire",
+      "designation": "W-C03",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "PS24",
+          "terminal": "-"
+        },
+        {
+          "device": "XT-MC",
+          "terminal": "2"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "49085c4c-355e-443a-9709-563f15ca7ca0",
+      "kind": "wire",
+      "designation": "W-C04",
+      "description": "8 ft one-way flex conduit route to console; individual +24 V copper conductor. Preliminary 6 A feeder budget.",
+      "endpoints": [
+        {
+          "device": "XT-MC",
+          "terminal": "1"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "4c42cce5-9c63-480e-ada2-7c2b7ed6e679",
+      "kind": "wire",
+      "designation": "W-C05",
+      "description": "8 ft one-way flex conduit route to console; individual 0 V copper return, separate from bond.",
+      "endpoints": [
+        {
+          "device": "XT-MC",
+          "terminal": "2"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "5"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "721180e4-45f0-455e-8b68-d7c033063ea8",
+      "kind": "wire",
+      "designation": "W-C06",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "2"
+        },
+        {
+          "device": "HMI1",
+          "terminal": "DC-IN.1"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "26e82b7f-ec17-4acf-9ab4-ce093ac5b861",
+      "kind": "wire",
+      "designation": "W-C07",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "6"
+        },
+        {
+          "device": "HMI1",
+          "terminal": "DC-IN.2"
+        }
+      ],
+      "properties": {
+        "size": "16 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "30812464-e166-4d81-bf8c-b7b244619c57",
+      "kind": "wire",
+      "designation": "W-C08",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "3"
+        },
+        {
+          "device": "F-KP8",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "bf0ec4ca-657b-4890-a96a-0511b205ac1e",
+      "kind": "wire",
+      "designation": "W-C09",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "F-KP8",
+          "terminal": "2"
+        },
+        {
+          "device": "KP8",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "cfad0d80-3319-4248-a80b-764e163a517a",
+      "kind": "wire",
+      "designation": "W-C10",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "7"
+        },
+        {
+          "device": "KP8",
+          "terminal": "2"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "ca683ca6-103d-4909-a798-20a1c6c7024c",
+      "kind": "wire",
+      "designation": "W-C11",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "4"
+        },
+        {
+          "device": "F-SL",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "61084a69-07b7-4970-92ee-aa4ad45f36dc",
+      "kind": "wire",
+      "designation": "W-PE01",
+      "description": "8 ft one-way flex conduit route; dedicated copper bonding conductor; final protective-bond sizing review open.",
+      "endpoints": [
+        {
+          "device": "PE-MC",
+          "terminal": "PE"
+        },
+        {
+          "device": "PE-HMI",
+          "terminal": "PE"
+        }
+      ],
+      "properties": {
+        "size": "14 AWG",
+        "color": "Green/yellow"
+      }
+    },
+    {
+      "uid": "e9de8a82-7e17-4681-8162-a1e3f9148937",
+      "kind": "wire",
+      "designation": "W-PE02",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "PE-HMI",
+          "terminal": "PE"
+        },
+        {
+          "device": "FRAME-HMI",
+          "terminal": "PE"
+        }
+      ],
+      "properties": {
+        "size": "14 AWG",
+        "color": "Green/yellow"
+      }
+    },
+    {
+      "uid": "35c646e8-0cde-44eb-861c-ca4baf3cee09",
+      "kind": "wire",
+      "designation": "W-PE03",
+      "description": "Proposed shell bond; verify physical attachment and acceptable conductor/termination with ARBOR before wiring.",
+      "endpoints": [
+        {
+          "device": "PE-HMI",
+          "terminal": "PE"
+        },
+        {
+          "device": "HMI1",
+          "terminal": "CHASSIS"
+        }
+      ],
+      "properties": {
+        "size": "14 AWG",
+        "color": "Green/yellow"
+      }
+    },
+    {
+      "uid": "d36e1864-dd36-4cc7-9dce-d73b7a49da10",
+      "kind": "wire",
+      "designation": "W-K1A",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "KP8",
+          "terminal": "5"
+        },
+        {
+          "device": "K-R",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "e7df749b-4d1d-4079-b586-9744254e15fa",
+      "kind": "wire",
+      "designation": "W-K1M",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "8"
+        },
+        {
+          "device": "K-R",
+          "terminal": "A2"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "57e11a05-8a4c-4fe3-821a-b0e04682e437",
+      "kind": "wire",
+      "designation": "W-S1P",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "15"
+        },
+        {
+          "device": "K-R",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "583d77c0-17a1-4e3b-b23b-3aefb5eea51e",
+      "kind": "wire",
+      "designation": "W-S1L",
+      "description": "SL1 factory flying lead; color identifies the lead, not a numbered connector pin.",
+      "endpoints": [
+        {
+          "device": "K-R",
+          "terminal": "14"
+        },
+        {
+          "device": "SL1",
+          "terminal": "RED"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Red"
+      }
+    },
+    {
+      "uid": "db14b2e9-ec74-4242-a46a-ee42c31ae1c2",
+      "kind": "wire",
+      "designation": "W-K2A",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "KP8",
+          "terminal": "6"
+        },
+        {
+          "device": "K-Y",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "7f82dad1-1bc0-48f0-862e-e2b48846da27",
+      "kind": "wire",
+      "designation": "W-K2M",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "9"
+        },
+        {
+          "device": "K-Y",
+          "terminal": "A2"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "a4bd5db5-c840-4ef0-bec8-0d62430c3ad9",
+      "kind": "wire",
+      "designation": "W-S2P",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "16"
+        },
+        {
+          "device": "K-Y",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "53d5d8ff-7931-4233-abe5-4febb9b90032",
+      "kind": "wire",
+      "designation": "W-S2L",
+      "description": "SL1 factory flying lead; color identifies the lead, not a numbered connector pin.",
+      "endpoints": [
+        {
+          "device": "K-Y",
+          "terminal": "14"
+        },
+        {
+          "device": "SL1",
+          "terminal": "ORANGE"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Orange"
+      }
+    },
+    {
+      "uid": "9ac4a024-2fd8-4ada-9d6e-152ccc24597f",
+      "kind": "wire",
+      "designation": "W-K3A",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "KP8",
+          "terminal": "7"
+        },
+        {
+          "device": "K-G",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "d7e23ab7-a50a-4bae-915f-2f1869afdc38",
+      "kind": "wire",
+      "designation": "W-K3M",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "10"
+        },
+        {
+          "device": "K-G",
+          "terminal": "A2"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "5ff3e87e-0f11-4116-99a0-94a3a2aaae90",
+      "kind": "wire",
+      "designation": "W-S3P",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "17"
+        },
+        {
+          "device": "K-G",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "cca084cf-554b-4afc-adb8-22e878e6b177",
+      "kind": "wire",
+      "designation": "W-S3L",
+      "description": "SL1 factory flying lead; color identifies the lead, not a numbered connector pin.",
+      "endpoints": [
+        {
+          "device": "K-G",
+          "terminal": "14"
+        },
+        {
+          "device": "SL1",
+          "terminal": "GREEN"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Green"
+      }
+    },
+    {
+      "uid": "70acd479-2f55-4de0-bce8-c6afeaa5867e",
+      "kind": "wire",
+      "designation": "W-K4A",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "KP8",
+          "terminal": "8"
+        },
+        {
+          "device": "K-B",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "c0977140-6558-4c7b-93d2-c6d23e2ba192",
+      "kind": "wire",
+      "designation": "W-K4M",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "11"
+        },
+        {
+          "device": "K-B",
+          "terminal": "A2"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue/white"
+      }
+    },
+    {
+      "uid": "89106587-3785-4839-af0a-6e8ab593ba79",
+      "kind": "wire",
+      "designation": "W-S4P",
+      "description": "PROPOSED console internal wire; final termination and protection review pending",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "18"
+        },
+        {
+          "device": "K-B",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "c450a014-5f3c-40ad-9768-72942f1ec240",
+      "kind": "wire",
+      "designation": "W-S4L",
+      "description": "SL1 factory flying lead; color identifies the lead, not a numbered connector pin.",
+      "endpoints": [
+        {
+          "device": "K-B",
+          "terminal": "14"
+        },
+        {
+          "device": "SL1",
+          "terminal": "PURPLE"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Purple"
+      }
+    },
+    {
+      "uid": "e9bb9364-dbf0-4f37-9967-0f353f568c91",
+      "kind": "wire",
+      "designation": "W-SLP",
+      "description": "SL1 factory lead; steady supply for buzzer module.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "19"
+        },
+        {
+          "device": "SL1",
+          "terminal": "GRAY"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Gray"
+      }
+    },
+    {
+      "uid": "65930720-17d5-48cd-998f-e5e3b65b91f8",
+      "kind": "wire",
+      "designation": "W-SLM",
+      "description": "SL1 factory common lead to 0 V; do not bond to PE.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "12"
+        },
+        {
+          "device": "SL1",
+          "terminal": "YELLOW"
+        }
+      ],
+      "properties": {
+        "size": "24 AWG",
+        "color": "Yellow"
+      }
+    },
+    {
+      "uid": "8d185f51-c93f-40f8-935f-8f3dfff91820",
+      "kind": "jumper",
+      "designation": "J-HMI-1-2",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "1"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "uid": "0374971e-c73b-4c33-8c54-2eb495695370",
+      "kind": "jumper",
+      "designation": "J-HMI-2-3",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "2"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "uid": "2f9cd8b7-59fd-4f12-bd17-a9788e7443d3",
+      "kind": "jumper",
+      "designation": "J-HMI-3-4",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "3"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "4"
+        }
+      ]
+    },
+    {
+      "uid": "98fcc8cf-9874-44d6-be9a-287ac1c8c6f5",
+      "kind": "jumper",
+      "designation": "J-HMI-4-13",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "4"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "13"
+        }
+      ]
+    },
+    {
+      "uid": "0d1502c7-d893-4a41-a57d-5fa7378e9906",
+      "kind": "jumper",
+      "designation": "J-HMI-5-6",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "5"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "6"
+        }
+      ]
+    },
+    {
+      "uid": "ccbfddc6-1692-4721-a556-2d1e9f5f0c4e",
+      "kind": "jumper",
+      "designation": "J-HMI-6-7",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "6"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "7"
+        }
+      ]
+    },
+    {
+      "uid": "05f15b6b-95ef-4920-a5a3-8960f9a6c1a4",
+      "kind": "jumper",
+      "designation": "J-HMI-7-8",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "7"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "8"
+        }
+      ]
+    },
+    {
+      "uid": "cc145e33-317a-4005-82b6-b7f4bb824eca",
+      "kind": "jumper",
+      "designation": "J-HMI-8-9",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "8"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "9"
+        }
+      ]
+    },
+    {
+      "uid": "ecd256e2-7fbe-496c-87c4-cfedee9b532d",
+      "kind": "jumper",
+      "designation": "J-HMI-9-10",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "9"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "10"
+        }
+      ]
+    },
+    {
+      "uid": "54362d98-0adc-4e66-b062-a6c412b87278",
+      "kind": "jumper",
+      "designation": "J-HMI-10-11",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "10"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "0482fc3b-a660-472d-956e-e3762d081f32",
+      "kind": "jumper",
+      "designation": "J-HMI-11-12",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "11"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "12"
+        }
+      ]
+    },
+    {
+      "uid": "15c0d526-76dd-4adf-9d2d-f7db70ebbf14",
+      "kind": "jumper",
+      "designation": "J-HMI-12-14",
+      "description": "Proposed distribution bridge; compatible bridge hardware and block arrangement TBD",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "12"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "14"
+        }
+      ]
+    },
+    {
+      "uid": "4f81e83d-d731-4f67-8dd9-7c6cb3f723e5",
+      "kind": "relation",
+      "designation": "NET07",
+      "description": "Local console patch through KP8 integrated two-port switch; SCADA and PROFINET share the machine segment.",
+      "relation": "associated_with",
+      "from": {
+        "device": "KP8"
+      },
+      "to": {
+        "device": "HMI1"
+      },
+      "connection": {
+        "fromPort": "X1P2",
+        "toPort": "ETH1",
+        "medium": "ethernet",
+        "protocol": "Ethernet / SCADA protocol TBD",
+        "status": "planned",
+        "cable": {
+          "specification": "Industrial Cat5e RJ45 patch",
+          "lengthM": 1,
+          "route": "Inside HMI console; 1 m allowance"
+        }
+      }
+    },
+    {
+      "uid": "88f7a171-f881-41d5-86df-da1b446c40bf",
+      "kind": "wire",
+      "designation": "W-C12",
+      "description": "Protected stack distribution feed; one conductor at F-SL output, explicit distribution bridges at XT-HMI 15-20.",
+      "endpoints": [
+        {
+          "device": "F-SL",
+          "terminal": "2"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "15"
+        }
+      ],
+      "properties": {
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "uid": "f825598b-ede1-4143-ab9c-b2f0473f4550",
+      "kind": "jumper",
+      "designation": "J-HMI-15-16",
+      "description": "Protected stack +24 V distribution bridge; compatible block hardware selection pending.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "15"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "16"
+        }
+      ]
+    },
+    {
+      "uid": "8e983dd2-3944-4f5c-95fb-43d0182055ea",
+      "kind": "jumper",
+      "designation": "J-HMI-16-17",
+      "description": "Protected stack +24 V distribution bridge; compatible block hardware selection pending.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "16"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "17"
+        }
+      ]
+    },
+    {
+      "uid": "dcadf669-de32-4428-b304-5c2ecf675a1a",
+      "kind": "jumper",
+      "designation": "J-HMI-17-18",
+      "description": "Protected stack +24 V distribution bridge; compatible block hardware selection pending.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "17"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "18"
+        }
+      ]
+    },
+    {
+      "uid": "ccb99edf-42a2-433d-87d3-a5b4fd2c64f4",
+      "kind": "jumper",
+      "designation": "J-HMI-18-19",
+      "description": "Protected stack +24 V distribution bridge; compatible block hardware selection pending.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "18"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "19"
+        }
+      ]
+    },
+    {
+      "uid": "83c745bc-2301-48fb-bdd3-7d8c2fe8e888",
+      "kind": "jumper",
+      "designation": "J-HMI-19-20",
+      "description": "Protected stack +24 V distribution bridge; compatible block hardware selection pending.",
+      "endpoints": [
+        {
+          "device": "XT-HMI",
+          "terminal": "19"
+        },
+        {
+          "device": "XT-HMI",
+          "terminal": "20"
+        }
+      ]
+    },
+    {
+      "uid": "5a2a9538-298c-5c87-ac71-96e3a77d9793",
+      "kind": "relation",
+      "designation": "NET06",
+      "relation": "associated_with",
+      "from": {
+        "device": "SW1"
+      },
+      "to": {
+        "device": "KP8"
+      },
+      "description": "8 ft one-way console uplink in shared flex conduit route; KP8 second switch port feeds HMI locally. Replaces former PLC1 ETH2 direct HMI link.",
+      "connection": {
+        "fromPort": "P6",
+        "toPort": "X1P1",
+        "medium": "ethernet",
+        "protocol": "PROFINET + SCADA Ethernet",
+        "status": "planned",
+        "cable": {
+          "specification": "Industrial Cat5e RJ45",
+          "lengthM": 2.4384,
+          "route": "8 ft cabinet-console flex conduit; installed route, service slack additional"
+        }
+      }
+    }
+  ]
+}

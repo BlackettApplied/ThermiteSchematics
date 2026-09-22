@@ -1,0 +1,274 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1651330000",
+      "description": "HDC HVE 6+2 MS male screw insert, size 6; six numbered power and two pilot contacts plus aggregate PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1651330000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1651330000/scope/2/",
+          "title": "Weidmüller HDC HVE 6+2 MS data sheet",
+          "revision": "Creation date 25.02.2026 05:57:18 MEZ",
+          "pages": "1 exact identity/two lagging contacts; 3 six power/two signal, PE and conditional data; numbered arrangement in source S2"
+        },
+        "modelingNotes": [
+          "S1: Exact manufacturer datasheet created 25.02.2026 05:57:18 MEZ, pp. 1 and 3, confirms 1651330000 = HDC HVE 6+2 MS, male screw insert, size 6, six power plus two signal contacts, and two lagging contacts. No adjacent 3+2 part or tension-clamp variant is substituted.",
+          "S2: Undated manufacturer HVE catalogue extract at Valin, physical p. 4, exact male screw row 1651330000 and its numbered male contact arrangement: populated positions 1,3,5,7,10,12,14,16. Source: https://files.valinonline.com/userfiles/documents/weidmuller-hve-exciting-voltage-connectors.pdf. Numbers are manufacturer markings; C./M. are authoring interface prefixes for cable and mating ends of the same contact.",
+          "S3: RockStar catalogue 2721750000, version 2020, B.84/PDF134, exact male screw layout labels two end positions as switch contacts and six intermediate positions as operating contacts. Cross-diagram inference using S2 identifies pilot/switch contacts 1 and 16 and operating/power contacts 3,5,7,10,12,14. The legacy black/open fill convention is opposite the modern legend; fill is not transferred. The modern schematic simplifies a lateral offset, so no physical-view or mating-face orientation is asserted.",
+          "Eight independent fixed within-insert paths C.n-M.n for n=1,3,5,7,10,12,14,16 describe each passive copper-alloy contact. The project must express those paths as explicit links. They do not connect different contacts or cross the detachable interface to another insert. The pilot contacts remain passive plug contacts; the switch-contact legend does not establish an internal relay, NC/NO switching function or an internally joined pilot loop.",
+          "PE is one aggregate functional endpoint. Required PE is an explicit library connection-coverage policy; satisfying it does not verify an external protective conductor or a housing/panel bond. The drawings and PE screw data do not establish an enumerated split PE inventory, so no C.PE/M.PE path, central PE pin or metalwork bond is invented. MATE lists only the eight documented numbered contacts; PE remains outside that partial numbered pin map.",
+          "Ratings remain source-conditioned notes. S3 B.80/B.84 states 20 A. S1 p. 1 introductory text says 23 A while its order summary and p. 3 DIN EN 61984 data say 20 A. This conflict is not resolved by assigning a scalar current, a derating explanation or an invented revision change.",
+          "S2 p. 1/B.78 and S3 p. 130/B.80 qualify signal contacts at 500 V; the main rating is 830 V under DIN EN 61984. S1 lists 600 V AC/DC under UL/CSA and 8 kV impulse capability. These values are capabilities, not nominal circuit supply assignments. There are no scalar terminal current or voltage ratings.",
+          "Conductor preparation data are revision-sensitive: historical/exact datasheet screw strip length 9 mm versus 2020 catalogue 8 mm, and exact datasheet fields contain both 2.5 and 4 mm2 maxima. These are not reconciled into installation instructions.",
+          "S4: Exact manufacturer customer drawing, drawn 24.10.2005 and checked 31.10.2005, shows sixteen numbered body positions and a 630 V/16 A annotation despite exact 1651330000/HDC HVE 6+2 MS title. It is not used to populate all sixteen positions or assign ratings; the exact eight-position catalogue arrangement controls inventory.",
+          "The historical introductory phrase lagging earth contacts is inconsistent with the exact modern two-signal/two-lagging description and separate PE hardware. No delayed protective-earth engagement is modeled. Mating sequencing, live-disconnection suitability, enclosing-housing suitability and safety-circuit function are outside this type.",
+          "S1 records silver-passivated copper-alloy contacts, at most 2 mOhm contact resistance, -40 to +125 C and main screw torque 0.5-0.55 Nm; PE 1.2-1.5 Nm. Conductor preparation data are revision-sensitive: historical/exact datasheet screw strip length 9 mm versus 2020 catalogue 8 mm, and exact datasheet fields contain both 2.5 and 4 mm2 maxima. These are not reconciled into installation instructions."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Eight manufacturer-numbered contacts 1,3,5,7,10,12,14,16 are each split into cable/mating authoring endpoints, plus one required aggregate PE. Pilot roles 1/16 derive from comparing exact legacy numbering with modern male screw role diagram. Individual PE interfaces and bonds, clamp subdivisions and physical-view orientation are unenumerated. No scalar current reconciles conflicting manufacturer values."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side screw connection 1; lagging pilot/switch contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Cable-side screw connection 3; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.5": {
+          "description": "Cable-side screw connection 5; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.7": {
+          "description": "Cable-side screw connection 7; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.10": {
+          "description": "Cable-side screw connection 10; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.12": {
+          "description": "Cable-side screw connection 12; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.14": {
+          "description": "Cable-side screw connection 14; operating/power contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.16": {
+          "description": "Cable-side screw connection 16; lagging pilot/switch contact; C. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "M.1": {
+          "description": "Male mating contact 1; lagging pilot/switch contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Male mating contact 3; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.5": {
+          "description": "Male mating contact 5; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.7": {
+          "description": "Male mating contact 7; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.10": {
+          "description": "Male mating contact 10; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.12": {
+          "description": "Male mating contact 12; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.14": {
+          "description": "Male mating contact 14; operating/power contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.16": {
+          "description": "Male mating contact 16; lagging pilot/switch contact; M. is an authoring interface prefix; numeric part is the manufacturer populated-position number",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "description": "Aggregate protective-earth connection; functional alias, individual cable/mating/bonding points not enumerated",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.10": {
+          "kind": "bus",
+          "terminals": ["C.10"]
+        },
+        "C.12": {
+          "kind": "bus",
+          "terminals": ["C.12"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "C.16": {
+          "kind": "bus",
+          "terminals": ["C.16"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.10": {
+          "kind": "bus",
+          "terminals": ["M.10"]
+        },
+        "M.12": {
+          "kind": "bus",
+          "terminals": ["M.12"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        },
+        "M.16": {
+          "kind": "bus",
+          "terminals": ["M.16"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.3": "terminal",
+        "C.5": "terminal",
+        "C.7": "terminal",
+        "C.10": "terminal",
+        "C.12": "terminal",
+        "C.14": "terminal",
+        "C.16": "terminal",
+        "M.1": "terminal",
+        "M.3": "terminal",
+        "M.5": "terminal",
+        "M.7": "terminal",
+        "M.10": "terminal",
+        "M.12": "terminal",
+        "M.14": "terminal",
+        "M.16": "terminal",
+        "PE": "earth"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HVE 6+2 MS male insert, size 6",
+          "description": "Eight documented numbered male contacts only; partial pin inventory excludes unenumerated PE hardware. C./M. are interface aliases; no face-view orientation or phase map is encoded.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Lagging pilot/switch contact 1"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Operating/power contact 3"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Operating/power contact 5"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Operating/power contact 7"
+            },
+            "10": {
+              "terminal": "M.10",
+              "description": "Operating/power contact 10"
+            },
+            "12": {
+              "terminal": "M.12",
+              "description": "Operating/power contact 12"
+            },
+            "14": {
+              "terminal": "M.14",
+              "description": "Operating/power contact 14"
+            },
+            "16": {
+              "terminal": "M.16",
+              "description": "Lagging pilot/switch contact 16"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.3",
+        "C.5",
+        "C.7",
+        "C.10",
+        "C.12",
+        "C.14",
+        "C.16",
+        "M.1",
+        "M.3",
+        "M.5",
+        "M.7",
+        "M.10",
+        "M.12",
+        "M.14",
+        "M.16",
+        "PE"
+      ]
+    }
+  ]
+}

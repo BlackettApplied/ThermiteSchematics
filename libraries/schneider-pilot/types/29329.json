@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:29329",
+      "description": "Interphase barriers (phase separators), set of 6, for fixed-mounted ComPact NS100/160/250 — 3-pole application; mechanical insulating accessory",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "29329",
+        "document": {
+          "url": "https://www.se.com/us/en/product/29329/6-phase-separators-compact-ns100-250-for-fixed-mounting/",
+          "title": "Schneider Electric — 29329: 6 phase separators, ComPact NS100/250, for fixed mounting",
+          "revision": "Official product page accessed 2026-09-11; commercial status: Discontinued 2023-06-30",
+          "pages": "Product identity, pack quantity (6), compatibility (ComPact NS100/250), commercial status, replacement LV429329"
+        },
+        "modelingNotes": [
+          "Manufacturer identifies 29329 as a set of 6 phase separators / interphase barriers for fixed-mounted ComPact NS100/160/250 circuit breakers. Compact NS Catalogue (illustration ref E18606) lists 'Interphase barriers, Set of 6, 29329' on the NS100/160/250 accessories page and in the NS100-250 column of the Barriers cross-reference (NS400-630 = 32570).",
+          "Purely mechanical / dielectric accessory. Interphase barriers reinforce phase-to-phase and phase-to-earth insulation (creepage/clearance) at the breaker power terminals. They have zero electrical terminals, conductors or circuit functions; they only insulate and never terminate, bond or join any net.",
+          "No electrical rating is assigned. Any application voltage in Schneider literature describes the insulation-reinforcement condition, not a switching/supply rating of the barrier; nominal_voltage is intentionally omitted.",
+          "The MGE. prefix reflects Merlin Gerin legacy numbering.",
+          "Replaced by ComPacT NSX 100/160/250 interphase barriers LV429329 (set of 6). Do not substitute the NSX/successor order number for this exact NS order."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical interphase-barrier set (6 pieces); no electrical terminals, conductors or circuit functions. Fit and insulation reinforcement depend on the specified ComPact NS100/160/250 breaker and its connection arrangement; host-breaker terminals and enclosure bonding are separate parts."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "BARRIER": {
+          "connector": "Interphase insulating barrier set (6 pieces) for ComPact NS100/160/250",
+          "description": "Mechanical insulating separator placed between phases at the breaker power terminals; no electrical pins."
+        }
+      }
+    }
+  ]
+}

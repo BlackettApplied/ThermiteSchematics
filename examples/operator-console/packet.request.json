@@ -1,0 +1,107 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Console feeder / 8 ft route",
+      "conductors": ["W-C01", "W-C02", "W-C03", "W-C04", "W-C05"],
+      "notes": [
+        "W-C04 / W-C05: 16 AWG copper +24 V / 0 V in flex conduit; one-way route 8 ft (2.4384 m), excluding service slack.",
+        "F-CON: proposed 6 A DC protection. PS24 represents an output boundary; supply selection and AC-side wiring remain open.",
+        "6 A planning load: estimated drop 0.39 V at 20 C or 0.47 V at 75 C for the route alone; verify load, inrush, terminations and protection."
+      ],
+      "deviceOrder": ["PS24", "F-CON", "XT-MC", "XT-HMI"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Console supply / HMI and KP8",
+      "conductors": ["W-C06", "W-C07", "W-C08", "W-C09", "W-C10"],
+      "notes": [
+        "XT-HMI +24 V: bridge 1-2-3-4-13. 0 V: bridge 5-6-7-8-9-10-11-12-14. See terminal schedule for each physical contact.",
+        "HMI DC-IN: 1 positive / 2 return. KP8 X60: 1 L+ / 2 M; unused loop-through 3/4. KP8 pigtails 18 AWG (connector limit 1 mm2).",
+        "HMI uses F-CON feeder protection; F-KP8 is a proposed 1 A branch. Final Class 2 branch source/limiter and protective device selection remain open."
+      ],
+      "deviceOrder": ["XT-HMI", "F-KP8", "KP8", "HMI1"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Stack light protected supply",
+      "conductors": ["W-C11", "W-C12"],
+      "deviceOrder": ["XT-HMI", "F-SL"],
+      "notes": [
+        "F-SL: proposed 1 A branch. XT-HMI 15-16-17-18-19-20 are explicitly bridged for protected stack +24 V.",
+        "Use compatible distribution blocks and bridges, keeping this group separate from feeder +24 V and 0 V. Terminal 20 reserves a future protected stack feed.",
+        "A fuse alone does not establish a Class 2 circuit; final supply/limiter selection and fault-clearing review remain open."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Console protective bonding",
+      "conductors": ["W-PE01", "W-PE02", "W-PE03"],
+      "notes": [
+        "W-PE01: separate 14 AWG copper green/yellow bond, 8 ft flex conduit route; no DC-return-to-PE jumper is specified.",
+        "Main protective bond upstream of PE-MC, and ARBOR shell attachment/conductor acceptance, remain review items."
+      ],
+      "deviceOrder": ["PE-MC", "PE-HMI", "FRAME-HMI", "HMI1"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "KP8 outputs / red and amber",
+      "conductors": ["W-K1A", "W-K1M", "W-K2A", "W-K2M"],
+      "notes": [
+        "KP8 X60 pins 5/6/7/8 = IO.0/1/2/3. Configure as DO; assign PROFINET addresses during commissioning.",
+        "K-R / K-Y / K-G / K-B: Phoenix 2966171, polarized 24 V coils A1+ / A2-, 9 mA typical, suppression included.",
+        "Each NO contact 11-14 switches its stack lead on the next pages. External IO.4-7 are reserved; front keypad operation is network data."
+      ],
+      "deviceOrder": ["KP8", "XT-HMI", "K-R", "K-Y"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "KP8 outputs / green and buzzer",
+      "conductors": ["W-K3A", "W-K3M", "W-K4A", "W-K4M"],
+      "notes": [
+        "KP8 X60 pins 5/6/7/8 = IO.0/1/2/3. Configure as DO; assign PROFINET addresses during commissioning.",
+        "K-R / K-Y / K-G / K-B: Phoenix 2966171, polarized 24 V coils A1+ / A2-, 9 mA typical, suppression included.",
+        "Each NO contact 11-14 switches its stack lead on the next pages. External IO.4-7 are reserved; front keypad operation is network data."
+      ],
+      "deviceOrder": ["KP8", "XT-HMI", "K-G", "K-B"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Stack light / red and amber",
+      "conductors": ["W-S1P", "W-S1L", "W-S2P", "W-S2L"],
+      "notes": [
+        "SL1: PATLITE LR4-302LJBW-RYG, installed red / amber / green and buzzer. Factory leads identified by color, AWG24.",
+        "XT-HMI 15-20: F-SL protected supply; Class 2 source selection open. Relay 11 common / 14 NO / 12 unused; coil connections on the KP8 output pages.",
+        "Gray = continuous supply, yellow = return. Brown flash common, blue and white unused: isolate individually. No supply to brown."
+      ],
+      "deviceOrder": ["XT-HMI", "K-R", "K-Y", "SL1"]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Stack light / green and buzzer",
+      "conductors": ["W-S3P", "W-S3L", "W-S4P", "W-S4L", "W-SLP", "W-SLM"],
+      "notes": [
+        "SL1: PATLITE LR4-302LJBW-RYG, installed red / amber / green and buzzer. Factory leads identified by color, AWG24.",
+        "XT-HMI 15-20: F-SL protected supply; Class 2 source selection open. Relay 11 common / 14 NO / 12 unused; coil connections on the KP8 output pages.",
+        "Gray = continuous supply, yellow = return. Brown flash common, blue and white unused: isolate individually. No supply to brown."
+      ],
+      "deviceOrder": ["XT-HMI", "K-G", "K-B", "SL1"]
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet",
+      "devices": ["KP8", "HMI1"]
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "terminals",
+      "device": "XT-HMI"
+    }
+  ],
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape",
+    "marginMm": 10
+  }
+}

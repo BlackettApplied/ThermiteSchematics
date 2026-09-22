@@ -1,0 +1,29 @@
+{
+  "kind": "device_type",
+  "id": "core:bad-terminal-cardinality-by-kind",
+  "terminals": { "T1": {}, "T2": {}, "T3": {} },
+  "functions": {
+    "contact": {
+      "kind": "contact",
+      "normal_state": "open",
+      "terminals": ["T1"]
+    },
+    "channel": {
+      "kind": "channel",
+      "direction": "input",
+      "terminals": []
+    },
+    "source": {
+      "kind": "source",
+      "terminals": []
+    },
+    "load": {
+      "kind": "load",
+      "terminals": []
+    },
+    "bus": {
+      "kind": "bus",
+      "terminals": []
+    }
+  }
+}

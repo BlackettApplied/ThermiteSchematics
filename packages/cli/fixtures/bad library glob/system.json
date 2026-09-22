@@ -1,0 +1,12 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Escaping library glob" },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "badlib",
+      "version": "1.0.0",
+      "path": "../problem libraries/bad-glob"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": { "name": "Voltage type compatibility rule fixture" },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "voltage-rules",
+      "version": "1.0.0",
+      "path": "../voltage-library"
+    }
+  ]
+}

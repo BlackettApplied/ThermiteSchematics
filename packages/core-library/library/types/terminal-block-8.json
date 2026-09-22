@@ -1,0 +1,32 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:terminal-block-8",
+      "description": "Eight-position terminal block with isolated terminal points",
+      "terminals": {
+        "1": { "role": "terminal_point" },
+        "2": { "role": "terminal_point" },
+        "3": { "role": "terminal_point" },
+        "4": { "role": "terminal_point" },
+        "5": { "role": "terminal_point" },
+        "6": { "role": "terminal_point" },
+        "7": { "role": "terminal_point" },
+        "8": { "role": "terminal_point" }
+      },
+      "functions": {
+        "terminal1": { "kind": "bus", "terminals": ["1"] },
+        "terminal2": { "kind": "bus", "terminals": ["2"] },
+        "terminal3": { "kind": "bus", "terminals": ["3"] },
+        "terminal4": { "kind": "bus", "terminals": ["4"] },
+        "terminal5": { "kind": "bus", "terminals": ["5"] },
+        "terminal6": { "kind": "bus", "terminals": ["6"] },
+        "terminal7": { "kind": "bus", "terminals": ["7"] },
+        "terminal8": { "kind": "bus", "terminals": ["8"] }
+      },
+      "internal_relations": [],
+      "symbol": "iec:terminal-block"
+    }
+  ]
+}

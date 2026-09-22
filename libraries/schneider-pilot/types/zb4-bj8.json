@@ -1,0 +1,41 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bj8",
+      "description": "Harmony XB4 selector switch head, long handle, black, 3-position ± 45°, spring return from right to center — head only (no contact block)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BJ8",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal control and signaling units — catalog (DIA5ED2121212EN)",
+          "revision": "October 2021, V13.0",
+          "pages": "Catalog p.55 (physical PDF page 57), 'Selector switches with long handle', Heads only — ZB4BJ8; contact-body reference p.24 / body-contact assemblies p.74"
+        },
+        "modelingNotes": [
+          "ZB4BJ8 is listed under 'Heads only' on catalog p.55: long handle, black, 3-position ± 45°, spring return from right to center (weight 0.040/0.088 kg/lb). The position scheme was visually confirmed on the rendered page: the right position spring-returns to centre, matching source notation '1-0<-2 45dgr'.",
+          "Manufacturer catalog spells the reference 'ZB4BJ8' with no hyphen; the source 'ZB4-BJ8' carries only a presentation hyphen. Identity matches; expectedOrderNumber 'ZB4-BJ8' is retained per the job.",
+          "This is a mechanical actuator (head) only. It has no contact block, no NO/NC contacts, no lamp/LED, no supply/return, no signal/communication and no documented PE terminal. Hence zero electrical terminals and zero circuit functions.",
+          "Contacts are a separately ordered body. Catalog p.55 footnote (1): the sequence of contacts constituting the body (fixing collar + contact) is associated with the head but ordered separately (fixing collar ZB4BZ10x + contact blocks; complete unit e.g. ZB4BZ103 + ZB4BJ3 = XB4BJ33). No contact numbering (e.g. 11-12/13-14) is imported into this head.",
+          "The metal head's bonding/attachment through the panel and fixing collar is not documented as a terminal on this reference and is not asserted as an installed bond. Coverage is therefore 'partial' with zero documented terminals.",
+          "Neighbouring long-handle heads are kept distinct: ZB4BJ7 = spring return from left to center; ZB4BJ5 = spring return to center (both sides); ZB4BJ3 = 3-position stay put. ZB4BJ8 is specifically right-to-centre spring return.",
+          "The OPERATOR connectorPort is a mechanical descriptor only (actuator/mounting interface); it declares no electrical pins and manufactures no continuity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Selector switch head (operator) only. Zero documented electrical terminals: contacts belong to a separately ordered body (fixing collar ZB4BZ10x + contact blocks), and the metal-head panel/collar bonding interface is not documented at a terminal level. Both are outside this head's documented scope."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "OPERATOR": {
+          "connector": "Long-handle 3-position selector switch head, spring return from right to center",
+          "description": "Mechanical actuator and mounting interface only; couples to a separately ordered contact body (fixing collar + contact blocks). No electrical pins."
+        }
+      }
+    }
+  ]
+}

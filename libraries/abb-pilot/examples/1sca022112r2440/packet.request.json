@@ -1,0 +1,132 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "1SCA022112R2440 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "P1.TAB.A / P1.FUSE.A / P1.TAP.A",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.TAB.A"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.FUSE.A"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.TAP.A"
+            }
+          ],
+          "conductors": ["W1", "W2", "W3", "FIXED1", "FIXED2"]
+        },
+        {
+          "id": "g2",
+          "label": "P1.TAB.B / P1.FUSE.B / P1.TAP.B",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.TAB.B"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.FUSE.B"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1.TAP.B"
+            }
+          ],
+          "conductors": ["W4", "W5", "W6", "FIXED3", "FIXED4"]
+        },
+        {
+          "id": "g3",
+          "label": "P2.TAB.A / P2.FUSE.A / P2.TAP.A",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.TAB.A"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.FUSE.A"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.TAP.A"
+            }
+          ],
+          "conductors": ["W7", "W8", "W9", "FIXED5", "FIXED6"]
+        },
+        {
+          "id": "g4",
+          "label": "P2.TAB.B / P2.FUSE.B / P2.TAP.B",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.TAB.B"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.FUSE.B"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2.TAP.B"
+            }
+          ],
+          "conductors": ["W10", "W11", "W12", "FIXED7", "FIXED8"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

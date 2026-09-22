@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "stahl-pilot:8570002140",
+    "manufacturer": "R. STAHL",
+    "orderNumber": "8570002140"
+  },
+  "type": {
+    "path": "types/8570002140.json",
+    "sha256": "f822ad83ee2a973e5310edcb44b3672c033bd38b255cda8c59c7775527198fc8"
+  },
+  "research": {
+    "path": "research/8570002140.md",
+    "sha256": "3c29dfee28ea0f36d50e58c7407c26b8399249b31f3011276c23b59198038e85"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "accessory"
+  },
+  "files": {
+    "source.json": "0ee9a9801eb3880a91070b701ee71d00435c17eaa36feecebe32600e76c0690c",
+    "packet.request.json": "7fe9cfa468e1b56848818e977cf7033818061f0978622d83d70a3c39126143a2",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "457563eddf07f2d8637aaa5737ff966a10d321cdd5114d1e9e377e8e6465f9dd",
+    "system.json": "d260703e40514a4eec25d61ae698cf7ac20904e52292df5d98c2c6076176f237"
+  }
+}

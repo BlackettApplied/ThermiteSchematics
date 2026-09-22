@@ -1,0 +1,51 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "46be3efd-17b7-43ee-bb9d-a019c4fb2cdd",
+      "kind": "potential",
+      "name": "+24VDC",
+      "at": { "device": "PS1", "terminal": "+" },
+      "electrical": {
+        "nominal_voltage": 24,
+        "voltage_type": "DC",
+        "polarity": "positive"
+      }
+    },
+    {
+      "uid": "aaccbc22-3208-42dd-ae26-54dce0250f8d",
+      "kind": "potential",
+      "name": "0VDC",
+      "at": { "device": "PS1", "terminal": "-" },
+      "electrical": {
+        "nominal_voltage": 0,
+        "voltage_type": "DC",
+        "polarity": "return"
+      }
+    },
+    {
+      "uid": "e916ceaf-d05d-4564-bb2e-75b97eecbe3d",
+      "kind": "potential",
+      "name": "PE",
+      "at": { "device": "SRC1", "terminal": "PE" },
+      "electrical": {
+        "nominal_voltage": 0,
+        "voltage_type": "AC",
+        "polarity": "protective_earth",
+        "frequency": 60
+      }
+    },
+    {
+      "uid": "8c28fde4-d3a2-4ee3-8cfc-b1323845f39d",
+      "kind": "potential",
+      "name": "L1",
+      "at": { "device": "SRC1", "terminal": "L1" },
+      "electrical": {
+        "nominal_voltage": 480,
+        "voltage_type": "AC",
+        "polarity": "line_1",
+        "frequency": 60
+      }
+    }
+  ]
+}

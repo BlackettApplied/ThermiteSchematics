@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "6ES7138-4CA01-0AA0 component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "siemens-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "batch-boundary",
+      "version": "0.1.0",
+      "path": "boundary"
+    }
+  ]
+}

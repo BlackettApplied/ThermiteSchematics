@@ -1,0 +1,100 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2csr272140r1164",
+      "description": "DS202C M C16 A30 RCBO / 2 protected poles / C16 / type A / 30 mA / Icn 10 kA",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CSR272140R1164",
+        "document": {
+          "url": "https://library.e.abb.com/public/6db6e1dfafef4787ab043d79c4c79e10/Catalogo%20System%20ProM%20%282014%29.pdf",
+          "title": "System pro M compact — DIN Rail components for low voltage installation, Catalogue 2014",
+          "revision": "2CSC400002D0211; online copy imprint 11/2013",
+          "pages": "3/59 (PDF 287), 11/7 DS202C diagram (PDF 1073)"
+        },
+        "modelingNotes": [
+          "Exact order is DS202C M C16 A30: two protected poles, C characteristic, 16 A, type A residual-current protection, 30 mA; Icn 10 kA under IEC/EN 61009.",
+          "Diagram markings are preserved literally: 1/2 and 3/4 at top; 2/1 and 4/3 at bottom. Each slash marking denotes one connection, not two pins. No fixed phase or neutral assignment is made.",
+          "Two mechanically linked breaker contacts are represented in the open state. Neither contact metadata nor the ganged relation creates net continuity. No permanent external-terminal links exist; T identifies the internal test mechanism, not an external terminal.",
+          "Complete base-device external connection inventory only; no separately ordered auxiliaries, releases, motor operator, PE, shield or communication connection is included. Cable and busbar entry are uses of the same terminal, not separate connector endpoints.",
+          "Generic breaker symbols cover both poles. Residual-current sensing, test resistor/button and protective trip response are documented, not simulated. No universally required external terminal is asserted; wiring suitability depends on the application.",
+          "ABB brochure 2CSC422004B0203, undated, p.9: 230 V AC, 50/60 Hz; test-button range 110–253 V. At 230 V AC under IEC/EN 60947-2, DS202C M Icu is 10 kA and Ics 7.5 kA; rated residual breaking capacity is 6 kA. These are distinct conditional ratings, not load-current limits. https://library.e.abb.com/public/57606be65add4edd9a1ddee0ad27d6ba/2CSC422004B0203.pdf",
+          "The model records 16 A and AC capability only; voltage and frequency conditions stay in notes. Historical brochure p.9 lists 25 mm² cable and 10 mm² busbar terminal capacity, 2.8 Nm tightening torque; p.3 specifies 25 mm² flexible cable. These are manufacturer limits, not conductor-sizing approval."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four base-device power terminals with original slash markings; internal test mechanism has no external terminal. No fitted auxiliary, PE, shield or communication connection. Trip/test behavior is not simulated."
+      },
+      "terminals": {
+        "1/2": {
+          "description": "First protected pole, upper terminal; marking 1/2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16,
+            "voltage_type": "AC"
+          }
+        },
+        "2/1": {
+          "description": "First protected pole, lower terminal; marking 2/1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16,
+            "voltage_type": "AC"
+          }
+        },
+        "3/4": {
+          "description": "Second protected pole, upper terminal; marking 3/4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16,
+            "voltage_type": "AC"
+          }
+        },
+        "4/3": {
+          "description": "Second protected pole, lower terminal; marking 4/3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/2", "2/1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/4", "4/3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1/2", "3/4", "2/1", "4/3"]
+    }
+  ]
+}

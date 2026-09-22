@@ -1,0 +1,16 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "fixture:module",
+      "terminals": {
+        "1": {}
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "DC power connector is not modeled."
+      }
+    }
+  ]
+}

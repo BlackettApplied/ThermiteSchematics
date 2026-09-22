@@ -1,0 +1,44 @@
+[
+  {
+    "code": "E200",
+    "severity": "error",
+    "message": "Cable \u0022CBL-INVALID-FIRST\u0022 conductor \u0022X\u0022 is not declared by selected cable type \u0022rules:cable\u0022. Available conductor IDs: [\u00221\u0022, \u00222\u0022].",
+    "file": "sources/objects.json",
+    "line": 34,
+    "column": 9,
+    "jsonPointer": "/objects/4/conductors/0",
+    "uid": "20400000-0000-4000-8000-000000000005",
+    "related": [
+      {
+        "file": "../library/types/connectivity.json",
+        "line": 10,
+        "column": 5,
+        "note": "Selected cable type \u0022rules:cable\u0022 is declared here. Available conductor IDs: [\u00221\u0022, \u00222\u0022]."
+      }
+    ]
+  },
+  {
+    "code": "E201",
+    "severity": "error",
+    "message": "Terminal \u0022TARGET.E\u0022 has connection policy \u0022exclusive\u0022, but jumper \u0022J-SECOND-VALID\u0022 is an excess direct conductive assignment.",
+    "file": "sources/objects.json",
+    "line": 57,
+    "column": 9,
+    "jsonPointer": "/objects/6/endpoints/0",
+    "uid": "20400000-0000-4000-8000-000000000007",
+    "related": [
+      {
+        "file": "../library/types/connectivity.json",
+        "line": 22,
+        "column": 14,
+        "note": "The library terminal \u0022TARGET.E\u0022 declares connection policy \u0022exclusive\u0022 here."
+      },
+      {
+        "file": "sources/objects.json",
+        "line": 48,
+        "column": 9,
+        "note": "Earlier permitted direct assignment from wire \u0022W-FIRST-VALID\u0022 lands here."
+      }
+    ]
+  }
+]

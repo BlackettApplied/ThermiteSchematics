@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw343",
+      "description": "Head for illuminated push-button / Harmony XB4 metal, red flush, round, Ø22.5 mm, plain lens, spring return, universal-LED — mechanical head sub-assembly only (no contacts, LED or terminals)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW343",
+        "document": {
+          "url": "https://www.se.com/us/en/product/download-pdf/ZB4BW343?filename=Schneider+Electric_Harmony-XB4-ZB4-Metal-Push-Buttons_ZB4BW343.pdf",
+          "title": "Schneider Electric product data sheet ZB4BW343 - Head for illuminated push button, Harmony XB4, metal, red flush, 22mm, universal LED, spring return, plain lens, unmarked",
+          "revision": "Product datasheet, generated 2026-09-12",
+          "pages": "p.1 Main characteristics (Head for illuminated push-button; Basic sub-assemblies; round; red flush; spring return; Ø22.5 mm; universal LED); p.2 environment/standards"
+        },
+        "modelingNotes": [
+          "ZB4BW343 is the electrically passive MECHANICAL HEAD sub-assembly of a Harmony XB4 metal illuminated pushbutton: chromium-plated metal bezel, round, flush, red, plain lens, spring return, Ø22.5 mm, for universal-LED bodies. Datasheet 'Device presentation: Basic sub-assemblies'. It is not a complete pushbutton, contact block or light block.",
+          "Zero electrical terminals. No contacts, no LED, no light-block terminals, no supply/return/PE terminal. Catalog (10/2021) p.31 lists it under 'Heads only - With plain lens' with no NO/NC contact columns; contacts, the integral LED and all wiring terminals belong to a separately ordered body sub-assembly (e.g. ZB4BW0B45 in complete unit XB4BW34B5 = ZB4BW0B45 + ZB4BW343). No contacts/LED were imported from the complete-unit table into this head.",
+          "Bonding/attachment: the metal bezel mounts in a Ø22.5 mm panel cutout and snap-fits to a ZB4B body. No PE/bond terminal is documented on the head; any earth path through panel/collar/metalwork is an installation matter, not a manufacturer-documented terminal. Coverage is partial with zero documented terminals; no bonding path is asserted as manufacturer fact.",
+          "connectorPorts.MOUNT documents the mechanical head-to-body and panel interface only; it carries no electrical pins and manufactures no net continuity.",
+          "Source/expected order code 'ZB4-BW343' carries a presentation hyphen; the manufacturer datasheet and catalog spell it 'ZB4BW343' (no hyphen) for the identical product. Source descriptor 'Round countersunk head' reconciles to the manufacturer 'Round / Red flush'; no neighboring variant substituted.",
+          "No switching voltage/current rating is claimed for the head (it has no contacts). The datasheet 'Electrical composition code' (M1/M2/M6/M10) describes LED/contact positions of the assembled device, not terminals of this head."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical illuminated-pushbutton head; zero documented electrical terminals. Contacts, integral LED and wiring terminals belong to the separately ordered ZB4BW0... body sub-assembly and are out of scope. The metal-bezel bonding/attachment interface is undocumented at the head (installation-dependent); no PE terminal is asserted."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "MOUNT": {
+          "connector": "Head sub-assembly: Ø22.5 mm panel cutout, snap-fit to ZB4B body sub-assembly",
+          "description": "Mechanical mounting/attachment only; no electrical pins. Contacts, integral LED and terminals are provided by the separately ordered ZB4BW0... body sub-assembly."
+        }
+      }
+    }
+  ]
+}

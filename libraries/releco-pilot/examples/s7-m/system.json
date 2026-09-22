@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "S7-M component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "releco-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "batch-boundary",
+      "version": "0.1.0",
+      "path": "boundary"
+    }
+  ]
+}

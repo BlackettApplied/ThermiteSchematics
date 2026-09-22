@@ -1,0 +1,186 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:67072",
+      "description": "MKS-LDP 5/1300-1 M diode module; five pairs with common lamp-test anode",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "67072",
+        "document": {
+          "url": "https://shop.murrelektronik.de/index.php?anid=000000000000067072_1&cl=details&fnc=outputSpecSheet&lang=1",
+          "title": "Product-PDF for Article 67072",
+          "revision": "2026-09-13 (retained downloaded PDF footer)",
+          "pages": "1-2"
+        },
+        "modelingNotes": [
+          "No order-code substitution. S1: product sheet, pp.1-2; S2: manufacturer catalog at distributor mirror, printed p.3.9.6 (PDF5).",
+          "S1 and S2 diagrams: individual anode-to-cathode paths 2->1, 3->9, 6->8, 11->7, 10->12. Five further diodes run from the common anode node 4/5 to cathodes 1, 9, 8, 7, 12. Numeric terminal keys preserve diagram markings; descriptive roles and T-prefixed function keys are authoring labels.",
+          "Only terminals 4 and 5 have direct factory continuity. Represent this with an explicit project jumper; metadata never joins nets. Do not jumper any diode path or join the five outputs. Shared connection policy on 4 and 5 permits the internal jumper plus field wiring, not a claim about multiple conductors under a screw.",
+          "Published diode capability: 1300 V, 1 A; neither is an assigned circuit supply. No nominal_voltage, whole-module aggregate current, AC-only restriction, derating or surge rating is inferred. Catalog specifies screw terminals 4 mm2, -20 to +60 degrees C and DIN rail TH35/G32 mounting.",
+          "All passive terminal connections are application-dependent; none is universally required. No PE, shield, communication port or separate supply/return is identified by the twelve-pole specification and corresponding complete circuit diagram. DIN-rail mounting is not modeled as a bond.",
+          "The supplied circuitSymbols enumeration has no diode mark. This candidate renders each connection as a single-terminal bus with the supported terminal symbol; semiconductor direction and ten-diode topology are documented here, not drawn or simulated. It is a terminal-inventory circuit abstraction, not a complete diode schematic. No conducting bus is implied by the bus function kind.",
+          "The downloaded dynamic product sheet footer is Version 2026-09-13; the web viewer returned Version 2026-09-09 at the same URL. Use the retained PDF and its recorded hash for the reviewed revision. Historical catalog revision is unstated. Installed hardware and engineering suitability are not established."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All 12 specified screw-terminal poles, marked 1 through 12, are present in the exact article circuit diagram. Common terminals 4/5 are directly linked; all remaining interterminal paths contain diodes. No additional electrical interface is documented. Diode circuit rendering is unavailable; terminal coverage is complete."
+      },
+      "terminals": {
+        "1": {
+          "role": "cathode",
+          "description": "Cathode output paired with individual anode 2 and common anode 4/5",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "2": {
+          "role": "anode",
+          "description": "Individual diode anode to cathode output 1",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "3": {
+          "role": "anode",
+          "description": "Individual diode anode to cathode output 9",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "4": {
+          "role": "anode",
+          "description": "Common lamp-test anode; directly linked to the other common terminal",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "5": {
+          "role": "anode",
+          "description": "Common lamp-test anode; directly linked to the other common terminal",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "6": {
+          "role": "anode",
+          "description": "Individual diode anode to cathode output 8",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "7": {
+          "role": "cathode",
+          "description": "Cathode output paired with individual anode 11 and common anode 4/5",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "8": {
+          "role": "cathode",
+          "description": "Cathode output paired with individual anode 6 and common anode 4/5",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "9": {
+          "role": "cathode",
+          "description": "Cathode output paired with individual anode 3 and common anode 4/5",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "10": {
+          "role": "anode",
+          "description": "Individual diode anode to cathode output 12",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "11": {
+          "role": "anode",
+          "description": "Individual diode anode to cathode output 7",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "12": {
+          "role": "cathode",
+          "description": "Cathode output paired with individual anode 10 and common anode 4/5",
+          "required": false,
+          "connection_policy": "exclusive"
+        }
+      },
+      "functions": {
+        "T1": {
+          "kind": "bus",
+          "terminals": ["1"]
+        },
+        "T2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "T3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "T4": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "T5": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "T6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "T7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "T8": {
+          "kind": "bus",
+          "terminals": ["8"]
+        },
+        "T9": {
+          "kind": "bus",
+          "terminals": ["9"]
+        },
+        "T10": {
+          "kind": "bus",
+          "terminals": ["10"]
+        },
+        "T11": {
+          "kind": "bus",
+          "terminals": ["11"]
+        },
+        "T12": {
+          "kind": "bus",
+          "terminals": ["12"]
+        }
+      },
+      "circuitSymbols": {
+        "T1": "terminal",
+        "T2": "terminal",
+        "T3": "terminal",
+        "T4": "terminal",
+        "T5": "terminal",
+        "T6": "terminal",
+        "T7": "terminal",
+        "T8": "terminal",
+        "T9": "terminal",
+        "T10": "terminal",
+        "T11": "terminal",
+        "T12": "terminal"
+      },
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12"
+      ]
+    }
+  ]
+}

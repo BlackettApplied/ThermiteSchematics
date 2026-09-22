@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:lad-n22",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LAD-N22"
+  },
+  "type": {
+    "path": "types/lad-n22.json",
+    "sha256": "904906eaecfa05c6496a3f4be6e71a8e123f9eef7027bfb8bb92822d30f124b1"
+  },
+  "research": {
+    "path": "research/lad-n22.md",
+    "sha256": "79c5ec2c2b1777849a74d4d877884c1dea273cee44ef3b75b79e116fd55eee03"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["53", "54", "61", "62", "71", "72", "83", "84"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "b4c1d8afb32d361e01c75d7ab57d9bc5e6f259ed9deaf0353f19b91a747d3414",
+    "packet.request.json": "0c1418387a3c1317dc1132545e78c05fa4690a02bb37c0c296ce2ccdeb2b12ae",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "9895a17f42431b0a74696fab3b5d4c1ee95bfffc84dcadd8947deed040793340",
+    "system.json": "84886710206bc27d6749e08887abf53eb4bdb898118b301d249062d9cdd9b7a3"
+  }
+}

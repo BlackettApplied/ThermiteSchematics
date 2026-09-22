@@ -1,0 +1,141 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8575-14-306",
+      "description": "Coupler / 16 A / 200-250 V AC / 2P+PE / 6h",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8575/14-306",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/01/0000000000000008575618300_001_01.pdf",
+          "title": "R. STAHL Wall-mounting socket / Coupler 8575/13 / 8575/14",
+          "revision": "8575618300; S-BA-8575/13/14-01-en-11/04/2007",
+          "pages": "English pp.3-5 operation/ratings/contact arrangement; p.7 coupler terminations and earth (PDF14-16,18)"
+        },
+        "modelingNotes": [
+          "Exact 200-250 V AC, 50/60 Hz, 16 A, 2P+PE, blue, 6h variant. Capability 250 V is the range upper bound, not a declaration of the connected circuit voltage.",
+          "Cable-side terminals and mating contacts are separate authoring endpoints: C.P1/C.P2/C.PE and M.P1/M.P2/M.PE. P1/P2 are neutral functional pole aliases, not verified stamped pin numbers or installation L/N assignments. C/M prefixes identify side, not manufacturer markings. No front-view orientation or universal connector compatibility is asserted.",
+          "The PE connection is required. An explicit project jumper must represent the fixed C.PE-M.PE conductor. Connector-port metadata alone never joins nets.",
+          "Two main poles are switched and interlocked. Do not permanently jumper C.P1-M.P1 or C.P2-M.P2; functions describe switching without changing physical nets. Auxiliary accessory contacts are not fitted in this base type.",
+          "Installation variants, exact screw/terminal legends, seals and hazardous-area suitability require hardware/manual review. Electrical safety certification is not a compiler result.",
+          "Exact legacy order confirmed by official catalog 2014-04-08 EK00 III en, E3/2: https://r-stahl.com/fileadmin/tx_aimeos/Files/i_/en/8575_14_Couplers_EK00_III_en.pdf. Integral interlocked switching. The 2014 catalog gives IP54; the 2007 manual English p.4 gives IP66 / IP55 with plug inserted. This revision discrepancy is unresolved; no installed ingress rating is certified.",
+          "The 2007 manual English p.3 restricts mating plugs to type 8575/12. Later compatibility statements require reconciliation for the exact hardware revision. This model and its example do not assert compatibility with 8570/12 or a successor coupler."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Two power poles and PE at cable and mating sides are inventoried separately. Functional aliases do not establish physical pin numbering, orientation or all screw positions. No optional accessory contacts are included; fixed internal links need explicit project jumpers."
+      },
+      "terminals": {
+        "C.P1": {
+          "description": "Cable termination / P1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 250,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.P2": {
+          "description": "Cable termination / P2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 250,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.PE": {
+          "description": "Cable termination / PE",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "M.P1": {
+          "description": "Mating contact / P1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 250,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.P2": {
+          "description": "Mating contact / P2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 250,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.PE": {
+          "description": "Mating contact / PE",
+          "role": "protective_earth",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "C.PE": {
+          "kind": "bus",
+          "terminals": ["C.PE"]
+        },
+        "M.PE": {
+          "kind": "bus",
+          "terminals": ["M.PE"]
+        },
+        "P1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.P1", "M.P1"]
+        },
+        "P2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.P2", "M.P2"]
+        }
+      },
+      "circuitSymbols": {
+        "C.PE": "terminal",
+        "M.PE": "terminal",
+        "P1": "switch-no",
+        "P2": "switch-no"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "R. STAHL 8575/14-306 coupler, 2P+PE, 6h, blue",
+          "description": "Functional pole map only; physical orientation and stamped numbering require hardware review.",
+          "pins": {
+            "P1": {
+              "terminal": "M.P1",
+              "description": "Functional P1 alias; not a stamped numerical pin designation"
+            },
+            "P2": {
+              "terminal": "M.P2",
+              "description": "Functional P2 alias; not a stamped numerical pin designation"
+            },
+            "PE": {
+              "terminal": "M.PE",
+              "description": "Functional PE alias; not a stamped numerical pin designation"
+            }
+          }
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "P1",
+          "to": "P2"
+        }
+      ],
+      "terminalOrder": ["C.P1", "C.P2", "C.PE", "M.P1", "M.P2", "M.PE"]
+    }
+  ]
+}

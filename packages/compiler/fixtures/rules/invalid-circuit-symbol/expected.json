@@ -1,0 +1,19 @@
+[
+  {
+    "file": "library/types/module.json",
+    "line": 17,
+    "column": 22,
+    "jsonPointer": "/types/0/circuitSymbols/missing~1~0",
+    "code": "E206",
+    "severity": "error",
+    "message": "fixture:module circuitSymbols references undeclared function \"missing/~\".",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 3,
+        "column": 5,
+        "note": "Device type \"fixture:module\" declares the available functions."
+      }
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library.schema.json",
+  "name": "stahl-pilot",
+  "version": "0.1.0",
+  "sources": ["types/*.json"]
+}

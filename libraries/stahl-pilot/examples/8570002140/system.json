@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "8570002140 component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "stahl-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    }
+  ]
+}

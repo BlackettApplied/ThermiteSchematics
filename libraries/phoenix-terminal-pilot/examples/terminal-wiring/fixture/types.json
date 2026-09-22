@@ -1,0 +1,53 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "phoenix-terminal-fixture:boundary",
+      "description": "Synthetic external wire endpoints; no implicit continuity",
+      "symbol": "thermite:terminal-strip",
+      "category": "terminal-strip",
+      "terminals": {
+        "A1": {
+          "role": "test_endpoint"
+        },
+        "A2": {
+          "role": "test_endpoint"
+        },
+        "B1": {
+          "role": "test_endpoint"
+        },
+        "B2": {
+          "role": "test_endpoint"
+        }
+      },
+      "functions": {
+        "A1": {
+          "kind": "bus",
+          "terminals": ["A1"]
+        },
+        "A2": {
+          "kind": "bus",
+          "terminals": ["A2"]
+        },
+        "B1": {
+          "kind": "bus",
+          "terminals": ["B1"]
+        },
+        "B2": {
+          "kind": "bus",
+          "terminals": ["B2"]
+        }
+      },
+      "circuitSymbols": {
+        "A1": "terminal",
+        "A2": "terminal",
+        "B1": "terminal",
+        "B2": "terminal"
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete four-point synthetic test boundary, not a purchasable part."
+      }
+    }
+  ]
+}

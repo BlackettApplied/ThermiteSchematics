@@ -1,0 +1,72 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:23d01ba05",
+      "description": "ConSig twin pushbutton position / red 0, green I / 1 NC + 1 NO",
+      "category": "component",
+      "symbol": "thermite:pushbutton",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "23D01BA05",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/41/57/Asset_294157/8040-Hinweis-zur-Bestellnummernergaenzung-EN.pdf",
+          "title": "R. STAHL Control Device System, Series ConSig 8040, order number supplement",
+          "revision": "2016-11-07 EK00 III en",
+          "pages": "E4/4 built-in elements; E4/5 order structure; E4/11 twin pushbutton selection (PDF 4, 5, 11)"
+        },
+        "modelingNotes": [
+          "23D01BA05 specifies one installation position: twin pushbutton 23, red 0 / green I labels D01, NBR seal B, silver-nickel NC / NO contacts A05. It is not a complete 8040 enclosure order or an independently certified enclosed station.",
+          "Historical exact-suffix diagram 08007E00 identifies NC terminals 11-12 and NO terminals 13-14: R. STAHL Hauptkatalog 05.10.2009, printed 9/3, https://media.w-f.ch/asset_external/downloads/lieferanten/r.stahl%20ag/datenbl%C3%A4tter/8040_controlunitsystems_60_100_de.pdf. Manufacturer-authored catalog at a distributor mirror.",
+          "The two contact functions are independently actuated. No ganged relation, fixed jumper, lighting terminals, supply, return, shield, communication port or PE terminal is asserted for this operator position. Enclosure bonding belongs to the separately specified assembly.",
+          "The numbered circuit endpoints are verified; the exact contact-block spare-part revision, screw versus spring clamp hardware and physical clamping-point inventory are not resolved by this suffix. The diagram does not label each contact actuator by button colour, so function names do not assign a colour or a physical left/right position.",
+          "Passive contact terminals are application-dependent and are not universally required. Functions describe normal state without joining physical nets; only authored conductors join nets.",
+          "No scalar terminal rating is claimed. The complete boxed 8040/1180X-23D01BA05 datasheet's 690 V AC family value does not establish the operator's switching capability. Conditional 8082 family limits and their documentation are retained in research/23d01ba05.md."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All four numbered contact endpoints in exact historical diagram 08007E00 are modeled. Exact fitted contact-block revision, terminal technology and physical clamping-point inventory remain unverified. The containing enclosure and its bonding are outside this installation-position type."
+      },
+      "terminals": {
+        "11": {
+          "description": "Normally closed contact terminal 11",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "12": {
+          "description": "Normally closed contact terminal 12",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "13": {
+          "description": "Normally open contact terminal 13",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Normally open contact terminal 14",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "pushbutton-nc",
+        "no": "pushbutton-no"
+      },
+      "terminalOrder": ["11", "12", "13", "14"]
+    }
+  ]
+}

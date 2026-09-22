@@ -1,0 +1,35 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": { "size": "tabloid", "orientation": "landscape", "marginMm": 10 },
+  "views": [
+    {
+      "format": "schematic-view-request/0.1",
+      "family": "power",
+      "root": { "by": "designation", "value": "M1" }
+    },
+    {
+      "format": "schematic-view-request/0.1",
+      "family": "control",
+      "root": { "by": "designation", "value": "K1" }
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": { "by": "designation", "value": "PS1" },
+      "intent": { "kind": "loads" }
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": { "by": "designation", "value": "LS1" },
+      "intent": {
+        "kind": "trace",
+        "to": { "by": "designation", "value": "PLC1" },
+        "includePower": true
+      }
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": { "by": "designation", "value": "CBL1" },
+      "intent": { "kind": "conductors" }
+    }
+  ]
+}

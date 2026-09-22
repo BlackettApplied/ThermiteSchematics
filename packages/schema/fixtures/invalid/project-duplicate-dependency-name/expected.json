@@ -1,0 +1,1 @@
+[{"code":"E023","jsonPointer":"/libraries/1/name","line":1,"column":157,"related":[{"file":"fixtures/invalid/project-duplicate-dependency-name/input.json","line":1,"column":106,"note":"First declaration of this library dependency name."}]}]

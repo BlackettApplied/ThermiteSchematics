@@ -1,0 +1,61 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds271001r0044",
+      "description": "S201M-C4 miniature circuit breaker, one pole, C characteristic, 4 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS271001R0044",
+        "document": {
+          "url": "https://library.e.abb.com/public/d9ecbe04345340d78aeb32059bf6ec8b/2CSC400002D0211.pdf",
+          "title": "System pro M compact — DIN rail components for low voltage installation",
+          "revision": "2CSC400002D0211; catalogue 2014; 03/2014",
+          "pages": "2/38 (PDF 64) identity; 2/16 (PDF 42) ratings; 2/20 (PDF 46) terminals; 11/2 (PDF 1068) S201 wiring diagram"
+        },
+        "modelingNotes": [
+          "Exact order is S201M-C4: one pole, C characteristic, rated current 4 A. IEC/EN 60898-1: Un 230/400 V AC, Icn 10 kA, 50/60 Hz, C reference temperature 30 degrees C. IEC/EN 60947-2: one-pole Ue 230 V AC, Icu 15 kA and Ics 11.2 kA at this rated current. Conditional ratings are documentation, not an assigned supply voltage or coordination check.",
+          "Manufacturer S201 family diagram identifies terminals 1 and 2. Shared numbered endpoints encompass cable/busbar accommodation; no separate opening numbers are invented. Bare breaker only; accessory contacts/releases and external bonding are separate equipment.",
+          "Open contact state follows the catalog drawing, not the installed handle position. Contact metadata never creates continuity; no fixed link joins 1 and 2. Terminals are application-dependent and may remain unused in a spare device. Trip dynamics are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Both numbered electrical terminals of the bare single-pole breaker are represented. No neutral, PE, shield, communication or auxiliary contacts belong to this order. Each shared terminal includes its cable/busbar accommodation."
+      },
+      "terminals": {
+        "1": {
+          "description": "Manufacturer terminal 1, first pole endpoint",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "2": {
+          "description": "Manufacturer terminal 2, second pole endpoint",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

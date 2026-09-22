@@ -1,0 +1,180 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8579-12-407",
+      "description": "Plug / 63 A / 480-500 V AC / 50-60 Hz / 3P+PE / 7h / black",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8579/12-407",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/n_/gb/SDS_PV_175690_en_GB/ex-single-data-sheet-plug-63-a-8579-12-407-153037-en-gb-rstahl.pdf",
+          "title": "R. STAHL Installation Equipment, Plug 63 A, 8579/12-407, Art. No. 153037",
+          "revision": "2022-10-05; V 0.98 EN",
+          "pages": "p.1 identity, 480-500 V AC, 63 A, 50/60 Hz; p.2 3P+PE, black, 7h, screw terminal, 2.5-16 mm2; p.3 dimensions and protective-cap accessory 153261"
+        },
+        "modelingNotes": [
+          "Exact 8579/12-407, R. STAHL SolConeX article 153037: 63 A, 480-500 V AC, 50/60 Hz, 3P+PE (4-pole), black, clock position 7h, screw terminals for one 2.5-16 mm2 finely stranded conductor, IP66 polyamide enclosure, ATEX/IECEx Ex db eb IIC. Installed hardware revision is unverified. The 5-pole 8579/12-5.. (adds N) and any other suffix or successor are not substituted.",
+          "Exact -407 coded range is480–500VAC,50/60Hz,63A,black,7h. Family maximum690VAC and insulation750V are capabilities. No voltage maximum is stored as nominal_voltage: that field imposes exact equality in the compiler. Variant range and frequency remain source qualifications.",
+          "Manual p.9 diagram 19041E00 (view from front side, 6h reference position) identifies contact markings L1, L2, L3 and the protective-earth symbol for the 4-pole 8579/12-4.. plug; p.10 colour-code table assigns 480-500 V / 50-60 Hz / black / earth-contact-7h to this -407. Diagram inspected visually. No rotated 7h pin coordinates, rear-view layout, numeric pin mapping or installed phase assignment is inferred.",
+          "C.L1/C.L2/C.L3/C.PE are cable-side (screw-terminal) functional pole endpoints and M.L1/M.L2/M.L3/M.PE are the corresponding mating pins. L1/L2/L3 are manufacturer contact identities, PE is a textual alias for the earth symbol, and C/M are authoring-side aliases, not stamped terminal numbers. Individual per-contact screw legends and cable-clamp markings are unverified. Verify physical terminal markings before use.",
+          "A plug has fixed contact conductors, not switched power poles (contrast the interlocked wall socket). Author four explicit fixed links C.L1-M.L1, C.L2-M.L2, C.L3-M.L3 and C.PE-M.PE representing factory continuity from each screw terminal to its fixed pin (manual p.13: conductor clamped on the contact-pin carrier). The singleton bus functions and connector metadata never join nets themselves; these links represent factory continuity, not field-installed jumpers.",
+          "Always connect cable-side PE (manual p.12). The required C.PE presence check can pass on the internal C.PE-M.PE link alone and does not establish an external protective-earth supply. Shared connection policy accommodates the internal representation plus one external lead, not multiple field conductors under a clamp.",
+          "Three power contacts and one PE contact (3P+PE) are supported; no neutral is present on this -407 (the 5-pole 8579/12-5.. adds N). No shield, signal, communication, auxiliary contact or additional bonding screw is verified. The protective cap (Art. No. 153261) is a separate mechanical accessory outside this type.",
+          "Compatible sockets per manual p.14: R. STAHL 8579/11, 8579/31, 8579/51, 8579/61 and DIN EN 60309 industrial sockets. Ex suitability, sealing/IP, conductor sizing, temperature class (dependent on the plug+socket combination) and mating compatibility require the installed hardware and application review. Compiler validation is not an engineering approval."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Four cable-side pole endpoints and four mating pins are inventoried (3 power + PE). L1/L2/L3/earth identities come from the four-contact manufacturer drawing 19041E00 (6h front view); exact 7h physical orientation, individual screw legends and cable-clamp markings remain unverified. No neutral on this -407, and no accessory is fitted. C/M and textual PE are authoring aliases; the four fixed internal conductors are declared as fixed links."
+      },
+      "terminals": {
+        "C.L1": {
+          "description": "Cable-side functional pole / L1 (screw terminal)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "C.L2": {
+          "description": "Cable-side functional pole / L2 (screw terminal)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "C.L3": {
+          "description": "Cable-side functional pole / L3 (screw terminal)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "C.PE": {
+          "description": "Cable-side functional pole / PE (screw terminal)",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "M.L1": {
+          "description": "Mating pin / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "M.L2": {
+          "description": "Mating pin / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "M.L3": {
+          "description": "Mating pin / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 63
+          }
+        },
+        "M.PE": {
+          "description": "Mating pin / PE",
+          "role": "protective_earth",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "C.L1": {
+          "kind": "bus",
+          "terminals": ["C.L1"]
+        },
+        "C.L2": {
+          "kind": "bus",
+          "terminals": ["C.L2"]
+        },
+        "C.L3": {
+          "kind": "bus",
+          "terminals": ["C.L3"]
+        },
+        "C.PE": {
+          "kind": "bus",
+          "terminals": ["C.PE"]
+        },
+        "M.L1": {
+          "kind": "bus",
+          "terminals": ["M.L1"]
+        },
+        "M.L2": {
+          "kind": "bus",
+          "terminals": ["M.L2"]
+        },
+        "M.L3": {
+          "kind": "bus",
+          "terminals": ["M.L3"]
+        },
+        "M.PE": {
+          "kind": "bus",
+          "terminals": ["M.PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.L1": "terminal",
+        "C.L2": "terminal",
+        "C.L3": "terminal",
+        "C.PE": "terminal",
+        "M.L1": "terminal",
+        "M.L2": "terminal",
+        "M.L3": "terminal",
+        "M.PE": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "R. STAHL 8579/12-407 SolConeX plug, 3P+PE, 63 A, 7h, black",
+          "description": "Contact identities from 8579/12-4.. diagram 19041E00 (6h front view); no exact 7h coordinates or numeric pin aliases are asserted.",
+          "pins": {
+            "L1": {
+              "terminal": "M.L1",
+              "description": "L1 identity from four-contact plug drawing 19041E00; no numeric pin alias or exact 7h coordinates"
+            },
+            "L2": {
+              "terminal": "M.L2",
+              "description": "L2 identity from four-contact plug drawing 19041E00; no numeric pin alias or exact 7h coordinates"
+            },
+            "L3": {
+              "terminal": "M.L3",
+              "description": "L3 identity from four-contact plug drawing 19041E00; no numeric pin alias or exact 7h coordinates"
+            },
+            "PE": {
+              "terminal": "M.PE",
+              "description": "Textual alias for the protective-earth symbol; exact 7h coordinates unverified"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.L1",
+        "C.L2",
+        "C.L3",
+        "C.PE",
+        "M.L1",
+        "M.L2",
+        "M.L3",
+        "M.PE"
+      ]
+    }
+  ]
+}

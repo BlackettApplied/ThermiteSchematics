@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85062",
+      "description": "MCS 10-115-230/24 MIT PFC single-phase power supply, adjustable 24–28 V DC",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85062",
+        "document": {
+          "url": "https://shop.murrelektronik.com/index.php?lang=1&cl=details&fnc=outputSpecSheet&anid=000000000000085062_1",
+          "title": "Murrelektronik Product-PDF for Article 85062 - MCS POWER SUPPLY 1-PHASE, IN: 90-265VAC OUT: 24-28V/10ADC (model MCS 10-115-230/24 MIT PFC)",
+          "revision": "Product-PDF Version 2026-09-13",
+          "pages": "Product-PDF p.1 exact numbered connection diagram; pp.2–3 current specifications and connector-local pin table; see modeling notes for exact V1.4 manual and historical conflicts"
+        },
+        "modelingNotes": [
+          "Exact Murrelektronik article 85062, MCS 10-115-230/24 MIT PFC. Murr preserves the historical job manufacturer label. Primary product PDF and exact manual 85062_ina_4_14.pdf were visually reviewed; no successor or adjacent order is substituted.",
+          "Physical manufacturer numbers 1=PE, 2=N, 3=L, 4/5=DC−, 6/7=DC+ are established by the exact product circuit diagram and V1.4 manual front view. Product-PDF p.3 uses connector-local output indices 1,2=− and 3,4=+; these are not extra endpoints or the global 1–7 labels. No alias pins are added.",
+          "Only the fixed common output pairs 4–5 and 6–7 are established. They require explicit project jumpers; load/source/bus metadata does not join nets. No L–N, input–output, opposite-output-polarity, output–PE or PE–rail continuity is implied.",
+          "Input AC capability is 90–265 V, 50/60 Hz. DC capability conflicts across exact manufacturer documents: Product-PDF Version 2026-09-13 states 90–250 V DC; operating instructions V1.4 state 90–275 V DC operating range and 100–250 V DC nominal range; historical Catalog 4.5 p.9 states 125–300 V DC. The source input line instead says 24–28 V DC, which matches the output adjustment range and does not establish a low-voltage DC input. No combined DC range or DC-input polarity assignment is inferred; match hardware revision/instructions before DC operation.",
+          "Output is adjustable 24–28 V DC, nominal reference 24 V, with conditional total supply output current. Exact manual V1.4: 10 A continuous at 60 °C; 12 A at 40 °C with 110–240 V AC; DC cases at 60 °C are 8 A with 100–250 V DC and 10 A with 125–250 V DC. Historical catalog instead qualifies 12 A at 40 °C with 110–265 V AC; current product PDF lists 10 A and 12 A (UL) without combining those entries into these manual conditions. No per-terminal current or forced nominal-voltage scalar is encoded.",
+          "Partial interface coverage: exact manual V1.4 p.2 and current Product-PDF p.2 establish a front AUTORESTART ON/OFF removable jumper. The detailed pin identities and selectable continuity are not exposed, so this known configuration interface is documented but not rendered as invented terminals or a permanent fixed link. ON is factory pulsed restart; OFF shuts down on protection events. Installed setting is unknown; follow the manual for changing it.",
+          "Exact V1.4 manual front view identifies output adjustment, output-OK indicator and seven clamps; its numbered callouts are feature references, not additional terminal numbers. Historical exact catalog describes a green output-voltage LED. No output-OK relay terminal is documented. The manual requires a grounded mounting rail and classifies the supply as safety class 1; external PE and rail grounding remain project obligations, and this model does not prove a case-to-rail bond.",
+          "Required input terminals 2/3 and PE 1 represent the modeled supply use. Choice of repeated output clamps is application-dependent. Shared clamp policy supports explicit internal links plus field wires in the library; it does not authorize multiple conductors under a clamp. Exact V1.4 manual shows screw-terminal torque while the current sheet lists spring clamps: hardware/terminal construction must be checked against the installed revision.",
+          "Primary exact operating instructions: https://shop.murrelektronik.com/out/media/85062_ina_4_14.pdf, V1.4, English physical p.2 (German p.1); downloaded from the filename listed by the exact official article page. Historical manufacturer-authored Catalog 4.5 at https://www.hunglin.com/prodown.php?id=131, physical p.9 / printed 4.5.9, exact 85062 column. Conditional installation, parallel operation and derating rules remain in those sources."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Seven documented power/PE clamps are modeled: 1 PE, 2 N, 3 L, 4/5 DC−, 6/7 DC+. Both common output pairs are retained. The exact front AUTORESTART jumper exists, but its individual pins and selectable continuity remain unmodeled; do not invent endpoints or treat its setting as a fixed link. The mounting rail must be grounded per the manual; additional physical bonding/contact geometry is not resolved by this model. No output-OK relay or communication interface is documented."
+      },
+      "terminals": {
+        "1": {
+          "description": "Input PE / protective-earth terminal (protective-earth symbol, input block)",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "description": "2 / N input; no DC-input polarity assignment inferred",
+          "role": "neutral",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "3": {
+          "description": "3 / L input; no DC-input polarity assignment inferred",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "4": {
+          "description": "Output DC- (negative output clamp; common negative rail with terminal 5)",
+          "role": "output_negative",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "5": {
+          "description": "Output DC- (negative output clamp; common negative rail with terminal 4)",
+          "role": "output_negative",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "6": {
+          "description": "Output DC+ (positive output clamp; common positive rail with terminal 7)",
+          "role": "output_positive",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "7": {
+          "description": "Output DC+ (positive output clamp; common positive rail with terminal 6)",
+          "role": "output_positive",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["6", "5"]
+        },
+        "POSITIVE_EXTRA": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "RETURN_EXTRA": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "POSITIVE_EXTRA": "terminal",
+        "RETURN_EXTRA": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7"]
+    }
+  ]
+}

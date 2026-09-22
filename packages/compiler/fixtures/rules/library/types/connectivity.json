@@ -1,0 +1,51 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "rules:terminal",
+      "terminals": { "T": {} },
+      "functions": {}
+    },
+    {
+      "kind": "cable_type",
+      "id": "rules:cable",
+      "conductors": [
+        { "id": "2", "color": "red" },
+        { "id": "1", "color": "black" }
+      ]
+    },
+    {
+      "kind": "device_type",
+      "id": "rules:policy-terminal",
+      "terminals": {
+        "E": {
+          "role": "digital_output",
+          "connection_policy": "exclusive"
+        },
+        "S": {
+          "role": "digital_output",
+          "connection_policy": "shared"
+        },
+        "X2.0": { "role": "digital_output" }
+      },
+      "functions": {
+        "exclusive_output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["E"]
+        },
+        "shared_output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["S"]
+        },
+        "undeclared_output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X2.0"]
+        }
+      }
+    }
+  ]
+}

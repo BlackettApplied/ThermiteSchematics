@@ -1,0 +1,9 @@
+{
+  "uid": "12345678-1234-4234-9234-123456789abc",
+  "kind": "device",
+  "designation": "=F1+P1-K1",
+  "type": "core:contactor-3p-1no",
+  "description": "Conveyor motor contactor",
+  "aliases": ["K1", "MTR-101-CONTACTOR"],
+  "location": "PANEL1"
+}

@@ -1,0 +1,77 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1498700000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1498700000"
+  },
+  "type": {
+    "path": "types/1498700000.json",
+    "sha256": "ecd644e9340eff69aae38a728789cbf6878e3c681182e852d89f4ba512abbed1"
+  },
+  "research": {
+    "path": "research/1498700000.md",
+    "sha256": "b37a32ac6ecb753cf53d2ff34543511cf7140f26eec06caf827adf09127857ea"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "C.5",
+      "C.6",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4",
+      "M.5",
+      "M.6",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "wm-1498700000-datasheet"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "wm-1498700000-datasheet"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "wm-1498700000-datasheet"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "wm-1498700000-datasheet"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "wm-1498700000-datasheet"
+      },
+      {
+        "from": "C.6",
+        "to": "M.6",
+        "sourceId": "wm-1498700000-datasheet"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "926094b611af4441924e557194983e0435f8bed9da1b6d8320f30ec4d27b7576",
+    "packet.request.json": "fae6c2cb56b7ca5726a5541be3a24177de6ee8fb8317c3e57c3bc08bed921d3a",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "0b530d7d4332e099b26ebcc9e16abc1d5acc698283b3ea26d731d7045db34658",
+    "system.json": "242c0046fb1e5d41b2b5a77b839e75c444f428060ce91bb15a4034901d68ea0c"
+  }
+}

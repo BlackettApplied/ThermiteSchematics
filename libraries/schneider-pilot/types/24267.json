@@ -1,0 +1,96 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24267",
+      "description": "C60N miniature circuit breaker / 2 poles / 6 A / curve C",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24267",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Schneider Electric Multi 9 — Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010–2011",
+          "pages": "Printed 15: 2P 6 A curve C selection row and E45094 diagram; printed 14: ratings"
+        },
+        "modelingNotes": [
+          "Exact catalog p.15, 2P block, 6 A row, curve C column identifies 24267. Four 9 mm modules (36 mm).",
+          "Catalog p.15 diagram E45094 explicitly numbers two mechanically ganged protected poles 1–2 and 3–4. Numeric keys preserve markings; no phase or neutral assignment is inferred. Open contact state follows the diagram, not an assertion about installed handle position.",
+          "6 A nominal current at 30 °C; curve C magnetic trip 5–10 In. Current fields describe the breaker rating, not conductor sizing or fault-current capability.",
+          "Catalog p.14: Ue 400 V AC; CEI EN 60898 Icn 6000 A at 400 V for 2P; CEI EN 60947-2 Icu 20 kA at 230–240 V and 10 kA at 400–415 V for 2P. Ui 500 V AC, Uimp 6 kV. Voltage and breaking capacities remain conditional documentation, not assigned circuit voltage.",
+          "For In up to 25 A, cage terminals accept up to 16 mm² flexible or 25 mm² rigid conductor. Connection policy does not specify permitted conductor count.",
+          "Bare breaker only: four main terminals; no accessory contacts, coil, PE, shield or communications are part of this inventory. Application-dependent main terminals are not universally required. No fixed links: protection contacts must never collapse nets, and ganging is mechanical only.",
+          "Manufacturer-authored historical catalog supplied via distributor carnevale.bz/Yumpu mirror; cover verifies Catalogo 2010–2011. Same printed pp.14–15 visually checked in supplied municipal technical-sheets.pdf, physical pp.5–6. Trip simulation, derating and coordination are outside this static circuit model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four main terminals of the bare 24267 breaker are represented from its applicable 2P diagram. Separately fitted accessories are outside this order identity; no additional electrical interfaces are shown for the base breaker."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, terminal 1 (upper in manufacturer diagram)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "2": {
+          "description": "Pole 1, terminal 2 (lower in manufacturer diagram)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "3": {
+          "description": "Pole 2, terminal 3 (upper in manufacturer diagram)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "4": {
+          "description": "Pole 2, terminal 4 (lower in manufacturer diagram)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

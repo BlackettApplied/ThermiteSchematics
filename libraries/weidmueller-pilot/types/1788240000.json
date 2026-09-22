@@ -1,0 +1,43 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1788240000",
+      "description": "HDC 16B SBU 2M25G — size 6 base housing, two M25 entries",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1788240000",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/web-weidmueller/2019q4/14e64d3d6d3f2416e981f461d312c26102460a1d.pdf",
+          "title": "Weidmüller Heavy Duty Connectors — RockStar catalog",
+          "revision": "Version 2020, reference 2721750000",
+          "pages": "Physical PDF p.244, catalog D.22"
+        },
+        "modelingNotes": [
+          "Exact Weidmüller order 1788240000: HDC 16B SBU 2M25G — size 6 base housing, two M25 entries. This model is the housing itself; separately ordered contact inserts and their electrical ratings are not included.",
+          "Mechanical housing scope with zero documented electrical terminals. The manufacturer outline and ordering data do not establish a dedicated housing PE/bonding terminal inventory or its internal bonding path. Preserve partial connection coverage; do not infer continuity through the body, mounting hardware, gland threads, clamp or separately ordered insert.",
+          "No pins or fixed links are authored for undocumented bonding interfaces. This omission is not evidence of isolation or proof of an installed bond. A mounting/assembly instruction is needed to extend that inventory.",
+          "IP65 applies to a specified closed or mated assembly with suitable seals and cable entries; the bare housing does not establish installed protection. No electrical voltage/current rating is assigned.",
+          "Mechanical connector descriptions are documentation only and do not create a communication link or electrical net."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical housing scope with zero documented electrical terminals. The manufacturer outline and ordering data do not establish a dedicated housing PE/bonding terminal inventory or its internal bonding path. Preserve partial connection coverage; do not infer continuity through the body, mounting hardware, gland threads, clamp or separately ordered insert."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "INSERT-CAVITY": {
+          "connector": "HDC size 16B insert mounting cavity",
+          "description": "Mechanical receptacle for a separately ordered HDC 16B insert. No electrical pins belong to the housing."
+        },
+        "CABLE-ENTRY": {
+          "connector": "2 x M25 threaded cable entry (lower/side)",
+          "description": "Two threaded M25 gland entries for cable/gland fitting. Mechanical only."
+        }
+      }
+    }
+  ]
+}

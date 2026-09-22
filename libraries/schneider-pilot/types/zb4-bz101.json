@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bz101",
+      "description": "Harmony XB4 body/fixing collar with one normally open contact, screw clamp terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BZ101",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/ZB4BZ101_DATA%20SHEET.PDF",
+          "title": "ZB4BZ101 product datasheet",
+          "revision": "6 April 2021",
+          "pages": "1-2; dimensional drawing 4"
+        },
+        "modelingNotes": [
+          "Source spelling ZB4-BZ101 is retained. Historical manufacturer catalog 36068-FR.indd version 6.1 spells ZB4 BZ101; current sheet spells ZB4BZ101. Presentation-punctuation equivalence is an explicit inference documented in research.md.",
+          "Includes one contact and body/fixing collar. Operator head and any additional contact or light blocks are outside this order's modeled scope.",
+          "Model keys 3 and 4 follow the readable physical markings on the exact manufacturer datasheet photograph. Its separate ISO-description field says 13-14; this discrepancy is preserved without inventing extra terminals or claiming a formal numeric alias map.",
+          "NO function describes normal contact state without creating net continuity. No fixed links; passive connections are application-dependent. No operator latching or spring-return behavior is asserted.",
+          "Conditional AC-15 and DC-13 ratings are recorded in research.md; no scalar nominal voltage, switching-current limit or AC-only metadata is assigned.",
+          "The exact catalog selection row and corresponding NO symbol were visually reviewed on October 2021 catalog PDF page 78, printed page 76. Contact-no represents the included contact without asserting a head type."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both physical contact clamps 3 and 4 are represented. Datasheet ISO field 13-14 is recorded separately, not treated as extra endpoints. Metal collar attachment/bonding remains unresolved; no PE terminal or installed panel bond is inferred."
+      },
+      "terminals": {
+        "3": {
+          "description": "Normally open contact; physical terminal marking 3",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "Normally open contact; physical terminal marking 4",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "no": "contact-no"
+      },
+      "terminalOrder": ["3", "4"]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "candidate-fixture:source-boundary",
+      "description": "Test supply and functional-earth boundary; upstream engineering omitted",
+      "terminals": {
+        "L": { "description": "120 V AC line test boundary" },
+        "N": { "description": "AC return test boundary" },
+        "+24V": { "description": "24 V DC positive test boundary" },
+        "0V": { "description": "24 V DC return test boundary" },
+        "FE": { "description": "Functional-earth test boundary" }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Test interface only; upstream supply, protection and bonding are outside this connector demonstration."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "candidate-fixture:thermocouple",
+      "description": "Generic TC test boundary; alloy and range unspecified",
+      "terminals": { "+": {}, "-": {} },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Demonstrates two distinct TC leads; no sensor alloy, ratings or physical junction continuity is inferred."
+      }
+    }
+  ]
+}

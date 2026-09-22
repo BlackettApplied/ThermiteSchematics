@@ -1,0 +1,83 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7135-4FB01-0AB0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "AO0 / AO1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AO0"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AO1"
+            }
+          ],
+          "conductors": ["W1", "W3", "W5", "W7", "FIXED1"]
+        },
+        {
+          "id": "g2",
+          "label": "SENSE0",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "SENSE0"
+            }
+          ],
+          "conductors": ["W2", "W4"]
+        },
+        {
+          "id": "g3",
+          "label": "SENSE1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "SENSE1"
+            }
+          ],
+          "conductors": ["W6", "W8"]
+        },
+        {
+          "id": "g4",
+          "label": "SUPPLY",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "SUPPLY"
+            }
+          ],
+          "conductors": ["W9", "W10"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

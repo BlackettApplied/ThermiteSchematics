@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bd3",
+      "description": "Selector switch operating head, Harmony XB4 metal, black standard (short) handle, Ø22, 3 positions (1-0-2) ±45°, stay put — head only, no contact block",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BD3",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal — Control and signaling units, catalog",
+          "revision": "DIA5ED2121212EN, October 2021, V13.0",
+          "pages": "Catalog p.54 (physical PDF p.56): Selector switches with standard handle, Heads only — ZB4BD3; note (1) body=fixing collar+contact, see p.24/p.74"
+        },
+        "modelingNotes": [
+          "Mechanical operating head only. The manufacturer catalog prints the reference ZB4BD3 without the presentation hyphen; the source order code ZB4-BD3 is the same part. expectedOrderNumber 'ZB4-BD3' is retained per job identity.",
+          "Catalog p.54 'Heads only' rows carry no NO/NC contact counts. Contacts exist only on complete units, e.g. XB4BD33 = ZB4BZ103 (body/contact) + ZB4BD3 (head); the '2 NO' contacts belong to the ZB4BZ103 body, not to this head. No contacts, LEDs, supply, return, signal or communication terminals are part of ZB4-BD3.",
+          "Zero electrical terminals: modeled as a documentation/accessory view. The ±45° three-position maintained (1-0-2) scheme is a mechanical position indicator, not an electrical wiring diagram.",
+          "Metal head with chromium-plated bezel; the catalog documents no earth/bonding terminal on the head. Any bonding of the metal bezel through panel, fixing collar or metalwork is undocumented and is NOT asserted as a manufacturer fact — hence partial connection coverage with zero documented terminals.",
+          "Body/fixing collar (e.g. ZB4BZ009) and contact blocks (e.g. ZBE-101 NO / ZBE-102 NC) or a preassembled body (e.g. ZB4BZ103) are separately ordered parts and are not included or modeled here. The black-metal-bezel variant is a distinct code ZB4BD37 (suffix 7); the source ZB4-BD3 has no such suffix and is the standard head."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical operating head with zero documented electrical terminals. Contacts/LEDs live on a separately-ordered XB4 body (fixing collar + contact blocks), not on this head. The metal-bezel bonding/earthing interface is undocumented and not asserted; hence partial rather than complete."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "MOUNT": {
+          "connector": "Ø22 mm panel-mount operating head; couples to a separately-ordered Harmony XB4 body (fixing collar ZB4BZ009 + contact/light blocks, or a preassembled body such as ZB4BZ103)",
+          "description": "Mechanical actuation interface only. The head transmits ±45° three-position maintained (1-0-2) motion to contact blocks mounted on the body. No electrical pins on the head itself."
+        }
+      }
+    }
+  ]
+}

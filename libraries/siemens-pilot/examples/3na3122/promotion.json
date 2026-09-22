@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "siemens-pilot:3na3122",
+    "manufacturer": "Siemens",
+    "orderNumber": "3NA3122"
+  },
+  "type": {
+    "path": "types/3na3122.json",
+    "sha256": "08ed3148e2e6efd298b78de402bac215cc9fbcbe414bf3933b7dfecd1cdf9aae"
+  },
+  "research": {
+    "path": "research/3na3122.md",
+    "sha256": "29eb0537f19989e67a4cdc6e69ce58168f0d0a291eead769b80874f6cba16216"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "d21fc516e451e70d3ece5fba26efb56445a0586211f18ad512dbc8d52c5a140a",
+    "packet.request.json": "a68278aab89578706dd84c29bdef2ed43bec58fe08c406bfb3aaa8a7fe7d686d",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "46add326778e34079f0d07a4887a86521c4aab7a6545f805e758a3623eefa344",
+    "system.json": "44d1bcced6a9d9f73ecb09a6c82a3b6f38c095612bc30f9cd7b99809ef9d9ee4"
+  }
+}

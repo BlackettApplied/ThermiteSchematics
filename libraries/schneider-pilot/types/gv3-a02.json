@@ -1,0 +1,82 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv3-a02",
+      "description": "GV3-A02 right-side auxiliary contact block, 2 NO early-break, for GV3ME",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV3-A02",
+        "document": {
+          "url": "https://www.elmatik.ee/info/pdf/GV3.pdf",
+          "title": "TeSys circuit-breakers — Thermal-magnetic motor circuit-breakers type GV3-ME",
+          "revision": "Undated historical Schneider Electric / Telemecanique catalog excerpt",
+          "pages": "Printed 3/58, 3/60, 3/62; physical PDF 7, 9, 11"
+        },
+        "modelingNotes": [
+          "Historical exact scheme uses GV3-A02; later manufacturer datasheet uses GV3A02. See https://iportal.se.com/Contents/docs/SQD-GV3A02.PDF (September 1, 2016, p.1) for identity, right-side mounting and screw-clamp data.",
+          "Exact GV3-A02 scheme verifies NO contacts 13–14 and 23–24 with mechanical linkage. Both open at host OFF and closed at ON. Early-break wording is retained from the product sheet; host-relative timing/travel is not expressible in this model. This is not a fault-only signaling block.",
+          "The historical ordering table prints GV1-A02, and the product photograph appears to show an NC pair. Neither is used for numbering; the explicitly labeled GV3-A02 schematic controls the modeled terminals.",
+          "All four passive terminals are application-dependent. No permanent internal links; contact and mechanical relation metadata do not merge nets. No host breaker poles or optional accessories are included.",
+          "Ui 690 V IEC / 600 V UL and CSA; Ith 6 A; Ue 48–690 V AC and 24–220 V DC are capabilities, not assigned nominal voltages. Conditional AC-11/DC-11 switching powers at 100,000 operations are preserved in research.md; no scalar terminal rating is assigned.",
+          "Screw clamps accept one or two solid 1–2.5 mm² conductors; flexible 0.75–2.5 mm², except two ferruled conductors 0.75–1.5 mm². Physical terminal orientation is not inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four screw-clamp contact terminals 13, 14, 23, 24 established by the exact GV3-A02 schematic and product sheet. No additional supply, return, PE, shield, communication or spare terminal is documented for this passive auxiliary block. Host and other accessories are separate."
+      },
+      "terminals": {
+        "13": {
+          "description": "NO contact screw-clamp terminal 13",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "NO contact screw-clamp terminal 14",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "23": {
+          "description": "NO contact screw-clamp terminal 23",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "24": {
+          "description": "NO contact screw-clamp terminal 24",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["23", "24"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no2"
+        }
+      ],
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "no2": "contact-no"
+      },
+      "terminalOrder": ["13", "14", "23", "24"]
+    }
+  ]
+}

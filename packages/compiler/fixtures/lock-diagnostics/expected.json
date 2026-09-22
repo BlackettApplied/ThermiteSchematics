@@ -1,0 +1,65 @@
+[
+  {
+    "code": "E105",
+    "file": "system.json",
+    "line": 9,
+    "column": 16,
+    "jsonPointer": "/libraries"
+  },
+  {
+    "code": "E106",
+    "file": "system.json",
+    "line": 2,
+    "column": 13,
+    "jsonPointer": "/format",
+    "related": [
+      {
+        "file": "electrical-system.lock.json",
+        "line": 4,
+        "column": 21
+      }
+    ]
+  },
+  {
+    "code": "E107",
+    "file": "electrical-system.lock.json",
+    "line": 10,
+    "column": 16,
+    "jsonPointer": "/libraries/alpha/files",
+    "related": [
+      {
+        "file": "libraries/alpha/library.json",
+        "line": 4,
+        "column": 14
+      }
+    ]
+  },
+  {
+    "code": "E108",
+    "file": "libraries/alpha/types/zeta.json",
+    "line": 1,
+    "column": 1,
+    "jsonPointer": "",
+    "related": [
+      {
+        "file": "electrical-system.lock.json",
+        "line": 13,
+        "column": 28
+      }
+    ]
+  },
+  {
+    "code": "E109",
+    "file": "electrical-system.lock.json",
+    "line": 9,
+    "column": 20,
+    "jsonPointer": "/libraries/alpha/integrity"
+  },
+  {
+    "code": "E110",
+    "file": "electrical-system.lock.json",
+    "line": 1,
+    "column": 1,
+    "jsonPointer": ""
+  }
+]

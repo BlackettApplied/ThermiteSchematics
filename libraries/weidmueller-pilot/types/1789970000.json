@@ -1,0 +1,166 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1789970000",
+      "description": "HDC S4 0 BAS female axial-screw contact insert, size 6, four numbered power contacts plus aggregate PE",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1789970000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1789970000/scope/2/",
+          "title": "Weidmüller HDC S4 0 BAS exact-order data sheet",
+          "revision": "Created 01.03.2026 11:45:51 MEZ",
+          "pages": "1,3–4 exact female identity, axial contact/PE data and dimensions; numbered female arrangement: RockStar 2012/2013 physical p.160/B.118; axial assembly: p.153/B.111"
+        },
+        "modelingNotes": [
+          "Exact order 1789970000 is HDC S4 0 BAS: female, axial screw connection, size 6, four power contacts and PE, with no signal/pilot contacts. Verified on its own manufacturer data sheet pp.1 and 3 and the exact female row in RockStar 2012/2013 physical p.160/B.118. The data sheet marks this legacy order discontinued and identifies an alternative product; this type retains 1789970000 and does not substitute 1023210000.",
+          "The historical B.118 FEMALE arrangement independently identifies contacts 1, 2, 3 and 4 plus an earth symbol. In that printed view 1/2 occupy the right column and 3/4 the left, with staggered heights. No installed orientation, phase/neutral allocation or male-to-female position inference is made. C. and M. are authoring prefixes for each contact's cable-side axial termination and female mating interface; only the numbers are manufacturer contact identities.",
+          "Four separate fixed internal conductors C.1–M.1, C.2–M.2, C.3–M.3 and C.4–M.4 follow the four numbered axial screw/contact paths. B.111 assembly instructions and section drawing place the wire at the cable end and the clamping tool through the corresponding mating-face contact. The candidate conformance declares these links for explicit instance jumpers; single-terminal functions and connector-port metadata do not join nets.",
+          "PE is one aggregate logical protective-earth endpoint. The female contact arrangement marks PE, the product photograph shows end/frame hardware, and exact p.3 specifies an M5 PE screw connection. Independent physical PE clamps, mating/bonding interfaces and frame/mounting continuity are not completely enumerated. No single central PE pin, exact PE screw count, C.PE–M.PE bridge or external housing bond is asserted. Connection coverage is partial for this physical subdivision.",
+          "PE is required by explicit library policy for modeled protective-earth use, not a universal manufacturer statement for every application. An authored PE connection satisfies presence only and does not prove an external earth source or adequate bonding. Power contacts remain application-dependent.",
+          "Exact data-sheet ratings also include 600 V AC/DC UL/CSA, 80 A DIN EN 61984, 8 kV and pollution severity 3. These are conditional capabilities, not circuit intent; no scalar nominal_voltage, AC-only restriction or current rating is imposed on this passive insert.",
+          "Exact power-contact data on p.3: axial screw, 1.5–16 mm², AWG16–6, 13 mm strip and 2–3 N m; its generic tightening-torque field separately says 0.5 N m and is not treated as the power-clamp value. The same page says a 2 mm hexagon socket, while historical B.108/B.111 specify SW3/IS3KG for S4/0. These tool/field inconsistencies remain visible instead of selecting an unverified preparation instruction. Historical B.111 gives a four-power-contact H07V-K16 derating curve with factor 0.80; 80 A is not asserted for every wire size or ambient.",
+          "Exact PE data: M5, 2–2.5 N m, 8 mm strip, rated 16 mm² and AWG16–6. Historical B.108 says 1.5–16 mm² with cable lug and limits its 8 mm stripping note to wire up to 6 mm², and lists AWG16–4. Those different preparation qualifications are retained as unresolved application details; PE hardware subdivision and external bonding are not proven by the ratings."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Nine modeled endpoints: four manufacturer-numbered axial cable/mating pairs (1–4) plus one aggregate required PE. Four fixed paths remain separate. Individual PE clamp/mating/frame/mounting interfaces and their complete bonding paths are not inventoried; no split-side PE conductor or housing bond is invented. Installed circuit allocation, orientation and governing 630/690/830 V evidence remain unresolved."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side axial-screw termination of manufacturer-numbered power contact 1; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.2": {
+          "description": "Cable-side axial-screw termination of manufacturer-numbered power contact 2; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Cable-side axial-screw termination of manufacturer-numbered power contact 3; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.4": {
+          "description": "Cable-side axial-screw termination of manufacturer-numbered power contact 4; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "description": "Aggregate protective-earth interface; individual clamp/mating/frame subdivision unresolved",
+          "role": "pe",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "M.1": {
+          "description": "Female mating contact of manufacturer-numbered power contact 1; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.2": {
+          "description": "Female mating contact of manufacturer-numbered power contact 2; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Female mating contact of manufacturer-numbered power contact 3; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.4": {
+          "description": "Female mating contact of manufacturer-numbered power contact 4; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "PE": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC S4 0 BAS female axial-screw insert, size 6",
+          "description": "Four numbered female mating contacts from the exact historical B.118 female arrangement. Aggregate PE is represented separately without an invented physical mating-pin position. Metadata does not join nets.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Manufacturer-numbered power contact 1"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Manufacturer-numbered power contact 2"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Manufacturer-numbered power contact 3"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Manufacturer-numbered power contact 4"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "PE",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4"
+      ]
+    }
+  ]
+}

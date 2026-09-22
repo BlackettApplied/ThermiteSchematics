@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:la9-ff970",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LA9-FF970"
+  },
+  "type": {
+    "path": "types/la9-ff970.json",
+    "sha256": "831b8fd22423418ed15a1be9b23bdb1519046b0aa260f3a864a917d746ff8081"
+  },
+  "research": {
+    "path": "research/la9-ff970.md",
+    "sha256": "1853b729ba881dd3879bfbd98a1c3ed61b8c8d447791a987c70959cbdec5af81"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "accessory"
+  },
+  "files": {
+    "source.json": "9c6620bdadc46178b319e3697121176ae6fff6d33961662e3bfca02bf83c2abe",
+    "packet.request.json": "7fe9cfa468e1b56848818e977cf7033818061f0978622d83d70a3c39126143a2",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "457563eddf07f2d8637aaa5737ff966a10d321cdd5114d1e9e377e8e6465f9dd",
+    "system.json": "f32d70d09051df0fe76aa5d7b3d595c7468ac0350b574f9e4e9bce55c6919820"
+  }
+}

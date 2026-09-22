@@ -1,0 +1,30 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:carlo-gavazzi-rgn-termres",
+      "description": "NRG bus termination accessory - included with NRGC-PN",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "BUS": {
+          "medium": "nrg-bus",
+          "connector": "Proprietary NRG termination plug"
+        }
+      },
+      "catalog": {
+        "manufacturer": "Carlo Gavazzi",
+        "orderNumber": "RGN-TERMRES",
+        "document": {
+          "url": "https://www.gavazziautomation.com/fileadmin/docs/mt_gh/SSR_NRGC_PN.pdf",
+          "title": "NRGC-PN datasheet",
+          "revision": "20/04/2021",
+          "pages": "9"
+        },
+        "modelingNotes": [
+          "Install on the final relay bus connector. Included with NRGC-PN; inventory line is not an extra purchase quantity. No resistor pin model."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "objects": [
+    {
+      "uid": "ce33b8c4-b8b2-42ae-a39b-34f06a8312d6",
+      "kind": "device",
+      "designation": "IO1",
+      "type": "fixture:module"
+    }
+  ]
+}

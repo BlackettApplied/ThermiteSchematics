@@ -1,0 +1,41 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "2CSR272140R1164 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "pole1 / pole2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "pole1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "pole2"
+            }
+          ],
+          "conductors": ["W1", "W2", "W3", "W4"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

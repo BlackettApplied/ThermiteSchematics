@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "stahl-pilot:8575-13-200",
+    "manufacturer": "R. STAHL",
+    "orderNumber": "8575/13-200"
+  },
+  "type": {
+    "path": "types/8575-13-200.json",
+    "sha256": "8ad3ada84b82821528855aaf5867f91ee6604854cc9c367887758e751ca65834"
+  },
+  "research": {
+    "path": "research/8575-13-200.md",
+    "sha256": "7d0767853980ab0ac26f7da34c785d33af801c6670142d05519d2c5148f7c162"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["C.L1", "C.L2", "C.L3", "M.L1", "M.L2", "M.L3"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "afd6dd8ba5525048525fc53770627b0e1919a61d2a035ee45377d97dd72a4b4d",
+    "packet.request.json": "17c4e557d4e2822b714de36aabee4711e848f6aa07da8df064667cbacef992f8",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "c960b716059dd5cc5b46ab5faf68c1e6d5b8b3087b3856cc8ef60a709fd5a77c",
+    "system.json": "642329cc4d2e46538ff80d0ce77335c393b49e4308c66ee43636260b7621dd3e"
+  }
+}

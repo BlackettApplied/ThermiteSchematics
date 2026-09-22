@@ -1,0 +1,62 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "et200pro-fixture:boundary",
+      "description": "Generic test boundary; upstream engineering and field hardware unspecified",
+      "terminals": {
+        "+24V": {},
+        "0V": {},
+        "FE": {},
+        "IN": {},
+        "OUT": {},
+        "+": {},
+        "-": {}
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Test endpoint only. No manufacturer identity, internal continuity, protection or complete physical connector inventory is asserted."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "et200pro-fixture:power-breakout",
+      "description": "Synthetic five-pin power-harness breakout for explicit-conductor testing",
+      "terminals": {
+        "1": {},
+        "2": {},
+        "3": {},
+        "4": {},
+        "5": {}
+      },
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "7/8-inch female, 5-pin test harness",
+          "pins": {
+            "1": {
+              "terminal": "1"
+            },
+            "2": {
+              "terminal": "2"
+            },
+            "3": {
+              "terminal": "3"
+            },
+            "4": {
+              "terminal": "4"
+            },
+            "5": {
+              "terminal": "5"
+            }
+          }
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic fixture only. Five test positions are declared; no real harness manufacturer or installed-machine identity is claimed."
+      }
+    }
+  ]
+}

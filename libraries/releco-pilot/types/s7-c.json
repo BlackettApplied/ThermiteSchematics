@@ -1,0 +1,259 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:s7-c",
+      "description": "Releco S7-C / 8-pin socket for C7-series (QRC) two-pole changeover relays / screw terminal / 10 A (16 A 1-pole) 250 V / TH35 or back-panel mount / RC-suppressor compatible",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "S7-C",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco World of Relays (WoR) 3.2 - product catalog",
+          "revision": "WoR 3.2 (EN)",
+          "pages": "Physical/printed p.354: exact S7-C wiring and dimension drawings; p.380: S7-BB order row names S7-C; p.383: RC0047-100/AC250V order row names S7-C"
+        },
+        "modelingNotes": [
+          "WoR 3.2 p.354 identifies S7-C as an 8-pin C7 relay socket with screw terminals and RC-suppressor compatibility. No successor or neighboring socket inventory is substituted.",
+          "WoR 3.2 p.354 fig.1 assigns main socket ways 1=(12), 2=(22), 3=(14), 4=(24), 5=(11), 6=(21), 7=(A1), 8=(A2) for an inserted two-changeover relay. These are diagram function assignments, not a claim that every IEC label is printed identically on the body. Fig.2 visibly labels way 6 as B1, while fig.1 uses 6 (21); this is one physical way with application-dependent function notation, not an additional terminal.",
+          "The relay coil and changeover contact symbols in fig.1 belong to the inserted relay, not the bare socket. No coil, switched contact-transfer behavior or automatic contact connection is modeled. The installed relay variant and coil voltage remain outside this socket identity.",
+          "C.1–C.8 are authoring aliases for screw/wire-clamp endpoints; M.1–M.8 are their distinct relay mating contacts. Fig.2 identifies the 1–8 mating positions and corresponding terminal numbering; eight one-to-one C.n–M.n factory conductors remain the declared fixed links. C./M. prefixes are not physical markings.",
+          "Socket capability from p.354: rated load 10 A, or 16 A for one pole, at 250 V; operation −40 to +60 °C with +50 °C condition at 16 A. Preserve these conditions; no relay switching rating is transferred to the socket. No nominal_voltage, per-terminal current scalar or AC-only restriction is assigned.",
+          "Connection coverage is partial. Fig.1 explicitly shows three accessory receptacle symbols connected to way 8/A2 and one connected to way 7/A1, in addition to the main relay interface. Fig.2 identifies an S7-BB attachment; p.380 lists S7-BB as an A2 connector for S7-C, and p.383 lists the two-lead RC0047-100/AC250V suppressor for S7-C. The exact correspondence of all four schematic accessory contacts to physical openings, their markings and their division between suppressor and bridge interfaces is not unambiguously established. These accessory contacts are disclosed but not assigned invented terminal keys or fixed links.",
+          "An optional module or bridge need not be installed for its socket-side receptacles to belong to the bare socket. S7-BB may join A2 points across separate sockets only when the separate bridge is fitted. An RC suppressor is an impedance and does not create a permanent A1–A2 jumper. No optional accessory is assumed fitted.",
+          "No PE, shield, communication or additional bonding interface is identified in the opened exact S7-C drawings. Housing material is PA/PC; this is not used as proof of an exhaustive absent-interface inventory. CP-07B retaining clip and S9-G panel adapter are mechanical accessories, distinct from the electrical RC-suppressor and A2-bridge interfaces.",
+          "connectorPorts.MATE uses the fig.1 relay IEC function labels as descriptive keys for the eight main mating contacts. It does not describe the omitted accessory interfaces or create continuity; only explicit C.n–M.n project jumpers realize the documented factory paths. No terminal is universally required on this passive bare socket."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "The eight main clamp-to-relay ways are modeled as sixteen C./M. endpoints with eight one-to-one fixed paths. Exact S7-C fig.1 also depicts three accessory receptacles at 8/A2 and one at 7/A1 for accessory interfaces. Their full physical opening/marking correspondence is unresolved; suppressor and S7-BB bridge receptacles are not inventoried as separate model terminals. No optional accessory or relay is assumed fitted. C./M. are authoring aliases, and the diagram IEC function labels are application-dependent (fig.2 shows way 6 as B1)."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Screw/wire-clamp terminal 1, relay function (12) - pole-1 changeover NC",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.2": {
+          "description": "Screw/wire-clamp terminal 2, relay function (22) - pole-2 changeover NC",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Screw/wire-clamp terminal 3, relay function (14) - pole-1 changeover NO",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.4": {
+          "description": "Screw/wire-clamp terminal 4, relay function (24) - pole-2 changeover NO",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.5": {
+          "description": "Screw/wire-clamp terminal 5, relay function (11) - pole-1 common",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.6": {
+          "description": "Screw/wire-clamp terminal 6, relay function (21) - pole-2 common",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.7": {
+          "description": "Screw/wire-clamp terminal 7, relay function (A1) - coil",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "C.8": {
+          "description": "Screw/wire-clamp terminal 8, relay function (A2) - coil",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "M.1": {
+          "description": "Relay mating contact 1, relay function (12) - pole-1 changeover NC",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.2": {
+          "description": "Relay mating contact 2, relay function (22) - pole-2 changeover NC",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Relay mating contact 3, relay function (14) - pole-1 changeover NO",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.4": {
+          "description": "Relay mating contact 4, relay function (24) - pole-2 changeover NO",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.5": {
+          "description": "Relay mating contact 5, relay function (11) - pole-1 common",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.6": {
+          "description": "Relay mating contact 6, relay function (21) - pole-2 common",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.7": {
+          "description": "Relay mating contact 7, relay function (A1) - coil",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "M.8": {
+          "description": "Relay mating contact 8, relay function (A2) - coil",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "C.7": "terminal",
+        "C.8": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "M.7": "terminal",
+        "M.8": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Releco C7-series 8-pin relay (2 CO), plugs into S7-C",
+          "description": "Relay IEC function labels from WoR 3.2 p.354 fig.1 mapped to the eight main socket mating contacts. These are descriptive keys rather than additional physical terminals; way 6 is also marked B1 in fig.2. Accessory mating interfaces remain outside this partial model. Field-side continuity requires explicit C.n–M.n fixed conductors.",
+          "pins": {
+            "11": {
+              "terminal": "M.5",
+              "description": "pole-1 common (relay pin 5)"
+            },
+            "12": {
+              "terminal": "M.1",
+              "description": "pole-1 changeover NC (relay pin 1)"
+            },
+            "14": {
+              "terminal": "M.3",
+              "description": "pole-1 changeover NO (relay pin 3)"
+            },
+            "21": {
+              "terminal": "M.6",
+              "description": "pole-2 common (relay pin 6)"
+            },
+            "22": {
+              "terminal": "M.2",
+              "description": "pole-2 changeover NC (relay pin 2)"
+            },
+            "24": {
+              "terminal": "M.4",
+              "description": "pole-2 changeover NO (relay pin 4)"
+            },
+            "A1": {
+              "terminal": "M.7",
+              "description": "coil (relay pin 7)"
+            },
+            "A2": {
+              "terminal": "M.8",
+              "description": "coil (relay pin 8)"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "C.7",
+        "C.8",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "M.7",
+        "M.8"
+      ]
+    }
+  ]
+}

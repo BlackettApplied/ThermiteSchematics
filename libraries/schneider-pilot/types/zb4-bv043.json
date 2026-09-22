@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bv043",
+      "description": "Head for pilot light, Harmony XB4 metal, red, Ø22, plain lens, for body with integral/universal LED (head only, no light source or terminals)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BV043",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal - Control and signaling units (catalog)",
+          "revision": "October 2021, DIA5ED2121212EN, V13.0",
+          "pages": "Printed pp. 66-67 (physical PDF pp. 68-69): pilot lights with integral LED - complete-unit composition and Heads only selection; index p. 67"
+        },
+        "modelingNotes": [
+          "HEAD ONLY: red plain lens in a metal bezel for a Ø22 pilot light with integral (universal) LED. The catalog prints the code without the presentation hyphen as 'ZB4BV043'; the source/job spelling 'ZB4-BV043' is retained per instruction, the hyphen being a presentation artifact.",
+          "Heads-only table (printed p. 67): 'With plain lens' / 'For use with body comprising light source type = Integral LED only' / Red = ZB4BV043, weight 0.026 kg (0.057 lb). The head carries no light source.",
+          "Complete-unit composition (printed p. 66): XB4BVB4 = ZB4BVB4 + ZB4BV043 (24 V), XB4BVG4 = ZB4BVG4 + ZB4BV043 (110-120 V), XB4BVM4 = ZB4BVM4 + ZB4BV043 (230-240 V). The same red head serves every supply voltage, so it has no electrical rating or terminals of its own; the LED and its screw-clamp supply terminals belong to the separately ordered body.",
+          "Mechanical scope only: zero electrical terminals, no contact block, no LED/lamp, no supply, return, shield, communication or PE terminal. Contacts/LED from the complete assembly are intentionally NOT imported into this head.",
+          "The metal bezel's earthing/bonding path through the panel cut-out and body is not documented as an electrical terminal on the head; no bonding pin is asserted. Coverage is 'partial' for this reason and because the light-source body is a separate order.",
+          "Environmental figures quoted by distributors (IP66 / NEMA 4X-13, -25...+70 C) describe the assembled sealed unit, not a switching or supply rating; no rating is assigned to a bare head."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Bare pilot-light head with no electrical terminals. The integral/universal LED body (ZB4BVB4/BVG4/BVM4) and its screw-clamp supply terminals are a separate order and are excluded. The metal bezel's bonding path through the panel/body is undocumented and modeled as no terminal, not a proven bond."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "BODY": {
+          "connector": "Snap-fit onto Ø22 pilot-light body comprising integral/universal LED (e.g. ZB4BVB4/BVG4/BVM4)",
+          "description": "Mechanical attachment and red plain lens only; no electrical pins on the head."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85658",
+      "description": "MDD 050-24/+-10V isolated DC/DC converter, 24 V DC to +/-10 V DC",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85658",
+        "document": {
+          "url": "https://shop.murrelektronik.com/index.php?anid=000000000000085658_1&cl=details&fnc=outputSpecSheet&lang=1",
+          "title": "Product-PDF for Article 85658",
+          "revision": "2026-09-13 (downloaded PDF footer)",
+          "pages": "1 identity and circuit diagram; 2 ratings; 3 connection inventory"
+        },
+        "modelingNotes": [
+          "Murr is the required historical manufacturer label; evidence is Murrelektronik article 85658.",
+          "Rated input 24 V DC; output +/-10 V DC, maximum 0.25 A per channel, 5 W total; operation 0 to 50 degrees C without condensation. No whole-device nominal voltage is assigned.",
+          "Terminal keys are functional authoring aliases preserving diagram markings. Repeated suffixes refer to diagram order, not engraved pin numbers. Input return is 0 V in diagram and minus in connection table.",
+          "Factory links: IN.+1 to IN.+2; IN.0V1 to IN.0V2; OUT.0a to OUT.0b. These require explicit links in instantiated wiring; function metadata creates no continuity.",
+          "Input and output remain galvanically separated. Fuse, diode and converter paths are not fixed links. No rail bonding path is asserted.",
+          "No individual clamp is universally required: repeated input clamps are interchangeable; output clamp use depends on application. Supply requires both input polarity groups in operation.",
+          "Short-circuit and overload protected; restart by removing supply. 4 kV is the input/output insulation test voltage.",
+          "Manufacturer table labels 0.85 A as AC input current despite DC product identity, and gives an unexplained 8.55 to 10.5 V output interval. Neither is converted into terminal rating metadata."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Eight screw terminals supported by the exact product electrical diagram and two four-pole connection inventories. No additional PE, shield, signal or communication connection is shown. Functional aliases avoid asserting physical numbered orientation."
+      },
+      "terminals": {
+        "IN.+1": {
+          "role": "power-input",
+          "description": "Input +, first of two diagram clamps; authoring alias.",
+          "required": false
+        },
+        "IN.+2": {
+          "role": "power-input",
+          "description": "Input +, second diagram clamp; factory linked to IN.+1.",
+          "required": false
+        },
+        "IN.0V1": {
+          "role": "power-return",
+          "description": "Input 0 V, first diagram clamp; table uses minus marking.",
+          "required": false
+        },
+        "IN.0V2": {
+          "role": "power-return",
+          "description": "Input 0 V, second diagram clamp; factory linked to IN.0V1.",
+          "required": false
+        },
+        "OUT.+": {
+          "role": "power-output",
+          "description": "Output +10 V relative to output zero; + marking.",
+          "required": false
+        },
+        "OUT.0a": {
+          "role": "power-return",
+          "description": "Upper output 0 in circuit diagram; alias a is not a physical number.",
+          "required": false
+        },
+        "OUT.0b": {
+          "role": "power-return",
+          "description": "Lower output 0 in circuit diagram; factory linked to OUT.0a.",
+          "required": false
+        },
+        "OUT.-": {
+          "role": "power-output",
+          "description": "Output -10 V relative to output zero; minus marking.",
+          "required": false
+        }
+      },
+      "terminalOrder": [
+        "IN.+1",
+        "IN.+2",
+        "IN.0V1",
+        "IN.0V2",
+        "OUT.+",
+        "OUT.0a",
+        "OUT.0b",
+        "OUT.-"
+      ],
+      "functions": {
+        "input": {
+          "kind": "load",
+          "terminals": ["IN.+1", "IN.0V1"]
+        },
+        "input_positive_duplicate": {
+          "kind": "bus",
+          "terminals": ["IN.+2"]
+        },
+        "input_return_duplicate": {
+          "kind": "bus",
+          "terminals": ["IN.0V2"]
+        },
+        "positive_output": {
+          "kind": "source",
+          "terminals": ["OUT.+", "OUT.0a"]
+        },
+        "negative_output": {
+          "kind": "source",
+          "terminals": ["OUT.0b", "OUT.-"]
+        }
+      },
+      "circuitSymbols": {
+        "input": "load",
+        "input_positive_duplicate": "terminal",
+        "input_return_duplicate": "terminal",
+        "positive_output": "source",
+        "negative_output": "source"
+      }
+    }
+  ]
+}

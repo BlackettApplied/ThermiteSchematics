@@ -1,0 +1,10 @@
+{
+  "uid": "22345678-1234-4234-9234-123456789abc",
+  "kind": "wire",
+  "designation": "W1",
+  "endpoints": [
+    { "device": "K1", "terminal": "A1" },
+    { "device": "K2", "terminal": "A1" },
+    { "device": "K3", "terminal": "A1" }
+  ]
+}

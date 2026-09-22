@@ -1,0 +1,23 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:pushbutton-nc",
+      "description": "Normally closed momentary pushbutton for a stop circuit",
+      "terminals": {
+        "11": { "role": "nc_contact" },
+        "12": { "role": "nc_contact" }
+      },
+      "functions": {
+        "contact11": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "iec:pushbutton-nc"
+    }
+  ]
+}

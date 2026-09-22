@@ -1,0 +1,130 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lrd-10",
+      "description": "TeSys LRD10 differential thermal overload relay, 4–6 A class 10A, three unswitched series heater elements and 1 NO + 1 NC auxiliary contacts",
+      "category": "component",
+      "symbol": "thermite:overload",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LRD-10",
+        "document": {
+          "url": "https://www.farnell.com/datasheets/66011.pdf",
+          "title": "Telemecanique / Schneider Electric — TeSys protection components, Model d thermal overload relays (LRD-01…35)",
+          "revision": "Catalogue section 2.3, pp. 2/108–2/119 (undated distributor mirror)",
+          "pages": "Printed 2/108 (controls), 2/112 / physical 5 (exact LRD-10 row), 2/119 / physical 12 (LRD scheme)"
+        },
+        "modelingNotes": [
+          "Exact manufacturer order LRD10; source order LRD-10 is retained. The historical Schneider/Telemecanique catalogue prints LRD-10 itself in the 4–6 A row, printed 2/112 / physical 5. No successor or LR9 electronic relay is substituted.",
+          "The applicable LRD scheme at printed 2/119 / physical 12 uses 1–2, 3–4, 5–6 for three separate series thermal sensing elements, plus 95–96 NC and 97–98 NO. It contains no switching gap in a heater path. Trip acts on the auxiliary contacts; the overload relay does not interrupt its main paths.",
+          "Each power pair is a two-terminal load function with a heater mark. The real heater conducts through its series impedance. It is not an ideal jumper: fixedLinks is empty and its endpoints remain separate compiler nets. The model does not simulate series impedance, current flow, temperature, trip timing, reset memory or control state.",
+          "Ten electrical interfaces of the bare device are documented: three protruding contactor-facing pins (scheme 1, 3, 5), three load screw clamps (scheme 2, 4, 6; exact product photo markings 2T1, 4T2, 6T3), and four auxiliary clamps 95 NC, 96 NC, 97 NO, 98 NO. Numeric model keys retain the applicable scheme. L1/L2/L3 and slash forms are functional aliases, not verified inscriptions on the upper pins. No installed left/right orientation is asserted.",
+          "Physical corroboration: exact Schneider LRD10 sheet dated 2023-04-13, pp. 1–2, https://docs.rs-online.com/764c/0900766b816a57ad.pdf ; manufacturer LRD01–35 instruction PHA4929101-08 (02/2024), pp. 1–2, https://download.se.com/files?p_Doc_Ref=PHA4929101&p_File_Name=TeSys-LRDooo-OLR-Instruction-Sheet-PHA4929101-08.pdf&p_enDocType=Instruction+sheet. The latter shows the three input pins entering contactor clamps. Two allowed conductors in one auxiliary clamp do not create duplicate terminal identities.",
+          "95–96 is closed in the reset/nontripped state and opens on trip. 97–98 is open in that state and closes on trip. TEST simulates trip and operates both auxiliary contacts. STOP opens only 95–96 and does not operate 97–98. RESET and manual/automatic selection act mechanically; they are not additional electrical terminals. The 2024 instruction restricts trip test to manual position and cautions against the shown operation while tripped.",
+          "The manufacturer 2009 TeSys D guide independently confirms exact LRD10 at printed57 / physical60, the scheme at printed66 / physical69, and TEST/STOP behavior at printed51 / physical 54: https://download.schneider-electric.com/files?p_Doc_Ref=S8500CT0901FPR0&p_File_Name=TeSysDtechGuide+S8500CT0901FPR0.pdf&p_enDocType=Catalog.",
+          "Ratings are conditional notes: thermal adjustment 4–6 A, class 10A; power capability 690 V AC 0–400 Hz, Ui 690 V IEC / 600 V UL-CSA, Uimp 6 kV; auxiliary Ith 5 A, 3 A at 120 V AC-15 and 0.22 A at 125 V DC-13. A settable range is not an installed setting. No scalar nominal voltage, current or AC-only auxiliary rating is assigned.",
+          "Bare relay only: no PE, coil, suppressor or communication terminal is documented. Contactor and installation bonding are separate. LAD7C1/LAD7C2 control prewiring and independent-mount terminal adapters are separately ordered accessories and add no internal links here. All terminals are application-dependent; no universal required-terminal policy is imposed."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Ten documented electrical connection points of the bare LRD10: three contactor-facing pins, three load clamps and four auxiliary clamps. Numeric power keys identify manufacturer scheme endpoints; upper-pin L aliases are not claimed as physical inscriptions. The three unswitched series heaters are represented by load/heater functions without ideal net-union links. Static function coverage does not simulate conduction, trip or reset behavior. Optional adapters and prewiring accessories are outside this device."
+      },
+      "terminals": {
+        "1": {
+          "description": "Series heater 1 contactor-facing input pin; manufacturer scheme 1; L1 is a functional alias",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2": {
+          "description": "Series heater 1 load screw clamp; manufacturer scheme 2; physical photo 2T1",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3": {
+          "description": "Series heater 2 contactor-facing input pin; manufacturer scheme 3; L2 is a functional alias",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "Series heater 2 load screw clamp; manufacturer scheme 4; physical photo 4T2",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5": {
+          "description": "Series heater 3 contactor-facing input pin; manufacturer scheme 5; L3 is a functional alias",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6": {
+          "description": "Series heater 3 load screw clamp; manufacturer scheme 6; physical photo 6T3",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "95": {
+          "description": "Auxiliary N/C signalling contact terminal 95 (opens on trip)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "96": {
+          "description": "Auxiliary N/C signalling contact terminal 96 (opens on trip)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "97": {
+          "description": "Auxiliary N/O signalling contact terminal 97 (closes on trip)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "98": {
+          "description": "Auxiliary N/O signalling contact terminal 98 (closes on trip)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "load",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "load",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "load",
+          "terminals": ["5", "6"]
+        },
+        "aux_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["95", "96"]
+        },
+        "aux_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["97", "98"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "heater",
+        "pole2": "heater",
+        "pole3": "heater",
+        "aux_nc": "contact-nc",
+        "aux_no": "contact-no"
+      },
+      "terminalOrder": ["1", "3", "5", "2", "4", "6", "95", "96", "97", "98"]
+    }
+  ]
+}

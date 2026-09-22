@@ -1,0 +1,21 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "33a15867-296b-40e4-a56b-15282f131b4c",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc",
+      "description": "480 VAC line-to-line to 24 VDC control power supply",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+      "kind": "device",
+      "designation": "PLC1",
+      "type": "core:plc-compact",
+      "description": "Motor starter control PLC",
+      "location": "MAIN-PANEL"
+    }
+  ]
+}

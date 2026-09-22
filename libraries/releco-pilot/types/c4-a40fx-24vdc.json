@@ -1,0 +1,242 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:c4-a40fx-24vdc",
+      "description": "Releco C4-A40FX/24VDC bare 4-pole changeover relay, AgNi, polarized 24 VDC coil with LED and protection diodes",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "C4-A40FX/24VDC",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco World of Relays",
+          "revision": "WoR 3.2",
+          "pages": "55 (C4-A4x selection, figures 1–4); 11 (C2–C9 FX circuit); physical PDF pages equal printed pages"
+        },
+        "modelingNotes": [
+          "Exact source spelling C4-A40FX/24VDC is retained. Manufacturer page 55 specifies C4-A4xFX/DC...V, x=0 for AgNi, with 24 V selected: C4-A40FX/DC24V.",
+          "Bare relay only: fourteen Faston.110 pins. S4-J and S4-P sockets are separately listed accessories, excluded from this type. Physical pin keys are used; IEC function labels are documented in terminal descriptions and are not additional terminals.",
+          "Page 55 figure 1 proves pin-to-function mapping; figure 4 shows the pin-face arrangement. Figure 1 is a functional schematic without a viewing direction; no left/right installation orientation is assigned. The pin-face view is interpreted as looking toward the projecting pins, not through a socket.",
+          "FX contains an LED, series polarity-protection diode and freewheeling diode (page 11 C2–C9 FX diagram). Pin 13=A1 positive and pin 14=A2 negative. These internal components are abstracted by the coil function; the supported coil symbol does not depict their semiconductor topology.",
+          "Four changeover poles are represented as paired NC and NO functions sharing each physical common. Coil actuation applies to all eight contact functions; neither contact state nor coil/LED/diode conduction creates a fixed net link.",
+          "Coil pins 13 and 14 are required by library policy for an operational relay. Contact pins are application-dependent. No separate PE, shield, communication or accessory terminals belong to this bare relay.",
+          "Coil nominal 24 VDC; operating range 0.8–1.1 UN (19.2–26.4 V); DC power 1.4 W; 24 VDC coil table gives 414 ohm and 58 mA. Contact capabilities are conditional: 10 A at 250 V AC-1 or 30 V DC-1; 2500 VA AC; inrush 30 A for 20 ms; recommended minimum 10 mA at 5 V. Higher DC voltages and inductive loads require page 55 figure 3; no universal contact voltage/current scalar is assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All fourteen bare-relay Faston pins documented in page 55 figures 1 and 4 are inventoried. Socket clamps and mating contacts are separate accessories. Integrated FX circuitry uses only coil pins 13 and 14."
+      },
+      "terminals": {
+        "1": {
+          "role": "control",
+          "description": "Physical relay pin 1; pole 1 normally closed; IEC function label 12.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2": {
+          "role": "control",
+          "description": "Physical relay pin 2; pole 1 normally open; IEC function label 14.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3": {
+          "role": "control",
+          "description": "Physical relay pin 3; pole 1 common; IEC function label 11.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "role": "control",
+          "description": "Physical relay pin 4; pole 2 normally closed; IEC function label 22.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5": {
+          "role": "control",
+          "description": "Physical relay pin 5; pole 2 normally open; IEC function label 24.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6": {
+          "role": "control",
+          "description": "Physical relay pin 6; pole 2 common; IEC function label 21.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "7": {
+          "role": "control",
+          "description": "Physical relay pin 7; pole 3 normally closed; IEC function label 32.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8": {
+          "role": "control",
+          "description": "Physical relay pin 8; pole 3 normally open; IEC function label 34.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "9": {
+          "role": "control",
+          "description": "Physical relay pin 9; pole 3 common; IEC function label 31.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "10": {
+          "role": "control",
+          "description": "Physical relay pin 10; pole 4 normally closed; IEC function label 42.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "11": {
+          "role": "control",
+          "description": "Physical relay pin 11; pole 4 normally open; IEC function label 44.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "12": {
+          "role": "control",
+          "description": "Physical relay pin 12; pole 4 common; IEC function label 41.",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "13": {
+          "role": "control",
+          "description": "Physical relay pin 13; coil A1, positive for FX.",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "14": {
+          "role": "control",
+          "description": "Physical relay pin 14; coil A2, negative for FX.",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["13", "14"]
+        },
+        "p1_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["3", "1"]
+        },
+        "p1_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "2"]
+        },
+        "p2_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["6", "4"]
+        },
+        "p2_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["6", "5"]
+        },
+        "p3_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["9", "7"]
+        },
+        "p3_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["9", "8"]
+        },
+        "p4_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["12", "10"]
+        },
+        "p4_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["12", "11"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p1_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p1_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p2_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p2_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p3_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p3_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p4_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "p4_no"
+        }
+      ],
+      "circuitSymbols": {
+        "coil": "coil",
+        "p1_nc": "contact-nc",
+        "p1_no": "contact-no",
+        "p2_nc": "contact-nc",
+        "p2_no": "contact-no",
+        "p3_nc": "contact-nc",
+        "p3_no": "contact-no",
+        "p4_nc": "contact-nc",
+        "p4_no": "contact-no"
+      },
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14"
+      ]
+    }
+  ]
+}

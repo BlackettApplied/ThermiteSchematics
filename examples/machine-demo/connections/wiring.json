@@ -1,0 +1,1157 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "e4d85ddf-87a0-5da7-b7e4-be1ed8eef737",
+      "kind": "wire",
+      "designation": "W-CTL-005",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "X12.3"
+        },
+        {
+          "device": "PB1",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "label": "PLC1-DO0-STOP",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "e43eb73d-5e34-5d73-a3ee-d966138de446",
+      "kind": "wire",
+      "designation": "W-CTL-006",
+      "endpoints": [
+        {
+          "device": "PB1",
+          "terminal": "12"
+        },
+        {
+          "device": "OL1",
+          "terminal": "95"
+        }
+      ],
+      "properties": {
+        "label": "STOP-OL1-NC",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "2f4b71a9-3736-58cb-a2d8-7c8842093ae5",
+      "kind": "wire",
+      "designation": "W-CTL-007",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "96"
+        },
+        {
+          "device": "K1",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "label": "OL1-NC-K1-A1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "6fdf711a-95ad-5cba-940f-ed2352fe3850",
+      "kind": "wire",
+      "designation": "W-CTL-008",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "A2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "-"
+        }
+      ],
+      "properties": {
+        "label": "K1-A2-0V",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "2f33044e-f488-59a2-8d99-1b05c62c7f84",
+      "kind": "wire",
+      "designation": "W-CTL-001",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X10.1"
+        }
+      ],
+      "properties": {
+        "label": "+24V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "56db4999-ed69-5ab1-8152-3ddb591a1073",
+      "kind": "wire",
+      "designation": "W-CTL-002",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X10.2"
+        }
+      ],
+      "properties": {
+        "label": "0V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "0bd6530b-3ca4-5ab2-aea2-170b313d3b7f",
+      "kind": "wire",
+      "designation": "W-CTL-003",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "TB1",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "+24V-PS1-TB1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "4dc6715f-7050-57f9-812e-03c33abdbd23",
+      "kind": "wire",
+      "designation": "W-CTL-004",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "TB1",
+          "terminal": "4"
+        }
+      ],
+      "properties": {
+        "label": "0V-PS1-TB1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "15fe2eef-fece-5b8a-a81f-cea3f0bf1d22",
+      "kind": "wire",
+      "designation": "W-FLD-001",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "3"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X10.7"
+        }
+      ],
+      "properties": {
+        "label": "LS1-RETURN-PLC1-DI0",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "e03d9e91-d9b9-5198-a54f-e22f92570191",
+      "kind": "wire",
+      "designation": "W-FLD-002",
+      "endpoints": [
+        {
+          "device": "JB1",
+          "terminal": "X1.1"
+        },
+        {
+          "device": "LS1",
+          "terminal": "13"
+        }
+      ],
+      "properties": {
+        "label": "+24V-JB1-LS1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "5a9b0f1c-80d5-54cc-9e43-61ff5694f198",
+      "kind": "wire",
+      "designation": "W-FLD-003",
+      "endpoints": [
+        {
+          "device": "LS1",
+          "terminal": "14"
+        },
+        {
+          "device": "JB1",
+          "terminal": "X1.2"
+        }
+      ],
+      "properties": {
+        "label": "LS1-SWITCHED-RETURN",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "6128fb52-2dce-5aeb-aaa8-0b4cf4766da6",
+      "kind": "jumper",
+      "designation": "JP1",
+      "description": "Distributes +24 VDC from TB1.1 to the LS1 cable feed at TB1.2",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "1"
+        },
+        {
+          "device": "TB1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "uid": "5b6a590c-2539-5bb4-9835-eda6b9b8dcb6",
+      "kind": "wire",
+      "designation": "W-PWR-001",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L1"
+        },
+        {
+          "device": "CB1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "L1-SRC-CB1",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "06544688-44d6-5c2d-9072-f433c9a0ecdb",
+      "kind": "wire",
+      "designation": "W-PWR-002",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L2"
+        },
+        {
+          "device": "CB1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "L2-SRC-CB1",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "1a60b039-08eb-5d82-b832-eb19897b4d7b",
+      "kind": "wire",
+      "designation": "W-PWR-003",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L3"
+        },
+        {
+          "device": "CB1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "L3-SRC-CB1",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "644ab432-7e6c-570c-a170-8a6dcfd01f44",
+      "kind": "wire",
+      "designation": "W-PWR-004",
+      "endpoints": [
+        {
+          "device": "CB1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "K1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "L1-CB1-K1",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "d25f05a5-7af0-5d66-9d5f-63b84c3c98a5",
+      "kind": "wire",
+      "designation": "W-PWR-005",
+      "endpoints": [
+        {
+          "device": "CB1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "K1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "L2-CB1-K1",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "9fa66108-fa0d-506c-9089-ea2c07216389",
+      "kind": "wire",
+      "designation": "W-PWR-006",
+      "endpoints": [
+        {
+          "device": "CB1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "K1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "L3-CB1-K1",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "2145308c-904d-54f2-80b9-39659a40cb51",
+      "kind": "wire",
+      "designation": "W-PWR-014",
+      "endpoints": [
+        {
+          "device": "CB1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "PS1",
+          "terminal": "L"
+        }
+      ],
+      "properties": {
+        "label": "L1-CB1-PS1",
+        "size": "14AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "cf320244-9a11-50f6-ba34-784eba7b6d9b",
+      "kind": "wire",
+      "designation": "W-PWR-015",
+      "endpoints": [
+        {
+          "device": "CB1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "N"
+        }
+      ],
+      "properties": {
+        "label": "L2-CB1-PS1",
+        "size": "14AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "574e217f-de3b-51d1-8727-4f61811e5f01",
+      "kind": "wire",
+      "designation": "W-PWR-007",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "OL1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "L1-K1-OL1",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "2b063b2c-5317-5a7b-8263-2562aa14c93a",
+      "kind": "wire",
+      "designation": "W-PWR-008",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "OL1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "L2-K1-OL1",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "8342ab34-6c54-5f36-83c2-06616c7cef13",
+      "kind": "wire",
+      "designation": "W-PWR-009",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "OL1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "L3-K1-OL1",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "848edee4-f5c0-5363-829c-86a3e69249e1",
+      "kind": "wire",
+      "designation": "W-PWR-010",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "M1",
+          "terminal": "U"
+        }
+      ],
+      "properties": {
+        "label": "L1-OL1-M1-U",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "94e505d9-353e-5bf1-a25a-d77fad35fd26",
+      "kind": "wire",
+      "designation": "W-PWR-011",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "M1",
+          "terminal": "V"
+        }
+      ],
+      "properties": {
+        "label": "L2-OL1-M1-V",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "459aa89c-76bb-5d93-a745-f6c3aba186ed",
+      "kind": "wire",
+      "designation": "W-PWR-012",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "M1",
+          "terminal": "W"
+        }
+      ],
+      "properties": {
+        "label": "L3-OL1-M1-W",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "436002bd-211e-515a-a885-7bf17ad1d6e7",
+      "kind": "wire",
+      "designation": "W-PWR-013",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "PE"
+        },
+        {
+          "device": "M1",
+          "terminal": "PE"
+        }
+      ],
+      "properties": {
+        "label": "PE-SRC-M1",
+        "size": "10AWG",
+        "color": "green/yellow"
+      }
+    },
+    {
+      "uid": "16fa5868-b3a7-56b6-a677-740c666fb3d5",
+      "kind": "relation",
+      "designation": "REL-PROTECTS-001",
+      "relation": "protects",
+      "from": {
+        "device": "CB1"
+      },
+      "to": {
+        "device": "M1"
+      },
+      "description": "CB1 provides branch protection for M1"
+    },
+    {
+      "uid": "5a30a670-2652-56b2-8958-ee8afe05342d",
+      "kind": "relation",
+      "designation": "REL-CONTROLS-001",
+      "relation": "controls",
+      "from": {
+        "device": "PLC1"
+      },
+      "to": {
+        "device": "K1"
+      },
+      "description": "PLC1 output controls the K1 coil through the stop and overload chain"
+    },
+    {
+      "uid": "93d78bf2-f4ad-53e3-9b46-c4bc25353a66",
+      "kind": "wire",
+      "designation": "W-CPU-X12.1",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X12.1"
+        }
+      ],
+      "properties": {
+        "label": "W-CPU-X12.1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "26f21eeb-e532-5789-9c9e-a0b9a185ec68",
+      "kind": "wire",
+      "designation": "W-CPU-X12.2",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X12.2"
+        }
+      ],
+      "properties": {
+        "label": "W-CPU-X12.2",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "3ced5bdb-341a-51ad-ba5d-469e0b87ebf5",
+      "kind": "wire",
+      "designation": "W-CPU-X10.6",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X10.6"
+        }
+      ],
+      "properties": {
+        "label": "W-CPU-X10.6",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "4537c61a-1be0-58f3-aa05-3daa669a7f25",
+      "kind": "jumper",
+      "designation": "JP-AI-X11.2",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "X11.1"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X11.2"
+        }
+      ]
+    },
+    {
+      "uid": "eec95bcb-e03b-5d68-9719-2e45fc5b8031",
+      "kind": "jumper",
+      "designation": "JP-AI-X11.3",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "X11.1"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "X11.3"
+        }
+      ]
+    },
+    {
+      "uid": "ee72c6df-094e-56a9-b95b-5a3d5e9c0e35",
+      "kind": "wire",
+      "designation": "W-PWR-001-M2",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L1"
+        },
+        {
+          "device": "CB2",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-001-M2",
+        "size": "18AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "7c095789-52b4-579b-a301-e8f6fdbef3c2",
+      "kind": "wire",
+      "designation": "W-PWR-002-M2",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L2"
+        },
+        {
+          "device": "CB2",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-002-M2",
+        "size": "18AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "3921ff8b-f536-5bfd-bcc3-a34a749464a3",
+      "kind": "wire",
+      "designation": "W-PWR-003-M2",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L3"
+        },
+        {
+          "device": "CB2",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-003-M2",
+        "size": "18AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "2930173f-d728-5f87-95da-880eba26b0e5",
+      "kind": "wire",
+      "designation": "W-PWR-004-M2",
+      "endpoints": [
+        {
+          "device": "CB2",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "K2",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-004-M2",
+        "size": "18AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "212d1ae5-b0a6-500f-827c-6d718a7da91a",
+      "kind": "wire",
+      "designation": "W-PWR-005-M2",
+      "endpoints": [
+        {
+          "device": "CB2",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "K2",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-005-M2",
+        "size": "18AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "e0851a54-0d14-5ee3-b2c4-3359b18ff275",
+      "kind": "wire",
+      "designation": "W-PWR-006-M2",
+      "endpoints": [
+        {
+          "device": "CB2",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "K2",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-006-M2",
+        "size": "18AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "450595d4-e2bb-501e-99fa-6087854a97e0",
+      "kind": "wire",
+      "designation": "W-PWR-007-M2",
+      "endpoints": [
+        {
+          "device": "K2",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "OL2",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-007-M2",
+        "size": "18AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "5fa351bc-9cb6-5dfe-bb0d-5b98cf972602",
+      "kind": "wire",
+      "designation": "W-PWR-008-M2",
+      "endpoints": [
+        {
+          "device": "K2",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "OL2",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-008-M2",
+        "size": "18AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "918387b0-7da6-5015-a3d1-7734a9c99a5b",
+      "kind": "wire",
+      "designation": "W-PWR-009-M2",
+      "endpoints": [
+        {
+          "device": "K2",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "OL2",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-009-M2",
+        "size": "18AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "4edeecf8-9e5e-5ce8-970b-cbbcc67b3e12",
+      "kind": "wire",
+      "designation": "W-PWR-010-M2",
+      "endpoints": [
+        {
+          "device": "OL2",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "M2",
+          "terminal": "U"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-010-M2",
+        "size": "18AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "dff6a2fa-4e0e-5bb5-bf74-bd139d3b586b",
+      "kind": "wire",
+      "designation": "W-PWR-011-M2",
+      "endpoints": [
+        {
+          "device": "OL2",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "M2",
+          "terminal": "V"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-011-M2",
+        "size": "18AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "1a781057-b1f8-51bd-b57c-c9b4141bed99",
+      "kind": "wire",
+      "designation": "W-PWR-012-M2",
+      "endpoints": [
+        {
+          "device": "OL2",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "M2",
+          "terminal": "W"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-012-M2",
+        "size": "18AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "6e3c1df1-8dc7-5359-873f-19be00984c9b",
+      "kind": "wire",
+      "designation": "W-PWR-013-M2",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "PE"
+        },
+        {
+          "device": "M2",
+          "terminal": "PE"
+        }
+      ],
+      "properties": {
+        "label": "W-PWR-013-M2",
+        "size": "18AWG",
+        "color": "green/yellow"
+      }
+    },
+    {
+      "uid": "3d9a640e-c500-55bb-a523-761efe604cc4",
+      "kind": "wire",
+      "designation": "W-CTL-005-M2",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "X12.4"
+        },
+        {
+          "device": "PB2",
+          "terminal": "11"
+        }
+      ],
+      "properties": {
+        "label": "W-CTL-005-M2",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "441c9af6-0445-5de9-8d57-0d6febc47eac",
+      "kind": "wire",
+      "designation": "W-CTL-006-M2",
+      "endpoints": [
+        {
+          "device": "PB2",
+          "terminal": "12"
+        },
+        {
+          "device": "OL2",
+          "terminal": "95"
+        }
+      ],
+      "properties": {
+        "label": "W-CTL-006-M2",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "8459e308-fa51-5dea-9c1e-55d4ac387bf9",
+      "kind": "wire",
+      "designation": "W-CTL-007-M2",
+      "endpoints": [
+        {
+          "device": "OL2",
+          "terminal": "96"
+        },
+        {
+          "device": "K2",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "label": "W-CTL-007-M2",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389",
+      "kind": "wire",
+      "designation": "W-CTL-008-M2",
+      "endpoints": [
+        {
+          "device": "K2",
+          "terminal": "A2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "-"
+        }
+      ],
+      "properties": {
+        "label": "W-CTL-008-M2",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "50df354c-858e-50e5-98b5-f59908037c5e",
+      "kind": "wire",
+      "designation": "W-RIO1-L+",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "RIO1",
+          "terminal": "L+"
+        }
+      ],
+      "properties": {
+        "label": "W-RIO1-L+",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "4a08f279-bcc6-55ad-9145-a2225a243b84",
+      "kind": "wire",
+      "designation": "W-RIO1-M",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "RIO1",
+          "terminal": "M"
+        }
+      ],
+      "properties": {
+        "label": "W-RIO1-M",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "15384f20-a51d-5a02-a201-5c95996ef727",
+      "kind": "wire",
+      "designation": "W-RIO2-L+",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "RIO2",
+          "terminal": "L+"
+        }
+      ],
+      "properties": {
+        "label": "W-RIO2-L+",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "e0b4feda-237b-5bf0-847e-15e9c4353886",
+      "kind": "wire",
+      "designation": "W-RIO2-M",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "RIO2",
+          "terminal": "M"
+        }
+      ],
+      "properties": {
+        "label": "W-RIO2-M",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "f63615ee-14c8-5997-8d3f-ca29b478cae9",
+      "kind": "wire",
+      "designation": "W-LS2-SUPPLY",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "LS2",
+          "terminal": "13"
+        }
+      ],
+      "properties": {
+        "label": "W-LS2-SUPPLY",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "dae8c7b0-f68f-5923-b138-b314c128441b",
+      "kind": "wire",
+      "designation": "W-LS2-INPUT",
+      "endpoints": [
+        {
+          "device": "LS2",
+          "terminal": "14"
+        },
+        {
+          "device": "RIO1",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "W-LS2-INPUT",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "325a0377-f317-5e42-9c4c-eb2b9300a05f",
+      "kind": "wire",
+      "designation": "W-LS3-SUPPLY",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "LS3",
+          "terminal": "13"
+        }
+      ],
+      "properties": {
+        "label": "W-LS3-SUPPLY",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "f7cfc2b7-a396-5cb2-afe5-acbee87775a5",
+      "kind": "wire",
+      "designation": "W-LS3-INPUT",
+      "endpoints": [
+        {
+          "device": "LS3",
+          "terminal": "14"
+        },
+        {
+          "device": "RIO1",
+          "terminal": "2"
+        }
+      ],
+      "properties": {
+        "label": "W-LS3-INPUT",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    }
+  ]
+}

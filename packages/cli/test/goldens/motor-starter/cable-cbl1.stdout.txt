@@ -1,0 +1,70 @@
+cable CBL1
+  uid c4c1bfdf-567a-4f6c-9e08-147342061afe
+  description "LS1 field cable; conductor 2- is a terminated spare"
+  aliases:
+    (none)
+  type core:cable-2pair-shielded
+  cable-type core:cable-2pair-shielded
+  shield true
+  construction {"conductor_material":"stranded copper","jacket_material":"PVC","outer_diameter":"8 mm","shield_construction":"overall foil shield with drain wire"}
+  conductors:
+    conductor CBL1.1+ id={"cableUid":"c4c1bfdf-567a-4f6c-9e08-147342061afe","conductorId":"1+"}
+      color black
+      size 18AWG
+      net net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a
+      potentials:
+        potential +24VDC uid=46be3efd-17b7-43ee-bb9d-a019c4fb2cdd electrical={"nominal_voltage":24,"polarity":"positive","voltage_type":"DC"}
+      endpoints:
+        terminal JB1.X1.1
+          id {"deviceUid":"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88","terminalKey":"X1.1"}
+          device-designation JB1
+          role field_terminal
+        terminal TB1.2
+          id {"deviceUid":"10418711-330f-4482-8dab-a274923215cb","terminalKey":"2"}
+          device-designation TB1
+          role terminal_point
+    conductor CBL1.1- id={"cableUid":"c4c1bfdf-567a-4f6c-9e08-147342061afe","conductorId":"1-"}
+      color white
+      size 18AWG
+      net net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9
+      potentials:
+        (none)
+      endpoints:
+        terminal JB1.X1.2
+          id {"deviceUid":"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88","terminalKey":"X1.2"}
+          device-designation JB1
+          role field_terminal
+        terminal TB1.3
+          id {"deviceUid":"10418711-330f-4482-8dab-a274923215cb","terminalKey":"3"}
+          device-designation TB1
+          role terminal_point
+    conductor CBL1.2+ id={"cableUid":"c4c1bfdf-567a-4f6c-9e08-147342061afe","conductorId":"2+"}
+      color red
+      size 18AWG
+      net net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d
+      potentials:
+        potential 0VDC uid=aaccbc22-3208-42dd-ae26-54dce0250f8d electrical={"nominal_voltage":0,"polarity":"return","voltage_type":"DC"}
+      endpoints:
+        terminal JB1.X1.3
+          id {"deviceUid":"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88","terminalKey":"X1.3"}
+          device-designation JB1
+          role field_terminal
+        terminal TB1.4
+          id {"deviceUid":"10418711-330f-4482-8dab-a274923215cb","terminalKey":"4"}
+          device-designation TB1
+          role terminal_point
+    conductor CBL1.2- id={"cableUid":"c4c1bfdf-567a-4f6c-9e08-147342061afe","conductorId":"2-"}
+      color green
+      size 18AWG
+      net net:sha256:50fed8ce9a698f44530313ab1acec2f9d6d5c57de79e1eb999204414f1f3f4d0
+      potentials:
+        (none)
+      endpoints:
+        terminal JB1.X1.4
+          id {"deviceUid":"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88","terminalKey":"X1.4"}
+          device-designation JB1
+          role field_terminal
+        terminal TB1.5
+          id {"deviceUid":"10418711-330f-4482-8dab-a274923215cb","terminalKey":"5"}
+          device-designation TB1
+          role terminal_point

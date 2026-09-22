@@ -1,0 +1,443 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:s4-j",
+      "description": "S4-J bare screw-terminal socket for 14-pin C4 relays",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "S4-J",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco World of Relays, section 4.3: S4-J",
+          "revision": "WoR 3.2, English; subject to changes",
+          "pages": "Printed / physical PDF pp.347–348; p.348 figures 1 and 2"
+        },
+        "modelingNotes": [
+          "Exact S4-J screw-terminal socket for 14-pin C4 relays, selected by WoR 3.2 p.347 and detailed on p.348. Manufacturer retained as Releco per job identity; evidence is ComatReleco.",
+          "C.n denotes wire clamp n; M.n denotes the matching socket mating contact n. C/M are model aliases, not manufacturer markings. Figure 2 shows both numbered interfaces from the socket insertion side; no underside mirror, coordinates or installed wiring is inferred.",
+          "Figure 1 maps physical numbers to relay-function labels: 1=12, 2=14, 3=11, 4=22, 5=24, 6=21, 7=32, 8=34, 9=31, 10=42, 11=44, 12=41, 13=A1, 14=A2. Figure 2 instead prints 14|21 at clamp 14, conflicting with figure 1. Physical number 14 is unambiguous; A2 is recorded only as figure 1's functional label.",
+          "Fourteen independent passive socket conductors connect C.n to M.n, n=1 through 14, as identified by matching socket-contact and clamp numbers in figure 2. Represent these factory paths using explicit project jumpers listed in conformance.fixedLinks. Singleton bus functions and connector metadata do not establish continuity.",
+          "Figure 1 shows the compatible relay coil and changeover functions, not components fitted inside the bare socket. Do not connect different numbered paths permanently, add coil behavior, assert contact normal state or fit suppression/indicator circuitry. All connections are application-dependent; none is universally required.",
+          "Manufacturer rated load is 10 A / 250 V. Capability is recorded here rather than nominal_voltage; no assigned voltage or AC-only classification is inferred. Dielectric strength is 2.5 kV rms for one minute, terminals-to-DIN-rail and terminal-to-terminal. This does not establish a conductive rail bond.",
+          "Single-wire capacity 1.5 mm2 or 2 x 1.5 mm2; uncrimped multi-wire 0.34–1 mm2. M3.5 combination screws, nominal torque 0.8 Nm. Operating temperature -40 to +60 degrees C; storage -40 to +80 degrees C, no ice. PA/PC housing; TH35 or back-panel mounting. Shared connection policy accommodates a factory-path representation plus external wiring; it is not a general multiple-conductor approval.",
+          "The optional plastic retaining clip S3-CM/CP-15B is mechanical and contributes no modeled terminals. No PE, shield, communication, auxiliary electrical connector or rail bonding terminal is documented. Complete coverage is for the catalog bare socket's 14 paths, not an installed relay/accessory assembly."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Fourteen wire clamps and fourteen corresponding socket mating contacts, physical numbers 1–14, comprise fourteen separate factory paths. C/M distinguish modeled interfaces. No fitted relay, electrical accessory or rail bond is asserted. Figure 2's clamp-14 sublabel conflicts with figure 1; physical number 14 is retained."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Wire clamp 1; figure 1 relay-function label 12",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.1": {
+          "description": "Socket mating contact 1; figure 1 relay-function label 12",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.2": {
+          "description": "Wire clamp 2; figure 1 relay-function label 14",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.2": {
+          "description": "Socket mating contact 2; figure 1 relay-function label 14",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.3": {
+          "description": "Wire clamp 3; figure 1 relay-function label 11",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.3": {
+          "description": "Socket mating contact 3; figure 1 relay-function label 11",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.4": {
+          "description": "Wire clamp 4; figure 1 relay-function label 22",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.4": {
+          "description": "Socket mating contact 4; figure 1 relay-function label 22",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.5": {
+          "description": "Wire clamp 5; figure 1 relay-function label 24",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.5": {
+          "description": "Socket mating contact 5; figure 1 relay-function label 24",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.6": {
+          "description": "Wire clamp 6; figure 1 relay-function label 21",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.6": {
+          "description": "Socket mating contact 6; figure 1 relay-function label 21",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.7": {
+          "description": "Wire clamp 7; figure 1 relay-function label 32",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.7": {
+          "description": "Socket mating contact 7; figure 1 relay-function label 32",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.8": {
+          "description": "Wire clamp 8; figure 1 relay-function label 34",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.8": {
+          "description": "Socket mating contact 8; figure 1 relay-function label 34",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.9": {
+          "description": "Wire clamp 9; figure 1 relay-function label 31",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.9": {
+          "description": "Socket mating contact 9; figure 1 relay-function label 31",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.10": {
+          "description": "Wire clamp 10; figure 1 relay-function label 42",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.10": {
+          "description": "Socket mating contact 10; figure 1 relay-function label 42",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.11": {
+          "description": "Wire clamp 11; figure 1 relay-function label 44",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.11": {
+          "description": "Socket mating contact 11; figure 1 relay-function label 44",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.12": {
+          "description": "Wire clamp 12; figure 1 relay-function label 41",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.12": {
+          "description": "Socket mating contact 12; figure 1 relay-function label 41",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.13": {
+          "description": "Wire clamp 13; figure 1 relay-function label A1",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.13": {
+          "description": "Socket mating contact 13; figure 1 relay-function label A1",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.14": {
+          "description": "Wire clamp 14; figure 1 relay-function label A2 (figure 2 clamp sublabel conflicts)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.14": {
+          "description": "Socket mating contact 14; figure 1 relay-function label A2 (figure 2 clamp sublabel conflicts)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "C.10": {
+          "kind": "bus",
+          "terminals": ["C.10"]
+        },
+        "M.10": {
+          "kind": "bus",
+          "terminals": ["M.10"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        },
+        "C.12": {
+          "kind": "bus",
+          "terminals": ["C.12"]
+        },
+        "M.12": {
+          "kind": "bus",
+          "terminals": ["M.12"]
+        },
+        "C.13": {
+          "kind": "bus",
+          "terminals": ["C.13"]
+        },
+        "M.13": {
+          "kind": "bus",
+          "terminals": ["M.13"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "M.1": "terminal",
+        "C.2": "terminal",
+        "M.2": "terminal",
+        "C.3": "terminal",
+        "M.3": "terminal",
+        "C.4": "terminal",
+        "M.4": "terminal",
+        "C.5": "terminal",
+        "M.5": "terminal",
+        "C.6": "terminal",
+        "M.6": "terminal",
+        "C.7": "terminal",
+        "M.7": "terminal",
+        "C.8": "terminal",
+        "M.8": "terminal",
+        "C.9": "terminal",
+        "M.9": "terminal",
+        "C.10": "terminal",
+        "M.10": "terminal",
+        "C.11": "terminal",
+        "M.11": "terminal",
+        "C.12": "terminal",
+        "M.12": "terminal",
+        "C.13": "terminal",
+        "M.13": "terminal",
+        "C.14": "terminal",
+        "M.14": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Releco S4-J socket for 14-pin C4 relay",
+          "description": "Numbered socket contacts from p.348 figure 2, insertion-side view; no connector geometry modeled.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Manufacturer socket contact 1; figure 1 function 12"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Manufacturer socket contact 2; figure 1 function 14"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Manufacturer socket contact 3; figure 1 function 11"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Manufacturer socket contact 4; figure 1 function 22"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Manufacturer socket contact 5; figure 1 function 24"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Manufacturer socket contact 6; figure 1 function 21"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Manufacturer socket contact 7; figure 1 function 32"
+            },
+            "8": {
+              "terminal": "M.8",
+              "description": "Manufacturer socket contact 8; figure 1 function 34"
+            },
+            "9": {
+              "terminal": "M.9",
+              "description": "Manufacturer socket contact 9; figure 1 function 31"
+            },
+            "10": {
+              "terminal": "M.10",
+              "description": "Manufacturer socket contact 10; figure 1 function 42"
+            },
+            "11": {
+              "terminal": "M.11",
+              "description": "Manufacturer socket contact 11; figure 1 function 44"
+            },
+            "12": {
+              "terminal": "M.12",
+              "description": "Manufacturer socket contact 12; figure 1 function 41"
+            },
+            "13": {
+              "terminal": "M.13",
+              "description": "Manufacturer socket contact 13; figure 1 function A1"
+            },
+            "14": {
+              "terminal": "M.14",
+              "description": "Manufacturer socket contact 14; figure 1 function A2"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "M.1",
+        "C.2",
+        "M.2",
+        "C.3",
+        "M.3",
+        "C.4",
+        "M.4",
+        "C.5",
+        "M.5",
+        "C.6",
+        "M.6",
+        "C.7",
+        "M.7",
+        "C.8",
+        "M.8",
+        "C.9",
+        "M.9",
+        "C.10",
+        "M.10",
+        "C.11",
+        "M.11",
+        "C.12",
+        "M.12",
+        "C.13",
+        "M.13",
+        "C.14",
+        "M.14"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 3,
+    "column": 5,
+    "jsonPointer": "/objects/0",
+    "uid": "ce33b8c4-b8b2-42ae-a39b-34f06a8312d6",
+    "code": "E202",
+    "severity": "error",
+    "message": "IO1.di99 is not a declared I/O channel.",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 3,
+        "column": 5,
+        "note": "Device type \"fixture:module\" declares the valid channel functions."
+      }
+    ]
+  }
+]

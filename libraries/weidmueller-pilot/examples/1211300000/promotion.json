@@ -1,0 +1,203 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1211300000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1211300000"
+  },
+  "type": {
+    "path": "types/1211300000.json",
+    "sha256": "e647f0c09b9078994c49bed5c7ef09052dd19c0326265980d0e50e045fb76d5f"
+  },
+  "research": {
+    "path": "research/1211300000.md",
+    "sha256": "bb0f471d7f84a706a10c3188b9df45ce1e4578f9f958a610d8d57a5b04a33d59"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "C.5",
+      "C.6",
+      "C.7",
+      "C.8",
+      "C.9",
+      "C.10",
+      "C.11",
+      "C.12",
+      "C.13",
+      "C.14",
+      "C.15",
+      "C.16",
+      "C.17",
+      "C.18",
+      "C.19",
+      "C.20",
+      "C.21",
+      "C.22",
+      "C.23",
+      "C.24",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4",
+      "M.5",
+      "M.6",
+      "M.7",
+      "M.8",
+      "M.9",
+      "M.10",
+      "M.11",
+      "M.12",
+      "M.13",
+      "M.14",
+      "M.15",
+      "M.16",
+      "M.17",
+      "M.18",
+      "M.19",
+      "M.20",
+      "M.21",
+      "M.22",
+      "M.23",
+      "M.24",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.6",
+        "to": "M.6",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.8",
+        "to": "M.8",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.9",
+        "to": "M.9",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.10",
+        "to": "M.10",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.11",
+        "to": "M.11",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.12",
+        "to": "M.12",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.13",
+        "to": "M.13",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.14",
+        "to": "M.14",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.15",
+        "to": "M.15",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.16",
+        "to": "M.16",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.17",
+        "to": "M.17",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.18",
+        "to": "M.18",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.19",
+        "to": "M.19",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.20",
+        "to": "M.20",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.21",
+        "to": "M.21",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.22",
+        "to": "M.22",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.23",
+        "to": "M.23",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.24",
+        "to": "M.24",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "9f9de9a104ae8003a48b53457934d11b65b50e176d4e63e695c9115b1db964ef",
+    "packet.request.json": "05b1e20e09cbbd04028cbdf75b76b034e2028631a2b4d358d7b3bf360d77fe75",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "f6dd03298c8918d4bcc4a3849b5ef38f3c47d2c276771b24a27fdf8ab0c5bc88",
+    "system.json": "b59cd1620d378a5a63e21e05f346cc9dc1b1a645564d4174289c2c47c9aba394"
+  }
+}

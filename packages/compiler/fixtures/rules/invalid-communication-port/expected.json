@@ -1,0 +1,20 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 15,
+    "column": 5,
+    "jsonPointer": "/objects/2",
+    "uid": "f1a56f29-7328-4714-8b60-166391638ef6",
+    "code": "E204",
+    "severity": "error",
+    "message": "A.MISSING is not a declared communication port.",
+    "related": [
+      {
+        "file": "library/types/node.json",
+        "line": 3,
+        "column": 5,
+        "note": "Device type \"fixture:node\" declares the valid communication ports."
+      }
+    ]
+  }
+]

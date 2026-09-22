@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "LA9-FF970 component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "schneider-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    }
+  ]
+}

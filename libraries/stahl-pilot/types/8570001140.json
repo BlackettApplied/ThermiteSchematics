@@ -1,0 +1,36 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8570001140",
+      "description": "Protective cap / legacy 8570 three-pole 16 A plug",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8570001140",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/03/0000000000000008570618300_001_03/Manual_de_instrucciones_8570618300_001_03.pdf",
+          "title": "R. STAHL Presa da muro, connettore 8570/11, 8570/12",
+          "revision": "8570618300; S-BA-8570/11/12-03-it-31/01/2007",
+          "pages": "pp.5-8 ratings/contact arrangement; pp.10-12 connection/operation; p.14 protective caps"
+        },
+        "modelingNotes": [
+          "Manufacturer accessory table p.14 identifies a protective cap for the 3-pole 16 A plug, excluding extra-low-voltage versions.",
+          "Mechanical accessory with zero electrical terminals or circuit functions. The cap covers the plug; it does not electrically terminate, bond or short its pins."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical protective cap; no electrical terminals. Fit and installed environmental protection depend on the specified plug and assembly."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Protective cap for legacy 8570 three-pole 16 A plug",
+          "description": "Mechanical attachment only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

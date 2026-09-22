@@ -1,0 +1,221 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "siemens-pilot:6es7193-4cd30-0aa0"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "2"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "6"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "3"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "7"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A4"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A8"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "BUS.AUX1"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200000",
+      "designation": "FIXED1",
+      "description": "S2: Page 10 shows a direct terminal-base bridge between clamps 2 and 6.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "2"
+        },
+        {
+          "device": "D1",
+          "terminal": "6"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200001",
+      "designation": "FIXED2",
+      "description": "S2: Page 10 shows a separate direct terminal-base bridge between clamps 3 and 7.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "3"
+        },
+        {
+          "device": "D1",
+          "terminal": "7"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200002",
+      "designation": "FIXED3",
+      "description": "S2: Page 10 shows both clamps joined to this base’s AUX1 infeed; left-group AUX1 is interrupted.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A4"
+        },
+        {
+          "device": "D1",
+          "terminal": "A8"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200003",
+      "designation": "FIXED4",
+      "description": "S2: Page 10 shows the A4/A8 AUX1 pair joined directly to the outgoing/right AUX1 interface; left AUX1 is interrupted. BUS.AUX1 is a functional alias, not an added field clamp.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A4"
+        },
+        {
+          "device": "D1",
+          "terminal": "BUS.AUX1"
+        }
+      ]
+    }
+  ]
+}

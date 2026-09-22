@@ -1,0 +1,30 @@
+[
+  {
+    "code": "E031",
+    "jsonPointer": "/conductors/1/id",
+    "line": 10,
+    "column": 13,
+    "related": [
+      {
+        "file": "fixtures/invalid/cable-type-duplicate-conductor-id/input.json",
+        "line": 6,
+        "column": 13,
+        "note": "First declaration of this conductor id."
+      }
+    ]
+  },
+  {
+    "code": "E031",
+    "jsonPointer": "/conductors/2/id",
+    "line": 14,
+    "column": 13,
+    "related": [
+      {
+        "file": "fixtures/invalid/cable-type-duplicate-conductor-id/input.json",
+        "line": 6,
+        "column": 13,
+        "note": "First declaration of this conductor id."
+      }
+    ]
+  }
+]

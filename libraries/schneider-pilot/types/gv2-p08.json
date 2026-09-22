@@ -1,0 +1,107 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p08",
+      "description": "Three-pole rotary motor circuit breaker; thermal adjustment 2.5-4 A; bare GV2-P08",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P08",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-GV2P08.PDF",
+          "title": "GV2P08 — TeSys GV2 motor circuit breaker, product data sheet",
+          "revision": "Dec 06, 2017",
+          "pages": "1-2"
+        },
+        "modelingNotes": [
+          "Exact 2017 sheet and catalog match 2.5-4 A rotary thermal-magnetic breaker; no successor substitution.",
+          "Three mechanically linked poles with thermal and magnetic protection. Diagram reference state is OFF/open, not an inferred installed position. Contact functions represent complete protected switched paths; trip curves are not simulated.",
+          "AC 50/60 Hz; thermal adjustment 2.5-4 A, Ith 4 A, magnetic release 51 A. No installation setting assigned. Ue and Ui capability 690 V AC is documentation, not nominal circuit intent.",
+          "IEC 60947-2 Icu: 100 kA at 230/240, 400/415, 440 and 500 V AC; 8 kA at 690 V AC. Conditional ratings are not flattened into scalar interrupt limits.",
+          "Connections and Schema p.11 of Schneider GV2P08 sheet dated 2024-07-01, manufacturer-authored AECOM mirror, visually reviewed: https://aecom.vn/document/GV2P08_Datasheet.pdf. Main terminal markings preserved exactly.",
+          "Bare breaker only. Separately ordered auxiliary contacts, release blocks and line barriers are excluded. No permanent fixed links and no universally required terminals; application wiring is not prescribed.",
+          "Screw-clamp torque 1.7 N.m. The 2017 sheet lists two conductors per terminal with conditional sizes: solid 1-6 mm², flexible without ends 1.5-6 mm², flexible with ends 1-4 mm². Shared connection policy does not enforce clamp capacity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Six main screw-clamp terminals of the bare GV2P08, verified from its exact-product schematic. No separate PE, neutral, supply, signal, communication or auxiliary terminals in this base-device inventory. Separately ordered accessories are excluded."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Line terminal 1/L1",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Line terminal 3/L2",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Line terminal 5/L3",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "Load terminal 2/T1",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "Load terminal 4/T2",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "Load terminal 6/T3",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

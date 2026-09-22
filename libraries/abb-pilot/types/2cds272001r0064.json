@@ -1,0 +1,93 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds272001r0064",
+      "description": "S202M-C6 miniature circuit breaker, two poles, C characteristic, 6 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS272001R0064",
+        "document": {
+          "url": "https://library.e.abb.com/public/d9ecbe04345340d78aeb32059bf6ec8b/2CSC400002D0211.pdf",
+          "title": "System pro M compact",
+          "revision": "2CSC 400 002 D0211; undated downloaded edition",
+          "pages": "2/38 (PDF 64), 2/16 (PDF 42), 2/20 (PDF 46), 11/2 (PDF 1068)"
+        },
+        "modelingNotes": [
+          "S1 exact order table identifies S202M-C6, 2 poles, C characteristic, rated current 6 A. IEC/EN 60898-1: 400 V AC, 50/60 Hz, Icn 10 kA; C tripping reference temperature 30 degrees C. IEC/EN 60947-2 separately lists 440 V AC and Icu 15 kA. No installation voltage is assigned.",
+          "Numeric markings 1/2 and 3/4 follow the visually inspected S202 family diagram in the same catalog; applicability to S202M is a family inference. No phase or neutral assignment is made. Supply direction is optional.",
+          "Two breaker contact functions use the diagram's open-state convention and are mechanically ganged. Neither contacts nor mechanical metadata create fixed conductive links or simulate protection.",
+          "Wire and busbar accommodation is represented by shared connections on each existing named terminal. Optional auxiliary contacts and releases are separate accessories, not terminals of this order."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four manufacturer-numbered main terminals of the basic two-pole breaker: 1, 2, 3, 4. Wire/busbar accommodation belongs to these same terminal nodes. No supplied PE, shield, neutral-specific, auxiliary, release or communication connection. Separately fitted accessories require their own models."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 terminal 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "2": {
+          "description": "Pole 1 terminal 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "3": {
+          "description": "Pole 2 terminal 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "4": {
+          "description": "Pole 2 terminal 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

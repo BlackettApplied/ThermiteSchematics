@@ -1,0 +1,223 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1498700000",
+      "description": "HDC HSB 6 MS male screw-contact insert, 6 power poles plus PE, size 6; 400 V / 35 A IEC capability subject to application conditions",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1498700000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1498700000/scope/2/",
+          "title": "Weidmüller data sheet HDC HSB 6 MS, order 1498700000",
+          "revision": "Creation date 24.02.2026 05:09:53 MEZ; catalogue status / Drawings",
+          "pages": "pp.1, 3-5: exact identity and photograph; conditional ratings; separate main-contact and PE terminations; mechanical drawings. Numbered male arrangement additionally verified in RockStar catalogue 2006, printed B.88 / PDF p.120."
+        },
+        "modelingNotes": [
+          "Exact identity: Weidmüller 1498700000, HDC HSB 6 MS, male screw-contact insert, size 6, six power poles and separate PE interface. The current exact-order datasheet is the identity/rating source; no facts are transferred from adjacent order 1498800000.",
+          "Numbering 1–6 is directly shown in the manufacturer RockStar catalogue 2006, printed B.88 (PDF p.120), male arrangement 3142 beside the table identifying 1498700000. In that drawing as printed, 1/3/5 occupy the right column and 2/4/6 the left, staggered; the earth symbol is at an end. The exact 2026 datasheet photograph corroborates molded numbers and end PE hardware. The current exact-order DXF front/back views show six contact positions but omit numeric marks; they are not numbering evidence. Physical coordinates and viewing conventions are not encoded by terminalOrder.",
+          "C.n and M.n are library aliases for the cable screw and mating-pin interfaces of the same numbered power contact, not two separate manufacturer marks. Six proposed fixed links C.1-M.1 through C.6-M.6 express continuity through each individual screw-contact/pin conductor. No link crosses numbered poles. Singleton functions and connector metadata do not join nets; explicit project fixed links must be authored separately.",
+          "PE is one aggregate protective-earth interface. The exact datasheet documents an M5 PE screw termination and shows PE hardware at the insert ends; it does not resolve every distinct PE clamp, mating spring or their internal bonds. No central PE pin, split C.PE/M.PE endpoints or PE fixed link is asserted. Aggregate PE intentionally leaves connection coverage partial.",
+          "PE.required=true is a library policy requiring the aggregate PE interface to appear in authored connectivity. It is not a manufacturer claim that all applications use every power pole and does not prove a protective-earth source, compliant external bonding, bond impedance or housing continuity. Power contacts are optional because their use is application-dependent.",
+          "Datasheet p.3 capability data are conditional: DIN EN 61984 rated current 35 A and voltage 400 V; UL/CSA rated voltage 600 V AC/DC. UR current is 35 A at AWG 10 and 8 A at AWG 12/14/16/18/20. cUR current is 8 A at each listed AWG 10/12/14/16/18/20. Preserve these surprising values exactly pending manufacturer clarification for any application relying on a higher approval-specific current. No scalar terminal current or nominal_voltage is authored from these capability limits.",
+          "Main-contact termination (datasheet p.4): screw M4, 0.5-6 mm² / AWG 20-10, 11 mm stripping, 1.2-1.5 Nm. PE termination: screw M5, rated 6 mm² / AWG 20-10, 10 mm stripping, 2-2.5 Nm. The family tightening-torque sheet separately corroborates HSB M4 main contacts versus M5 PE. Installation must use the instructions for the actual conductor and hardware revision.",
+          "Scope is the passive insert only. The 2006 numbered drawing and 2026 exact-order data are different source dates; installed-revision applicability, split PE hardware/bonds, mating counterpart, hood/housing bonding, environmental protection and approval-specific loading remain application checks. No housing, coding accessory, shield, neutral assignment or switch state is invented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six numbered power contacts are represented at cable and mating interfaces, with six same-contact fixed links proposed separately. PE is an aggregate interface because the distinct physical PE terminations/mating features and their internal bonds are not fully established. Numbering 1–6 is directly verified on the exact-order 2006 manufacturer male diagram and corroborated by the current exact-order photograph; installed revision still requires confirmation. Hood/housing and external protective bonding are out of scope."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side screw termination of manufacturer contact 1; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.2": {
+          "description": "Cable-side screw termination of manufacturer contact 2; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Cable-side screw termination of manufacturer contact 3; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.4": {
+          "description": "Cable-side screw termination of manufacturer contact 4; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.5": {
+          "description": "Cable-side screw termination of manufacturer contact 5; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.6": {
+          "description": "Cable-side screw termination of manufacturer contact 6; C is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.1": {
+          "description": "Male mating pin of manufacturer contact 1; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.2": {
+          "description": "Male mating pin of manufacturer contact 2; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Male mating pin of manufacturer contact 3; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.4": {
+          "description": "Male mating pin of manufacturer contact 4; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.5": {
+          "description": "Male mating pin of manufacturer contact 5; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.6": {
+          "description": "Male mating pin of manufacturer contact 6; M is a library side alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "description": "Aggregate protective-earth interface; individual physical PE clamps and mating features are not split",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "PE": "earth"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HSB 6 MS male insert, 6P+PE, size 6",
+          "description": "Six numbered male power interfaces and aggregate PE. Numbering is from exact-order manufacturer diagram 3142; no pin coordinates or individual PE mating hardware are encoded.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Manufacturer power contact 1"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Manufacturer power contact 2"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Manufacturer power contact 3"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Manufacturer power contact 4"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Manufacturer power contact 5"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Manufacturer power contact 6"
+            },
+            "PE": {
+              "terminal": "PE",
+              "description": "Aggregate protective-earth interface; textual alias for the earth symbol, not a central numbered pin"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "PE"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "objects": [
+    {
+      "uid": "d1a56f29-7328-4714-8b60-166391638ef6",
+      "kind": "device",
+      "designation": "A",
+      "type": "fixture:node"
+    },
+    {
+      "uid": "e1a56f29-7328-4714-8b60-166391638ef6",
+      "kind": "device",
+      "designation": "B",
+      "type": "fixture:node"
+    },
+    {
+      "uid": "f1a56f29-7328-4714-8b60-166391638ef6",
+      "kind": "relation",
+      "designation": "NET1",
+      "relation": "associated_with",
+      "from": {
+        "device": "A"
+      },
+      "to": {
+        "device": "B"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "Missing",
+        "toPort": "P1",
+        "cable": {
+          "specification": "M12 cordset"
+        },
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "Reference omits pin mapping."
+        }
+      }
+    }
+  ]
+}

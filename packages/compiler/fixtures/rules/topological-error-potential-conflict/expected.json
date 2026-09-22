@@ -1,0 +1,26 @@
+[
+  {
+    "code": "E201",
+    "severity": "error",
+    "message": "Terminal \"TARGET.E\" has connection policy \"exclusive\", but wire \"W-SECOND\" is an excess direct conductive assignment.",
+    "file": "sources/objects.json",
+    "line": 36,
+    "column": 9,
+    "jsonPointer": "/objects/4/endpoints/0",
+    "uid": "30500000-0000-4000-8000-000000000005",
+    "related": [
+      {
+        "file": "../library/types/connectivity.json",
+        "line": 22,
+        "column": 14,
+        "note": "The library terminal \"TARGET.E\" declares connection policy \"exclusive\" here."
+      },
+      {
+        "file": "sources/objects.json",
+        "line": 27,
+        "column": 9,
+        "note": "Earlier permitted direct assignment from wire \"W-FIRST\" lands here."
+      }
+    ]
+  }
+]

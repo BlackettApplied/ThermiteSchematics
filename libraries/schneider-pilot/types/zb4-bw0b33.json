@@ -1,0 +1,95 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw0b33",
+      "description": "Green 24 V AC/DC LED body with fixing collar and two separate NO contacts; head excluded",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW0B33",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/ZB4BW0B33",
+          "title": "ZB4BW0B33 product datasheet",
+          "revision": "12 September 2026",
+          "pages": "1-2 specifications;9 rear terminal markings and constituent NO diagram"
+        },
+        "modelingNotes": [
+          "Source ZB4-BW0B33 is retained. Manufacturer ZB4BW0B33 has the same alphanumeric code, green 24 V AC/DC LED and two NO contacts; punctuation correspondence is a documented identity inference, not a replacement order.",
+          "Exact body/contact/light assembly includes the metal fixing collar. The operator head, added contact blocks and optional test accessories are separate. No pushbutton/selector motion or universal mechanical contact gang is assigned to this bare body.",
+          "Manufacturer product datasheet dated 12 September 2026, page 9 rear view, shows two NO contact blocks, each physically marked 3 and 4, with the central lamp marked X1 and X2. Its separate ISO text field mentions only 13-14; these labels are not modeled as extra physical clamps or asserted aliases.",
+          "B1 and B2 are model-only block qualifiers for the photo-left and photo-right NO blocks, respectively, while looking at the rear screw terminals with NO3/X1 above 4/X2 as in the cited page 9. Printed terminal markings remain 3 and 4 on both blocks. The qualifiers are not manufacturer legends.",
+          "Lamp nominal supply 24 V AC/DC, 50/60 Hz for AC. Exact sheet operating limits are 19.2-30 V DC and 21.6-26.4 V AC, consumption 18 mA. No DC polarity assignment or universal reverse-polarity guarantee is inferred from the unpolarized labels.",
+          "Passive contacts are application-dependent. Both lamp terminals are required for the modeled operating lamp under library policy. Neither the lamp nor either normally open contact creates a permanent net link.",
+          "Contact ratings remain conditional: AC-15/A600 6 A at120 V,3 A at240 V,1.2 A at600 V; DC-13/Q600 0.55 A at125 V,0.27 A at250 V,0.1 A at600 V. Ith10 A and Ui600 V are thermal/insulation capabilities, not one universal switching rating.",
+          "Class I and Zamak collar do not establish an installed protective bond. Collar/support bonding and any associated attachment interface remain outside the documented electrical model; no PE clamp or automatic panel bond is invented.",
+          "The current exact-product datasheet labels its additional views as alternate images. Their matching two-NO and lamp composition corroborates the exact historical selection; no unlisted internal bill of materials or installed production revision is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six documented field clamps: B1.3/B1.4 and B2.3/B2.4 for two separately marked NO3-4 blocks, plus LED X1/X2. B1/B2 identify photo-left/right in the cited rear view, not manufacturer pin prefixes. Collar/support protective bonding remains unresolved; no installed bond inferred."
+      },
+      "terminals": {
+        "B1.3": {
+          "description": "Photo-left NO contact block, physical marking 3; B1 is a model qualifier",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "B1.4": {
+          "description": "Photo-left NO contact block, physical marking 4; B1 is a model qualifier",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "B2.3": {
+          "description": "Photo-right NO contact block, physical marking 3; B2 is a model qualifier",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "B2.4": {
+          "description": "Photo-right NO contact block, physical marking 4; B2 is a model qualifier",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "X1": {
+          "description": "Green LED supply terminal X1, 24 V AC/DC; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "X2": {
+          "description": "Green LED supply terminal X2, 24 V AC/DC; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["B1.3", "B1.4"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["B2.3", "B2.4"]
+        },
+        "lamp": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "no2": "contact-no",
+        "lamp": "lamp"
+      },
+      "terminalOrder": ["B1.3", "B1.4", "X1", "X2", "B2.3", "B2.4"]
+    }
+  ]
+}

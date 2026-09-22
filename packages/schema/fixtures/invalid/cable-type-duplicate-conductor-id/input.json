@@ -1,0 +1,18 @@
+{
+  "kind": "cable_type",
+  "id": "core:duplicate-conductors",
+  "conductors": [
+    {
+      "id": "pair.1",
+      "color": "black"
+    },
+    {
+      "id": "pair.1",
+      "color": "white"
+    },
+    {
+      "id": "pair.1",
+      "color": "red"
+    }
+  ]
+}

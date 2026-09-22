@@ -1,0 +1,250 @@
+[
+  {
+    "code": "E103",
+    "file": "sources/01-declarations.json",
+    "line": 14,
+    "column": 15,
+    "jsonPointer": "/objects/1/type",
+    "uid": "00000000-0000-4000-8000-000000000002"
+  },
+  {
+    "code": "E104",
+    "file": "sources/01-declarations.json",
+    "line": 20,
+    "column": 15,
+    "jsonPointer": "/objects/2/type",
+    "uid": "00000000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 15,
+        "column": 13,
+        "note": "Incompatible cable_type \"catalog:cable\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E103",
+    "file": "sources/01-declarations.json",
+    "line": 33,
+    "column": 15,
+    "jsonPointer": "/objects/4/type",
+    "uid": "00000000-0000-4000-8000-000000000005"
+  },
+  {
+    "code": "E104",
+    "file": "sources/01-declarations.json",
+    "line": 40,
+    "column": 15,
+    "jsonPointer": "/objects/5/type",
+    "uid": "00000000-0000-4000-8000-000000000006",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Incompatible device_type \"catalog:opaque\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E103",
+    "file": "sources/01-declarations.json",
+    "line": 84,
+    "column": 15,
+    "jsonPointer": "/objects/11/type",
+    "uid": "00000000-0000-4000-8000-00000000000c"
+  },
+  {
+    "code": "E100",
+    "file": "sources/02-duplicates.json",
+    "line": 6,
+    "column": 22,
+    "jsonPointer": "/objects/0/designation",
+    "uid": "00000000-0000-4000-8000-00000000000d",
+    "related": [
+      {
+        "file": "sources/01-declarations.json",
+        "line": 55,
+        "column": 22,
+        "note": "First declaration of this designation."
+      }
+    ]
+  },
+  {
+    "code": "E100",
+    "file": "sources/02-duplicates.json",
+    "line": 12,
+    "column": 22,
+    "jsonPointer": "/objects/1/designation",
+    "uid": "00000000-0000-4000-8000-00000000000e",
+    "related": [
+      {
+        "file": "sources/01-declarations.json",
+        "line": 61,
+        "column": 22,
+        "note": "First declaration of this designation."
+      }
+    ]
+  },
+  {
+    "code": "E100",
+    "file": "sources/02-duplicates.json",
+    "line": 21,
+    "column": 22,
+    "jsonPointer": "/objects/2/designation",
+    "uid": "00000000-0000-4000-8000-00000000000f",
+    "related": [
+      {
+        "file": "sources/01-declarations.json",
+        "line": 70,
+        "column": 22,
+        "note": "First declaration of this designation."
+      }
+    ]
+  },
+  {
+    "code": "E100",
+    "file": "sources/02-duplicates.json",
+    "line": 64,
+    "column": 22,
+    "jsonPointer": "/objects/7/designation",
+    "uid": "00000000-0000-4000-8000-000000000020",
+    "related": [
+      {
+        "file": "sources/01-declarations.json",
+        "line": 55,
+        "column": 22,
+        "note": "First declaration of this designation."
+      }
+    ]
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 8,
+    "column": 21,
+    "jsonPointer": "/objects/0/endpoints/0/device",
+    "uid": "00000000-0000-4000-8000-000000000014"
+  },
+  {
+    "code": "E102",
+    "file": "sources/03-reference-sites.json",
+    "line": 9,
+    "column": 46,
+    "jsonPointer": "/objects/0/endpoints/1/terminal",
+    "uid": "00000000-0000-4000-8000-000000000014",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Resolved device type \"catalog:opaque\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 17,
+    "column": 21,
+    "jsonPointer": "/objects/1/endpoints/0/device",
+    "uid": "00000000-0000-4000-8000-000000000015"
+  },
+  {
+    "code": "E102",
+    "file": "sources/03-reference-sites.json",
+    "line": 18,
+    "column": 46,
+    "jsonPointer": "/objects/1/endpoints/1/terminal",
+    "uid": "00000000-0000-4000-8000-000000000015",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Resolved device type \"catalog:opaque\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 30,
+    "column": 25,
+    "jsonPointer": "/objects/2/conductors/0/endpoints/0/device",
+    "uid": "00000000-0000-4000-8000-000000000016"
+  },
+  {
+    "code": "E102",
+    "file": "sources/03-reference-sites.json",
+    "line": 31,
+    "column": 50,
+    "jsonPointer": "/objects/2/conductors/0/endpoints/1/terminal",
+    "uid": "00000000-0000-4000-8000-000000000016",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Resolved device type \"catalog:opaque\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 41,
+    "column": 27,
+    "jsonPointer": "/objects/3/from/device",
+    "uid": "00000000-0000-4000-8000-000000000017"
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 42,
+    "column": 25,
+    "jsonPointer": "/objects/3/to/device",
+    "uid": "00000000-0000-4000-8000-000000000017"
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 57,
+    "column": 25,
+    "jsonPointer": "/objects/5/at/device",
+    "uid": "00000000-0000-4000-8000-000000000019"
+  },
+  {
+    "code": "E102",
+    "file": "sources/03-reference-sites.json",
+    "line": 65,
+    "column": 50,
+    "jsonPointer": "/objects/6/at/terminal",
+    "uid": "00000000-0000-4000-8000-00000000001a",
+    "related": [
+      {
+        "file": "library/types/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Resolved device type \"catalog:opaque\" is declared here."
+      }
+    ]
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 73,
+    "column": 25,
+    "jsonPointer": "/objects/7/at/device",
+    "uid": "00000000-0000-4000-8000-00000000001b"
+  },
+  {
+    "code": "E101",
+    "file": "sources/03-reference-sites.json",
+    "line": 81,
+    "column": 25,
+    "jsonPointer": "/objects/8/at/device",
+    "uid": "00000000-0000-4000-8000-00000000001c"
+  }
+]

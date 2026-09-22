@@ -1,0 +1,125 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24284",
+      "description": "C60N miniature circuit breaker, three poles, 16 A, curve C",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24284",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Multi 9 - Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010-2011",
+          "pages": "Printed 15: 3P selection row 16 A / curve C and diagram E45095"
+        },
+        "modelingNotes": [
+          "Exact order 24284: C60N, 3P, 16 A, curve C, catalog printed p.15. Manufacturer legacy product page independently confirms identity: https://www.se.com/th/en/product/24284/c60-circuit-breaker-c60n-3p-16a-c-curve/",
+          "Printed p.15 diagram E45095 explicitly marks three mechanically ganged switched poles 1-2, 3-4, 5-6. Numeric keys preserve markings; upper/lower refer only to the drawing, not mandatory feed direction or assigned phases. Open state follows the catalog symbol and is not an asserted as-installed handle state.",
+          "Complete connection coverage is scoped to the standalone breaker: six power terminals; no neutral, PE, control, signal or communication terminals shown for this order. Optional auxiliary/release/residual-current assemblies are outside this order model. Passive power connections are application-dependent, so none is universally required.",
+          "16 A nominal current at 30 deg C; curve C magnetic operation 5-10 In. Source for ratings: catalog printed p.14, https://img.yumpu.com/16219073/16/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "For 3P: CEI EN 60898 Icn 6000 A at 400 V AC; CEI EN 60947-2 Icu 20 kA at 230-240 V AC, 10 kA at 400-415 V AC. Catalog Ue 400 V AC, Ui 500 V AC, Uimp 6 kV. Conditional capabilities are notes, not assigned circuit voltage; no nominal_voltage or AC-only restriction is encoded.",
+          "For In up to 25 A, cage terminals accept up to 16 mm2 flexible or 25 mm2 rigid conductors. No conductor-count or tightening-torque claim is made.",
+          "Contact functions and mechanical ganging create no permanent continuity. No fixed links. Protective dynamics, coordination and installation suitability are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Standalone 24284: six numbered main power terminals in three switched poles. No accessory assemblies included; no neutral, PE, control or communication connection in the documented breaker circuit."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, upper diagram terminal 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "2": {
+          "description": "Pole 1, lower diagram terminal 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "3": {
+          "description": "Pole 2, upper diagram terminal 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "4": {
+          "description": "Pole 2, lower diagram terminal 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "5": {
+          "description": "Pole 3, upper diagram terminal 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "6": {
+          "description": "Pole 3, lower diagram terminal 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "6"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1", "3", "5", "2", "4", "6"]
+    }
+  ]
+}

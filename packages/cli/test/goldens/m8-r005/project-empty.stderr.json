@@ -1,0 +1,15 @@
+{
+  "format": "agent-tool-report/0.1",
+  "tool": "create-view",
+  "diagnostics": [],
+  "error": {
+    "code": "R005",
+    "message": "Invalid render text: project project field project.name is empty.",
+    "family": "control",
+    "ownerKind": "project",
+    "ownerId": "project",
+    "field": "project.name",
+    "reason": "empty-string",
+    "root": "LS1"
+  }
+}

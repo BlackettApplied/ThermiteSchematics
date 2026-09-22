@@ -1,0 +1,86 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1sca022112r2440",
+    "manufacturer": "ABB",
+    "orderNumber": "1SCA022112R2440"
+  },
+  "type": {
+    "path": "types/1sca022112r2440.json",
+    "sha256": "479c0357d09ec14ae25d0c0161835db012821984002d856f15d168682afc9e19"
+  },
+  "research": {
+    "path": "research/1sca022112r2440.md",
+    "sha256": "beeef3842bbc557693e3c97b6385cff1d391e4181da70a07fd1bb85e2b793d7c"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "P1.TAB.A",
+      "P1.FUSE.A",
+      "P1.TAP.A",
+      "P1.TAB.B",
+      "P1.FUSE.B",
+      "P1.TAP.B",
+      "P2.TAB.A",
+      "P2.FUSE.A",
+      "P2.TAP.A",
+      "P2.TAB.B",
+      "P2.FUSE.B",
+      "P2.TAP.B"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "P1.TAB.A",
+        "to": "P1.FUSE.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P1.TAB.A",
+        "to": "P1.TAP.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P1.TAB.B",
+        "to": "P1.FUSE.B",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P1.TAB.B",
+        "to": "P1.TAP.B",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P2.TAB.A",
+        "to": "P2.FUSE.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P2.TAB.A",
+        "to": "P2.TAP.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P2.TAB.B",
+        "to": "P2.FUSE.B",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P2.TAB.B",
+        "to": "P2.TAP.B",
+        "sourceId": "S1"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "8f0b9b877cf3f727f674b1786d730c6b3802b2b0a549e502837b44e0c9cf0fc0",
+    "packet.request.json": "c89ec25dc81528f92b4c8e270f49e2a1cb91c0e725c0cabf8201989c52250c84",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "2757f818aae0a7a688a70476eb95729df0ec34a79aae5541b96720d387113092",
+    "system.json": "4233116fb290c9003c8ad0a3f045c71352a9e826437152a678587b395242acc0"
+  }
+}

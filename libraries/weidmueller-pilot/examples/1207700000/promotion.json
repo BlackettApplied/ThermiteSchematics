@@ -1,0 +1,147 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1207700000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1207700000"
+  },
+  "type": {
+    "path": "types/1207700000.json",
+    "sha256": "d7defd3841f14106394a55fbf46c8c42cc0b6ca771732b66bc46cde45dbb5d59"
+  },
+  "research": {
+    "path": "research/1207700000.md",
+    "sha256": "caa4e076a518ffa5336b91fd10c9a339e672f665768b13ceedd2f221012dbf4a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "C.5",
+      "C.6",
+      "C.7",
+      "C.8",
+      "C.9",
+      "C.10",
+      "C.11",
+      "C.12",
+      "C.13",
+      "C.14",
+      "C.15",
+      "C.16",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4",
+      "M.5",
+      "M.6",
+      "M.7",
+      "M.8",
+      "M.9",
+      "M.10",
+      "M.11",
+      "M.12",
+      "M.13",
+      "M.14",
+      "M.15",
+      "M.16",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.6",
+        "to": "M.6",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.8",
+        "to": "M.8",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.9",
+        "to": "M.9",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.10",
+        "to": "M.10",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.11",
+        "to": "M.11",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.12",
+        "to": "M.12",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.13",
+        "to": "M.13",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.14",
+        "to": "M.14",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.15",
+        "to": "M.15",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.16",
+        "to": "M.16",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "98d101fb3bccd905b0f5d1eb5d6c429f1e209d3f213d5b6cd06424d1c159e04f",
+    "packet.request.json": "f9f096e96824b9824bb93bb033b6c4b3c7993c32bde0ed10096ffc837a4b188b",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "601fbd75299af5600ac1c0ca36eae48b49e5358f38f545fdd1384729862b5612",
+    "system.json": "56c37c9834159ff8a54bb30ef1064ac11afac9a087cffd82323a1a5b2b42eb33"
+  }
+}

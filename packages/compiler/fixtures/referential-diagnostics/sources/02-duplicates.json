@@ -1,0 +1,68 @@
+{
+  "objects": [
+    {
+      "uid": "00000000-0000-4000-8000-00000000000d",
+      "kind": "device",
+      "designation": "DUP-DEVICE",
+      "type": "catalog:opaque"
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000000e",
+      "kind": "wire",
+      "designation": "DUP-NONDEVICE",
+      "endpoints": [
+        { "device": "=F1+P1-K1", "terminal": "13/NO" },
+        { "device": "=F1+P1-K1", "terminal": "1/L1" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000000f",
+      "kind": "wire",
+      "designation": "DUP-MIXED",
+      "endpoints": [
+        { "device": "=F1+P1-K1", "terminal": "13/NO" },
+        { "device": "=F1+P1-K1", "terminal": "1/L1" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000010",
+      "kind": "wire",
+      "designation": "DUPLICATE-ENDPOINT-SUPPRESSION",
+      "endpoints": [
+        { "device": "DUP-DEVICE", "terminal": "not-a-terminal" },
+        { "device": "DUP-NONDEVICE", "terminal": "not-a-terminal" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000011",
+      "kind": "jumper",
+      "designation": "DUPLICATE-JUMPER-SUPPRESSION",
+      "endpoints": [
+        { "device": "DUP-MIXED", "terminal": "not-a-terminal" },
+        { "device": "DUP-MIXED", "terminal": "still-not-a-terminal" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000012",
+      "kind": "potential",
+      "designation": "DUPLICATE-POTENTIAL-SUPPRESSION",
+      "name": "duplicate suppression",
+      "at": { "device": "DUP-MIXED", "terminal": "not-a-terminal" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000013",
+      "kind": "relation",
+      "designation": "DUPLICATE-RELATION-SUPPRESSION",
+      "relation": "associated_with",
+      "from": { "device": "DUP-DEVICE" },
+      "to": { "device": "DUP-NONDEVICE" }
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000020",
+      "kind": "device",
+      "designation": "DUP-DEVICE",
+      "type": "catalog:opaque"
+    }
+  ]
+}

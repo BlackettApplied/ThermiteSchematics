@@ -1,0 +1,33 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bj5",
+      "description": "Harmony XB4 black long-handle selector head, 3 positions +/-45 degrees, spring return to center",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BJ5",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal control and signaling units catalog",
+          "revision": "10/2021",
+          "pages": "Printed p.55; physical PDF p.57"
+        },
+        "modelingNotes": [
+          "Manufacturer reference ZB4BJ5 corresponds to source spelling ZB4-BJ5 by identical code characters and operating configuration; source punctuation is retained.",
+          "Exact catalog row specifies heads only: black long handle, three positions +/-45 degrees, spring return to center. Contact/light blocks and body/contact assemblies are not included in this head abstraction.",
+          "2017 ZB4BJ5 product sheet pp.1-3 identifies 22 mm mounting and chromium-plated metal bezel; p.16 describes operation of separately fitted body contacts, not head terminals.",
+          "Zero documented electrical terminals or fixed links. Bonding through the head, collar or panel remains undocumented; no mounting-hardware continuity is asserted.",
+          "Accessory documentation view only; mechanical behavior is descriptive. No electrical circuit functions or electrical ratings are assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical head with no documented electrical terminals and no included contact/light blocks. Reviewed drawings do not establish an exhaustive PE/bonding inventory or conductive attachment path through the metal head, collar and panel."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Parent glob is rejected" },
+  "sources": ["../outside/*.json"]
+}

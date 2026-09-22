@@ -1,0 +1,73 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "siemens-pilot:6es7138-4ca01-0aa0",
+    "manufacturer": "Siemens",
+    "orderNumber": "6ES7138-4CA01-0AA0"
+  },
+  "type": {
+    "path": "types/6es7138-4ca01-0aa0.json",
+    "sha256": "158dca28ade5bb3be5feaca8c018db8bdd37dd2a9e09a9a64ed18589bd656c7a"
+  },
+  "research": {
+    "path": "research/6es7138-4ca01-0aa0.md",
+    "sha256": "48144c96a043379329c845d9daebfd953ddb920c8656844adf8501fe69e5f1b8"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "2",
+      "6",
+      "3",
+      "7",
+      "A4",
+      "A8",
+      "BUS.L+",
+      "BUS.M",
+      "BUS.AUX1"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "2",
+        "to": "6",
+        "sourceId": "S1"
+      },
+      {
+        "from": "2",
+        "to": "BUS.L+",
+        "sourceId": "S1"
+      },
+      {
+        "from": "3",
+        "to": "7",
+        "sourceId": "S1"
+      },
+      {
+        "from": "3",
+        "to": "BUS.M",
+        "sourceId": "S1"
+      },
+      {
+        "from": "A4",
+        "to": "A8",
+        "sourceId": "S2"
+      },
+      {
+        "from": "A4",
+        "to": "BUS.AUX1",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "df16f115a7767120fecce5406daf185bd4909bbb3b6bdde2c1fe2f15b21cbdfe",
+    "packet.request.json": "5f0b352d1ab64e076094e35ebd89eb367cc4037fa0bba8b35075f158ce02bebd",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "6485c6705a761c88d6f168f45401011256ee6f50f19d0b468e7c29b6ae1ddeb9",
+    "system.json": "34d701cce9599804e18579c14a11bf4b19c667ff0946d04656f1f6f8caa496c7"
+  }
+}

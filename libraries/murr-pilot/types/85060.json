@@ -1,0 +1,112 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85060",
+      "description": "MCS 3-115-230/24 MIT PFC single-phase power supply, adjustable 24–28 V DC, 3 A",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85060",
+        "document": {
+          "url": "https://www.hunglin.com/prodown.php?id=131",
+          "title": "Murrelektronik Catalog 4.5 — Primary switch mode – single-phase",
+          "revision": "Undated historical catalog; revision not stated on applicable page",
+          "pages": "Physical PDF p.8; printed 4.5.8; right-hand MCS with PFC column, order 85060"
+        },
+        "modelingNotes": [
+          "Manufacturer is Murrelektronik; Murr preserves the job's historical manufacturer label. Current exact article sheet identifies MCS 3-115-230/24 MIT PFC and EOL status: https://shop.murrelektronik.com/index.php?anid=000000000000085060_1&cl=details&fnc=outputSpecSheet.",
+          "S2 catalog is manufacturer-authored evidence hosted at the Hunglin distributor mirror. Visually reviewed the exact 85060 order row and matching right-hand circuit diagram. Terminal 1 earth, 2 N, 3 L, 4/5 DC−, 6/7 DC+. Numbers preserve diagram identities, not physical orientation.",
+          "Input capability 85–265 V AC, 50/60 Hz. Do not use this proposal to establish DC input operation.",
+          "Output is 24 V DC SELV ±1%, adjustable 24–28 V; 3 A at 60 °C, 3.5 A at 40 °C; ordering rating 72 W. No fixed nominal input/output voltage or unconditional current scalar is encoded.",
+          "Factory common links 4–5 and 6–7 are explicit in S2. Represent them with project jumpers; source/load/bus metadata never joins nets. No L–N, input–output, output polarity cross-link or output–PE continuity is implied.",
+          "L, N and protective earth are required for operation. Output clamp choice is application-dependent. Shared output policy permits explicit internal jumpers plus external wiring in the model; it is not permission for multiple field conductors per clamp. No rail bonding path is asserted.",
+          "Connection coverage is partial beyond the seven numbered power/PE terminals. Catalog 4.5 p.2 describes selectable restart/shutoff at MCS family level; p.9 explicitly describes a front bridging link for other larger orders while their circuit diagrams omit it. The exact 85060 p.8 has no selector row or exact housing drawing, so neither the presence nor absence of such an interface is established. No selector endpoints, output-OK contact, additional case terminal or rail bond are invented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Seven numbered power and protective-earth terminals are established by the exact 85060 diagram: 1 PE, 2 N, 3 L, 4/5 DC− and 6/7 DC+. Fixed output pairs are retained. Exact physical housing/bonding and any optional mode-selection interface are not resolved by this circuit diagram or the one-page current sheet. Family-level selector descriptions are not sufficient to add terminals or prove that this order has a selector. No output-OK, communication, rail bond or output–PE link is asserted."
+      },
+      "terminals": {
+        "1": {
+          "role": "protective_earth",
+          "description": "1 / protective-earth symbol",
+          "required": true
+        },
+        "2": {
+          "role": "neutral",
+          "description": "2 / N input",
+          "required": true
+        },
+        "3": {
+          "role": "power",
+          "description": "3 / L input",
+          "required": true
+        },
+        "4": {
+          "role": "negative",
+          "description": "4 / DC− output; fixed common with 5",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "5": {
+          "role": "negative",
+          "description": "5 / DC− output; fixed common with 4",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "6": {
+          "role": "positive",
+          "description": "6 / DC+ output; fixed common with 7",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "7": {
+          "role": "positive",
+          "description": "7 / DC+ output; fixed common with 6",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["6", "4"]
+        },
+        "RETURN_EXTRA": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "POSITIVE_EXTRA": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "RETURN_EXTRA": "terminal",
+        "POSITIVE_EXTRA": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7"]
+    }
+  ]
+}

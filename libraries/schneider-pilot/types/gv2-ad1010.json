@@ -1,0 +1,74 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-ad1010",
+      "description": "GV2 left-side auxiliary block: 1 NO position contact and 1 NO fault contact",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-AD1010",
+        "document": {
+          "url": "https://www.fichier-pdf.fr/2018/12/04/45manstart/45manstart.pdf",
+          "title": "Manual Motor Starters, Controllers, and Protectors, 2520CT0001",
+          "revision": "05/01; copyright 2001 Schneider Electric",
+          "pages": "11, 26, 27, 58 (printed and physical PDF)"
+        },
+        "modelingNotes": [
+          "Historical manufacturer spelling GV2AD1010; source hyphen preserved. Exact order selection and circuit diagram inspected in manufacturer-authored 2001 catalog at public document mirror.",
+          "53-54: instantaneous normally open position contact. 97-98: normally open fault indication. Normal reference is breaker off/reset without fault indication. Historical p27 includes short-circuit, overload and undervoltage tripping. No transition timing or reset simulation is claimed.",
+          "The p27 timing chart has apparent labeling/state inconsistencies; normal states follow exact p58 diagram and p11 selection. Later GVAD1010 FAQ FA23920 mentions magnetic/thermal fault behavior only; successor equivalence is not asserted.",
+          "Passive screw-clamp contact endpoints are application-dependent. No permanent links or ganged relation: position indication and fault indication are distinct. Breaker power poles and other accessories are outside this type.",
+          "Conditional ratings, p26: instantaneous IEC Ith 6 A; AC-15 3.3 A at 230-240 V for 100000 operations; fault IEC Ith 2.5 A; AC-14 0.3 A at 230-240 V for 1000 operations. DC-13 at 24 V: instantaneous 6 A/100000 operations, fault 1 A/1000 operations. Other voltage limits differ. No assigned voltage, AC-only metadata or scalar rating is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four screw-clamp endpoints shown in exact GV2AD1010 wiring diagram are included: 53, 54, 97, 98. No additional power, return, PE, shield or communication connections are specified for this auxiliary block; host breaker and separate accessories are excluded."
+      },
+      "terminals": {
+        "53": {
+          "description": "Instantaneous position NO contact terminal 53",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "54": {
+          "description": "Instantaneous position NO contact terminal 54",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "97": {
+          "description": "Fault indication NO contact terminal 97",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "98": {
+          "description": "Fault indication NO contact terminal 98",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "position": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["53", "54"]
+        },
+        "fault": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["97", "98"]
+        }
+      },
+      "circuitSymbols": {
+        "position": "contact-no",
+        "fault": "contact-no"
+      },
+      "terminalOrder": ["53", "54", "97", "98"]
+    }
+  ]
+}

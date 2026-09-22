@@ -1,0 +1,263 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "weidmueller-pilot:1789960000"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001007",
+      "designation": "B8",
+      "type": "batch-boundary:endpoint-8"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100007",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        },
+        {
+          "device": "B8",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001008",
+      "designation": "B9",
+      "type": "batch-boundary:endpoint-9"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100008",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "PE"
+        },
+        {
+          "device": "B9",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200000",
+      "designation": "FIXED1",
+      "description": "rockstar-2012: Independent axial-screw contact shown by assembly section B.111/PDF153: cable and male mating ends of the same contact 1; exact number from B.118/PDF160 and copper-alloy construction corroborated by exact-datasheet. No cross-pole or external mating link.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200001",
+      "designation": "FIXED2",
+      "description": "rockstar-2012: Independent axial-screw contact shown by assembly section B.111/PDF153: cable and male mating ends of the same contact 2; exact number from B.118/PDF160 and copper-alloy construction corroborated by exact-datasheet. No cross-pole or external mating link.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200002",
+      "designation": "FIXED3",
+      "description": "rockstar-2012: Independent axial-screw contact shown by assembly section B.111/PDF153: cable and male mating ends of the same contact 3; exact number from B.118/PDF160 and copper-alloy construction corroborated by exact-datasheet. No cross-pole or external mating link.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200003",
+      "designation": "FIXED4",
+      "description": "rockstar-2012: Independent axial-screw contact shown by assembly section B.111/PDF153: cable and male mating ends of the same contact 4; exact number from B.118/PDF160 and copper-alloy construction corroborated by exact-datasheet. No cross-pole or external mating link.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        }
+      ]
+    }
+  ]
+}

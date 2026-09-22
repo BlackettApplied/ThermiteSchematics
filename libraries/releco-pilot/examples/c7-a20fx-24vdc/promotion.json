@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "releco-pilot:c7-a20fx-24vdc",
+    "manufacturer": "Releco",
+    "orderNumber": "C7-A20FX/24VDC"
+  },
+  "type": {
+    "path": "types/c7-a20fx-24vdc.json",
+    "sha256": "6ed14534c77b95ca82279a4021c2d576964981273f1acda6c6f476f304683965"
+  },
+  "research": {
+    "path": "research/c7-a20fx-24vdc.md",
+    "sha256": "8b7e50157b342580848f264c5ac755173de24f98b2acdea6680955ab06ef22a7"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5", "6", "7", "8"],
+    "requiredTerminalKeys": ["7", "8"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "ff96696225b6500e8f2ee16853ccd038497713f6ae138e99852b6c0fcb8003f6",
+    "packet.request.json": "aec901dec6bfe7d6b36b032dc1bc613e2f0319aef6464f9474d8bf67b42cd6fb",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "97408709340bf9623e2a612b698e73cbb5d2313fd603f10f697a137d5483229f",
+    "system.json": "e48799ee4519885ad87b366462b10694f23e3af9b2e068c6a7e03586d72a1525"
+  }
+}

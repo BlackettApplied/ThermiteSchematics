@@ -1,0 +1,88 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85064",
+      "description": "Murrelektronik MCS power supply 1-phase / IN 90-265 V AC (110-300 V DC) / OUT 24 V DC (SELV, 20-30 V adjustable) 2.5 A",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85064",
+        "document": {
+          "url": "https://www.se-import.com/documents/catalog/powering/murr/switch_mode/85064.pdf",
+          "title": "Murrelektronik INTERNET-DATASHEET of Art.-No. 85064 — MCS Power supply 1-phase, primary switched IN: 90-265VAC OUT: 20-30V/2,5ADC",
+          "revision": "Created 11/12 (manufacturer-authored, distributor mirror se-import.com)",
+          "pages": "p.1 electrical data; p.2 circuit diagram (terminals 3=L, 2=N, 1=PE, 5=DC+, 4=DC-) and dimension drawing"
+        },
+        "modelingNotes": [
+          "Exact Murrelektronik article85064; historic source manufacturer Murr is preserved. Manufacturer exact-product diagram establishes 1=PE,2=N,3=L,4=DC− and5=DC+. Diagram numbers are retained rather than connector-local table indices.",
+          "Adjustable output and universal/variable input are capability ranges. No input/output nominal_voltage or conditional current scalar is assigned. Output ratings are total supply capability, not independent allowances on duplicate clamps. Project intent must specify the chosen supply voltage.",
+          "Input pins1/2/3 are required for the powered abstraction. Output connections are application-dependent. No field bond to DC return is invented. The device outline is not a wire; function membership never creates net continuity.",
+          "Five field terminals, no duplicate output clamps. Exact diagram and inventory show no additional signal/communication/PE interface; output indication and adjuster are not signal terminals. No permanent terminal-to-terminal links are asserted.",
+          "Historical exact sheet input90–265 VAC /110–300 VDC; output24 VDC nominal, adjustable20–30 V;2.5 A at+60°C or3 A at+50°C. Conditional capabilities remain documentation. DC-input connection polarity is not established by the power-interface diagram.",
+          "Clamp technology and installed manufacturing revision must be checked against the physical device; exact current diagrams do not prove every historical unit revision. No housing/mounting bond path is inferred from metalwork."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All five terminals of the manufacturer circuit diagram are inventoried: input L/N/PE (3/2/1) and isolated DC output DC+/DC- (5/4). This article has no signal/relay contact (green LED only) and no repeated output clamps, so the physical connection inventory is complete. Terminal clamp technology/conductor range and any internal DC-/PE relationship are not detailed by this datasheet."
+      },
+      "terminals": {
+        "1": {
+          "description": "Protective earth input PE (earth symbol on diagram)",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "description": "AC neutral input N (universal wide input; see notes for range)",
+          "role": "neutral",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "3": {
+          "description": "AC line input L (universal wide input; see notes for range)",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "4": {
+          "description": "DC output negative/return DC- (24 V DC nominal, SELV)",
+          "role": "return",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "5": {
+          "description": "DC output positive DC+ (24 V DC nominal, SELV; 20-30 V adjustable per notes)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "input": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "output": {
+          "kind": "source",
+          "terminals": ["5", "4"]
+        },
+        "earth": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "input": "load",
+        "output": "source",
+        "earth": "earth"
+      },
+      "terminalOrder": ["3", "2", "1", "5", "4"]
+    }
+  ]
+}

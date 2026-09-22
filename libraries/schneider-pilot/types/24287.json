@@ -1,0 +1,123 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24287",
+      "description": "C60N miniature circuit breaker / 3P / 32 A / C curve",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24287",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1500x2000/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Schneider Electric Multi 9 — Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010-2011",
+          "pages": "Printed pp.14-15; Yumpu physical pages 16-17; diagram E45095 on p.15"
+        },
+        "modelingNotes": [
+          "Exact 24287 selection: C60N, 3P, 32 A, curve C; catalog 2010-2011 printed pp.14-15. Manufacturer-authored catalog mirrored on Yumpu by carnevale.bz.",
+          "Six marked terminals: 1-2, 3-4, 5-6. Three mechanically ganged breaking poles; open state is the catalog drawing convention, not an asserted installed state. No permanent fixed links.",
+          "32 A rating at 30 degrees C; magnetic trip 5-10 In. Printed p.14 specifies Ue 400 V AC, Icn 6000 A at 400 V under CEI EN 60898; Icu 20 kA at 230-240 V and 10 kA at 400-415 V under CEI EN 60947-2 for 3P. Ui 500 V AC; Uimp 6 kV. No assigned circuit voltage or unconditional breaking-capacity scalar is modeled.",
+          "For 32-63 A ratings, cage terminals accept up to 25 mm2 flexible or 35 mm2 rigid conductors. Ratings page: https://img.yumpu.com/16219073/16/1500x2000/multi-9-sistema-apparecchiature-modulari.jpg",
+          "Base breaker only: no accessory auxiliary contacts, trip-release terminals, neutral, PE, shield or communications connections in this order inventory. No phase names or feed orientation inferred. External use is application-dependent, so no terminal is universally required."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All six base-breaker power terminals are modeled from the exact selection-table diagram E45095. Separately ordered accessories are excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Marked power terminal 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        },
+        "2": {
+          "description": "Marked power terminal 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        },
+        "3": {
+          "description": "Marked power terminal 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        },
+        "4": {
+          "description": "Marked power terminal 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        },
+        "5": {
+          "description": "Marked power terminal 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        },
+        "6": {
+          "description": "Marked power terminal 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 32
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "6"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1", "3", "5", "2", "4", "6"]
+    }
+  ]
+}

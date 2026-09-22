@@ -1,0 +1,61 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "1d5b89e1-acb0-41c4-b3dd-e735711436c9",
+      "kind": "wire",
+      "designation": "W-CTL-001",
+      "endpoints": [
+        { "device": "PS1", "terminal": "+" },
+        { "device": "PLC1", "terminal": "L+" }
+      ],
+      "properties": {
+        "label": "+24V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "fd37ae09-e179-422b-8c02-b28865488214",
+      "kind": "wire",
+      "designation": "W-CTL-002",
+      "endpoints": [
+        { "device": "PS1", "terminal": "-" },
+        { "device": "PLC1", "terminal": "M" }
+      ],
+      "properties": {
+        "label": "0V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "66665011-47ab-4788-bdbe-42c4019316b8",
+      "kind": "wire",
+      "designation": "W-CTL-003",
+      "endpoints": [
+        { "device": "PS1", "terminal": "+" },
+        { "device": "TB1", "terminal": "1" }
+      ],
+      "properties": {
+        "label": "+24V-PS1-TB1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "14d788a9-d2c4-4dcb-98fe-c3edf7485947",
+      "kind": "wire",
+      "designation": "W-CTL-004",
+      "endpoints": [
+        { "device": "PS1", "terminal": "-" },
+        { "device": "TB1", "terminal": "4" }
+      ],
+      "properties": {
+        "label": "0V-PS1-TB1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    }
+  ]
+}

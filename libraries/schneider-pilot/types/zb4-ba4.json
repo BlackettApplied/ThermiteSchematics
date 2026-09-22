@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-ba4",
+      "description": "Red unmarked flush spring-return pushbutton head, 22 mm, metal bezel; head only",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BA4",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal control and signaling units",
+          "revision": "10/2021",
+          "pages": "Printed p.26; physical PDF p.28"
+        },
+        "modelingNotes": [
+          "Source order spelling ZB4-BA4 is preserved. Manufacturer ZB4BA4 matches the alphanumeric identity and head description; treating the hyphen as presentation is a documented reconciliation.",
+          "Exact catalog selection is heads only. Contact blocks, fixing body and illumination are not imported from assembled configurations.",
+          "Zero documented electrical terminals and no fixed links; accessory documentation view only.",
+          "The reviewed datasheet does not establish the metal head's bonding interface to collar or panel. No PE terminal, insulation claim or factory bond is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical head with zero documented electrical terminals. Head-to-collar/panel bonding remains undocumented; the empty inventory is not proof of electrical isolation or exhaustive absence of bonding interfaces. Contact/light blocks belong to separately assembled parts."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

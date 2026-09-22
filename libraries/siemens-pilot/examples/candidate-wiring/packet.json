@@ -1,0 +1,22 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Siemens candidate power connector demonstration",
+      "conductors": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9"],
+      "notes": [
+        "Connector demonstration only. These are separately sourced Siemens candidates, not identified legacy-machine hardware.",
+        "Upstream supplies, protection, bonds and unused interfaces are intentionally outside this fixture."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "SM1231 differential TC channel demonstration",
+      "conductors": ["W10", "W11"],
+      "notes": [
+        "AI0+ and AI0- remain distinct physical nets. TC alloy and range are unspecified."
+      ]
+    }
+  ]
+}

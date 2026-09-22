@@ -1,0 +1,1 @@
+[{"code":"E020","file":"fixtures/invalid/source-file-duplicate-uids/inputs/02-second.json","jsonPointer":"/objects/0/uid","line":1,"column":20,"related":[{"file":"fixtures/invalid/source-file-duplicate-uids/inputs/01-first.json","line":1,"column":20,"note":"First declaration of this uid."}]}]

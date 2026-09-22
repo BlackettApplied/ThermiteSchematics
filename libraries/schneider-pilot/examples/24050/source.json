@@ -1,0 +1,52 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "schneider-pilot:24050"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "2"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    }
+  ]
+}

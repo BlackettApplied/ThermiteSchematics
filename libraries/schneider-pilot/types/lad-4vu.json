@@ -1,0 +1,59 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lad-4vu",
+      "description": "LAD4VU varistor coil suppressor, 110–250 V AC, two clip attachment contacts (logical S1/S2); generic load representation",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LAD-4VU",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "Schneider Electric TeSys catalogue, Chapter B8 - TeSys D contactors: Suppressor modules",
+          "revision": "Chapter B8; edition/date not printed on inspected pages (cover B8/1, suppressor modules B8/24)",
+          "pages": "Physical p24 / printed B8/24: exact LAD4VU row and side-mounting/across-coil notes; related installation figure W9 1380874 01 21 A04 p1, 06/2016; exact LAD4VU datasheet p1, 19 Mar 2019"
+        },
+        "modelingNotes": [
+          "Exact manufacturer spelling LAD4VU; source/job LAD-4VU is preserved as the orderNumber. Identity is established by the exact B8/24 row and official LAD4VU datasheet dated 19 Mar 2019; no successor substitution.",
+          "The module is a varistor connected across the host coil. It exposes two electrical attachment contacts even though it has no separate field-wire screw terminals. S1 and S2 are logical aliases for the two unlabelled ends, not manufacturer-stamped numbers, polarity marks, A1/A2 labels, or an asserted top/bottom orientation.",
+          "B8/24 footnotes (1) and (3) establish across-coil installation and electrical contact by clipping. The applicable LAD4V AC side-attachment drawing and two-terminal varistor symbol are visually shown in Schneider instruction W9 1380874 01 21 A04, 06/2016, p1 (manufacturer-authored RSP mirror). Exact LAD4VU datasheet p1 lists LC1D09...D38, LC1DT20...DT40, LC1D098...D258 and CAD32/CAD50 compatibility.",
+          "S1 and S2 are required by library policy for this model of an installed suppressor: both attachment contacts must be connected to the two distinct host-coil nets. That declaration does not prove correct mechanical seating, correct host selection, or the as-built slot-to-A1/A2 mapping. No automatic attachment, connection, or coil short is introduced.",
+          "VARISTOR uses the existing load function/symbol as a generic two-terminal nonlinear suppressor representation. It is not an ordinary linear resistor, coil, switch or permanent conductor. No impedance value, clamping simulation, energy absorption, protection adequacy or drop-out timing is calculated. There are no fixed links.",
+          "Exact B8/24 row and the 19 Mar 2019 datasheet specify 110–250 V AC; the datasheet specifies 50/60 Hz. No capability nominal_voltage, scalar current or invented DC approval is assigned.",
+          "Catalog suppression claims: maximum transient voltage 2 Uc and contactor drop-out time 1.1–1.5 times normal. No absolute clamping voltage or surge current/energy rating is established by the inspected sources.",
+          "Side clip mounting is supported by exact B8/24 and the 2019 datasheet. B8/24 footnote (4), top mounting on A1/A2, belongs to screw-fixing variants, not this module. Follow footnote (5) regarding removal of an existing suppression device when fitting the accessory. The modern Clipsal page inconsistently has side in its description and front in a data field; the reviewed model follows the documented side-mounted scope.",
+          "No PE, shield, separate supply, communication interface or contactor power poles are modeled. Physical pin labelling and orientation remain unverified. The 2019 exact datasheet photograph depicts LAD4RC3E and is not used as LAD4VU terminal evidence; catalog family photographs and dimensions do not establish stamped labels."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Two electrically distinct clip attachment ends are explicit as logical S1/S2; no field-wire screws are implied. The applicable installation drawing shows two-ended attachment and the two-terminal varistor symbol but no physical terminal marks or reliable slot-to-host-coil orientation. This model omits that mechanical mapping and any fine contact geometry; no other electrical interfaces are shown in the inspected sources. Generic load rendering does not simulate MOV behavior."
+      },
+      "terminals": {
+        "S1": {
+          "description": "Varistor clip attachment end S1; logical alias only, unlabelled physical contact to one host-coil net",
+          "role": "control",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "S2": {
+          "description": "Varistor clip attachment end S2; logical alias only, unlabelled physical contact to one host-coil net",
+          "role": "control",
+          "connection_policy": "exclusive",
+          "required": true
+        }
+      },
+      "functions": {
+        "VARISTOR": {
+          "kind": "load",
+          "terminals": ["S1", "S2"]
+        }
+      },
+      "circuitSymbols": {
+        "VARISTOR": "load"
+      },
+      "terminalOrder": ["S1", "S2"]
+    }
+  ]
+}

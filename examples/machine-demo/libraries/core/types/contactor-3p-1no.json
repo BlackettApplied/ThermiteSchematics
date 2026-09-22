@@ -1,0 +1,57 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:contactor-3p-1no",
+      "description": "3-pole contactor, 24 VDC coil, 1 NO auxiliary contact",
+      "terminals": {
+        "A1": {
+          "role": "coil",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" }
+        },
+        "A2": { "role": "coil_return" },
+        "1/L1": { "role": "power_input" },
+        "2/T1": { "role": "power_output" },
+        "3/L2": { "role": "power_input" },
+        "4/T2": { "role": "power_output" },
+        "5/L3": { "role": "power_input" },
+        "6/T3": { "role": "power_output" },
+        "13": { "role": "aux" },
+        "14": { "role": "aux" }
+      },
+      "functions": {
+        "coil": { "kind": "coil", "terminals": ["A1", "A2"] },
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "aux13": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "internal_relations": [
+        { "relation": "actuates", "from": "coil", "to": "pole1" },
+        { "relation": "actuates", "from": "coil", "to": "pole2" },
+        { "relation": "actuates", "from": "coil", "to": "pole3" },
+        { "relation": "actuates", "from": "coil", "to": "aux13" },
+        { "relation": "ganged_with", "from": "pole1", "to": "pole2" },
+        { "relation": "ganged_with", "from": "pole2", "to": "pole3" }
+      ],
+      "symbol": "iec:contactor"
+    }
+  ]
+}

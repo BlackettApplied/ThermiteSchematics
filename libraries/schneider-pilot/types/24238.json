@@ -1,0 +1,61 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24238",
+      "description": "C60N miniature circuit breaker, 1P, 4 A, C curve",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24238",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Multi 9 - Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010-2011; manufacturer-authored Yumpu mirror from carnevale.bz",
+          "pages": "Printed p.15 (viewer 17), exact 24238 row and E45092 1P diagram; ratings printed p.14 (viewer 16)"
+        },
+        "modelingNotes": [
+          "Exact identity corroborated by https://www.se.com/uk/en/product/24238/c60-circuit-breaker-c60n-1p-4a-c-curve/.",
+          "Terminals 1 and 2 are manufacturer diagram markings. One protected interruptible pole; no permanent fixed link. Drawn open reference state does not simulate trip dynamics or prescribe operating state.",
+          "4 A at 30 degrees C; curve C magnetic operation 5-10 times In. Ratings page: https://img.yumpu.com/16219073/16/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg.",
+          "CEI EN 60898: 1P Icn 6000 A at 230/400 V AC. CEI EN 60947-2: 1P Icu 10 kA at 230-240 V AC; 3 kA at 400-415 V only for one pole in an isolated-neutral system under double-fault conditions. No scalar nominal voltage or unconditional breaking capacity assigned; DC capability not established.",
+          "Cage terminals: up to 16 mm2 flexible or 25 mm2 rigid conductors for ratings up to 25 A. Connection requirements depend on application. Separate auxiliary devices are not part of this bare breaker model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Bare 24238: terminals 1 and 2 across its single protected pole, verified in exact catalog selection table and E45092 diagram. No neutral, PE, signal or communication connections in this 1P circuit; separate accessories excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Terminal 1, upper end of protected pole in catalog diagram",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "2": {
+          "description": "Terminal 2, lower end of protected pole in catalog diagram",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

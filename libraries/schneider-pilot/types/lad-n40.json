@@ -1,0 +1,122 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lad-n40",
+      "description": "Schneider TeSys D front-mounting instantaneous auxiliary contact block, 4 N/O (LADN40)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LAD-N40",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "Schneider Electric TeSys catalogue, chapter B8 - Contactors and protection relays (EN)",
+          "revision": "Chapter B8 (Contactors); catalogue edition/date not printed on extracted pages; retrieved 2026-09-11",
+          "pages": "p.B8/22 (physical p.22) selection: LADN40 = front clip-on, 4 contacts, 4 N/O, screw clamp; p.B8/79 (physical p.79) scheme 127275.eps terminals 53-54/63-64/73-74/83-84; p.B8/66 (physical p.66) auxiliary contact block characteristics"
+        },
+        "modelingNotes": [
+          "LADN40 is a Schneider Electric TeSys D / TeSys D Green front-mounting add-on INSTANTANEOUS auxiliary contact block, clip-on, composition 4 N/O, screw-clamp terminals (base reference). Fits LC1-D contactors.",
+          "Manufacturer catalogue spelling is 'LADN40' (no separator). The job/source code 'LAD-N40' inserts a presentation hyphen and 'LAD N40' a space; same reference, recorded here as aliases. orderNumber is kept as the job-provided 'LAD-N40' for identity; the verified manufacturer spelling is LADN40.",
+          "Base LADN40 = screw-clamp terminals. Suffix +3 = spring terminals (LADN403), +6 = lug/Faston (LADN406); those are different references and are not modeled here. The job code carries no such suffix.",
+          "Terminal marking verified by visual inspection of the exact scheme 127275.eps (p.B8/79): four independent N/O contacts 53-54, 63-64, 73-74, 83-84 (EN 50005: units 3/4 = N/O). No N/C contacts.",
+          "All four contacts are mechanically ganged by the host contactor's actuator (they operate together). This coupling is mechanical/functional and does NOT join the contact nets; no factory jumper links any of the eight terminals.",
+          "The block has no coil, supply, return, PE/bond, shield or communication connection of its own; the clip-on interface to the contactor is non-electrical.",
+          "Ratings are capabilities (conditional), not an assigned circuit voltage, from characteristics p.B8/66: rated operational voltage Ue <= 690 V; rated insulation voltage Ui 690 V (IEC 60947-5-1), 600 V UL/CSA; conventional thermal current Ith 10 A at <= 60 C; frequency 25-400 Hz; min switching 17 V / 5 mA; short-circuit protection gG 10 A. AC-15 and DC-13 operational currents are per-voltage tables (p.B8/68). No scalar terminal rating is asserted.",
+          "Contacts are passive and application-dependent; none is universally required. connection_policy 'shared'."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All eight terminals of the four N/O contacts are documented from the exact LADN40 scheme 127275.eps (p.B8/79). The accessory exposes no other electrical interface; the clip-on mechanical mount and common actuator are non-electrical."
+      },
+      "terminals": {
+        "53": {
+          "description": "N/O contact 1 terminal 53",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "54": {
+          "description": "N/O contact 1 terminal 54",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "63": {
+          "description": "N/O contact 2 terminal 63",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "64": {
+          "description": "N/O contact 2 terminal 64",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "73": {
+          "description": "N/O contact 3 terminal 73",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "74": {
+          "description": "N/O contact 3 terminal 74",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "83": {
+          "description": "N/O contact 4 terminal 83",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "84": {
+          "description": "N/O contact 4 terminal 84",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["53", "54"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["63", "64"]
+        },
+        "no3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["73", "74"]
+        },
+        "no4": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["83", "84"]
+        }
+      },
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "no2": "contact-no",
+        "no3": "contact-no",
+        "no4": "contact-no"
+      },
+      "terminalOrder": ["53", "54", "63", "64", "73", "74", "83", "84"],
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no3"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no4"
+        }
+      ]
+    }
+  ]
+}

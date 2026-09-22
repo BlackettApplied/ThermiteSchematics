@@ -1,0 +1,169 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1789960000",
+      "description": "HDC S4 0 SAS male axial-screw insert, size 6; four numbered power contacts plus aggregate PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1789960000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1789960000/scope/2/",
+          "title": "Weidmüller HDC S4 0 SAS data sheet",
+          "revision": "Creation date 03.03.2026 05:07:51 MEZ",
+          "pages": "1 exact identity; 3 electrical/connection data and PE; numbered arrangement in RockStar 2012/2013 B.118/PDF160"
+        },
+        "modelingNotes": [
+          "S1: Exact manufacturer data sheet HDC S4 0 SAS, created 03.03.2026 05:07:51 MEZ, pp. 1 and 3, verifies order 1789960000, male pin insert, axial-screw connection, size 6, four power contacts and documented screw PE connection. The part is recorded as discontinued with availability until 31 July 2014; the sheet names HDC S4/0 MS as an alternative, not this type.",
+          "S2: Manufacturer RockStar catalogue 1282180000, 2012/2013, B.118/physical PDF160, at https://media.digikey.com/pdf/data%20sheets/weidmuller%20pdfs/rockstar_heavy_duty_conns_2012-2013_cat.pdf. Exact male axial-screw row 1789960000 = HDC S4 0 SAS is beside its own numbered arrangement with four positions 1,2,3,4 and a separate earth symbol. No numbering or construction is transferred from the later 1023220000 screw insert or a size-3 a1/b1/a2/b2 variant.",
+          "C./M. are authoring aliases for the cable and mating ends of each manufacturer-numbered contact. S2 B.111/PDF153 includes an axial-screw contact section/assembly drawing and S4/0-specific table: the conductor enters the same contact whose mating side admits the tightening tool. Together with the exact numbered arrangement and copper-alloy contact data this supports four independent paths C.1-M.1 through C.4-M.4. Explicit project links implement them; bus functions and metadata do not join separate poles or cross to another insert.",
+          "All four numbered positions are power contacts; this exact 4+0+PE order has no additional signal/pilot contacts. Terminal order is a documentation sequence, not an L1/L2/L3/N assignment, face orientation or direction of current flow.",
+          "PE is one aggregate authoring endpoint. Its required flag is a library connection-coverage policy, not proof of external protective bonding. Individual PE clamps/mating portions and metalwork bonds are not enumerated, so no C.PE-M.PE fixed path or central PE pin is invented. MATE contains only the four documented numbered contacts and retains partial PE scope.",
+          "Manufacturer source comparison: S2 technical table B.108/PDF150 lists S4/0 Axial at 690 V/80 A, but its overview B.110/PDF152 and exact order page B.118/PDF160 say 830 V/80 A. S1 exact sheet also says 830 V/80 A. These family 690 / exact 830 entries are not reconciled into an installed rating or invented revision explanation.",
+          "Conditional capabilities from S1 p. 3: DIN EN 61984 rated power contact 830 V, 80 A and 8 kV impulse voltage; UL/CSA 600 V AC/DC. These are not nominal supply assignments, conductor sizing or as-built suitability. No scalar terminal current or voltage is set.",
+          "Preparation fields are retained as source conditions, not installation instructions. S1 p. 3 power-contact section: 1.5-16 mm2, 13 mm strip length, 2-3 Nm, hexagon socket 2 mm; PE 8 mm strip and 2-2.5 Nm; separate generic torque 0.5 Nm. S2 B.108/B.111 gives S4/0 Axial SW3 / IS 3 KG tool, 13 mm and 2-3 Nm. Its PE row qualifies 8 mm stripping for wire up to 6 mm2 and 1.5-16 mm2 connection with cable lug. Tool-size and torque-field applicability remain unresolved; no installed preparation is selected.",
+          "Silver-passivated copper-alloy contacts, at most 1 mOhm contact resistance and PC glass-fibre-reinforced body are recorded by the exact sheet. Mechanical mounting and surrounding housing are separate; the type does not assert live-disconnection capability, enclosure protection or a panel bond.",
+          "S2 B.111/PDF153 documents the S4/0 power-contact derating curve using H07V-K16 and derating factor 0.80, and explicitly says signal contacts are unavailable. The 80 A nameplate capability is not a universal ambient/conductor operating limit."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Four manufacturer-numbered power contacts 1,2,3,4 each expose cable/mating authoring endpoints, plus one required aggregate PE. Individual PE interfaces/bonds, clamp subdivisions and face-view orientation are unenumerated. No pilot or signal terminals are present in the documented 4+0+PE inventory. Source 630 V, family-table 690 V and exact-order 830 V remain distinct unresolved entries."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Axial-screw cable connection 1; numeric mark from exact male arrangement; C. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.2": {
+          "description": "Axial-screw cable connection 2; numeric mark from exact male arrangement; C. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Axial-screw cable connection 3; numeric mark from exact male arrangement; C. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.4": {
+          "description": "Axial-screw cable connection 4; numeric mark from exact male arrangement; C. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.1": {
+          "description": "Male mating power contact 1; numeric mark from exact male arrangement; M. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.2": {
+          "description": "Male mating power contact 2; numeric mark from exact male arrangement; M. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Male mating power contact 3; numeric mark from exact male arrangement; M. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.4": {
+          "description": "Male mating power contact 4; numeric mark from exact male arrangement; M. is an authoring interface prefix",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "description": "Aggregate protective-earth connection; individual cable/mating/bonding points unenumerated",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "PE": "earth"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC S4 0 SAS male axial-screw insert, size 6",
+          "description": "Four documented numbered male power contacts only; partial map excludes unenumerated PE hardware. No phase map or mating-view orientation asserted.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Male power contact 1"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Male power contact 2"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Male power contact 3"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Male power contact 4"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "PE"
+      ]
+    }
+  ]
+}

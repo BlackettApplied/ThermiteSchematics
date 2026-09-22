@@ -1,0 +1,75 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "expansion:all-kinds",
+      "description": "All D8 function kinds and relations",
+      "aliases": ["FUNCTION-CATALOG"],
+      "terminals": {
+        "coil-a": {
+          "role": "coil_positive",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" },
+          "description": "Metadata preservation terminal"
+        },
+        "coil-b": { "role": "coil_return" },
+        "contact-a": { "role": "contact_input" },
+        "contact-b": { "role": "contact_output" },
+        "channel": { "role": "signal_input" },
+        "source": { "role": "source" },
+        "load": { "role": "load" },
+        "bus": { "role": "bus" },
+        "other": { "role": "other" }
+      },
+      "functions": {
+        "a-coil": { "kind": "coil", "terminals": ["coil-a", "coil-b"] },
+        "b-contact": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["contact-a", "contact-b"]
+        },
+        "c-contact": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["contact-a", "contact-b"]
+        },
+        "d-contact": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["contact-a", "contact-b"]
+        },
+        "e-channel": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["channel"]
+        },
+        "f-source": { "kind": "source", "terminals": ["source"] },
+        "g-load": { "kind": "load", "terminals": ["load"] },
+        "h-bus": { "kind": "bus", "terminals": ["bus"] },
+        "i-mechanism": { "kind": "mechanism", "terminals": [] },
+        "j-other": { "kind": "other", "terminals": ["other"] }
+      },
+      "internal_relations": [
+        { "relation": "actuates", "from": "a-coil", "to": "b-contact" },
+        { "relation": "trips", "from": "i-mechanism", "to": "c-contact" },
+        { "relation": "ganged_with", "from": "b-contact", "to": "c-contact" },
+        { "relation": "ganged_with", "from": "c-contact", "to": "d-contact" },
+        { "relation": "ganged_with", "from": "c-contact", "to": "b-contact" },
+        { "relation": "ganged_with", "from": "b-contact", "to": "c-contact" },
+        {
+          "relation": "feeds_internal",
+          "from": "f-source",
+          "to": "e-channel"
+        }
+      ],
+      "symbol": "test:all-kinds"
+    },
+    {
+      "kind": "device_type",
+      "id": "expansion:unused",
+      "terminals": {},
+      "functions": {},
+      "internal_relations": []
+    }
+  ]
+}

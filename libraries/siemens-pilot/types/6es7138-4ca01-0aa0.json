@@ -1,0 +1,167 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7138-4ca01-0aa0",
+      "description": "ET 200S PM-E DC24V with diagnostics; assembled field interface on separately ordered TM-P15C23-A0 (6ES7193-4CD30-0AA0)",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7138-4CA01-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/978/25547978/att_19700/v1/et200s_powermodul_dc24v_manual_en-US_en-US.pdf",
+          "title": "Power module PM-E DC24V (6ES7138-4CA01-0AA0)",
+          "revision": "A5E01119952-02, 04/2007; imprint 04/2014",
+          "pages": "pp.7-10; p.8 terminal assignment, p.9 exact base compatibility and Figure 1-1 block diagram"
+        },
+        "modelingNotes": [
+          "This is an assembled field-interface abstraction of the exact PM-E fitted to TM-P15C23-A0, order 6ES7193-4CD30-0AA0. The six field clamps belong to that separately ordered base, not to the PM-E card alone. This selected compatible arrangement does not independently establish the configuration of any installed instance. Avoid duplicating the same physical base clamps when separately instantiating a base model.",
+          "Base evidence: Siemens Terminal modules, 04/2007, A5E01120034-01, p.10 TM-P15x23-A0 diagram explicitly including TM-P15C23-A0; https://cache.industry.siemens.com/dl/files/457/25390457/att_75261/v1/et200s_terminalmodule_manual_en-US.pdf. The base fixes 2-6, 3-7 and A4-A8, with the AUX1 pair connected only to the right AUX1 bus. Left AUX1 is interrupted and the next potential group starts here.",
+          "PM-E Figure 1-1 shows the fitted module connects the L+ group to its DC24V power rail and the M group to its return power rail. BUS.L+ and BUS.M are functional aliases, not manufacturer-stamped pin identifiers; the figure labels these rails P2 and P1 respectively. Physical row placement in other front views is not used to assign rail pins. BUS.AUX1 is also an authoring alias for the base outgoing bus.",
+          "Represent six fixed paths by explicit project jumpers: 2-6, 2-BUS.L+, 3-7, 3-BUS.M, A4-A8 and A4-BUS.AUX1. The two field-to-power-rail paths apply only with this PM-E fitted; never transfer them to a bare base. Singleton bus functions and connector metadata do not join nets. The three supply/return/AUX groups remain separate.",
+          "Rated load supply is 24 VDC; the manual p.7 permits only that rated load voltage. Page 10 gives 10 A maximum group current up to 60 C, no overvoltage or internal short-circuit protection, and protection using automatic breakers with B/C trip characteristics. The 10 A limit is total group capacity, not 10 A per duplicate clamp; no unconditional scalar current limit is assigned. No-load consumption is at most 4 mA; typical dissipation is 100 mW. Vertical installation is limited to 0-55 C in p.7.",
+          "AUX1 is a protective-conductor terminal or freely usable potential bus, up to 230 VAC per p.8; it is not inherently PE, M or 24 V. No AUX1-to-M, AUX1-to-DIN-rail or supply-to-backplane bond is supported. Supply/backplane isolation and 500 VDC insulation test are documented on p.10; test voltage is not working voltage.",
+          "At least one external positive feed to the 2/6 group and one return to the 3/7 group are needed for powered operation, but neither duplicate clamp is individually universal. No individual field endpoint is marked required. Internal jumpers do not prove an external source is present; the current schema cannot enforce one-of-pair external feeding. AUX1 use is application dependent.",
+          "Rear-panel communication/diagnostic bus and PM mating contacts exist but individual physical pins are unenumerated in these drawings. BACKPLANE records an unpinned interface, not one conductor or a pin map. Load-voltage monitoring, diagnostics and LED behavior are documented but not electrically simulated. The base DIN-rail noise spring and optional shield contact element are outside the terminal topology, with no invented PE bond.",
+          "Additional selected-base evidence: Siemens ET 200S Distributed I/O System, 07/2003, EWA-4NEB780602402-09, printed p.10-7 (physical 257) lists exact 6ES7193-4CD30-0AA0, six field clamps, noise-diversion spring and provision for a shield contact element; printed p.5-16 (physical 120) is the older front wiring view. Manufacturer manual mirrored at https://public.eandm.com/Public_Docs/200s.pdf. No physical rail mapping is inferred from front-row placement."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six documented field clamps on the selected separately ordered TM-P15C23-A0 plus three functional outgoing bus endpoints. PM-E must be fitted for the modeled field-to-power-rail continuity. Exact PM/card mating pin inventory, rear-bus pins, DIN-rail noise contact and optional shield hardware are not enumerated. BACKPLANE has no inferred pins. AUX1 is separate and its left continuation is absent on A0; no universal PE assignment is asserted."
+      },
+      "terminals": {
+        "2": {
+          "role": "supply_positive",
+          "description": "TM-P15C23-A0 field clamp 2, L+ for the fitted PM-E DC24V",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "3": {
+          "role": "supply_return",
+          "description": "TM-P15C23-A0 field clamp 3, M return for the fitted PM-E DC24V",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "6": {
+          "role": "supply_positive",
+          "description": "TM-P15C23-A0 field clamp 6, duplicate L+ connection",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "7": {
+          "role": "supply_return",
+          "description": "TM-P15C23-A0 field clamp 7, duplicate M connection",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "A4": {
+          "role": "auxiliary_potential",
+          "description": "TM-P15C23-A0 field clamp A4, freely assignable AUX1; not intrinsically PE",
+          "connection_policy": "shared"
+        },
+        "A8": {
+          "role": "auxiliary_potential",
+          "description": "TM-P15C23-A0 field clamp A8, same isolated AUX1 group",
+          "connection_policy": "shared"
+        },
+        "BUS.L+": {
+          "role": "supply_positive",
+          "description": "Authoring alias for the outgoing positive power rail; PM-E Figure 1-1 labels it P2 / DC24V, not a field clamp or physical pin number",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "BUS.M": {
+          "role": "supply_return",
+          "description": "Authoring alias for the outgoing return power rail; PM-E Figure 1-1 labels it P1 / M, not a field clamp or physical pin number",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "BUS.AUX1": {
+          "role": "auxiliary_potential",
+          "description": "Authoring alias for the outgoing/right AUX1 bus contact on selected A0 base; no incoming AUX1 continuity",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "A4": {
+          "kind": "bus",
+          "terminals": ["A4"]
+        },
+        "A8": {
+          "kind": "bus",
+          "terminals": ["A8"]
+        },
+        "BUS.L+": {
+          "kind": "bus",
+          "terminals": ["BUS.L+"]
+        },
+        "BUS.M": {
+          "kind": "bus",
+          "terminals": ["BUS.M"]
+        },
+        "BUS.AUX1": {
+          "kind": "bus",
+          "terminals": ["BUS.AUX1"]
+        }
+      },
+      "circuitSymbols": {
+        "2": "terminal",
+        "3": "terminal",
+        "6": "terminal",
+        "7": "terminal",
+        "A4": "terminal",
+        "A8": "terminal",
+        "BUS.L+": "terminal",
+        "BUS.M": "terminal",
+        "BUS.AUX1": "terminal"
+      },
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "Siemens ET 200S rear-panel bus interface",
+          "description": "Unnumbered multipin bus interface shown in PM-E Figure 1-1. Physical contact inventory is unresolved; no individual pins or conductive aggregate are asserted."
+        }
+      },
+      "terminalOrder": [
+        "2",
+        "6",
+        "3",
+        "7",
+        "A4",
+        "A8",
+        "BUS.L+",
+        "BUS.M",
+        "BUS.AUX1"
+      ]
+    }
+  ]
+}

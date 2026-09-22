@@ -1,0 +1,97 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:patlite-lr4-302ljbw-ryg",
+      "description": "Stack light / R-Y-G + buzzer",
+      "terminals": {
+        "RED": {
+          "description": "Red LED",
+          "connection_policy": "exclusive"
+        },
+        "ORANGE": {
+          "description": "Amber LED",
+          "connection_policy": "exclusive"
+        },
+        "GREEN": {
+          "description": "Green LED",
+          "connection_policy": "exclusive"
+        },
+        "BLUE": {
+          "description": "Blue tier (not fitted)",
+          "connection_policy": "exclusive"
+        },
+        "WHITE": {
+          "description": "White tier (not fitted)",
+          "connection_policy": "exclusive"
+        },
+        "YELLOW": {
+          "description": "Supply common / 0 V in this circuit",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "BROWN": {
+          "description": "Flashing common - do not apply supply",
+          "connection_policy": "exclusive"
+        },
+        "PURPLE": {
+          "description": "Buzzer",
+          "connection_policy": "exclusive"
+        },
+        "GRAY": {
+          "description": "Supply +24 V in this circuit",
+          "connection_policy": "exclusive",
+          "required": true
+        }
+      },
+      "terminalOrder": [
+        "RED",
+        "ORANGE",
+        "GREEN",
+        "BLUE",
+        "WHITE",
+        "YELLOW",
+        "BROWN",
+        "PURPLE",
+        "GRAY"
+      ],
+      "functions": {
+        "red": {
+          "kind": "load",
+          "terminals": ["RED", "YELLOW"]
+        },
+        "amber": {
+          "kind": "load",
+          "terminals": ["ORANGE", "YELLOW"]
+        },
+        "green": {
+          "kind": "load",
+          "terminals": ["GREEN", "YELLOW"]
+        },
+        "buzzer": {
+          "kind": "load",
+          "terminals": ["PURPLE", "YELLOW"]
+        }
+      },
+      "catalog": {
+        "manufacturer": "PATLITE",
+        "orderNumber": "LR4-302LJBW-RYG",
+        "document": {
+          "url": "https://www.scs.nl/wp-content/uploads/2025/03/Patlite_LR_2025.pdf",
+          "title": "PATLITE LR Series manufacturer catalog (public distributor copy)",
+          "revision": "O-AG10B EN 1808 A",
+          "pages": "15-18"
+        },
+        "modelingNotes": [
+          "24 V cable model, pole/L-bracket, three tiers and buzzer. Model physical flying leads by color; these are not numbered connector pins.",
+          "Use the lighting/buzzer voltage-contact diagram: yellow common, gray supply, switched red/orange/green/purple; brown unused for steady operation. Isolate unused leads.",
+          "Catalog recommends a 1 A fuse and Class 2 supply. Buzzer switching capacity >=300 mA; KP8 100 mA outputs therefore drive interposing relays. Lead wires AWG24."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Nine cable leads inventoried for the LR cable interface. Blue/white tiers absent in RYG build; unused leads and flashing common need explicit project review."
+      }
+    }
+  ]
+}

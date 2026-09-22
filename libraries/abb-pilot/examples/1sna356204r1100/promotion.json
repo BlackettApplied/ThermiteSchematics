@@ -1,0 +1,77 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1sna356204r1100",
+    "manufacturer": "ABB",
+    "orderNumber": "1SNA356204R1100"
+  },
+  "type": {
+    "path": "types/1sna356204r1100.json",
+    "sha256": "690072e1a5255ea88301bf1da0d6cffe669732cb6e24d556a264f98c2b41b2f3"
+  },
+  "research": {
+    "path": "research/1sna356204r1100.md",
+    "sha256": "d09ccd256b27ae00d58ec9e99269f64527dfe009e6da2a7efe0fb9e9f7242875"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "LARGE",
+      "MEDIUM",
+      "BRANCH1",
+      "BRANCH2",
+      "BRANCH3",
+      "BRANCH4",
+      "BRANCH5",
+      "BRANCH6"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "LARGE",
+        "to": "MEDIUM",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH1",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH2",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH3",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH4",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH5",
+        "sourceId": "S2"
+      },
+      {
+        "from": "LARGE",
+        "to": "BRANCH6",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "9fbaa40131dda48385d5e81692e1c5dd030791fe718f9e18932938bfde6cda22",
+    "packet.request.json": "3061d455a75e4e649891c0f8632adb28ea993d8381340dbcafcc7a7b2e87cc6c",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "9d9f23043f86dce5bcb9eba024e0cfff87d68f4b00e594d79813978864c51c4d",
+    "system.json": "a73167b88186274a11cbad1e97300f7bfdb5a4813d8bac37fa9dea8e3c2f6291"
+  }
+}

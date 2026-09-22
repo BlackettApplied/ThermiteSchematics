@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:gv2-p05",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "GV2-P05"
+  },
+  "type": {
+    "path": "types/gv2-p05.json",
+    "sha256": "9b8d90ed613610b5b0f2b807fdf3bad39f0a9050129a5c07b65c2429e161e34f"
+  },
+  "research": {
+    "path": "research/gv2-p05.md",
+    "sha256": "233711b6fb79d5bd1980341d5d1442647b752cfca9e704f688e8dc490d00468d"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "feeb314757c12eff73d9f3f74f5cb9e4aab58f572dc8dd9875f6b8a42cb9d2f9",
+    "packet.request.json": "51d4d2d805a09ab9c1313c9a95ec7ba3c2dd0ddd48d15e66c30b25a9552e948d",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "891de00bb49313644623b3a9d76459ed5f5c6ee285fa9fb7a6be127d7dc413d0",
+    "system.json": "3eb89d264c8ed1fe75268eb04c336084c80b26fed8e9b4b7e93c6bbb91d1f16b"
+  }
+}

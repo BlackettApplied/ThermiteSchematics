@@ -1,0 +1,8 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Valid project in a path with spaces" },
+  "sources": ["sources/*.json", "sources/**/*.json"],
+  "libraries": [
+    { "name": "mini", "version": "1.0.0", "path": "../shared library" }
+  ]
+}

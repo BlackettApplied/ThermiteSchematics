@@ -1,0 +1,7 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": { "name": "Multi-net potential independence rule fixture" },
+  "sources": ["sources/*.json"],
+  "libraries": [{ "name": "rules", "version": "1.0.0", "path": "../library" }]
+}

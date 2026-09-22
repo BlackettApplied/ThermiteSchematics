@@ -1,0 +1,23 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "a74d078b-0466-4904-b3a5-5ad4e90e0cc9",
+      "kind": "relation",
+      "designation": "REL-PROTECTS-001",
+      "relation": "protects",
+      "from": { "device": "CB1" },
+      "to": { "device": "M1" },
+      "description": "CB1 provides branch protection for M1"
+    },
+    {
+      "uid": "11056adf-ae12-42cd-a9ea-da6d815dc7f6",
+      "kind": "relation",
+      "designation": "REL-CONTROLS-001",
+      "relation": "controls",
+      "from": { "device": "PLC1" },
+      "to": { "device": "K1" },
+      "description": "PLC1 output controls the K1 coil through the stop and overload chain"
+    }
+  ]
+}

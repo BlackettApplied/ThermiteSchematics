@@ -1,0 +1,128 @@
+export {
+  SHIPPED_CORE_DISPLAY_ROOT,
+  SHIPPED_CORE_FILE_INVENTORY,
+  SHIPPED_CORE_LIBRARY_LOCATOR,
+  SHIPPED_CORE_LIBRARY_NAME,
+  SHIPPED_CORE_LIBRARY_VERSION,
+  SHIPPED_CORE_PACKAGE_NAME,
+  resolveShippedCoreLibrary,
+  type ShippedCoreLibraryResolution,
+} from "@thermite/core-library";
+export {
+  compileLoadedProject,
+  compileProject,
+  type CompiledProjectPresentation,
+  type CompileResult,
+} from "./compiler.js";
+export {
+  expandResolvedProject,
+  type ExpansionResult,
+  type FunctionId,
+  type IrCable,
+  type IrCableType,
+  type IrCableTypeConductor,
+  type IrDevice,
+  type IrDeviceType,
+  type IrDeviceTypeFunction,
+  type IrDeviceTypeInternalRelation,
+  type IrDeviceTypeTerminal,
+  type IrFunction,
+  type IrGangedGroup,
+  type IrInternalRelation,
+  type IrTerminal,
+} from "./expansion.js";
+export {
+  normalizeProjectGraph,
+  type CableConductorId,
+  type ConductiveElementId,
+  type GraphNormalizationResult,
+  type InstanceRef,
+  type IrCableConductor,
+  type IrCableConductorTypeMetadata,
+  type IrGraphIndexes,
+  type IrIndexes,
+  type IrIndexEntry,
+  type IrJumper,
+  type IrPotential,
+  type IrPotentialDeclaration,
+  type IrProjectRelation,
+  type IrWire,
+  type ProjectObjectRef,
+  type ProjectRelationEndpoints,
+  type ResolvedEndpoint,
+} from "./graph.js";
+export {
+  assembleElectricalIr,
+  compareConductiveElementId,
+  compareSourceRef,
+  serializeIr,
+  type ElectricalIr,
+  type IrLibrary,
+  type IrLibraryFile,
+  type IrProject,
+} from "./ir.js";
+export {
+  deriveProjectNets,
+  type IrNet,
+  type NetDerivationResult,
+} from "./nets.js";
+export { evaluateRules, type M3RuleId } from "./rules/index.js";
+export {
+  loadProject,
+  type LoadedDocument,
+  type LoadedDocumentKind,
+  type LoadedDocumentOwner,
+  type LoadedLibrary,
+  type LoadedLibraryLock,
+  type LoadedLibrarySourceFile,
+  type LoadedProject,
+  type LoadedProjectSourceFile,
+  type LibraryResolutionKind,
+  type LoadProjectOptions,
+  type LoadResult,
+  type NormalizedLibraryLock,
+  type NormalizedLibraryLockEntry,
+  type ProjectLibraryDependency,
+} from "./loader.js";
+export {
+  writeFileAtomically,
+  type AtomicWritableFile,
+  type AtomicWriteOperations,
+  type AtomicWriteOptions,
+} from "./atomic-write.js";
+export {
+  LIBRARY_LOCK_FILE_NAME,
+  LIBRARY_LOCK_SCHEMA_ID,
+  computeFileIntegrity,
+  computeLibraryIntegrity,
+  generateLibraryLock,
+  lockProject,
+  serializeLibraryLock,
+  verifyLibraryLock,
+  writeLibraryLock,
+  type LockProjectOptions,
+  type LockProjectResult,
+  type VerifyLibraryLockOptions,
+  type VerifyLibraryLockResult,
+} from "./lock.js";
+export {
+  buildProjectCatalogs,
+  resolveLoadedProject,
+  type CatalogBuildResult,
+  type InstanceTypeResolution,
+  type LibraryTypeCatalogEntry,
+  type ProjectCatalogs,
+  type ProjectObjectCatalogEntry,
+  type ResolvedDeviceReference,
+  type ResolvedTerminalReference,
+  type ResolveLoadedProjectResult,
+  type SourceRef,
+  type TerminalId,
+} from "./resolution.js";
+
+export {
+  analyzeCompleteness,
+  type CompletenessReport,
+  type CompletenessFinding,
+  type ConnectionInventoryEntry,
+} from "./completeness.js";

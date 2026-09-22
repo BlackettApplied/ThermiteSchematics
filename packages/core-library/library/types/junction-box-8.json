@@ -1,0 +1,32 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:junction-box-8",
+      "description": "Eight-position field junction box",
+      "terminals": {
+        "X1.1": { "role": "field_terminal" },
+        "X1.2": { "role": "field_terminal" },
+        "X1.3": { "role": "field_terminal" },
+        "X1.4": { "role": "field_terminal" },
+        "X1.5": { "role": "field_terminal" },
+        "X1.6": { "role": "field_terminal" },
+        "X1.7": { "role": "field_terminal" },
+        "X1.8": { "role": "field_terminal" }
+      },
+      "functions": {
+        "terminal1": { "kind": "bus", "terminals": ["X1.1"] },
+        "terminal2": { "kind": "bus", "terminals": ["X1.2"] },
+        "terminal3": { "kind": "bus", "terminals": ["X1.3"] },
+        "terminal4": { "kind": "bus", "terminals": ["X1.4"] },
+        "terminal5": { "kind": "bus", "terminals": ["X1.5"] },
+        "terminal6": { "kind": "bus", "terminals": ["X1.6"] },
+        "terminal7": { "kind": "bus", "terminals": ["X1.7"] },
+        "terminal8": { "kind": "bus", "terminals": ["X1.8"] }
+      },
+      "internal_relations": [],
+      "symbol": "iec:junction-box"
+    }
+  ]
+}

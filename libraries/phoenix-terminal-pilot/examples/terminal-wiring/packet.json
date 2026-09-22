@@ -1,0 +1,181 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "ST 2,5-QUATTRO - terminal functions",
+      "groups": [
+        {
+          "id": "XQ",
+          "label": "ST 2,5-QUATTRO / 3031306",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQ"
+              },
+              "key": "A1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQ"
+              },
+              "key": "A2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQ"
+              },
+              "key": "B1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQ"
+              },
+              "key": "B2"
+            }
+          ],
+          "conductors": [
+            "XQ-A1",
+            "XQ-A2",
+            "XQ-B1",
+            "XQ-B2",
+            "XQ-INTERNAL-A1-A2",
+            "XQ-INTERNAL-A2-B1",
+            "XQ-INTERNAL-B1-B2"
+          ]
+        }
+      ],
+      "notes": [
+        "Catalog demonstration only; no installation or conductor sizing is asserted.",
+        "A/B labels identify ordinary clamps in the manufacturer diagram, not printed terminal numbers. INTERNAL jumpers document factory busbar continuity; they are not additional field conductors."
+      ],
+      "terminalLayout": "distributed"
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "ST 2,5-QUATTRO BU - terminal functions",
+      "groups": [
+        {
+          "id": "XQB",
+          "label": "ST 2,5-QUATTRO BU / 3031319",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQB"
+              },
+              "key": "A1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQB"
+              },
+              "key": "A2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQB"
+              },
+              "key": "B1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XQB"
+              },
+              "key": "B2"
+            }
+          ],
+          "conductors": [
+            "XQB-A1",
+            "XQB-A2",
+            "XQB-B1",
+            "XQB-B2",
+            "XQB-INTERNAL-A1-A2",
+            "XQB-INTERNAL-A2-B1",
+            "XQB-INTERNAL-B1-B2"
+          ]
+        }
+      ],
+      "notes": [
+        "Catalog demonstration only; no installation or conductor sizing is asserted.",
+        "A/B labels identify ordinary clamps in the manufacturer diagram, not printed terminal numbers. INTERNAL jumpers document factory busbar continuity; they are not additional field conductors."
+      ],
+      "terminalLayout": "distributed"
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "ST 2,5-TWIN-MT - terminal functions",
+      "groups": [
+        {
+          "id": "XMT",
+          "label": "ST 2,5-TWIN-MT / 3036356",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XMT"
+              },
+              "key": "A2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XMT"
+              },
+              "key": "knife"
+            }
+          ],
+          "conductors": ["XMT-A1", "XMT-A2", "XMT-B1", "XMT-INTERNAL-A1-A2"]
+        }
+      ],
+      "notes": [
+        "Catalog demonstration only; no installation or conductor sizing is asserted.",
+        "A/B labels identify ordinary clamps in the manufacturer diagram, not printed terminal numbers. INTERNAL jumpers document factory busbar continuity; they are not additional field conductors.",
+        "A1 and A2 are fixed common. B1 stays on a separate physical net across the knife, shown open as in the manufacturer diagram."
+      ]
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "ST 16 - terminal functions",
+      "groups": [
+        {
+          "id": "X16",
+          "label": "ST 16 / 3036149",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "X16"
+              },
+              "key": "A1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "X16"
+              },
+              "key": "B1"
+            }
+          ],
+          "conductors": ["X16-A1", "X16-B1", "X16-INTERNAL-A1-B1"]
+        }
+      ],
+      "notes": [
+        "Catalog demonstration only; no installation or conductor sizing is asserted.",
+        "A/B labels identify ordinary clamps in the manufacturer diagram, not printed terminal numbers. INTERNAL jumpers document factory busbar continuity; they are not additional field conductors."
+      ],
+      "terminalLayout": "distributed"
+    }
+  ]
+}

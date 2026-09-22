@@ -1,0 +1,480 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1207700000",
+      "description": "HDC HE 16 FS female heavy-duty connector insert, 16 numbered poles plus PE assembly, screw termination, installation size 6",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1207700000",
+        "document": {
+          "url": "https://assets.dam.weidmueller.com/assets/api/557848ad-af15-4e18-8cd4-4930c8f75870/original/1207700000_HDC_HE_16_FS_STP_Blatt__1.pdf",
+          "title": "1207700000 HDC HE 16 FS customer drawing (Female Insert)",
+          "revision": "Drawn 24.10.2005; checked 31.10.2005; drawing/issue number fields unfilled",
+          "pages": "1: numbered-contact plan view, side/termination/isometric views and bill of materials"
+        },
+        "modelingNotes": [
+          "Exact order 1207700000, HDC HE 16 FS female screw-terminated insert, installation size 6. The exact manufacturer customer drawing visibly marks rows 1-8 and 9-16; BOM item 4 CONTACTOR is silver-plated brass, item 3 PE CONTACT is nickel-plated brass. No numbering or ratings are transferred from an FP variant or the adjacent 17-32 insert. No phase, polarity or application net is assigned.",
+          "C.1-C.16 and M.1-M.16 are authoring aliases separating each fixed numbered contact conductor into cable screw termination and female mating endpoint. C/M are not printed manufacturer side markings; terminalOrder is logical and does not prescribe a physical viewing direction or installed orientation.",
+          "Represent the 16 fixed contact conductors by explicit project jumpers C.n-M.n for n=1 through 16, supported by the exact drawing and screw-termination/female-contactor construction. These represent factory conductors, not field-installed jumpers. No numbered contact joins another numbered contact or PE. Singleton bus functions and connector metadata do not join nets.",
+          "PE represents the verified conductive PE assembly as one aggregate node. The exact sheet specifies a PE screw connection and the drawing identifies the PE contact assembly. Individual cable/mating/end-hardware interfaces remain unenumerated: connectionCoverage is partial. No invented C.PE/M.PE, left/right PE identifiers, split-PE fixed link, or automatic hood/mating-half bond is asserted.",
+          "The aggregate PE endpoint is required by explicit library policy for this connector model's protective-earth use; this is not a manufacturer instruction for every possible application. Ordinary numbered contacts remain application-dependent. Projects may annotate deliberate non-use. External protective bonding must be established by the project; PE presence does not prove an upstream bond.",
+          "Exact datasheet https://datasheet.weidmueller.com/pdf/en/1207700000/scope/2/, creation 18.02.2026 11:02:29 MEZ, pp.1-4: DIN EN 61984 rating 500 V / 16 A, impulse 6 kV, pollution severity 3, insulation group IIIa. UL/CSA voltage is 600 V AC/DC. UR current at AWG12/14/16/18/20 is 20/15/10/7/5 A; cUR is 19.7/15/11.3/10.3/8 A. Ratings are approval/wire-dependent capabilities; no assigned nominal_voltage or unconditional scalar current is modeled.",
+          "Exact sheet pp.2-4: limiting temperature -40 to +125 degC is not a full-current-at-every-ambient claim. Main terminal: 0.5-2.5 mm2 solid or finely stranded, ferruled maximum 2.5 mm2, AWG20-14, M3, 9 mm strip. AWG12 in the approval table does not authorize exceeding the stated terminal range. PE: M4, rated 4 mm2, AWG20-12, 10 mm strip, 1.2-1.5 Nm. Numbered contacts are copper alloy, silver passivated; no extra dedicated signal contact is present (16 power, zero signal contacts).",
+          "Main-contact torque revision discrepancy: exact 2026 sheet specifies 0.6-0.7 Nm; linked manufacturer HDC tightening table https://assets.dam.weidmueller.com/assets/api/719442ee-190c-4c27-8b06-0fb4d3eaf6d9/original/HDC_Tightening_torques.pdf, 1460950000 / 2014/2015, p.A.17, specifies HE M3 0.5-0.55 Nm. Both specify HE M4 PE 1.2-1.5 Nm. Confirm the installed hardware/manufacturer instruction before tightening; no universal main-contact torque is selected.",
+          "No additional shield, auxiliary or communication terminal is established for this exact insert. Hood/enclosure, mating insert and coding accessories are separate components. Installed revision, mating compatibility, assembly bonding and circuit suitability remain project checks."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Exact numbered contacts 1-16 have cable and female mating aliases (32 endpoints) and 16 fixed paths. Verified PE assembly is one aggregate PE endpoint; individual PE cable/mating/bond interfaces are not separately enumerated or linked. No hood or mating-half bond is assumed."
+      },
+      "terminals": {
+        "C.1": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 1; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.2": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 2; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.3": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 3; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.4": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 4; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.5": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 5; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.6": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 6; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.7": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 7; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.8": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 8; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.9": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 9; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.10": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 10; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.11": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 11; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.12": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 12; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.13": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 13; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.14": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 14; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.15": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 15; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "C.16": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Cable screw termination of contact 16; C is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.1": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 1; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.2": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 2; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.3": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 3; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.4": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 4; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.5": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 5; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.6": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 6; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.7": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 7; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.8": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 8; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.9": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 9; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.10": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 10; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.11": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 11; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.12": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 12; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.13": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 13; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.14": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 14; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.15": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 15; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "M.16": {
+          "role": "power",
+          "connection_policy": "shared",
+          "description": "Female mating contact 16; M is an authoring side alias; no application phase or net is assigned"
+        },
+        "PE": {
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "description": "Aggregate verified PE contact assembly; PE is a functional alias. Individual screw, mating and bonding interfaces are not separately enumerated.",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "C.10": {
+          "kind": "bus",
+          "terminals": ["C.10"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "C.12": {
+          "kind": "bus",
+          "terminals": ["C.12"]
+        },
+        "C.13": {
+          "kind": "bus",
+          "terminals": ["C.13"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "C.15": {
+          "kind": "bus",
+          "terminals": ["C.15"]
+        },
+        "C.16": {
+          "kind": "bus",
+          "terminals": ["C.16"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "M.10": {
+          "kind": "bus",
+          "terminals": ["M.10"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        },
+        "M.12": {
+          "kind": "bus",
+          "terminals": ["M.12"]
+        },
+        "M.13": {
+          "kind": "bus",
+          "terminals": ["M.13"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        },
+        "M.15": {
+          "kind": "bus",
+          "terminals": ["M.15"]
+        },
+        "M.16": {
+          "kind": "bus",
+          "terminals": ["M.16"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "C.7": "terminal",
+        "C.8": "terminal",
+        "C.9": "terminal",
+        "C.10": "terminal",
+        "C.11": "terminal",
+        "C.12": "terminal",
+        "C.13": "terminal",
+        "C.14": "terminal",
+        "C.15": "terminal",
+        "C.16": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "M.7": "terminal",
+        "M.8": "terminal",
+        "M.9": "terminal",
+        "M.10": "terminal",
+        "M.11": "terminal",
+        "M.12": "terminal",
+        "M.13": "terminal",
+        "M.14": "terminal",
+        "M.15": "terminal",
+        "M.16": "terminal",
+        "PE": "earth"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HE 16 FS female insert, installation size 6",
+          "description": "Exact numbered female contacts; verified PE assembly is represented separately as aggregate PE, without an invented distinct mating PE endpoint.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Manufacturer contact 1; no application phase/net assignment"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Manufacturer contact 2; no application phase/net assignment"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Manufacturer contact 3; no application phase/net assignment"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Manufacturer contact 4; no application phase/net assignment"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Manufacturer contact 5; no application phase/net assignment"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Manufacturer contact 6; no application phase/net assignment"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Manufacturer contact 7; no application phase/net assignment"
+            },
+            "8": {
+              "terminal": "M.8",
+              "description": "Manufacturer contact 8; no application phase/net assignment"
+            },
+            "9": {
+              "terminal": "M.9",
+              "description": "Manufacturer contact 9; no application phase/net assignment"
+            },
+            "10": {
+              "terminal": "M.10",
+              "description": "Manufacturer contact 10; no application phase/net assignment"
+            },
+            "11": {
+              "terminal": "M.11",
+              "description": "Manufacturer contact 11; no application phase/net assignment"
+            },
+            "12": {
+              "terminal": "M.12",
+              "description": "Manufacturer contact 12; no application phase/net assignment"
+            },
+            "13": {
+              "terminal": "M.13",
+              "description": "Manufacturer contact 13; no application phase/net assignment"
+            },
+            "14": {
+              "terminal": "M.14",
+              "description": "Manufacturer contact 14; no application phase/net assignment"
+            },
+            "15": {
+              "terminal": "M.15",
+              "description": "Manufacturer contact 15; no application phase/net assignment"
+            },
+            "16": {
+              "terminal": "M.16",
+              "description": "Manufacturer contact 16; no application phase/net assignment"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "C.7",
+        "C.8",
+        "C.9",
+        "C.10",
+        "C.11",
+        "C.12",
+        "C.13",
+        "C.14",
+        "C.15",
+        "C.16",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "M.7",
+        "M.8",
+        "M.9",
+        "M.10",
+        "M.11",
+        "M.12",
+        "M.13",
+        "M.14",
+        "M.15",
+        "M.16",
+        "PE"
+      ]
+    }
+  ]
+}

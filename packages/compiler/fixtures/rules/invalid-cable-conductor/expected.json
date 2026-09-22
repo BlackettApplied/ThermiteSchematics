@@ -1,0 +1,20 @@
+[
+  {
+    "code": "E200",
+    "severity": "error",
+    "message": "Cable \"CBL1\" conductor \"X\" is not declared by selected cable type \"rules:cable\". Available conductor IDs: [\"1\", \"2\"].",
+    "file": "sources/objects.json",
+    "line": 29,
+    "column": 9,
+    "jsonPointer": "/objects/2/conductors/1",
+    "uid": "20000000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "../library/types/connectivity.json",
+        "line": 10,
+        "column": 5,
+        "note": "Selected cable type \"rules:cable\" is declared here. Available conductor IDs: [\"1\", \"2\"]."
+      }
+    ]
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Unmatched glob" },
+  "sources": ["missing/**/*.json"]
+}

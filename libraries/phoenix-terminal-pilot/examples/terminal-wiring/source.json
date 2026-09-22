@@ -1,0 +1,388 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "a6a296e1-20ff-5908-988f-5b4283824cef",
+      "designation": "XQ",
+      "type": "phoenix-terminal-pilot:3031306"
+    },
+    {
+      "kind": "device",
+      "uid": "9ea64ab6-5f29-538c-acee-4163aea474c1",
+      "designation": "XQ-TEST",
+      "type": "phoenix-terminal-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "2d563093-c435-5d3c-a12b-dcbeba0326a7",
+      "designation": "XQ-A1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQ-TEST",
+          "terminal": "A1"
+        },
+        {
+          "device": "XQ",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "c6cc2848-2a82-5ef9-ab4c-17b7fabf5f1d",
+      "designation": "XQ-A2",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQ-TEST",
+          "terminal": "A2"
+        },
+        {
+          "device": "XQ",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "aacb0551-0ef5-5e89-9d24-a44339d1baf6",
+      "designation": "XQ-B1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQ-TEST",
+          "terminal": "B1"
+        },
+        {
+          "device": "XQ",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "31226671-5782-55aa-81bb-f563c52f24fd",
+      "designation": "XQ-B2",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQ-TEST",
+          "terminal": "B2"
+        },
+        {
+          "device": "XQ",
+          "terminal": "B2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "41cdd2c5-4913-58ed-85b9-893c96e72069",
+      "designation": "XQ-INTERNAL-A1-A2",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQ",
+          "terminal": "A1"
+        },
+        {
+          "device": "XQ",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "77b5ff9b-175e-517a-a1db-b745cd96b802",
+      "designation": "XQ-INTERNAL-A2-B1",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQ",
+          "terminal": "A2"
+        },
+        {
+          "device": "XQ",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "22fb6298-7a5e-5556-b320-2c8f2afd7d46",
+      "designation": "XQ-INTERNAL-B1-B2",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQ",
+          "terminal": "B1"
+        },
+        {
+          "device": "XQ",
+          "terminal": "B2"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "66118dae-2cca-568b-bb27-564bd346af91",
+      "designation": "XQB",
+      "type": "phoenix-terminal-pilot:3031319"
+    },
+    {
+      "kind": "device",
+      "uid": "ac55d1d6-84c7-594a-a97e-f3dd8b9a1720",
+      "designation": "XQB-TEST",
+      "type": "phoenix-terminal-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "d41392c1-ed4c-5409-80d1-2a7ee6e81073",
+      "designation": "XQB-A1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQB-TEST",
+          "terminal": "A1"
+        },
+        {
+          "device": "XQB",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "ae600727-e704-5822-8c5d-451aa9ec6587",
+      "designation": "XQB-A2",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQB-TEST",
+          "terminal": "A2"
+        },
+        {
+          "device": "XQB",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "1f004631-e24b-57f0-af30-235cbd74674b",
+      "designation": "XQB-B1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQB-TEST",
+          "terminal": "B1"
+        },
+        {
+          "device": "XQB",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "ff1ba56e-0291-5490-9d02-ef8528f77d6b",
+      "designation": "XQB-B2",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XQB-TEST",
+          "terminal": "B2"
+        },
+        {
+          "device": "XQB",
+          "terminal": "B2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "04afc14a-860c-599a-8815-ec21de9c06fa",
+      "designation": "XQB-INTERNAL-A1-A2",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQB",
+          "terminal": "A1"
+        },
+        {
+          "device": "XQB",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "180b2dd7-7b76-5e71-b009-ff2764d1e6ea",
+      "designation": "XQB-INTERNAL-A2-B1",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQB",
+          "terminal": "A2"
+        },
+        {
+          "device": "XQB",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "8ee91a4d-0c47-5d17-b261-47aec0468f65",
+      "designation": "XQB-INTERNAL-B1-B2",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XQB",
+          "terminal": "B1"
+        },
+        {
+          "device": "XQB",
+          "terminal": "B2"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "8ddb63b3-990f-5342-8d76-27e616745f4e",
+      "designation": "XMT",
+      "type": "phoenix-terminal-pilot:3036356"
+    },
+    {
+      "kind": "device",
+      "uid": "895b12c0-448a-5463-be9f-2cc32ebadade",
+      "designation": "XMT-TEST",
+      "type": "phoenix-terminal-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "4c993911-2855-5b36-9790-7461b14bcda1",
+      "designation": "XMT-A1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XMT-TEST",
+          "terminal": "A1"
+        },
+        {
+          "device": "XMT",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "44eccc18-25be-56a5-bd47-4197130998c8",
+      "designation": "XMT-A2",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XMT-TEST",
+          "terminal": "A2"
+        },
+        {
+          "device": "XMT",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "4457a7cd-9190-58e6-9133-eaeb7634999e",
+      "designation": "XMT-B1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "XMT-TEST",
+          "terminal": "B1"
+        },
+        {
+          "device": "XMT",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "09fac6ad-3797-58c2-b0b9-ae9b351076a5",
+      "designation": "XMT-INTERNAL-A1-A2",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "XMT",
+          "terminal": "A1"
+        },
+        {
+          "device": "XMT",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "47a07a56-211b-5ed0-af0d-65d0ac0251f9",
+      "designation": "X16",
+      "type": "phoenix-terminal-pilot:3036149"
+    },
+    {
+      "kind": "device",
+      "uid": "1e92aabb-f857-50fe-ada9-e1dc3a279c86",
+      "designation": "X16-TEST",
+      "type": "phoenix-terminal-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "71836125-f6fe-5a74-b605-288d25b41a41",
+      "designation": "X16-A1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "X16-TEST",
+          "terminal": "A1"
+        },
+        {
+          "device": "X16",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "2cddc8cc-f837-52dd-bb3f-56093689f24b",
+      "designation": "X16-B1",
+      "description": "Synthetic external lead to demonstrate the ordinary clamp",
+      "endpoints": [
+        {
+          "device": "X16-TEST",
+          "terminal": "B1"
+        },
+        {
+          "device": "X16",
+          "terminal": "B1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "6a5d6b11-8436-5ab6-8b2e-1f494e97ffbe",
+      "designation": "X16-INTERNAL-A1-B1",
+      "description": "Model of factory fixed internal busbar continuity; not an extra external wire or purchased bridge accessory",
+      "endpoints": [
+        {
+          "device": "X16",
+          "terminal": "A1"
+        },
+        {
+          "device": "X16",
+          "terminal": "B1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "file": "library/types/module.json",
+    "line": 3,
+    "column": 5,
+    "jsonPointer": "/types/0",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 7,
+        "column": 14,
+        "note": "Declared terminal \"1\" must appear once in the order."
+      }
+    ],
+    "code": "E203",
+    "severity": "error",
+    "message": "fixture:module terminalOrder must list every declared terminal exactly once."
+  }
+]

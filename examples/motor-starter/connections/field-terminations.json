@@ -1,0 +1,57 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "e84a9629-373c-4946-8b48-184b7464d474",
+      "kind": "wire",
+      "designation": "W-FLD-001",
+      "endpoints": [
+        { "device": "TB1", "terminal": "3" },
+        { "device": "PLC1", "terminal": "X1.0" }
+      ],
+      "properties": {
+        "label": "LS1-RETURN-PLC1-DI0",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "4f3f64e8-af7c-4b5d-9cbc-250368ad3e75",
+      "kind": "wire",
+      "designation": "W-FLD-002",
+      "endpoints": [
+        { "device": "JB1", "terminal": "X1.1" },
+        { "device": "LS1", "terminal": "13" }
+      ],
+      "properties": {
+        "label": "+24V-JB1-LS1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+      "kind": "wire",
+      "designation": "W-FLD-003",
+      "endpoints": [
+        { "device": "LS1", "terminal": "14" },
+        { "device": "JB1", "terminal": "X1.2" }
+      ],
+      "properties": {
+        "label": "LS1-SWITCHED-RETURN",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "7bdee01c-ec15-4747-9208-ee650da1e681",
+      "kind": "jumper",
+      "designation": "JP1",
+      "description": "Distributes +24 VDC from TB1.1 to the LS1 cable feed at TB1.2",
+      "endpoints": [
+        { "device": "TB1", "terminal": "1" },
+        { "device": "TB1", "terminal": "2" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022701r0700",
+      "description": "HRC fuse link, DIN-type NH size 2, gG, 250 A, 690 V AC / 250 V DC (ABB OFAA2GG250)",
+      "category": "component",
+      "symbol": "thermite:fuse",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022701R0700",
+        "document": {
+          "url": "https://library.e.abb.com/public/f5b11030645a47049f82447a40dd8fc8/OF1GB_19-01_1SCC317001C0201.pdf",
+          "title": "ABB Fusegear DIN-type HRC-fuse links, 2...1250 A",
+          "revision": "OF1GB 19-01 / 1SCC317001C0201",
+          "pages": "Ordering table PDF p.10 (row OFAA2GG250 / 1SCA022701R0700); Technical data & Features PDF p.15; Dimension drawing PDF p.54 (printed p.52)"
+        },
+        "modelingNotes": [
+          "Exact identity: ABB library ordering table lists OFAA2GG250 -> order code 1SCA022701R0700, NH size 2, 690 V/250 V, 250 A, power loss 20.6 W. This is the fuse LINK (replaceable element), not a fuse base (OFAX/OS) or a switch-disconnector (OS/OT).",
+          "Utilization category gG (general cable/line protection). Standards IEC 60269-1 & -2, DIN VDE 0636-1 & -2, DIN 43620-1 (technical-data page). Ceramic body, silver-plated copper knife-blade contacts, non-isolated gripping lugs.",
+          "Voltage capability is dual and bidirectional: 690 V AC and 250 V DC. It is deliberately NOT encoded as rating.nominal_voltage/voltage_type, because the compiler compares nominal_voltage exactly to circuit intent and this device is neither AC-only nor tied to one voltage. Rated current In = 250 A is recorded as terminal current capability; breaking capacity 80 kA (AC and DC) and 20.6 W loss are documentation only.",
+          "Two terminals '1' and '2' are the two knife-blade contacts (one at each end), confirmed on the visually inspected DIN dimension drawing. NH fuse links carry NO printed terminal numbering; '1'/'2' are functional aliases with no orientation/polarity meaning.",
+          "The single function 'element' is a normally-closed conducting path. A fuse must NOT be modeled as a permanent (fixed) link: it normally conducts but is a protective element, so no fixedLink joins the two nets.",
+          "No auxiliary contacts, no striker/microswitch terminal, no PE/bond point exist on the standard gG link. The blown-fuse indicator is visual only. Separately ordered OFM/OFS/OFD fuse monitors (aux contacts 11/14/21/22) are different parts and are not included here.",
+          "connectionCoverage is complete for the electrical interface (exactly two blades); only the (nonexistent) blade markings are unverified."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "The two knife-blade contacts are the complete electrical interface of the NH gG fuse link; no auxiliary, striker, or PE terminal exists. NH links carry no printed terminal designations, so '1'/'2' are functional aliases (unmarked), not verified markings."
+      },
+      "terminals": {
+        "1": {
+          "description": "Fuse-link knife-blade contact (end 1); functional alias, unmarked, non-polarized",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "2": {
+          "description": "Fuse-link knife-blade contact (end 2); functional alias, unmarked, non-polarized",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        }
+      },
+      "functions": {
+        "element": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "element": "fuse"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

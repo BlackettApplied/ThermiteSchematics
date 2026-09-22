@@ -1,0 +1,19 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Thermite Schematics Starter Project"
+  },
+  "sources": [
+    "devices/equipment.json",
+    "connections/control-power.json",
+    "potentials/potentials.json"
+  ],
+  "presentation": "presentation.json",
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.1.0"
+    }
+  ]
+}

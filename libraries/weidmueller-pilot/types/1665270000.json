@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665270000",
+      "description": "HDC 16B DMDQ 2QB — size 6 mechanical hood cover",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665270000",
+        "document": {
+          "url": "https://eshop.weidmueller.com/en/hdc-16b-dmdq-2qb/p/1665270000",
+          "title": "HDC 16B DMDQ 2QB — 1665270000",
+          "revision": "No revision stated; accessed 2026-09-11",
+          "pages": "HTML: General ordering data and Version"
+        },
+        "modelingNotes": [
+          "Size 6 cover for the upper housing/hood, with side-locking clamps; mechanical accessory only.",
+          "The 2011 manufacturer datasheet at the E.B. Horsman mirror corroborates identity and diecast aluminium construction; see research.md, S2, pages 1–2.",
+          "No electrical terminals, contact functions or fixed electrical links. Metalwork and the retaining tether do not establish a specified PE/bond connection; assembly bonding is separate.",
+          "COVER is an authoring alias for mechanical attachment, not a manufacturer terminal marking.",
+          "Current IP65 in plugged condition differs from historical IP66. No environmental or electrical rating is assigned; see research.md."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete for the exact mechanical cover order: no electrical power, return, PE/bond, shield, signal, communication or optional contact terminals. Associated housings and inserts are separate components."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Size 6 HDC upper-housing cover",
+          "description": "Mechanical attachment only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

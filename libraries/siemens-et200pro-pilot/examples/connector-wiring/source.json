@@ -1,0 +1,470 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "f1fa6da0-6fe3-5658-a8f4-f4945265bf81",
+      "designation": "IM",
+      "type": "siemens-et200pro-pilot:im154-4-pn-hf-cm-m12-7-8"
+    },
+    {
+      "kind": "device",
+      "uid": "2037a4c4-f015-5c6b-a23e-3aaf367a55bb",
+      "designation": "DI",
+      "type": "siemens-et200pro-pilot:di8-hf-cm8-m12"
+    },
+    {
+      "kind": "device",
+      "uid": "1d67a4eb-2ed1-5250-aa29-fcce7d0650b4",
+      "designation": "DQ",
+      "type": "siemens-et200pro-pilot:dq4-2a-hf-cm4-m12p"
+    },
+    {
+      "kind": "device",
+      "uid": "4c7113a8-ced5-5dfb-8287-ef43149e3146",
+      "designation": "AIU",
+      "type": "siemens-et200pro-pilot:ai4-u-hf-cm4-m12"
+    },
+    {
+      "kind": "device",
+      "uid": "0265589c-8062-5835-b3cb-9d49e82a07da",
+      "designation": "AII",
+      "type": "siemens-et200pro-pilot:ai4-i-hf-cm4-m12"
+    },
+    {
+      "kind": "device",
+      "uid": "6ea97ceb-07fb-5ebf-94fb-a1d64aeff5a6",
+      "designation": "AO",
+      "type": "siemens-et200pro-pilot:ao4-u-hf-cm4-m12"
+    },
+    {
+      "kind": "device",
+      "uid": "2c2359e9-1219-574b-ae0b-4d5f6ef4b455",
+      "designation": "PSE",
+      "type": "siemens-et200pro-pilot:6EP1961-2BA41",
+      "connectionReview": {
+        "terminals": {
+          "+24V.1": {
+            "status": "required",
+            "reason": "This fixture selects the first input/return screw; the other duplicate remains available."
+          },
+          "0V.1": {
+            "status": "required",
+            "reason": "This fixture selects the first input/return screw; the other duplicate remains available."
+          }
+        }
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "2dc8e53c-132f-5075-8da4-43b65e592cab",
+      "designation": "SUPPLY",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "ad4bcbde-b03e-5ecd-993b-148615ae4db6",
+      "designation": "FIELD-DI",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "f993c145-5efe-50f0-99fc-dcfbfdb1cd9c",
+      "designation": "FIELD-DQ",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "9a9413e6-d55c-501d-9bcc-38397663866e",
+      "designation": "FIELD-AIU",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "a6d70880-469e-5b07-8f5e-817d2c639889",
+      "designation": "FIELD-AII",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "f8fcb3f2-5ee4-590f-909c-c2139154b2c0",
+      "designation": "FIELD-AO",
+      "type": "et200pro-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "aec939a4-b9b9-5605-836a-580647722ce4",
+      "designation": "BREAKOUT",
+      "type": "et200pro-fixture:power-breakout"
+    },
+    {
+      "kind": "wire",
+      "uid": "2266728d-c7d7-5cbe-a86f-8420feec3338",
+      "designation": "P01",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "+24V"
+        },
+        {
+          "device": "PSE",
+          "terminal": "+24V.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "42184410-9276-5241-ae8c-740ef83b909b",
+      "designation": "P02",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "0V"
+        },
+        {
+          "device": "PSE",
+          "terminal": "0V.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "4f30c380-0926-5564-aea7-463a8f0e1ba9",
+      "designation": "P03",
+      "endpoints": [
+        {
+          "device": "PSE",
+          "terminal": "1"
+        },
+        {
+          "device": "BREAKOUT",
+          "terminal": "4"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "5929c43e-86d0-53a0-aeb9-145ce5cef15f",
+      "designation": "P04",
+      "endpoints": [
+        {
+          "device": "PSE",
+          "terminal": "2"
+        },
+        {
+          "device": "BREAKOUT",
+          "terminal": "5"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "c3337822-4124-5016-81c9-704c87305b82",
+      "designation": "P05",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "0V"
+        },
+        {
+          "device": "BREAKOUT",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "cac6443f-c6af-53da-8039-b5952abeb616",
+      "designation": "P06",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "0V"
+        },
+        {
+          "device": "BREAKOUT",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "9dd7dc89-12cc-5c89-8b41-727554892188",
+      "designation": "P07",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "FE"
+        },
+        {
+          "device": "BREAKOUT",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "ea2caa35-1306-5459-a30f-e8fdc8184d24",
+      "designation": "P11",
+      "endpoints": [
+        {
+          "device": "BREAKOUT",
+          "terminal": "1"
+        },
+        {
+          "device": "IM",
+          "terminal": "X03.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "a98e0836-3189-5e94-83ff-4bad7748b88b",
+      "designation": "P12",
+      "endpoints": [
+        {
+          "device": "BREAKOUT",
+          "terminal": "2"
+        },
+        {
+          "device": "IM",
+          "terminal": "X03.2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "fc24e00a-643b-5e1d-9643-95be42f708b3",
+      "designation": "P13",
+      "endpoints": [
+        {
+          "device": "BREAKOUT",
+          "terminal": "3"
+        },
+        {
+          "device": "IM",
+          "terminal": "X03.3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e2aa352b-b402-58ec-bf25-f83aeaad3f6f",
+      "designation": "P14",
+      "endpoints": [
+        {
+          "device": "BREAKOUT",
+          "terminal": "4"
+        },
+        {
+          "device": "IM",
+          "terminal": "X03.4"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e69d730f-7198-58a6-a1e6-8d2574a07808",
+      "designation": "P15",
+      "endpoints": [
+        {
+          "device": "BREAKOUT",
+          "terminal": "5"
+        },
+        {
+          "device": "IM",
+          "terminal": "X03.5"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "1a56ff5e-1a0d-5567-bb73-5122b37b94f1",
+      "designation": "DI-SIG",
+      "endpoints": [
+        {
+          "device": "DI",
+          "terminal": "X1.4"
+        },
+        {
+          "device": "FIELD-DI",
+          "terminal": "OUT"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "d4303595-a2de-564b-af31-f58a04fefcc0",
+      "designation": "DI-RET",
+      "endpoints": [
+        {
+          "device": "DI",
+          "terminal": "X1.3"
+        },
+        {
+          "device": "FIELD-DI",
+          "terminal": "0V"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "48c057b1-4755-5817-ba67-73fdcc88a5b6",
+      "designation": "DI-PWR",
+      "endpoints": [
+        {
+          "device": "DI",
+          "terminal": "X1.1"
+        },
+        {
+          "device": "FIELD-DI",
+          "terminal": "+24V"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "d7674b59-ac99-5a06-adeb-500a7bf159c9",
+      "designation": "DQ-SIG",
+      "endpoints": [
+        {
+          "device": "DQ",
+          "terminal": "X1.4"
+        },
+        {
+          "device": "FIELD-DQ",
+          "terminal": "IN"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "2df922eb-2777-57b1-af91-f7af8063f03e",
+      "designation": "DQ-RET",
+      "endpoints": [
+        {
+          "device": "DQ",
+          "terminal": "X1.3"
+        },
+        {
+          "device": "FIELD-DQ",
+          "terminal": "0V"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "0e335d4b-fb39-523a-b466-6f8316bd762a",
+      "designation": "AIU-POS",
+      "endpoints": [
+        {
+          "device": "AIU",
+          "terminal": "X1.2"
+        },
+        {
+          "device": "FIELD-AIU",
+          "terminal": "+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "d820b095-d116-509d-a234-ef4e91812317",
+      "designation": "AIU-NEG",
+      "endpoints": [
+        {
+          "device": "AIU",
+          "terminal": "X1.4"
+        },
+        {
+          "device": "FIELD-AIU",
+          "terminal": "-"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "6d186639-90e5-56a6-836a-23078ac1e1eb",
+      "designation": "AII-POS",
+      "endpoints": [
+        {
+          "device": "AII",
+          "terminal": "X1.2"
+        },
+        {
+          "device": "FIELD-AII",
+          "terminal": "+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "c4d893c3-2a86-55a8-a384-bd1221c42f54",
+      "designation": "AII-NEG",
+      "endpoints": [
+        {
+          "device": "AII",
+          "terminal": "X1.4"
+        },
+        {
+          "device": "FIELD-AII",
+          "terminal": "-"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "94fe8c98-c174-563e-a47b-3f0c4ec070ac",
+      "designation": "AO-POS",
+      "endpoints": [
+        {
+          "device": "AO",
+          "terminal": "X1.2"
+        },
+        {
+          "device": "FIELD-AO",
+          "terminal": "+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "8dec4bd7-a919-5959-b185-43e61ea37443",
+      "designation": "AO-NEG",
+      "endpoints": [
+        {
+          "device": "AO",
+          "terminal": "X1.4"
+        },
+        {
+          "device": "FIELD-AO",
+          "terminal": "-"
+        }
+      ]
+    },
+    {
+      "kind": "relation",
+      "uid": "4d8204e2-bf5f-5463-8acc-b6316e2c09f8",
+      "designation": "HARNESS",
+      "relation": "associated_with",
+      "from": {
+        "device": "BREAKOUT"
+      },
+      "to": {
+        "device": "IM"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "P",
+        "toPort": "X03",
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "Assembly metadata does not prove pin continuity. The separate P11-P15 conductors explicitly exercise five pin connections in this synthetic fixture."
+        },
+        "cable": {
+          "specification": "Synthetic five-core power-harness fixture; no installed cable identity claimed"
+        },
+        "status": "planned"
+      }
+    }
+  ]
+}

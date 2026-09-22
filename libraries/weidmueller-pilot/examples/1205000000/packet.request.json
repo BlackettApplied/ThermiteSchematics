@@ -1,0 +1,12 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid"
+  },
+  "views": [
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "bom"
+    }
+  ]
+}

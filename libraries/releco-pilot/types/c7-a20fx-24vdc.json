@@ -1,0 +1,147 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:c7-a20fx-24vdc",
+      "description": "Two-pole changeover power relay, 24 V DC coil with FX polarity protection, free-wheeling diode and LED",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "C7-A20FX/24VDC",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco General Catalogue / World of Relays",
+          "revision": "WoR 3.2",
+          "pages": "10, 11, 69 (printed and physical PDF)"
+        },
+        "modelingNotes": [
+          "Manufacturer row C7-A2xFX/DC.V at 24 V and AgNi code C7-A20 establish C7-A20FX/DC24V; source /24VDC is interpreted as the same voltage field and preserved verbatim.",
+          "Bare relay only: physical pins 1=12, 2=22, 3=14, 4=24, 5=11, 6=21, 7=A1+, 8=A2-. IEC names are aliases proven by page 69 figure 1; negative FX polarity is shown on page 11. Socket wire clamps are excluded.",
+          "Page 69 figure 4 depicts the exposed pin face (underside); no top-view or socket orientation is transferred into this model.",
+          "Coil nominal 24 V DC; operating range 0.8-1.1 Un; catalog DC consumption 1 W and 24 V coil table 632 ohms / 38 mA. Coil pins required by library policy; contact terminals application-dependent.",
+          "AgNi contacts: maximum 10 A at 250 V AC-1 or 30 V DC-1; inrush 30 A for 20 ms; recommended minimum 10 mA / 10 V. Consult page 69 DC load curve for DC voltage and inductive L/R=40 ms derating. No universal contact current or nominal-voltage scalar is assigned.",
+          "Two changeover poles are represented by paired NC/NO functions sharing each common pin and actuated by the coil. Contact states, coil and FX electronics never manufacture permanent continuity; fixed links are empty.",
+          "FX includes series polarity-protection diode, free-wheeling diode and LED, represented within the coil abstraction without separate semiconductor graphics or switching simulation."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All eight physical Faston relay pins from page 69 figures 1 and 4 are included. FX circuitry uses only coil pins 7 and 8. No separately ordered socket, PE, shield or communication interface is included."
+      },
+      "terminals": {
+        "1": {
+          "role": "control",
+          "description": "Physical pin 1 / IEC 12, pole 1 NC",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "2": {
+          "role": "control",
+          "description": "Physical pin 2 / IEC 22, pole 2 NC",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "3": {
+          "role": "control",
+          "description": "Physical pin 3 / IEC 14, pole 1 NO",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "4": {
+          "role": "control",
+          "description": "Physical pin 4 / IEC 24, pole 2 NO",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "5": {
+          "role": "control",
+          "description": "Physical pin 5 / IEC 11, pole 1 common",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "6": {
+          "role": "control",
+          "description": "Physical pin 6 / IEC 21, pole 2 common",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "7": {
+          "role": "coil",
+          "description": "Physical pin 7 / A1+, positive coil supply",
+          "required": true,
+          "connection_policy": "exclusive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "8": {
+          "role": "coil",
+          "description": "Physical pin 8 / A2-, negative coil return",
+          "required": true,
+          "connection_policy": "exclusive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["7", "8"]
+        },
+        "pole1_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["5", "1"]
+        },
+        "pole1_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "3"]
+        },
+        "pole2_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["6", "2"]
+        },
+        "pole2_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["6", "4"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2_no"
+        }
+      ],
+      "circuitSymbols": {
+        "coil": "coil",
+        "pole1_nc": "contact-nc",
+        "pole1_no": "contact-no",
+        "pole2_nc": "contact-nc",
+        "pole2_no": "contact-no"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8"]
+    }
+  ]
+}

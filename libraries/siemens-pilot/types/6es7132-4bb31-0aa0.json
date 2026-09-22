@@ -1,0 +1,174 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7132-4bb31-0aa0",
+      "description": "ET 200S 2DO DC24V/2A ST; documented assembled field interface on TM-E15C26-A1",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7132-4BB31-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/531/25390531/att_57260/v1/et200s_2do_dc24v_2a_st_manual_en-US.pdf",
+          "title": "ET 200S distributed I/O — Digital electronic module 2DO DC24V/2A ST (6ES7132-4BB31-0AA0)",
+          "revision": "04/2007, A5E01077237-01",
+          "pages": "Printed/physical pp.7–10; assignments p.7, compatible bases p.8, Fig.1-1 p.9"
+        },
+        "modelingNotes": [
+          "Exact electronic module represented at the documented TM-E15C24-01 (6ES7193-4CB30-0AA0) assembled field interface: eight numbered field clamps and no AUX clamps. Card and base are separately ordered. Verify the installed per-slot pairing before use. Do not add this abstraction and a second full field-clamp representation to the same circuit.",
+          "Field assignment: 1=DO0,5=DO1;2/6=L+;3/7=M;4/8=not connected (maximum applied voltage30 VDC). Internal P1=1M and P2=L+ use the exact Figure1-1 designations, not physical field-clamp names.",
+          "Exact p.9 block diagram establishes fixed P1–3–7 and P2–2–6 paths; author explicit source jumpers. Neither output is permanently joined to supply or return. Functions do not simulate switching.",
+          "Rated load supply 24 VDC from power module. Outputs rated 2 A each, 4 A total per module; signal-1 range 7 mA–2.4 A; signal-0 leakage at most 0.5 mA. Lamp load at most 10 W; resistive switching 100 Hz, inductive 2 Hz at 0.5 H, lamp 10 Hz. Range maxima are not alternative assigned ratings.",
+          "P1/P2 require operating supply connectivity; field terminals are application-dependent. Presence checks can be met by internal jumpers and do not prove an external power module or operational backplane.",
+          "The electronic card does not own the separate base clamps. Internal operating-supply endpoints are functional interfaces, not an enumeration of mating fingers. Backplane communication/contact inventory and installed per-slot base pairing remain unverified. Compatible A1-base auxiliary clamps are not part of this selected 24-01 arrangement. Preserve partial coverage; no PE, shield or AUX bond is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "The electronic card does not own the separate base clamps. Internal operating-supply endpoints are functional interfaces, not an enumeration of mating fingers. Backplane communication/contact inventory and installed per-slot base pairing remain unverified. Compatible A1-base auxiliary clamps are not part of this selected 24-01 arrangement. Preserve partial coverage; no PE, shield or AUX bond is inferred."
+      },
+      "terminals": {
+        "1": {
+          "description": "DO0 / switched digital output channel 0",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 2
+          }
+        },
+        "2": {
+          "description": "L+ / field supply",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "3": {
+          "description": "M / DC common",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "n.c. / no module connection",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5": {
+          "description": "DO1 / switched digital output channel 1",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 2
+          }
+        },
+        "6": {
+          "description": "L+ / field supply",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "7": {
+          "description": "M / DC common",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8": {
+          "description": "n.c. / no module connection",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P1": {
+          "description": "1M / functional internal potential-bus interface; not field clamp",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "P2": {
+          "description": "L+ / functional internal potential-bus interface; not field clamp",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8", "P1", "P2"],
+      "functions": {
+        "2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "4": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "8": {
+          "kind": "bus",
+          "terminals": ["8"]
+        },
+        "P1": {
+          "kind": "bus",
+          "terminals": ["P1"]
+        },
+        "P2": {
+          "kind": "bus",
+          "terminals": ["P2"]
+        },
+        "DO0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1"]
+        },
+        "DO1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["5"]
+        }
+      },
+      "circuitSymbols": {
+        "2": "terminal",
+        "3": "terminal",
+        "4": "terminal",
+        "6": "terminal",
+        "7": "terminal",
+        "8": "terminal",
+        "P1": "terminal",
+        "P2": "terminal",
+        "DO0": "interface",
+        "DO1": "interface"
+      }
+    }
+  ]
+}

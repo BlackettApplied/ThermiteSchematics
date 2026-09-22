@@ -1,0 +1,50 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "signal-loop-view-request/0.1",
+      "from": {
+        "device": "AQ1",
+        "function": "ch3"
+      },
+      "to": {
+        "device": "V1",
+        "function": "command"
+      },
+      "auxiliary": [
+        {
+          "from": {
+            "device": "XT1",
+            "function": "aux1"
+          },
+          "to": {
+            "device": "V1",
+            "function": "supply"
+          }
+        }
+      ],
+      "cableAssemblies": [
+        {
+          "cable": "CB1",
+          "connector": "M12",
+          "description": "4-pole command + power cordset (proposed)"
+        }
+      ],
+      "enclosures": [
+        {
+          "label": "Main cabinet",
+          "devices": ["AQ1", "XT1", "XP1"],
+          "wallDevice": "XP1"
+        }
+      ],
+      "notes": [
+        "PROPOSED interface only: exact valve, M12 pins and power requirements remain open.",
+        "XT1 terminals 3/4 reserve a 24 V feed; upstream power and protection are not yet designed."
+      ]
+    }
+  ]
+}

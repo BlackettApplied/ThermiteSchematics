@@ -1,0 +1,81 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Rejected paths"
+  },
+  "sources": [
+    "sources/**/*.json"
+  ],
+  "libraries": [
+    {
+      "name": "library-0",
+      "version": "0.1.0",
+      "path": "/library/core"
+    },
+    {
+      "name": "library-1",
+      "version": "0.1.0",
+      "path": "//server/share"
+    },
+    {
+      "name": "library-2",
+      "version": "0.1.0",
+      "path": "C:/library/core"
+    },
+    {
+      "name": "library-3",
+      "version": "0.1.0",
+      "path": "C:\\library\\core"
+    },
+    {
+      "name": "library-4",
+      "version": "0.1.0",
+      "path": "C:library"
+    },
+    {
+      "name": "library-5",
+      "version": "0.1.0",
+      "path": "D:../library"
+    },
+    {
+      "name": "library-6",
+      "version": "0.1.0",
+      "path": "\\\\server\\share"
+    },
+    {
+      "name": "library-7",
+      "version": "0.1.0",
+      "path": "\\\\?\\C:\\library"
+    },
+    {
+      "name": "library-8",
+      "version": "0.1.0",
+      "path": "nested\\library"
+    },
+    {
+      "name": "library-9",
+      "version": "0.1.0",
+      "path": ""
+    },
+    {
+      "name": "library-10",
+      "version": "0.1.0",
+      "path": "bad\u0000path"
+    },
+    {
+      "name": "library-11",
+      "version": "0.1.0",
+      "path": "bad\u001fpath"
+    },
+    {
+      "name": "library-12",
+      "version": "0.1.0",
+      "path": "badpath"
+    },
+    {
+      "name": "library-13",
+      "version": "0.1.0",
+      "path": "badpath"
+    }
+  ]
+}

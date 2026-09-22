@@ -1,0 +1,303 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1saj240100r0003",
+      "description": "PDP22-FBP.025 PROFIBUS DP-V1 FieldBusPlug, integral 0.25 m cable",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SAJ240100R0003",
+        "document": {
+          "url": "https://search.abb.com/library/Download.aspx?DocumentID=2CDC192001D0205&LanguageCode=en&DocumentPartId=&Action=Launch",
+          "title": "PDP21-FBP / PDP22-FBP PROFIBUS DP FieldBusPlugs — Technical Description",
+          "revision": "2CDC192001D0205; V6; 03.09.2004",
+          "pages": "9-12,16,19-20,27,29-30 (printed and physical PDF pages)"
+        },
+        "modelingNotes": [
+          "Exact ABB 1SAJ240100R0003 is PDP22-FBP.025, a PROFIBUS DP-V1 FieldBusPlug with 0.25 m integral cable (2004 manual p.30).",
+          "External-interface abstraction of the complete factory cable/plug assembly: IN is the passive cable-end plug X13; OUT is the onward PROFIBUS socket; DEV is the fieldbus-neutral device socket. IN/OUT/DEV are authoring aliases. ABB p.27 labels both sockets X12, so they must not share a key. Pin numbers 1-5 are manufacturer identities; no separately accessible cable clamps are documented.",
+          "Bus pins: 1 +24 V DC/brown, 2 Bus-N=A/green, 3 0 V DC/blue, 4 red bus conductor, 5 shield/bare. Historical pp.27/29 call pin 4 Bus-B=A, but p.27 lower diagram says Signal P/B. The 07.2006 manual p.28 says Bus-P=B. Preserve pin 4 as the red bus conductor without resolving this inconsistent A/B text into an installation instruction.",
+          "DEV pins: 1 +24 V; 3 0 V; parallel mode 2 DI1, 4 DI0, 5 DO0; serial mode 2 diagnosis, 4 and 5 serial data. Modes share physical pins. Singleton bus functions render endpoints only, without simulating active conversion, mode selection, signal direction or protocol behavior. PROFIBUS is not Ethernet; no logical Ethernet ports are authored.",
+          "Factory continuity requires explicit fixture jumpers IN.1-OUT.1 through IN.5-OUT.5 (passive tee and integral cable, manual pp.9-12,27,29); also IN.1-DEV.1 and IN.3-DEV.3 (explicit internal potential diagram p.27). Metadata never joins nets. DEV.2/4/5 remain separate from bus data and each other. No shield-to-0V or shield-to-PE jumper is asserted. The downstream termination unit and device INT/EXT switch are separate equipment.",
+          "Bus supply 24 V DC +30%/-20% (19.2-31.2 V DC). Consumption 46 mA at 19.2 V, 37 mA at 24 V, 31 mA at 31.2 V; total dissipation max.0.9 W. Plug/cable load max.4 A; supply to a connected device should not exceed 200 mA (pp.16,29). These conditional ratings are notes, not scalar terminal current or assigned circuit voltage.",
+          "IP65 with M12 box-nut device fixing; IP20 with supplied fastening screw. Operating ambient 0 to +55 degC (p.29). Shield grounding is an installation connection (pp.19-20), not an automatic bond through mounting hardware. Shell-to-shield and device-side metalwork continuity are not exhaustively documented.",
+          "Only IN.1 and IN.3 are required, representing the universally needed bus supply/return nets (p.16); fixed links can satisfy presence but do not prove external power. Shared policy permits explicit factory-link representation plus external wiring, not multiple conductors in a socket. Device signals and onward use are application-dependent."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 15 numbered contacts across integral passive plug, onward bus socket and neutral device socket are inventoried. IN/OUT/DEV disambiguate duplicate X12 socket labels. Factory bus and supply continuity is specified separately. Shell-to-shield and device-side metalwork bonding are not exhaustively documented; no additional PE terminal is invented. Bus pin 4 textual A/B labeling is inconsistent in the historical manual; numerical identity and red conductor are retained."
+      },
+      "terminals": {
+        "IN.1": {
+          "role": "power",
+          "description": "+24 V DC; brown",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "IN.2": {
+          "role": "signal",
+          "description": "PROFIBUS Bus-N=A; green",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "IN.3": {
+          "role": "return",
+          "description": "0 V DC; blue",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "IN.4": {
+          "role": "signal",
+          "description": "PROFIBUS red conductor; conflicting Bus-B=A / Signal P/B labels in historical manual",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "IN.5": {
+          "role": "shield",
+          "description": "Shield; bare conductor",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "OUT.1": {
+          "role": "power",
+          "description": "+24 V DC; brown",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "OUT.2": {
+          "role": "signal",
+          "description": "PROFIBUS Bus-N=A; green",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "OUT.3": {
+          "role": "return",
+          "description": "0 V DC; blue",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "OUT.4": {
+          "role": "signal",
+          "description": "PROFIBUS red conductor; conflicting Bus-B=A / Signal P/B labels in historical manual",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "OUT.5": {
+          "role": "shield",
+          "description": "Shield; bare conductor",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "DEV.1": {
+          "role": "power",
+          "description": "+24 V from bus supply",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "DEV.2": {
+          "role": "signal",
+          "description": "DI1 in parallel mode; diagnosis in serial mode",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "DEV.3": {
+          "role": "return",
+          "description": "0 V bus supply return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "DEV.4": {
+          "role": "signal",
+          "description": "DI0 in parallel mode; serial data in serial mode",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "DEV.5": {
+          "role": "signal",
+          "description": "DO0 in parallel mode; serial data in serial mode",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "IN.1": {
+          "kind": "bus",
+          "terminals": ["IN.1"]
+        },
+        "IN.2": {
+          "kind": "bus",
+          "terminals": ["IN.2"]
+        },
+        "IN.3": {
+          "kind": "bus",
+          "terminals": ["IN.3"]
+        },
+        "IN.4": {
+          "kind": "bus",
+          "terminals": ["IN.4"]
+        },
+        "IN.5": {
+          "kind": "bus",
+          "terminals": ["IN.5"]
+        },
+        "OUT.1": {
+          "kind": "bus",
+          "terminals": ["OUT.1"]
+        },
+        "OUT.2": {
+          "kind": "bus",
+          "terminals": ["OUT.2"]
+        },
+        "OUT.3": {
+          "kind": "bus",
+          "terminals": ["OUT.3"]
+        },
+        "OUT.4": {
+          "kind": "bus",
+          "terminals": ["OUT.4"]
+        },
+        "OUT.5": {
+          "kind": "bus",
+          "terminals": ["OUT.5"]
+        },
+        "DEV.1": {
+          "kind": "bus",
+          "terminals": ["DEV.1"]
+        },
+        "DEV.2": {
+          "kind": "bus",
+          "terminals": ["DEV.2"]
+        },
+        "DEV.3": {
+          "kind": "bus",
+          "terminals": ["DEV.3"]
+        },
+        "DEV.4": {
+          "kind": "bus",
+          "terminals": ["DEV.4"]
+        },
+        "DEV.5": {
+          "kind": "bus",
+          "terminals": ["DEV.5"]
+        }
+      },
+      "circuitSymbols": {
+        "IN.1": "terminal",
+        "IN.2": "terminal",
+        "IN.3": "terminal",
+        "IN.4": "terminal",
+        "IN.5": "terminal",
+        "OUT.1": "terminal",
+        "OUT.2": "terminal",
+        "OUT.3": "terminal",
+        "OUT.4": "terminal",
+        "OUT.5": "terminal",
+        "DEV.1": "terminal",
+        "DEV.2": "terminal",
+        "DEV.3": "terminal",
+        "DEV.4": "terminal",
+        "DEV.5": "terminal"
+      },
+      "connectorPorts": {
+        "IN": {
+          "connector": "M12 five-contact interface",
+          "description": "Passive cable-end M12 plug X13 to previous node/master; port key is an authoring alias",
+          "pins": {
+            "1": {
+              "terminal": "IN.1",
+              "description": "+24 V DC; brown"
+            },
+            "2": {
+              "terminal": "IN.2",
+              "description": "PROFIBUS Bus-N=A; green"
+            },
+            "3": {
+              "terminal": "IN.3",
+              "description": "0 V DC; blue"
+            },
+            "4": {
+              "terminal": "IN.4",
+              "description": "PROFIBUS red conductor; conflicting Bus-B=A / Signal P/B labels in historical manual"
+            },
+            "5": {
+              "terminal": "IN.5",
+              "description": "Shield; bare conductor"
+            }
+          }
+        },
+        "OUT": {
+          "connector": "M12 five-contact interface",
+          "description": "M12 onward PROFIBUS socket, labeled X12; port key is an authoring alias",
+          "pins": {
+            "1": {
+              "terminal": "OUT.1",
+              "description": "+24 V DC; brown"
+            },
+            "2": {
+              "terminal": "OUT.2",
+              "description": "PROFIBUS Bus-N=A; green"
+            },
+            "3": {
+              "terminal": "OUT.3",
+              "description": "0 V DC; blue"
+            },
+            "4": {
+              "terminal": "OUT.4",
+              "description": "PROFIBUS red conductor; conflicting Bus-B=A / Signal P/B labels in historical manual"
+            },
+            "5": {
+              "terminal": "OUT.5",
+              "description": "Shield; bare conductor"
+            }
+          }
+        },
+        "DEV": {
+          "connector": "M12 five-contact interface",
+          "description": "M12 fieldbus-neutral device socket, also labeled X12; port key is an authoring alias",
+          "pins": {
+            "1": {
+              "terminal": "DEV.1",
+              "description": "+24 V from bus supply"
+            },
+            "2": {
+              "terminal": "DEV.2",
+              "description": "DI1 in parallel mode; diagnosis in serial mode"
+            },
+            "3": {
+              "terminal": "DEV.3",
+              "description": "0 V bus supply return"
+            },
+            "4": {
+              "terminal": "DEV.4",
+              "description": "DI0 in parallel mode; serial data in serial mode"
+            },
+            "5": {
+              "terminal": "DEV.5",
+              "description": "DO0 in parallel mode; serial data in serial mode"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "IN.1",
+        "IN.2",
+        "IN.3",
+        "IN.4",
+        "IN.5",
+        "OUT.1",
+        "OUT.2",
+        "OUT.3",
+        "OUT.4",
+        "OUT.5",
+        "DEV.1",
+        "DEV.2",
+        "DEV.3",
+        "DEV.4",
+        "DEV.5"
+      ]
+    }
+  ]
+}

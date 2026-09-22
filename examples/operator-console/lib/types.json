@@ -1,0 +1,280 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "console-planning:dc-feed",
+      "description": "24 V supply / selection open",
+      "category": "power-supply",
+      "terminals": {
+        "+": {
+          "description": "+24 V",
+          "connection_policy": "shared"
+        },
+        "-": {
+          "description": "0 V",
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": ["+", "-"],
+      "functions": {
+        "output": {
+          "kind": "source",
+          "terminals": ["+", "-"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Output boundary only. Source part, input terminals, AC feed, upstream protection and total loading are not modeled."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:fuse-6a",
+      "description": "6 A DC fuse / proposed",
+      "category": "component",
+      "terminals": {
+        "1": {
+          "description": "Supply",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "description": "Load",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "terminalOrder": ["1", "2"],
+      "functions": {
+        "fuse": {
+          "kind": "other",
+          "terminals": ["1", "2"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:fuse-1a",
+      "description": "1 A DC branch / proposed",
+      "category": "component",
+      "terminals": {
+        "1": {
+          "description": "Supply",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "description": "Load",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "terminalOrder": ["1", "2"],
+      "functions": {
+        "fuse": {
+          "kind": "other",
+          "terminals": ["1", "2"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:main-strip",
+      "description": "Console feeder terminals",
+      "category": "terminal-strip",
+      "terminals": {
+        "1": {
+          "description": "+24 V",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "0 V",
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": ["1", "2"],
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:console-strip",
+      "description": "Console distribution strip",
+      "category": "terminal-strip",
+      "terminals": {
+        "1": {
+          "description": "+24 V distribution",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "+24 V distribution",
+          "connection_policy": "shared"
+        },
+        "3": {
+          "description": "+24 V distribution",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "+24 V distribution",
+          "connection_policy": "shared"
+        },
+        "5": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "6": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "7": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "8": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "9": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "10": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "11": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "12": {
+          "description": "0 V distribution",
+          "connection_policy": "shared"
+        },
+        "13": {
+          "description": "+24 V / future supply",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "0 V / future supply",
+          "connection_policy": "shared"
+        },
+        "15": {
+          "description": "F-SL protected +24 V",
+          "connection_policy": "shared"
+        },
+        "16": {
+          "description": "F-SL protected +24 V",
+          "connection_policy": "shared"
+        },
+        "17": {
+          "description": "F-SL protected +24 V",
+          "connection_policy": "shared"
+        },
+        "18": {
+          "description": "F-SL protected +24 V",
+          "connection_policy": "shared"
+        },
+        "19": {
+          "description": "F-SL protected +24 V",
+          "connection_policy": "shared"
+        },
+        "20": {
+          "description": "F-SL protected +24 V / future stack feed",
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20"
+      ],
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:bond-bar",
+      "description": "Protective bonding bar",
+      "category": "terminal-strip",
+      "terminals": {
+        "PE": {
+          "description": "Protective bond",
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": ["PE"],
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:console-frame",
+      "description": "Console frame / bond",
+      "category": "component",
+      "terminals": {
+        "PE": {
+          "description": "Frame bonding stud",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "terminalOrder": ["PE"],
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed logical terminals; exact hardware, terminal capacity and ratings require selection before construction."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "console-planning:switch",
+      "description": "Example network switch",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "P6": {
+          "medium": "ethernet",
+          "connector": "RJ45"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Example communication interface only; supply omitted."
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "weidmueller-pilot:1826800000"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "PE"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    }
+  ]
+}

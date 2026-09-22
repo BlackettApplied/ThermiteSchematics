@@ -1,0 +1,182 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d38bd",
+      "description": "TeSys D three-pole contactor, 38 A AC-3, 24 V DC standard coil, factory 1NO + 1NC auxiliary contacts",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D38BD",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-LC1D38BD.PDF",
+          "title": "Product data sheet — LC1D38BD",
+          "revision": "September 14, 2017",
+          "pages": "1–3"
+        },
+        "modelingNotes": [
+          "Manufacturer spelling LC1D38BD; source LC1-D38BD retained in orderNumber. B8/8 selection and BD suffix corroborate exact identity; no substitution.",
+          "AC-3 38 A and AC-1 50 A at <=440 V AC, <=60 degrees C. Power voltage capability <=690 V AC at 25–400 Hz or <=300 V DC; these are not assigned circuit voltages.",
+          "24 V DC standard coil, 5.4 W at 20 degrees C; built-in bidirectional peak-limiting diode suppressor. Suppression is documented within coil abstraction, with transient behavior unmodeled and no fixed link.",
+          "Terminal diagram: https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF B8/79 diagram 127266, applicable via B8/8. Markings preserved including 13/NO and 21/NC.",
+          "FA121938 https://www.se.com/ca/en/faqs/FA121938/ directs A1 positive and A2 negative. FA95490 https://www.se.com/us/en/faqs/FA95490/ confirms one connection each; no duplicated A2.",
+          "All contact functions are mechanically actuated by the coil; no coil, contact or suppressor creates a permanent net. Passive contacts are application-dependent; A1/A2 are required by library policy for electrical coil operation. Optional accessories excluded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Twelve external connections of the standard factory contactor: six main, four auxiliary, A1 and A2; applicable B8 diagram plus manufacturer coil-count FAQ. No added accessory contacts. Internal suppression is documented, not simulated."
+      },
+      "terminals": {
+        "14": {
+          "role": "contact",
+          "required": false,
+          "description": "Manufacturer terminal marking 14"
+        },
+        "22": {
+          "role": "contact",
+          "required": false,
+          "description": "Manufacturer terminal marking 22"
+        },
+        "1/L1": {
+          "role": "line",
+          "required": false,
+          "description": "Manufacturer terminal marking 1/L1"
+        },
+        "2/T1": {
+          "role": "load",
+          "required": false,
+          "description": "Manufacturer terminal marking 2/T1"
+        },
+        "3/L2": {
+          "role": "line",
+          "required": false,
+          "description": "Manufacturer terminal marking 3/L2"
+        },
+        "4/T2": {
+          "role": "load",
+          "required": false,
+          "description": "Manufacturer terminal marking 4/T2"
+        },
+        "5/L3": {
+          "role": "line",
+          "required": false,
+          "description": "Manufacturer terminal marking 5/L3"
+        },
+        "6/T3": {
+          "role": "load",
+          "required": false,
+          "description": "Manufacturer terminal marking 6/T3"
+        },
+        "13/NO": {
+          "role": "contact",
+          "required": false,
+          "description": "Manufacturer terminal marking 13/NO"
+        },
+        "21/NC": {
+          "role": "contact",
+          "required": false,
+          "description": "Manufacturer terminal marking 21/NC"
+        },
+        "A1": {
+          "role": "coil",
+          "required": true,
+          "description": "24 V DC coil positive; one physical connection (Schneider FAQs FA121938, FA95490).",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "A2": {
+          "role": "coil",
+          "required": true,
+          "description": "24 V DC coil negative; one physical connection (Schneider FAQs FA121938, FA95490).",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "main1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "main2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "main3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13/NO", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21/NC", "22"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        }
+      },
+      "circuitSymbols": {
+        "main1": "contact-no",
+        "main2": "contact-no",
+        "main3": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "terminalOrder": [
+        "1/L1",
+        "2/T1",
+        "3/L2",
+        "4/T2",
+        "5/L3",
+        "6/T3",
+        "13/NO",
+        "14",
+        "21/NC",
+        "22",
+        "A1",
+        "A2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "56da88cf-a112-42b6-9b15-a26a9982408c",
+      "designation": "XP",
+      "type": "stahl-pilot:8570-12-407"
+    },
+    {
+      "kind": "device",
+      "uid": "016c6eee-2933-412a-b070-816a3e75421a",
+      "designation": "CABLE",
+      "type": "stahl-8570-12-407-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "32470014-cb30-4e5c-869f-8058fc3f1177",
+      "designation": "MATE",
+      "type": "stahl-8570-12-407-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "29bb1337-60ce-4fb6-92dd-874e97154388",
+      "designation": "CABLE-L1",
+      "endpoints": [
+        {
+          "device": "CABLE",
+          "terminal": "L1"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.L1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "58b7fecf-e36a-4a48-ba04-60c01c115f4e",
+      "designation": "MATE-L1",
+      "endpoints": [
+        {
+          "device": "MATE",
+          "terminal": "L1"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "1120cccd-4f2d-467f-b580-071456a95f05",
+      "designation": "INTERNAL-L1",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.L1"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e6f61716-f591-4115-8c9d-4262871e799a",
+      "designation": "CABLE-L2",
+      "endpoints": [
+        {
+          "device": "CABLE",
+          "terminal": "L2"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.L2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "691c9191-3e04-4f38-af7f-6545c14d69f8",
+      "designation": "MATE-L2",
+      "endpoints": [
+        {
+          "device": "MATE",
+          "terminal": "L2"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "988a142d-c938-4c78-909a-586cab7c18c9",
+      "designation": "INTERNAL-L2",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.L2"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "b21ccd62-a444-4258-9f1a-300af366f345",
+      "designation": "CABLE-L3",
+      "endpoints": [
+        {
+          "device": "CABLE",
+          "terminal": "L3"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.L3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "9b6874f7-dd04-4bee-b73e-dc99435b710f",
+      "designation": "MATE-L3",
+      "endpoints": [
+        {
+          "device": "MATE",
+          "terminal": "L3"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L3"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "99652f0a-b5db-42bc-9d55-aa1e2e1ecda1",
+      "designation": "INTERNAL-L3",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.L3"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.L3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "f173bf3f-871f-41ee-8daf-6bb04dbc1db9",
+      "designation": "CABLE-PE",
+      "endpoints": [
+        {
+          "device": "CABLE",
+          "terminal": "PE"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.PE"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "be4b8e37-363a-4361-947d-d4f0f4d5a98e",
+      "designation": "MATE-PE",
+      "endpoints": [
+        {
+          "device": "MATE",
+          "terminal": "PE"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.PE"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "4a953e9c-6a96-4322-9e31-a252e635da3a",
+      "designation": "INTERNAL-PE",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.PE"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.PE"
+        }
+      ]
+    }
+  ]
+}

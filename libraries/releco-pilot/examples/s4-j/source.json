@@ -1,0 +1,822 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "releco-pilot:s4-j"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001007",
+      "designation": "B8",
+      "type": "batch-boundary:endpoint-8"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100007",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        },
+        {
+          "device": "B8",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001008",
+      "designation": "B9",
+      "type": "batch-boundary:endpoint-9"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100008",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.5"
+        },
+        {
+          "device": "B9",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001009",
+      "designation": "B10",
+      "type": "batch-boundary:endpoint-10"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100009",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.5"
+        },
+        {
+          "device": "B10",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001010",
+      "designation": "B11",
+      "type": "batch-boundary:endpoint-11"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100010",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.6"
+        },
+        {
+          "device": "B11",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001011",
+      "designation": "B12",
+      "type": "batch-boundary:endpoint-12"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100011",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.6"
+        },
+        {
+          "device": "B12",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001012",
+      "designation": "B13",
+      "type": "batch-boundary:endpoint-13"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100012",
+      "designation": "W13",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.7"
+        },
+        {
+          "device": "B13",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001013",
+      "designation": "B14",
+      "type": "batch-boundary:endpoint-14"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100013",
+      "designation": "W14",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.7"
+        },
+        {
+          "device": "B14",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001014",
+      "designation": "B15",
+      "type": "batch-boundary:endpoint-15"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100014",
+      "designation": "W15",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.8"
+        },
+        {
+          "device": "B15",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001015",
+      "designation": "B16",
+      "type": "batch-boundary:endpoint-16"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100015",
+      "designation": "W16",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.8"
+        },
+        {
+          "device": "B16",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001016",
+      "designation": "B17",
+      "type": "batch-boundary:endpoint-17"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100016",
+      "designation": "W17",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.9"
+        },
+        {
+          "device": "B17",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001017",
+      "designation": "B18",
+      "type": "batch-boundary:endpoint-18"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100017",
+      "designation": "W18",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.9"
+        },
+        {
+          "device": "B18",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001018",
+      "designation": "B19",
+      "type": "batch-boundary:endpoint-19"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100018",
+      "designation": "W19",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.10"
+        },
+        {
+          "device": "B19",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001019",
+      "designation": "B20",
+      "type": "batch-boundary:endpoint-20"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100019",
+      "designation": "W20",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.10"
+        },
+        {
+          "device": "B20",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001020",
+      "designation": "B21",
+      "type": "batch-boundary:endpoint-21"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100020",
+      "designation": "W21",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.11"
+        },
+        {
+          "device": "B21",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001021",
+      "designation": "B22",
+      "type": "batch-boundary:endpoint-22"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100021",
+      "designation": "W22",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.11"
+        },
+        {
+          "device": "B22",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001022",
+      "designation": "B23",
+      "type": "batch-boundary:endpoint-23"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100022",
+      "designation": "W23",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.12"
+        },
+        {
+          "device": "B23",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001023",
+      "designation": "B24",
+      "type": "batch-boundary:endpoint-24"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100023",
+      "designation": "W24",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.12"
+        },
+        {
+          "device": "B24",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001024",
+      "designation": "B25",
+      "type": "batch-boundary:endpoint-25"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100024",
+      "designation": "W25",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.13"
+        },
+        {
+          "device": "B25",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001025",
+      "designation": "B26",
+      "type": "batch-boundary:endpoint-26"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100025",
+      "designation": "W26",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.13"
+        },
+        {
+          "device": "B26",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001026",
+      "designation": "B27",
+      "type": "batch-boundary:endpoint-27"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100026",
+      "designation": "W27",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.14"
+        },
+        {
+          "device": "B27",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001027",
+      "designation": "B28",
+      "type": "batch-boundary:endpoint-28"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100027",
+      "designation": "W28",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.14"
+        },
+        {
+          "device": "B28",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200000",
+      "designation": "FIXED1",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 1 and corresponding socket mating contact 1 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200001",
+      "designation": "FIXED2",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 2 and corresponding socket mating contact 2 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200002",
+      "designation": "FIXED3",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 3 and corresponding socket mating contact 3 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200003",
+      "designation": "FIXED4",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 4 and corresponding socket mating contact 4 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200004",
+      "designation": "FIXED5",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 5 and corresponding socket mating contact 5 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.5"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.5"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200005",
+      "designation": "FIXED6",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 6 and corresponding socket mating contact 6 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.6"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.6"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200006",
+      "designation": "FIXED7",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 7 and corresponding socket mating contact 7 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.7"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.7"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200007",
+      "designation": "FIXED8",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 8 and corresponding socket mating contact 8 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.8"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.8"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200008",
+      "designation": "FIXED9",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 9 and corresponding socket mating contact 9 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.9"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.9"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200009",
+      "designation": "FIXED10",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 10 and corresponding socket mating contact 10 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.10"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.10"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200010",
+      "designation": "FIXED11",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 11 and corresponding socket mating contact 11 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.11"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.11"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200011",
+      "designation": "FIXED12",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 12 and corresponding socket mating contact 12 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.12"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.12"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200012",
+      "designation": "FIXED13",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 13 and corresponding socket mating contact 13 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.13"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.13"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200013",
+      "designation": "FIXED14",
+      "description": "S1: WoR 3.2 p.348 figure 2 identifies clamp 14 and corresponding socket mating contact 14 as the two interfaces of the same numbered passive socket path. Represents factory continuity, not a relay contact or field-installed bridge.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.14"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.14"
+        }
+      ]
+    }
+  ]
+}

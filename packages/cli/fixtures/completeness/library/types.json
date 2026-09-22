@@ -1,0 +1,81 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "audit:load",
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All connection points for this generic test load are modeled."
+      },
+      "terminals": {
+        "P": {
+          "role": "supply_positive",
+          "required": true,
+          "connection_policy": "shared"
+        },
+        "N": {
+          "role": "supply_return",
+          "required": true
+        },
+        "S": {},
+        "SP": {}
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["P", "N"]
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "audit:supply",
+      "terminals": {
+        "+": {
+          "connection_policy": "shared"
+        },
+        "-": {}
+      },
+      "functions": {
+        "supply": {
+          "kind": "source",
+          "terminals": ["+", "-"]
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "audit:hmi",
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Power connector and protective bonding are not modeled."
+      },
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "ETH1": {
+          "medium": "ethernet",
+          "connector": "RJ45"
+        },
+        "ETH2": {
+          "medium": "ethernet",
+          "connector": "RJ45"
+        }
+      }
+    },
+    {
+      "kind": "cable_type",
+      "id": "audit:pair",
+      "conductors": [
+        {
+          "id": "1",
+          "color": "brown"
+        },
+        {
+          "id": "2",
+          "color": "blue"
+        }
+      ]
+    }
+  ]
+}

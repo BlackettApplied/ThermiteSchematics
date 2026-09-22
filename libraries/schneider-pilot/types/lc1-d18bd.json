@@ -1,0 +1,195 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d18bd",
+      "description": "TeSys D contactor, 3 main NO poles, 1 NO + 1 NC factory auxiliaries, 24 V DC standard coil",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D18BD",
+        "document": {
+          "url": "https://controltechappfiles.blob.core.windows.net/appfiles-public/documents/datasheet/schneider/LC1D18BD.pdf",
+          "title": "Schneider Electric Product data sheet LC1D18BD",
+          "revision": "May 7, 2019",
+          "pages": "1–3 and 6"
+        },
+        "modelingNotes": [
+          "Manufacturer spelling LC1D18BD; job hyphen retained as presentation separator. Exact datasheet is manufacturer-authored at a distributor mirror.",
+          "Terminal labels preserve the exact wiring diagram, including 13/NO and 21/NC. No external phase assignment is inferred.",
+          "A1 positive and A2 negative per Schneider FAQ FA121938: https://www.se.com/us/en/faqs/FA121938/.",
+          "Integral bidirectional peak-limiting suppression per B8/8: https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF. Represented in notes, not as a short or extra terminals.",
+          "Main ratings: 18 A AC-3 or 32 A AC-1 at <=440 V and <=60 C; 7.5 kW at 380–400 V AC 50/60 Hz AC-3. Coil 5.4 W at 20 C. Conditional contact ratings are intentionally not scalar metadata.",
+          "Coil actuation and contact normal states establish no permanent continuity. No fixed links are asserted.",
+          "All circuit functions render with standard symbols; coil suppression internal semiconductor geometry is not represented. Optional add-on blocks are excluded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 12 documented circuit endpoints are modeled. Physical duplicate coil access and suppressor attachment contacts, and their internal continuity, are unverified. No additional PE, shield or communication point is identified in the reviewed circuit; no exhaustive physical inventory is claimed."
+      },
+      "terminals": {
+        "A1": {
+          "role": "control",
+          "description": "24 V DC coil; positive (Schneider FAQ FA121938).",
+          "required": true,
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "A2": {
+          "role": "control",
+          "description": "24 V DC coil; negative (Schneider FAQ FA121938).",
+          "required": true,
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "1/L1": {
+          "role": "power",
+          "description": "main1 terminal, manufacturer marking 1/L1.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "2/T1": {
+          "role": "power",
+          "description": "main1 terminal, manufacturer marking 2/T1.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "3/L2": {
+          "role": "power",
+          "description": "main2 terminal, manufacturer marking 3/L2.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "4/T2": {
+          "role": "power",
+          "description": "main2 terminal, manufacturer marking 4/T2.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "5/L3": {
+          "role": "power",
+          "description": "main3 terminal, manufacturer marking 5/L3.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "6/T3": {
+          "role": "power",
+          "description": "main3 terminal, manufacturer marking 6/T3.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "13/NO": {
+          "role": "control",
+          "description": "auxNO terminal, manufacturer marking 13/NO.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "14": {
+          "role": "control",
+          "description": "auxNO terminal, manufacturer marking 14.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "21/NC": {
+          "role": "control",
+          "description": "auxNC terminal, manufacturer marking 21/NC.",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "22": {
+          "role": "control",
+          "description": "auxNC terminal, manufacturer marking 22.",
+          "required": false,
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "main1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "main2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "main3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13/NO", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21/NC", "22"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "circuitSymbols": {
+        "coil": "coil",
+        "main1": "contact-no",
+        "main2": "contact-no",
+        "main3": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc"
+      },
+      "terminalOrder": [
+        "A1",
+        "A2",
+        "1/L1",
+        "2/T1",
+        "3/L2",
+        "4/T2",
+        "5/L3",
+        "6/T3",
+        "13/NO",
+        "14",
+        "21/NC",
+        "22"
+      ]
+    }
+  ]
+}

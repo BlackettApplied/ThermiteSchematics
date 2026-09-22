@@ -1,0 +1,5 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Absolute glob is rejected" },
+  "sources": ["C:/outside/*.json"]
+}

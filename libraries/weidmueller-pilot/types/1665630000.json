@@ -1,0 +1,37 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665630000",
+      "description": "Weidmüller HDC 24B DODQ 4BO — protective cover for the lower part (base) of a size 8 (24B/64D) heavy-duty connector housing",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665630000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1665630000/scope/2/",
+          "title": "Weidmüller Data sheet HDC24B DODQ4BO",
+          "revision": "Creation date19.02.2026 10:18:38 MEZ",
+          "pages": "1 exact identity and cover version;2–3 mechanical data"
+        },
+        "modelingNotes": [
+          "Exact manufacturer datasheet opened during coordinator review: size8 cover for lower housing, no cable entries, diecast aluminium with powder coating.",
+          "Mechanical accessory only; zero electrical terminals. Inserts and external housing bonding are separate.",
+          "IP65 is conditional on the plugged assembly; no standalone electrical or bonding rating is encoded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical protective cover for a size 8 (24B/64D) HDC base housing; no electrical terminals. Installed environmental protection (IP65) is realized only in the closed/plugged condition and depends on the specified base housing, gasket and assembly."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Protective cover for size 8 (24B/64D) HDC base housing, lower part",
+          "description": "Mechanical attachment via side-locking clamp on the lower side; no electrical pins."
+        }
+      }
+    }
+  ]
+}

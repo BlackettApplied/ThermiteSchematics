@@ -1,0 +1,39 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "stahl-8570-12-407-fixture": {
+      "version": "1.0.0",
+      "path": "fixture",
+      "resolutionKind": "local",
+      "integrity": "sha256-WQq5JOfzt3SjHD32bUPmEtz/pom+s5H9nbnRv27AwYA=",
+      "files": {
+        "library.json": "sha256-gQMreYspv8SPotKIjsXmDwkqFiLHXNqOIhORq4OjFak=",
+        "types.json": "sha256-AEjxL317kMt0Mv90ulCRaPmmpABlV99iamhCej2uV5k="
+      }
+    },
+    "stahl-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-5k8GB5QUHTWQq7ct5zlnGwF0eXQTvqL6+fIh9sSSZbY=",
+      "files": {
+        "library.json": "sha256-4IiZMnQYqmBM5snyeGbyhhOmiHyLb8zJZhPdReehAi0=",
+        "types/23d01ba05.json": "sha256-t0XFxvO/PK0gyRh7A05obj6HKWkd5y/hhL1VFmxE3v0=",
+        "types/8527-21-11-0001.json": "sha256-UN9dJh8p3zGvgAshEip3Ri552bhDF+Ine6ge3ibdOmc=",
+        "types/8570-11-306.json": "sha256-imEAT/FKFDPCDw03fjLnuDkPXnwuBVFQtLEHH0EEZYg=",
+        "types/8570-11-407.json": "sha256-jey78LLE4NUdNyovOREshz7jAmw/e+/RhpOIu5rBuf4=",
+        "types/8570-12-306.json": "sha256-FGftoxugKp060VH/2mIo+yfhKRoJXYR+dER7vTs3ooA=",
+        "types/8570-12-407.json": "sha256-FFPgm6JpxpGwv8LMyvW20d2VROubQbBcE2ylQxS/v0k=",
+        "types/8570001140.json": "sha256-aRcRrhDmUkDTcqX0mVJnY86+WIDKAkWqQfyI4XyH2to=",
+        "types/8570002140.json": "sha256-+CKtg+4qlz5TEO3LRLNnLAM704slXNqMWcd3VScZj8g=",
+        "types/8571001140.json": "sha256-FNfHEYFDXeAFXDiMjXHNvHLd9k0s5pxzkdXOfaZDtFs=",
+        "types/8575-12-200.json": "sha256-f6BtfTiattbjfHOAp2KaESUBv/WFDXTHHSpJRh5ntrQ=",
+        "types/8575-13-200.json": "sha256-itOtqEuCghUohVqvWGf5HuZgSFTMnDZ4h3WOdRymWDQ=",
+        "types/8575-14-306.json": "sha256-EWJ3DtrL+JIqLVJaWKvzfovvBRl+sPzPYa9FBv910do=",
+        "types/8579-12-407.json": "sha256-AQpZfmPybP0wtlCljfIclsofyFZs02QlLlzDCItCsLM="
+      }
+    }
+  }
+}

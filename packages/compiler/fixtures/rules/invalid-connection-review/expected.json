@@ -1,0 +1,20 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 3,
+    "column": 5,
+    "jsonPointer": "/objects/0",
+    "uid": "45a8a769-6d4f-5e45-bbb0-cc918e1b049b",
+    "code": "E205",
+    "severity": "error",
+    "message": "D1 connectionReview references undeclared terminal \"missing\".",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 3,
+        "column": 5,
+        "note": "Declared connections for fixture:module."
+      }
+    ]
+  }
+]

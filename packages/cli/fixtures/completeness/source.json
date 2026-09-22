@@ -1,0 +1,116 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "2dc78ecb-265d-5a3a-b1f9-c1ad4bb41caa",
+      "designation": "PS1",
+      "type": "audit:supply",
+      "location": "Main cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "521c04d9-f8ce-5b99-8f69-244752bad29a",
+      "designation": "D1",
+      "type": "audit:load",
+      "location": "Main cabinet",
+      "connectionReview": {
+        "terminals": {
+          "P": {
+            "status": "deferred",
+            "reason": "Protection selection is pending."
+          }
+        }
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "48aec738-d458-5f81-8c29-3740d3845dd3",
+      "designation": "D2",
+      "type": "audit:load",
+      "location": "HMI console",
+      "connectionReview": {
+        "terminals": {
+          "N": {
+            "status": "intentionally-unused",
+            "reason": "This contradicts the required return and needs review."
+          },
+          "S": {
+            "status": "required",
+            "reason": "This application uses the signal input."
+          },
+          "SP": {
+            "status": "intentionally-unused",
+            "reason": "Reserved for expansion."
+          }
+        }
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "5e372125-a5c3-5d2e-8ef2-eb409a184e9d",
+      "designation": "HMI1",
+      "type": "audit:hmi",
+      "location": "HMI console",
+      "connectionReview": {
+        "ports": {
+          "ETH1": {
+            "status": "required",
+            "reason": "SCADA network connection."
+          },
+          "ETH2": {
+            "status": "intentionally-unused",
+            "reason": "Second network is not used in this test fixture."
+          }
+        }
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "d5a2fd30-3731-50f6-b08a-8423582fcca3",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "D1",
+          "terminal": "P"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "3d2b8b26-3f17-5b89-84ac-1e9f27cee4ef",
+      "designation": "CB1",
+      "type": "audit:pair",
+      "conductors": [
+        {
+          "id": "1",
+          "usage": "spare",
+          "endpoints": [
+            {
+              "device": "D1",
+              "terminal": "N"
+            },
+            null
+          ]
+        },
+        {
+          "id": "2",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "PS1",
+              "terminal": "-"
+            },
+            {
+              "device": "D2",
+              "terminal": "P"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "siemens-pilot:6es7132-4bb31-0aa0",
+    "manufacturer": "Siemens",
+    "orderNumber": "6ES7132-4BB31-0AA0"
+  },
+  "type": {
+    "path": "types/6es7132-4bb31-0aa0.json",
+    "sha256": "193ccf926442b188025fef8d2621beafe081544e1d31fda35adf0d9c77b76eb8"
+  },
+  "research": {
+    "path": "research/6es7132-4bb31-0aa0.md",
+    "sha256": "eafd47cb911ed27f2cf324c6768bfd782241390aaa0923a8634de18694998596"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5", "6", "7", "8", "P1", "P2"],
+    "requiredTerminalKeys": ["P1", "P2"],
+    "fixedLinks": [
+      {
+        "from": "P1",
+        "to": "3",
+        "sourceId": "S1"
+      },
+      {
+        "from": "3",
+        "to": "7",
+        "sourceId": "S1"
+      },
+      {
+        "from": "P2",
+        "to": "2",
+        "sourceId": "S1"
+      },
+      {
+        "from": "2",
+        "to": "6",
+        "sourceId": "S1"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "bc48b794a6c423dd1468b866fb462ad87069a7cd886c68a7cd48050b7fceb2e8",
+    "packet.request.json": "4689a085c3a8c5f9bc8b17574464b9dd6d14095b30e2937c42e8634d30e6806a",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "ed6f32f385fd55c1408ad6d7278dc9621ac84d248c0052a301c54083b1d83fa1",
+    "system.json": "0126cc6515898b1a6c6e15c5a587d5dacf7c874a551ef151a6c23c71c6f1378a"
+  }
+}

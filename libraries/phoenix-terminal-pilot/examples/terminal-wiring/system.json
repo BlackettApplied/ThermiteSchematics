@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Phoenix terminal catalog demonstrations"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "phoenix-terminal-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "phoenix-terminal-fixture",
+      "version": "1.0.0",
+      "path": "fixture"
+    }
+  ]
+}

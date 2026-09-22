@@ -1,0 +1,96 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24264",
+      "description": "C60N miniature circuit breaker, 2 poles, 2 A, C curve; bare legacy breaker 24264",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24264",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Multi 9 — Sistema apparecchiature modulari; C60N selection table and E45094 diagram",
+          "revision": "Catalogo 2010-2011; Schneider-authored catalogue at Yumpu mirror",
+          "pages": "Printed p.15 / viewer p.17; exact 24264 row in 2P, 2 A, curve C block and applicable E45094 diagram"
+        },
+        "modelingNotes": [
+          "Exact legacy order 24264 is in the 2P, 2 A, curve C selection row alongside diagram E45094. The diagram marks upper terminals 1 and 3, lower terminals 2 and 4, with separate switched protected paths 1-2 and 3-4 and mechanical coupling. No successor order or neighboring breaker pinout is substituted.",
+          "Conditional ratings are on printed p.14 / viewer p.16 of the same Italian catalogue: https://img.yumpu.com/16219073/16/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg. Curve C rated current is 2 A at 30 C; magnetic operation is 5-10 times In. For 2P, Icn is 6000 A at 400 V AC under CEI EN 60898; Icu is 20 kA at 230-240 V AC or 10 kA at 400-415 V AC under CEI EN 60947-2. These are distinct test conditions, not one universal breaking-capacity scalar.",
+          "Ui is 500 V AC and Uimp is 6 kV; the page also states Ue 400 V AC. No operating or insulation capability is assigned as a circuit nominal voltage. No DC rating, frequency, conductor orientation or line/neutral mapping is inferred.",
+          "For In up to 25 A, the published cage-terminal capacities are up to 16 mm2 flexible or 25 mm2 rigid conductor. These are capabilities, not selected conductor sizes or proof of multiple conductors per clamp. No torque value is inferred.",
+          "Bare breaker only: four documented power terminals. Separately ordered auxiliary contacts, trip coils and residual-current attachments are not included. No dedicated PE, shield, communication or external control-supply terminal is identified for this bare device.",
+          "The contact normal_state open represents the illustrated OFF position, not an automatic normal operating state. Mechanical ganging joins no nets; no fixed jumpers cross the breaker poles or connect the poles together. Trip timing, switching dynamics and protection coordination are not simulated.",
+          "The identical 24264 selection/diagram and rating pages were independently checked in manufacturer-authored excerpts at the municipal mirror https://www.sportellotelematicocastionedellapresolana.it/sites/default/files/2023-02/3481-Schede%20tecniche-R1.pdf, physical PDF pp.5-6 / printed pp.14-15. The original failed acquisition and inapplicable 2011 Korea catalogue are preserved in research provenance. Installed hardware revision remains unverified."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four power terminals 1,2,3,4 in the applicable exact-order E45094 2P diagram are represented. Coverage applies to the bare 24264 breaker, excluding separately ordered accessories. No electrical jumpers or auxiliary/PE/shield/communication terminals are invented; two interruptible poles remain electrically separate."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 upper terminal, manufacturer marking 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "2": {
+          "description": "Pole 1 lower terminal, manufacturer marking 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "3": {
+          "description": "Pole 2 upper terminal, manufacturer marking 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "4": {
+          "description": "Pole 2 lower terminal, manufacturer marking 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

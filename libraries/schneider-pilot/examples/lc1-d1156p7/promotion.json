@@ -1,0 +1,45 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:lc1-d1156p7",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LC1-D1156P7"
+  },
+  "type": {
+    "path": "types/lc1-d1156p7.json",
+    "sha256": "282d1d6961fd88eaa4936fb83dcae4b8ff349aee15c39ebf55882d5fdb6a4815"
+  },
+  "research": {
+    "path": "research/lc1-d1156p7.md",
+    "sha256": "3e695b584184a333f9c560c08ce02962f5d3cf5ced23db253cf0d047c9e6800d"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "1/L1",
+      "2/T1",
+      "3/L2",
+      "4/T2",
+      "5/L3",
+      "6/T3",
+      "13/NO",
+      "14",
+      "21/NC",
+      "22",
+      "A1",
+      "A2"
+    ],
+    "requiredTerminalKeys": ["A1", "A2"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "75c627a8a567d083ce0b5888af29141ff64b130006f6cbe31da4e3c3af63ce6b",
+    "packet.request.json": "21ec850018334a22937afffd30e5b2e4f94738b96a3f24f2636a54e2938a37fc",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "581d4820e88404d6be32a9fd3473f075e93a61d9c0ba0c4036dc0a7af7bea30a",
+    "system.json": "84f29f8f0be9ade72e62ed34f2ca9fa080b31a5f983bd3a3356a7d15c37f4d21"
+  }
+}

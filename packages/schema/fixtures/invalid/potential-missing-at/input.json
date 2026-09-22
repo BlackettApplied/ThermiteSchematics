@@ -1,0 +1,10 @@
+{
+  "uid": "52345678-1234-4234-9234-123456789abc",
+  "kind": "potential",
+  "name": "+24VDC",
+  "electrical": {
+    "nominal_voltage": 24,
+    "voltage_type": "DC",
+    "polarity": "positive"
+  }
+}

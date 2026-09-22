@@ -1,0 +1,455 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6ES7212-1AE40-0XB0",
+      "description": "S7-1200 CPU 1212C DC/DC/DC",
+      "category": "controller",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7212-1AE40-0XB0",
+        "document": {
+          "url": "https://docs.tia.siemens.cloud/r/simatic_s7_1200_manual_collection_enus_20/technical-specifications/cpu-1212c/cpu-1212c-wiring-diagrams",
+          "title": "S7-1200 manual collection V20 - CPU 1212C wiring diagrams",
+          "revision": "V20 web edition; retrieved 2026-09-06",
+          "pages": "Table 6, connector pin locations"
+        },
+        "modelingNotes": [
+          "Exact DC/DC/DC order number only. Keys X10.n, X11.n and X12.n encode connector and physical pin number.",
+          "8 digital inputs, 6 digital outputs and 2 analog voltage inputs are represented. Analog channels use the generic directional input symbol; labels identify AI channels.",
+          "Common terminals, sensor supply and output supply are represented independently. No internal physical net is inferred.",
+          "Ethernet, programming, high-speed modes, firmware, limits, protection and complete installation requirements are not modeled.",
+          "The cited manual requires unused analog inputs to be shorted. Author any required connections explicitly in the project.",
+          "Nominal 24 V supply / digital I/O and nominal 10 V analog full scale are descriptive ratings, not a full compatibility or range check."
+        ]
+      },
+      "terminals": {
+        "X10.1": {
+          "role": "supply_positive",
+          "description": "L+ CPU supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.2": {
+          "role": "supply_return",
+          "description": "M CPU supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.3": {
+          "role": "protective_earth",
+          "description": "Functional earth"
+        },
+        "X10.4": {
+          "role": "dc_positive_output",
+          "description": "L+ sensor supply output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.5": {
+          "role": "dc_return_output",
+          "description": "M sensor supply output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.6": {
+          "role": "supply_return",
+          "description": "1M digital input common",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.7": {
+          "role": "digital_input_0",
+          "description": "DI a.0",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.8": {
+          "role": "digital_input_1",
+          "description": "DI a.1",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.9": {
+          "role": "digital_input_2",
+          "description": "DI a.2",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.10": {
+          "role": "digital_input_3",
+          "description": "DI a.3",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.11": {
+          "role": "digital_input_4",
+          "description": "DI a.4",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.12": {
+          "role": "digital_input_5",
+          "description": "DI a.5",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.13": {
+          "role": "digital_input_6",
+          "description": "DI a.6",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X10.14": {
+          "role": "digital_input_7",
+          "description": "DI a.7",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X11.1": {
+          "role": "analog_common",
+          "description": "2M analog common"
+        },
+        "X11.2": {
+          "role": "analog_input",
+          "description": "AI 0, 0-10 V",
+          "rating": {
+            "nominal_voltage": 10,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X11.3": {
+          "role": "analog_input",
+          "description": "AI 1, 0-10 V",
+          "rating": {
+            "nominal_voltage": 10,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.1": {
+          "role": "supply_positive",
+          "description": "3L+ output supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X12.2": {
+          "role": "supply_return",
+          "description": "3M output supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X12.3": {
+          "role": "digital_output_0",
+          "description": "DQ a.0",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.4": {
+          "role": "digital_output_1",
+          "description": "DQ a.1",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.5": {
+          "role": "digital_output_2",
+          "description": "DQ a.2",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.6": {
+          "role": "digital_output_3",
+          "description": "DQ a.3",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.7": {
+          "role": "digital_output_4",
+          "description": "DQ a.4",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "X12.8": {
+          "role": "digital_output_5",
+          "description": "DQ a.5",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        }
+      },
+      "functions": {
+        "di0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.7"]
+        },
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.8"]
+        },
+        "di2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.9"]
+        },
+        "di3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.10"]
+        },
+        "di4": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.11"]
+        },
+        "di5": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.12"]
+        },
+        "di6": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.13"]
+        },
+        "di7": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.14"]
+        },
+        "ai0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.2"]
+        },
+        "ai1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.3"]
+        },
+        "do0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.3"]
+        },
+        "do1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.4"]
+        },
+        "do2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.5"]
+        },
+        "do3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.6"]
+        },
+        "do4": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.7"]
+        },
+        "do5": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.8"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["X10.1", "X10.2"]
+        },
+        "output_supply": {
+          "kind": "load",
+          "terminals": ["X12.1", "X12.2"]
+        },
+        "sensor_supply": {
+          "kind": "source",
+          "terminals": ["X10.4", "X10.5"]
+        },
+        "functional_earth": {
+          "kind": "bus",
+          "terminals": ["X10.3"]
+        },
+        "digital_common": {
+          "kind": "bus",
+          "terminals": ["X10.6"]
+        },
+        "analog_common": {
+          "kind": "bus",
+          "terminals": ["X11.1"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di2"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di3"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di4"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di5"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di6"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di7"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "ai0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "ai1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do2"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do3"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do4"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "output_supply",
+          "to": "do5"
+        }
+      ],
+      "terminalOrder": [
+        "X10.1",
+        "X10.2",
+        "X10.3",
+        "X10.4",
+        "X10.5",
+        "X10.6",
+        "X10.7",
+        "X10.8",
+        "X10.9",
+        "X10.10",
+        "X10.11",
+        "X10.12",
+        "X10.13",
+        "X10.14",
+        "X11.1",
+        "X11.2",
+        "X11.3",
+        "X12.1",
+        "X12.2",
+        "X12.3",
+        "X12.4",
+        "X12.5",
+        "X12.6",
+        "X12.7",
+        "X12.8"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "23D01BA05 twin pushbutton / isolated component check"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    { "name": "stahl-pilot", "version": "0.1.0", "path": "../.." },
+    { "name": "stahl-twin-fixture", "version": "1.0.0", "path": "fixture" }
+  ]
+}

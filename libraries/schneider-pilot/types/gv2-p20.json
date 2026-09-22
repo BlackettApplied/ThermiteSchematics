@@ -1,0 +1,107 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p20",
+      "description": "Three-pole thermal-magnetic motor protection breaker, rotary handle, 13–18 A adjustment; bare device",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P20",
+        "document": {
+          "url": "https://www.se.com/ww/en/product/download-pdf/GV2P20",
+          "title": "Product data sheet — GV2P20",
+          "revision": "Undated generated sheet; retrieved 2026-09-11",
+          "pages": "1–2 specifications; 11 Connections and Schema"
+        },
+        "modelingNotes": [
+          "Manufacturer order spelling GV2P20; source GV2-P20 retained. Historical 2017 catalog exact row confirms 13–18 A rotary model; hyphen treated as presentation separator (research.md S3).",
+          "Bare breaker only. Verified pairs 1/L1–2/T1, 3/L2–4/T2, 5/L3–6/T3. Common mechanical operation and thermal/magnetic release shown in exact-product sheet p.11. Auxiliary contacts and release accessories are separate orders.",
+          "Open normal_state denotes the illustrated OFF state. Ganged relations are mechanical; neither pole functions nor release metadata establishes permanent electrical continuity.",
+          "13–18 A thermal adjustment; 18 A upper capability is not an installation setting. AC 50/60 Hz, Ue capability 690 V; no nominal circuit voltage assigned.",
+          "Magnetic threshold unresolved for historical unit: 2017 exact-order sheet gives 223 A, current exact-order sheet 341 A. No scalar threshold or protective simulation is modeled; see research.md S1/S2.",
+          "2017 Icu (IEC 60947-2): 100 kA at 230/240 V AC, 50 kA at 400/415 V, 20 kA at 440 V, 10 kA at 500 V, 4 kA at 690 V. Corresponding Ics: 100%, 50%, 75%, 75%, 100% of Icu. No unconditional breaking-capacity scalar.",
+          "Screw clamps: two solid conductors 1–6 mm², flexible without ferrule 1.5–6 mm², flexible with ferrule 1–4 mm²; tightening 1.7 N·m. External wiring and application suitability remain engineering decisions."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Six main screw-clamp terminals in the exact GV2P20 sheet circuit diagram. Bare device has no depicted auxiliary, coil, PE, neutral, shield or communication connection. Separately ordered accessories and panel bonding are excluded."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Main pole 1 line terminal, manufacturer marking 1/L1",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "Main pole 1 load terminal, manufacturer marking 2/T1",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Main pole 2 line terminal, manufacturer marking 3/L2",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "Main pole 2 load terminal, manufacturer marking 4/T2",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Main pole 3 line terminal, manufacturer marking 5/L3",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "Main pole 3 load terminal, manufacturer marking 6/T3",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022042r6530",
+      "description": "OXP6X360 extended shaft for pistol handle, 360 mm length, 6 mm diameter",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022042R6530",
+        "document": {
+          "url": "https://library.e.abb.com/public/7defaf792ade43d193ead08bdaed451c/1SCC303003C0201_Change-over%20and%20transfer%20switches_23-04_EN.pdf",
+          "title": "Transfer switches: Manual, motorized, automatic",
+          "revision": "1SCC303003C0201, 23-04 (2023)",
+          "pages": "36 (printed and physical): extended shafts ordering table"
+        },
+        "modelingNotes": [
+          "S1 explicitly identifies OXP6X360 / 1SCA022042R6530 as a pistol-handle shaft, length 360 mm and diameter 6 mm.",
+          "Mechanical accessory only; zero electrical terminals, circuit functions and fixed electrical links. No electrical ratings are assigned.",
+          "SHAFT is an authoring alias for mechanical attachment, not a manufacturer terminal marking or electrical connector.",
+          "Historical 335...365 mm and 439...484 mm installation-depth descriptions are unverified and not modeled. Assembly suitability requires separate confirmation."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Standalone mechanical shaft has no power, return, PE/bond, shield, signal, communication or auxiliary-contact terminals. Enclosure bonding and separately purchased switch/handle connections are outside this item."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "SHAFT": {
+          "connector": "Pistol-handle operating shaft",
+          "description": "Mechanical attachment only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:lc1-dt25p7",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LC1-DT25P7"
+  },
+  "type": {
+    "path": "types/lc1-dt25p7.json",
+    "sha256": "c69fcb478b3ff0d9d19fbf87956dd0671ae47f1eeeeeb36f8a4e3af7cfef8d91"
+  },
+  "research": {
+    "path": "research/lc1-dt25p7.md",
+    "sha256": "180b972a9563b39b661167016d8b4c426916da66ef418a09d56930269adda4ea"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "A1",
+      "A2",
+      "1/L1",
+      "2/T1",
+      "3/L2",
+      "4/T2",
+      "5/L3",
+      "6/T3",
+      "7/L4",
+      "8/T4",
+      "13/NO",
+      "14",
+      "21/NC",
+      "22"
+    ],
+    "requiredTerminalKeys": ["A1", "A2"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "f64d5d881acd5313ce2d6ae80835e7199a9ee1668c2ba47745bba832423bd15d",
+    "packet.request.json": "6e6a4f0de7af4b359a1aed706aa6e681ccb18781abdcedfcc6403ead7981d24b",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "f7ae7b1be883648ba5a4d13187d20d251be65237b0699aa77757fc18e5408fdf",
+    "system.json": "428895027bf76210faf53ad232e38f27b964b4e828e1f335082ad3bc24ecf43a"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:gv2-rt10",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "GV2-RT10"
+  },
+  "type": {
+    "path": "types/gv2-rt10.json",
+    "sha256": "6a5915a2a66c2110424976e2c81ce72a6056a8bcbab4ede19dad655c366b38d7"
+  },
+  "research": {
+    "path": "research/gv2-rt10.md",
+    "sha256": "9c3049994fa0cc2af32c6601a032cda22bcece7cb6a7238ff270574d27327cc6"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1/L1", "2/T1", "3/L2", "4/T2", "5/L3", "6/T3"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "c808a2bd351c1c6fd8ad28a944fb6cad6f65dbecfe58d7387c4faa3f353b1b58",
+    "packet.request.json": "bd34b63b172bae4c839d41553eabe738bda3302f4b0c950d719d85981c411225",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "9739fe0b072bcfd5621d77f2e06bb9edbbef30174701167f37d93a0d60a005de",
+    "system.json": "a50d36052b30f16ba780cffb8902fb9ad7bbbf4c94fc9d260db25191b9711863"
+  }
+}

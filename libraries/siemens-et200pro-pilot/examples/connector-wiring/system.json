@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "ET 200pro verified connector demonstrations"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "siemens-et200pro-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "et200pro-fixture",
+      "version": "1.0.0",
+      "path": "fixture"
+    }
+  ]
+}

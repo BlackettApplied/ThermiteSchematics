@@ -1,0 +1,119 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1651360000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1651360000"
+  },
+  "type": {
+    "path": "types/1651360000.json",
+    "sha256": "a1d936434076fedf1ae73c60ad8aed90d86fe95a76f132c7cea579da9863f45f"
+  },
+  "research": {
+    "path": "research/1651360000.md",
+    "sha256": "d0fde291645acc2b1765ad1321ed1727492e211042c37c76206a06d40faabf7a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.3",
+      "C.5",
+      "C.7",
+      "C.9",
+      "C.11",
+      "C.14",
+      "C.16",
+      "C.18",
+      "C.20",
+      "C.22",
+      "C.24",
+      "M.1",
+      "M.3",
+      "M.5",
+      "M.7",
+      "M.9",
+      "M.11",
+      "M.14",
+      "M.16",
+      "M.18",
+      "M.20",
+      "M.22",
+      "M.24",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.9",
+        "to": "M.9",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.11",
+        "to": "M.11",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.14",
+        "to": "M.14",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.16",
+        "to": "M.16",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.18",
+        "to": "M.18",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.20",
+        "to": "M.20",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.22",
+        "to": "M.22",
+        "sourceId": "S2"
+      },
+      {
+        "from": "C.24",
+        "to": "M.24",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "1df739b2eda12af7045e8caf131c56473c4a30b7f916675c35734384b864185b",
+    "packet.request.json": "228c81a0950d290b1101fe6703e220dbe30ba9783c52c2e305517f915ff5b930",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "7b1ff431cd0f50dd4c83f7c11d98a15b389ab757727849b4a485b96980d19d4b",
+    "system.json": "9e178f47bba6c2ae469f962b6f58f740530c1e1833aac9839617869c6741f27b"
+  }
+}

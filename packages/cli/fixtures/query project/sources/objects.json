@@ -1,0 +1,138 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "40000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "A",
+      "type": "query:a"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "A.B",
+      "type": "query:a-dot-b"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "A.",
+      "type": "query:a-dot"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "PLC1",
+      "type": "query:plc"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000005",
+      "kind": "device",
+      "designation": "=F1+P1-K1",
+      "type": "query:iec"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000006",
+      "kind": "device",
+      "designation": "K1",
+      "type": "query:k"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000007",
+      "kind": "device",
+      "designation": "Panel A",
+      "description": "Panel device with spaces",
+      "aliases": ["main panel"],
+      "location": "Bay 1",
+      "type": "query:panel"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000008",
+      "kind": "device",
+      "designation": "-K1",
+      "type": "query:iec"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000009",
+      "kind": "device",
+      "designation": "D1",
+      "type": "query:plain"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000010",
+      "kind": "device",
+      "designation": "D2",
+      "type": "query:plain"
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000011",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        { "device": "A", "terminal": "C" },
+        { "device": "A.B", "terminal": "C" }
+      ]
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000012",
+      "kind": "relation",
+      "designation": "REL1",
+      "relation": "controls",
+      "from": { "device": "A" },
+      "to": { "device": "A.B" }
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000013",
+      "kind": "cable",
+      "designation": "Cable A",
+      "description": "Cable with spaces",
+      "aliases": ["main cable"],
+      "type": "query:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            { "device": "D1", "terminal": "T" },
+            { "device": "D2", "terminal": "T" }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000014",
+      "kind": "cable",
+      "designation": "-CBL",
+      "type": "query:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            { "device": "D1", "terminal": "T" },
+            { "device": "D2", "terminal": "T" }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000015",
+      "kind": "jumper",
+      "designation": "JP1",
+      "endpoints": [
+        { "device": "D1", "terminal": "T" },
+        { "device": "D2", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "40000000-0000-4000-8000-000000000016",
+      "kind": "potential",
+      "designation": "POT1",
+      "name": "+24V",
+      "at": { "device": "PLC1", "terminal": "X1.0" },
+      "electrical": {
+        "voltage_type": "DC",
+        "nominal_voltage": 24,
+        "polarity": "positive"
+      }
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "b7c2c3ea-bed5-4866-832f-311212314e62",
+      "kind": "wire",
+      "designation": "W-PWR-015",
+      "endpoints": [
+        { "device": "K1", "terminal": "2/T1" },
+        { "device": "OL1", "terminal": "1/L1" }
+      ],
+      "properties": {
+        "label": "L1-K1-OL1",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "24900c61-3ace-41b5-b43b-e07798a86e17",
+      "kind": "wire",
+      "designation": "W-PWR-016",
+      "endpoints": [
+        { "device": "K1", "terminal": "4/T2" },
+        { "device": "OL1", "terminal": "3/L2" }
+      ],
+      "properties": {
+        "label": "L2-K1-OL1",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "c329c1f4-c2bd-488e-a5e0-5651a1365942",
+      "kind": "wire",
+      "designation": "W-PWR-017",
+      "endpoints": [
+        { "device": "K1", "terminal": "6/T3" },
+        { "device": "OL1", "terminal": "5/L3" }
+      ],
+      "properties": {
+        "label": "L3-K1-OL1",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "54de9989-976e-46cc-b683-1d3b36270b74",
+      "kind": "wire",
+      "designation": "W-PWR-018",
+      "endpoints": [
+        { "device": "OL1", "terminal": "2/T1" },
+        { "device": "M1", "terminal": "U" }
+      ],
+      "properties": {
+        "label": "L1-OL1-M1-U",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "4941b14c-6e44-43fa-bfa8-ae302925b2f4",
+      "kind": "wire",
+      "designation": "W-PWR-019",
+      "endpoints": [
+        { "device": "OL1", "terminal": "4/T2" },
+        { "device": "M1", "terminal": "V" }
+      ],
+      "properties": {
+        "label": "L2-OL1-M1-V",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "bf79bb59-64a7-4233-886f-cc9b00a45948",
+      "kind": "wire",
+      "designation": "W-PWR-020",
+      "endpoints": [
+        { "device": "OL1", "terminal": "6/T3" },
+        { "device": "M1", "terminal": "W" }
+      ],
+      "properties": {
+        "label": "L3-OL1-M1-W",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "47d899d7-7502-4426-a76c-6aa8818159ee",
+      "kind": "wire",
+      "designation": "W-PWR-021",
+      "endpoints": [
+        { "device": "SRC1", "terminal": "PE" },
+        { "device": "M1", "terminal": "PE" }
+      ],
+      "properties": {
+        "label": "PE-SRC-M1",
+        "size": "10AWG",
+        "color": "green/yellow"
+      }
+    },
+    {
+      "uid": "58511cef-a346-4567-8e20-390117abf248",
+      "kind": "wire",
+      "designation": "W-PWR-022",
+      "endpoints": [
+        { "device": "K2", "terminal": "2/T1" },
+        { "device": "OL2", "terminal": "1/L1" }
+      ],
+      "properties": {
+        "label": "L1-K2-OL2",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "8fd35070-cc79-4600-a525-c922446e9a46",
+      "kind": "wire",
+      "designation": "W-PWR-023",
+      "endpoints": [
+        { "device": "K2", "terminal": "4/T2" },
+        { "device": "OL2", "terminal": "3/L2" }
+      ],
+      "properties": {
+        "label": "L2-K2-OL2",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "e0af714f-02c3-40a9-823b-1130e967f761",
+      "kind": "wire",
+      "designation": "W-PWR-024",
+      "endpoints": [
+        { "device": "K2", "terminal": "6/T3" },
+        { "device": "OL2", "terminal": "5/L3" }
+      ],
+      "properties": {
+        "label": "L3-K2-OL2",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "f2be871d-09db-414d-84ac-8130b04d485f",
+      "kind": "wire",
+      "designation": "W-PWR-025",
+      "endpoints": [
+        { "device": "OL2", "terminal": "2/T1" },
+        { "device": "M2", "terminal": "U" }
+      ],
+      "properties": {
+        "label": "L1-OL2-M2-U",
+        "size": "10AWG",
+        "color": "brown"
+      }
+    },
+    {
+      "uid": "1d6ffc4b-7e6c-457a-af4e-16dc9aefd4e3",
+      "kind": "wire",
+      "designation": "W-PWR-026",
+      "endpoints": [
+        { "device": "OL2", "terminal": "4/T2" },
+        { "device": "M2", "terminal": "V" }
+      ],
+      "properties": {
+        "label": "L2-OL2-M2-V",
+        "size": "10AWG",
+        "color": "orange"
+      }
+    },
+    {
+      "uid": "dfad775b-bf85-4c55-a217-ef9c9977461d",
+      "kind": "wire",
+      "designation": "W-PWR-027",
+      "endpoints": [
+        { "device": "OL2", "terminal": "6/T3" },
+        { "device": "M2", "terminal": "W" }
+      ],
+      "properties": {
+        "label": "L3-OL2-M2-W",
+        "size": "10AWG",
+        "color": "yellow"
+      }
+    },
+    {
+      "uid": "573d3816-e137-40eb-908e-ee41ac5aa773",
+      "kind": "wire",
+      "designation": "W-PWR-028",
+      "endpoints": [
+        { "device": "SRC1", "terminal": "PE" },
+        { "device": "M2", "terminal": "PE" }
+      ],
+      "properties": {
+        "label": "PE-SRC-M2",
+        "size": "10AWG",
+        "color": "green/yellow"
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d",
+      "kind": "wire",
+      "designation": "W-CTL-001",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "L+"
+        }
+      ],
+      "properties": {
+        "label": "+24V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "00f8fde6-55ad-4b82-8bfb-ac3a0268161a",
+      "kind": "wire",
+      "designation": "W-CTL-002",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "M"
+        }
+      ],
+      "properties": {
+        "label": "0V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    }
+  ]
+}

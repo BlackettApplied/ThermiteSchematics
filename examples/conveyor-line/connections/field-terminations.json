@@ -1,0 +1,71 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "442a8edc-795c-4855-a249-0bd059c01194",
+      "kind": "wire",
+      "designation": "W-FLD-001",
+      "endpoints": [
+        { "device": "TB1", "terminal": "3" },
+        { "device": "PLC1", "terminal": "X1.0" }
+      ],
+      "properties": {
+        "label": "PX1-PNP-OUT-PLC1-DI0",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "2338b207-f90c-4087-8986-6d8bcd09cba5",
+      "kind": "wire",
+      "designation": "W-FLD-002",
+      "endpoints": [
+        { "device": "JB1", "terminal": "X1.1" },
+        { "device": "PX1", "terminal": "1" }
+      ],
+      "properties": {
+        "label": "+24V-JB1-PX1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "d25cdb35-19a3-411d-814d-2ccdd70ef73e",
+      "kind": "wire",
+      "designation": "W-FLD-003",
+      "endpoints": [
+        { "device": "PX1", "terminal": "4" },
+        { "device": "JB1", "terminal": "X1.2" }
+      ],
+      "properties": {
+        "label": "PX1-PNP-SIGNAL",
+        "size": "18AWG",
+        "color": "violet"
+      }
+    },
+    {
+      "uid": "5d13c9d6-1dcd-4ecb-a450-3292c736a024",
+      "kind": "wire",
+      "designation": "W-FLD-004",
+      "endpoints": [
+        { "device": "JB1", "terminal": "X1.3" },
+        { "device": "PX1", "terminal": "3" }
+      ],
+      "properties": {
+        "label": "0V-JB1-PX1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "3c7f916e-b8e8-43f8-8892-114b17daccf6",
+      "kind": "jumper",
+      "designation": "JP1",
+      "description": "Distributes +24 VDC from TB1.1 to the PX1 cable feed at TB1.2",
+      "endpoints": [
+        { "device": "TB1", "terminal": "1" },
+        { "device": "TB1", "terminal": "2" }
+      ]
+    }
+  ]
+}

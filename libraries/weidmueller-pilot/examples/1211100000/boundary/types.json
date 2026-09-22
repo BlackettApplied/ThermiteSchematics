@@ -1,0 +1,788 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-1",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-2",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-3",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-4",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-5",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-6",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-7",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-8",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-9",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-10",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-11",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-12",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-13",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-14",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-15",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-16",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-17",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-18",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-19",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-20",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-21",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-22",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-23",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-24",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-25",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-26",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-27",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-28",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-29",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-30",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-31",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-32",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-33",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-34",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-35",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-36",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-37",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-38",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-39",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-40",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-41",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-42",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-43",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-44",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-45",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-46",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-47",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-48",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "power"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-49",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "protective_earth"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    }
+  ]
+}

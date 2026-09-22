@@ -1,0 +1,58 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:3na3836",
+      "description": "NH00 gG fuse link / 160 A / front indicator / live grip lugs",
+      "category": "component",
+      "symbol": "thermite:fuse",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "3NA3836",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/siemenscomplete/2021q2/documents/df7c16e159664f0a2cf79f64f7f8aad7426b851c.pdf",
+          "title": "Siemens Data sheet 3NA3836",
+          "revision": "Footer date 4.2.2021",
+          "pages": "1-2 technical data; 3 dimensional drawing; 4 circuit diagram"
+        },
+        "modelingNotes": [
+          "Bare NH00 gG fuse link, 160 A; capability 500 V AC / 250 V DC. No assigned nominal circuit voltage or AC-only metadata.",
+          "Rated AC current is 160 A. Operational-current table: 156.8 A at 30 °C; 152 A at 40 °C; 147.2 A at 45 °C; 144 A at 50 °C; 140.8 A at 55 °C; 137.6 A at 60 °C. Separately specified operating ambient is -5 to +40 °C. No unconditional scalar current rating is assigned.",
+          "Keys 1 and 2 preserve manufacturer circuit-diagram identifiers on datasheet p.4, not verified physical stamping, polarity or mounting orientation.",
+          "Front indication is non-terminal hardware. Live grip lugs are handling hardware, not external wiring terminals or protective earth. Fuse base and accessory signal detectors are not part of this order.",
+          "Closed contact with fuse mark represents the intact protective element only; it creates no permanent net continuity and does not simulate fuse clearing or coordination.",
+          "Manufacturer-authored datasheet retained at a distributor mirror; dimensional and circuit drawings visually reviewed."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Two external blade-contact circuit endpoints 1 and 2, as drawn on exact-order datasheet p.4. Front indicator and live handling lugs add no wiring terminals. Bare link only; no fuse base or accessory contacts."
+      },
+      "terminals": {
+        "1": {
+          "description": "Fuse blade endpoint 1, manufacturer circuit-diagram identifier",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "2": {
+          "description": "Fuse blade endpoint 2, manufacturer circuit-diagram identifier",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        }
+      },
+      "functions": {
+        "fuse": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "fuse": "fuse"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

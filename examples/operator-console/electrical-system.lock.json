@@ -1,0 +1,41 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "console-planning": {
+      "version": "0.1.0",
+      "path": "lib",
+      "resolutionKind": "local",
+      "integrity": "sha256-I/Vpbmf+zbbA+VtChe6qvc2pWQW/glxk7jDIKuT5bDI=",
+      "files": {
+        "library.json": "sha256-SEItPKJNe++qzdodTVkwa7WO37/4ohRa8IKWqN5bM78=",
+        "types.json": "sha256-4612tEawJhetXXE4UMG5D+6+VmzQKI1UWAuNf80+hS8="
+      }
+    },
+    "industrial-pilot": {
+      "version": "0.1.0",
+      "path": "../../libraries/industrial-pilot",
+      "resolutionKind": "local",
+      "integrity": "sha256-tWtp5dvYbQcAqSSAYQl8V9NPNpZyMWULge92l4Bqxac=",
+      "files": {
+        "library.json": "sha256-3cqRtLLw2j8G//pEsoJAOp9FYDn1FzeGD6A7nYo/gWU=",
+        "types/arbor-sp-151c-1n305.json": "sha256-H0aY5otHdPGsUjHa7N0x2ECimmR+XnRNbc+taWXYZLY=",
+        "types/carlo-gavazzi-nrgc-pn.json": "sha256-vvy3zmlPoqYDNbhz7oFWW+LU5t2OfIJNsmWWYd1JmJw=",
+        "types/carlo-gavazzi-rgc1p60cm25ken.json": "sha256-4zqVqEg8OwgWUnzh9ZGHnPrn7p7RzmDiPHigNzSVB1U=",
+        "types/carlo-gavazzi-rgn-termres.json": "sha256-bZB+lmygbI+bd3wXT/SwZbA4p5GSKqqdwggQMYE65g4=",
+        "types/neousys-poc-610.json": "sha256-urqUT0iVUij+LsZ1hUios7Lg2sWlKBBLQmO1mvCg1kI=",
+        "types/patlite-lr4-302ljbw-ryg.json": "sha256-hNguKIDvBlMOVWt++1kV3KgrQVWeOP+yf5C6irzQgNc=",
+        "types/phoenix-plc-rsc-24dc-21.json": "sha256-PF+xYmxafmqv88OxvczH5tOtsiB1UcjKGPAjuQdJV+8=",
+        "types/siemens-ai4i-st-2wire.json": "sha256-rWKOvbmzkiSI+n6naUKctlikuge7HlUXK/g5AMrx76g=",
+        "types/siemens-ai4tc-hs.json": "sha256-ySDpsiNNnwjIzn2cpC+udgCMThpkZh2CpzlxT0wW3pQ=",
+        "types/siemens-aq4ui-st-2wire.json": "sha256-PAJsixYPxa7hAZNRt+Q6p7ncU6NRUAuz6tV2ed1uVSc=",
+        "types/siemens-aq4ui-st-current.json": "sha256-fqOFNm/xrp/YnT2za3nTmlFbDPcP8YSG6NN0J2AhPM4=",
+        "types/siemens-bu-0ba1.json": "sha256-vckxYyPuTd68vCZWE/ZXkhRqrtMRCNp5pqpcc+VqZzo=",
+        "types/siemens-bu-0da1.json": "sha256-PiKjaVJwvGD16oLkbmPPgUOM+7N58Bw7JLLjVKnswyI=",
+        "types/siemens-im155-6pn-st-bundle.json": "sha256-4CC+fvweSYE7boKAc7MoshewBv0XxfHeO7VeW6L9bk4=",
+        "types/siemens-kp8-pn-8do.json": "sha256-RPHPmNoLfJ1e9SSmkr46rA2RBDPt65hKCb2QqaO4ti0="
+      }
+    }
+  }
+}

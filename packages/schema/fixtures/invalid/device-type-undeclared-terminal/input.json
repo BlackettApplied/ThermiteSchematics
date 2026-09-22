@@ -1,0 +1,1 @@
+{"kind":"device_type","id":"core:bad-terminal-ref","terminals":{"A1":{}},"functions":{"coil":{"kind":"coil","terminals":["A1","A2"]}}}

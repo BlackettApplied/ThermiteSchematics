@@ -1,0 +1,233 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:c4-a40x-230vac",
+      "description": "Releco C4-A40X/230VAC / 4-pole changeover plug-in industrial relay / AgNi contacts / LED / 230 V AC coil / Faston .110",
+      "category": "component",
+      "symbol": "thermite:relay",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "C4-A40X/230VAC",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco World of Relays (WoR) 3.2 - 1.3 Industrial Relays pluggable, family C4-A4x",
+          "revision": "WoR 3.2",
+          "pages": "Printed/physical pp.55,11; exact C4 selection, pin diagram and X circuit"
+        },
+        "modelingNotes": [
+          "Exact order C4-A40X/230VAC located in ComatReleco WoR 3.2, PDF p.55, section 1.3 Industrial Relays - pluggable, family C4-A4x. Code decodes as C4 = 4-pole changeover (4 CO) with Faston.110 tabs; contact-material digit 0 = AgNi (C4-A40); suffix X = LED coil-status indicator; /230VAC = 230 V AC coil. Catalog printed form is C4-A4xX/AC...V (i.e. C4-A40X/AC230V); the source /230VAC spelling is an equivalent ordering, not a substitution. Brand is ComatReleco; 'Releco' is retained as the historical brand per job identity.",
+          "Source-vs-manufacturer: the source BOM labels the item 'Contactor 4-pole 230VAC / MR-C serie / four pole relay'. The manufacturer documents a 4-pole plug-in industrial relay (series C4), not a contactor; the source's historical 'MR-C serie' wording is retained without asserting that it is a current catalog designation. The order code C4-A40X/230VAC is exact.",
+          "Fig.1 wiring diagram (p.55) inspected visually. Terminals are keyed by the physical Faston tab numbers 1-14; the IEC contact aliases printed in the SAME diagram are: pole1 1/2/3 = 12(NC)/14(NO)/11(COM); pole2 4/5/6 = 22/24/21; pole3 7/8/9 = 32/34/31; pole4 10/11/12 = 42/44/41; coil 13/14 = A1(+)/A2. Fig.4 (dimensions) confirms the physical tab layout 1,4,7,10 / 2,5,8,11 / 3,6,9,12 / 13,14.",
+          "Contacts AgNi, rated current 10 A. Conditional switching maxima: 10 A / 250 V AC (AC-1) and 10 A / 30 V DC (DC-1); rated load AC 2500 VA; inrush 30 A / 20 ms; recommended min. load 10 mA / 5 V. Contacts are rated for both AC and DC, so contact terminals carry no unconditional current, voltage_type or nominal_voltage; 250 V is a capability maximum, not an assigned circuit voltage.",
+          "Coil 230 V AC, 50 Hz standard (60 Hz also offered). Operating range 0.8-1.1 UN; pick-up <= 0.8 UN; release >= 0.1 UN; consumption 2.4 VA / 1.4 W; 230 V AC coil = 6850 ohm, 10.4 mA (manufacturer coil table). Coil pins A1(13)/A2(14) are the universally required connection (library policy). A1 '(+)' is a DC polarity reference and does not apply to this AC coil.",
+          "Suffix X = LED status indication with rectification at the coil (WoR3.2 p.11); it adds no terminal and creates no link between contacts. This AC 'X' variant has no free-wheeling diode (DC DX/FX variants) and no RC suppressor (R variant). Poles are independent; no fixed internal links are modeled.",
+          "Socket (S4-J / S4-P), blanking plug SO-NP, wall-mount adapter S5-R and test button S5-HP are separately ordered accessories and are NOT part of this bare relay; socket cage/clamp terminals are out of scope. Standards IEC/EN 60947 and IEC/EN 61810; approvals apply to C4-A40. No trip-coordination, environmental or in-application suitability verdict is encoded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All 14 relay Faston tabs are inventoried: four changeover contacts (COM/NC/NO on pins 1-12) plus coil A1/A2 (pins 13/14). The bare relay has no PE, neutral, shield or communication terminal. Contact positions are application-dependent; the coil is required. Socket, blanking plug and adapters are separate parts and are not modeled."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 normally-closed contact (IEC 12)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "Pole 1 normally-open contact (IEC 14)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "3": {
+          "description": "Pole 1 common (IEC 11)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "Pole 2 normally-closed contact (IEC 22)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "5": {
+          "description": "Pole 2 normally-open contact (IEC 24)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "6": {
+          "description": "Pole 2 common (IEC 21)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "7": {
+          "description": "Pole 3 normally-closed contact (IEC 32)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "8": {
+          "description": "Pole 3 normally-open contact (IEC 34)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "9": {
+          "description": "Pole 3 common (IEC 31)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "10": {
+          "description": "Pole 4 normally-closed contact (IEC 42)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "11": {
+          "description": "Pole 4 normally-open contact (IEC 44)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "12": {
+          "description": "Pole 4 common (IEC 41)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "13": {
+          "description": "Physical pin13 / IEC A1, 230 VAC coil; no DC polarity requirement",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC",
+            "frequency": 50
+          }
+        },
+        "14": {
+          "description": "Coil A2; 230 V AC coil terminal",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC",
+            "frequency": 50
+          }
+        }
+      },
+      "functions": {
+        "pole1_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["3", "1"]
+        },
+        "pole1_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "2"]
+        },
+        "pole2_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["6", "4"]
+        },
+        "pole2_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["6", "5"]
+        },
+        "pole3_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["9", "7"]
+        },
+        "pole3_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["9", "8"]
+        },
+        "pole4_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["12", "10"]
+        },
+        "pole4_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["12", "11"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["13", "14"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1_nc": "contact-nc",
+        "pole1_no": "contact-no",
+        "pole2_nc": "contact-nc",
+        "pole2_no": "contact-no",
+        "pole3_nc": "contact-nc",
+        "pole3_no": "contact-no",
+        "pole4_nc": "contact-nc",
+        "pole4_no": "contact-no",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole3_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole3_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole4_nc"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole4_no"
+        }
+      ],
+      "terminalOrder": [
+        "3",
+        "1",
+        "2",
+        "6",
+        "4",
+        "5",
+        "9",
+        "7",
+        "8",
+        "12",
+        "10",
+        "11",
+        "13",
+        "14"
+      ]
+    }
+  ]
+}

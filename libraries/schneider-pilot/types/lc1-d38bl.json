@@ -1,0 +1,198 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d38bl",
+      "description": "TeSys D 3-pole contactor / AC-3 38 A (18.5 kW / 400 V) / 24 V DC low-consumption 'BL' coil / 1 NO + 1 NC integral auxiliary",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D38BL",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-LC1D38BL.PDF",
+          "title": "Schneider Electric LC1D38BL product data sheet",
+          "revision": "March 12, 2018",
+          "pages": "1-3; applicable B8/8, B8/24 and B8/79 catalogue and 137830401A55 instruction are cited in modelingNotes"
+        },
+        "modelingNotes": [
+          "Manufacturer exact reference LC1D38BL matches source order LC1-D38BL; the source presentation hyphen is retained. Exact historical product sheet, not a successor, establishes the BL 24 VDC low-consumption coil, 3NO main poles and factory 1NO+1NC auxiliary.",
+          "Applicable manufacturer contact diagram: https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF , physical B8/79, LC1D09-D150 three-pole scheme linked to the exact B8/8 selection row. Main pairs 1/L1-2/T1, 3/L2-4/T2 and 5/L3-6/T3 are NO; factory auxiliary 13/NO-14 is NO and 21/NC-22 is NC.",
+          "Coil A1 is positive and A2 negative. Applicable historical LC1D instruction https://docs.rs-online.com/27c0/A700000008089423.pdf (137830401A55-10; printed W9 1378304 0211 A09, 03/2017), page 1, explicitly depicts A1+ and A2- and includes LC low-consumption scope. The later A14 instruction corroborates the marks. Bidirectional suppression does not imply arbitrary coil polarity; BD-only FAQ and separate PLC-interface reverse-polarity protection are not used as BL proof.",
+          "Aliases are documented textual labels, not extra terminals: A1+ means A1; A2- means A2; 13/NO means 13; 21/NC means 21. Main keys retain their combined numeric/line-load markings. The current terminal schema has no alias field, so these mappings are stated here and in terminal descriptions.",
+          "Exact LC1D38BL product sheet page 3: 2.4 W inrush and holding at 20 C; operation 0.8-1.25 Uc and dropout 0.1-0.3 Uc at 60 C, time constant 40 ms. The adjacent standard-DC 0.7 Uc lower limit and generic selection-table comparisons are not substituted for this exact-order data.",
+          "Built-in bidirectional peak-limiting diode suppression is fitted as standard. B8/24 expressly includes DC low-consumption coils: the suppressor is removable/replaceable, and clipping makes the electrical connection. The catalogue lists LAD4TBDL for 24 VDC and LAD9DL blanking plug if operated without suppression. The installed unit has not been inspected.",
+          "Physical coverage is partial beyond the established twelve field screw terminals. The installation diagram depicts the removable suppressor's two unnumbered accessory mating ends; their individual bindings are not enumerated. They are not extra field screw terminals. Schneider FAQ FA95490 https://www.se.com/us/en/faqs/FA95490/ confirms one A1 and one A2; no duplicated A2 is inferred. Optional LAD4BB coil-wiring adapter, other add-ons and their terminals are excluded.",
+          "The coil, clamp and moving contacts are not permanent net joins. Coil actuation is mechanical/functional only. No fixed links, protective-earth terminal, shield or communication port are asserted for this field-terminal model.",
+          "Required A1/A2 is an explicit library policy for the modeled operating contactor. Main and auxiliary contact usage is project-dependent; required does not claim that every unused stored device must be energized.",
+          "Conditional main ratings: 38 A AC-3 or 50 A AC-1 at <=440 VAC and <=60 C; 18.5 kW at 380-400 VAC, AC-3. Maximum main operating voltage <=690 VAC at 25-400 Hz or <=300 VDC, and insulation ratings, are capabilities rather than terminal nominal voltages. Power and signal thermal limits remain separate; exact auxiliary minimum signal is 17 V/5 mA. Coil nominal is genuinely 24 VDC."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All twelve field-wiring terminals and six schematic functions are established: six main, four factory auxiliary, and one A1+ / one A2-. The standard removable suppressor has two unnumbered accessory mating ends that are not individually mapped or modeled. This is partial coverage of all physical electrical interfaces, not a missing field screw or unresolved coil polarity. No fixed continuity through coil, suppression or moving contacts is claimed; optional add-ons and as-built suppressor state are outside scope."
+      },
+      "terminals": {
+        "13": {
+          "description": "Factory auxiliary NO terminal; manufacturer marking 13/NO is the documented alias of key 13.",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "Integral auxiliary NO contact terminal 14",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "21": {
+          "description": "Factory auxiliary NC terminal; manufacturer marking 21/NC is the documented alias of key 21.",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "22": {
+          "description": "Integral auxiliary NC contact terminal 22",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "1/L1": {
+          "description": "Main pole 1 line terminal (marked 1/L1)",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "Main pole 1 load terminal (marked 2/T1)",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Main pole 2 line terminal (marked 3/L2)",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "Main pole 2 load terminal (marked 4/T2)",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Main pole 3 line terminal (marked 5/L3)",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "Main pole 3 load terminal (marked 6/T3)",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "A1": {
+          "description": "24 VDC low-consumption coil positive; manufacturer A1+ is the polarity-labelled alias of A1 (137830401A55 instruction, page 1).",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "A2": {
+          "description": "24 VDC low-consumption coil negative; manufacturer A2- is the polarity-labelled alias of A2 (137830401A55 instruction, page 1).",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "contact-no",
+        "pole2": "contact-no",
+        "pole3": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "terminalOrder": [
+        "1/L1",
+        "3/L2",
+        "5/L3",
+        "2/T1",
+        "4/T2",
+        "6/T3",
+        "13",
+        "14",
+        "21",
+        "22",
+        "A1",
+        "A2"
+      ]
+    }
+  ]
+}

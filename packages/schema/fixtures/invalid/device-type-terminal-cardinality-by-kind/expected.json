@@ -1,0 +1,7 @@
+[
+  {"code":"E015","jsonPointer":"/functions/contact/terminals","line":9,"column":20},
+  {"code":"E015","jsonPointer":"/functions/channel/terminals","line":14,"column":20},
+  {"code":"E015","jsonPointer":"/functions/source/terminals","line":18,"column":20},
+  {"code":"E015","jsonPointer":"/functions/load/terminals","line":22,"column":20},
+  {"code":"E015","jsonPointer":"/functions/bus/terminals","line":26,"column":20}
+]

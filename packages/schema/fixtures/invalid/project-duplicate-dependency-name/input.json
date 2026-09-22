@@ -1,0 +1,1 @@
+{"format":"electrical-system/0.1","project":{"name":"Dup"},"sources":["src/*.json"],"libraries":[{"name":"core","version":"0.1.0","path":"../core"},{"name":"core","version":"0.2.0","path":"../core2"}]}

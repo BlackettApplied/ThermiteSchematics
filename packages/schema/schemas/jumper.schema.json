@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/jumper.schema.json",
+  "title": "Jumper",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uid", "kind", "endpoints"],
+  "properties": {
+    "uid": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/uid"
+    },
+    "kind": {
+      "const": "jumper"
+    },
+    "designation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "endpoints": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/endpointPair"
+    }
+  }
+}

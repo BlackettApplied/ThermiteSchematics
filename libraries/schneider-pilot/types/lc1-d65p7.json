@@ -1,0 +1,193 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d65p7",
+      "description": "TeSys D contactor / 3-pole (3 NO) / AC-3 65 A up to 440 V / 230 V AC 50/60 Hz coil (P7) / 1 NO + 1 NC integral auxiliary",
+      "category": "component",
+      "symbol": "thermite:contactor",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D65P7",
+        "document": {
+          "url": "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20%28converters%29/LC1-D_Breaker%20Contactor_Telemecanique.pdf",
+          "title": "Schneider Electric / Telemecanique TeSys historical contactors catalogue, CERN-hosted manufacturer document",
+          "revision": "24501-EN_Ver6.0; print date not established",
+          "pages": "physical 1 /24501/2 exactLC1-D65••andP7; physical 13 /24532/2 applicableLC1-D09–D150scheme"
+        },
+        "modelingNotes": [
+          "Manufacturer spelling is LC1D65P7 (no separators); the source hyphen in LC1-D65P7 is a presentation separator. orderNumber keeps the job's expected LC1-D65P7.",
+          "Coil P7 = 230 V AC, 50/60 Hz (B8/8 a.c. supply table). Frequency is a 50/60 Hz range kept in notes, not as a scalar. Integral coil suppression is attributed by the catalogue to D115/D150 a.c. and to d.c. coils, not to this 230 V a.c. D65 coil; any suppression device would not add a terminal or a net.",
+          "No fixed internal continuity: the three main poles and aux 13-14 are switched normally-open contacts, aux 21-22 a switched normally-closed contact, A1/A2 a coil winding. actuates/ganged_with relations assert mechanical linkage only, not electrical continuity. No factory jumper.",
+          "Coordinator reviewed the exact historical LC1-D65•• row and P7 table in manufacturer TeSys catalogue 24501-EN_Ver6.0 p.24501/2 (physical 1), with the applicable LC1-D09–D150 circuit 24532/2 (physical 13). LC1-D65P7 is established directly; newer LC1D65A ratings/terminal hardware are not transferred. The historical row gives 65 A AC-3, 18.5 kW at 220/230 V, 30 kW at 380/400 V and 37 kW at 415/440/500 V. P7 is 230 VAC 50/60 Hz. Three NO main poles plus NO 13/NO–14 and NC 21/NC–22 auxiliary and A1/A2 coil; no built-in suppressor is specified for this historical AC D65. https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20%28converters%29/LC1-D_Breaker%20Contactor_Telemecanique.pdf"
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 12 labeled circuit endpoints are represented. Physical duplicate-access/clamping positions and any accessory suppression attachment geometry are not separately enumerated for the historical hardware edition; connection coverage is partial for those details. No extra terminal or fixed link is inferred. Optional external accessories remain separate."
+      },
+      "terminals": {
+        "13": {
+          "description": "Integral auxiliary NO contact terminal 13",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Integral auxiliary NO contact terminal 14",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "21": {
+          "description": "Integral auxiliary NC contact terminal 21",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "22": {
+          "description": "Integral auxiliary NC contact terminal 22",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "1/L1": {
+          "description": "Main pole 1, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "T1/2": {
+          "description": "Main pole 1, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "3/L2": {
+          "description": "Main pole 2, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "T2/4": {
+          "description": "Main pole 2, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "5/L3": {
+          "description": "Main pole 3, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "T3/6": {
+          "description": "Main pole 3, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "A1": {
+          "description": "Control coil terminal A1",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "A2": {
+          "description": "Control coil terminal A2",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "T1/2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "T2/4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "T3/6"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "aux_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "aux_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "contact-no",
+        "pole2": "contact-no",
+        "pole3": "contact-no",
+        "coil": "coil",
+        "aux_no": "contact-no",
+        "aux_nc": "contact-nc"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "aux_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "aux_nc"
+        }
+      ],
+      "terminalOrder": [
+        "1/L1",
+        "3/L2",
+        "5/L3",
+        "T1/2",
+        "T2/4",
+        "T3/6",
+        "A1",
+        "A2",
+        "13",
+        "14",
+        "21",
+        "22"
+      ]
+    }
+  ]
+}

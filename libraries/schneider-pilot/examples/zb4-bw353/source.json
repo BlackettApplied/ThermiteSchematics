@@ -1,0 +1,10 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "schneider-pilot:zb4-bw353"
+    }
+  ]
+}

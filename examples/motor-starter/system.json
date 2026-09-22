@@ -1,0 +1,16 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Motor Starter Reference System",
+    "description": "480 VAC motor starter with 24 VDC PLC control and field limit switch"
+  },
+  "sources": [
+    "devices/**/*.json",
+    "connections/**/*.json",
+    "cables/**/*.json",
+    "potentials/**/*.json"
+  ],
+  "presentation": "presentation.json",
+  "libraries": [{ "name": "core", "version": "0.1.0" }]
+}

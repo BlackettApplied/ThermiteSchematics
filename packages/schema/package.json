@@ -1,0 +1,33 @@
+{
+  "name": "@thermite/schema",
+  "version": "0.2.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": "^22.12.0 || >=24"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./schemas/*": "./schemas/*"
+  },
+  "files": [
+    "dist",
+    "schemas",
+    "README.md"
+  ],
+  "dependencies": {
+    "ajv": "^8.20.0",
+    "jsonc-parser": "^3.3.1"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "15.0.4"
+  },
+  "scripts": {
+    "generate:types": "node scripts/generate-types.mjs",
+    "generate:types:check": "node scripts/generate-types.mjs --check"
+  }
+}

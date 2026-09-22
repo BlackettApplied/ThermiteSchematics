@@ -1,0 +1,48 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "31000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "ZETA",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "ALPHA",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "MID",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31000000-0000-4000-8000-000000000004",
+      "kind": "wire",
+      "designation": "W-ZA",
+      "endpoints": [
+        { "device": "ZETA", "terminal": "T" },
+        { "device": "ALPHA", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "31000000-0000-4000-8000-000000000005",
+      "kind": "wire",
+      "designation": "W-ZM",
+      "endpoints": [
+        { "device": "ZETA", "terminal": "T" },
+        { "device": "MID", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "31000000-0000-4000-8000-000000000006",
+      "kind": "potential",
+      "name": "24VAC",
+      "at": { "device": "ZETA", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24, "voltage_type": "AC" }
+    }
+  ]
+}

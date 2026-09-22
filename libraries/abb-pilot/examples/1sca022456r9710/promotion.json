@@ -1,0 +1,45 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1sca022456r9710",
+    "manufacturer": "ABB",
+    "orderNumber": "1SCA022456R9710"
+  },
+  "type": {
+    "path": "types/1sca022456r9710.json",
+    "sha256": "da2e9b8af0059031ba9d7bd78f703f5fb4268901cb982c24f5ab81b37dcacd8e"
+  },
+  "research": {
+    "path": "research/1sca022456r9710.md",
+    "sha256": "b1818f7c4d9a1961f3ff924dc33fa8a6677aa558e455bd16a10285697ed39507"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "P1.EXT.A",
+      "P1.FUSE.A",
+      "P1.FUSE.B",
+      "P1.EXT.B",
+      "P2.EXT.A",
+      "P2.FUSE.A",
+      "P2.FUSE.B",
+      "P2.EXT.B",
+      "P3.EXT.A",
+      "P3.FUSE.A",
+      "P3.FUSE.B",
+      "P3.EXT.B"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "cd1a0881c154d4736ae1be570361a95037c8b53cced25203a62537c4ef688952",
+    "packet.request.json": "6efd40bb875d20b4c9f4c4ed664dccfade7d4fd9b0c5bdccb0209adfff7f231a",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "2757f818aae0a7a688a70476eb95729df0ec34a79aae5541b96720d387113092",
+    "system.json": "547114a55a3b219df4fd307f62dfea05f74f7048f394fba8df487e9a8d8553d0"
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85063",
+      "description": "Murrelektronik MCS 20-115-230/24 MIT PFC, single-phase power supply, adjustable 24–28 VDC output",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85063",
+        "document": {
+          "url": "https://shop.murrelektronik.com/index.php?anid=000000000000085063_1&cl=details&fnc=outputSpecSheet",
+          "title": "Product-PDF for Article 85063",
+          "revision": "2026-09-13 (downloaded footer)",
+          "pages": "1–3; circuit diagram on page 1"
+        },
+        "modelingNotes": [
+          "Murr is the required historical catalog label; manufacturer is Murrelektronik. Exact article 85063; no successor substitution.",
+          "Diagram numbering is retained: 1 earth, 2 N, 3 L, 4/5 DC−, 6/7 DC+. Output connector-local positions 1–4 in the product table correspond to the diagram's 4–7, not additional terminals.",
+          "Historical manufacturer sheet Created 11/12, pages 1–2: https://se-import.com/documents/catalog/powering/murr/switch_mode/85063.pdf. Input 90–265 VAC, 50/60 Hz, or 110–300 VDC; input current 5.5 A at 100 VAC / 2.4 A at 230 VAC. Exact operating manual V1.5 specifies 90–265 VAC and does not describe DC-input polarity. DC polarity and installed revision remain unverified; no polarity-insensitive DC input is claimed.",
+          "Output 24 VDC SELV ±1%, adjustable 24–28 V. Historical sheet and exact manual specify 20 A at +60 °C, with manual UL condition +40 °C; 24 A at +40 °C requires 110–265 VAC input. These are total output capabilities, not independent current allowances per clamp. No nominal_voltage scalar is assigned to this adjustable universal-input device.",
+          "Explicit factory common paths 4–5 and 6–7 are shown in both exact-article diagrams; author them as project jumpers. No input-to-output, PE-to-return, or other fixed link is asserted. Function metadata does not create continuity.",
+          "Input 2/3 and earth 1 are required for the powered abstraction. Repeated output clamps are individually application-dependent. Shared output policy supports explicit internal jumpers plus field leads, not a physical clamp conductor-count claim.",
+          "Exact manufacturer operating instructions 85063_ina_4_15.pdf, V1.5, physical page 2: https://shop.murrelektronik.com/out/media/85063_ina_4_15.pdf. Front AUTORESTART jumper ON is the factory default and enables repeated pulsed restart; OFF shuts down for overcurrent, overvoltage or overtemperature. OFF-mode restart requires a 2-minute mains disconnection. The manual requires at least 5 minutes disconnected before changing the jumper. These mode labels are settings, not numbered terminals. Pin count, markings and selectable pin-to-pin paths are not exposed in the drawing, so configuration contacts remain unmodeled; no permanent mode link is asserted.",
+          "Manual page 2 identifies safety class I and field protective-earth terminal 1. The four M4 screws shown in mounting figures are mechanical fixings, not documented additional PE terminals. No separate housing-bond position or fixed PE-to-output-return link is established. The voltage-adjust potentiometer and output-OK LED are local controls/indicators, not remote signal contacts."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Seven numbered power-interface clamps and the 4–5 and 6–7 output common links are documented. Manual V1.5 establishes AUTORESTART ON/OFF behavior but does not expose selector contact count, pin markings or selectable continuity; these configuration contacts remain outside the model. Any separate housing-bond positions and DC-input polarity remain unverified."
+      },
+      "terminals": {
+        "1": {
+          "role": "protective_earth",
+          "description": "Protective earth symbol, diagram terminal 1",
+          "required": true
+        },
+        "2": {
+          "role": "power",
+          "description": "N input; DC operation polarity not established",
+          "required": true
+        },
+        "3": {
+          "role": "power",
+          "description": "L input; DC operation polarity not established",
+          "required": true
+        },
+        "4": {
+          "role": "power",
+          "description": "DC− output, internally common with 5",
+          "rating": {
+            "voltage_type": "DC"
+          },
+          "connection_policy": "shared"
+        },
+        "5": {
+          "role": "power",
+          "description": "DC− output, internally common with 4",
+          "rating": {
+            "voltage_type": "DC"
+          },
+          "connection_policy": "shared"
+        },
+        "6": {
+          "role": "power",
+          "description": "DC+ output, internally common with 7",
+          "rating": {
+            "voltage_type": "DC"
+          },
+          "connection_policy": "shared"
+        },
+        "7": {
+          "role": "power",
+          "description": "DC+ output, internally common with 6",
+          "rating": {
+            "voltage_type": "DC"
+          },
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["6", "4"]
+        },
+        "RETURN_CLAMP": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "POSITIVE_CLAMP": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "RETURN_CLAMP": "terminal",
+        "POSITIVE_CLAMP": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7"]
+    }
+  ]
+}

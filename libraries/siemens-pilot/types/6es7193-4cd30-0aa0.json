@@ -1,0 +1,136 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7193-4cd30-0aa0",
+      "description": "TM-P15C23-A0 ET 200S bare terminal base; six field clamps and outgoing AUX1 interface, with partial mating-contact coverage",
+      "category": "terminal-strip",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7193-4CD30-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/457/25390457/att_75261/v1/et200s_terminalmodule_manual_en-US.pdf",
+          "title": "SIMATIC ET 200S distributed I/O — Terminal modules",
+          "revision": "04/2007, A5E01120034-01",
+          "pages": "7, 10–11"
+        },
+        "modelingNotes": [
+          "Exact 6ES7193-4CD30-0AA0 is the spring-terminal TM-P15C23-A0, documented in Siemens ET 200S Distributed I/O System, 07/2003, EWA-4NEB780602402-09, printed pp.10-7 to 10-8 (physical PDF 257-258), manufacturer manual mirrored at https://public.eandm.com/Public_Docs/200s.pdf. Installed hardware revision remains unverified.",
+          "This is a bare terminal-base abstraction. Six field clamps are 2,6,3,7,A4,A8. BUS.AUX1 is an authoring alias for the outgoing/right AUX1 contact group, not an extra field clamp or stamped pin number. No separately ordered PM-E power module is included.",
+          "Factory paths 2-6, 3-7, A4-A8 and A4-BUS.AUX1 require explicit project jumpers. They form three distinct nets. Singleton functions and connector metadata do not join nets, and shared connection policy accommodates these internal representations rather than establishing the allowed field-conductor count.",
+          "AUX1 is interrupted toward the preceding/left potential group. A4/A8 feed outgoing/right AUX1 directly, independently of PM-E. AUX1 may carry PE or another permitted potential; no universal PE role, required PE or AUX1-to-M/FG bond is assigned.",
+          "The terminal manual p.10 shows separate PM-E input and outgoing power-bus paths with a PM-E block between them. A bare base does not establish a field 2/6 or 3/7 to outgoing power-rail link. The power rails start a new potential group; no previous-group power bridge, PM contact numbering, rail polarity or P1/P2 position mapping is inferred.",
+          "Known but unenumerated interfaces are recorded as unpinned connector metadata: lateral multipin BACKPLANE, POWER_MODULE mating interface, outgoing POWER_BUS_RIGHT and FG_RAIL noise-diversion contact. FG_RAIL is an authoring scope label for the documented DIN-rail spring contact, not a manufacturer pin legend or proof of protective bonding. No single conductor is inferred for the abstract backplane bus.",
+          "The system manual printed p.10-7 explicitly documents noise diversion from the electronic module to the DIN rail through a spring contact and provision for fitting a shield contact element. Exact module-side FG contacts and the noise path are outside the conductive model. No optional shield element is assumed fitted; no rail bond to AUX1, M or a field clamp is established.",
+          "Field 2/6 and 3/7 assignments depend on the separately fitted power module; the historical table labels these L+/L and M/N respectively. AUX capability up to 230 VAC in terminal manual p.7 is not an assigned nominal voltage. No unconditional current rating, voltage scalar, AC-only/DC-only restriction or universally required individual field connection is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All six documented field clamps and one functional outgoing/right AUX1 endpoint are modeled, with four fixed paths in three separate nets. The lateral backplane, PM-E mating interface, outgoing power rails and DIN-rail noise spring are known interfaces recorded without guessed pins or net continuity. Module-side FG/rail mating contact inventory and optional shield contact element details remain unresolved. The base alone has no field-to-power-rail feed-through; left AUX1 is interrupted."
+      },
+      "terminals": {
+        "2": {
+          "description": "Field clamp connected to separately fitted power module; signal assignment depends on that module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3": {
+          "description": "Field clamp connected to separately fitted power module; signal assignment depends on that module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6": {
+          "description": "Field clamp connected to separately fitted power module; signal assignment depends on that module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "7": {
+          "description": "Field clamp connected to separately fitted power module; signal assignment depends on that module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "A4": {
+          "description": "AUX1 field clamp; application-selected potential",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "A8": {
+          "description": "AUX1 field clamp; application-selected potential",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BUS.AUX1": {
+          "description": "Functional alias for outgoing/right AUX1 contact group; fixed to A4/A8, with no electrical continuation to the preceding left group",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "A4": {
+          "kind": "bus",
+          "terminals": ["A4"]
+        },
+        "A8": {
+          "kind": "bus",
+          "terminals": ["A8"]
+        },
+        "BUS.AUX1": {
+          "kind": "bus",
+          "terminals": ["BUS.AUX1"]
+        }
+      },
+      "circuitSymbols": {
+        "2": "terminal",
+        "3": "terminal",
+        "6": "terminal",
+        "7": "terminal",
+        "A4": "terminal",
+        "A8": "terminal",
+        "BUS.AUX1": "terminal"
+      },
+      "terminalOrder": ["2", "6", "3", "7", "A4", "A8", "BUS.AUX1"],
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "Siemens ET 200S lateral backplane bus",
+          "description": "Left/right multipin backplane continuity and PM-E access are shown schematically; physical pin inventory is unenumerated. This unpinned scope record creates no aggregate bus conductor."
+        },
+        "POWER_MODULE": {
+          "connector": "Siemens ET 200S PM-E mating interface",
+          "description": "Separately fitted module interface. Base field-supply-side contacts and outgoing-power-rail-side contacts remain separate without PM-E. Exact physical pin inventory and module-side FG contacts are unenumerated."
+        },
+        "POWER_BUS_RIGHT": {
+          "connector": "Siemens ET 200S outgoing power-bus interface",
+          "description": "Two separate outgoing power buses are shown, starting a new potential group. Physical pins and rail polarity are not assigned by this bare-base model; no feed-through across absent PM-E or to the previous group is asserted."
+        },
+        "FG_RAIL": {
+          "connector": "DIN-rail noise-diversion spring contact",
+          "description": "Authoring scope alias for the system manual documented spring contact diverting noise from the electronic module to DIN rail. No stamped FG identifier, exact mating pin inventory or bond to a field/AUX1 terminal is inferred. This unpinned record does not assert protective-earth continuity."
+        }
+      }
+    }
+  ]
+}

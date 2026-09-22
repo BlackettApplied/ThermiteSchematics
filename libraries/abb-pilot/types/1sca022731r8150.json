@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022731r8150",
+      "description": "OTS250G1L/3 long three-pole grey plastic terminal-shroud kit",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022731R8150",
+        "document": {
+          "url": "https://library.e.abb.com/public/e34df2b19ec248e5b31248f737091b77/OTC1GB%2016-09_1SCC303003C0201_interactive.pdf",
+          "title": "ABB Transfer, change-over and bypass switches — Securing your power to perform",
+          "revision": "1SCC303003C0201; OTC1GB 16-09",
+          "pages": "Printed p.39 (physical PDF p.41); revision on physical p.136"
+        },
+        "modelingNotes": [
+          "Exact ABB order 1SCA022731R8150 is OTS250G1L/3: a long, three-pole grey plastic terminal-shroud kit, with snap-on mounting. Catalog p.39 lists three shrouds per type.",
+          "The catalog lists OT_160...250_C compatibility and upper-switch use in this change-over assembly context. The ABB product page also lists OT160, OT200 and OT250 families; assembly fit must follow the applicable switch documentation.",
+          "IP20 is the catalog protection context for shrouds mounted on switches, not an independent enclosure rating. No supply voltage, current or switching capacity is assigned to this mechanical accessory.",
+          "Zero electrical terminals and functions: the three-pole designation identifies coverage of host-switch poles, not conductive poles in the shroud. No power, return, PE/bond, shield, signal or communication connections and no fixed conductive links.",
+          "COVER is a mechanical documentation alias only, without electrical pins. Host-switch terminals and any enclosure bonding belong to separate components."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete for this mechanical plastic shroud kit: zero electrical connections. Covered switch terminals and enclosure bonding are outside this order identity."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Snap-on terminal shroud for compatible ABB OT switches",
+          "description": "Mechanical attachment only; no electrical pins. COVER is an authoring alias."
+        }
+      }
+    }
+  ]
+}

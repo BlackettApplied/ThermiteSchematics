@@ -1,0 +1,93 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "4a85387b-564e-45a2-82a4-8f1f2dc3d6f9",
+      "kind": "device",
+      "designation": "SRC1",
+      "type": "core:supply-480v-3ph",
+      "description": "Incoming 480 VAC three-phase supply",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+      "kind": "device",
+      "designation": "CB1",
+      "type": "core:breaker-3p",
+      "description": "Motor branch circuit breaker",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+      "kind": "device",
+      "designation": "K1",
+      "type": "core:contactor-3p-1no",
+      "description": "Motor contactor",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+      "kind": "device",
+      "designation": "OL1",
+      "type": "core:overload-3p-1nc",
+      "description": "Motor overload relay",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "3f1901ec-1087-445f-9bd3-dcd657ca07de",
+      "kind": "device",
+      "designation": "M1",
+      "type": "core:motor-3ph",
+      "description": "Three-phase process motor",
+      "location": "FIELD"
+    },
+    {
+      "uid": "33a15867-296b-40e4-a56b-15282f131b4c",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc",
+      "description": "480 VAC line-to-line to 24 VDC control power supply",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+      "kind": "device",
+      "designation": "PLC1",
+      "type": "core:plc-compact",
+      "description": "Motor starter control PLC",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "0ac7f98f-1bdd-461a-a4a6-d1a9e0114c72",
+      "kind": "device",
+      "designation": "PB1",
+      "type": "core:pushbutton-nc",
+      "description": "Normally closed stop pushbutton",
+      "location": "MAIN-PANEL-DOOR"
+    },
+    {
+      "uid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+      "kind": "device",
+      "designation": "LS1",
+      "type": "core:limit-switch-2wire",
+      "description": "Normally open field limit switch permissive",
+      "location": "FIELD"
+    },
+    {
+      "uid": "10418711-330f-4482-8dab-a274923215cb",
+      "kind": "device",
+      "designation": "TB1",
+      "type": "core:terminal-block-8",
+      "description": "Panel field-wiring terminal block",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+      "kind": "device",
+      "designation": "JB1",
+      "type": "core:junction-box-8",
+      "description": "Field junction box for LS1",
+      "location": "FIELD"
+    }
+  ]
+}

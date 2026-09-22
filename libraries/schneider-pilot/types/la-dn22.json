@@ -1,0 +1,121 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:la-dn22",
+      "description": "Front-mounting instantaneous auxiliary contact block, 2 NO + 2 NC, for TeSys D (LC1D) and TeSys F (LC1F/CR1F) contactors",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LA-DN22",
+        "document": {
+          "url": "https://www.se.com/us/en/product/download-pdf/LADN22",
+          "title": "LADN22 product data sheet - TeSys auxiliary contact block, 2 NO + 2 NC, front mount, screw clamp terminals",
+          "revision": "Product data sheet generated 2026-09-13 (retrieved 2026-09-12)",
+          "pages": "Physical p.1 exact LADN22 front illustration with all eight contact markings, composition and range compatibility; pp.1–2 conditional ratings; p.5 dimensions"
+        },
+        "modelingNotes": [
+          "Catalog spelling 'LA-DN22'. Schneider's catalogue reference removes the separator: LADN22 (printed 'LA DN22' inside instruction sheet HRB33724). Formatting equivalence, not a successor.",
+          "This is the plain LADN22, NOT LADN22G. The 'G' is a separate order code with EN 50012 terminal referencing (NC 31-32, NC 41-42, NO 53-54, NO 63-64) and is not selected.",
+          "Exact terminal evidence is visually confirmed in Schneider TeSys D catalogue 2017, physical/printed p.41, scheme 127273.eps headed 2 N/O + 2 N/C LAD N22: NO 53–54, NC 61–62, NC 71–72, NO 83–84. https://docs.rs-online.com/64d6/0900766b815d84a0.pdf. The exact current LADN22 product sheet p.1 front illustration separately shows those physical markings and LADN22 order marking; top row left-to-right 53,61,71,83 and bottom row 54,62,72,84. Official FAQ FA130288 independently corroborates the distinction from LADN22G.",
+          "Compatibility resolves the source's 'for LC1-F relays': datasheet range list includes TeSys F LC1F/CR1F and TeSys D LC1D; Schneider instruction sheet HRB33724 (LC1-F, T02EN13...T02JN13) lists 'LA DN22 = 2 F + 2 O' as a front adder block.",
+          "Bare passive front add-on contact block: four electrically separate contact circuits with the shared mechanical linkage shown in the exact LAD N22 catalogue scheme. ganged_with records that internal mechanical coupling; it does not assert simultaneous electrical transitions or create a common conductor. No coil, main power poles or host-contactor connections are included, and no fixed link is asserted even across normally closed contacts. The documented electrical inventory is the eight contact clamps; no separate PE, shield or communication endpoint is identified for this block.",
+          "Ratings are equipment capabilities, kept out of terminal rating/nominal_voltage: Ui 690 V IEC (600 V UL/CSA); Ie 6 A @ 120 V AC-15, 1.04 A @ 690 V AC-15, 0.55 A @ 125 V DC-13, 0.1 A @ 600 V DC-13 (rated for both AC and DC); Ith 10 A @ 60 C; min switching 5 mA / 17 V; 1.5 ms non-overlap; IP20; EN/IEC 60947-5-1, EN 50012.",
+          "Connection coverage is complete for the documented plain LADN22 electrical interface. The former missing-numbered-diagram qualification is resolved by the exact catalogue scheme and exact-product front illustration. The specific historical installed hardware revision remains unverified; coverage is not an as-built identity or suitability claim."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All eight contact clamps and four normal-state pairs are verified by the exact LAD N22 numbered scheme (2017 catalogue p.41) and the exact LADN22 product illustration (p.1). Plain LADN22 is distinguished from LADN22G by the official FAQ and separate catalogue scheme. Mechanical ganging does not join the four electrical contact circuits. Complete scope is this documented bare block; its host contactor and the installed historical hardware revision are not represented."
+      },
+      "terminals": {
+        "53": {
+          "description": "NO contact 1, terminal 53",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "54": {
+          "description": "NO contact 1, terminal 54",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "61": {
+          "description": "NC contact 1, terminal 61",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "62": {
+          "description": "NC contact 1, terminal 62",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "71": {
+          "description": "NC contact 2, terminal 71",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "72": {
+          "description": "NC contact 2, terminal 72",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "83": {
+          "description": "NO contact 2, terminal 83",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "84": {
+          "description": "NO contact 2, terminal 84",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["53", "54"]
+        },
+        "nc1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["61", "62"]
+        },
+        "nc2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["71", "72"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["83", "84"]
+        }
+      },
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "nc1": "contact-nc",
+        "nc2": "contact-nc",
+        "no2": "contact-no"
+      },
+      "terminalOrder": ["53", "54", "61", "62", "71", "72", "83", "84"],
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "nc1"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "nc1",
+          "to": "nc2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "nc2",
+          "to": "no2"
+        }
+      ]
+    }
+  ]
+}

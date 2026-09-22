@@ -1,0 +1,19 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "fixture:module",
+      "terminals": {
+        "1": {}
+      },
+      "functions": {
+        "di0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["1"]
+        }
+      },
+      "terminalOrder": ["missing"]
+    }
+  ]
+}

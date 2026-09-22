@@ -1,0 +1,60 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24050",
+      "description": "C60N miniature circuit breaker, 1 pole, 10 A, B curve",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24050",
+        "document": {
+          "url": "https://assets.gordonelectricsupply.com/datasheets/ts/SQAREDE65814_A9_A10_A108_E1338_25.pdf",
+          "title": "Multipolar Protection — C60N circuit-breaker, B, C and D curves",
+          "revision": "Undated relevant catalog pages; manufacturer-authored distributor mirror",
+          "pages": "Printed A9–A10 (physical PDF 1–2); schematic E45092 on A10"
+        },
+        "modelingNotes": [
+          "Exact 24050 row: C60N, 1P, 10 A, B curve. Diagram E45092 establishes terminal markings 1 and 2; accessories are separately ordered.",
+          "B curve magnetic operation 3–5 In, calibrated at 30 °C. IEC 60947-2 1P Icu: 10 kA at 230–240 V AC; 3 kA at 400–415 V AC only for IT isolated-neutral double fault. IEC 60898 table: 6 kA at 230/400 V. Voltage capability is not encoded as an assigned nominal voltage; no DC suitability conclusion is made.",
+          "Tunnel-terminal cable capacity at this rating: 16 mm² flexible or 25 mm² rigid. Terminal positions follow the diagram, without imposing feed direction.",
+          "Open contact represents the catalog drawing, not an asserted installed state. The breaker does not permanently join its terminals; trip dynamics and coordination are not simulated. Connections are application-dependent."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Bare 24050: one protected pole with two tunnel terminals, 1 and 2, per A10 schematic E45092. No neutral, PE, auxiliary or communication connection; separately ordered auxiliaries and Vigi modules excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Upper pole terminal 1 in manufacturer schematic",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "2": {
+          "description": "Lower pole terminal 2 in manufacturer schematic",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

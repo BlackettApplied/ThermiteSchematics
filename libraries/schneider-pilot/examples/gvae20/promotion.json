@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:gvae20",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "GVAE20"
+  },
+  "type": {
+    "path": "types/gvae20.json",
+    "sha256": "ba3c9ec578c12938271addce97a73ec1fc99821e5b7d46d0364c33fc61a84f6d"
+  },
+  "research": {
+    "path": "research/gvae20.md",
+    "sha256": "7c48f36259de20e3dadb5307a8777c604473b9bc2495963c39a729f6e4af88e4"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["13", "14", "23", "24"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "51a778c2f18aedbda5dc5fdb501a15cf014599e69fed418cb7bdbb1208e3b0df",
+    "packet.request.json": "46ea2eb76d7c74ec17c2f8e44ac0344504290a8c80eace275e6d50c22a7ef834",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "97f423cd51539e65a64ba376515f0096e65cad512182d86c7447acad8d32d7f3",
+    "system.json": "9060f4c8b2e34e9273b38c0815103faddc14bf2f74eeaabff4afd50ed2d48121"
+  }
+}

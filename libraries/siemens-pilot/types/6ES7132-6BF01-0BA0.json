@@ -1,0 +1,323 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6ES7132-6BF01-0BA0",
+      "description": "ET 200SP DQ 8 x 24 V DC / 0.5 A ST",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7132-6BF01-0BA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/588/59753588/att_90143/v1/et200sp_dq_8x24vdc_0_5a_st_manual_en-US_en-US.pdf",
+          "title": "ET 200SP digital output module equipment manual",
+          "revision": "02/2019; A5E03574575-AF",
+          "pages": "13, figure 3-1"
+        },
+        "modelingNotes": [
+          "Represents the module on a type A0 BaseUnit without AUX terminals. BaseUnit must be selected separately.",
+          "Terminal 1 through 8 channel mapping and terminal 9 through 16 purpose verified from the cited figure.",
+          "P1/P2/AUX backplane bus and internal distribution are not conductive edges in this model. Do not use this model to infer a complete BaseUnit power plan.",
+          "Interface module, bus adapter, end module, network wiring, diagnostics, parameterization and performance limits are not modeled.",
+          "Nominal 24 V DC is modeled. Total load, transient behavior, derating and installation limits require the manufacturer manual."
+        ]
+      },
+      "terminals": {
+        "1": {
+          "role": "digital_output_0",
+          "description": "DQ0",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "2": {
+          "role": "digital_output_1",
+          "description": "DQ1",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "3": {
+          "role": "digital_output_2",
+          "description": "DQ2",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "4": {
+          "role": "digital_output_3",
+          "description": "DQ3",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "5": {
+          "role": "digital_output_4",
+          "description": "DQ4",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "6": {
+          "role": "digital_output_5",
+          "description": "DQ5",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "7": {
+          "role": "digital_output_6",
+          "description": "DQ6",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "8": {
+          "role": "digital_output_7",
+          "description": "DQ7",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connection_policy": "exclusive"
+        },
+        "9": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "10": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "11": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "12": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "13": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "14": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "15": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "16": {
+          "role": "supply_return",
+          "description": "M return (internal distribution not joined)",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "L+": {
+          "role": "supply_positive",
+          "description": "24 V feed; light-colored BaseUnit only",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "M": {
+          "role": "supply_return",
+          "description": "M return; BaseUnit supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "do0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1"]
+        },
+        "do1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["2"]
+        },
+        "do2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["3"]
+        },
+        "do3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["4"]
+        },
+        "do4": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["5"]
+        },
+        "do5": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["6"]
+        },
+        "do6": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["7"]
+        },
+        "do7": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["8"]
+        },
+        "terminal9": {
+          "kind": "bus",
+          "terminals": ["9"]
+        },
+        "terminal10": {
+          "kind": "bus",
+          "terminals": ["10"]
+        },
+        "terminal11": {
+          "kind": "bus",
+          "terminals": ["11"]
+        },
+        "terminal12": {
+          "kind": "bus",
+          "terminals": ["12"]
+        },
+        "terminal13": {
+          "kind": "bus",
+          "terminals": ["13"]
+        },
+        "terminal14": {
+          "kind": "bus",
+          "terminals": ["14"]
+        },
+        "terminal15": {
+          "kind": "bus",
+          "terminals": ["15"]
+        },
+        "terminal16": {
+          "kind": "bus",
+          "terminals": ["16"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["L+", "M"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do2"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do3"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do4"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do5"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do6"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do7"
+        }
+      ],
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "L+",
+        "M"
+      ]
+    }
+  ]
+}

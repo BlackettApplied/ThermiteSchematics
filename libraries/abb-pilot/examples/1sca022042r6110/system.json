@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "1SCA022042R6110 component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "abb-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    }
+  ]
+}

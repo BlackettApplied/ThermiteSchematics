@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24052",
+      "description": "C60N miniature circuit breaker, 1P, 20 A, B curve, bare device",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24052",
+        "document": {
+          "url": "https://denilighting.com/userfiles/file/Schneider_Electric_LV_Catalogue.pdf",
+          "title": "Електроразпределение ниско напрежение (Low-voltage electrical distribution), Merlin Gerin / Schneider Electric",
+          "revision": "Undated historical Bulgarian catalog; no revision identified",
+          "pages": "Printed 54-56 (physical PDF 55-57); cover PDF 1"
+        },
+        "modelingNotes": [
+          "Exact order 24052 is in the C60N, B-curve, 1P, 20 A row, printed p.56; adjacent 1P schematic explicitly labels terminals 1 and 2. No terminal aliases.",
+          "20 A nominal current at 30 deg C; B-curve magnetic trip 3-5 times In (printed p.55). Current metadata is device rating, not conductor ampacity.",
+          "Printed p.55 gives C60N 1P IEC 60947-2 Icu: 20 kA at 130 V, 10 kA at 240 V, 3 kA at 415 V; the last value is for one pole in an IT system under double-fault conditions. No scalar breaking-capacity or assigned nominal-voltage field is used.",
+          "Korean manufacturer guide, pp.42-43, corroborates exact identity and separately lists C60N 6-63 A DC capability: 15 kA at less than 60 V with one pole, magnetic uprating coefficient 1.38. Its general 250 V DC headline applies across pole arrangements, not to this single-pole order. Source: https://www.eocrsek.co.kr/datafiles/schneider/guide_060727.pdf",
+          "Two tunnel terminals form one interruptible protection pole. Contact metadata and the breaker symbol do not join nets. normal_state open depicts the catalog OFF/open schematic, not an asserted installed state or trip simulation.",
+          "Bare breaker only. Auxiliary switches, releases, Vigi modules and external comb busbars are separate additions (printed p.54); no accessory terminals or permanent links are included. Connections are application-dependent, hence neither terminal is universally required.",
+          "Bulgarian p.55 specifies up-to-25 A terminals for 16 mm2 flexible or 25 mm2 rigid conductor; Korean p.42 gives a generic 35 mm2 below 63 A. This presentation difference is not resolved into automated conductor limits. Voltage type is omitted because AC and DC capability are documented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Bare order 24052: the applicable 1P circuit diagram inventories two main electrical connections, 1 and 2. No separate neutral, PE, shield, signal or communication connection is part of this bare breaker; optional added modules are outside this order."
+      },
+      "terminals": {
+        "1": {
+          "description": "Main pole terminal 1 (upper in manufacturer schematic)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 20
+          }
+        },
+        "2": {
+          "description": "Main pole terminal 2 (lower in manufacturer schematic)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 20
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

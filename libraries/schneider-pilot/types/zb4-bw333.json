@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw333",
+      "description": "Green flush spring-return illuminated pushbutton head, 22 mm, metal bezel; mechanical head only",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW333",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-ZB4BW333.PDF",
+          "title": "Product data sheet: ZB4BW333",
+          "revision": "November 11, 2015",
+          "pages": "1, 3, 7-8"
+        },
+        "modelingNotes": [
+          "Historical Schneider catalog prints ZB4-BW333; the 2021 catalog prints ZB4BW333 for the matching green flush integral-LED-compatible head. Exact historical order spelling is retained.",
+          "Mechanical head only, plain unmarked lens and spring return. Associated body, light block and contact blocks are separate; composition diagrams specify possible assemblies, not populated head terminals.",
+          "No electrical terminals or fixed links documented. Class I is stated in the product sheet, but a head bonding terminal or attachment continuity is not established. Do not infer a PE path through metalwork or panel mounting.",
+          "Documentation accessory view; no electrical functions or assigned voltage/current ratings. No assembly contacts or lamp connections are transferred to this head."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Zero documented electrical terminals for the mechanical head. No included contact or LED block. The metal head/collar/panel bonding and attachment interface remains undocumented; an exhaustive empty physical connection inventory and installed bonding continuity are not asserted."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

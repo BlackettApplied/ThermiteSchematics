@@ -1,0 +1,7 @@
+{
+  "format": "agent-tool-result/0.1",
+  "tool": "validate",
+  "value": {
+    "valid": true
+  }
+}

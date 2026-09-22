@@ -1,0 +1,257 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1498900000",
+      "description": "Connector insert (female) / HDC HSB 6 FS / 6P+PE / 400 V / 35 A / screw / Size 6",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1498900000",
+        "document": {
+          "url": "https://media.masterelectronics.com/productfiles/mf-we/1498900000_hdc_hsb_6_fs.pdf",
+          "title": "Weidmüller Product catalog — Heavy Duty Connectors | Inserts | HSB series — HDC HSB 6 FS (Order No. 1498900000)",
+          "revision": "Manufacturer catalog datasheet; PDF generated 2008-04-09 (Apache FOP); distributor mirror, retrieved 2026-09-11",
+          "pages": "pp.1-2 identity, ratings, dimensions and female contact-arrangement image; p.3 general/PE connection data, ratings, similar products"
+        },
+        "modelingNotes": [
+          "Exact manufacturer sheet1498900000 identifies HDC HSB6FS, female screw-contact insert,6+PE, size6; Assignment1–6 on page1 establishes contact numbering. The photograph/outline was visually inspected, but no numbered spatial map is asserted.",
+          "C.1–C.6 and M.1–M.6 distinguish the two ends of each fixed contact. Six explicit project links establish continuity. C/M are authoring aliases.",
+          "PE is an aggregate of documented PE hardware; page2 identifies screw connection,M5,6mm². Individual screw and mating positions are not separately modeled. No assumed C.PE–M.PE link or host-housing bond is added.",
+          "PE.required is a library policy for the modeled protective-earth use. Presence alone does not establish upstream bonding; deliberate non-use needs project review.",
+          "IEC capability400V/35A and UL/CSA600VAC/DC remain standard-conditioned capabilities. No nominal voltage or AC-only terminal classification is assigned. Current is rated capability, not conductor sizing or a validated simultaneous-current budget.",
+          "Manufacturer sheet states ferrules for stranded conductors and two inserts per full housing. This model is one exact insert; second insert, housing, coding and mating partner remain separate."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six numbered contacts1–6 have cable/mating endpoints; numbering is explicitly given as Assignment1–6 in the exact manufacturer sheet. PE is one aggregate assembly. Individual PE screw/mating positions, contact geometry and installed orientation are not enumerated; no central PE pin or split-side PE path is asserted."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side screw termination / contact 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "C.2": {
+          "description": "Cable-side screw termination / contact 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "C.3": {
+          "description": "Cable-side screw termination / contact 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "C.4": {
+          "description": "Cable-side screw termination / contact 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "C.5": {
+          "description": "Cable-side screw termination / contact 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "C.6": {
+          "description": "Cable-side screw termination / contact 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.1": {
+          "description": "Mating female socket contact / contact 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.2": {
+          "description": "Mating female socket contact / contact 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.3": {
+          "description": "Mating female socket contact / contact 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.4": {
+          "description": "Mating female socket contact / contact 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.5": {
+          "description": "Mating female socket contact / contact 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "M.6": {
+          "description": "Mating female socket contact / contact 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 35
+          }
+        },
+        "PE": {
+          "description": "Aggregate PE assembly; individual screw and mating interfaces are not separately enumerated",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "PE": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HSB 6 FS female insert, 6P+PE, Assignment 1-6",
+          "description": "Female socket contacts that mate the male HSB 6 insert. Contact identities 1-6 and PE from the datasheet 'Assignment 1-6'; no exact position coordinates, orientation or renumbering asserted.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Contact 1 (Assignment 1-6); no position coordinates asserted"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Contact 2 (Assignment 1-6); no position coordinates asserted"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Contact 3 (Assignment 1-6); no position coordinates asserted"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Contact 4 (Assignment 1-6); no position coordinates asserted"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Contact 5 (Assignment 1-6); no position coordinates asserted"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Contact 6 (Assignment 1-6); no position coordinates asserted"
+            },
+            "PE": {
+              "terminal": "PE",
+              "description": "Aggregate protective-earth assembly, not a numbered central pin"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "PE"
+      ]
+    }
+  ]
+}

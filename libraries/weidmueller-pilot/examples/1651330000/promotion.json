@@ -1,0 +1,91 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1651330000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1651330000"
+  },
+  "type": {
+    "path": "types/1651330000.json",
+    "sha256": "aac1ef22ee674572ae1cecaa88b8b458d9d21257a881fb88e6d396ad78b5ea23"
+  },
+  "research": {
+    "path": "research/1651330000.md",
+    "sha256": "65fa655e561a5813da187f5687fc2b06a99951f0a2c31934b0285305a644acc0"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.3",
+      "C.5",
+      "C.7",
+      "C.10",
+      "C.12",
+      "C.14",
+      "C.16",
+      "M.1",
+      "M.3",
+      "M.5",
+      "M.7",
+      "M.10",
+      "M.12",
+      "M.14",
+      "M.16",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.10",
+        "to": "M.10",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.12",
+        "to": "M.12",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.14",
+        "to": "M.14",
+        "sourceId": "exact-datasheet"
+      },
+      {
+        "from": "C.16",
+        "to": "M.16",
+        "sourceId": "exact-datasheet"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "c2f3cb62cdce85baa26f6ee75aeb4c300bbf8ace7cd6011791207591cdc604cb",
+    "packet.request.json": "6d4fc7f2b945781fb6d23dab5c9898b8949e2dab861f020752bb6064ba5096c7",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "a98202da451f8bb6a2ce36548f97c3b3f0d05b42eb5f9ed447b40332cecb7380",
+    "system.json": "efbb4a1108662d5125eb68ef49fe49675dd98f06324cc553ad69916f3598bc16"
+  }
+}

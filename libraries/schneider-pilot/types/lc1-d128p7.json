@@ -1,0 +1,209 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d128p7",
+      "description": "TeSys D / Deca 4-pole contactor / 2 NO (1-2, 3-4) + 2 NC (R1-R2, R3-R4) power poles / integrated 1 NO (13-14) + 1 NC (21-22) aux / 230 V AC 50/60 Hz coil / AC-1 25 A",
+      "category": "component",
+      "symbol": "thermite:contactor",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D128P7",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "Schneider Electric Catalogue chapter B8 - Contactors (TeSys D/SK/K/GC/GY/GF), EN",
+          "revision": "Online EN edition, retrieved 2026-09-11; 126 pp",
+          "pages": "B8/12 selection row LC1D128pp (PDF p.12); a.c. coil table P7=230V 50/60Hz (PDF p.12); B8/79 scheme group 'LC1D098 to D258' (PDF p.79, rendered/inspected)"
+        },
+        "modelingNotes": [
+          "Identity: base radical LC1D128 + a.c. coil code P7. Manufacturer spelling is unhyphenated LC1D128P7; source hyphens are presentation separators. Non-reversing, screw-clamp terminals, open style.",
+          "Power poles verified from B8/79 scheme (image 127269.eps, group 'LC1D098 to D258', which contains LC1D128), rendered and visually inspected: NO poles 1/2 and 3/4; NC poles R1/R2 and R3/R4. Independently corroborated by FAQ FA119547.",
+          "Integrated auxiliary contacts are the contactor's own row (selection table B8/12: '2 2 1 1'): 1 NO = 13/14, 1 NC = 21/22. Verified in the same scheme. The neighbouring LC1D40008..D80008 scheme shows identical power poles but NO auxiliary (table '– –'), so the auxiliary was not transferred from a neighbour.",
+          "Coil A1/A2, P7 = 230 V a.c. 50/60 Hz. Per B8/12, within the a.c. range only LC1D115 and D150 coils have a built-in suppression device as standard; LC1D128 P7 has NO built-in suppressor and, as an a.c. coil, no polarity.",
+          "Power poles: AC-1, Ue <= 440 V, Ie 25 A (theta <= 60 C), Ith 20 A. These are capabilities across AC and DC utilisation categories and a voltage range, so no nominal_voltage/voltage_type scalar is assigned to the poles; <=440 V is a ceiling, not an assigned supply. Auxiliary contacts are application-dependent control contacts with no scalar rating asserted.",
+          "All poles and auxiliaries are switched contacts and the coil is a separate winding: there are no permanent internal net joins. Coil-to-contact actuation (internal_relations) is mechanical/functional, not electrical continuity.",
+          "No dedicated PE terminal on the device; panel/rail earthing is external. Front/side add-on auxiliary blocks, timer/interface and suppressor modules are separately ordered and not part of this type."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Full factory electrical terminal set inventoried and verified against the manufacturer scheme B8/79: 2 NO + 2 NC power poles (1/2, 3/4, R1/R2, R3/R4), integrated 1 NO (13/14) + 1 NC (21/22) auxiliary, and coil A1/A2. No PE terminal exists on the device; external bonding and separately ordered add-on modules are out of scope."
+      },
+      "terminals": {
+        "1": {
+          "description": "NO power pole 1, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "NO power pole 1, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "3": {
+          "description": "NO power pole 2, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "NO power pole 2, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "R1": {
+          "description": "NC power pole 1, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "R2": {
+          "description": "NC power pole 1, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "R3": {
+          "description": "NC power pole 2, line side",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "R4": {
+          "description": "NC power pole 2, load side",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "13": {
+          "description": "Integrated auxiliary NO contact, terminal 13",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Integrated auxiliary NO contact, terminal 14",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "21": {
+          "description": "Integrated auxiliary NC contact, terminal 21",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "22": {
+          "description": "Integrated auxiliary NC contact, terminal 22",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "A1": {
+          "description": "Coil terminal A1 (230 V a.c. 50/60 Hz, code P7)",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "A2": {
+          "description": "Coil terminal A2 (230 V a.c. 50/60 Hz, code P7)",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "noPole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "noPole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "ncPole1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["R1", "R2"]
+        },
+        "ncPole2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["R3", "R4"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        }
+      },
+      "circuitSymbols": {
+        "noPole1": "contact-no",
+        "noPole2": "contact-no",
+        "ncPole1": "contact-nc",
+        "ncPole2": "contact-nc",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "noPole1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "noPole2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "ncPole1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "ncPole2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "terminalOrder": [
+        "1",
+        "R1",
+        "R3",
+        "3",
+        "13",
+        "21",
+        "2",
+        "R2",
+        "R4",
+        "4",
+        "14",
+        "22",
+        "A1",
+        "A2"
+      ]
+    }
+  ]
+}

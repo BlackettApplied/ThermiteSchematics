@@ -1,0 +1,59 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:3na3810",
+      "description": "NH000 fuse link, 25 A, gG, front indicator, live grip lugs",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "3NA3810",
+        "document": {
+          "url": "https://www.e-alkan.com/Data/EditorFiles/PDF/3NA3810_datasheet_en.pdf",
+          "title": "Siemens Data sheet 3NA3810 (manufacturer document, E-Alkan distributor mirror)",
+          "revision": "08/08/2019",
+          "pages": "Physical 1-2 (technical data), 3 (dimension/end views), 4 (circuit diagram); 5 is blank except footer"
+        },
+        "modelingNotes": [
+          "Exact standalone Siemens 3NA3810 NH000 gG fuse link. The exact datasheet circuit diagram on physical page 4 labels the two fuse ends 1 and 2. These are manufacturer circuit labels, not asserted stamped blade markings, supply/load polarity or physical installation orientation.",
+          "Both blade contact interfaces are modeled. The front indicator is integral visual indication with no separate wired contact shown by the exact circuit diagram and dimensional/end views. Non-insulated live grip lugs and end-plate fasteners are handling/assembly hardware, not PE or additional intended circuit terminals. The fuse base, holder and any external indication accessories are separate components.",
+          "The datasheet cover photograph visibly depicts 3NA3 802 / 2 A, so it is illustrative and is not used as exact-order label or rating evidence. Exact order 3NA3810 is identified by the sheet header/footer, technical fields, dimension sheet and circuit diagram. No neighboring fuse supplies the terminal-number proof.",
+          "Voltage capabilities are 500 V AC / 250 V DC; the rated AC current is 25 A. These are not an assigned supply voltage, an AC-only restriction or an unconditional conductor current limit. No nominal_voltage or scalar terminal current rating is set.",
+          "2019 sheet pp.1-2: gG class, 21 mm enclosure width, 2.3 W hot loss per pole at rated AC current, and 23.75 A derated current at 40 degC. It lists DC switching capacity 25 kA and a separate 120 kA switching-capacity entry under IEC 60947-2; the latter entry does not explicitly repeat a voltage type. These source-specific fields are preserved without rewriting them as independently verified protective coordination.",
+          "2022 exact Siemens datasheet text at https://www.electricautomationnetwork.com/PDF/PIM/SIE/EN_3NA3810.pdf, footer 5/4/2022, pp.1-2, additionally lists operational current 24.5 A at 30 degC, 23.75 A at 40 degC, 23 A at 45 degC, 22.5 A at 50 degC, 22 A at 55 degC and 21.5 A at 60 degC. Its separate operating-ambient range is -5 to +40 degC; the higher-temperature current entries do not extend that declared operating range.",
+          "IP20 is explicitly conditional on connected conductors, not a standalone fuse-body protection claim. Ambient range -5 to +40 degC, separate environmental category -20 to +50 at 95% relative humidity, and mounting any position preferably vertical remain distinct datasheet conditions.",
+          "Normally closed contact metadata represents an intact fuse for drawing only. The fuse can open; no permanent fixed conductive link is specified. This model does not simulate melting, time-current behavior, let-through energy or protection coordination. Individual terminals are application-dependent and not universally required."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Two blade contact interfaces of the standalone fuse link, using exact manufacturer circuit labels 1 and 2. Front indicator has no separate wired connection in the reviewed dimension and circuit drawings. Live grip lugs are handling hardware, not PE or extra wiring terminals. Base, holder and external indication accessories are outside this type."
+      },
+      "terminals": {
+        "1": {
+          "description": "Fuse blade interface; manufacturer circuit label 1, not a claimed stamped blade marking",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "2": {
+          "description": "Fuse blade interface; manufacturer circuit label 2, not a claimed stamped blade marking",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        }
+      },
+      "functions": {
+        "fuse": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "fuse": "fuse"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

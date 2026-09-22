@@ -1,0 +1,123 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1svr430720r0400",
+      "description": "CM-MSS (4) thermistor motor protection relay, 24-240 V AC/DC, one PTC circuit, 1 NO + 1 NC",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SVR430720R0400",
+        "document": {
+          "url": "https://library.e.abb.com/public/d29ecf1b1bd53244c1257c31003486a8/2CDC110004C0209.pdf",
+          "title": "ABB Catalog Electronic Products and Relays 2013/2014",
+          "revision": "2CDC 110 004 C0209, 2013/2014",
+          "pages": "2/96, 2/98-2/100 (physical PDF 165, 167-169)"
+        },
+        "modelingNotes": [
+          "Exact order selection: catalog 2/96. Nine physical terminal positions and output states: CM-MSS (4) diagram 2CDC 252 016 F0004, 2/100. External reset/jumper: 1SVC 110 000 F0145, 2/99.",
+          "Supply capability 24-240 V AC/DC, tolerance -15/+10%, AC frequency 15-400 Hz; no assigned nominal voltage. Exact-order safety supplement 1SVC 437 710 M2000 A2, p.8: <1.7 W DC or <3.5 VA at 50 Hz.",
+          "Conditional output ratings: AC12 4 A at 230 V; AC15 3 A at 230 V; DC13 2 A at 24 V. Maximum fast-acting protective fuse: NC 4 A, NO 6 A. Ratings are not unconditional scalar limits.",
+          "T2 is shared by sensor and remote-reset circuits. No fixed internal conductor joins different terminal keys. Optional external S1-T2 jumper disables fault storage and must be authored separately.",
+          "Contact normal states are de-energized states. Closed-circuit operating principle, fault memory, test/reset and PTC evaluation are not simulated by these static wiring functions.",
+          "A1/A2 and T1/T2 are required for monitoring operation. Remote reset and individual output usage are application-dependent. No PE, shield or communication terminal is shown in the complete terminal diagram.",
+          "See research.md for source URLs and differing historical short-circuit thresholds and storage-temperature limits; neither is encoded. No safety certification or installation suitability is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All nine marked physical terminal positions in the exact CM-MSS (4) diagram are included: supply, PTC sensor, remote reset and both outputs. No additional bond, shield or communications terminal is documented."
+      },
+      "terminals": {
+        "A1": {
+          "description": "Control supply terminal A1; 24-240 V AC/DC range",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "A2": {
+          "description": "Control supply terminal A2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "T1": {
+          "description": "PTC sensor circuit terminal T1",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "T2": {
+          "description": "PTC sensor circuit terminal T2; also remote-reset reference",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "S1": {
+          "description": "Remote reset to T2; external jumper selects no fault storage",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "13": {
+          "description": "Normally open output terminal 13",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "Normally open output terminal 14",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "21": {
+          "description": "Normally closed output terminal 21",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "22": {
+          "description": "Normally closed output terminal 22",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["A1", "A2"]
+        },
+        "sensor": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["T1", "T2"]
+        },
+        "reset": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["S1", "T2"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        }
+      },
+      "circuitSymbols": {
+        "supply": "load",
+        "sensor": "interface",
+        "reset": "interface",
+        "no": "contact-no",
+        "nc": "contact-nc"
+      },
+      "terminalOrder": ["A1", "A2", "T1", "T2", "S1", "13", "14", "21", "22"]
+    }
+  ]
+}

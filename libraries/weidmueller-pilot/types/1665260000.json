@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665260000",
+      "description": "HDC 16B DODQ 4BO — size-6 lower-housing cover",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665260000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1665260000/scope/2/",
+          "title": "Data sheet — HDC 16B DODQ 4BO",
+          "revision": "Creation date 19.02.2026 02:29:07 MEZ",
+          "pages": "p.1 identity; pp.2–3 technical data"
+        },
+        "modelingNotes": [
+          "Mechanical cover only; no electrical terminals, circuit functions or fixed electrical links. Base and insert connections remain separate.",
+          "Manufacturer photograph shows a retention tether and mounting eye; these are not modeled as a rated PE connection or an assertion of external bonding.",
+          "IP65 applies in plugged condition. Temperature limits: -40 to +125 °C. No electrical voltage or current rating assigned.",
+          "COVER is a mechanical attachment authoring alias with no electrical pins; use an accessory documentation view."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete for this mechanical cover: no electrical connection points. Enclosure bonding and insert contacts are separate assembly concerns."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Size-6 HDC lower-housing cover attachment",
+          "description": "Mechanical attachment only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "releco-pilot:c7-a20x-230vac",
+    "manufacturer": "Releco",
+    "orderNumber": "C7-A20X/230VAC"
+  },
+  "type": {
+    "path": "types/c7-a20x-230vac.json",
+    "sha256": "d27ec7bbccca3b3d55bce46fc325bbef942f1a3c5f934616fa00c4ef243b5f5c"
+  },
+  "research": {
+    "path": "research/c7-a20x-230vac.md",
+    "sha256": "f3e9f11898620b603a15eeab4fa460d23e503285e281df1122163d6f73df3c57"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5", "6", "7", "8"],
+    "requiredTerminalKeys": ["7", "8"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "e8067749b9b50fb5c5f071376bb9ea4711084510c700357a9771392bac067bfe",
+    "packet.request.json": "11cf58148f1a47621680d43659bee29753d3bb13671e08ff61adb7bb1bdbe6c3",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "97408709340bf9623e2a612b698e73cbb5d2313fd603f10f697a137d5483229f",
+    "system.json": "68e7a72cabaadf86db67b36d8dc26a75f7af04555f5730ab4448feff2e276510"
+  }
+}

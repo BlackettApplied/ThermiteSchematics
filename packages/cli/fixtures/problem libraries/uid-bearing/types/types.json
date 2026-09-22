@@ -1,0 +1,10 @@
+{
+  "types": [
+    {
+      "kind": "cable_type",
+      "id": "uidlib:valid",
+      "conductors": []
+    }
+  ],
+  "objects": [{ "uid": "22222222-2222-4222-8222-222222222222" }]
+}

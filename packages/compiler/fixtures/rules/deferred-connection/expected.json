@@ -1,0 +1,20 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 3,
+    "column": 5,
+    "jsonPointer": "/objects/0",
+    "uid": "4f4dd7df-166f-5b76-a57b-79b4377761ab",
+    "code": "W905",
+    "severity": "warning",
+    "message": "D1: D1.1 has deferred work: Supply design is pending.",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 7,
+        "column": 14,
+        "note": "D1.1 has deferred work: Supply design is pending."
+      }
+    ]
+  }
+]

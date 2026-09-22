@@ -1,0 +1,158 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "a162f847-3b24-493c-99dc-82d7174a8632",
+      "designation": "PT1",
+      "type": "field-interfaces:pressure-4-20ma-m12-p1-p2",
+      "location": "Hydraulic line"
+    },
+    {
+      "kind": "device",
+      "uid": "7683e1cb-c638-443a-a66a-54bc0e9d4a18",
+      "designation": "XP1",
+      "type": "field-interfaces:m12-a4-bulkhead",
+      "location": "Cabinet wall"
+    },
+    {
+      "kind": "device",
+      "uid": "0f66960d-f96b-4517-8751-45cd6be462c7",
+      "designation": "XT1",
+      "type": "field-interfaces:terminal-strip-6",
+      "location": "Cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "a4d2326a-93f7-4469-9355-512345ed900d",
+      "designation": "AI1",
+      "type": "industrial-pilot:siemens-ai4i-st-2wire",
+      "location": "Cabinet"
+    },
+    {
+      "kind": "cable",
+      "uid": "8fba5369-4fe9-476d-9dd8-b764b44b5ae6",
+      "designation": "CB1",
+      "type": "field-interfaces:m12-a4-cordset",
+      "fromLocation": "Hydraulic line",
+      "toLocation": "Cabinet wall",
+      "conductors": [
+        {
+          "id": "A",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "PT1",
+              "terminal": "1"
+            },
+            {
+              "device": "XP1",
+              "terminal": "1"
+            }
+          ]
+        },
+        {
+          "id": "B",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "PT1",
+              "terminal": "2"
+            },
+            {
+              "device": "XP1",
+              "terminal": "2"
+            }
+          ]
+        },
+        {
+          "id": "C",
+          "usage": "spare",
+          "endpoints": [
+            {
+              "device": "PT1",
+              "terminal": "3"
+            },
+            {
+              "device": "XP1",
+              "terminal": "3"
+            }
+          ]
+        },
+        {
+          "id": "D",
+          "usage": "spare",
+          "endpoints": [
+            {
+              "device": "PT1",
+              "terminal": "4"
+            },
+            {
+              "device": "XP1",
+              "terminal": "4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "7ea94fcc-3f92-4a3e-afbd-5b1ed7fe856c",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "XP1",
+          "terminal": "1"
+        },
+        {
+          "device": "XT1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "0871cb1a-33d7-4491-9a1c-08f3008971c8",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "1"
+        },
+        {
+          "device": "AI1",
+          "terminal": "9"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "8827573b-2f34-4a9e-b5e9-9e0589d30012",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "XP1",
+          "terminal": "2"
+        },
+        {
+          "device": "XT1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "a7adb06e-09b5-40eb-a7f8-bde7f39018b0",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "2"
+        },
+        {
+          "device": "AI1",
+          "terminal": "13"
+        }
+      ]
+    }
+  ]
+}

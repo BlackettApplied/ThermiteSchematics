@@ -1,0 +1,11 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "fixture:node",
+      "terminals": {},
+      "functions": {},
+      "ports": { "ETH1": { "medium": "ethernet", "connector": "RJ45" } }
+    }
+  ]
+}

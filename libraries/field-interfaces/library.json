@@ -1,0 +1,5 @@
+{
+  "name": "field-interfaces",
+  "version": "0.1.0",
+  "sources": ["types.json"]
+}

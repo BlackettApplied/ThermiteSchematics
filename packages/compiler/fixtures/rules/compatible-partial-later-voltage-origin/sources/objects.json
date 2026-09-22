@@ -1,0 +1,45 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "31600000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "TYPE_TARGET",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31600000-0000-4000-8000-000000000002",
+      "kind": "potential",
+      "name": "TYPE-MERGE",
+      "at": { "device": "TYPE_TARGET", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24 }
+    },
+    {
+      "uid": "31600000-0000-4000-8000-000000000003",
+      "kind": "potential",
+      "name": "TYPE-MERGE",
+      "at": { "device": "TYPE_TARGET", "terminal": "T" },
+      "electrical": { "voltage_type": "AC" }
+    },
+    {
+      "uid": "31600000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "VOLTAGE_TARGET",
+      "type": "voltage-rules:dc-48"
+    },
+    {
+      "uid": "31600000-0000-4000-8000-000000000005",
+      "kind": "potential",
+      "name": "VOLTAGE-MERGE",
+      "at": { "device": "VOLTAGE_TARGET", "terminal": "T" },
+      "electrical": { "voltage_type": "DC" }
+    },
+    {
+      "uid": "31600000-0000-4000-8000-000000000006",
+      "kind": "potential",
+      "name": "VOLTAGE-MERGE",
+      "at": { "device": "VOLTAGE_TARGET", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24 }
+    }
+  ]
+}

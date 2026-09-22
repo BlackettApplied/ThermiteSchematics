@@ -1,0 +1,103 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "014ad3b9-983a-4d77-805c-6111c65b8db8",
+      "kind": "wire",
+      "designation": "W-CTL-005",
+      "endpoints": [
+        { "device": "PLC1", "terminal": "X2.0" },
+        { "device": "PB1", "terminal": "11" }
+      ],
+      "properties": {
+        "label": "PLC1-DO0-STOP",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "7589ca3f-d966-40b5-8a36-b18d7e3dd87a",
+      "kind": "wire",
+      "designation": "W-CTL-006",
+      "endpoints": [
+        { "device": "PB1", "terminal": "12" },
+        { "device": "OL1", "terminal": "95" }
+      ],
+      "properties": {
+        "label": "STOP-OL1-NC",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "e6aa2286-ea8c-489f-833e-9602627028aa",
+      "kind": "wire",
+      "designation": "W-CTL-007",
+      "endpoints": [
+        { "device": "OL1", "terminal": "96" },
+        { "device": "K1", "terminal": "A1" }
+      ],
+      "properties": {
+        "label": "OL1-NC-K1-A1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "eec270ab-13d6-449e-83ee-0d46e07d5902",
+      "kind": "wire",
+      "designation": "W-CTL-008",
+      "endpoints": [
+        { "device": "K1", "terminal": "A2" },
+        { "device": "PS1", "terminal": "-" }
+      ],
+      "properties": {
+        "label": "K1-A2-0V",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    },
+    {
+      "uid": "c4633299-0009-4b25-b39e-020c1df8080c",
+      "kind": "wire",
+      "designation": "W-CTL-009",
+      "endpoints": [
+        { "device": "PB1", "terminal": "12" },
+        { "device": "OL2", "terminal": "95" }
+      ],
+      "properties": {
+        "label": "STOP-OL2-NC",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "8607332d-0a45-479b-9442-e286a1241440",
+      "kind": "wire",
+      "designation": "W-CTL-010",
+      "endpoints": [
+        { "device": "OL2", "terminal": "96" },
+        { "device": "K2", "terminal": "A1" }
+      ],
+      "properties": {
+        "label": "OL2-NC-K2-A1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "81002163-455a-4311-ac16-e565a2b3b1fd",
+      "kind": "wire",
+      "designation": "W-CTL-011",
+      "endpoints": [
+        { "device": "K2", "terminal": "A2" },
+        { "device": "PS1", "terminal": "-" }
+      ],
+      "properties": {
+        "label": "K2-A2-0V",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    }
+  ]
+}

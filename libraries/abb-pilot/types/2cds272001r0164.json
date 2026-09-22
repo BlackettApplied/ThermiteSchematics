@@ -1,0 +1,95 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds272001r0164",
+      "description": "ABB S202M-C16 miniature circuit breaker / 2 poles / C characteristic / 16 A / Icn 10 kA at 400 V AC",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS272001R0164",
+        "document": {
+          "url": "https://new.abb.com/docs/librariesprovider74/lp-materials/prom-2014-2csc400002d0211.pdf?sfvrsn=2",
+          "title": "ABB System pro M compact — Technical catalogue",
+          "revision": "2014; 2CSC 400 002 D0211",
+          "pages": "2/38 (PDF 64), 2/16 (PDF 42), 2/20 (PDF 46), 11/2 (PDF 1068)"
+        },
+        "modelingNotes": [
+          "Exact order 2CDS272001R0164 is S 202 M-C 16: two protected poles, C characteristic, rated current 16 A; selection table 2/38.",
+          "S200-family S202 diagram 11/2 shows numeric terminals 1-2 and 3-4, open contacts and mechanical ganging. No phase or neutral assignment is inferred. Supply direction is optional per 2/20; roles are therefore bidirectional power.",
+          "IEC/EN 60898-1: two-pole rated operational voltage 400 V AC, 50/60 Hz, Icn 10 kA, C-curve reference temperature 30 degrees C. IEC/EN 60947-2: Ue 440 V AC, Icu 15 kA, Ics 11.2 kA for rated currents up to 40 A, C-curve reference temperature 55 degrees C (2/16). Voltage and interrupting capacities are documented with conditions, not assigned supply values.",
+          "Twin conductor/busbar entries are parts of each numbered cylinder-lift terminal, modeled as a shared connection point rather than invented separately numbered terminals. Table 2/20 lists 35 mm2 solid/stranded, 25 mm2 flexible and 10 mm2 busbar capacity top/bottom.",
+          "Only the base breaker is included. Auxiliary contacts, signal contacts, releases and motor operators are combination accessories (2/20), not supplied connection inventory. No PE, shield, communication or separate return terminal is shown.",
+          "Open is the catalogue drawing state, not a prediction of installed handle position. Contact functions and ganged_with metadata create no permanent continuity. Terminal use is application-dependent; no universally required terminal is asserted. Protection dynamics and coordination are outside this connectivity model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four numbered electrical connection points of the base two-pole breaker: 1, 2, 3, 4. Twin wire/busbar entries share each numbered terminal. No separately purchased accessory contacts or external bonding connections are included."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, terminal 1; bidirectional supply/load",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "2": {
+          "description": "Pole 1, terminal 2; bidirectional supply/load",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "3": {
+          "description": "Pole 2, terminal 3; bidirectional supply/load",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "4": {
+          "description": "Pole 2, terminal 4; bidirectional supply/load",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

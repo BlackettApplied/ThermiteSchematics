@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/device.schema.json",
+  "title": "Device",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uid", "kind", "designation", "type"],
+  "properties": {
+    "uid": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/uid"
+    },
+    "kind": {
+      "const": "device"
+    },
+    "designation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "type": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/typeId"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "location": {
+      "type": "string"
+    },
+    "io": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "addressSpace": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "channels": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "address": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                },
+                "signal": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                },
+                "usage": {
+                  "type": "string",
+                  "enum": ["in-use", "spare"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["addressSpace", "channels"]
+    },
+    "connectionReview": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "terminals": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "$ref": "#/$defs/connectionReviewEntry"
+            }
+          }
+        },
+        "ports": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "$ref": "#/$defs/connectionReviewEntry"
+            }
+          }
+        },
+        "connectorPorts": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "$ref": "#/$defs/connectionReviewEntry"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "connectionReviewEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {
+          "enum": ["required", "intentionally-unused", "deferred"]
+        },
+        "reason": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      }
+    }
+  }
+}

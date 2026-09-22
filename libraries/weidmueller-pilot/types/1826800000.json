@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1826800000",
+      "description": "HDC HEE 32 FC female insert body, size 6, 32 crimp-contact cavities; crimp contacts supplied separately",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1826800000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1826800000/scope/2/",
+          "title": "Weidmüller HDC HEE 32 FC exact-order data sheet",
+          "revision": "Created 18.02.2026 01:45:13 MEZ",
+          "pages": "1: exact female order and excluded crimp contacts; 3: PE screw data and connector capabilities; 4: PE-marked dimensional drawing; 7–8: separately ordered female crimp contacts"
+        },
+        "modelingNotes": [
+          "Exact female order 1826800000 is HDC HEE 32 FC, a size-6 body for 32 crimp-contact positions. Its own manufacturer data sheet p.1 explicitly states that crimp contacts are not delivered with the inserts. Empty cavities are not supplied conductive terminals. This delivery-scope conclusion is independently established for the female order, not transferred from a male part.",
+          "This model covers the bare insert order. It therefore has no numbered populated power/signal terminals, no C.n/M.n contact endpoints and no 32 fixed contact paths. Separately selected female crimp contacts and their eventual cavity assignments require distinct modeling before a populated assembly can be reconstructed; contact plating, wire range and circuit use are not selected here.",
+          "Exact data-sheet p.3 documents a screw PE interface; the p.1 photograph and p.4 dimensional drawing show PE hardware on the insert ends/frame. One aggregate PE terminal represents this documented protective-earth interface. Individual clamp, mating, frame and mounting interfaces and their full bonding matrix are not enumerated. No single central PE pin, exact count of PE clamps, C.PE–M.PE link or external housing bond is asserted.",
+          "PE is required as an explicit library policy for modeled protective-earth use. A connected aggregate PE satisfies presence only; it does not prove an external earth source or adequate protective bonding. Mechanical attachment and connector metadata never create electrical continuity.",
+          "Manufacturer capabilities describe a suitably assembled connector: 500 V under DIN EN 61984, 600 V AC/DC under UL/CSA, 16 A, 6 kV impulse and pollution severity 3. They do not establish an electrical rating for absent crimp contacts or an assigned circuit voltage. No capability nominal_voltage, AC-only restriction or scalar current is imposed by this bare-body model. Contact/conductor selection and thermal conditions remain application decisions.",
+          "PE screw data on exact p.3: M4, 1.2–1.5 N m, 10 mm strip length, rated 4 mm², AWG20–12, slotted SD0.8x4.0 or PH1. Those figures do not identify every physical PE subdivision or prove the installed bond. The 7.5 mm crimp strip figure and separate silver/gold female contact offerings on pp.7–8 do not select an absent crimp contact.",
+          "As-built cavity population, contact order/plating/wire size, mating half, housing, orientation and external protective bonding remain outside this exact bare-order model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Bare female insert order with 32 empty crimp-contact cavities and one aggregate documented PE interface. Crimp contacts are explicitly excluded from delivery. No populated numbered electrical pins or fixed contact paths are asserted. Individual PE clamp/mating/frame/mounting interfaces and their complete bonding matrix remain unenumerated; separate crimp-contact selection and installed assembly are outside scope."
+      },
+      "terminals": {
+        "PE": {
+          "description": "Aggregate documented protective-earth interface; individual clamp/mating/frame subdivision unresolved",
+          "role": "pe",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "PE": "terminal"
+      },
+      "connectorPorts": {
+        "INSERT": {
+          "connector": "HDC HEE 32 FC female insert body, size 6",
+          "description": "Mechanical body for 32 separately ordered female crimp contacts. No populated electrical pin map is asserted; aggregate PE is represented separately."
+        }
+      },
+      "terminalOrder": ["PE"]
+    }
+  ]
+}

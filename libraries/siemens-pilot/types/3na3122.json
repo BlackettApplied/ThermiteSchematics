@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:3na3122",
+      "description": "NH1 fuse link, 63 A, gG, front indicator, live grip lugs",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "3NA3122",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/siemenscomplete/2021q1/documents/5f9a60e811dc553e49bfa650aed4e7c0caea3c28.pdf",
+          "title": "Siemens Data sheet 3NA3122 (manufacturer document, distributor mirror)",
+          "revision": "2021-01-21",
+          "pages": "Physical 1 (data), 3 (dimensions), 4 (circuit diagram)"
+        },
+        "modelingNotes": [
+          "Voltage capability: 500 V AC / 440 V DC; no assigned nominal supply voltage. Rated current 63 A; datasheet current field specifies AC.",
+          "Terminal keys 1 and 2 preserve the manufacturer's circuit labels on physical page 4; they do not assert stamped blade markings, polarity or installation orientation.",
+          "Single fuse link only. Front indicator has no separate wired contacts. Live grip lugs are handling hardware, not PE or additional wiring terminals; base and indication accessories are excluded.",
+          "Normally closed contact metadata represents an intact fuse for drawing only. No fixed conductive link or protective trip simulation is asserted.",
+          "Width 30 mm. Hot power loss 6 W per pole at rated AC current. Sheet lists DC breaking capacity 25 kA and a separate 120 kA breaking-capacity entry; these remain documentation, not conductor current limits."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Both blade interfaces of the standalone fuse link are covered using exact circuit labels 1 and 2. No separate indicator terminals, PE, shield or communication interfaces; handling lugs are not external wiring interfaces."
+      },
+      "terminals": {
+        "1": {
+          "description": "Fuse blade; manufacturer circuit label 1",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "2": {
+          "description": "Fuse blade; manufacturer circuit label 2",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        }
+      },
+      "functions": {
+        "fuse": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "fuse": "fuse"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

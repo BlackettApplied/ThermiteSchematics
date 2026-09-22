@@ -1,0 +1,188 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "1e206e5b-df97-5a12-9106-dedc688a4b58",
+      "designation": "AQ1",
+      "type": "industrial-pilot:siemens-aq4ui-st-2wire",
+      "location": "Main cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "312ab367-b959-5ea6-a424-c8a10937b1a6",
+      "designation": "XT1",
+      "type": "field-interfaces:terminal-strip-8-aux",
+      "location": "Main cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "81d754ec-cd69-5718-a488-125d3234784b",
+      "designation": "XP1",
+      "type": "field-interfaces:m12-a4-bulkhead",
+      "location": "Cabinet wall"
+    },
+    {
+      "kind": "device",
+      "uid": "a3bf87a5-337c-572b-80b6-4bd9aa2543b0",
+      "designation": "V1",
+      "type": "field-interfaces:ram-valve-m12-proposed",
+      "location": "Lower platen"
+    },
+    {
+      "kind": "wire",
+      "uid": "3ce7a393-737f-54ad-961c-0be16dff3b7b",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "AQ1",
+          "terminal": "4"
+        },
+        {
+          "device": "XT1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "d9e84a53-8519-5f86-908b-29ac961179ba",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "AQ1",
+          "terminal": "8"
+        },
+        {
+          "device": "XT1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "7021cd9a-ff0a-5c72-aedf-814d2f6d2c43",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "1"
+        },
+        {
+          "device": "XP1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "fc39f383-83de-5695-a7b7-0cc7595ae712",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "2"
+        },
+        {
+          "device": "XP1",
+          "terminal": "4"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "b0324a66-dd53-514e-b9ff-0d5d86a5d5ec",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "3"
+        },
+        {
+          "device": "XP1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "8c6316be-2e82-56f7-b5ef-55fc8d2a6a15",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "4"
+        },
+        {
+          "device": "XP1",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "05185937-00c6-55f2-acef-9fc86b2d5b8c",
+      "designation": "CB1",
+      "type": "field-interfaces:m12-a4-actuator-cordset",
+      "fromLocation": "Cabinet wall",
+      "toLocation": "Lower platen",
+      "conductors": [
+        {
+          "id": "A",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "XP1",
+              "terminal": "1"
+            },
+            {
+              "device": "V1",
+              "terminal": "1"
+            }
+          ]
+        },
+        {
+          "id": "B",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "XP1",
+              "terminal": "2"
+            },
+            {
+              "device": "V1",
+              "terminal": "2"
+            }
+          ]
+        },
+        {
+          "id": "C",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "XP1",
+              "terminal": "3"
+            },
+            {
+              "device": "V1",
+              "terminal": "3"
+            }
+          ]
+        },
+        {
+          "id": "D",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "XP1",
+              "terminal": "4"
+            },
+            {
+              "device": "V1",
+              "terminal": "4"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

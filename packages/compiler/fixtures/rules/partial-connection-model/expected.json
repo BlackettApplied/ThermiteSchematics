@@ -1,0 +1,20 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 3,
+    "column": 5,
+    "jsonPointer": "/objects/0",
+    "uid": "a6ee422c-6ec2-5a65-9e39-11c3a4e91b20",
+    "code": "W904",
+    "severity": "warning",
+    "message": "D1: Incomplete connection model: DC power connector is not modeled.",
+    "related": [
+      {
+        "file": "library/types/module.json",
+        "line": 3,
+        "column": 5,
+        "note": "Incomplete connection model: DC power connector is not modeled."
+      }
+    ]
+  }
+]

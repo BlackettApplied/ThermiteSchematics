@@ -1,0 +1,33 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bs54",
+      "description": "Red 40 mm mushroom head, mechanical latching, turn to release; emergency switching off",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BS54",
+        "document": {
+          "url": "https://media.distrelec.com/Web/Downloads/_t/ds/Harmony_XB4-5_eng_tds.pdf",
+          "title": "Control and signalling units Ø 22 — Harmony XB4, metal",
+          "revision": "Undated historical catalog excerpt; PDF creation metadata 2009-04-02, modification 2013-01-17",
+          "pages": "Physical PDF 26 and 68; printed 31 and 73"
+        },
+        "modelingNotes": [
+          "The source ZB4-BS54 matches catalog grouping ZB4 BS54 and exact datasheet code ZB4BS54; the job order spelling is preserved.",
+          "Head only. Separately ordered contact bodies and any complete assembly are outside this type; no contacts or light source are imported.",
+          "The exact selection row and corresponding mechanical drawing were visually reviewed. Documentation rendering represents the head without electrical functions.",
+          "No documented terminals or fixed electrical links. Metal-head bonding through the attachment, collar or panel remains unresolved; no installed PE path is asserted.",
+          "Emergency switching off is the manufacturer's classification. No electrical supply or switching rating is assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Zero documented electrical terminals on this mechanical head. Exact head selection and outline establish mechanical scope, but do not establish an exhaustive PE/bonding inventory or continuity at the metal bezel/attachment/panel interface. Separately ordered contact and light bodies are excluded."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

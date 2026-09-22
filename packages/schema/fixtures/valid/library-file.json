@@ -1,0 +1,17 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:terminal",
+      "terminals": {},
+      "functions": { "body": { "kind": "other", "terminals": [] } }
+    },
+    {
+      "kind": "cable_type",
+      "id": "core:single-core",
+      "conductors": [{ "id": "1", "color": "black" }],
+      "shield": false
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/common.schema.json",
+  "$defs": {
+    "uid": {
+      "type": "string",
+      "description": "Lowercase canonical RFC 4122/9562 UUID using version 1 through 8 and the RFC variant.",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "designation": {
+      "type": "string",
+      "description": "Opaque non-empty identifier with no control characters or surrounding whitespace.",
+      "minLength": 1,
+      "pattern": "^(?!\\s)(?![\\s\\S]*\\s$)[^\\u0000-\\u001f\\u007f-\\u009f]*$"
+    },
+    "deviceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device"],
+      "properties": {
+        "device": {
+          "$ref": "#/$defs/designation"
+        }
+      }
+    },
+    "terminalRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["device", "terminal"],
+      "properties": {
+        "device": {
+          "$ref": "#/$defs/designation"
+        },
+        "terminal": {
+          "$ref": "#/$defs/designation"
+        }
+      }
+    },
+    "endpointPair": {
+      "type": "array",
+      "description": "Exactly two terminal references. Endpoint order has no electrical meaning.",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/terminalRef"
+      }
+    },
+    "typeId": {
+      "type": "string",
+      "description": "A library-qualified type identifier in <library-name>:<type-name> form.",
+      "pattern": "^[^\\s:\\u0000-\\u001f\\u007f-\\u009f]+:[^\\s:\\u0000-\\u001f\\u007f-\\u009f]+$"
+    },
+    "electricalIntent": {
+      "type": "object",
+      "description": "Declared electrical intent. This is distinct from equipment capability or rating.",
+      "additionalProperties": false,
+      "properties": {
+        "nominal_voltage": {
+          "type": "number",
+          "description": "Nominal voltage in volts (V), the canonical source unit."
+        },
+        "voltage_type": {
+          "type": "string",
+          "enum": ["AC", "DC"]
+        },
+        "polarity": {
+          "type": "string",
+          "description": "Opaque polarity classification, such as positive, negative, or neutral."
+        },
+        "current": {
+          "type": "number",
+          "description": "Current in amperes (A), the canonical source unit."
+        },
+        "power": {
+          "type": "number",
+          "description": "Power in watts (W), the canonical source unit."
+        },
+        "frequency": {
+          "type": "number",
+          "description": "Frequency in hertz (Hz), the canonical source unit."
+        }
+      }
+    },
+    "electricalRating": {
+      "type": "object",
+      "description": "Equipment electrical capability or rating. This is distinct from declared electrical intent.",
+      "additionalProperties": false,
+      "properties": {
+        "nominal_voltage": {
+          "type": "number",
+          "description": "Nominal voltage in volts (V), the canonical source unit."
+        },
+        "voltage_type": {
+          "type": "string",
+          "enum": ["AC", "DC"]
+        },
+        "current": {
+          "type": "number",
+          "description": "Current in amperes (A), the canonical source unit."
+        },
+        "power": {
+          "type": "number",
+          "description": "Power in watts (W), the canonical source unit."
+        },
+        "frequency": {
+          "type": "number",
+          "description": "Frequency in hertz (Hz), the canonical source unit."
+        }
+      }
+    },
+    "aliases": {
+      "type": "array",
+      "description": "Alternative names for an entity.",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

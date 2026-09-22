@@ -1,0 +1,262 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "schneider-pilot:lc1-d1156p7"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "1/L1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "3/L2"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "5/L3"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "13/NO"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001007",
+      "designation": "B8",
+      "type": "batch-boundary:endpoint-8"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100007",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "14"
+        },
+        {
+          "device": "B8",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001008",
+      "designation": "B9",
+      "type": "batch-boundary:endpoint-9"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100008",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "21/NC"
+        },
+        {
+          "device": "B9",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001009",
+      "designation": "B10",
+      "type": "batch-boundary:endpoint-10"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100009",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "22"
+        },
+        {
+          "device": "B10",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001010",
+      "designation": "B11",
+      "type": "batch-boundary:endpoint-11"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100010",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A1"
+        },
+        {
+          "device": "B11",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001011",
+      "designation": "B12",
+      "type": "batch-boundary:endpoint-12"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100011",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "A2"
+        },
+        {
+          "device": "B12",
+          "terminal": "1"
+        }
+      ]
+    }
+  ]
+}

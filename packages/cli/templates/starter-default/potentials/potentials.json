@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "46be3efd-17b7-43ee-bb9d-a019c4fb2cdd",
+      "kind": "potential",
+      "name": "+24VDC",
+      "at": {
+        "device": "PS1",
+        "terminal": "+"
+      },
+      "electrical": {
+        "nominal_voltage": 24,
+        "voltage_type": "DC",
+        "polarity": "positive"
+      }
+    },
+    {
+      "uid": "aaccbc22-3208-42dd-ae26-54dce0250f8d",
+      "kind": "potential",
+      "name": "0VDC",
+      "at": {
+        "device": "PS1",
+        "terminal": "-"
+      },
+      "electrical": {
+        "nominal_voltage": 0,
+        "voltage_type": "DC",
+        "polarity": "return"
+      }
+    }
+  ]
+}

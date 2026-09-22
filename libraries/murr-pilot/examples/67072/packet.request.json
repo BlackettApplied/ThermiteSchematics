@@ -1,0 +1,181 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "67072 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "T1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T1"
+            }
+          ],
+          "conductors": ["W1"]
+        },
+        {
+          "id": "g2",
+          "label": "T2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T2"
+            }
+          ],
+          "conductors": ["W2"]
+        },
+        {
+          "id": "g3",
+          "label": "T3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T3"
+            }
+          ],
+          "conductors": ["W3"]
+        },
+        {
+          "id": "g4",
+          "label": "T4 / T5",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T5"
+            }
+          ],
+          "conductors": ["W4", "W5", "FIXED1"]
+        },
+        {
+          "id": "g5",
+          "label": "T6",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T6"
+            }
+          ],
+          "conductors": ["W6"]
+        },
+        {
+          "id": "g6",
+          "label": "T7",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T7"
+            }
+          ],
+          "conductors": ["W7"]
+        },
+        {
+          "id": "g7",
+          "label": "T8",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T8"
+            }
+          ],
+          "conductors": ["W8"]
+        },
+        {
+          "id": "g8",
+          "label": "T9",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T9"
+            }
+          ],
+          "conductors": ["W9"]
+        },
+        {
+          "id": "g9",
+          "label": "T10",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T10"
+            }
+          ],
+          "conductors": ["W10"]
+        },
+        {
+          "id": "g10",
+          "label": "T11",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T11"
+            }
+          ],
+          "conductors": ["W11"]
+        },
+        {
+          "id": "g11",
+          "label": "T12",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "T12"
+            }
+          ],
+          "conductors": ["W12"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

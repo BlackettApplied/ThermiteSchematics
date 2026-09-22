@@ -1,0 +1,118 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "C4-A40FX/24VDC / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "p1_nc / p1_no",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p1_nc"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p1_no"
+            }
+          ],
+          "conductors": ["W1", "W2", "W3"]
+        },
+        {
+          "id": "g2",
+          "label": "p2_nc / p2_no",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p2_nc"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p2_no"
+            }
+          ],
+          "conductors": ["W4", "W5", "W6"]
+        },
+        {
+          "id": "g3",
+          "label": "p3_nc / p3_no",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p3_nc"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p3_no"
+            }
+          ],
+          "conductors": ["W7", "W8", "W9"]
+        },
+        {
+          "id": "g4",
+          "label": "p4_nc / p4_no",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p4_nc"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "p4_no"
+            }
+          ],
+          "conductors": ["W10", "W11", "W12"]
+        },
+        {
+          "id": "g5",
+          "label": "coil",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "coil"
+            }
+          ],
+          "conductors": ["W13", "W14"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

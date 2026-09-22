@@ -1,0 +1,331 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7193-4cb30-0aa0",
+      "description": "ET 200S TM-E15C24-01 spring-terminal base; partial functional interface model",
+      "category": "terminal-strip",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7193-4CB30-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/457/25390457/att_75261/v1/et200s_terminalmodule_manual_en-US.pdf",
+          "title": "SIMATIC ET 200S distributed I/O - Terminal modules",
+          "revision": "04/2007, A5E01120034-01",
+          "pages": "7, 21-22; named P1/P2 rails additionally verified in system manual 07/2003, printed 3-22 / PDF 68"
+        },
+        "modelingNotes": [
+          "One physical TM-E15C24-01 base per instance; Siemens order 6ES7193-4CB30-0AA0 is packaged as five units. The inserted electronic module and optional shield-contact element are separate components.",
+          "1 through 8 are manufacturer field-clamp markings, arranged as paired front-view rows 1/5, 2/6, 3/7, 4/8. EM.n names the base-side electronic-module interface of that individual conductor, not a verified connector cavity number. The inserted electronic module determines field signal assignments.",
+          "P1 and P2 are the manufacturer power-bus names shown for this exact named variant in system-manual table 3-8, printed 3-22 / PDF 68. L/R are library aliases for inter-base ends and EM is the separate tap to the electronic-module interface. Each bus passes through this terminal base; P1 and P2 remain distinct. These aliases specify neither physical connector coordinates nor operating polarity.",
+          "AUX1.L/R are library aliases for the independent auxiliary through-bus ends. No AUX1 field clamp, field-to-AUX1 connection or AUX1-to-EM tap is shown for TM-E15C24-01. Do not import terminals A3/A4/A7/A8 or links to field terminals 4/8 from an AUX-access variant.",
+          "Backplane contacts are not pin-enumerated in the reviewed drawings. The depicted backplane is an aggregate communication/electronics-supply bus, not a single physical conductor. No backplane pin, opaque-bus short circuit or backplane fixed link is invented.",
+          "System manual section 10.8, printed 10-22 / PDF 272, documents a spring contact for noise diversion from the electronic module to the DIN rail; figure 5-1, printed 5-6 / PDF 110, identifies it as functional ground (FG). This FG mating/rail interface is omitted from the authored endpoints because its exact connector contacts are not established. It is not AUX1, and no FG-to-AUX1 or FG-to-P2 bond is asserted. Connection coverage remains partial.",
+          "All conformance fixed links require explicit project jumpers. Eight field-to-EM links, two separate tapped power-bus groups and one AUX1 through-link are represented. Single-terminal functions and connector metadata do not join nets; no continuity through the installed electronic module is asserted.",
+          "AUX1 capability up to 230 VAC or protective-conductor-bar use is described on terminal-manual page 7. Its installed potential is application-dependent. P1/P2 receive the associated power-module supply. No nominal_voltage, unconditional 24 V/M assignment, PE bond or scalar current rating is inferred. Separate drawn paths do not establish safety isolation; system-manual printed 3-6 cautions about AUX1 versus P1/P2 when different potentials are applied.",
+          "15 x 132 x 43 mm, approximately 65 g. No universally required external field connection is established for this passive base; usage and permitted potential depend on the selected electronics. Installed revision, compatibility, conductor capacity and loading need the appropriate component/application documentation."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Eight field-clamp paths and their electronic-module interfaces, separate P1/P2 buses with EM taps, and the independent AUX1 through-bus are represented with qualified library aliases. Backplane pin count/functions/continuity and the documented FG spring-contact mating/rail interface are not modeled. No physical connector pin inventory, electronic-module function, shield accessory or installed bonding is claimed complete."
+      },
+      "terminals": {
+        "1": {
+          "description": "Manufacturer-marked spring clamp 1; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2": {
+          "description": "Manufacturer-marked spring clamp 2; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3": {
+          "description": "Manufacturer-marked spring clamp 3; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "Manufacturer-marked spring clamp 4; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5": {
+          "description": "Manufacturer-marked spring clamp 5; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6": {
+          "description": "Manufacturer-marked spring clamp 6; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "7": {
+          "description": "Manufacturer-marked spring clamp 7; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8": {
+          "description": "Manufacturer-marked spring clamp 8; signal assigned by separately installed electronic module",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.1": {
+          "description": "Base-side functional interface alias EM.1; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.2": {
+          "description": "Base-side functional interface alias EM.2; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.3": {
+          "description": "Base-side functional interface alias EM.3; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.4": {
+          "description": "Base-side functional interface alias EM.4; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.5": {
+          "description": "Base-side functional interface alias EM.5; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.6": {
+          "description": "Base-side functional interface alias EM.6; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.7": {
+          "description": "Base-side functional interface alias EM.7; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "EM.8": {
+          "description": "Base-side functional interface alias EM.8; see modeling notes, not a manufacturer pin marking",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P1.L": {
+          "description": "P1 manufacturer power bus, inter-base left interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P1.R": {
+          "description": "P1 manufacturer power bus, inter-base right interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P1.EM": {
+          "description": "P1 manufacturer power bus, tap to the electronic-module interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P2.L": {
+          "description": "P2 manufacturer power bus, inter-base left interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P2.R": {
+          "description": "P2 manufacturer power bus, inter-base right interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "P2.EM": {
+          "description": "P2 manufacturer power bus, tap to the electronic-module interface; suffix is a library alias, not a connector cavity or assigned polarity",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "AUX1.L": {
+          "description": "AUX1.L auxiliary through-bus end; L/R are library aliases, no field access or assigned PE potential",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "AUX1.R": {
+          "description": "AUX1.R auxiliary through-bus end; L/R are library aliases, no field access or assigned PE potential",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "1": {
+          "kind": "bus",
+          "terminals": ["1"]
+        },
+        "2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "4": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "5": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "8": {
+          "kind": "bus",
+          "terminals": ["8"]
+        },
+        "EM.1": {
+          "kind": "bus",
+          "terminals": ["EM.1"]
+        },
+        "EM.2": {
+          "kind": "bus",
+          "terminals": ["EM.2"]
+        },
+        "EM.3": {
+          "kind": "bus",
+          "terminals": ["EM.3"]
+        },
+        "EM.4": {
+          "kind": "bus",
+          "terminals": ["EM.4"]
+        },
+        "EM.5": {
+          "kind": "bus",
+          "terminals": ["EM.5"]
+        },
+        "EM.6": {
+          "kind": "bus",
+          "terminals": ["EM.6"]
+        },
+        "EM.7": {
+          "kind": "bus",
+          "terminals": ["EM.7"]
+        },
+        "EM.8": {
+          "kind": "bus",
+          "terminals": ["EM.8"]
+        },
+        "P1.L": {
+          "kind": "bus",
+          "terminals": ["P1.L"]
+        },
+        "P1.R": {
+          "kind": "bus",
+          "terminals": ["P1.R"]
+        },
+        "P1.EM": {
+          "kind": "bus",
+          "terminals": ["P1.EM"]
+        },
+        "P2.L": {
+          "kind": "bus",
+          "terminals": ["P2.L"]
+        },
+        "P2.R": {
+          "kind": "bus",
+          "terminals": ["P2.R"]
+        },
+        "P2.EM": {
+          "kind": "bus",
+          "terminals": ["P2.EM"]
+        },
+        "AUX1.L": {
+          "kind": "bus",
+          "terminals": ["AUX1.L"]
+        },
+        "AUX1.R": {
+          "kind": "bus",
+          "terminals": ["AUX1.R"]
+        }
+      },
+      "circuitSymbols": {
+        "1": "terminal",
+        "2": "terminal",
+        "3": "terminal",
+        "4": "terminal",
+        "5": "terminal",
+        "6": "terminal",
+        "7": "terminal",
+        "8": "terminal",
+        "EM.1": "terminal",
+        "EM.2": "terminal",
+        "EM.3": "terminal",
+        "EM.4": "terminal",
+        "EM.5": "terminal",
+        "EM.6": "terminal",
+        "EM.7": "terminal",
+        "EM.8": "terminal",
+        "P1.L": "terminal",
+        "P1.R": "terminal",
+        "P1.EM": "terminal",
+        "P2.L": "terminal",
+        "P2.R": "terminal",
+        "P2.EM": "terminal",
+        "AUX1.L": "terminal",
+        "AUX1.R": "terminal"
+      },
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "EM.1",
+        "EM.2",
+        "EM.3",
+        "EM.4",
+        "EM.5",
+        "EM.6",
+        "EM.7",
+        "EM.8",
+        "P1.L",
+        "P1.R",
+        "P1.EM",
+        "P2.L",
+        "P2.R",
+        "P2.EM",
+        "AUX1.L",
+        "AUX1.R"
+      ]
+    }
+  ]
+}

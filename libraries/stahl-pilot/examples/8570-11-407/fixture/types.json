@@ -1,0 +1,29 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-8570-11-407-fixture:boundary",
+      "description": "Synthetic unenergized boundary / no installed supply or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "L1": {
+          "role": "power"
+        },
+        "L2": {
+          "role": "power"
+        },
+        "L3": {
+          "role": "power"
+        },
+        "PE": {
+          "role": "protective_earth"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic four-endpoint test boundary only; no installed source, load, protection, wire size or earth supply is specified."
+      }
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:c3-a30x-24dc",
+      "description": "Releco C3-A30X/24DC industrial plug-in relay / 3-pole changeover (3 CO) / AgNi contacts / LED indicator / 24 V DC coil / 11-pin",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "C3-A30X/24DC",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco World of Relays (WoR) 3.2 - Industrial Relays, pluggable, C3-A3x",
+          "revision": "WoR 3.2",
+          "pages": "Printed/physical pp.45,11; exact selection, numbered diagram and applicable X circuit"
+        },
+        "modelingNotes": [
+          "Exact bare relay C3-A30X/24DC. WoR3.2 page45 selects AgNi (material digit0), LED-only X and 24 V DC. Source voltage-token order is interpreted using the manufacturer's explicit selection row; original source spelling is preserved. Installed revision is not established.",
+          "Model keys are physical relay pin numbers, matching the socket side of the interface. IEC function designations are descriptive aliases, not additional terminals. No pin viewing orientation beyond the manufacturer numbered diagram is asserted.",
+          "Physical-to-IEC map: 1=11, 4=12, 3=14, 6=21, 5=22, 7=24, 11=31, 8=32, 9=34, 2=A1, 10=A2. Socket clamps and accessories are separately ordered and excluded.",
+          "WoR3.2 page11 distinguishes X from DX/FX. X includes LED indication with rectification; it does not add freewheeling suppression or a universal polarity requirement. Generic A1(+) convention in the family figure is not proof that this X variant requires a polarized supply. The coil symbol abstracts internal indication/rectification.",
+          "Only coil pins are required by library policy. Contacts are application-dependent. All contacts and coil/LED/rectifier paths remain distinct nets; no permanent fixed links. Shared physical commons and coil actuation are retained.",
+          "Coil selection24 VDC; range0.8–1.1Un, catalog DC consumption1.3 W and coil table480 ohm/50 mA. Whole-coil power stays in notes, not duplicated as per-pin power.",
+          "Contact capabilities:10 A at250 VAC AC-1 or30 VDC DC-1; inrush30 A/20 ms; DC inductive limits depend on the page45 curve. No unconditional contact current or voltage scalar is assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All 11 bare-relay physical pins from exact selection and numbered diagram inventoried. Integrated X indication uses the existing coil pins. Separate socket and accessories excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Physical pin 1; IEC 11; Pole 1 common (COM)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "Physical pin 2; IEC A1; coil connection",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "3": {
+          "description": "Physical pin 3; IEC 14; Pole 1 normally-open contact (NO)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "Physical pin 4; IEC 12; Pole 1 normally-closed contact (NC)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "5": {
+          "description": "Physical pin 5; IEC 22; Pole 2 normally-closed contact (NC)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "6": {
+          "description": "Physical pin 6; IEC 21; Pole 2 common (COM)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "7": {
+          "description": "Physical pin 7; IEC 24; Pole 2 normally-open contact (NO)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "8": {
+          "description": "Physical pin 8; IEC 32; Pole 3 normally-closed contact (NC)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "9": {
+          "description": "Physical pin 9; IEC 34; Pole 3 normally-open contact (NO)",
+          "role": "contact",
+          "connection_policy": "shared"
+        },
+        "10": {
+          "description": "Physical pin 10; IEC A2; coil connection",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "11": {
+          "description": "Physical pin 11; IEC 31; Pole 3 common (COM)",
+          "role": "contact",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["2", "10"]
+        },
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "3"]
+        },
+        "nc1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "4"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["6", "7"]
+        },
+        "nc2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["6", "5"]
+        },
+        "no3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["11", "9"]
+        },
+        "nc3": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "8"]
+        }
+      },
+      "circuitSymbols": {
+        "coil": "coil",
+        "no1": "contact-no",
+        "nc1": "contact-nc",
+        "no2": "contact-no",
+        "nc2": "contact-nc",
+        "no3": "contact-no",
+        "nc3": "contact-nc"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "no1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "nc1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "no2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "nc2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "no3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "nc3"
+        }
+      ],
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+  ]
+}

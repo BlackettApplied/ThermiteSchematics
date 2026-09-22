@@ -1,0 +1,95 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24587",
+      "description": "C60N miniature circuit breaker / 2 poles / D curve / 16 A / bare breaker",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24587",
+        "document": {
+          "url": "https://www.ronsystemshop.hu/pdf/c60n.pdf",
+          "title": "Merlin Gerin — C60N kismegszakító, B, C, D karakterisztika",
+          "revision": "Undated historical Hungarian catalog extract; no revision printed",
+          "pages": "Printed B12–B13; physical PDF pages 1–2"
+        },
+        "modelingNotes": [
+          "Exact 24587 row on B13 identifies C60N, 2P, D curve, 16 A; manufacturer-authored catalog at Ronsystemshop distributor mirror.",
+          "B13 diagram: marked terminals 1–2 and 3–4, two mechanically ganged protected poles. No fixed conducting links. Open contact state represents the illustrated OFF position, not a prediction of installed state.",
+          "B12: D curve calibrated at 40 °C; magnetic operation 10–14 In. For 2P, IEC/EN 60947-2 Icu is 20 kA at 230–240 V AC and 10 kA at 400–415 V AC; Ics is 75% Icu. These are conditional capabilities, not assigned circuit voltages.",
+          "B12 clamp capacities for ratings up to 25 A: 16 mm² flexible or 25 mm² rigid conductor. Connection policy shared does not specify permitted conductor count.",
+          "Candidate uses the historical row; manufacturer website inconsistency remains recorded. Swiss AC/DC title alone is not used to assign DC operating limits.",
+          "Bare breaker only; accessory terminals are outside this exact order. No neutral designation, PE, shield or communication connection in the applicable circuit diagram. Connections are application-dependent, so none universally required. No assigned nominal_voltage or AC-only terminal metadata."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four main screw terminals of the bare 2P breaker, marked 1, 2, 3, 4 in the exact catalog section. No accessory terminals included; no documented PE, neutral-specific, shield, signal or communication connections."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, marked terminal 1",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "2": {
+          "description": "Pole 1, marked terminal 2",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "3": {
+          "description": "Pole 2, marked terminal 3",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "4": {
+          "description": "Pole 2, marked terminal 4",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

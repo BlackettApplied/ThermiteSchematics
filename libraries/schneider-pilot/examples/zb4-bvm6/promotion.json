@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:zb4-bvm6",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "ZB4-BVM6"
+  },
+  "type": {
+    "path": "types/zb4-bvm6.json",
+    "sha256": "d18c4b7be87663a6881013ae27dcd78c117aabc4ba12d20ceb3d48a8fd305046"
+  },
+  "research": {
+    "path": "research/zb4-bvm6.md",
+    "sha256": "0fe750060da353f82e7ec2c19918bf1459493ff8df3d5d8ad7aa5faf55aa1d2d"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["X1", "X2"],
+    "requiredTerminalKeys": ["X1", "X2"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "b4df09606b669c6d97305661bc6c173d8b3145c663505eb18b87735787200631",
+    "packet.request.json": "6119a2a6a469321098f237a78a0879cda6efccc441b4e20e2e02a33eae09f787",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "a4d11751cfcf282c8372b1add592b7a2f3bae4dd928c10b51a9fcfbbe062c975",
+    "system.json": "ba2d44ec68568971c24801139fc7eaeb2db8ca5002c9b99e3b83d726378cdf57"
+  }
+}

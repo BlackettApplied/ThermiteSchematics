@@ -1,0 +1,24 @@
+{
+  "uid": "12345678-1234-4234-9234-123456789abc",
+  "kind": "cable",
+  "designation": "CBL1",
+  "type": "core:cable-2pair-shielded",
+  "description": "Field sensor cable",
+  "aliases": ["FIELD-CABLE-1"],
+  "conductors": [
+    {
+      "id": "pair.1+",
+      "endpoints": [
+        { "device": "JB1", "terminal": "X1.1" },
+        { "device": "LS1", "terminal": "1" }
+      ]
+    },
+    {
+      "id": "2",
+      "endpoints": [
+        { "device": "JB1", "terminal": "X1.2" },
+        { "device": "LS1", "terminal": "3" }
+      ]
+    }
+  ]
+}

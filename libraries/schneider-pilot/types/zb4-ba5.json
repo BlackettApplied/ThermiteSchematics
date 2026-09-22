@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-ba5",
+      "description": "Harmony XB4 push button head, metal, flush, yellow, Ø22, spring return, unmarked (head only; no contact block)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BA5",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal — Control and signaling units, Catalog (DIA5ED2121212EN)",
+          "revision": "October 2021, V13.0",
+          "pages": "PDF p.28 — Spring return pushbuttons (unmarked): Heads only / Flush selection table, Yellow = ZB4BA5"
+        },
+        "modelingNotes": [
+          "ZB4BA5 is the head only (mechanical operator/actuator). Same catalog identity.",
+          "Catalog p.28, visually inspected: 'Heads only / Flush' lists Yellow = ZB4BA5 (weight 0.029/0.064 kg/lb) with no NO/NC contact columns. The complete yellow unit XB4BA51 = ZB4BZ101 (1 NO contact block) + ZB4BA5 head, proving the head carries no contacts. Note (1): the contacts constitute the separately ordered body (fixing collar + contact).",
+          "Characteristics (se.com ZB4BA5 product page): metal, flush, Ø22 (22 mm), spring return (momentary), unmarked. It requires a separately ordered contact-block body; connection technologies (screw clamp / connector / Faston / spring terminal) belong to that body, not the head.",
+          "No electrical terminals, contacts, LEDs or PE terminal are asserted for this head. Contact and LED membership belong to the separately ordered body; a metal bezel/collar outline does not prove an installed panel bond. Zero-terminal mechanical item modeled as a documentation/accessory view — no wiring, fixed links or nets."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Head-only mechanical actuator with zero electrical terminals. Contacts are not part of this reference; they constitute the separately ordered body (fixing collar + contact block) per catalog note (1). The metal bezel/fixing collar may provide a panel-earth bond once assembled, but no bonding terminal is documented for the head, so that interface remains unresolved."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "MOUNT": {
+          "connector": "Ø22 flush yellow spring-return push actuator; snap-fit to a separately ordered contact-block body",
+          "description": "Mechanical actuator and Ø22 panel-mount interface only; no electrical pins. Contacts belong to the separately ordered body (e.g. ZB4BZ101 fixing collar + contact / ZBE10x)."
+        }
+      }
+    }
+  ]
+}

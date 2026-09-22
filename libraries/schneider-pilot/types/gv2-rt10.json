@@ -1,0 +1,132 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-rt10",
+      "description": "Motor circuit breaker, TeSys GV2 (GV2RT), 3P thermal-magnetic, 4-6.3 A, toggle (rocker-lever) control; no integrated auxiliary contacts",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-RT10",
+        "document": {
+          "url": "https://app.mectronic.com/dsheet/GV2RT10_SCHNEIDER-ELECTRIC.pdf",
+          "title": "Schneider Electric Product datasheet - Characteristics GV2RT10 (Motor circuit breaker, TeSys GV2, 3P, 4-6.3 A, thermal magnetic, screw clamp terminals)",
+          "revision": "Auto-generated datasheet dated Apr 13, 2020; distributor mirror (mectronic) of the Schneider Electric datasheet",
+          "pages": "p1 exact identity/network; p2 ratings/terminations; p4 GV2RT dimensions; p5 Connections and Schema explicitly applicable to GV2RT"
+        },
+        "modelingNotes": [
+          "Exact manufacturer identity GV2RT10 (source GV2-RT10): TeSys GV2, device short name GV2RT, thermal-magnetic, 3P, toggle control matching the source rocker-lever description. The Apr 13 2020 exact-order datasheet pp1–2 and official Dec 6 2017 GV2RT10 datasheet pp1–2 establish this identity; no GV2ME/GV2P order substitution.",
+          "The exact GV2RT10 datasheet p5 Connections and Schema explicitly labels its applicable drawing GV2ME•• and GV2RT. It establishes three distinct paths 1/L1–2/T1, 3/L2–4/T2 and 5/L3–6/T3, with a common actuator and thermal/magnetic release mechanisms. The six terminal identifiers are manufacturer schematic designations, not guesses from a blurred product photograph or code convention. Exact molded slash typography is not asserted.",
+          "Three contact functions use breaker symbols and a common mechanical ganged_with relation. Their open reference denotes breaker OFF. No fixed electrical links join the poles or permanently bypass their contacts. Thermal/magnetic sensing, release thresholds, common-trip mechanics and timing are described but not dynamically simulated by the contact model.",
+          "Complete coverage is bounded to the bare breaker: six main electrical terminals. The exact p5 diagram shows no integrated auxiliary, alarm, coil-supply, PE, shield or communication terminals. Official GV2LE/GV2RT instruction S1B19868-06, 01/2021, p1 depicts auxiliary/signalling and voltage-release modules fitted separately. Add-on modules and their terminals are excluded, not treated as integral interfaces.",
+          "2020 exact datasheet ratings: In 6.3 A, adjustable thermal protection 4–6.3 A, magnetic tripping current 138 A, Ith 6.3 A, Ue/Ui 690 V AC 50/60 Hz, Uimp 6 kV, power dissipation 2.5 W per pole. These are conditional equipment ratings, not installed settings, wire ampacity or an assigned supply voltage; no nominal_voltage is modeled. Terminal current 6.3 A retains the published In/Ith, not a selected thermal setting. The 2017 sheet labels In/trip-unit range 4–6.3 A and Ith 6.3 A, consistent with that distinction.",
+          "Published breaking capacity is voltage-dependent: Icu 100 kA at 220/230 and 400/415 V AC, 50 kA at 440 and 500 V AC, 3 kA at 690 V AC, 50/60 Hz, IEC 60947-2. No single universal interrupting rating or protective-coordination calculation is claimed. Exact datasheets specify AC network service; no DC-use inference is made.",
+          "Termination evidence from exact 2017/2020 datasheets p2 and official GV2RT instruction p2: screw clamps for two conductors, solid 1–6 mm², flexible without cable end 1.5–6 mm², flexible with cable end 1–4 mm²; 1.7 N·m. Shared terminal connection policy reflects those two-conductor clamps. No automatic conductor-sizing check is provided.",
+          "Terminal required:false leaves application wiring to the assembled project; it does not authorize a particular single-phase or two-pole protection scheme. This review establishes no such scheme, selected overload setting, installed circuit voltage, fitted accessory inventory, protection adequacy or rail protective bond. Product photographs are illustrative; electrical topology comes from the explicitly applicable p5 schematic."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Bare GV2RT10 breaker electrical inventory: six manufacturer schematic terminals on three mechanically coupled thermal-magnetic poles, as explicitly drawn on the exact GV2RT10 datasheet p5. No auxiliary, alarm, supply, PE, shield or communication terminals are shown in the bare-device circuit; official GV2RT instructions depict accessory modules separately. Mounting hardware and fitted project accessories do not add invented internal electrical terminals."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Line terminal, pole 1 (L1)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        },
+        "2/T1": {
+          "description": "Load terminal, pole 1 (T1)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        },
+        "3/L2": {
+          "description": "Line terminal, pole 2 (L2)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        },
+        "4/T2": {
+          "description": "Load terminal, pole 2 (T2)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        },
+        "5/L3": {
+          "description": "Line terminal, pole 3 (L3)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        },
+        "6/T3": {
+          "description": "Load terminal, pole 3 (T3)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 6.3
+          },
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

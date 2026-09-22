@@ -1,0 +1,63 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds271001r0254",
+      "description": "S201M-C25 miniature circuit breaker / 1 pole / C characteristic / 25 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS271001R0254",
+        "document": {
+          "url": "https://new.abb.com/docs/librariesprovider74/lp-materials/prom-2014-2csc400002d0211.pdf?sfvrsn=2",
+          "title": "ABB System pro M compact catalogue",
+          "revision": "2014; 2CSC 400 002 D0211",
+          "pages": "2/38 (PDF 64), 2/16 (PDF 42), 2/20 (PDF 46), 11/2 (PDF 1068)"
+        },
+        "modelingNotes": [
+          "Exact order row identifies S 201 M-C 25, one pole, 25 A, C characteristic.",
+          "IEC/EN 60898-1: 1P Un 230/400 V AC, Icn 10 kA, reference temperature 30 degrees C. IEC/EN 60947-2: 1P Ue 230 V AC, Icu 15 kA, Ics 11.2 kA for this 25 A unit, reference temperature 55 degrees C. Frequency 50/60 Hz. No scalar nominal voltage assigned.",
+          "Catalogue S201 family diagram shows terminal 1 above terminal 2 and one breaker contact. Terminal roles are bidirectional: supply is optional at either end. Open state represents the drawn OFF state, not an automatic net connection or trip simulation.",
+          "Cylinder-lift terminals support conductor and busbar attachment at each numbered electrical point; these are not separately numbered poles. No PE, neutral, coil, communication or auxiliary contacts belong to this bare order. Compatible auxiliary devices are separate accessories.",
+          "Contact endpoints remain separate nets; no fixed link. Connections are application-dependent and neither terminal is universally required. Protection coordination and installation suitability are outside this model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Both numbered electrical connection points of the bare one-pole breaker are represented: 1 and 2. Conductor and busbar attachment share their respective numbered terminal. Separately purchased auxiliaries are excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Main pole terminal 1; supply may enter either end",
+          "role": "bidirectional",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 25
+          }
+        },
+        "2": {
+          "description": "Main pole terminal 2; supply may enter either end",
+          "role": "bidirectional",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 25
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "20200000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "TARGET",
+      "type": "rules:policy-terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "HUB",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "P1",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "P2",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000005",
+      "kind": "device",
+      "designation": "P3",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000006",
+      "kind": "device",
+      "designation": "P4",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000007",
+      "kind": "device",
+      "designation": "P5",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000008",
+      "kind": "device",
+      "designation": "P6",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000009",
+      "kind": "wire",
+      "designation": "E-TO-HUB",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "E" },
+        { "device": "HUB", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000010",
+      "kind": "wire",
+      "designation": "HUB-BRANCH-1",
+      "endpoints": [
+        { "device": "HUB", "terminal": "T" },
+        { "device": "P1", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000011",
+      "kind": "wire",
+      "designation": "HUB-BRANCH-2",
+      "endpoints": [
+        { "device": "HUB", "terminal": "T" },
+        { "device": "P2", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000012",
+      "kind": "wire",
+      "designation": "SHARED-1",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "S" },
+        { "device": "P3", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000013",
+      "kind": "wire",
+      "designation": "SHARED-2",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "S" },
+        { "device": "P4", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000014",
+      "kind": "wire",
+      "designation": "UNDECLARED-1",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "X2.0" },
+        { "device": "P5", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20200000-0000-4000-8000-000000000015",
+      "kind": "wire",
+      "designation": "UNDECLARED-2",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "X2.0" },
+        { "device": "P6", "terminal": "T" }
+      ]
+    }
+  ]
+}

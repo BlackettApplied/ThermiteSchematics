@@ -1,0 +1,437 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "abb-pilot:1saj240100r0003"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.2"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.3"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.4"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.5"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "OUT.1"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "OUT.2"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001007",
+      "designation": "B8",
+      "type": "batch-boundary:endpoint-8"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100007",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "OUT.3"
+        },
+        {
+          "device": "B8",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001008",
+      "designation": "B9",
+      "type": "batch-boundary:endpoint-9"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100008",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "OUT.4"
+        },
+        {
+          "device": "B9",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001009",
+      "designation": "B10",
+      "type": "batch-boundary:endpoint-10"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100009",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "OUT.5"
+        },
+        {
+          "device": "B10",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001010",
+      "designation": "B11",
+      "type": "batch-boundary:endpoint-11"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100010",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "DEV.1"
+        },
+        {
+          "device": "B11",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001011",
+      "designation": "B12",
+      "type": "batch-boundary:endpoint-12"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100011",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "DEV.2"
+        },
+        {
+          "device": "B12",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001012",
+      "designation": "B13",
+      "type": "batch-boundary:endpoint-13"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100012",
+      "designation": "W13",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "DEV.3"
+        },
+        {
+          "device": "B13",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001013",
+      "designation": "B14",
+      "type": "batch-boundary:endpoint-14"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100013",
+      "designation": "W14",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "DEV.4"
+        },
+        {
+          "device": "B14",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001014",
+      "designation": "B15",
+      "type": "batch-boundary:endpoint-15"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100014",
+      "designation": "W15",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "DEV.5"
+        },
+        {
+          "device": "B15",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200000",
+      "designation": "FIXED1",
+      "description": "S1: Integral passive tee passes bus +24 V conductor between plug and onward socket; pp.9-12,27,29.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.1"
+        },
+        {
+          "device": "D1",
+          "terminal": "OUT.1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200001",
+      "designation": "FIXED2",
+      "description": "S1: Passive tee keeps the green bus conductor continuous independently of active node operation; pp.9-12,27,29.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.2"
+        },
+        {
+          "device": "D1",
+          "terminal": "OUT.2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200002",
+      "designation": "FIXED3",
+      "description": "S1: Integral passive tee passes bus 0 V conductor between plug and onward socket; pp.9-12,27,29.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.3"
+        },
+        {
+          "device": "D1",
+          "terminal": "OUT.3"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200003",
+      "designation": "FIXED4",
+      "description": "S1: Passive tee keeps the red bus conductor continuous; numbered pin 4 is retained despite conflicting A/B text; pp.9-12,27,29.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.4"
+        },
+        {
+          "device": "D1",
+          "terminal": "OUT.4"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200004",
+      "designation": "FIXED5",
+      "description": "S1: Continuous shield path of integral passive tee/cable: both bus interfaces pin 5 are shield, with connected cable shields; pp.9,19,27,29. Does not establish external earth bonding.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.5"
+        },
+        {
+          "device": "D1",
+          "terminal": "OUT.5"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200005",
+      "designation": "FIXED6",
+      "description": "S1: Internal potential-separation diagram p.27 explicitly passes +24 V to neutral device interface; device INT/EXT selection is outside the FieldBusPlug.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.1"
+        },
+        {
+          "device": "D1",
+          "terminal": "DEV.1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200006",
+      "designation": "FIXED7",
+      "description": "S1: Internal potential-separation diagram p.27 explicitly passes 0 V to neutral device interface; signal conversion is not galvanic continuity.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "IN.3"
+        },
+        {
+          "device": "D1",
+          "terminal": "DEV.3"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "format": "agent-tool-report/0.1",
+  "tool": "apply-source-patch",
+  "diagnostics": [
+    {
+      "code": "E102",
+      "severity": "error",
+      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"13\".",
+      "file": "connections/field-terminations.json",
+      "line": 24,
+      "column": 40,
+      "jsonPointer": "/objects/1/endpoints/1/terminal",
+      "uid": "4f3f64e8-af7c-4b5d-9cbc-250368ad3e75",
+      "related": [
+        {
+          "file": "@thermite/core-library/types/prox-pnp-3wire.json",
+          "line": 6,
+          "column": 13,
+          "note": "Resolved device type \"core:prox-pnp-3wire\" is declared here."
+        }
+      ]
+    },
+    {
+      "code": "E102",
+      "severity": "error",
+      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"14\".",
+      "file": "connections/field-terminations.json",
+      "line": 37,
+      "column": 40,
+      "jsonPointer": "/objects/2/endpoints/0/terminal",
+      "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+      "related": [
+        {
+          "file": "@thermite/core-library/types/prox-pnp-3wire.json",
+          "line": 6,
+          "column": 13,
+          "note": "Resolved device type \"core:prox-pnp-3wire\" is declared here."
+        }
+      ]
+    }
+  ],
+  "error": null
+}

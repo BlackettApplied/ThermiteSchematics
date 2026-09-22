@@ -1,0 +1,18 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "45a8a769-6d4f-5e45-bbb0-cc918e1b049b",
+      "designation": "D1",
+      "type": "fixture:module",
+      "connectionReview": {
+        "terminals": {
+          "missing": {
+            "status": "required",
+            "reason": "Required by this application."
+          }
+        }
+      }
+    }
+  ]
+}

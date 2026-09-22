@@ -1,0 +1,34 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw353",
+      "description": "Harmony XB4 flush spring-return illuminated pushbutton head, plain lens; orange in product sheet, yellow in North American Digest",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW353",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/SQD-ZB4BW353.PDF",
+          "title": "Product data sheet — ZB4BW353",
+          "revision": "March 3, 2017",
+          "pages": "1–3; 8 and 12 composition illustration and legend"
+        },
+        "modelingNotes": [
+          "Manufacturer spelling ZB4BW353 is mapped to historical ZB4-BW353 as presentation punctuation: identical remaining code and matching head description. No explicit manufacturer alias declaration was found; retain the requested order spelling.",
+          "Head only, nominal 22 mm mounting, chromium-plated metal bezel, flush unmarked plain lens, spring return. The 10/2021 catalog printed p.31 explicitly lists this order under Heads only for bodies with an integral-LED light source.",
+          "No contact blocks, light source or fixing-collar body is represented as included. Electrical composition diagrams describe compatible assemblies, not head terminal inventory.",
+          "As-built color is not established.",
+          "Zero documented electrical terminals and fixed links. Bonding through the head/collar/panel interface remains undocumented; Class I wording is not a terminal or continuity specification.",
+          "Documentation-only accessory representation; no electrical functions, circuit symbol, supply voltage or switching rating assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical head with zero documented power, return, signal, shield, communication or PE terminals. Separately selected contact/light blocks are excluded. Reviewed sources do not establish a head-specific bonding connection or continuity through bezel, collar or panel; empty inventory does not assert exhaustive absence of a bonding interface."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project-presentation.schema.json",
+  "format": "project-presentation/0.1",
+  "revision": "0.1.0",
+  "backgroundColor": "#ffffff",
+  "titleBlock": {
+    "lines": ["Starter project"]
+  }
+}

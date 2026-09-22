@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:26924",
+      "description": "Multi9 OF auxiliary switch / one changeover (1 NO/NC) position-signalling contact for C60 circuit-breakers",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "26924",
+        "document": {
+          "url": "https://download.schneider-electric.com/files?p_Doc_Ref=lowvoltagemulti9catalog_EN&p_File_Ext=.PDF",
+          "title": "Schneider Electric Multi9 Low Voltage Final Distribution Products0.5A to125A",
+          "revision": "04/2011",
+          "pages": "Printed77–79 (physicalPDF76–78); exact26924 OF selection and three-terminal diagram on printed79/PDF78"
+        },
+        "modelingNotes": [
+          "Exact26924 is an OF position-signalling auxiliary with one changeover contact, separately installed on a compatibleC60 breaker. Exact ordering column and diagram in April2011 Multi9 catalog printedp.79; also corroborated by 2014 Multi9 System Catalog0860CT0201 pp.42,44.",
+          "Terminals11 common,12 breaker-open indication and14 breaker-closed indication. Normal states refer to breaker OFF:11–12 closed,11–14 open. This OF accessory reports position, not SD trip-only alarm. Contact transition timing is not specified or simulated.",
+          "Three electrical terminals only; no coil, supply, communications orPE terminals. Mounting and test actuator are mechanical. Breaker power terminals belong to the separate host.",
+          "No permanent fixed links. Terminal11 is shared by the two throws; mechanical coupling to the breaker never creates a conductive path to its power poles.",
+          "April2011 exact26924 column rates6A at≤240VAC and3A at415VAC. These conditional capabilities stay in notes, without scalarcurrent or assigned nominalvoltage. This bounded evidence does not assert AC-only suitability. ModernMGN-prefixed product pages are not needed as identity evidence and no successor equivalence is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "The accessory's full electrical interface is one changeover signalling contact: common 11, NC 12, NO 14, per Multi9 System Catalog Class 0860 p.9 diagram (visually reviewed). Clip-on mounting and front test button are mechanical with no electrical terminals; no PE/bond, shield, supply or communication connection. No conductor is shared with the host circuit-breaker."
+      },
+      "terminals": {
+        "11": {
+          "description": "Common (C) of the changeover position-signalling contact",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "12": {
+          "description": "Normally-closed (NC) throw terminal of the changeover (11-12)",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Normally-open (NO) throw terminal of the changeover (11-14)",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["11", "14"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc",
+        "no": "contact-no"
+      },
+      "terminalOrder": ["11", "12", "14"]
+    }
+  ]
+}

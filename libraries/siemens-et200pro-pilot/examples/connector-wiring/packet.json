@@ -1,0 +1,89 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "SITOP selected input and electronics return",
+      "conductors": ["P01", "P02"],
+      "notes": [
+        "Synthetic connector demonstration; upstream supply, protection settings and backplane distribution are outside this example.",
+        "P11-P15 are explicit conductors. Assembly metadata alone does not establish pin mapping or physical continuity."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "SITOP protected outputs to test breakout",
+      "conductors": ["P03", "P04"],
+      "notes": [
+        "Synthetic connector demonstration; upstream supply, protection settings and backplane distribution are outside this example.",
+        "P11-P15 are explicit conductors. Assembly metadata alone does not establish pin mapping or physical continuity."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "Power-harness return and earth breakout",
+      "conductors": ["P05", "P06", "P07"],
+      "notes": [
+        "Synthetic connector demonstration; upstream supply, protection settings and backplane distribution are outside this example.",
+        "P11-P15 are explicit conductors. Assembly metadata alone does not establish pin mapping or physical continuity."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "ET 200pro five-pin power connector",
+      "conductors": ["P11", "P12", "P13", "P14", "P15"],
+      "notes": [
+        "Synthetic connector demonstration; upstream supply, protection settings and backplane distribution are outside this example.",
+        "P11-P15 are explicit conductors. Assembly metadata alone does not establish pin mapping or physical continuity."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "DI channel 0 connector demonstration",
+      "conductors": ["DI-SIG", "DI-RET", "DI-PWR"],
+      "notes": [
+        "Exact electronic plus connection-module assembly. Generic field test endpoint; remaining channels and rack backplane power are not wired."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "DQ channel 0 connector demonstration",
+      "conductors": ["DQ-SIG", "DQ-RET"],
+      "notes": [
+        "Exact electronic plus connection-module assembly. Generic field test endpoint; remaining channels and rack backplane power are not wired."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "AIU channel 0 connector demonstration",
+      "conductors": ["AIU-POS", "AIU-NEG"],
+      "notes": [
+        "Exact electronic plus connection-module assembly. Generic field test endpoint; remaining channels and rack backplane power are not wired."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "AII channel 0 connector demonstration",
+      "conductors": ["AII-POS", "AII-NEG"],
+      "notes": [
+        "Exact electronic plus connection-module assembly. Generic field test endpoint; remaining channels and rack backplane power are not wired."
+      ]
+    },
+    {
+      "format": "wiring-view-request/0.1",
+      "title": "AO channel 0 connector demonstration",
+      "conductors": ["AO-POS", "AO-NEG"],
+      "notes": [
+        "Exact electronic plus connection-module assembly. Generic field test endpoint; remaining channels and rack backplane power are not wired."
+      ]
+    },
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "title": "Power harness physical assembly and unresolved metadata",
+      "assemblies": ["HARNESS"],
+      "notes": [
+        "The five electrical conductors are separately authored. This assembly view does not infer a conductor map."
+      ]
+    }
+  ]
+}

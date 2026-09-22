@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:carlo-gavazzi-rgc1p60cm25ken",
+      "description": "RGC1P60CM25KEN proportional heater SSR",
+      "terminals": {
+        "1/L1": {
+          "description": "Line"
+        },
+        "2/T1": {
+          "description": "Switched load"
+        },
+        "Ref": {
+          "description": "Load voltage reference; follow load return"
+        }
+      },
+      "functions": {
+        "switch": {
+          "kind": "other",
+          "terminals": ["1/L1", "2/T1"]
+        }
+      },
+      "ports": {
+        "BUS-IN": {
+          "medium": "nrg-bus",
+          "connector": "Proprietary RCRGN micro-USB",
+          "description": "Engineering identifier for upstream bus connector"
+        },
+        "BUS-OUT": {
+          "medium": "nrg-bus",
+          "connector": "Proprietary RCRGN micro-USB",
+          "description": "Engineering identifier for downstream bus connector"
+        }
+      },
+      "catalog": {
+        "manufacturer": "Carlo Gavazzi",
+        "orderNumber": "RGC1P60CM25KEN",
+        "document": {
+          "url": "https://www.gavazziautomation.com/fileadmin/images/PIM/DATASHEET/ENG/SSR_RG_CM_N.pdf",
+          "title": "RG..CM..N datasheet",
+          "revision": "29/05/2026",
+          "pages": "5-8, 34-36, 39"
+        },
+        "modelingNotes": [
+          "One switching pole, 25 A nominal variant, operating range 42-660 VAC; installation derating and protection remain application-specific.",
+          "No A1/A2 external command terminals for this proportional P variant. BUS-IN/OUT are engineering aliases. Ref is a logical reference connection; duplicated physical connection points are not expanded.",
+          "Power symbol and detailed SSR behavior are not implemented by this library. No implicit load continuity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Logical line, load and reference connections only. Duplicated physical reference connection points and internal bus power are not expanded."
+      }
+    }
+  ]
+}

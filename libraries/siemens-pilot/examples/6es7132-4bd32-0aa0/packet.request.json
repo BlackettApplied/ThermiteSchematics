@@ -1,0 +1,142 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7132-4BD32-0AA0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "DO0",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO0"
+            }
+          ],
+          "conductors": ["W1"]
+        },
+        {
+          "id": "g2",
+          "label": "DO1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO1"
+            }
+          ],
+          "conductors": ["W2"]
+        },
+        {
+          "id": "g3",
+          "label": "DO2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO2"
+            }
+          ],
+          "conductors": ["W3"]
+        },
+        {
+          "id": "g4",
+          "label": "DO3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO3"
+            }
+          ],
+          "conductors": ["W4"]
+        },
+        {
+          "id": "g5",
+          "label": "3 / 4 / 7 / 8 / BP.1M",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "7"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "8"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "BP.1M"
+            }
+          ],
+          "conductors": [
+            "W5",
+            "W6",
+            "W7",
+            "W8",
+            "W10",
+            "FIXED1",
+            "FIXED2",
+            "FIXED3",
+            "FIXED4"
+          ]
+        },
+        {
+          "id": "g6",
+          "label": "BP.L+",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "BP.L+"
+            }
+          ],
+          "conductors": ["W9"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

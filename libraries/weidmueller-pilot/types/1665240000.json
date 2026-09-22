@@ -1,0 +1,37 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665240000",
+      "description": "HDC 10B DMDQ 2QB — size 4 protective cover for hoods",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665240000",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/web-weidmueller/2019q4/14e64d3d6d3f2416e981f461d312c26102460a1d.pdf",
+          "title": "Weidmüller Heavy Duty Connectors – RockStar (HE series) catalogue; Housing selection RockStar IP65, Size 4",
+          "revision": "Version 2020, reference 2721750000",
+          "pages": "Physical PDF p.73, catalog B.23"
+        },
+        "modelingNotes": [
+          "Exact Weidmüller order 1665240000 is the size 4 HDC 10B DMDQ 2QB cover for hoods, per catalog B.23. Do not substitute the N variant 2559740000 or base cover 1665230000.",
+          "Mechanical closure with zero electrical terminals and functions. No electrical path is inferred through the cover, its attachment or metalwork.",
+          "IP65 is conditional on the specified closed or mated housing assembly, including seals. No standalone ingress or electrical rating is assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical protective cover with no electrical contacts. Mating and sealing are mechanical assembly conditions."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Protective cover for RockStar HE Size 4 hood (HDC 10B DMDQ 2QB)",
+          "description": "Mechanical attachment/closure only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d95p7",
+      "description": "TeSys D contactor / 3-pole AC-3 95 A / 230 V AC 50-60 Hz coil (P7) / integral 1 NO + 1 NC auxiliary",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D95P7",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "Schneider Electric LV catalogue, Chapter B8 - Contactors (TeSys D, SK, K, GC)",
+          "revision": "Chapter B8 (EN), online edition retrieved 2026-09-11;  (126 pp.); no printed revision code located in the document",
+          "pages": "PDF p.8 / B8/8 AC-3 selection row and a.c. coil-code table; PDF p.4 P7=230 V AC; PDF p.79 / B8/79 scheme 127266 (3-pole, LC1D09 to D150)"
+        },
+        "modelingNotes": [
+          "Identity: LC1D95 verified in the B8 AC-3 3-pole selection table (PDF p.8 / B8/8): rated operational current in AC-3 at 440 V (theta<=60 C) = 95 A, 45 kW at 400 V; 'instantaneous auxiliary contacts' = 1 NO + 1 NC integral. The basic reference is completed by adding the a.c. control-voltage code.",
+          "Coil code P7 = 230 V a.c., 50/60 Hz: verified in the a.c. control-voltage code table (voltage row 24/42/48/110/115/220/230/240/... -> B7/D7/E7/F7/FE7/M7/P7/U7/... , PDF p.8) and stated explicitly on PDF p.4 ('P7 code = 230 V AC'). The a.c. coil is non-polarised. Built-in coil suppression is standard only on D115/D150 a.c. coils, not on D80...D95, so the P7 coil is a plain A1-A2 winding; suppression modules (LA4D...) and control-circuit take-off (LA9D8067) are separately ordered accessories, out of scope for this reference.",
+          "Terminal markings from manufacturer scheme 127266 (PDF p.79 / B8/79, 'TeSys D... 3-pole contactors, LC1D09 to D150'), visually inspected: coil A1-A2; three NO make poles 1/L1-2/T1, 3/L2-4/T2, 5/L3-6/T3 (mechanically ganged, coil-actuated); integral auxiliary 1 NO 13-14 and 1 NC 21-22. LC1D95 lies inside the LC1D09...D150 range of this scheme.",
+          "Ratings are conditional and kept out of the terminals: AC-3 Ie = 95 A is defined at 440 V; motor power varies with voltage (45 kW/400 V); insulation up to 690 V. No scalar voltage/current is asserted on the main-pole or auxiliary terminals because the load-circuit voltage is application-dependent. Coil terminals A1/A2 carry the assigned 230 V AC (50/60 Hz) supply; frequency 50/60 Hz is recorded here rather than as a scalar.",
+          "Manufacturer spelling is 'LC1D95P7' (no hyphen); the source 'LC1-D95P7' hyphen is a presentation separator. Exact ordered reference, not a successor substitution.",
+          "No PE/earth terminal appears on the scheme; none is fabricated. All contact functions are switched and the coil actuation is mechanical/functional, so no permanent net joins (fixed links) are asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All twelve factory terminals of LC1D95P7 are modeled from the manufacturer scheme: three main NO poles (1/L1-2/T1, 3/L2-4/T2, 5/L3-6/T3), the a.c. coil A1/A2, and the integral 1 NO (13/14) + 1 NC (21/22) auxiliary. Add-on front/side auxiliary blocks, suppression modules and control-circuit take-off are separate accessories and are out of scope. Screw-clamp is the D80...D95 base terminal technology; exact wire ranges and tightening torques are not modeled."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Line terminal, pole 1",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "2/T1": {
+          "description": "Load terminal, pole 1",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "3/L2": {
+          "description": "Line terminal, pole 2",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "4/T2": {
+          "description": "Load terminal, pole 2",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "5/L3": {
+          "description": "Line terminal, pole 3",
+          "role": "line",
+          "connection_policy": "shared"
+        },
+        "6/T3": {
+          "description": "Load terminal, pole 3",
+          "role": "load",
+          "connection_policy": "shared"
+        },
+        "13": {
+          "description": "Integral auxiliary NO contact terminal 13",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Integral auxiliary NO contact terminal 14",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "21": {
+          "description": "Integral auxiliary NC contact terminal 21",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "22": {
+          "description": "Integral auxiliary NC contact terminal 22",
+          "role": "auxiliary",
+          "connection_policy": "shared"
+        },
+        "A1": {
+          "description": "Coil terminal A1 (230 V AC 50/60 Hz, P7)",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "A2": {
+          "description": "Coil terminal A2 (230 V AC 50/60 Hz, P7)",
+          "role": "coil",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "aux_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "aux_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "contact-no",
+        "pole2": "contact-no",
+        "pole3": "contact-no",
+        "aux_no": "contact-no",
+        "aux_nc": "contact-nc",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "pole3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "aux_no"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "aux_nc"
+        }
+      ],
+      "terminalOrder": [
+        "1/L1",
+        "3/L2",
+        "5/L3",
+        "2/T1",
+        "4/T2",
+        "6/T3",
+        "13",
+        "14",
+        "21",
+        "22",
+        "A1",
+        "A2"
+      ]
+    }
+  ]
+}

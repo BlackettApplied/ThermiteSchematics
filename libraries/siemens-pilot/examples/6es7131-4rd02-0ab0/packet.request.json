@@ -1,0 +1,111 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7131-4RD02-0AB0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "DI0",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DI0"
+            }
+          ],
+          "conductors": ["W1"]
+        },
+        {
+          "id": "g2",
+          "label": "DI1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DI1"
+            }
+          ],
+          "conductors": ["W2"]
+        },
+        {
+          "id": "g3",
+          "label": "DI2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DI2"
+            }
+          ],
+          "conductors": ["W3"]
+        },
+        {
+          "id": "g4",
+          "label": "DI3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DI3"
+            }
+          ],
+          "conductors": ["W4"]
+        },
+        {
+          "id": "g5",
+          "label": "VS3 / VS4 / VS7 / VS8",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "VS3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "VS4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "VS7"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "VS8"
+            }
+          ],
+          "conductors": ["W5", "W6", "W7", "W8", "FIXED1", "FIXED2", "FIXED3"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

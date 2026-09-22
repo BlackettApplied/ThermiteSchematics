@@ -1,0 +1,128 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lad-n22",
+      "description": "TeSys LADN22 front-mounted instantaneous auxiliary contact block, 2 NO + 2 NC, screw clamps",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LAD-N22",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "TeSys D, SK, K, SKGC, GC, GY, GF Contactors — Chapter B8",
+          "revision": "Undated chapter; accessed 2026-09-11",
+          "pages": "B8/22 selection and B8/79 diagram (physical PDF pages 22 and 79)"
+        },
+        "modelingNotes": [
+          "Source LAD-N22 is interpreted as presentation-separated manufacturer LADN22: exact B8/22 front-mounted 2NO + 2NC screw-clamp selection matches the historical description. Requested catalog spelling is retained; no suffix or successor is substituted.",
+          "B8/79 LADN22 diagram 127273.eps visually establishes NO 53-54 and 83-84, NC 61-62 and 71-72, with common mechanical actuation. NO/NC annotations are represented by function state; numeric keys preserve terminal numbers.",
+          "Four ganged passive contacts; no fixed electrical links. Normally closed paths are switched, not permanent joins. Host contactor coil, main poles and any other accessories are outside this block.",
+          "Contact use is application-dependent; no terminal is universally required. Screw clamps permit two conductors under the documented size/ferrule conditions, hence shared connection policy.",
+          "LADN22 product sheet dated 2026-09-11 pp.1-2: AC-15 6 A at 120 V and 1.04 A at 690 V; DC-13 0.55 A at 125 V and 0.1 A at 600 V; Ith 10 A at 60 C. Ue 690 V AC 25-400 Hz; Ui 690 V IEC, 600 V UL/CSA. Minimum switching 17 V and 5 mA. Capabilities remain notes, with no assigned nominal voltage, AC-only restriction or scalar switching-current rating.",
+          "Product sheet: https://www.se.com/us/en/product/download-pdf/LADN22. Screw torque 1.7 N m; conductor capacities and historical specimen limitation are recorded in research.md."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All eight screw-clamp contact terminals of the LADN22 auxiliary block are represented. No coil, main power poles, PE/bond, supply, shield or communications interface is present in the documented block. Host contactor connections are outside this separate accessory."
+      },
+      "terminals": {
+        "53": {
+          "description": "Normally open contact 53-54, terminal 53",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "54": {
+          "description": "Normally open contact 53-54, terminal 54",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "61": {
+          "description": "Normally closed contact 61-62, terminal 61",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "62": {
+          "description": "Normally closed contact 61-62, terminal 62",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "71": {
+          "description": "Normally closed contact 71-72, terminal 71",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "72": {
+          "description": "Normally closed contact 71-72, terminal 72",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "83": {
+          "description": "Normally open contact 83-84, terminal 83",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "84": {
+          "description": "Normally open contact 83-84, terminal 84",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["53", "54"]
+        },
+        "nc1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["61", "62"]
+        },
+        "nc2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["71", "72"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["83", "84"]
+        }
+      },
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "nc1": "contact-nc",
+        "nc2": "contact-nc",
+        "no2": "contact-no"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "nc1"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "nc2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no2"
+        }
+      ],
+      "terminalOrder": ["53", "54", "61", "62", "71", "72", "83", "84"]
+    }
+  ]
+}

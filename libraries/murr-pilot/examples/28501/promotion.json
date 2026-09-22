@@ -1,0 +1,55 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "murr-pilot:28501",
+    "manufacturer": "Murr",
+    "orderNumber": "28501"
+  },
+  "type": {
+    "path": "types/28501.json",
+    "sha256": "31ebfc5e73c1a1c99e273fa72ff79cffbdb6bf723fbc0bc3b528bec4cf31f624"
+  },
+  "research": {
+    "path": "research/28501.md",
+    "sha256": "91cde4ed77241d6602d3745c0256ec4fb51d0fdf1bc2693150ebee716405b8e0"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "PE-out",
+      "2-",
+      "1+",
+      "PE-in",
+      "24V",
+      "0-supply-a",
+      "0-supply-b",
+      "0-signal-left",
+      "IN",
+      "10V",
+      "0-signal-right"
+    ],
+    "requiredTerminalKeys": ["PE-in", "24V", "0-supply-a"],
+    "fixedLinks": [
+      {
+        "from": "0-supply-a",
+        "to": "0-supply-b",
+        "sourceId": "legacy-catalog-28501"
+      },
+      {
+        "from": "PE-in",
+        "to": "PE-out",
+        "sourceId": "manual-28501-v11"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "18e8dabeb1c4f3aa215b145153da877af7ed846ff6c3e38ff7dab24486cd1eef",
+    "packet.request.json": "d266431d3884a9de849abed5927a40bb62a5b0cedf56bf22ed1a146dbf40bf9d",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "390312a29b1bba797f2c4125f65cf98a00b23163eed24cbffbdf46322695bf87",
+    "system.json": "36fdb10443edda88cde3ed94360c13df5c04d02d559999a19955c5b55c38317e"
+  }
+}

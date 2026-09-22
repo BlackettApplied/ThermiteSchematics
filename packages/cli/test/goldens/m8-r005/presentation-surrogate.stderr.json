@@ -1,0 +1,15 @@
+{
+  "format": "agent-tool-report/0.1",
+  "tool": "create-view",
+  "diagnostics": [],
+  "error": {
+    "code": "R005",
+    "message": "Invalid render text: presentation presentation.titleBlock.lines[0] field title.authored-line contains unpaired-surrogate.",
+    "family": "control",
+    "ownerKind": "presentation",
+    "ownerId": "presentation.titleBlock.lines[0]",
+    "field": "title.authored-line",
+    "reason": "unpaired-surrogate",
+    "root": "LS1"
+  }
+}

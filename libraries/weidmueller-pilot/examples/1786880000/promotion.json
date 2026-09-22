@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1786880000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1786880000"
+  },
+  "type": {
+    "path": "types/1786880000.json",
+    "sha256": "4a9bb5be392db43ee26f87a29f631e69950be31eef6b4a554d251174d83bcd93"
+  },
+  "research": {
+    "path": "research/1786880000.md",
+    "sha256": "1293d9b67c7fbed1c3cae3e70d734530ac748a6340f3215a22e5d2a796f17f3c"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "accessory"
+  },
+  "files": {
+    "source.json": "165538218ce2cf91b265848176742f0e0fa8f603fc7535aa7ec37048925dd327",
+    "packet.request.json": "7fe9cfa468e1b56848818e977cf7033818061f0978622d83d70a3c39126143a2",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "457563eddf07f2d8637aaa5737ff966a10d321cdd5114d1e9e377e8e6465f9dd",
+    "system.json": "e2883eeb093e05918969acaf8c1442e0add97228e1b41b0871cd97b4d2887dd2"
+  }
+}

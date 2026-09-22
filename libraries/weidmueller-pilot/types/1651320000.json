@@ -1,0 +1,192 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1651320000",
+      "description": "Weidmüller HDC HVE 3+2 FS female screw contact insert, size 4; numbered 1/3/5/7/9 plus aggregate PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1651320000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1651320000/scope/2/",
+          "title": "Weidmüller HDC HVE 3+2 FS exact-order data sheet",
+          "revision": "Created 18.02.2026 05:15:35 MEZ",
+          "pages": "pp.1,3–4 identity, 3 power + 2 signal, PE data/dimensions; numbered female arrangement: historical HVE catalogue p.2; contact roles: RockStar version 2020 physical p.132/B.82"
+        },
+        "modelingNotes": [
+          "Exact order 1651320000 = HDC HVE 3+2 FS, female screw contact insert, size 4, 3 power + 2 signal + PE. Confirmed by exact-order data sheet (18.02.2026, pp.1 and 3), historical HVE catalogue female screw row (p.2), and RockStar version 2020 female screw row (physical p.132/B.82). This is the insert alone; housings and mating half are separate.",
+          "Historical HVE p.2 female arrangement identifies populated contacts 1, 3, 5, 7 and 9. In the printed female diagram, 1/3/5 run down the left and 7/9 down the right; this records that drawing only and is not an installed viewing-direction assertion. Matching these positions against the exact female SCREW arrangement in RockStar B.82 identifies switch/pilot contacts 1 and 5 and operating/power contacts 3, 7 and 9. This role-to-number assignment is a cross-diagram inference; the documents use opposite filled/open-circle conventions. C. and M. are authoring prefixes for cable screw and corresponding female mating contact, not additional stamped labels or a phase assignment.",
+          "Five fixed contact conductors C.1–M.1, C.3–M.3, C.5–M.5, C.7–M.7 and C.9–M.9 represent the numbered screw/contact paths through the passive insert. The candidate conformance declares these fixed links for explicit instance jumpers; single-terminal functions and connector metadata never join nets. Pilot contacts remain conductive within one insert; mating sequence does not create an internal relay, bridge between pilot contacts, or permission to connect/disconnect under voltage or load.",
+          "PE is one aggregate logical protective-earth endpoint. Exact data-sheet p.3 documents an M4 PE screw connection and p.4/legacy p.2 show earth-marked hardware, but the independently accessible PE clamps, mating/bonding points and frame continuity are not fully enumerated. No single central PE pin, exact PE screw count, C.PE–M.PE conductor, mounting-screw bond or housing bond is asserted. PE is required by library policy for modeled protective-earth use, not a universal manufacturer requirement for every application. An authored PE connection satisfies presence only and does not prove an external earth source or bonding adequacy.",
+          "Capabilities remain notes: DIN EN 61984 rated voltage 830 V, UL/CSA 600 V AC/DC, signal contacts 500 V (RockStar B.80), 8 kV impulse and pollution severity 3. No rating.nominal_voltage, AC-only scalar or current scalar is imposed on this passive insert. These conflicting editions/sections are preserved, and conductor, populated pole count and ambient derating must be evaluated for the application.",
+          "Exact data-sheet p.3 gives main-contact M3 screws, 0.5–0.55 Nm, AWG20–14 and nominal 0.5–2.5 mm²; its conductor-specific fields also say 4 mm². It gives 9 mm strip length, while RockStar B.80 says 8 mm. Do not resolve these inconsistent preparation fields into a single universal instruction. PE data: M4, 1.2–1.5 Nm, 10 mm strip, AWG20–12 and rated 4 mm². Temperature capability −40…125 °C does not imply full-current operation throughout that range.",
+          "The historical phrase lagging earth contacts is not used as a delayed-PE claim. The exact modern data-sheet p.1 specifies two lagging contacts; its p.3 separately counts two signal and three power contacts, and RockStar B.82 distinguishes the two pilot/switch positions from power. The model records the pilot distinction and leaves detailed timing/interlock behavior outside scope. RockStar B.80 prohibits connection/disconnection under live voltage or load."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Eleven modeled endpoints: five manufacturer-numbered cable/mating pairs (1, 3, 5, 7, 9) plus one aggregate required PE. Five explicit fixed paths preserve separate numbered contacts; 1/5 are pilot and 3/7/9 power by the documented female diagram comparison. Partial scope: individual PE clamp/mating/bonding interfaces, mounting-frame continuity and external housing bonds are not fully inventoried; aggregate PE is not a physical central pin or an invented split-side bridge. Circuit assignment, mating sequence, external bonding and as-built orientation are outside this insert model."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side screw termination of numbered contact 1; pilot/switch contact, signal capability 500 V; C/M prefix is an authoring alias",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "C.3": {
+          "description": "Cable-side screw termination of numbered contact 3; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.5": {
+          "description": "Cable-side screw termination of numbered contact 5; pilot/switch contact, signal capability 500 V; C/M prefix is an authoring alias",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "C.7": {
+          "description": "Cable-side screw termination of numbered contact 7; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "C.9": {
+          "description": "Cable-side screw termination of numbered contact 9; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "description": "Aggregate logical protective-earth connection; individual clamp/mating/bond interfaces omitted under partial scope",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "M.1": {
+          "description": "Female mating contact of numbered contact 1; pilot/switch contact, signal capability 500 V; C/M prefix is an authoring alias",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "M.3": {
+          "description": "Female mating contact of numbered contact 3; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.5": {
+          "description": "Female mating contact of numbered contact 5; pilot/switch contact, signal capability 500 V; C/M prefix is an authoring alias",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "M.7": {
+          "description": "Female mating contact of numbered contact 7; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "M.9": {
+          "description": "Female mating contact of numbered contact 9; operating/power contact; C/M prefix is an authoring alias",
+          "role": "power",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.3": "terminal",
+        "C.5": "terminal",
+        "C.7": "terminal",
+        "C.9": "terminal",
+        "PE": "earth",
+        "M.1": "terminal",
+        "M.3": "terminal",
+        "M.5": "terminal",
+        "M.7": "terminal",
+        "M.9": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HVE 3+2 FS female screw insert, size 4",
+          "description": "Five numbered female mating contacts from historical HVE p.2. Roles mapped by position to RockStar B.82 female screw arrangement. The separate aggregate PE endpoint does not enumerate physical mating-earth points and is intentionally not assigned a pin here. Metadata alone does not connect nets.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Numbered contact 1: pilot/switch"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Numbered contact 3: operating/power"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Numbered contact 5: pilot/switch"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Numbered contact 7: operating/power"
+            },
+            "9": {
+              "terminal": "M.9",
+              "description": "Numbered contact 9: operating/power"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.3",
+        "C.5",
+        "C.7",
+        "C.9",
+        "PE",
+        "M.1",
+        "M.3",
+        "M.5",
+        "M.7",
+        "M.9"
+      ]
+    }
+  ]
+}

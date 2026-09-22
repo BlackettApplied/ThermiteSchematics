@@ -1,0 +1,17 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Library diagnostics" },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "declared",
+      "version": "1.0.0",
+      "path": "../problem libraries/mismatched"
+    },
+    {
+      "name": "empty",
+      "version": "1.0.0",
+      "path": "../problem libraries/empty"
+    }
+  ]
+}

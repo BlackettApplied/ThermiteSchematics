@@ -1,0 +1,458 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/device-type.schema.json",
+  "title": "DeviceType",
+  "$defs": {
+    "terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+          "type": "string"
+        },
+        "rating": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/electricalRating"
+        },
+        "connection_policy": {
+          "type": "string",
+          "enum": ["exclusive", "shared"]
+        },
+        "description": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Requires a connection in every device instance; absence does not assert optionality."
+        }
+      }
+    },
+    "functionEnvelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "coil",
+            "contact",
+            "channel",
+            "source",
+            "load",
+            "bus",
+            "mechanism",
+            "other"
+          ]
+        },
+        "normal_state": {
+          "type": "string",
+          "enum": ["open", "closed"]
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["input", "output"]
+        },
+        "terminals": {
+          "type": "array",
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "coilFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "coil"
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "contactFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "normal_state", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "contact"
+        },
+        "normal_state": {
+          "type": "string",
+          "enum": ["open", "closed"]
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "channelFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "direction", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "channel"
+        },
+        "direction": {
+          "type": "string",
+          "enum": ["input", "output"]
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "sourceFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "source"
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "loadFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "load"
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "busFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "bus"
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "mechanismFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "mechanism"
+        },
+        "terminals": {
+          "type": "array",
+          "maxItems": 0,
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "otherFunction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "terminals"],
+      "properties": {
+        "kind": {
+          "const": "other"
+        },
+        "terminals": {
+          "type": "array",
+          "items": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          }
+        }
+      }
+    },
+    "internalRelation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation", "from", "to"],
+      "properties": {
+        "relation": {
+          "type": "string",
+          "enum": ["actuates", "trips", "ganged_with", "feeds_internal"]
+        },
+        "from": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "to": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "id", "terminals", "functions"],
+  "properties": {
+    "kind": {
+      "const": "device_type"
+    },
+    "id": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/typeId"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "terminals": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyNames": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      },
+      "patternProperties": {
+        "^.*$": {
+          "$ref": "#/$defs/terminal"
+        }
+      }
+    },
+    "functions": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyNames": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      },
+      "patternProperties": {
+        "^.*$": {
+          "$ref": "#/$defs/functionEnvelope"
+        }
+      }
+    },
+    "internal_relations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/internalRelation"
+      }
+    },
+    "symbol": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "circuitSymbols": {
+      "description": "Optional circuit drawing mark for each explicitly named function. Marks never assert electrical continuity.",
+      "type": "object",
+      "additionalProperties": false,
+      "propertyNames": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      },
+      "patternProperties": {
+        "^.*$": {
+          "type": "string",
+          "enum": [
+            "contact-no",
+            "contact-nc",
+            "breaker",
+            "overload",
+            "fuse",
+            "coil",
+            "motor",
+            "heater",
+            "winding",
+            "source",
+            "load",
+            "terminal",
+            "earth",
+            "solenoid",
+            "lamp",
+            "switch-no",
+            "switch-nc",
+            "pushbutton-no",
+            "pushbutton-nc",
+            "thermocouple",
+            "interface"
+          ]
+        }
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "terminal-strip",
+        "io-module",
+        "controller",
+        "power-supply",
+        "component"
+      ]
+    },
+    "terminalOrder": {
+      "type": "array",
+      "items": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      }
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "manufacturer": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "orderNumber": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "document": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://[^\\s]+$"
+            },
+            "title": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "revision": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "pages": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            }
+          },
+          "required": ["url", "title", "revision", "pages"]
+        },
+        "modelingNotes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["manufacturer", "orderNumber", "document"]
+    },
+    "ports": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["medium", "connector"],
+          "properties": {
+            "medium": {
+              "type": "string",
+              "enum": ["ethernet", "nrg-bus"]
+            },
+            "connector": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string"
+            },
+            "required": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "connectionCoverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "notes"],
+      "properties": {
+        "status": {
+          "enum": ["complete", "partial"]
+        },
+        "notes": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      }
+    },
+    "connectorPorts": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^.+$": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["connector"],
+          "properties": {
+            "connector": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "description": {
+              "type": "string"
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "pins": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+              },
+              "additionalProperties": false,
+              "patternProperties": {
+                "^.+$": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "terminal": {
+                      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cable-2pair-shielded",
+      "description": "PX1 field cable; conductor 2- is a terminated spare",
+      "conductors": [
+        {
+          "id": "1+",
+          "endpoints": [
+            { "device": "TB1", "terminal": "2" },
+            { "device": "JB1", "terminal": "X1.1" }
+          ]
+        },
+        {
+          "id": "1-",
+          "endpoints": [
+            { "device": "TB1", "terminal": "3" },
+            { "device": "JB1", "terminal": "X1.2" }
+          ]
+        },
+        {
+          "id": "2+",
+          "endpoints": [
+            { "device": "TB1", "terminal": "4" },
+            { "device": "JB1", "terminal": "X1.3" }
+          ]
+        },
+        {
+          "id": "2-",
+          "endpoints": [
+            { "device": "TB1", "terminal": "5" },
+            { "device": "JB1", "terminal": "X1.4" }
+          ]
+        }
+      ]
+    }
+  ]
+}

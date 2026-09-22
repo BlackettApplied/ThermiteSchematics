@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:29321",
+      "description": "Schneider Electric 29321 - set of 2 short terminal shields, 3 poles, for Compact NS100/160/250 (legacy Merlin Gerin MGE.29321)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "29321",
+        "document": {
+          "url": "https://www.se.com/us/en/product/29321/2-short-terminal-shields---3-poles---for-ns100..250/",
+          "title": "29321 - 2 short terminal shields - 3 poles - for NS100..250 (Schneider Electric product record)",
+          "revision": "Online product page; identity corroborated by Substitution guide Compact NSX100 to 630, p.16",
+          "pages": "Product identification / designation"
+        },
+        "modelingNotes": [
+          "Insulation accessory: a pair of short terminal shields that clip over the line/load power terminals of a 3-pole Compact NS100/160/250 moulded-case circuit breaker to prevent direct contact and preserve IEC 60947-2 clearance/creepage. Supplied as a set of 2 (upstream + downstream).",
+          "Purely mechanical, non-conductive insulating shroud: it has zero electrical terminals and forms no conductive path. It does not terminate, jumper, short or bond the host breaker's poles; the breaker's three poles remain electrically separate.",
+          "Ratings and pole count belong to the host breaker; the shield adds no electrical rating of its own, so no rating/nominal_voltage is assigned to this part.",
+          "Legacy Merlin Gerin order code MGE.29321. Schneider Substitution guide Compact NSX100 to 630 (p.16) lists 29321 as '2 short terminal shields 3P (NS100/250)'; the Compact NSX equivalent short 3P shield is LV429515 (different packaging). No successor is substituted here - 29321 is modeled exactly."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical insulating terminal shield; no electrical terminals or circuit functions by design. The empty electrical inventory is exhaustive. Fit and installed clearance depend on the specified 3-pole Compact NS100..250 breaker and connection type."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Short terminal shields (set of 2) for 3-pole Compact NS100/160/250 power terminals",
+          "description": "Mechanical insulating cover only; no electrical pins, no continuity, no bonding."
+        }
+      }
+    }
+  ]
+}

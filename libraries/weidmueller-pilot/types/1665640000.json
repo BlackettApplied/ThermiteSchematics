@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665640000",
+      "description": "HDC 24B DMDQ 2QB — size-8 hood cover",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665640000",
+        "document": {
+          "url": "https://eshop.weidmueller.com/en/hdc-24b-dmdq-2qb/p/1665640000",
+          "title": "Housing industry connectors | HDC 24B DMDQ 2QB | 1665640000",
+          "revision": "Undated manufacturer product page; accessed 2026-09-11",
+          "pages": "General ordering data; Dimensions; General data; Version; linked drawing and photograph"
+        },
+        "modelingNotes": [
+          "S1 identifies the exact order as a size-8 cover for the upper housing, with side-locking clamp on the lower side and no cable entries.",
+          "S2 drawing and S3 photograph were visually reviewed: mechanical cover, latches and retention tether; no contact insert or identified electrical terminals. The tether eye is not modeled as a PE terminal or fixed electrical bond.",
+          "IP65 applies in plugged condition; limit temperature -40 to +125 °C. No electrical current or voltage rating is assigned to the cover.",
+          "Zero-terminal accessory/documentation view. Host housing and insert connections and bonding are outside this cover identity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical hood cover only: no identified power, return, PE/bond, shield, signal or communication terminals, required connections or fixed electrical links. Retention hardware does not establish electrical continuity; host assembly bonding is separate."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Size-8 HDC hood cover, side-locking clamp on lower side",
+          "description": "Mechanical attachment only; no electrical pins. COVER is an authoring alias, not a manufacturer terminal marking."
+        }
+      }
+    }
+  ]
+}

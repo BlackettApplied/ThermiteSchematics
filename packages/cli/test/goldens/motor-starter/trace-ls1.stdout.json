@@ -1,0 +1,592 @@
+{
+  "command": "trace",
+  "device": {
+    "kind": "device",
+    "uid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+    "designation": "LS1",
+    "description": "Normally open field limit switch permissive",
+    "aliases": [],
+    "typeId": "core:limit-switch-2wire",
+    "location": "FIELD"
+  },
+  "components": [
+    {
+      "net": {
+        "id": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a",
+        "potentials": [
+          {
+            "uid": "46be3efd-17b7-43ee-bb9d-a019c4fb2cdd",
+            "name": "+24VDC",
+            "electrical": {
+              "nominal_voltage": 24,
+              "polarity": "positive",
+              "voltage_type": "DC"
+            }
+          }
+        ]
+      },
+      "roots": [
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "13"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.13",
+          "role": "no_contact"
+        }
+      ],
+      "visits": [
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+              "terminalKey": "13"
+            },
+            "deviceDesignation": "LS1",
+            "display": "LS1.13",
+            "role": "no_contact"
+          },
+          "hops": 0
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.1"
+            },
+            "deviceDesignation": "JB1",
+            "display": "JB1.X1.1",
+            "role": "field_terminal"
+          },
+          "hops": 1,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "13"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.13",
+              "role": "no_contact"
+            },
+            "element": {
+              "kind": "wire",
+              "uid": "4f3f64e8-af7c-4b5d-9cbc-250368ad3e75",
+              "designation": "W-FLD-002",
+              "display": "W-FLD-002"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+              "terminalKey": "2"
+            },
+            "deviceDesignation": "TB1",
+            "display": "TB1.2",
+            "role": "terminal_point"
+          },
+          "hops": 2,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.1"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.1",
+              "role": "field_terminal"
+            },
+            "element": {
+              "kind": "cable_conductor",
+              "cableUid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+              "cableDesignation": "CBL1",
+              "conductorId": "1+",
+              "display": "CBL1.1+"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+              "terminalKey": "1"
+            },
+            "deviceDesignation": "TB1",
+            "display": "TB1.1",
+            "role": "terminal_point"
+          },
+          "hops": 3,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "2"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.2",
+              "role": "terminal_point"
+            },
+            "element": {
+              "kind": "jumper",
+              "uid": "7bdee01c-ec15-4747-9208-ee650da1e681",
+              "designation": "JP1",
+              "display": "JP1"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "33a15867-296b-40e4-a56b-15282f131b4c",
+              "terminalKey": "+"
+            },
+            "deviceDesignation": "PS1",
+            "display": "PS1.+",
+            "role": "dc_positive_output",
+            "rating": {
+              "current": 2.5,
+              "nominal_voltage": 24,
+              "power": 60,
+              "voltage_type": "DC"
+            }
+          },
+          "hops": 4,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "1"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.1",
+              "role": "terminal_point"
+            },
+            "element": {
+              "kind": "wire",
+              "uid": "c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c",
+              "designation": "W-CTL-003",
+              "display": "W-CTL-003"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+              "terminalKey": "L+"
+            },
+            "deviceDesignation": "PLC1",
+            "display": "PLC1.L+",
+            "role": "supply_positive",
+            "rating": {
+              "nominal_voltage": 24,
+              "voltage_type": "DC"
+            }
+          },
+          "hops": 5,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "33a15867-296b-40e4-a56b-15282f131b4c",
+                "terminalKey": "+"
+              },
+              "deviceDesignation": "PS1",
+              "display": "PS1.+",
+              "role": "dc_positive_output",
+              "rating": {
+                "current": 2.5,
+                "nominal_voltage": 24,
+                "power": 60,
+                "voltage_type": "DC"
+              }
+            },
+            "element": {
+              "kind": "wire",
+              "uid": "5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d",
+              "designation": "W-CTL-001",
+              "display": "W-CTL-001"
+            }
+          }
+        }
+      ],
+      "elements": [
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d",
+            "designation": "W-CTL-001",
+            "display": "W-CTL-001"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+                "terminalKey": "L+"
+              },
+              "deviceDesignation": "PLC1",
+              "display": "PLC1.L+",
+              "role": "supply_positive",
+              "rating": {
+                "nominal_voltage": 24,
+                "voltage_type": "DC"
+              }
+            },
+            {
+              "id": {
+                "deviceUid": "33a15867-296b-40e4-a56b-15282f131b4c",
+                "terminalKey": "+"
+              },
+              "deviceDesignation": "PS1",
+              "display": "PS1.+",
+              "role": "dc_positive_output",
+              "rating": {
+                "current": 2.5,
+                "nominal_voltage": 24,
+                "power": 60,
+                "voltage_type": "DC"
+              }
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c",
+            "designation": "W-CTL-003",
+            "display": "W-CTL-003"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "33a15867-296b-40e4-a56b-15282f131b4c",
+                "terminalKey": "+"
+              },
+              "deviceDesignation": "PS1",
+              "display": "PS1.+",
+              "role": "dc_positive_output",
+              "rating": {
+                "current": 2.5,
+                "nominal_voltage": 24,
+                "power": 60,
+                "voltage_type": "DC"
+              }
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "1"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.1",
+              "role": "terminal_point"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "4f3f64e8-af7c-4b5d-9cbc-250368ad3e75",
+            "designation": "W-FLD-002",
+            "display": "W-FLD-002"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.1"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.1",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "13"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.13",
+              "role": "no_contact"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "jumper",
+            "uid": "7bdee01c-ec15-4747-9208-ee650da1e681",
+            "designation": "JP1",
+            "display": "JP1"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "1"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.1",
+              "role": "terminal_point"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "2"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.2",
+              "role": "terminal_point"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "cable_conductor",
+            "cableUid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+            "cableDesignation": "CBL1",
+            "conductorId": "1+",
+            "display": "CBL1.1+"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.1"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.1",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "2"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.2",
+              "role": "terminal_point"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "net": {
+        "id": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9",
+        "potentials": []
+      },
+      "roots": [
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "14"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.14",
+          "role": "no_contact"
+        }
+      ],
+      "visits": [
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+              "terminalKey": "14"
+            },
+            "deviceDesignation": "LS1",
+            "display": "LS1.14",
+            "role": "no_contact"
+          },
+          "hops": 0
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.2"
+            },
+            "deviceDesignation": "JB1",
+            "display": "JB1.X1.2",
+            "role": "field_terminal"
+          },
+          "hops": 1,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "14"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.14",
+              "role": "no_contact"
+            },
+            "element": {
+              "kind": "wire",
+              "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+              "designation": "W-FLD-003",
+              "display": "W-FLD-003"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+              "terminalKey": "3"
+            },
+            "deviceDesignation": "TB1",
+            "display": "TB1.3",
+            "role": "terminal_point"
+          },
+          "hops": 2,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.2"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.2",
+              "role": "field_terminal"
+            },
+            "element": {
+              "kind": "cable_conductor",
+              "cableUid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+              "cableDesignation": "CBL1",
+              "conductorId": "1-",
+              "display": "CBL1.1-"
+            }
+          }
+        },
+        {
+          "terminal": {
+            "id": {
+              "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+              "terminalKey": "X1.0"
+            },
+            "deviceDesignation": "PLC1",
+            "display": "PLC1.X1.0",
+            "role": "digital_input_0",
+            "rating": {
+              "nominal_voltage": 24,
+              "voltage_type": "DC"
+            },
+            "connectionPolicy": "exclusive"
+          },
+          "hops": 3,
+          "via": {
+            "from": {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.3",
+              "role": "terminal_point"
+            },
+            "element": {
+              "kind": "wire",
+              "uid": "e84a9629-373c-4946-8b48-184b7464d474",
+              "designation": "W-FLD-001",
+              "display": "W-FLD-001"
+            }
+          }
+        }
+      ],
+      "elements": [
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "e84a9629-373c-4946-8b48-184b7464d474",
+            "designation": "W-FLD-001",
+            "display": "W-FLD-001"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+                "terminalKey": "X1.0"
+              },
+              "deviceDesignation": "PLC1",
+              "display": "PLC1.X1.0",
+              "role": "digital_input_0",
+              "rating": {
+                "nominal_voltage": 24,
+                "voltage_type": "DC"
+              },
+              "connectionPolicy": "exclusive"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.3",
+              "role": "terminal_point"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+            "designation": "W-FLD-003",
+            "display": "W-FLD-003"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.2"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.2",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "14"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.14",
+              "role": "no_contact"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "cable_conductor",
+            "cableUid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+            "cableDesignation": "CBL1",
+            "conductorId": "1-",
+            "display": "CBL1.1-"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.2"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.2",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.3",
+              "role": "terminal_point"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

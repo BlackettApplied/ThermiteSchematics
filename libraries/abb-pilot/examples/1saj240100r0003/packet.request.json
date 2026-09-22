@@ -1,0 +1,181 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "1SAJ240100R0003 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "IN.1 / OUT.1 / DEV.1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "IN.1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUT.1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DEV.1"
+            }
+          ],
+          "conductors": ["W1", "W6", "W11", "FIXED1", "FIXED6"]
+        },
+        {
+          "id": "g2",
+          "label": "IN.2 / OUT.2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "IN.2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUT.2"
+            }
+          ],
+          "conductors": ["W2", "W7", "FIXED2"]
+        },
+        {
+          "id": "g3",
+          "label": "IN.3 / OUT.3 / DEV.3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "IN.3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUT.3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DEV.3"
+            }
+          ],
+          "conductors": ["W3", "W8", "W13", "FIXED3", "FIXED7"]
+        },
+        {
+          "id": "g4",
+          "label": "IN.4 / OUT.4",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "IN.4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUT.4"
+            }
+          ],
+          "conductors": ["W4", "W9", "FIXED4"]
+        },
+        {
+          "id": "g5",
+          "label": "IN.5 / OUT.5",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "IN.5"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUT.5"
+            }
+          ],
+          "conductors": ["W5", "W10", "FIXED5"]
+        },
+        {
+          "id": "g6",
+          "label": "DEV.2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DEV.2"
+            }
+          ],
+          "conductors": ["W12"]
+        },
+        {
+          "id": "g7",
+          "label": "DEV.4",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DEV.4"
+            }
+          ],
+          "conductors": ["W14"]
+        },
+        {
+          "id": "g8",
+          "label": "DEV.5",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DEV.5"
+            }
+          ],
+          "conductors": ["W15"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

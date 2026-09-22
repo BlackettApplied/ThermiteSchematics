@@ -1,0 +1,9 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project-presentation.schema.json",
+  "format": "project-presentation/0.1",
+  "revision": "A",
+  "backgroundColor": "#ffffff",
+  "titleBlock": {
+    "lines": ["Dual-motor conveyor line example"]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:phoenix-plc-rsc-24dc-21",
+      "description": "24 V interface relay / 9 mA typ.",
+      "terminals": {
+        "A1": {
+          "description": "Coil +",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "A2": {
+          "description": "Coil -",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "11": {
+          "description": "Contact common",
+          "connection_policy": "exclusive"
+        },
+        "12": {
+          "description": "Normally closed",
+          "connection_policy": "exclusive"
+        },
+        "14": {
+          "description": "Normally open",
+          "connection_policy": "exclusive"
+        }
+      },
+      "terminalOrder": ["A1", "A2", "11", "12", "14"],
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "NO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["11", "14"]
+        },
+        "NC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "NO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "NC"
+        }
+      ],
+      "catalog": {
+        "manufacturer": "Phoenix Contact",
+        "orderNumber": "2966171",
+        "document": {
+          "url": "https://www.phoenixcontact.com/gb/products/2966171/pdf",
+          "title": "PLC-RSC-24DC/21 catalog data",
+          "revision": "2026-09-06 download; data 2026-04-01",
+          "pages": "2-3, 9"
+        },
+        "modelingNotes": [
+          "Polarized 24 V input, typical 9 mA; includes polarity and freewheeling diodes. 11 common, 12 NC, 14 NO. Contact ratings depend on utilization category; confirm the selected load."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Five connection points of the relay module inventoried. Contact state is behavioral and does not join physical nets."
+      }
+    }
+  ]
+}

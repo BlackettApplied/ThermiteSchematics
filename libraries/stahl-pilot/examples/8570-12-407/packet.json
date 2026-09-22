@@ -1,0 +1,101 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "8570/12-407 / 3P+PE / 480-500 V / 7h",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "pole-L1",
+          "label": "L1 / fixed plug conductor",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.L1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.L1"
+            }
+          ],
+          "conductors": ["CABLE-L1", "MATE-L1", "INTERNAL-L1"]
+        },
+        {
+          "id": "pole-L2",
+          "label": "L2 / fixed plug conductor",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.L2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.L2"
+            }
+          ],
+          "conductors": ["CABLE-L2", "MATE-L2", "INTERNAL-L2"]
+        },
+        {
+          "id": "pole-L3",
+          "label": "L3 / fixed plug conductor",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.L3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.L3"
+            }
+          ],
+          "conductors": ["CABLE-L3", "MATE-L3", "INTERNAL-L3"]
+        },
+        {
+          "id": "pole-PE",
+          "label": "PE / fixed plug conductor",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.PE"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.PE"
+            }
+          ],
+          "conductors": ["CABLE-PE", "MATE-PE", "INTERNAL-PE"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized component check; no installed supply, load or protection is specified.",
+        "C = cable-side pole; M = mating contact. Physical 7h coordinates and numerical pin aliases remain unverified.",
+        "INTERNAL conductors represent four fixed factory paths. A PE presence check cannot establish external bonding."
+      ]
+    }
+  ]
+}

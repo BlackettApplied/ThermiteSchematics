@@ -1,0 +1,66 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:carlo-gavazzi-nrgc-pn",
+      "description": "NRGC-PN PROFINET to NRG bus controller",
+      "terminals": {
+        "Us+": {
+          "rating": {
+            "voltage_type": "DC",
+            "nominal_voltage": 24
+          },
+          "required": true,
+          "role": "supply_positive"
+        },
+        "Us-": {
+          "rating": {
+            "voltage_type": "DC",
+            "nominal_voltage": 24
+          },
+          "required": true,
+          "role": "supply_return"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["Us+", "Us-"]
+        }
+      },
+      "symbol": "thermite:io-module",
+      "ports": {
+        "X1": {
+          "medium": "ethernet",
+          "connector": "RJ45"
+        },
+        "X2": {
+          "medium": "ethernet",
+          "connector": "RJ45"
+        },
+        "BUS": {
+          "medium": "nrg-bus",
+          "connector": "Proprietary RCRGN micro-USB"
+        }
+      },
+      "catalog": {
+        "manufacturer": "Carlo Gavazzi",
+        "orderNumber": "NRGC-PN",
+        "document": {
+          "url": "https://www.gavazziautomation.com/fileadmin/docs/mt_gh/SSR_NRGC_PN.pdf",
+          "title": "NRGC-PN datasheet",
+          "revision": "20/04/2021",
+          "pages": "6-9, 15-16"
+        },
+        "modelingNotes": [
+          "Us+/Us- are 24 VDC supply; observe specified Class 2 supply requirement. X1/X2 are Ethernet; BUS is proprietary NRG.",
+          "Maximum 32 RG..CM..N relays. RGN-TERMRES is supplied with the controller. Internal bus power is not expanded into electrical nets."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "External supply and communication connectors are modeled. Internal NRG bus power is not expanded into electrical nets."
+      }
+    }
+  ]
+}

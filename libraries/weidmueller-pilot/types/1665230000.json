@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1665230000",
+      "description": "Weidmüller HDC 10B DODQ 4BO protective cover for RockStar size 4 bases; mechanical accessory with no electrical terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1665230000",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/web-weidmueller/2019q4/14e64d3d6d3f2416e981f461d312c26102460a1d.pdf",
+          "title": "Heavy Duty Connectors — RockStar; Housing selection RockStar IP65, Size 4",
+          "revision": "Version 2020; catalogue reference 2721750000; manufacturer-authored distributor mirror",
+          "pages": "Physical PDF p.73 / printed B.23, bottom Cover / For bases row and adjacent exact-part illustration and dimensional drawing"
+        },
+        "modelingNotes": [
+          "The exact manufacturer catalogue row at physical p.73 / printed B.23 maps order 1665230000 to HDC 10B DODQ 4BO under Cover / For bases in the RockStar IP65 Size 4 housing selection. The adjacent photograph and drawing are this base cover; identity and mechanical function do not rely on a size-6 sibling.",
+          "The upper Cover / For hoods row on the same page is a different product, 1665240000 / HDC 10B DMDQ 2QB. It is not substituted for this base cover.",
+          "This cover is a mechanical closure for compatible size 4 bases. The exact row/drawing shows no electrical terminals, numbered contacts or dedicated PE/bond terminal. There are zero circuit functions and no fixed electrical links. Mechanical connector metadata describes attachment only, with no electrical pins.",
+          "The page places this cover within the RockStar IP65 housing selection. IP65 is conditional on the correctly closed compatible base/cover assembly and its sealing; it is not asserted for a loose cover or an open assembly. The exact installed pairing and assembly condition are outside this model.",
+          "No earth continuity is inferred through cover metalwork, closure hardware or the illustrated retaining tether. Any enclosure protective-bonding path must be established separately for the actual assembly; the cover model does not provide that path.",
+          "Material/alloy, coating, hinge construction, net weight, service-temperature limits and generic family NEMA claims are not established by the exact row used here and are omitted. No dimensions or ratings are transferred from a sibling. Installed hardware revision remains unverified."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete electrical connection inventory for the exact mechanical base cover: no electrical terminals, functions or fixed links. The mechanical attachment carries no modeled electrical pins or bonding path. Compatible-assembly selection, sealing and conditional IP65 protection are outside electrical terminal coverage."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Mechanical protective cover for compatible RockStar size 4 bases",
+          "description": "Mechanical attachment only, supported by the exact 1665230000 Cover / For bases row and drawing; no electrical pins or conductive bond is represented."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1saj240100r0003",
+    "manufacturer": "ABB",
+    "orderNumber": "1SAJ240100R0003"
+  },
+  "type": {
+    "path": "types/1saj240100r0003.json",
+    "sha256": "2dd76080d42d8ff2fb3089e28bdb00e3b76b628f405eb130ee7d20a648d7e09c"
+  },
+  "research": {
+    "path": "research/1saj240100r0003.md",
+    "sha256": "6feb4338c558b037c0deaa044aaf7879e2256b9cd04345f24a880522dde2eb1f"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "IN.1",
+      "IN.2",
+      "IN.3",
+      "IN.4",
+      "IN.5",
+      "OUT.1",
+      "OUT.2",
+      "OUT.3",
+      "OUT.4",
+      "OUT.5",
+      "DEV.1",
+      "DEV.2",
+      "DEV.3",
+      "DEV.4",
+      "DEV.5"
+    ],
+    "requiredTerminalKeys": ["IN.1", "IN.3"],
+    "fixedLinks": [
+      {
+        "from": "IN.1",
+        "to": "OUT.1",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.2",
+        "to": "OUT.2",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.3",
+        "to": "OUT.3",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.4",
+        "to": "OUT.4",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.5",
+        "to": "OUT.5",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.1",
+        "to": "DEV.1",
+        "sourceId": "S1"
+      },
+      {
+        "from": "IN.3",
+        "to": "DEV.3",
+        "sourceId": "S1"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "2b96336a9169f86fa499c2eae9e0a80de57c93a84176af857590af04b4de7c6a",
+    "packet.request.json": "954a2ff82ca886694a39cb7b0d4a4110b556c1b4410795ccbe064fd14142b122",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "cc0cba0d327e64daa288c41dcd3424a97121e09c3842bf83569b350db473aec0",
+    "system.json": "6197e9480629d2fffc25334d7660019479bf341f0d7cf5b9143f5f851d7c7371"
+  }
+}

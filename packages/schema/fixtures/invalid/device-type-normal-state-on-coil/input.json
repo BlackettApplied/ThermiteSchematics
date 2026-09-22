@@ -1,0 +1,1 @@
+{"kind":"device_type","id":"core:bad-coil-state","terminals":{"A1":{},"A2":{}},"functions":{"coil":{"kind":"coil","normal_state":"open","terminals":["A1","A2"]}}}

@@ -1,0 +1,60 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zbe-101",
+      "description": "Harmony XB4/XB5 single standard normally open contact block, screw-clamp terminals 3 and 4",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZBE-101",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/ZBE101",
+          "title": "Schneider Electric ZBE101 product datasheet with alternate product views",
+          "revision": "Generated 12 September 2026; nine pages",
+          "pages": "1, 6, 8–9; exact NO terminal marking and side circuit"
+        },
+        "modelingNotes": [
+          "The source order ZBE-101 matches manufacturer catalogue ZBE101. The exact-product PDF side view itself prints ZBE-101 on the block; the May 2023 exact-sheet photograph corroborates this spelling and the same NO contact. Preserve source orderNumber ZBE-101; no successor or neighboring variant is substituted.",
+          "Exact-product manufacturer PDF generated 12 September 2026, page 8, shows a normally open contact between the marked endings.3 and.4; front views on pages 6 and 9 show the actual field screws 3 and 4. These are the two terminal keys. Do not replace them with guessed 13/14 ISO-style aliases or treat the typographic prefix dots as extra endpoints.",
+          "One single standard NO slow-break contact with silver alloy Ag/Ni contacts; the exact sheet states without positive opening. This model does not claim a safety monitoring function, direct-opening NC behavior, early-make timing or high-power variant capability.",
+          "Bare contact block scope: two screw clamps, a mechanical operating plunger and mounting clips. October 2021 catalogue physical 78 / printed 76 lists ZBE101 separately from fixing collar ZB4BZ009 and collar-inclusive assembly ZB4BZ101. External head, collar, lamps and extra blocks are not included. The clips/plunger are mechanical interfaces, not electrical terminals or a protective bond.",
+          "Both passive contact terminals are application-dependent and are not universally required. One normally open contact function represents the unactuated state; only project wiring defines its circuit. The contact function never establishes an intrinsic fixed net link between 3 and 4.",
+          "Complete connection coverage applies to this bare block only: both documented electrical field terminals are modeled. No coil/supply, lamp, PE, shield, communication or additional contact terminal is identified on this component. Bonding of separately selected mounting hardware and enclosure remains a project/assembly matter.",
+          "No scalar terminal nominal_voltage, voltage_type or current is assigned. The contact supports conditional AC and DC duties, not a rated supply. Manufacturer operational current: AC-15/A600 6 A at 120 V, 3 A at 240 V, 1.2 A at 600 V; DC-13/Q600 0.55 A at 125 V, 0.27 A at 250 V, 0.1 A at 600 V, per EN/IEC 60947-5-1.",
+          "Distinct conditional values: conventional free-air thermal current Ith 10 A; insulation Ui 600 V at pollution degree 3; impulse withstand 6 kV; specified short-circuit protection 10 A gG cartridge fuse. These are not an unconditional 10 A at 600 V switching rating.",
+          "Screw-clamp conductor limits per exact sheet: at least 1 × 0.22 mm² without cable end and at most 2 × 1.5 mm² with cable end, torque 0.8–1.2 N·m. Two conductors accepted by one screw do not create duplicate terminals. IP20 and −40…70 °C ambient conditions remain documentary. Mechanical attachment and actual operating-head behavior require the project assembly; this bare-block model does not assign a pushbutton, selector or emergency-stop actuator."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete for the bare single contact block: the two physical screw-clamp terminals 3 and 4 are modeled as one passive normally open contact. Mechanical clip/plunger attachment adds no electrical endpoint. Separate head, collar, enclosure and their bonding are outside this order. No fixed links or unverified aliases."
+      },
+      "terminals": {
+        "3": {
+          "description": "Physical screw-clamp terminal 3 of the single normally open contact; manufacturer marking 3, not an inferred 13 alias.",
+          "role": "control",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "Physical screw-clamp terminal 4 of the single normally open contact; manufacturer marking 4, not an inferred 14 alias.",
+          "role": "control",
+          "required": false,
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "no": "contact-no"
+      },
+      "terminalOrder": ["3", "4"]
+    }
+  ]
+}

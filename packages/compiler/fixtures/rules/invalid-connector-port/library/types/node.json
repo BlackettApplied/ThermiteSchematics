@@ -1,0 +1,15 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "fixture:node",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "P1": {
+          "connector": "M12 A-coded"
+        }
+      }
+    }
+  ]
+}

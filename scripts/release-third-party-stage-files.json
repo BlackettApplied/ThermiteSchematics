@@ -1,0 +1,1816 @@
+{
+  "format": "thermite-schematics-release-third-party-stage-files/0.1",
+  "packages": [
+    {
+      "name": "@nodelib/fs.scandir",
+      "version": "2.1.5",
+      "packagePath": "package/node_modules/@nodelib/fs.scandir",
+      "manifest": {
+        "path": "package/node_modules/@nodelib/fs.scandir/package.json",
+        "sha256": "f0f7c8e5c56b1e1e5c9fc6a89887ec8d9a6e5cbef11858cd20930c346117439a"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/LICENSE",
+          "role": "license",
+          "sha256": "9363d160bf41d46d83901a5d24fc3fe2094c2afc17b4a2378914b273977ee2de"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/adapters/fs.js",
+          "role": "runtime",
+          "sha256": "9e5aa25d62ba9c654454bdc8c694a7a1cf8229cd5dd2dc2f97f3f40025a882c5"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/constants.js",
+          "role": "runtime",
+          "sha256": "aff8749c230a74d0334907472b971f7f62b1775b8e9a520324599a1e71c9c3f0"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/index.js",
+          "role": "runtime",
+          "sha256": "7c1029d95a78da23d59c93b5104ba4e6f91c037d0803feaac9314aa9a3bd404b"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/providers/async.js",
+          "role": "runtime",
+          "sha256": "12268cf178785ce6fc7170e12593f3fa4831f61d82b71c55b75664b32403eec6"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/providers/common.js",
+          "role": "runtime",
+          "sha256": "7230a1152039713fe53b69e4a2dccde87a0704ed3a6545fb9f2bd809e97a1d9b"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/providers/sync.js",
+          "role": "runtime",
+          "sha256": "19642bbec8499717c896fa5ca9d58e12b40b54ff91da0d4d8f168141b681fa15"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/settings.js",
+          "role": "runtime",
+          "sha256": "ffcf2817ce621641abc4d3ecf350dbe86d0443bb32811f1c6c0f61be2e8c106e"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/types/index.js",
+          "role": "runtime",
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/utils/fs.js",
+          "role": "runtime",
+          "sha256": "10fcd66d19070a64fe2eb45a133047c574b045c5cabb860e04472e32341bb1ec"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.scandir/out/utils/index.js",
+          "role": "runtime",
+          "sha256": "4f83f86fbd0df815f8c6e8ae876ec085b055ed57ec78ed93326dd7a9411a51a5"
+        }
+      ]
+    },
+    {
+      "name": "@nodelib/fs.stat",
+      "version": "2.0.5",
+      "packagePath": "package/node_modules/@nodelib/fs.stat",
+      "manifest": {
+        "path": "package/node_modules/@nodelib/fs.stat/package.json",
+        "sha256": "34fd9376ddf4ce6505268a088c9b5833c8c7b20eafdc0e4e1d360eff59f421c6"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/LICENSE",
+          "role": "license",
+          "sha256": "9363d160bf41d46d83901a5d24fc3fe2094c2afc17b4a2378914b273977ee2de"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/adapters/fs.js",
+          "role": "runtime",
+          "sha256": "fe08e8266cfd2c4fc9c59c48993b82f894181e93e3d1bb4527d7079091c9fa51"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/index.js",
+          "role": "runtime",
+          "sha256": "7a19f0f3cb5fda9fd9f398003b226c638370898af403f89ddfa4276b5777d9ea"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/providers/async.js",
+          "role": "runtime",
+          "sha256": "df7fc1fe9ccebb214a2d3c5cff744302fec0164421a7bd58c541709862092cfd"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/providers/sync.js",
+          "role": "runtime",
+          "sha256": "e3b0e28d1b151bbabca4cae3dbf8dd1add9ed2524265bbd8fc827fb21c599fc6"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/settings.js",
+          "role": "runtime",
+          "sha256": "11ab7580176e2390e9d27d2217f330979a41ca5f1bde9c27fd2af0cf78956094"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.stat/out/types/index.js",
+          "role": "runtime",
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "name": "@nodelib/fs.walk",
+      "version": "1.2.8",
+      "packagePath": "package/node_modules/@nodelib/fs.walk",
+      "manifest": {
+        "path": "package/node_modules/@nodelib/fs.walk/package.json",
+        "sha256": "a938e1ac7e096689809a0bd045a30025cd00ca2cd5850fc055c492bdea7a8708"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/LICENSE",
+          "role": "license",
+          "sha256": "9363d160bf41d46d83901a5d24fc3fe2094c2afc17b4a2378914b273977ee2de"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/index.js",
+          "role": "runtime",
+          "sha256": "f4a7ff687aaf6223ad0e549030d11834103469e40898de922fd0a60cef12ad21"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/providers/async.js",
+          "role": "runtime",
+          "sha256": "ae9c48210be7b276c8df7fc7bf16a04bce517635d33d07d92d620b8f8fed3629"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/providers/index.js",
+          "role": "runtime",
+          "sha256": "2f24ab6abd2978d99098ebc18a8801eb9b4d32c9a697d9d44874046ddda54b27"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/providers/stream.js",
+          "role": "runtime",
+          "sha256": "cbf46228291fc4a8dee090db411c8db430c8c0066580f4fe056b2ed24ba95bc7"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/providers/sync.js",
+          "role": "runtime",
+          "sha256": "e06d608e9b575819fdd239dc0f0ab0038fd5c297df4cbd523f801e467d13009a"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/readers/async.js",
+          "role": "runtime",
+          "sha256": "71831647fe7b5f2e077646b799a621d0b9c41b0fccf64b3dd41a772c314c4d1d"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/readers/common.js",
+          "role": "runtime",
+          "sha256": "68b6026e669d1977a40d63c2463acf11a8ea3daffe0f5f026fd3bab07950da59"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/readers/reader.js",
+          "role": "runtime",
+          "sha256": "ad0139c61b7a4811ce1b7d1d70e9ef46d8812347a1c44436a254207420824bc0"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/readers/sync.js",
+          "role": "runtime",
+          "sha256": "5296d2103bbaea6e3ec5c07e1233f77b3868757ce3ed9f3ff9d51a1a2ad8675d"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/settings.js",
+          "role": "runtime",
+          "sha256": "2ad9e3bd36d3e551349196809bcf9a8685d37a9fa321b07cdbef0ce8ee29115e"
+        },
+        {
+          "path": "package/node_modules/@nodelib/fs.walk/out/types/index.js",
+          "role": "runtime",
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        }
+      ]
+    },
+    {
+      "name": "ajv",
+      "version": "8.20.0",
+      "packagePath": "package/node_modules/ajv",
+      "manifest": {
+        "path": "package/node_modules/ajv/package.json",
+        "sha256": "c7594d7e0c7465299e730d25d815b969d4376866af4351ca9f4445d346d1edcf"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/ajv/LICENSE",
+          "role": "license",
+          "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/2019.js",
+          "role": "runtime",
+          "sha256": "4a1b1d479d0b946af0119f3a3960fcabfd964e1c20e87f7a9575f8f9e705d0c4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/2020.d.ts",
+          "role": "declaration",
+          "sha256": "66a5ace456d19768103c1da9df2abafa9cb2e78ff61c938746527ec2524e5d11"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/2020.js",
+          "role": "runtime",
+          "sha256": "908e9670b478b2ba126802a221b7e47006f50cf467e2c5dd7935d3dbef10a20a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/ajv.d.ts",
+          "role": "declaration",
+          "sha256": "41b8775befd7ded7245a627e9f4de6110236688ce4c124d2d40c37bc1a3bfe05"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/ajv.js",
+          "role": "runtime",
+          "sha256": "edaed56fc546f5551b0d6dc2ff2a9cc25c2d6c83318a086eaa8c3ad0b2479297"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/code.d.ts",
+          "role": "declaration",
+          "sha256": "2d225e7bda2871c066a7079c88174340950fb604f624f2586d3ea27bb9e5f4ff"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/code.js",
+          "role": "runtime",
+          "sha256": "1287153722f1fc3c5342647de7ae1d7b6fb68bdb3378a0776a937d273fc97e0d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/index.d.ts",
+          "role": "declaration",
+          "sha256": "c1422d016f7df2ccd3594c06f2923199acd09898f2c42f50ea8159f1f856f618"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/index.js",
+          "role": "runtime",
+          "sha256": "f03b2b72597ef86878d1d4030580c2d0964046efad4867f3d05aa91065ba034c"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/scope.d.ts",
+          "role": "declaration",
+          "sha256": "6a785f84e63234035e511817dd48ada756d984dd8f9344e56eb8b2bdcd8fd001"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/codegen/scope.js",
+          "role": "runtime",
+          "sha256": "d2a0a97af2faa2cad88702314fe421e235ab17f11e0d62883d58d8d4dc734286"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/errors.d.ts",
+          "role": "declaration",
+          "sha256": "cd44995ee13d5d23df17a10213fed7b483fabfd5ea08f267ab52c07ce0b6b4da"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/errors.js",
+          "role": "runtime",
+          "sha256": "53990f8f2cc05922bba410ae68231d3f869de4f8343277ede5b4834fa564c6c2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/index.d.ts",
+          "role": "declaration",
+          "sha256": "62d26d8ba4fa15ab425c1b57a050ed76c5b0ecbffaa53f182110aa3a02405a07"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/index.js",
+          "role": "runtime",
+          "sha256": "05b34da22814f3787bfa3ac68dad59c9047f56e55a607e0a20719ebf5afe69ac"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/jtd/parse.js",
+          "role": "runtime",
+          "sha256": "548b7e6ee5558360945f261e092cd328662868995877140ed2ae7ff981300b7f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/jtd/serialize.js",
+          "role": "runtime",
+          "sha256": "1f8b1873fbd899240cd625144d3cd10630b3cf1b0c69c640566f6e25c80765c0"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/jtd/types.js",
+          "role": "runtime",
+          "sha256": "e92a89e57c3b7d228be4e2e74c71ef3af52320bf061b411add9dccc34ddb0a78"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/names.js",
+          "role": "runtime",
+          "sha256": "3cab37a2240b996b9bed92fe7a041d91689cfe3ad2e9ae4c0ab99e4146408493"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/ref_error.d.ts",
+          "role": "declaration",
+          "sha256": "3d7f9eb12aface876f7b535cc89dcd416daf77f0b3573333f16ec0a70bcf902a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/ref_error.js",
+          "role": "runtime",
+          "sha256": "81c98fdf34c3037c91bfcc02277ec32156c71e34048f36cfe4e084416e916cb7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/resolve.d.ts",
+          "role": "declaration",
+          "sha256": "e0205f04611bea8b5b82168065b8ef1476a8e96236201494eb8c785331c43118"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/resolve.js",
+          "role": "runtime",
+          "sha256": "df75af0e0cf03fa1c6452e8dc61019f5aec645a8a5f6f494dc4e13cb5502d2d9"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/rules.d.ts",
+          "role": "declaration",
+          "sha256": "2973b1b7857ca144251375b97f98474e9847a890331e27132d5a8b3aea9350a8"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/rules.js",
+          "role": "runtime",
+          "sha256": "ec1d86500f497aa8e20f9f0c1695951159d9a909669d00a261ce1bb22b3cf0a9"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/util.d.ts",
+          "role": "declaration",
+          "sha256": "0eb6152d37c84d6119295493dfcc20c331c6fda1304a513d159cdaa599dcb78b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/util.js",
+          "role": "runtime",
+          "sha256": "fa911f5631f29d4d6420adfe086cb693b94b08de2719475c78c54bcb82f831a5"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/applicability.js",
+          "role": "runtime",
+          "sha256": "50c5cba5894a7fb9874b3432355b46ec71b73c9368dafb1323ded8567cca8fc0"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/boolSchema.js",
+          "role": "runtime",
+          "sha256": "c08abdbdbd3d8b1dcc0552a20fbc7d837ed44f4ca6abb2e464985590ac94377f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/dataType.d.ts",
+          "role": "declaration",
+          "sha256": "7557d4d7f19f94341f4413575a3453ba7f6039c9591015bcf4282a8e75414043"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/dataType.js",
+          "role": "runtime",
+          "sha256": "697bd7005361ec7066a23c18830a10b0ef28aec1a33138b4e3098bf78c4fae52"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/defaults.js",
+          "role": "runtime",
+          "sha256": "05721971df94faa57b09c8cfd60c2eef81b6d14910a7dea5f539d693a029c428"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/index.d.ts",
+          "role": "declaration",
+          "sha256": "58ce1486f851942bd2d3056b399079bc9cb978ec933fe9833ea417e33eab676e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/index.js",
+          "role": "runtime",
+          "sha256": "cb2103e5f890e04592c10d24b45857dad91155bae9f9460138a2459bdaaea2cd"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/keyword.js",
+          "role": "runtime",
+          "sha256": "ab8f070c75c25eee9be5c837f364748909b58f5db66149a2beccbd2f66afeb76"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/subschema.d.ts",
+          "role": "declaration",
+          "sha256": "237df26f8c326ca00cd9d2deb40214a079749062156386b6d75bdcecc6988a6b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/compile/validate/subschema.js",
+          "role": "runtime",
+          "sha256": "ca783d6052af91e65ebb59a5b48b47fb459a2241d37ca6a042f767d4ce451bdc"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/core.d.ts",
+          "role": "declaration",
+          "sha256": "4304f640f7cb4724ea82441accb7c7607fa7207541182470d625adda99b2900b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/core.js",
+          "role": "runtime",
+          "sha256": "51be29c7ed7288622f755c0f1bebd3da4a9907d77aa2c33b0f2a0a5b6b339603"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/jtd.js",
+          "role": "runtime",
+          "sha256": "9554827c19abbb10694cafb71edd72a8303ea71e56b9eb7253200f5395610e44"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/data.json",
+          "role": "runtime",
+          "sha256": "d24ab8a97c18b3f5afdde7d7024a0e0ac1df0614a16a41cb88f81379edcc2db3"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/index.js",
+          "role": "runtime",
+          "sha256": "ec400bdf35a0f290266811503cdbfffd7c18c4a690379988b8062c57b48f946d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/applicator.json",
+          "role": "runtime",
+          "sha256": "9c356a52b0ad5da7d4c1b69f61dff5277c2af46221bc0b0521bbdbf3a12d3a2a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/content.json",
+          "role": "runtime",
+          "sha256": "cf4792ae93f4a4580ec9523640945f7756f75fd624935ebf15194b0ac3909267"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/core.json",
+          "role": "runtime",
+          "sha256": "629c017994ffaa33f573a96cf01b9dac6cae80c7d5d17dad5e823a3afa18d5fe"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/format.json",
+          "role": "runtime",
+          "sha256": "018ef7c81bcca9e40a4a02ed236e7cabb3a630f2b1ea01fbdeed2f882c15ddc8"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/meta-data.json",
+          "role": "runtime",
+          "sha256": "e038593d36bf1855875a13b8812469d6a2d62ed309436b9c9a2fa5a4ba59085e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/meta/validation.json",
+          "role": "runtime",
+          "sha256": "aaba7f2d6fcbdfa6ca97fdc3d3da1ae7d66ca3322b7e90cf5a98b067555d06e6"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2019-09/schema.json",
+          "role": "runtime",
+          "sha256": "264720afa0dd61919e21bbe9bc1312121b70e43019ac696240e069adc72cce15"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/index.js",
+          "role": "runtime",
+          "sha256": "2e39089b0aaa14efa7901ecf5384622ec3d5897b206e1d589d2420f17b9fa6e1"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/applicator.json",
+          "role": "runtime",
+          "sha256": "f1e465ff0c0cc86bee5c0cc4b51d2734c532e6ea12c75b60a2ac093a4577b2d4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/content.json",
+          "role": "runtime",
+          "sha256": "7ede86f2c48d646202bf1332aefaf46db268c943d59752727db7247dc2920516"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/core.json",
+          "role": "runtime",
+          "sha256": "c3a5947992d4fe67c95cda7910911207376bbae41c0a124ec9e7e699172e7a49"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/format-annotation.json",
+          "role": "runtime",
+          "sha256": "1e31131b1ed21f98c007f04deb501343b8c4dd77f1c5a8494a9c2085f68d769d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/meta-data.json",
+          "role": "runtime",
+          "sha256": "eb008c756b29bdaa237c1f06d32ea4a21f6ef22148b03c6372cea5e4c0782273"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/unevaluated.json",
+          "role": "runtime",
+          "sha256": "8f7f75f4274745faa32e4abdba12de99f49b21df225f52f723b5c62043b0edca"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/meta/validation.json",
+          "role": "runtime",
+          "sha256": "3cae7069843679429e4ada7df261bb8961fa34cac15be89296026e69af312092"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-2020-12/schema.json",
+          "role": "runtime",
+          "sha256": "5333c7df76bceee098e865881d0808238dea836126c6c60b49299ec85c6c7a56"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-draft-06.json",
+          "role": "runtime",
+          "sha256": "a9b6a00af20105009f0924cd7c02d811bbf70c579a96f1552579c3457111f687"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-draft-07.json",
+          "role": "runtime",
+          "sha256": "f7e8b13cad4fecff9771f3626fef33e20e59027b90938a28fd9d2f6c17cd0773"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/json-schema-secure.json",
+          "role": "runtime",
+          "sha256": "b7840b4f1526eee47ac19780906a436d0c39df2aa3d505388caf18864085a421"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/refs/jtd-schema.js",
+          "role": "runtime",
+          "sha256": "ed529445bf027885182bbed71e5458baecec2d356a788b636ed9f0c7cdaccd92"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/equal.js",
+          "role": "runtime",
+          "sha256": "c94467da09ee94e5d194483a7ab821b9bb3bf1c04397270f2ab53dea9de59274"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/parseJson.js",
+          "role": "runtime",
+          "sha256": "1bc006064c98afbbb4fc03bef49db7e85dd9493fb54a7dc647d4344ad043848e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/quote.js",
+          "role": "runtime",
+          "sha256": "1061132b1475fce15821d2b41c74b9ac710f278a33f5dae3385458715cc962b2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/re2.js",
+          "role": "runtime",
+          "sha256": "e1a6849652ae9a099c36c9aee9d2efc7412c8f83c4b285142413af99a7238361"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/timestamp.js",
+          "role": "runtime",
+          "sha256": "05cd4fc283b82af25a2a71ee5e587640c1d42945c74cea790627135fff338bef"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/ucs2length.js",
+          "role": "runtime",
+          "sha256": "1df012dd3d23fced07255a7204798004509687cb1f431ae0ab976db436bbd890"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/uri.js",
+          "role": "runtime",
+          "sha256": "d1d61baf97ed87d7310df847a78ed73d19c8cc003207bf5aaec977500bdb1578"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/validation_error.d.ts",
+          "role": "declaration",
+          "sha256": "cde493e09daad4bb29922fe633f760be9f0e8e2f39cdca999cce3b8690b5e13a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/runtime/validation_error.js",
+          "role": "runtime",
+          "sha256": "11bf5b4affc8114e5e7cdf65b93006c2d997ab60ada1152c22e136f9b828b815"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/standalone/index.js",
+          "role": "runtime",
+          "sha256": "361d58a7523548bb1b9c782135fae27e76d93c8feaba8c4d613331dbcd3b888f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/standalone/instance.js",
+          "role": "runtime",
+          "sha256": "4e14aa01e0cb8288fbb75deeb2e738950b0560bd02e1ad8974f391af4c9fc6f3"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/index.d.ts",
+          "role": "declaration",
+          "sha256": "9941cbf7ca695e95d588f5f1692ab040b078d44a95d231fa9a8f828186b7b77d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/index.js",
+          "role": "runtime",
+          "sha256": "fc9c6096246805c2075c83ab1b96082eda2fc98c240a2502caa82f1966096b71"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/json-schema.d.ts",
+          "role": "declaration",
+          "sha256": "feeb73d48cc41c6dd23d17473521b0af877751504c30c18dc84267c8eeea429a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/json-schema.js",
+          "role": "runtime",
+          "sha256": "2e30aa0c0789b5af8248b081ddc14b439b48937730eb1be0ab28de2ca2353b28"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/jtd-schema.d.ts",
+          "role": "declaration",
+          "sha256": "25f1159094dc0bf3a71313a74e0885426af21c5d6564a254004f2cadf9c5b052"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/types/jtd-schema.js",
+          "role": "runtime",
+          "sha256": "6755d0ec5a09cc74205d46089f814c88c1ce4363e56a55486c12a0a86942bd8d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/additionalItems.d.ts",
+          "role": "declaration",
+          "sha256": "a3b2cc16f3ce2d882eca44e1066f57a24751545f2a5e4a153d4de31b4cac9bb5"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/additionalItems.js",
+          "role": "runtime",
+          "sha256": "7beb0fbda5e349907067c8398bb8cc3260a6267b6e5dff9793a5ab2171934099"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/additionalProperties.d.ts",
+          "role": "declaration",
+          "sha256": "1fce9ecb87a2d3898941c60df617e52e50fb0c03c9b7b2ba8381972448327285"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js",
+          "role": "runtime",
+          "sha256": "e237cb180cd2e3f2e676feb714d7dcc6a42116640f9db2ad830cd20d9dfc540a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/allOf.js",
+          "role": "runtime",
+          "sha256": "98f46a6434ebe5f851b406480e18b776dd7f1bcc275e28c16a13bfef3cc067c7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/anyOf.d.ts",
+          "role": "declaration",
+          "sha256": "ac52b775a80badff5f4ac329c5725a26bd5aaadd57afa7ad9e98b4844767312a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/anyOf.js",
+          "role": "runtime",
+          "sha256": "8d7368d4aebad0514b713191b934993b4f0bf570e1bab93b07dc69712db2cec5"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/contains.d.ts",
+          "role": "declaration",
+          "sha256": "8deb39d89095469957f73bd194d11f01d9894b8c1f1e27fbf3f6e8122576b336"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/contains.js",
+          "role": "runtime",
+          "sha256": "56165dc93cd8b0b4611db50a97f1e7d7f9af6c5ffe95a7a5b054d6eeaa7f6a8c"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/dependencies.d.ts",
+          "role": "declaration",
+          "sha256": "a38a9c41f433b608a0d37e645a31eecf7233ef3d3fffeb626988d3219f80e32f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/dependencies.js",
+          "role": "runtime",
+          "sha256": "c1a83bf484b6fde4d268935f079ddba5e74a2f589dfc6d15ca2e20ba4d06ee5b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/dependentSchemas.js",
+          "role": "runtime",
+          "sha256": "d17d23755b0cf8699c180dd98b8b7270b688d2e4fe5a4c4fcc53ffdcc18ee58e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/if.d.ts",
+          "role": "declaration",
+          "sha256": "dd7109c49f416f218915921d44f0f28975df78e04e437c62e1e1eb3be5e18a35"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/if.js",
+          "role": "runtime",
+          "sha256": "42374ee5dc681433579cc689b0c4ae5343f5bf78d4d6a561722b9277c5335ec4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/index.d.ts",
+          "role": "declaration",
+          "sha256": "eee181112e420b345fc78422a6cc32385ede3d27e2eaf8b8c4ad8b2c29e3e52e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/index.js",
+          "role": "runtime",
+          "sha256": "5a61978f6d81bbabfa8b9ccb71d7de816ed6dd1fd7de5c72657439a76c2a7cb3"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/items.js",
+          "role": "runtime",
+          "sha256": "fa87f74adc3aac1f1b5e3e7dddf73294e6850e1dd49ed131fca4352e9645c54e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/items2020.d.ts",
+          "role": "declaration",
+          "sha256": "ac2b3b377d3068bfb6e1cb8889c99098f2c875955e2325315991882a74d92cc8"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/items2020.js",
+          "role": "runtime",
+          "sha256": "c449ef64aec16263c7935293ed450cfc2da3ba66f6df5f99c3198c05f169838f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/not.d.ts",
+          "role": "declaration",
+          "sha256": "5ef0597b8238443908b2c4bf69149ed3894ac0ddd0515ac583d38c7595b151f1"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/not.js",
+          "role": "runtime",
+          "sha256": "ab2f2758d4ea97ac8763fe5540dd0f4d877859676fe5d6c750a18deca387f718"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/oneOf.d.ts",
+          "role": "declaration",
+          "sha256": "6ae5b4a63010c82bf2522b4ecfc29ffe6a8b0c5eea6b2b35120077e9ac54d7a1"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/oneOf.js",
+          "role": "runtime",
+          "sha256": "e2aeb6c22d49fd5f348bedcf7f5c4d7b31f5a05dd7ff1a0c531374c6968792a2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/patternProperties.js",
+          "role": "runtime",
+          "sha256": "0d43da49a82452c439ba990de7372ad5cedb663717918a5f6dae07025abff655"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/prefixItems.js",
+          "role": "runtime",
+          "sha256": "16264f7b3233a6dcb98b48700643efbd3ebc4d11e27b3eacffc83ccb5f44fb23"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/properties.js",
+          "role": "runtime",
+          "sha256": "c896873ae7251093a2c8880545b69b6e8cb55c44817a53ec830a49818d74104f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/propertyNames.d.ts",
+          "role": "declaration",
+          "sha256": "8e1428dcba6a984489863935049893631170a37f9584c0479f06e1a5b1f04332"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/propertyNames.js",
+          "role": "runtime",
+          "sha256": "b3411cfeaff8efd5e6de12971bb5dc339e64b61fbe62d3b950794c077315c2e7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/applicator/thenElse.js",
+          "role": "runtime",
+          "sha256": "9bc42eb8699d57188a7ec2a710d3f38052f92bd78c5d4d0442cf98cf2ebbe22d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/code.js",
+          "role": "runtime",
+          "sha256": "9212ddf8bd0a4c3b1c4b44cdadd141183b2b36f561b91d13df53c83911e3bf63"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/core/id.js",
+          "role": "runtime",
+          "sha256": "49c8eff694ce4371450c1f9986e934fcbf4bd143311caef5332113f29175bc11"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/core/index.js",
+          "role": "runtime",
+          "sha256": "f420e1011b95e27b54c58323a7ed4ffbd0a88cdb4496f771bb6782c2aa22d23e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/core/ref.js",
+          "role": "runtime",
+          "sha256": "1422c1454b3621d890066042048f37746fe1cf213088307099816199889bbfd1"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/discriminator/index.d.ts",
+          "role": "declaration",
+          "sha256": "423d2ccc38e369a7527988d682fafc40267bcd6688a7473e59c5eea20a29b64f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/discriminator/index.js",
+          "role": "runtime",
+          "sha256": "b58b58025d2dbe5a6967376faec9295b860a338664c47037e9a1035c1e8fb88e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/discriminator/types.d.ts",
+          "role": "declaration",
+          "sha256": "3be71f4ce8988a01e2f5368bdd58e1d60236baf511e4510ee9291c7b3729a27e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/discriminator/types.js",
+          "role": "runtime",
+          "sha256": "2365341d1f30dc72cece7703e908e47aacb8f904b9f66ec4019fe889ae1e57fa"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/draft2020.js",
+          "role": "runtime",
+          "sha256": "2d0dc3a14abd48a45ad1407a97f23a0f943fa5244923037f86e95a7de04a7445"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/draft7.js",
+          "role": "runtime",
+          "sha256": "8c62022c6c3aa302c3ea6f6709a697fc9eb6385d243fa7c2156dbe9f02228170"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/dynamic/dynamicAnchor.js",
+          "role": "runtime",
+          "sha256": "78222a5b42bab186253d880f9af4b012394ae5988bfab78e79f2510caed0ccf7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/dynamic/dynamicRef.js",
+          "role": "runtime",
+          "sha256": "acc2913c91d11ff57150dde1751cdd5d9f486a0cb156037870ede203273af917"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/dynamic/index.js",
+          "role": "runtime",
+          "sha256": "8c05d09948653957427f351d9c6172965b932a5663f7dcb63014a491a533cc0b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/dynamic/recursiveAnchor.js",
+          "role": "runtime",
+          "sha256": "9f6cb7e509f9deada1b884010f08c52876f8eace32dcf0e7da28f6d0d91f3f76"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/dynamic/recursiveRef.js",
+          "role": "runtime",
+          "sha256": "7b0c651e2c5b5218639cd3ad7e5162f1e226fc9814107a85f4c3e47f5138670d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/errors.d.ts",
+          "role": "declaration",
+          "sha256": "2f9fde0868ed030277c678b435f63fcf03d27c04301299580a4017963cc04ce6"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/errors.js",
+          "role": "runtime",
+          "sha256": "7758b311e7cba27a8ff8b99a5fcd8db6804265cbc48d2867b72bfe56823d36bc"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/format/format.d.ts",
+          "role": "declaration",
+          "sha256": "596e5b88b6ca8399076afcc22af6e6e0c4700c7cd1f420a78d637c3fb44a885e"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/format/format.js",
+          "role": "runtime",
+          "sha256": "6fae0d5124fd821b1a9959492f7d6d7b528bee8830d49a7a4759fc9a9ab81d5f"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/format/index.js",
+          "role": "runtime",
+          "sha256": "d5dad5f95c9c5f48f8ca956cdbb927aafc7b56baabfca8c0b0403d92c5ebeb67"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/discriminator.js",
+          "role": "runtime",
+          "sha256": "14df845b5ef760d96a3c62db8d4446840e3d408a248d1b92ba6db2260fca4da2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/elements.js",
+          "role": "runtime",
+          "sha256": "b2cad5c59d7c8ce936cea240d70beb41404c729901a60f32013c4facdcacfd5b"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/enum.js",
+          "role": "runtime",
+          "sha256": "4a8b7fa05f94b2e67275445c6e8437c337b92f709d243ed30a48ba6a08a9a154"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/error.js",
+          "role": "runtime",
+          "sha256": "d6896337eedc9b71a742912f776580918cb4de58a90b434cd39f152896da16f9"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/index.js",
+          "role": "runtime",
+          "sha256": "c57d340cd0709479d8ea9f102549a8fd2a47a2c1f2e6fe7f0e14067fe6385d7d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/metadata.js",
+          "role": "runtime",
+          "sha256": "237a4bcc04f1a59628ba35aab9bd7c02fa19a007bf026f75c562c20c7a63ab68"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/nullable.js",
+          "role": "runtime",
+          "sha256": "ba6494ac04fb1c2654951e8c8a57861e324fafa0f6c3bd2e1716bea8eb5c823a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/optionalProperties.js",
+          "role": "runtime",
+          "sha256": "82b67841649a948b069c8e0cfab712eb883579690065a05658b7df7e4eddcc62"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/properties.js",
+          "role": "runtime",
+          "sha256": "4a392193b708f69c25511ed059e80a70ea084585731817ad8e459364f479eb35"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/ref.js",
+          "role": "runtime",
+          "sha256": "4736880c610f3664a8c714fdb5cf4e9db9fcda1721691dcacad2e9796e937460"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/type.js",
+          "role": "runtime",
+          "sha256": "f97e19f2c3042938f433cfad0c4500b3342d869719550246bd4fced479db8e1c"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/union.js",
+          "role": "runtime",
+          "sha256": "f8404ab539ecfc5f6eb1bc489cc541aad6bf79cf58beecfcfe671226678c3280"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/jtd/values.js",
+          "role": "runtime",
+          "sha256": "6b98eb1fbe2686a7f26fbf1e8860f61bdc81fe47117c4f5a79d5ca1fc92138f2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/metadata.js",
+          "role": "runtime",
+          "sha256": "45c178744a7ec57e20c85ceeaea8d9f36b5663636ab7e495ea2c3c1bf4a58609"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/next.js",
+          "role": "runtime",
+          "sha256": "491c4d9738e50a6c22b3090cb1df49911b4bb7c3b7dcafc2f2dd4c074c4d82e7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/unevaluated/index.js",
+          "role": "runtime",
+          "sha256": "4e7936d1a55051e70e2ebbbfc8de94fbe7f1e7b055252df5a984481ea7c156a4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/unevaluated/unevaluatedItems.d.ts",
+          "role": "declaration",
+          "sha256": "d4cad9dc13e9c5348637170ddd5d95f7ed5fdfc856ddca40234fa55518bc99a6"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/unevaluated/unevaluatedItems.js",
+          "role": "runtime",
+          "sha256": "4d7010c39f1b7af4a2fe1a62e5b65c8f763d4e58ac3d710099d367659f5e4fda"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/unevaluated/unevaluatedProperties.d.ts",
+          "role": "declaration",
+          "sha256": "adddf736e08132c7059ee572b128fdacb1c2650ace80d0f582e93d097ed4fbaf"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/unevaluated/unevaluatedProperties.js",
+          "role": "runtime",
+          "sha256": "665029a99612ec32e9bef99c9c4b09a4dc0be6c71d7b920594d414d404806ebe"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/const.d.ts",
+          "role": "declaration",
+          "sha256": "1cf0d15e6ab1ecabbf329b906ae8543e6b8955133b7f6655f04d433e3a0597ab"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/const.js",
+          "role": "runtime",
+          "sha256": "ace994e9ab97a70899a9484794794f4be5ee03bfb3cf32242d3f091d77f0329a"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/dependentRequired.d.ts",
+          "role": "declaration",
+          "sha256": "d70675ba7ba7d02e52b7070a369957a70827e4b2bca2c1680c38a832e87b61fd"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/dependentRequired.js",
+          "role": "runtime",
+          "sha256": "cd69a90089328b24d2232c12edae57858c14f66aaa56923c12929eb3d673e8fa"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/enum.d.ts",
+          "role": "declaration",
+          "sha256": "7c9f98fe812643141502b30fb2b5ec56d16aaf94f98580276ae37b7924dd44a4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/enum.js",
+          "role": "runtime",
+          "sha256": "61062b318a40eb52fc5a8283e7f4781db98349841744961ef4fe04a4722ebf22"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/index.d.ts",
+          "role": "declaration",
+          "sha256": "b3547893f24f59d0a644c52f55901b15a3fa1a115bc5ea9a582911469b9348b7"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/index.js",
+          "role": "runtime",
+          "sha256": "4a1839832de5f10ff423c1c0c6cb232b5b6e1b34980a28862cf56b2763136de4"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitContains.js",
+          "role": "runtime",
+          "sha256": "0ea6f2e43359add298e1ed9306fe5020c62e086392f2915f10226b01394b200d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitItems.js",
+          "role": "runtime",
+          "sha256": "49f0427d29b38aef2fa8aead26e68bda12deb9a2da22f7a7804ba0fed44e1fec"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitLength.js",
+          "role": "runtime",
+          "sha256": "379c28317faaf7784680b6049c3562692d3df6d65cce33f48e6c6c723beeeec2"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitNumber.d.ts",
+          "role": "declaration",
+          "sha256": "25fbe57c8ee3079e2201fe580578fab4f3a78881c98865b7c96233af00bf9624"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitNumber.js",
+          "role": "runtime",
+          "sha256": "3dd4bd41dbfc76c522078ff54b6479683485c4e97faa04cfcfaf2d8cb0fb8e65"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/limitProperties.js",
+          "role": "runtime",
+          "sha256": "8523a3f7b36c34882ca32b0ec71a2157d7930907cb86b778a97c1514fa6258ac"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/multipleOf.d.ts",
+          "role": "declaration",
+          "sha256": "62cc8477858487b4c4de7d7ae5e745a8ce0015c1592f398b63ee05d6e64ca295"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/multipleOf.js",
+          "role": "runtime",
+          "sha256": "df128c2a6ca74ae57c65fbfe3aea8a101447a3ae8c41fd53cfc5693fa23cc8bd"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/pattern.d.ts",
+          "role": "declaration",
+          "sha256": "cc2a9ec3cb10e4c0b8738b02c31798fad312d21ef20b6a2f5be1d077e9f5409d"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/pattern.js",
+          "role": "runtime",
+          "sha256": "86e84206bfc6a66ef18bf1fe43fbc56ebe7f7f4d57841197b6d044c529e0c195"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/required.d.ts",
+          "role": "declaration",
+          "sha256": "4b4fadcda7d34034737598c07e2dca5d7e1e633cb3ba8dd4d2e6a7782b30b296"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/required.js",
+          "role": "runtime",
+          "sha256": "b953bc18d94274bd73374dd5b4282d7a21159cec8c0e7a357e1eaf3f326b9054"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/uniqueItems.d.ts",
+          "role": "declaration",
+          "sha256": "360fdc8829a51c5428636f1f83e7db36fef6c5a15ed4411b582d00a1c2bd6e97"
+        },
+        {
+          "path": "package/node_modules/ajv/dist/vocabularies/validation/uniqueItems.js",
+          "role": "runtime",
+          "sha256": "666d1a2aa25c0dfe3cf41312d0f9d40e9f99eb2c19be7469134ad89005aadd52"
+        }
+      ]
+    },
+    {
+      "name": "braces",
+      "version": "3.0.3",
+      "packagePath": "package/node_modules/braces",
+      "manifest": {
+        "path": "package/node_modules/braces/package.json",
+        "sha256": "4be8aea887d73df26d5c7f39419fa6cf1c5f243ae0e9d452633ca282c862aaed"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/braces/LICENSE",
+          "role": "license",
+          "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2"
+        },
+        {
+          "path": "package/node_modules/braces/index.js",
+          "role": "runtime",
+          "sha256": "332ea07c7b006361aad12aa994ca75dc1db8e8382b884909e2f38f10b85c88a4"
+        },
+        {
+          "path": "package/node_modules/braces/lib/compile.js",
+          "role": "runtime",
+          "sha256": "dc98f22eee3d511785d92a00758d5f0d48efed5f5813bdecc2de430c529b5c9f"
+        },
+        {
+          "path": "package/node_modules/braces/lib/constants.js",
+          "role": "runtime",
+          "sha256": "c18ac5adb57308f1ce42a28552da3a31f5d83709743ebd9a636336813a744d4b"
+        },
+        {
+          "path": "package/node_modules/braces/lib/expand.js",
+          "role": "runtime",
+          "sha256": "41ccc196ebfa7b7781a634e721eb744e4e7bcb54cba427a7e3d6806a1b9e58f7"
+        },
+        {
+          "path": "package/node_modules/braces/lib/parse.js",
+          "role": "runtime",
+          "sha256": "e572166565f15fa6ad9865ae49d678218e32aabfd1b3720f6d0d43d39800d310"
+        },
+        {
+          "path": "package/node_modules/braces/lib/stringify.js",
+          "role": "runtime",
+          "sha256": "379f22d77bfa1478341ccd49c5e4267464aabcbba03558bab332aac23fc6f23a"
+        },
+        {
+          "path": "package/node_modules/braces/lib/utils.js",
+          "role": "runtime",
+          "sha256": "b5a7596aa67730412b3c029ef09e84e6b67b8e445cffd35d1d295549c89066c7"
+        }
+      ]
+    },
+    {
+      "name": "commander",
+      "version": "15.0.0",
+      "packagePath": "package/node_modules/commander",
+      "manifest": {
+        "path": "package/node_modules/commander/package.json",
+        "sha256": "d42e500959d658bea23acc597eac399e77c21510d452e6d3e6d953f4a2f55ac0"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/commander/LICENSE",
+          "role": "license",
+          "sha256": "04512a63dce4d2d506ad612dc0bd7681ccf6e3655f7b6eaef7dfac8323d1ec0b"
+        },
+        {
+          "path": "package/node_modules/commander/index.js",
+          "role": "runtime",
+          "sha256": "3b1110c896b70704627d415e6658953a5a6f099e0b141311c73dfb06e55bdbcc"
+        },
+        {
+          "path": "package/node_modules/commander/lib/argument.js",
+          "role": "runtime",
+          "sha256": "a86c43174d904198b92ece266e97b6b711e640f3b89ac45291b682a753e145e4"
+        },
+        {
+          "path": "package/node_modules/commander/lib/command.js",
+          "role": "runtime",
+          "sha256": "751c19479dac3e3f415fbbd709df90d25c595034f699dba7bef6eeab4dc1304b"
+        },
+        {
+          "path": "package/node_modules/commander/lib/error.js",
+          "role": "runtime",
+          "sha256": "98ac5e1b63894792fa7740e5fb2b79ef8c016d94fc41e55bb6ff85fff3346e72"
+        },
+        {
+          "path": "package/node_modules/commander/lib/help.js",
+          "role": "runtime",
+          "sha256": "c1a58d89555b8c0cef5c3da9b173c998ce1faf43fe2cdcb331c0fd2c3a455c38"
+        },
+        {
+          "path": "package/node_modules/commander/lib/option.js",
+          "role": "runtime",
+          "sha256": "29fc1d0311f16f33fd0df2d8589c93b0a7e37fb89afd852672ba3b7083fa1515"
+        },
+        {
+          "path": "package/node_modules/commander/lib/suggestSimilar.js",
+          "role": "runtime",
+          "sha256": "eaa0c4bd9f4d51259c9107e65173f7de37a5413cbd5de39a5795d83d3c7deb3f"
+        }
+      ]
+    },
+    {
+      "name": "elkjs",
+      "version": "0.12.0",
+      "packagePath": "package/node_modules/elkjs",
+      "manifest": {
+        "path": "package/node_modules/elkjs/package.json",
+        "sha256": "80cec1cf6cfa727c5ee02243a0787a6f1780bd9f87a884992064fe8eecd3fa29"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/elkjs/LICENSE.md",
+          "role": "license",
+          "sha256": "637e81f4a1b6b4079535c499fca05e238cf7605c1ff5b76d60d7da7ce96700c9"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/elk-api.d.ts",
+          "role": "declaration",
+          "sha256": "93f3c5a56c99e0f88f6d6d45e24e4b6861b5500a7a6c03ea01f8af8d46d599af"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/elk-api.js",
+          "role": "runtime",
+          "sha256": "ccca46175c05bbd280b5de6c9853103711e52c666a101f145b717e345363e24d"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/elk-worker.js",
+          "role": "runtime",
+          "sha256": "f7617e622f565748e1c88a9f45d97b458bc9c3f4299c0fdc6ed778a92ef30683"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/elk-worker.min.js",
+          "role": "runtime",
+          "sha256": "e4f5c51c6f2fd564bb64e52e81c4a85a316ef2f24f8b90e1db5eb886c765b030"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/elk.bundled.js",
+          "role": "runtime",
+          "sha256": "1222e44f953ce7746af23801e723708f8e6f436b8b377a6a5fc7552f34a307b3"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/main.d.ts",
+          "role": "declaration",
+          "sha256": "6d5ae88a366b976d02fc68bc3cc15af8b23b287735dd506b32d55cb74452f7a3"
+        },
+        {
+          "path": "package/node_modules/elkjs/lib/main.js",
+          "role": "runtime",
+          "sha256": "2e11f2611e1bc60bf3a15c267a0f128ecb5395cb348f733cbc44cefa341f4d44"
+        }
+      ]
+    },
+    {
+      "name": "fast-deep-equal",
+      "version": "3.1.3",
+      "packagePath": "package/node_modules/fast-deep-equal",
+      "manifest": {
+        "path": "package/node_modules/fast-deep-equal/package.json",
+        "sha256": "a8dba02b66c4b2eda9ad86fd34db4a0686bcbde80116c9dd2312d7769f226398"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/fast-deep-equal/LICENSE",
+          "role": "license",
+          "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+        },
+        {
+          "path": "package/node_modules/fast-deep-equal/es6/index.js",
+          "role": "runtime",
+          "sha256": "d7f027497048c75e17268dbc66b670579d4f70f2dc0e019cdc9edf5078c247d6"
+        },
+        {
+          "path": "package/node_modules/fast-deep-equal/es6/react.js",
+          "role": "runtime",
+          "sha256": "366779cbb7821d26d18b9eaa12b6788cbb101cdbbabcae36f2919a5f48534ef0"
+        },
+        {
+          "path": "package/node_modules/fast-deep-equal/index.js",
+          "role": "runtime",
+          "sha256": "eb469e206280321a3878f2335ec98aa2104a155079d8ed83a23029098dccd215"
+        },
+        {
+          "path": "package/node_modules/fast-deep-equal/react.js",
+          "role": "runtime",
+          "sha256": "37cbd168dbd42c73119ce7326556bddef40b3a5fbd2e215cf81a7c78fb73ff9a"
+        }
+      ]
+    },
+    {
+      "name": "fast-glob",
+      "version": "3.3.3",
+      "packagePath": "package/node_modules/fast-glob",
+      "manifest": {
+        "path": "package/node_modules/fast-glob/package.json",
+        "sha256": "68bc2ed26cf856016570946dc158cc19767d2e76a9bffadf25f3b931e7379c0b"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/fast-glob/LICENSE",
+          "role": "license",
+          "sha256": "9363d160bf41d46d83901a5d24fc3fe2094c2afc17b4a2378914b273977ee2de"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/index.js",
+          "role": "runtime",
+          "sha256": "007e6052c85f7ed2ca2eaed4ae0ca5fb14226cd7585a5f096abcf78e28146f96"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/managers/tasks.js",
+          "role": "runtime",
+          "sha256": "2ace07a1b05722a3e6998e0c29002c1fb1db59e73208f2bb60693c1721e2cb7b"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/async.js",
+          "role": "runtime",
+          "sha256": "bb933692e540a7ad5e8e8a31e5c5db6cbfe925054ed4a3bd6a21f626c28441ab"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/filters/deep.js",
+          "role": "runtime",
+          "sha256": "a928ab99904b45ee1eb02ecccaf44ee82ff459df1e1ab7a6e70272ee7e3612eb"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/filters/entry.js",
+          "role": "runtime",
+          "sha256": "49679538cfea2c7b6b917c9d04f631bfc7f50bb200c4fdb168561147bda82a1e"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/filters/error.js",
+          "role": "runtime",
+          "sha256": "3cef3a07527bd8ee61655eac1463b5a9af89aa69133e7a3b40c82b401953562e"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/matchers/matcher.js",
+          "role": "runtime",
+          "sha256": "5dc95497ae47e058b2bd7ecb958097ae389848c71e2ed1d35f6b2b5496007e59"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/matchers/partial.js",
+          "role": "runtime",
+          "sha256": "5ce00745b96a769556407a282c1fbf303e18421084ee6adac88c4a2715dc50b4"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/provider.js",
+          "role": "runtime",
+          "sha256": "205c99df95c8c2756d54b5d447e758cba1106b43aa2435dda13c7949ce17c62c"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/stream.js",
+          "role": "runtime",
+          "sha256": "1483b0b5867ec5abdd0ad5bb70c0fa1045014a75be25249a9f2d3d4a19d3e030"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/sync.js",
+          "role": "runtime",
+          "sha256": "8bfa1b27aeb4810937d921b7ee26b4a434315efbbbffcebde2540947de0885c2"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/providers/transformers/entry.js",
+          "role": "runtime",
+          "sha256": "0d7cd318379269c3ed6c6aaaf84cdc461bd9fc1ed4a4554f4454de8ab291cf03"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/readers/async.js",
+          "role": "runtime",
+          "sha256": "145a6129c92fcb7608c6b6f217bb0f28a22cdc8388d60144a062f397e3353b64"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/readers/reader.js",
+          "role": "runtime",
+          "sha256": "a7bdcaf433b5ab696cdc4750ac7916894405c41f3a51ca5f9fac8fb17a00bbec"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/readers/stream.js",
+          "role": "runtime",
+          "sha256": "193806523a3889f3faa6e311aeed3044e0fdeab939bb208a3213fe3bff037360"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/readers/sync.js",
+          "role": "runtime",
+          "sha256": "9538670791926ec8f7f22e87d13e68cd56d7e35cef0b6f51a9016b9295d01aa3"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/settings.js",
+          "role": "runtime",
+          "sha256": "e4375b4d4eff9fdb917a9ae5e0453e5be82da7aed7b822dfe7b92c4f7aee49c3"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/types/index.js",
+          "role": "runtime",
+          "sha256": "d43aa81f5bc89faa359e0f97c814ba25155591ff078fbb9bfd40f8c7c9683230"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/array.js",
+          "role": "runtime",
+          "sha256": "432791ee8fa960a16a5f3864fbfd9fc906078bf6aa44a12eee79049288276854"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/errno.js",
+          "role": "runtime",
+          "sha256": "1586402affdb743e636de83b34b05417583fe90ae6ebf3415941cc65be84739c"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/fs.js",
+          "role": "runtime",
+          "sha256": "10fcd66d19070a64fe2eb45a133047c574b045c5cabb860e04472e32341bb1ec"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/index.js",
+          "role": "runtime",
+          "sha256": "8693771308fbb864423813ca7b34158277268b1e19b8c5634a7e9f60910355c4"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/path.js",
+          "role": "runtime",
+          "sha256": "c6e4a7352fe6b6a13fac7933b8efda2f4f4461bef4eb3380f35195e4b818c9df"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/pattern.js",
+          "role": "runtime",
+          "sha256": "ada4ff0cfdfa804247dd1a8dc9fc00ec537b591c7ef7ded1ff602d2e3d0cd571"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/stream.js",
+          "role": "runtime",
+          "sha256": "fb76a333f0e41061ef1184c0efc6b8efcec8752e7822ef98e2b51bc232b27bef"
+        },
+        {
+          "path": "package/node_modules/fast-glob/out/utils/string.js",
+          "role": "runtime",
+          "sha256": "202e1032fd5cb468710caabf4b1aa18d2e0024aeef1be36750153579ba9a6aa4"
+        }
+      ]
+    },
+    {
+      "name": "fast-uri",
+      "version": "3.1.6",
+      "packagePath": "package/node_modules/fast-uri",
+      "manifest": {
+        "path": "package/node_modules/fast-uri/package.json",
+        "sha256": "82bc95f01cfa04a0f204781ff4b00cbdf19b39a5f5f7e5cf2809113e2c2ebdc8"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/fast-uri/LICENSE",
+          "role": "license",
+          "sha256": "b010b0dfdfdb23d7396e03b82cd4621fc9bb8f95d6b0aea70b9c24e12074c786"
+        },
+        {
+          "path": "package/node_modules/fast-uri/index.js",
+          "role": "runtime",
+          "sha256": "45b52d2d77365bcc8a41bfac0223482bf73e3bedf7d232027b4b27544f40097b"
+        },
+        {
+          "path": "package/node_modules/fast-uri/lib/schemes.js",
+          "role": "runtime",
+          "sha256": "c2c61d3fd0bc63a587100928a399e75be8c420d210c439d75f7346da4aa4f3c3"
+        },
+        {
+          "path": "package/node_modules/fast-uri/lib/utils.js",
+          "role": "runtime",
+          "sha256": "a523a2da0a4cc3354d6d171107ee9af303ba6437d6db228be0a629e9698d1602"
+        },
+        {
+          "path": "package/node_modules/fast-uri/types/index.d.ts",
+          "role": "declaration",
+          "sha256": "84bcc7c6b06f4d643a55dc63b56be0c81d990f8d549b66ea615c553268774dc3"
+        }
+      ]
+    },
+    {
+      "name": "fastq",
+      "version": "1.20.1",
+      "packagePath": "package/node_modules/fastq",
+      "manifest": {
+        "path": "package/node_modules/fastq/package.json",
+        "sha256": "24500342dabc75c64dcc637c2f59f2ce1114c80c6d58c69832178bc6e2172895"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/fastq/LICENSE",
+          "role": "license",
+          "sha256": "c3367f6d01a79d368fc4fbb41b3615fcd92f243d6597ab96742f6f976f9325af"
+        },
+        {
+          "path": "package/node_modules/fastq/queue.js",
+          "role": "runtime",
+          "sha256": "00bc4c635e66ecd8d8e6b8839a80a96995464a3e6064d0e1666e336983809659"
+        }
+      ]
+    },
+    {
+      "name": "fill-range",
+      "version": "7.1.1",
+      "packagePath": "package/node_modules/fill-range",
+      "manifest": {
+        "path": "package/node_modules/fill-range/package.json",
+        "sha256": "2631aab34e982a4cb0d8bd7c67769f457a5bd222260139212ae20b5714631e3e"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/fill-range/LICENSE",
+          "role": "license",
+          "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2"
+        },
+        {
+          "path": "package/node_modules/fill-range/index.js",
+          "role": "runtime",
+          "sha256": "ca6199f79a117e4d68be02c6bcd974e2f18f358e711a0aba497bffaf1ccadd4e"
+        }
+      ]
+    },
+    {
+      "name": "glob-parent",
+      "version": "5.1.2",
+      "packagePath": "package/node_modules/glob-parent",
+      "manifest": {
+        "path": "package/node_modules/glob-parent/package.json",
+        "sha256": "5edbe74d68e7e0c9121b39f295e6bf87b601803bc93501fde424e6b14fbe012d"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/glob-parent/LICENSE",
+          "role": "license",
+          "sha256": "2c46f1325bd3822a33c1e2c1e49c18d13127ac00f9c8b3b79196c7a126f73cd9"
+        },
+        {
+          "path": "package/node_modules/glob-parent/index.js",
+          "role": "runtime",
+          "sha256": "8e482c70067850425183ae785f19614bb9c788cf22226db62243119e507384c4"
+        }
+      ]
+    },
+    {
+      "name": "is-extglob",
+      "version": "2.1.1",
+      "packagePath": "package/node_modules/is-extglob",
+      "manifest": {
+        "path": "package/node_modules/is-extglob/package.json",
+        "sha256": "f95ab2cfcf1fa0c1c5924a5179faa53cba45da8f3d77fa69c8d0f8d3b06bf10c"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/is-extglob/LICENSE",
+          "role": "license",
+          "sha256": "73b5283588baa142c5baaef5f56d3e8fdea7a30b214e8c5737e87640f882453a"
+        },
+        {
+          "path": "package/node_modules/is-extglob/index.js",
+          "role": "runtime",
+          "sha256": "68be041dd0379d295d89550d1f6f2e8c29645bdd92d14b427fe2e140b3c8f2f8"
+        }
+      ]
+    },
+    {
+      "name": "is-glob",
+      "version": "4.0.3",
+      "packagePath": "package/node_modules/is-glob",
+      "manifest": {
+        "path": "package/node_modules/is-glob/package.json",
+        "sha256": "fef3d5b882d6ee4fba7da8d47d4934771eec3d039f83645f2ca557707e07c7aa"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/is-glob/LICENSE",
+          "role": "license",
+          "sha256": "4cd903859549d4b20b571041f96dfae1136ed079c476126268f9d7cc1b611150"
+        },
+        {
+          "path": "package/node_modules/is-glob/index.js",
+          "role": "runtime",
+          "sha256": "3d6b458efdfc6c26e196b907ca56f14ee015e7272d46e179e5b6fccfb7b99a39"
+        }
+      ]
+    },
+    {
+      "name": "is-number",
+      "version": "7.0.0",
+      "packagePath": "package/node_modules/is-number",
+      "manifest": {
+        "path": "package/node_modules/is-number/package.json",
+        "sha256": "bfb85df6604ace0645998096ce3b9530aaa5e4c2061aadc689f6bfaafa3fceb5"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/is-number/LICENSE",
+          "role": "license",
+          "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2"
+        },
+        {
+          "path": "package/node_modules/is-number/index.js",
+          "role": "runtime",
+          "sha256": "04255e482e181687823a95b207802ddd32e746c65dce4c95a5176fc192735960"
+        }
+      ]
+    },
+    {
+      "name": "json-schema-traverse",
+      "version": "1.0.0",
+      "packagePath": "package/node_modules/json-schema-traverse",
+      "manifest": {
+        "path": "package/node_modules/json-schema-traverse/package.json",
+        "sha256": "0b1b2ac70c2d201633bbbd898ad81b5992f18d914f11e2815003bc229616f5e5"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/json-schema-traverse/LICENSE",
+          "role": "license",
+          "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+        },
+        {
+          "path": "package/node_modules/json-schema-traverse/index.js",
+          "role": "runtime",
+          "sha256": "024191b747afac01b28ff11d744e9f82720bbad5f716163ba5c962eb62aa2350"
+        }
+      ]
+    },
+    {
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "packagePath": "package/node_modules/jsonc-parser",
+      "manifest": {
+        "path": "package/node_modules/jsonc-parser/package.json",
+        "sha256": "6402764cfa4f90c09394f903cee1bba0a7f31d28d759cedd10adb57f46ff603c"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/jsonc-parser/LICENSE.md",
+          "role": "license",
+          "sha256": "c3a24c02d678e5f0711623dcf3ab3f243b273c2633f638a1fa8e35fb7c7f8e4d"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/impl/edit.js",
+          "role": "runtime",
+          "sha256": "9ecd115039cf7a478f223e4a9649170c7f5e8fd8016df1b267723b57553f9483"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/impl/format.js",
+          "role": "runtime",
+          "sha256": "f9e468e436bf1014a4395b1ac70374edb918739ba90b19e6e6a22ca0214564a9"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/impl/parser.js",
+          "role": "runtime",
+          "sha256": "a35db1bfb9631dcba643fa42972e9ebe2a318b4de3cac239d29081577a43d688"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/impl/scanner.js",
+          "role": "runtime",
+          "sha256": "581d82c4f1aa84b0605369c01f414fb0164ee462e03daa298cb960076a2a9e82"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/impl/string-intern.js",
+          "role": "runtime",
+          "sha256": "e590d27909a7c132382fbf9b8c4668054ab425734c1e0789753063356826c30f"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/main.d.ts",
+          "role": "declaration",
+          "sha256": "f1d603af05e59e26aae3d9fa7bb0138e744bfbfc9f4793ddeaabe5c85da1d30f"
+        },
+        {
+          "path": "package/node_modules/jsonc-parser/lib/umd/main.js",
+          "role": "runtime",
+          "sha256": "6dc132e2e792a9616688ff93d10dd671c1fbcfa3301d76bff3e81193d049337d"
+        }
+      ]
+    },
+    {
+      "name": "merge2",
+      "version": "1.4.1",
+      "packagePath": "package/node_modules/merge2",
+      "manifest": {
+        "path": "package/node_modules/merge2/package.json",
+        "sha256": "d6d04a1ec3e8305b6671993146d436c356d410a1e236cabd33a9a652af59f0c0"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/merge2/LICENSE",
+          "role": "license",
+          "sha256": "b2590e53ea6e050512c3993bfc746c394bbba9242fd6909245201bdc1dc6862a"
+        },
+        {
+          "path": "package/node_modules/merge2/index.js",
+          "role": "runtime",
+          "sha256": "15a54c244f6591f3a744ea3e26f3484fd3ecd0975734639aa535b5af9a3edade"
+        }
+      ]
+    },
+    {
+      "name": "micromatch",
+      "version": "4.0.8",
+      "packagePath": "package/node_modules/micromatch",
+      "manifest": {
+        "path": "package/node_modules/micromatch/package.json",
+        "sha256": "964c005c5e58eba456feeb7917ddeba666eff9547cbd82d2ba49ebf0f5a059a2"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/micromatch/LICENSE",
+          "role": "license",
+          "sha256": "35bdd8a44339719441900fb50fbefc5e2dca1ca662cbaed7a687de842c8b70f2"
+        },
+        {
+          "path": "package/node_modules/micromatch/index.js",
+          "role": "runtime",
+          "sha256": "6a56366fcf3ae8e678e574900a0acb2ea6f118ea030d09bcc1b1053ccab916bb"
+        }
+      ]
+    },
+    {
+      "name": "picomatch",
+      "version": "2.3.2",
+      "packagePath": "package/node_modules/picomatch",
+      "manifest": {
+        "path": "package/node_modules/picomatch/package.json",
+        "sha256": "2f0a5ce69e8bc15ee1dada16e55d37850ad42da3b1ad1b7ce77644bd347a0469"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/picomatch/LICENSE",
+          "role": "license",
+          "sha256": "d0cd141b0c322fded5dfad1d4645bb2fedfc05b7321fe1009469638190d59ef9"
+        },
+        {
+          "path": "package/node_modules/picomatch/index.js",
+          "role": "runtime",
+          "sha256": "5695ff5dfcd5a338a40630bd506056f2950bcb08fe1cc068519cbbfe60add480"
+        },
+        {
+          "path": "package/node_modules/picomatch/lib/constants.js",
+          "role": "runtime",
+          "sha256": "980225ab847a88a784f6d315557b8434f7742b2551ce20e354455c61b938c0a5"
+        },
+        {
+          "path": "package/node_modules/picomatch/lib/parse.js",
+          "role": "runtime",
+          "sha256": "3a91656f440069aa8f8e15c9d695b9f6b2209df1eab2be8127c72cbcca45ff5f"
+        },
+        {
+          "path": "package/node_modules/picomatch/lib/picomatch.js",
+          "role": "runtime",
+          "sha256": "2cb169cbe17d356036c5f62a377318b85e30817877e59797842aec9d8b15f54b"
+        },
+        {
+          "path": "package/node_modules/picomatch/lib/scan.js",
+          "role": "runtime",
+          "sha256": "227fcc994a477ea95c5a0435d32783566334c6bd0dcc4a103029735ad8c9c535"
+        },
+        {
+          "path": "package/node_modules/picomatch/lib/utils.js",
+          "role": "runtime",
+          "sha256": "809fc29cf35ab0aa76b99cad29182f62c0ae598902481d10f9868eaef71981ee"
+        }
+      ]
+    },
+    {
+      "name": "queue-microtask",
+      "version": "1.2.3",
+      "packagePath": "package/node_modules/queue-microtask",
+      "manifest": {
+        "path": "package/node_modules/queue-microtask/package.json",
+        "sha256": "6aeab48d5f4b96e0f08e5b266bf1f33076ce360b60237a231506834e71955485"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/queue-microtask/LICENSE",
+          "role": "license",
+          "sha256": "d4c2065e2b936e62a4eb400efb4576edec9ca1388a9f78aa288e147275e7bc8b"
+        },
+        {
+          "path": "package/node_modules/queue-microtask/index.js",
+          "role": "runtime",
+          "sha256": "e56672f1cf34e0be38f3c28c164810c878a243918d19bd0ac82d701209b5b9a2"
+        }
+      ]
+    },
+    {
+      "name": "require-from-string",
+      "version": "2.0.2",
+      "packagePath": "package/node_modules/require-from-string",
+      "manifest": {
+        "path": "package/node_modules/require-from-string/package.json",
+        "sha256": "7d10dbfb8ff6d12fc420c0c12ac7179aaeff32fb6edf422a231cf72fa77dd0c4"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/require-from-string/index.js",
+          "role": "runtime",
+          "sha256": "cb059342a762b955997bf780f3693add176922727f2fa9f11fcaf1b3fc323239"
+        },
+        {
+          "path": "package/node_modules/require-from-string/license",
+          "role": "license",
+          "sha256": "6ee0feb1f6ef996ff5a68600f8cf98909cf412d39ef3cdceaefd87d636fa1b7f"
+        }
+      ]
+    },
+    {
+      "name": "reusify",
+      "version": "1.1.0",
+      "packagePath": "package/node_modules/reusify",
+      "manifest": {
+        "path": "package/node_modules/reusify/package.json",
+        "sha256": "01988fda1b093de46cdc66bde0fcc5dd5739adf65146c502ac2016118269cabc"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/reusify/LICENSE",
+          "role": "license",
+          "sha256": "93a1506953b08ad4874e1cc0971a1d2ac387ca510da91e4d05e460a6c4966fa3"
+        },
+        {
+          "path": "package/node_modules/reusify/reusify.js",
+          "role": "runtime",
+          "sha256": "00894a3dd7016e3751560569cc791c15c2e0607c35a91bd3398dab675026fcf3"
+        }
+      ]
+    },
+    {
+      "name": "run-parallel",
+      "version": "1.2.0",
+      "packagePath": "package/node_modules/run-parallel",
+      "manifest": {
+        "path": "package/node_modules/run-parallel/package.json",
+        "sha256": "47c1424935350e2fdd63b0bcdbe057061c395000096d493453119786a944ecc6"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/run-parallel/LICENSE",
+          "role": "license",
+          "sha256": "d4c2065e2b936e62a4eb400efb4576edec9ca1388a9f78aa288e147275e7bc8b"
+        },
+        {
+          "path": "package/node_modules/run-parallel/index.js",
+          "role": "runtime",
+          "sha256": "acbc9a16809467da8f06757d4600be6466b20bf4a05e55c157fa04830fb186b7"
+        }
+      ]
+    },
+    {
+      "name": "to-regex-range",
+      "version": "5.0.1",
+      "packagePath": "package/node_modules/to-regex-range",
+      "manifest": {
+        "path": "package/node_modules/to-regex-range/package.json",
+        "sha256": "1a8a90dd2d922eeccc6ec901ed7675f79597d422ce6510df4f3c71ace1303917"
+      },
+      "files": [
+        {
+          "path": "package/node_modules/to-regex-range/LICENSE",
+          "role": "license",
+          "sha256": "e7d1fee7347ffddccc5fd03327ffdb50f8c112be0d5016d62388a92c4ae6e7a9"
+        },
+        {
+          "path": "package/node_modules/to-regex-range/index.js",
+          "role": "runtime",
+          "sha256": "e32199271f92372a2deb70a3a57f7c0f7f558d04152a905eb97104867870c404"
+        }
+      ]
+    }
+  ]
+}

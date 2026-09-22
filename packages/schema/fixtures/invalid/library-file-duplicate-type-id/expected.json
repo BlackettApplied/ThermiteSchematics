@@ -1,0 +1,1 @@
+[{"code":"E022","jsonPointer":"/types/1/id","line":1,"column":97,"related":[{"file":"fixtures/invalid/library-file-duplicate-type-id/input.json","line":1,"column":37,"note":"First declaration of this type id."}]}]

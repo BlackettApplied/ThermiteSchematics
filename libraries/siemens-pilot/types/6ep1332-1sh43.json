@@ -1,0 +1,109 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6ep1332-1sh43",
+      "description": "LOGO!Power isolated stabilized power supply, 24 V DC / 2.5 A",
+      "category": "power-supply",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6EP1332-1SH43",
+        "document": {
+          "url": "https://www.stercontrol.pl/attachments/data/import/6EP13321SH43_en.pdf",
+          "title": "Siemens Data sheet 6EP1332-1SH43",
+          "revision": "05/04/2017 (as printed)",
+          "pages": "1-4; connection inventory and Class II on p.3"
+        },
+        "modelingNotes": [
+          "Exact 6EP1332-1SH43 only. Rated input 100-240 V AC, operating range 85-264 V AC at 47-63 Hz, or 110-300 V DC. No input scalar voltage rating is assigned to this dual-mode range. Manual p.24 specifies DC positive to L1 (L in exact datasheet), negative to N.",
+          "Output nominal 24 V DC, adjustable 22.2-26.4 V; total rated output 2.5 A / typical 60 W, shared across both positive terminals. Derate 2%/K above +55 through +70 degC; operation -20 to +70 degC with natural convection. Specifications otherwise at rated input and +25 degC. Conditional aggregate current is retained here rather than assigned independently per screw.",
+          "Exact datasheet p.3 inventories L and N once each, + and - twice each; no auxiliary connections. Family manual p.10 uses L1 instead of L. Preserve exact-sheet L. +.1/+.2 and -.1/-.2 are authoring aliases for repeated + and - legends, not manufacturer numbers or asserted left/right coordinates.",
+          "Manual 06.2014 C98130-A7560-A999-3-7629, pp.9-10,13,24-25: https://www.manualslib.com/manual/1612842/Siemens-Logo-Power-Series.html. Visually reviewed family illustrations pp.9,13,25; p.25 explicitly illustrates a different family member, used only to corroborate shared terminal convention. Exact-order inventory comes from its own datasheet.",
+          "Two screws for the single positive output and two for its return establish duplicated same-polarity endpoints (datasheet p.3, manual p.10). Represent factory continuity with explicit project jumpers +.1 to +.2 and -.1 to -.2. This interpretation is supported by the single isolated output shown in manual p.13, not by a detailed internal copper drawing. Never join opposite polarities or primary to secondary.",
+          "Class II without protective conductor; no PE, shield, communication or auxiliary terminals. Green OK LED and adjustment potentiometer are local controls, not electrical connections. Manual p.25 requires an external minus-to-PE connection when supplying Class I devices; this conditional field bond is not factory continuity.",
+          "L and N are required for operation in either supply mode. No individual output screw is universally required: duplicate takeoffs are alternatives and no-load operation is allowed. Shared output policy permits explicit factory-link representation plus field lead; it does not authorize multiple conductors under a clamp. Functions and symbols never manufacture continuity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Six screw terminals: L, N, two +, two -. Exact-sheet complete connections list and Class II construction support no PE or auxiliary terminals; no shield or communication interfaces. Duplicate suffixes are aliases without physical position assertions. Two explicit factory links required."
+      },
+      "terminals": {
+        "L": {
+          "role": "power",
+          "required": true,
+          "description": "Line input L (family manual L1); DC input positive",
+          "connection_policy": "exclusive"
+        },
+        "N": {
+          "role": "return",
+          "required": true,
+          "description": "Input neutral; DC input negative",
+          "connection_policy": "exclusive"
+        },
+        "+.1": {
+          "role": "power",
+          "description": "Positive output; +.1 is an alias for a repeated polarity legend",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "+.2": {
+          "role": "power",
+          "description": "Positive output; +.2 is an alias for a repeated polarity legend",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "-.1": {
+          "role": "return",
+          "description": "Output return; -.1 is an alias for a repeated polarity legend",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "-.2": {
+          "role": "return",
+          "description": "Output return; -.2 is an alias for a repeated polarity legend",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["L", "N"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["+.1", "-.1"]
+        },
+        "PLUS_DUPLICATE": {
+          "kind": "bus",
+          "terminals": ["+.2"]
+        },
+        "MINUS_DUPLICATE": {
+          "kind": "bus",
+          "terminals": ["-.2"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "PLUS_DUPLICATE": "terminal",
+        "MINUS_DUPLICATE": "terminal"
+      },
+      "terminalOrder": ["L", "N", "+.1", "+.2", "-.1", "-.2"]
+    }
+  ]
+}

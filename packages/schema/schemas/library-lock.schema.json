@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "title": "LibraryLock",
+  "$defs": {
+    "portableDependencyPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:)(?![\\s\\S]*\\\\)[^\\u0000-\\u001f\\u007f-\\u009f]+$"
+    },
+    "libraryFilePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![A-Za-z]:)(?![\\s\\S]*\\\\)(?!\\.{1,2}(?:/|$))(?![\\s\\S]*/\\.{1,2}(?:/|$))[^\\u0000-\\u001f\\u007f-\\u009f/]+(?:/[^\\u0000-\\u001f\\u007f-\\u009f/]+)*$"
+    },
+    "integrity": {
+      "type": "string",
+      "pattern": "^sha256-[A-Za-z0-9+/]{42}[AEIMQUYcgkosw048]=$"
+    },
+    "library": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "path", "integrity", "files"],
+      "properties": {
+        "version": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/library.schema.json#/properties/version"
+        },
+        "path": {
+          "$ref": "#/$defs/portableDependencyPath"
+        },
+        "resolutionKind": {
+          "enum": ["local", "shipped"]
+        },
+        "integrity": {
+          "$ref": "#/$defs/integrity"
+        },
+        "files": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["library.json"],
+          "propertyNames": {
+            "$ref": "#/$defs/libraryFilePath"
+          },
+          "patternProperties": {
+            "^(?!library\\.json$).*$": {
+              "$ref": "#/$defs/integrity"
+            }
+          },
+          "properties": {
+            "library.json": {
+              "$ref": "#/$defs/integrity"
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "lockfile_version", "project_format", "libraries"],
+  "properties": {
+    "$schema": {
+      "const": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json"
+    },
+    "lockfile_version": {
+      "const": 1
+    },
+    "project_format": {
+      "type": "string"
+    },
+    "libraries": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^.*$": {
+          "$ref": "#/$defs/library"
+        }
+      }
+    }
+  }
+}

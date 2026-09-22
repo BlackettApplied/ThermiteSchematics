@@ -1,0 +1,37 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-fixture:boundary",
+      "description": "Generic unenergized test boundary / no installation design",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {},
+        "2": {},
+        "3": {},
+        "4": {},
+        "5": {},
+        "6": {},
+        "7": {},
+        "8": {},
+        "9": {},
+        "10": {},
+        "11": {},
+        "12": {},
+        "13": {},
+        "14": {},
+        "15": {},
+        "16": {},
+        "17": {},
+        "18": {},
+        "19": {},
+        "20": {}
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic test boundary only; no real equipment, supply or protection is specified."
+      }
+    }
+  ]
+}

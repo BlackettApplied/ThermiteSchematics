@@ -1,0 +1,202 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-et200pro-pilot:6EP1961-2BA41",
+      "description": "SITOP PSE200U 24 V DC selectivity module, four adjustable 3–10 A outputs with serial status",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6EP1961-2BA41",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/004/108989004/att_911004/v1/A7579-A1-4-76_MANUAL_SITOP-PSE200U_en-US.pdf?download=true",
+          "title": "Selectivity modules manual",
+          "revision": "04/2019, C98130-A7579-A1-4-7629",
+          "pages": "pp.11-13 external connections; p.15 signaling; p.45 installation"
+        },
+        "modelingNotes": [
+          "All twelve external screw positions are inventoried. Suffix .1/.2 distinguishes repeated physical +24V, 0V and NF screws; these are authoring keys, not additional printed terminal numbers.",
+          "The two +24 V screws are alternative input attachment points, and the two 0 V screws are alternative electronics-return attachment points. The schema cannot express a required-one-of terminal group; neither duplicate screw is universally required individually. A project must mark its chosen input and return in connectionReview and verify an actual upstream feed.",
+          "0 V terminals supply the internal electronics only. Connected load returns must go directly to the power supply, not through this module.",
+          "S is the serial single-channel status output; it is not a dry changeover contact. RST is the remote reset input. The two NF positions are unassigned, not normally-closed contacts.",
+          "The four protected outputs are stateful independent channels. Functions do not create permanent ties from input to outputs or between duplicate screws. Trip settings, timing, serial decoding, protection coordination and current-measuring points are outside this model.",
+          "This type represents exact 6EP1961-2BA41. The -2BA21 group-signaling relay terminal arrangement 11/12/14 must not be copied into this type."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All twelve screw positions are inventoried. Front current-measuring points and internal conductive/protective behavior are not modeled. Required alternative input/return screws need application-specific review because the schema has no required-one-of supply group."
+      },
+      "terminals": {
+        "+24V.1": {
+          "description": "+24 V input, first duplicate screw",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "+24V.2": {
+          "description": "+24 V input, second duplicate screw",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "0V.1": {
+          "description": "0 V electronics return, first duplicate screw",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "0V.2": {
+          "description": "0 V electronics return, second duplicate screw",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "1": {
+          "description": "Protected +24 V output 1",
+          "role": "protected_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 10
+          }
+        },
+        "2": {
+          "description": "Protected +24 V output 2",
+          "role": "protected_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 10
+          }
+        },
+        "3": {
+          "description": "Protected +24 V output 3",
+          "role": "protected_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 10
+          }
+        },
+        "4": {
+          "description": "Protected +24 V output 4",
+          "role": "protected_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 10
+          }
+        },
+        "NF.1": {
+          "description": "Not assigned, first NF screw",
+          "role": "no_connection"
+        },
+        "NF.2": {
+          "description": "Not assigned, second NF screw",
+          "role": "no_connection"
+        },
+        "S": {
+          "description": "Serial single-channel status output",
+          "role": "status_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "RST": {
+          "description": "Remote reset input",
+          "role": "reset_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "input1": {
+          "kind": "load",
+          "terminals": ["+24V.1", "0V.1"]
+        },
+        "input2": {
+          "kind": "load",
+          "terminals": ["+24V.2", "0V.2"]
+        },
+        "ch1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1"]
+        },
+        "ch2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["2"]
+        },
+        "ch3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["3"]
+        },
+        "ch4": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["4"]
+        },
+        "chS": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["S"]
+        },
+        "chRST": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["RST"]
+        },
+        "NF.1": {
+          "kind": "bus",
+          "terminals": ["NF.1"]
+        },
+        "NF.2": {
+          "kind": "bus",
+          "terminals": ["NF.2"]
+        }
+      },
+      "circuitSymbols": {
+        "input1": "load",
+        "input2": "load",
+        "ch1": "interface",
+        "ch2": "interface",
+        "ch3": "interface",
+        "ch4": "interface",
+        "chS": "interface",
+        "chRST": "interface",
+        "NF.1": "terminal",
+        "NF.2": "terminal"
+      },
+      "terminalOrder": [
+        "+24V.1",
+        "+24V.2",
+        "0V.1",
+        "0V.2",
+        "1",
+        "2",
+        "3",
+        "4",
+        "NF.1",
+        "NF.2",
+        "S",
+        "RST"
+      ]
+    }
+  ]
+}

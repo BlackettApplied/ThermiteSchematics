@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/cable.schema.json",
+  "title": "Cable",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uid", "kind", "designation", "type", "conductors"],
+  "properties": {
+    "uid": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/uid"
+    },
+    "kind": {
+      "const": "cable"
+    },
+    "designation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "type": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/typeId"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "conductors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "endpoints"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "endpoints": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "End A and end B. A null endpoint requires usage spare (enforced by structural validation).",
+            "items": {
+              "type": ["object", "null"],
+              "additionalProperties": false,
+              "required": ["device", "terminal"],
+              "properties": {
+                "device": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                },
+                "terminal": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                }
+              }
+            }
+          },
+          "usage": {
+            "enum": ["in-use", "spare"]
+          }
+        }
+      }
+    },
+    "fromLocation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "toLocation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    }
+  }
+}

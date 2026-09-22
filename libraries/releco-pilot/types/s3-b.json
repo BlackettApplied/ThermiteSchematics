@@ -1,0 +1,401 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "releco-pilot:s3-b",
+      "description": "11-pin C3 relay socket base / screw terminal / 10 A 300 V / DIN rail or panel",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Releco",
+        "orderNumber": "S3-B",
+        "document": {
+          "url": "https://www.comatreleco.com/media/43/fd/6f/1692802495/wor_3-2_en.pdf",
+          "title": "ComatReleco Catalogue World of Relays (WoR) 3.2 (English)",
+          "revision": "WoR 3.2",
+          "pages": "p.336 S3-B datasheet & fig.1 wiring diagram; p.335 11-pin socket index; p.332 socket/relay selection; pp.330-331 retaining-clip selection; p.382 accessory scope"
+        },
+        "modelingNotes": [
+          "Exact order S3-B, ComatReleco WoR 3.2 p.336: '11-pin C3 Relay socket | Time Cubes compatible | screw terminal'. Rated load 10 A / 300 V; dielectric 2.5 kV rms/1 min; conductor 4 mm2/AWG12 single or 2x2.5 mm2; M3 Pozi screw at 0.7 Nm; TH35 (EN 60715) or back-panel mount; op. -40..60 C; 55 g; PA/PC; EN 60664-1. The catalogue is branded ComatReleco (Comat Releco AG); 'Releco' is the historical product brand and the source make.",
+          "Pinout from fig.1 wiring diagram, reviewed at 600 dpi. Bold value = socket screw-terminal marking (1-11); parenthetical = relay-pin IEC function on a plugged C3 (3 CO) relay: 1->11, 2->A1, 3->14, 4->12, 5->22, 6->21, 7->24, 8->32, 9->34, 10->A2, 11->31. Contact groups 1(11/12/14), 2(21/22/24), 3(31/32/34) plus coil A1/A2. Text extraction scrambled terminals 5/6; the rendered diagram gives 5=22, 6=21.",
+          "Bare socket = passive wiring base of 11 independent pins. C.n is the wire-side screw clamp; M.n is the relay-side mating contact; C.n and M.n are the two accessible ends of one internal conductor. Author one explicit fixed link C.n-M.n per pin to represent factory continuity; these are not field jumpers. The singleton bus functions and connector metadata do not themselves join nets.",
+          "No relay behavior belongs to this socket. The coil and three CO switches drawn in fig.1 are the plugged C3 relay, not the socket. There are no cross-pin jumpers, and installed relay contact positions are not permanent socket links. An 11-pin relay socket has no PE/bonding terminal; none is invented.",
+          "Ratings are equipment capability: current 10 A recorded per terminal; 300 V kept in notes (not authored as nominal_voltage) so the compiler does not read it as circuit intent; no AC/DC voltage_type is assigned to a socket rated for both. connectorPorts.MATE documents the relay-facing 11-pin interface keyed by IEC function; exact angular pin coordinates / keyway of the circular base are not specified and are not invented.",
+          "Accessories are separate orders and excluded from this type: included retaining clip S30-CM/10; optional retaining springs HF-32 / HF-33; coding ring S3-BC (p.382). Freewheeling-diode modules RD1/RD16 fit S3-M/S3-M0/S5-M, not S3-B. Do not substitute the 250 V S3-S or the S3-M(x)/EC-11 sockets. Installed hardware revision and any fitted coding ring are unverified."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All 11 pins are inventoried as clamp (C.1-C.11) plus mating-contact (M.1-M.11) pairs with the visually verified screw<->relay-function map, and each pin has one fixed internal conductor (C.n-M.n). Open items are physical geometry (exact angular pin/keyway positions of the circular 11-pin base), the AC/DC split of the 10 A/300 V rating, and installed hardware revision; none of these is an additional electrical terminal. No PE/bond terminal exists on this relay socket."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Screw terminal 1 (wire clamp) - relay pin 11 (contact 1 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.2": {
+          "description": "Screw terminal 2 (wire clamp) - relay pin A1 (coil)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.3": {
+          "description": "Screw terminal 3 (wire clamp) - relay pin 14 (contact 1 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.4": {
+          "description": "Screw terminal 4 (wire clamp) - relay pin 12 (contact 1 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.5": {
+          "description": "Screw terminal 5 (wire clamp) - relay pin 22 (contact 2 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.6": {
+          "description": "Screw terminal 6 (wire clamp) - relay pin 21 (contact 2 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.7": {
+          "description": "Screw terminal 7 (wire clamp) - relay pin 24 (contact 2 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.8": {
+          "description": "Screw terminal 8 (wire clamp) - relay pin 32 (contact 3 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.9": {
+          "description": "Screw terminal 9 (wire clamp) - relay pin 34 (contact 3 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.10": {
+          "description": "Screw terminal 10 (wire clamp) - relay pin A2 (coil)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "C.11": {
+          "description": "Screw terminal 11 (wire clamp) - relay pin 31 (contact 3 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.1": {
+          "description": "Mating contact 1 (relay-pin receptacle) - relay pin 11 (contact 1 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.2": {
+          "description": "Mating contact 2 (relay-pin receptacle) - relay pin A1 (coil)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.3": {
+          "description": "Mating contact 3 (relay-pin receptacle) - relay pin 14 (contact 1 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.4": {
+          "description": "Mating contact 4 (relay-pin receptacle) - relay pin 12 (contact 1 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.5": {
+          "description": "Mating contact 5 (relay-pin receptacle) - relay pin 22 (contact 2 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.6": {
+          "description": "Mating contact 6 (relay-pin receptacle) - relay pin 21 (contact 2 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.7": {
+          "description": "Mating contact 7 (relay-pin receptacle) - relay pin 24 (contact 2 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.8": {
+          "description": "Mating contact 8 (relay-pin receptacle) - relay pin 32 (contact 3 NC)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.9": {
+          "description": "Mating contact 9 (relay-pin receptacle) - relay pin 34 (contact 3 NO)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.10": {
+          "description": "Mating contact 10 (relay-pin receptacle) - relay pin A2 (coil)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        },
+        "M.11": {
+          "description": "Mating contact 11 (relay-pin receptacle) - relay pin 31 (contact 3 common)",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 10
+          }
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "C.10": {
+          "kind": "bus",
+          "terminals": ["C.10"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "M.10": {
+          "kind": "bus",
+          "terminals": ["M.10"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "C.7": "terminal",
+        "C.8": "terminal",
+        "C.9": "terminal",
+        "C.10": "terminal",
+        "C.11": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "M.7": "terminal",
+        "M.8": "terminal",
+        "M.9": "terminal",
+        "M.10": "terminal",
+        "M.11": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "ComatReleco S3-B 11-pin C3 relay base (undecal, screw terminal)",
+          "description": "Relay-facing 11-pin interface. Pins keyed by relay-pin IEC function from p.336 fig.1; each maps to the socket mating contact and its screw-terminal number. No exact angular pin coordinates or keyway orientation is asserted.",
+          "pins": {
+            "11": {
+              "terminal": "M.1",
+              "description": "Contact 1 common; socket screw terminal 1"
+            },
+            "A1": {
+              "terminal": "M.2",
+              "description": "Coil A1; socket screw terminal 2"
+            },
+            "14": {
+              "terminal": "M.3",
+              "description": "Contact 1 NO; socket screw terminal 3"
+            },
+            "12": {
+              "terminal": "M.4",
+              "description": "Contact 1 NC; socket screw terminal 4"
+            },
+            "22": {
+              "terminal": "M.5",
+              "description": "Contact 2 NC; socket screw terminal 5"
+            },
+            "21": {
+              "terminal": "M.6",
+              "description": "Contact 2 common; socket screw terminal 6"
+            },
+            "24": {
+              "terminal": "M.7",
+              "description": "Contact 2 NO; socket screw terminal 7"
+            },
+            "32": {
+              "terminal": "M.8",
+              "description": "Contact 3 NC; socket screw terminal 8"
+            },
+            "34": {
+              "terminal": "M.9",
+              "description": "Contact 3 NO; socket screw terminal 9"
+            },
+            "A2": {
+              "terminal": "M.10",
+              "description": "Coil A2; socket screw terminal 10"
+            },
+            "31": {
+              "terminal": "M.11",
+              "description": "Contact 3 common; socket screw terminal 11"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "C.7",
+        "C.8",
+        "C.9",
+        "C.10",
+        "C.11",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "M.7",
+        "M.8",
+        "M.9",
+        "M.10",
+        "M.11"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "31200000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "DUAL",
+      "type": "voltage-rules:dc-48"
+    },
+    {
+      "uid": "31200000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "VOLTAGE",
+      "type": "voltage-rules:ac-48"
+    },
+    {
+      "uid": "31200000-0000-4000-8000-000000000003",
+      "kind": "wire",
+      "designation": "W-LINK",
+      "endpoints": [
+        { "device": "DUAL", "terminal": "T" },
+        { "device": "VOLTAGE", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "31200000-0000-4000-8000-000000000004",
+      "kind": "potential",
+      "name": "24VAC",
+      "at": { "device": "DUAL", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24, "voltage_type": "AC" }
+    }
+  ]
+}

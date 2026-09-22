@@ -1,0 +1,9 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "Siemens candidate connector demonstration" },
+  "sources": ["source.json"],
+  "libraries": [
+    { "name": "siemens-pilot", "version": "0.1.0", "path": "../.." },
+    { "name": "candidate-fixture", "version": "1.0.0", "path": "fixture" }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8575-13-200",
+      "description": "Socket (switched, Ex) / 16 A / 20-25 V extra-low voltage / 50-60 Hz / 3P (no PE) / violet",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8575/13-200",
+        "document": {
+          "url": "https://media.w-f.ch/asset_external/downloads/lieferanten/r.stahl%20ag/datenbl%C3%A4tter/steckvorrichtung_2.pdf",
+          "title": "R. STAHL Steckvorrichtungen SolConeX & CES - Reihe 8575 selection table and technical data (manufacturer catalogue, distributor mirror)",
+          "revision": "2010-06-EK00-III-de",
+          "pages": "E3/2 exact 8575/13-200 selection row and 3P contact diagram 06199E00; E3/9 interlocked switch and ratings; E3/12 optional supporting-terminal block 151307"
+        },
+        "modelingNotes": [
+          "Exact order identity is directly verified in the R. STAHL manufacturer catalogue 2010-06-EK00-III-de, E3/2: 8575/13-200 is the CES 16 A extra-low-voltage wall socket, 3P, 20-25 V, 50/60 Hz, violet, with no auxiliary coding nose. No successor or different suffix is substituted.",
+          "The operating instructions for 8575/13 and 8575/14, IDENT-Nr. 85 756 18 30 0 / R. STAHL / 05.01, printed page 5 (right side of physical PDF page 5), show L1, L2 and L3 in extra-low-voltage 3P figure Z0299 and explicitly state that extra-low-voltage connectors have no protective-earth contact. Manufacturer source: https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/00/0000000000000008575618300_001_00/Betriebsanleitung_8575618300_001_00.pdf",
+          "The matching 3P figure is 06199E00 in catalogue E3/2 and the supplied 2007 manual, printed page 5 / physical page 7. The base nose is at 6h; 8575/13-200 has no auxiliary nose. Only the L1/L2/L3 identities are modeled: no numeric pin renaming, rear-view coordinates or installed phase assignment is inferred.",
+          "C.L1/C.L2/C.L3 are functional cable-side pole endpoints; C is an authoring side alias, not a stamped marking. Exact cable-clamp legends and individual screw positions remain unverified. M.L1/M.L2/M.L3 expose the corresponding mating-contact identities. C/M distinguish sides rather than manufacturer terminal numbers.",
+          "The 05.01 manual printed page 2 permits switch-on only with an inserted R. STAHL 8575/12 plug. Catalogue E3/9 explicitly specifies a three-pole interlocking switch with forcibly opening contacts. Three ganged contact functions represent the poles; open is the OFF drawing reference, not a claim about an unactuated mechanism or a simulated state. There are no fixed links across the switched C/M paths. Only explicit wires, jumpers and terminated cores join nets.",
+          "The exact coded operating band is 20-25 V AC at 50/60 Hz, with rated current 16 A. Catalogue E3/9 gives the extra-low-voltage family capability maximum of 50 V and AC-3 switching capacity 50 V, 16 A; the 05.01 manual printed page 3 gives insulation voltage 60 V and conductor capacity max 4 mm2 / max 2 Nm torque. No nominal_voltage scalar is assigned: this engine compares nominal values exactly, so neither the 50 V family maximum nor an arbitrary value within the 20-25 V range represents the type correctly.",
+          "Ratings depend on document and hardware revision. The 05.01 manual printed page 3 states IP54 and 12 A at frequencies >=100 Hz; catalogue E3/9 also states IP54. The supplied 2007 manual printed page 4 instead states IP66 / IP55 mated and gives no frequency derating. These revisions corroborate the ELV contact inventory and interlock, not identical environmental ratings. The 20-25 V / 50-60 Hz coded variant is the scope of this model; installed nameplate, temperature class and enclosure rating still require review.",
+          "Catalogue E3/12 lists optional supporting-terminal block 151307 for 8575/13, with two supporting terminals for 2 x 4 mm2 each. It is not included in this base socket model; whether it is installed is unverified. No unsupported accessory terminals, neutral, shield, signal, communication or bonding screw are added. Mating suitability, conductor selection and installed optional equipment require application review."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Three cable-side functional endpoints (C.L1/C.L2/C.L3) and three mating contacts (M.L1/M.L2/M.L3) are inventoried as ganged switched poles. Manufacturer figures Z0299 (05.01 manual) and 06199E00 (2007 manual/catalogue) establish L1/L2/L3 and no protective-earth contact for this extra-low-voltage insert. Exact cable-clamp legends and screw positions remain unverified; C/M are authoring aliases. Optional supporting-terminal block 151307 is outside this model and its installed presence is unverified. No universally required individual contact or installed accessory connection is inferred."
+      },
+      "terminals": {
+        "C.L1": {
+          "description": "Cable-side functional pole / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L2": {
+          "description": "Cable-side functional pole / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L3": {
+          "description": "Cable-side functional pole / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L1": {
+          "description": "Mating contact / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L2": {
+          "description": "Mating contact / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L3": {
+          "description": "Mating contact / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "L1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L1", "M.L1"]
+        },
+        "L2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L2", "M.L2"]
+        },
+        "L3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L3", "M.L3"]
+        }
+      },
+      "circuitSymbols": {
+        "L1": "switch-no",
+        "L2": "switch-no",
+        "L3": "switch-no"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "R. STAHL 8575/13-200 socket, 3P extra-low voltage, violet",
+          "description": "L1/L2/L3 identities from extra-low-voltage 3P figures Z0299 (05.01 manual) and 06199E00 (2007 manual/catalogue); no PE contact. Coded for 20-25 V, 50/60 Hz, violet, without auxiliary nose. No numeric renaming, rear-view orientation or installed phase assignment is asserted. The family manual requires a compatible R. STAHL 8575/12 plug.",
+          "pins": {
+            "L1": {
+              "terminal": "M.L1",
+              "description": "L1 identity from 3-pole extra-low-voltage diagram; no numeric pin alias or exact clock coordinates"
+            },
+            "L2": {
+              "terminal": "M.L2",
+              "description": "L2 identity from 3-pole extra-low-voltage diagram; no numeric pin alias or exact clock coordinates"
+            },
+            "L3": {
+              "terminal": "M.L3",
+              "description": "L3 identity from 3-pole extra-low-voltage diagram; no numeric pin alias or exact clock coordinates"
+            }
+          }
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "L1",
+          "to": "L2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "L2",
+          "to": "L3"
+        }
+      ],
+      "terminalOrder": ["C.L1", "C.L2", "C.L3", "M.L1", "M.L2", "M.L3"]
+    }
+  ]
+}

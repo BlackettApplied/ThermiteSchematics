@@ -1,0 +1,104 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p14",
+      "description": "Three-pole thermal-magnetic motor breaker, rotary handle, 6–10 A adjustment, basic device",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P14",
+        "document": {
+          "url": "https://assets.alliedelec.com/image/upload/v1584649453/Datasheets/b6a10966173af611b6c76c38a17eb6a2.pdf",
+          "title": "Schneider Electric Product data sheet — GV2P14",
+          "revision": "Jan 6, 2020; manufacturer-authored Allied Electronics mirror",
+          "pages": "1–2 characteristics; 8 Connections and Schema"
+        },
+        "modelingNotes": [
+          "Catalog spelling GV2P14; exact product photo on page 1 reads GV2-P14 / 6–10A, supporting the preserved source order spelling.",
+          "Thermal adjustment 6–10 A; magnetic release 138 A. No actual trip setting or assigned supply voltage is modeled. Conditional AC ratings and conductor limits are recorded in research.md using the 2017 manufacturer sheet.",
+          "Terminal keys follow the page 8 diagram; compact physical labels such as 1L1 correspond to diagram label 1/L1. Three thermal-magnetic poles are mechanically linked. Open state is the schematic OFF reference.",
+          "Basic breaker only; separately fitted auxiliary or release accessories are not included. Functions and mechanical relations do not create fixed electrical links. Trip curves and coordination are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Six main screw-clamp points in the exact product's applicable circuit diagram. No auxiliary, release, PE, neutral, shield or communications terminal is shown for this basic breaker; accessory assemblies are outside this order."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Pole 1 line",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Pole 2 line",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Pole 3 line",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "Pole 1 load",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "Pole 2 load",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "Pole 3 load",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1211100000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1211100000"
+  },
+  "type": {
+    "path": "types/1211100000.json",
+    "sha256": "ce9047c40a603f60964d906a02f0d4be844dcbd699197ba129f0aa79cf0e5095"
+  },
+  "research": {
+    "path": "research/1211100000.md",
+    "sha256": "c00f85d613bf47f19f36f801579d61d8b68723c518888fa93986df967ff1a212"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "C.5",
+      "C.6",
+      "C.7",
+      "C.8",
+      "C.9",
+      "C.10",
+      "C.11",
+      "C.12",
+      "C.13",
+      "C.14",
+      "C.15",
+      "C.16",
+      "C.17",
+      "C.18",
+      "C.19",
+      "C.20",
+      "C.21",
+      "C.22",
+      "C.23",
+      "C.24",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4",
+      "M.5",
+      "M.6",
+      "M.7",
+      "M.8",
+      "M.9",
+      "M.10",
+      "M.11",
+      "M.12",
+      "M.13",
+      "M.14",
+      "M.15",
+      "M.16",
+      "M.17",
+      "M.18",
+      "M.19",
+      "M.20",
+      "M.21",
+      "M.22",
+      "M.23",
+      "M.24",
+      "PE"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.6",
+        "to": "M.6",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.8",
+        "to": "M.8",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.9",
+        "to": "M.9",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.10",
+        "to": "M.10",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.11",
+        "to": "M.11",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.12",
+        "to": "M.12",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.13",
+        "to": "M.13",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.14",
+        "to": "M.14",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.15",
+        "to": "M.15",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.16",
+        "to": "M.16",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.17",
+        "to": "M.17",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.18",
+        "to": "M.18",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.19",
+        "to": "M.19",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.20",
+        "to": "M.20",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.21",
+        "to": "M.21",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.22",
+        "to": "M.22",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.23",
+        "to": "M.23",
+        "sourceId": "WM-CAT-1282180000"
+      },
+      {
+        "from": "C.24",
+        "to": "M.24",
+        "sourceId": "WM-CAT-1282180000"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "f27ba76aaf38c2c59612503295af7ec1bcfe2f63516f092f5c95c1827e8aab4d",
+    "packet.request.json": "44de760a640bbde706bfd12188680ebb33e8622ebd2c6f263c234729e5ca602d",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "f6dd03298c8918d4bcc4a3849b5ef38f3c47d2c276771b24a27fdf8ab0c5bc88",
+    "system.json": "c6fa4157670cba2f67324a4c788cf83e8c47c06eaf5f9d0f5f69ac4c38eff73a"
+  }
+}

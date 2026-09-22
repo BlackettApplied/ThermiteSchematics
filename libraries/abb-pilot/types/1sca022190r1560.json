@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022190r1560",
+      "description": "OESAZX167 mechanical shaft-extension coupler, 6 mm shaft size",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022190R1560",
+        "document": {
+          "url": "https://library.e.abb.com/public/d8e4e6b6859641708660a9fb38f702b1/OT_OTC2012PL.pdf",
+          "title": "ABB Katalog techniczny — Rozłączniki izolacyjne i przełączniki",
+          "revision": "3106PL321-W4-pl; edition 03.2012",
+          "pages": "32 (printed and physical); 166 edition information"
+        },
+        "modelingNotes": [
+          "S1 p.32 identifies the exact order as OESAZX167, a mechanical sleeve for joining shafts or a coupling mechanism; shaft size 6 mm, mass 0.03 kg.",
+          "Source historical description gives 5...6 mm diameter; ABB evidence establishes 6 mm shaft size only. No 5 mm suitability or round-shaft geometry is asserted.",
+          "Zero electrical terminals, functions and fixed electrical links. Fastening screws and shaft interfaces are mechanical; no PE/bond terminal or electrical rating is inferred.",
+          "S2 ABB / Thomas & Betts sheet uses OESA-ZX167 for the same exact order. Accessory documentation view; associated switch and optional accessories are separate components."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical shaft coupler only. No electrical connections, optional contacts or factory electrical links; surrounding equipment bonding is outside this accessory inventory."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "SHAFT_COUPLING": {
+          "connector": "Mechanical shaft-extension sleeve for 6 mm shafts",
+          "description": "Documentation alias for mechanical coupling only; no electrical pins or net continuity."
+        }
+      }
+    }
+  ]
+}

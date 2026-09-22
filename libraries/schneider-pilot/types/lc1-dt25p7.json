@@ -1,0 +1,219 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-dt25p7",
+      "description": "TeSys D 4-pole contactor, 4 NO main + 1 NO/1 NC auxiliary, 230 V AC 50/60 Hz coil",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-DT25P7",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "TeSys D, SK, K, SKGC, GC, GY, GF Contactors — Chapter B8",
+          "revision": "Undated; no revision visible on inspected cover/pages; accessed 2026-09-11",
+          "pages": "B8/1, B8/12, B8/79 (physical PDF pages 1, 12, 79)"
+        },
+        "modelingNotes": [
+          "Manufacturer order spelling LC1DT25P7; source presentation LC1-DT25P7 retained. B8/12 exact LC1DT25 selection with P7 = 230 V AC 50/60 Hz; B8/79 scheme 127267.eps applies.",
+          "Four NO main poles plus factory 1 NO and 1 NC auxiliaries. Terminal keys preserve the applicable diagram markings. Mechanical actuation does not create electrical continuity; no fixed links are asserted.",
+          "AC-1 noninductive load capability: 25 A at <=440 V AC and ambient <=60 degrees C. Conditional contact voltage/current capabilities are not assigned circuit voltages; no contact scalar rating is modeled.",
+          "Plain AC coil in the applicable diagram; no polarity or suppression accessory inferred. Do not transfer integral DC suppression to the P7 AC order.",
+          "Partial physical coverage: 14 verified circuit endpoints; duplicate coil access/clamping positions and accessory-interface inventory for the historical hardware revision are unresolved. No imagined duplicate terminals or internal shorts. Additional installed accessories are outside this order.",
+          "A1 and A2 are required for electrical operation; contact terminals are application-dependent. No PE, shield or communications terminal is documented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 14 circuit endpoints in applicable scheme 127267.eps are modeled. Exact historical physical duplicate coil access/clamping and accessory-interface inventory remains unverified."
+      },
+      "terminals": {
+        "A1": {
+          "description": "230 V AC 50/60 Hz coil terminal A1",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "A2": {
+          "description": "230 V AC 50/60 Hz coil terminal A2",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "1/L1": {
+          "description": "main1 terminal marked 1/L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "main1 terminal marked 2/T1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "main2 terminal marked 3/L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "main2 terminal marked 4/T2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "main3 terminal marked 5/L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "main3 terminal marked 6/T3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "7/L4": {
+          "description": "main4 terminal marked 7/L4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8/T4": {
+          "description": "main4 terminal marked 8/T4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "13/NO": {
+          "description": "auxNO terminal marked 13/NO",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "auxNO terminal marked 14",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "21/NC": {
+          "description": "auxNC terminal marked 21/NC",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "22": {
+          "description": "auxNC terminal marked 22",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "main1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "main2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "main3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "main4": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["7/L4", "8/T4"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13/NO", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21/NC", "22"]
+        }
+      },
+      "circuitSymbols": {
+        "coil": "coil",
+        "main1": "contact-no",
+        "main2": "contact-no",
+        "main3": "contact-no",
+        "main4": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main4"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "terminalOrder": [
+        "A1",
+        "A2",
+        "1/L1",
+        "2/T1",
+        "3/L2",
+        "4/T2",
+        "5/L3",
+        "6/T3",
+        "7/L4",
+        "8/T4",
+        "13/NO",
+        "14",
+        "21/NC",
+        "22"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "C3-A30X/24DC component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "releco-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "batch-boundary",
+      "version": "0.1.0",
+      "path": "boundary"
+    }
+  ]
+}

@@ -1,0 +1,267 @@
+name: M8 Release Candidate
+on:
+  push:
+    branches: [dev]
+permissions:
+  actions: read
+  contents: read
+  pull-requests: read
+
+jobs:
+  release_candidate:
+    runs-on: ubuntu-24.04
+    outputs:
+      artifact_id: ${{ steps.candidate-upload.outputs.artifact-id }}
+      artifact_digest: ${{ steps.candidate-upload.outputs.artifact-digest }}
+      artifact_name: m8-cli-candidate-${{ github.run_id }}-${{ github.run_attempt }}
+      candidate_sha256: ${{ steps.candidate.outputs.sha256 }}
+      source_commit: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+      - name: Verify exact producer toolchain
+        shell: bash
+        run: |
+          test "$(node --version)" = "v24.11.1"
+          test "$(npm --version)" = "11.6.2"
+      - name: Verify protected post-merge private target
+        run: node scripts/verify-private-release-target.mjs --mode candidate
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Build deterministic candidate in the frozen environment
+        shell: bash
+        run: |
+          /usr/bin/env -i HOME=release-out/.home LANG=C LC_ALL=C NPM_CONFIG_AUDIT=false NPM_CONFIG_CACHE=release-out/.npm-cache NPM_CONFIG_FUND=false NPM_CONFIG_GLOBALCONFIG=release-out/.npm-globalrc NPM_CONFIG_IGNORE_SCRIPTS=true NPM_CONFIG_UPDATE_NOTIFIER=false NPM_CONFIG_USERCONFIG=release-out/.npm-userrc PATH=/opt/hostedtoolcache/node/24.11.1/x64/bin:/usr/bin:/bin SOURCE_DATE_EPOCH=0 TZ=UTC /usr/bin/bash --noprofile --norc scripts/release-pack.sh --output release-out --source-commit "${{ github.sha }}"
+          node scripts/release-tar-audit.mjs --output release-out
+      - name: Audit producer product tests
+        id: candidate
+        shell: bash
+        env:
+          THERMITE_SCHEMATICS_RELEASE_AUTHORITY: local-task6
+          THERMITE_SCHEMATICS_RELEASE_CANDIDATE: ${{ github.workspace }}/release-out/thermite-cli-0.2.0.tgz
+        run: |
+          sha=$(cut -d ' ' -f 1 release-out/thermite-cli-0.2.0.tgz.sha256)
+          export THERMITE_SCHEMATICS_RELEASE_CANDIDATE_SHA256="$sha"
+          npm run check
+          node scripts/run-vitest-and-audit.mjs --manifest release-out/evidence/producer-ubuntu-24.04-node-24.11.1.tests.json --require task4-ledger,package-smoke,release-install,empty-folder -- packages/render/test packages/agent-tools/test/create-view.test.ts packages/cli/test/render-cli.test.ts packages/cli/test/render-motor-starter-golden.test.ts packages/cli/test/agent-motor-starter-golden.test.ts packages/compiler/test/package-smoke.test.ts packages/cli/test/release-package.test.ts packages/cli/test/release-install-smoke.test.ts packages/cli/test/empty-folder-smoke.test.ts packages/cli/test/init.test.ts
+          printf 'sha256=%s\n' "$sha" >> "$GITHUB_OUTPUT"
+      - name: Scan exact pre-upload candidate evidence
+        run: >-
+          node scripts/scan-release-evidence-leaks.mjs --files
+          release-out/evidence/producer-ubuntu-24.04-node-24.11.1.tests.json
+          release-out/thermite-cli-0.2.0.tgz.sha256
+          release-out/thermite-cli-0.2.0.tar-headers.json
+          release-out/thermite-cli-0.2.0.stage-files.json
+          release-out/thermite-cli-0.2.0.runtime-closure.json
+          release-out/thermite-cli-0.2.0.third-party-licenses.json
+          release-out/thermite-cli-0.2.0.build-provenance.json
+      - name: Upload exact candidate files
+        id: candidate-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8-cli-candidate-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            release-out/thermite-cli-0.2.0.tgz
+            release-out/thermite-cli-0.2.0.tgz.sha256
+            release-out/thermite-cli-0.2.0.tar-headers.json
+            release-out/thermite-cli-0.2.0.stage-files.json
+            release-out/thermite-cli-0.2.0.runtime-closure.json
+            release-out/thermite-cli-0.2.0.third-party-licenses.json
+            release-out/thermite-cli-0.2.0.build-provenance.json
+      - name: Bind producer evidence to queried artifact identity
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          node scripts/release-evidence-audit.mjs producer
+          --manifest release-out/evidence/producer-ubuntu-24.04-node-24.11.1.tests.json
+          --evidence release-out/evidence/producer-ubuntu-24.04-node-24.11.1.evidence.json
+          --authority-output release-out/evidence/producer-authority.json
+          --candidate release-out/thermite-cli-0.2.0.tgz
+          --artifact-id "${{ steps.candidate-upload.outputs.artifact-id }}"
+          --artifact-digest "${{ steps.candidate-upload.outputs.artifact-digest }}"
+          --run-id "${{ github.run_id }}"
+          --run-attempt "${{ github.run_attempt }}"
+          --source-commit "${{ github.sha }}"
+      - name: Scan exact producer evidence upload
+        run: >-
+          node scripts/scan-release-evidence-leaks.mjs --files
+          release-out/evidence/producer-ubuntu-24.04-node-24.11.1.tests.json
+          release-out/evidence/producer-ubuntu-24.04-node-24.11.1.evidence.json
+      - name: Upload producer evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8-cli-producer-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          path: |
+            release-out/evidence/producer-ubuntu-24.04-node-24.11.1.tests.json
+            release-out/evidence/producer-ubuntu-24.04-node-24.11.1.evidence.json
+
+  acceptance:
+    needs: release_candidate
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2022]
+        node: [22.12.0, 24.11.1]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Hard-verify candidate archive before extraction
+        id: download
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          $root = Join-Path $env:RUNNER_TEMP "m8-candidate-${{ matrix.os }}-${{ matrix.node }}"
+          $archive = "$root.zip"
+          $authority = "$root-authority.json"
+          $sha = & node scripts/download-actions-artifact.mjs --artifact-id "${{ needs.release_candidate.outputs.artifact_id }}" --artifact-name "${{ needs.release_candidate.outputs.artifact_name }}" --artifact-digest "${{ needs.release_candidate.outputs.artifact_digest }}" --workflow-run-id "${{ github.run_id }}" --run-attempt "${{ github.run_attempt }}" --source-commit "${{ needs.release_candidate.outputs.source_commit }}" --archive $archive --extract $root --authority-output $authority --verify-candidate true --expect thermite-cli-0.2.0.tgz --expect thermite-cli-0.2.0.tgz.sha256 --expect thermite-cli-0.2.0.tar-headers.json --expect thermite-cli-0.2.0.stage-files.json --expect thermite-cli-0.2.0.runtime-closure.json --expect thermite-cli-0.2.0.third-party-licenses.json --expect thermite-cli-0.2.0.build-provenance.json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          "root=$root" >> $env:GITHUB_OUTPUT
+          "authority=$authority" >> $env:GITHUB_OUTPUT
+          "sha256=$sha" >> $env:GITHUB_OUTPUT
+      - name: Install exact npm only after candidate verification
+        shell: pwsh
+        run: |
+          if ((node --version) -ne "v${{ matrix.node }}") { exit 1 }
+          npm install --global npm@11.6.2 --ignore-scripts --no-audit --no-fund
+          if ((npm --version) -ne "11.6.2") { exit 1 }
+          npm ci --ignore-scripts --no-audit --no-fund
+      - name: Run consumer checks against only downloaded candidate
+        shell: pwsh
+        run: |
+          $candidate = Join-Path "${{ steps.download.outputs.root }}" "thermite-cli-0.2.0.tgz"
+          if (Test-Path "release-out/thermite-cli-0.2.0.tgz") { exit 1 }
+          $env:THERMITE_SCHEMATICS_RELEASE_AUTHORITY = "protected-consumer"
+          $env:THERMITE_SCHEMATICS_RELEASE_CANDIDATE = $candidate
+          $env:THERMITE_SCHEMATICS_RELEASE_CANDIDATE_SHA256 = "${{ steps.download.outputs.sha256 }}"
+          $env:THERMITE_SCHEMATICS_RELEASE_AUTHORITY_JSON = Get-Content -Raw "${{ steps.download.outputs.authority }}"
+          npm run check
+          node scripts/release-tar-audit.mjs --output "${{ steps.download.outputs.root }}"
+          node scripts/release-acceptance.mjs --tar $candidate --sha "${{ steps.download.outputs.sha256 }}"
+      - name: Create canonical consumer evidence
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          $candidate = Join-Path "${{ steps.download.outputs.root }}" "thermite-cli-0.2.0.tgz"
+          $tests = "release-out/evidence/acceptance-${{ matrix.os }}-node-${{ matrix.node }}.tests.json"
+          $evidence = "release-out/evidence/acceptance-${{ matrix.os }}-node-${{ matrix.node }}.evidence.json"
+          node scripts/run-vitest-and-audit.mjs --manifest $tests --evidence $evidence --candidate $candidate --authority "${{ steps.download.outputs.authority }}" --os "${{ matrix.os }}" --node "${{ matrix.node }}" --source downloaded-m8-cli-candidate -- packages/render/test/determinism.test.ts packages/cli/test/render-cli.test.ts packages/cli/test/render-motor-starter-golden.test.ts packages/cli/test/agent-motor-starter-golden.test.ts packages/compiler/test/package-smoke.test.ts packages/cli/test/release-install-smoke.test.ts packages/cli/test/empty-folder-smoke.test.ts
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/scan-release-evidence-leaks.mjs --files $tests $evidence
+      - name: Upload canonical consumer evidence only
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8-cli-acceptance-${{ matrix.os }}-node-${{ matrix.node }}
+          if-no-files-found: error
+          path: |
+            release-out/evidence/acceptance-${{ matrix.os }}-node-${{ matrix.node }}.tests.json
+            release-out/evidence/acceptance-${{ matrix.os }}-node-${{ matrix.node }}.evidence.json
+
+  release_gate:
+    needs: [release_candidate, acceptance]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require producer and all four consumers
+        shell: bash
+        run: |
+          test "${{ needs.release_candidate.result }}" = success
+          test "${{ needs.acceptance.result }}" = success
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.11.1
+      - name: Download and hash every authority artifact before extraction
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          root="$RUNNER_TEMP/m8-release-gate"
+          mkdir "$root"
+          candidate="$root/candidate"
+          node scripts/download-actions-artifact.mjs --artifact-id "${{ needs.release_candidate.outputs.artifact_id }}" --artifact-name "${{ needs.release_candidate.outputs.artifact_name }}" --artifact-digest "${{ needs.release_candidate.outputs.artifact_digest }}" --workflow-run-id "${{ github.run_id }}" --archive "$root/candidate.zip" --extract "$candidate" --expect thermite-cli-0.2.0.tgz --expect thermite-cli-0.2.0.tgz.sha256 --expect thermite-cli-0.2.0.tar-headers.json --expect thermite-cli-0.2.0.stage-files.json --expect thermite-cli-0.2.0.runtime-closure.json --expect thermite-cli-0.2.0.third-party-licenses.json --expect thermite-cli-0.2.0.build-provenance.json
+          node scripts/download-actions-artifact.mjs --artifact-name "m8-cli-producer-evidence-${{ github.run_id }}-${{ github.run_attempt }}" --workflow-run-id "${{ github.run_id }}" --archive "$root/producer.zip" --extract "$root/producer" --expect producer-ubuntu-24.04-node-24.11.1.tests.json --expect producer-ubuntu-24.04-node-24.11.1.evidence.json
+          for os in ubuntu-24.04 windows-2022; do
+            for node_version in 22.12.0 24.11.1; do
+              key="${os}-node-${node_version}"
+              node scripts/download-actions-artifact.mjs --artifact-name "m8-cli-acceptance-${key}" --workflow-run-id "${{ github.run_id }}" --archive "$root/${key}.zip" --extract "$root/${key}" --expect "acceptance-${key}.tests.json" --expect "acceptance-${key}.evidence.json"
+            done
+          done
+          echo "root=$root" >> "$GITHUB_ENV"
+      - name: Aggregate and scan exact gate evidence
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(node --version)" = "v24.11.1"
+          test "$(npm --version)" = "11.6.2"
+          npm ci --ignore-scripts --no-audit --no-fund
+          node scripts/release-tar-audit.mjs --output "$root/candidate"
+          evidence_root="$root/evidence"
+          mkdir "$evidence_root"
+          cp "$root/producer/producer-ubuntu-24.04-node-24.11.1.tests.json" "$evidence_root/producer-ubuntu-24.04-node-24.11.1.tests.json"
+          cp "$root/producer/producer-ubuntu-24.04-node-24.11.1.evidence.json" "$evidence_root/producer-ubuntu-24.04-node-24.11.1.evidence.json"
+          for os in ubuntu-24.04 windows-2022; do
+            for node_version in 22.12.0 24.11.1; do
+              key="${os}-node-${node_version}"
+              cp "$root/${key}/acceptance-${key}.tests.json" "$evidence_root/acceptance-${key}.tests.json"
+              cp "$root/${key}/acceptance-${key}.evidence.json" "$evidence_root/acceptance-${key}.evidence.json"
+            done
+          done
+          node scripts/verify-private-release-target.mjs --mode candidate
+          node scripts/release-evidence-audit.mjs aggregate --product-root "$root/candidate" --evidence-root "$evidence_root" --evidence-files "producer-ubuntu-24.04-node-24.11.1.tests.json,producer-ubuntu-24.04-node-24.11.1.evidence.json,acceptance-ubuntu-24.04-node-22.12.0.tests.json,acceptance-ubuntu-24.04-node-22.12.0.evidence.json,acceptance-ubuntu-24.04-node-24.11.1.tests.json,acceptance-ubuntu-24.04-node-24.11.1.evidence.json,acceptance-windows-2022-node-22.12.0.tests.json,acceptance-windows-2022-node-22.12.0.evidence.json,acceptance-windows-2022-node-24.11.1.tests.json,acceptance-windows-2022-node-24.11.1.evidence.json" --payload-artifact-name "m8-release-gate-payload-${{ github.run_id }}-${{ github.run_attempt }}" --output "$evidence_root/release-gate.evidence.json"
+          payload_root="$root/payload"
+          mkdir "$payload_root"
+          for file in thermite-cli-0.2.0.tgz thermite-cli-0.2.0.tgz.sha256 thermite-cli-0.2.0.tar-headers.json thermite-cli-0.2.0.stage-files.json thermite-cli-0.2.0.runtime-closure.json thermite-cli-0.2.0.third-party-licenses.json thermite-cli-0.2.0.build-provenance.json; do
+            cp "$root/candidate/$file" "$payload_root/$file"
+          done
+          cp "$evidence_root/release-gate.evidence.json" "$payload_root/release-gate.evidence.json"
+          node scripts/scan-release-evidence-leaks.mjs --files "$evidence_root/producer-ubuntu-24.04-node-24.11.1.tests.json" "$evidence_root/producer-ubuntu-24.04-node-24.11.1.evidence.json" "$evidence_root/acceptance-ubuntu-24.04-node-22.12.0.tests.json" "$evidence_root/acceptance-ubuntu-24.04-node-22.12.0.evidence.json" "$evidence_root/acceptance-ubuntu-24.04-node-24.11.1.tests.json" "$evidence_root/acceptance-ubuntu-24.04-node-24.11.1.evidence.json" "$evidence_root/acceptance-windows-2022-node-22.12.0.tests.json" "$evidence_root/acceptance-windows-2022-node-22.12.0.evidence.json" "$evidence_root/acceptance-windows-2022-node-24.11.1.tests.json" "$evidence_root/acceptance-windows-2022-node-24.11.1.evidence.json" "$payload_root/thermite-cli-0.2.0.tgz.sha256" "$payload_root/thermite-cli-0.2.0.tar-headers.json" "$payload_root/thermite-cli-0.2.0.stage-files.json" "$payload_root/thermite-cli-0.2.0.runtime-closure.json" "$payload_root/thermite-cli-0.2.0.third-party-licenses.json" "$payload_root/thermite-cli-0.2.0.build-provenance.json" "$payload_root/release-gate.evidence.json"
+      - name: Upload exact gate payload
+        id: payload-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8-release-gate-payload-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          compression-level: 0
+          path: |
+            ${{ env.root }}/payload/thermite-cli-0.2.0.tgz
+            ${{ env.root }}/payload/thermite-cli-0.2.0.tgz.sha256
+            ${{ env.root }}/payload/thermite-cli-0.2.0.tar-headers.json
+            ${{ env.root }}/payload/thermite-cli-0.2.0.stage-files.json
+            ${{ env.root }}/payload/thermite-cli-0.2.0.runtime-closure.json
+            ${{ env.root }}/payload/thermite-cli-0.2.0.third-party-licenses.json
+            ${{ env.root }}/payload/thermite-cli-0.2.0.build-provenance.json
+            ${{ env.root }}/payload/release-gate.evidence.json
+      - name: Create queried gate receipt
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: >-
+          node scripts/release-evidence-audit.mjs receipt
+          --gate "${{ env.root }}/payload/release-gate.evidence.json"
+          --artifact-id "${{ steps.payload-upload.outputs.artifact-id }}"
+          --artifact-digest "${{ steps.payload-upload.outputs.artifact-digest }}"
+          --output "${{ env.root }}/evidence/release-gate-receipt.json"
+      - name: Scan exact receipt upload
+        run: node scripts/scan-release-evidence-leaks.mjs --files "${{ env.root }}/evidence/release-gate-receipt.json"
+      - name: Upload gate receipt only
+        uses: actions/upload-artifact@v4
+        with:
+          name: m8-release-gate-receipt-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: error
+          path: ${{ env.root }}/evidence/release-gate-receipt.json

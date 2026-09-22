@@ -1,0 +1,157 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "f29ee251-0d12-58c3-82c5-9f57fcbdc402",
+      "designation": "XS",
+      "type": "stahl-pilot:8570-11-407"
+    },
+    {
+      "kind": "device",
+      "uid": "7fb2d293-dd7e-5413-9622-a01e5797d6da",
+      "designation": "IN",
+      "type": "stahl-8570-11-407-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "26fae27d-8f86-5c64-a884-a3e85c1718f1",
+      "designation": "OUT",
+      "type": "stahl-8570-11-407-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "38e53365-dd27-5bf5-9a87-32c37e1425de",
+      "designation": "IN-L1",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "L1"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.L1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "200315dd-497f-5a45-abea-e72172c90d61",
+      "designation": "OUT-L1",
+      "endpoints": [
+        {
+          "device": "OUT",
+          "terminal": "L1"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.L1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "b0e9d9a9-e51c-5ed8-9a2e-b527b5bc86f5",
+      "designation": "IN-L2",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "L2"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.L2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "19821778-ee87-5fa3-80f3-29665877eff3",
+      "designation": "OUT-L2",
+      "endpoints": [
+        {
+          "device": "OUT",
+          "terminal": "L2"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.L2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "0b066fa1-8f9a-51bf-9f52-ecb9e1fcf9e7",
+      "designation": "IN-L3",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "L3"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.L3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "72d5b5a5-c949-5739-ad5a-41b65c4e24b6",
+      "designation": "OUT-L3",
+      "endpoints": [
+        {
+          "device": "OUT",
+          "terminal": "L3"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.L3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "2e8e934c-5c37-5bb3-ae56-3558aba9993e",
+      "designation": "IN-PE",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "PE"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.PE"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "72cbbe71-6231-5759-bc47-80831f93fdf0",
+      "designation": "OUT-PE",
+      "endpoints": [
+        {
+          "device": "OUT",
+          "terminal": "PE"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.PE"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "880be298-1372-51c0-baca-dc99ebbbbffc",
+      "designation": "INTERNAL-PE",
+      "endpoints": [
+        {
+          "device": "XS",
+          "terminal": "C.PE"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.PE"
+        }
+      ]
+    }
+  ]
+}

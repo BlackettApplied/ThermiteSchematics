@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:3sb3420-0c",
+      "description": "Base-mounted screw-terminal contact block, 1 NC",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "3SB3420-0C",
+        "document": {
+          "url": "https://docs.rs-online.com/fb76/0900766b8110b091.pdf",
+          "title": "Siemens Data sheet 3SB3420-0C",
+          "revision": "05.05.2015; circuit diagram last modified 28.04.2015",
+          "pages": "1–4; circuit diagram page 4"
+        },
+        "modelingNotes": [
+          "Manufacturer-authored datasheet hosted at RS distributor mirror. Exact order denotes the standalone contact block, not its operator or enclosure.",
+          "Terminal keys.1 and.2 preserve the visually reviewed schematic labels. No complete engraved numeric prefix or physical orientation is inferred.",
+          "Positive opening is specified by Siemens. The generic contact-nc symbol represents normal state only, not certification or actuator details.",
+          "The NC contact is switchable, not a fixed hardware link. Passive contact use is application-dependent; neither terminal is universally required.",
+          "Conditional ratings and screw torque are retained in research.md; no scalar supply voltage or universal switching-current rating is assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both endpoints of the sole NC contact are modeled using Siemens schematic labels.1 and.2. Screw terminals accept conductors; multiple conductors at a terminal do not create additional independent terminals. No lamp, supply, PE, shield or communication connection belongs to this standalone block. Enclosure bonding is outside this type; full engraved numbering is not established. Partial because the diagram supplies endpoint placeholders but the full installed terminal markings remain unverified."
+      },
+      "terminals": {
+        ".1": {
+          "description": "NC contact endpoint .1 (Siemens schematic label)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        ".2": {
+          "description": "NC contact endpoint .2 (Siemens schematic label)",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": [".1", ".2"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc"
+      },
+      "terminalOrder": [".1", ".2"]
+    }
+  ]
+}

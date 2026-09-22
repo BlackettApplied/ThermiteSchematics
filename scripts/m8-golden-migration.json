@@ -1,0 +1,398 @@
+[
+  {
+    "path": "examples/motor-starter/electrical-system.lock.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/baseline-validate.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/baseline-validate.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/baseline-view.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/baseline-view.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/complete-patch.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/complete-patch.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/final-validate.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/final-validate.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/inspect-ls1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/inspect-ls1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/net-ls1-14.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/net-ls1-14.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/pnp-inspect.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/pnp-inspect.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/pnp-view.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/pnp-view.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/search-ls1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/search-ls1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/type-only-patch.stderr.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-agent/type-only-patch.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-cbl1-conductors-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-cbl1-conductors-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-cbl1-conductors-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-cbl1-conductors-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-k1-actuation-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-k1-actuation-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-k1-actuation-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-k1-actuation-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ls1-to-plc1-include-power-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ls1-to-plc1-include-power-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ls1-to-plc1-include-power-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ls1-to-plc1-include-power-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ps1-loads-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ps1-loads-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ps1-loads-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter-pnp/view-ps1-loads-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/cable-cbl1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/cable-cbl1.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/cable-cbl1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/cable-cbl1.stdout.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/inspect-k1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/inspect-k1.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/inspect-k1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/inspect-k1.stdout.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/neighbors-k1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/neighbors-k1.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/neighbors-k1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/neighbors-k1.stdout.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/net-plc1-x1-0.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/net-plc1-x1-0.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/net-plc1-x1-0.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/net-plc1-x1-0.stdout.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-k1-control-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-k1-control-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-k1-control-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-k1-control-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-m1-power-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-m1-power-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-m1-power-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/render-m1-power-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/trace-ls1.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/trace-ls1.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/trace-ls1.stdout.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/trace-ls1.stdout.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-cbl1-conductors-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-cbl1-conductors-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-cbl1-conductors-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-cbl1-conductors-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-k1-actuation-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-k1-actuation-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-k1-actuation-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-k1-actuation-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ls1-to-plc1-include-power-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ls1-to-plc1-include-power-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ls1-to-plc1-include-power-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ls1-to-plc1-include-power-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-m1-power-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-m1-power-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-m1-power-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-m1-power-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ps1-loads-left-to-right.stderr.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ps1-loads-left-to-right.stderr.txt",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ps1-loads-left-to-right.stdout.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/cli/test/goldens/motor-starter/view-ps1-loads-left-to-right.stdout.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/compiler/test/goldens/motor-starter.ir.json",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter-pnp/cbl1-conductors-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter-pnp/k1-control-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter-pnp/ls1-to-plc1-include-power-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter-pnp/ps1-loads-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter/cbl1-conductors-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter/k1-control-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter/ls1-to-plc1-include-power-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter/m1-power-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/motor-starter/ps1-loads-left-to-right.svg",
+    "classification": "regenerate"
+  },
+  {
+    "path": "packages/render/test/goldens/tier2/bridge-down.r004.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/render/test/goldens/tier2/bridge-right.r004.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/render/test/goldens/tier2/right-deep-down.r004.json",
+    "classification": "byte-identical"
+  },
+  {
+    "path": "packages/render/test/goldens/tier2/right-deep-right.r004.json",
+    "classification": "byte-identical"
+  }
+]

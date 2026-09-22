@@ -1,0 +1,22 @@
+net net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9
+  selected PLC1.X1.0
+  potentials:
+    (none)
+  terminals:
+    terminal JB1.X1.2
+    terminal LS1.14
+    terminal PLC1.X1.0
+    terminal TB1.3
+  elements:
+    edge
+      wire W-FLD-001 uid=e84a9629-373c-4946-8b48-184b7464d474
+      from PLC1.X1.0
+      to TB1.3
+    edge
+      wire W-FLD-003 uid=c2dccef7-ec9d-48dc-b58b-6e0dd990dd51
+      from JB1.X1.2
+      to LS1.14
+    edge
+      cable-conductor CBL1.1- cable-uid=c4c1bfdf-567a-4f6c-9e08-147342061afe conductor-id=1-
+      from JB1.X1.2
+      to TB1.3

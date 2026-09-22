@@ -1,0 +1,107 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85085",
+      "description": "MCS 10-230/24 single-phase power supply, 185–265 VAC input, adjustable 24–28 VDC output",
+      "category": "power-supply",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85085",
+        "document": {
+          "url": "https://shop.murrelektronik.com/index.php?anid=000000000000085085_1&cl=details&fnc=outputSpecSheet&lang=1",
+          "title": "Product-PDF for Article 85085",
+          "revision": "2026-09-13 (downloaded footer)",
+          "pages": "1–3; circuit diagram p.1"
+        },
+        "modelingNotes": [
+          "Exact Murrelektronik article 85085, MCS 10-230/24; Murr preserves the job manufacturer label. Numbered terminals follow the exact circuit and historical front drawing, not connector-local PIN indices.",
+          "Input 185–265 VAC, 50–60 Hz; 2.1 A at 230 VAC; external fuse maximum 10 A. Output 24 VDC SELV ±1%, adjustable 24–28 V; continuous 10 A at +60°C or 12 A at +40°C (2014 sheet pp.1–2: https://dmliefer.ru/sites/default/files/documents/Murrelektronik/85085.pdf). Ranges and conditional currents are not assigned nominal voltages or per-terminal current limits.",
+          "Factory conductors join 4–5 (DC−) and 6–7 (DC+), shown explicitly in the exact circuit diagram. Represent these with explicit project jumpers. Function metadata never creates continuity; no DC−/PE or AC/DC net link is asserted.",
+          "Terminals 1 (class I protective earth), 2 (N), 3 (L) are required. Individual output clamps are alternatives and not universally required. Shared policy accommodates explicit fixed jumpers plus wiring; it does not approve multiple conductors under a clamp.",
+          "Front autorestart jumper is a local configuration interface, factory ON; individual pins/circuit undocumented and not modeled. LED and voltage adjuster are not signal terminals. Operating instructions English p.2, technical V1.2: https://se-import.com/documents/catalog/powering/murr/switch_mode/85085_ina_4_12.pdf",
+          "Current sheet calls clamps spring type; historical manual depicts screws and gives torque. Installed revision is unverified; no clamp construction/torque claim is encoded. Current 12 A UL label is not generalized beyond historical temperature conditions. No additional signal, communication, shield or separate bond point is documented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All seven numbered field terminals verified, including PE and duplicated output clamps. Local autorestart selector exists but its individual contact inventory/circuit is undocumented and omitted. No additional field interface is documented; installed clamp revision unresolved."
+      },
+      "terminals": {
+        "1": {
+          "role": "protective_earth",
+          "description": "Protective earth, earth symbol",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "role": "neutral",
+          "description": "N, AC input",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "3": {
+          "role": "power",
+          "description": "L, AC input",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "4": {
+          "role": "return",
+          "description": "DC− output clamp; internally common with 5",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5": {
+          "role": "return",
+          "description": "DC− output clamp; internally common with 4",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6": {
+          "role": "power",
+          "description": "DC+ output clamp; internally common with 7",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "7": {
+          "role": "power",
+          "description": "DC+ output clamp; internally common with 6",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["6", "4"]
+        },
+        "DC_PLUS_DUPLICATE": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "DC_MINUS_DUPLICATE": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "DC_PLUS_DUPLICATE": "terminal",
+        "DC_MINUS_DUPLICATE": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7"]
+    }
+  ]
+}

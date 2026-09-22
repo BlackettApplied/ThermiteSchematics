@@ -1,0 +1,270 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:pressure-4-20ma-m12-p1-p2",
+      "description": "4-20 mA / M12 A-coded / proposed pin map",
+      "symbol": "thermite:pressure-transmitter",
+      "terminals": {
+        "1": {
+          "connection_policy": "exclusive",
+          "description": "Loop supply +",
+          "required": true
+        },
+        "2": {
+          "connection_policy": "exclusive",
+          "description": "Loop return / I",
+          "required": true
+        },
+        "3": {
+          "connection_policy": "exclusive",
+          "description": "Unused"
+        },
+        "4": {
+          "connection_policy": "exclusive",
+          "description": "Unused"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4"],
+      "functions": {
+        "signal": {
+          "kind": "other",
+          "terminals": ["1", "2"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed four-pin loop-powered interface. Exact transmitter, connector pinout and any grounding requirements remain to be selected and verified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:m12-a4-bulkhead",
+      "description": "M12 A-coded / cabinet bulkhead / rear terminals",
+      "symbol": "thermite:bulkhead-connector",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        },
+        "3": {
+          "connection_policy": "shared"
+        },
+        "4": {
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4"],
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:terminal-strip-6",
+      "description": "Terminal strip / selected terminals shown",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        },
+        "3": {
+          "connection_policy": "shared"
+        },
+        "4": {
+          "connection_policy": "shared"
+        },
+        "5": {
+          "connection_policy": "shared"
+        },
+        "6": {
+          "connection_policy": "shared"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6"],
+      "functions": {}
+    },
+    {
+      "kind": "cable_type",
+      "id": "field-interfaces:m12-a4-cordset",
+      "description": "Proposed M12 A-coded cordset / female at sensor, male at cabinet / 4 cores",
+      "conductors": [
+        {
+          "id": "A",
+          "color": "Brown"
+        },
+        {
+          "id": "B",
+          "color": "White"
+        },
+        {
+          "id": "C",
+          "color": "Blue"
+        },
+        {
+          "id": "D",
+          "color": "Black"
+        }
+      ]
+    },
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:pressure-regulator-m12-proposed",
+      "description": "Pressure regulator / 4-20 mA / proposed",
+      "symbol": "thermite:analog-actuator",
+      "terminals": {
+        "1": {
+          "connection_policy": "exclusive",
+          "description": "+24 V power",
+          "required": true,
+          "role": "supply_positive"
+        },
+        "2": {
+          "connection_policy": "exclusive",
+          "description": "Command + / 4-20 mA"
+        },
+        "3": {
+          "connection_policy": "exclusive",
+          "description": "0 V power",
+          "required": true,
+          "role": "supply_return"
+        },
+        "4": {
+          "connection_policy": "exclusive",
+          "description": "Command return"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4"],
+      "functions": {
+        "command": {
+          "kind": "other",
+          "terminals": ["2", "4"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["1", "3"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed command and supply interface only. Exact valve, connector, enable and protective bonding requirements remain to be selected and verified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:ram-valve-m12-proposed",
+      "description": "Ram valve / +/-10 V / OBE proposed",
+      "symbol": "thermite:analog-actuator",
+      "terminals": {
+        "1": {
+          "connection_policy": "exclusive",
+          "description": "+24 V power",
+          "required": true,
+          "role": "supply_positive"
+        },
+        "2": {
+          "connection_policy": "exclusive",
+          "description": "Command + / +/-10 V"
+        },
+        "3": {
+          "connection_policy": "exclusive",
+          "description": "0 V power",
+          "required": true,
+          "role": "supply_return"
+        },
+        "4": {
+          "connection_policy": "exclusive",
+          "description": "Command return"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4"],
+      "functions": {
+        "command": {
+          "kind": "other",
+          "terminals": ["2", "4"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["1", "3"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Proposed command and supply interface only. Exact valve, connector, enable and protective bonding requirements remain to be selected and verified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "field-interfaces:terminal-strip-8-aux",
+      "description": "Terminal strip / separate command and power",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        },
+        "3": {
+          "connection_policy": "shared",
+          "description": "+24 V feed TBD"
+        },
+        "4": {
+          "connection_policy": "shared",
+          "description": "0 V feed TBD"
+        },
+        "5": {
+          "connection_policy": "shared"
+        },
+        "6": {
+          "connection_policy": "shared"
+        },
+        "7": {
+          "connection_policy": "shared",
+          "description": "+24 V feed TBD"
+        },
+        "8": {
+          "connection_policy": "shared",
+          "description": "0 V feed TBD"
+        }
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8"],
+      "functions": {
+        "aux1": {
+          "kind": "other",
+          "terminals": ["3", "4"]
+        },
+        "aux2": {
+          "kind": "other",
+          "terminals": ["7", "8"]
+        }
+      }
+    },
+    {
+      "kind": "cable_type",
+      "id": "field-interfaces:m12-a4-actuator-cordset",
+      "description": "Proposed M12 actuator cordset / 2 command + 2 power cores / exact connectors TBD",
+      "conductors": [
+        {
+          "id": "A",
+          "color": "Brown"
+        },
+        {
+          "id": "B",
+          "color": "White"
+        },
+        {
+          "id": "C",
+          "color": "Blue"
+        },
+        {
+          "id": "D",
+          "color": "Black"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "actual",
+  "version": "2.0.0",
+  "sources": ["types/*.json"]
+}

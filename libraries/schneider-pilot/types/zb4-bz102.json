@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bz102",
+      "description": "Harmony XB4 body/fixing collar with one NC contact; physical clamps 1 and 2, head separate",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BZ102",
+        "document": {
+          "url": "https://hedleysonline.co.uk/ProductImages/PDFImages/ZB4BZ1021/2Technical%20Data%20Sheet.pdf",
+          "title": "Schneider Electric Product datasheet - Characteristics ZB4BZ102 (single contact block with body/fixing collar 1NC screw clamp terminal)",
+          "revision": "Product datasheet; manufacturer-authored, undated distributor-mirror copy",
+          "pages": "pp.1-2 characteristics; 'Terminals description ISO n°1: (11-12) NC' on p.1"
+        },
+        "modelingNotes": [
+          "Identity confirmed. Schneider Harmony XB4 metal catalog 10/2021 (https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF), catalog p.76 / physical PDF page 78, row 'Single with body/fixing collar' = NO none, NC 1, sold in lots of 1, ZB4BZ102. Source order 'ZB4-BZ102' carries a presentation hyphen; the manufacturer spells it 'ZB4BZ102'. Same part.",
+          "Scope: this order is the contact block + Zamak body/fixing collar sub-assembly only. It does NOT include an operator head; a complete pushbutton pairs it with a separately ordered head (e.g. red flush XB4BA42 = ZB4BZ102 + ZB4BA4).",
+          "Exact manufacturer PDF dated12 September2026, page7 rear photo, physically marks NC1 and2; page8 shows the ZBE-102 NC1-2 diagram. The older ISO-description field11-12 is retained as a documentary discrepancy, not physical aliases or extra endpoints. Silver-alloy slow-break NC contact and screw-clamp construction remain exact scope.",
+          "Ratings are documentation, not an assigned scalar rating: [Ith] 10 A; [Ui] 600 V (pollution degree 3); [Uimp] 6 kV; short-circuit protection 10 A gG fuse. Rated for BOTH AC-15 (3 A/240 V, 6 A/120 V, 1.2 A/600 V) and DC-13 (0.1 A/600 V, 0.27 A/250 V, 0.55 A/125 V) per EN/IEC 60947-5-1. Because it is AC- and DC-rated, no AC-only or DC-only scalar voltage_type/rating is placed on the terminals.",
+          "Two documented NC contact clamps are modeled. Metal fixing-collar/support bonding and its installed continuity remain unresolved. No PE pin or automatic panel bond is inferred.",
+          "The NC function describes switchable state between physical1 and2, not a permanent link. No fixed links or universally required passive contacts; no head actuation style assigned.",
+          "Additional exact terminal evidence: https://www.se.com/au/en/product/download-pdf/ZB4BZ102 , product datasheet12 September2026, pages7-8; alternate images visually reviewed."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both physical NC clamps1 and2 are represented. Earlier ISO field11-12 is recorded separately without a formal alias map. Metal collar/support bonding and electrical attachment continuity remain unresolved; separate head excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "NC physical clamp 1",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "NC physical clamp 2",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

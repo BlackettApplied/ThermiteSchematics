@@ -1,0 +1,5 @@
+{
+  "name": "badlib",
+  "version": "1.0.0",
+  "sources": ["../outside/*.json"]
+}

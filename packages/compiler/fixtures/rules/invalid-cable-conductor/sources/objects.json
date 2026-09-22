@@ -1,0 +1,39 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "20000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "D1",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "D2",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000003",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "rules:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            { "device": "D1", "terminal": "T" },
+            { "device": "D2", "terminal": "T" }
+          ]
+        },
+        {
+          "id": "X",
+          "endpoints": [
+            { "device": "D1", "terminal": "T" },
+            { "device": "D2", "terminal": "T" }
+          ]
+        }
+      ]
+    }
+  ]
+}

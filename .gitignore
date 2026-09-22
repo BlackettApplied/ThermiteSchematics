@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.npm-cache/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Test/coverage output
+coverage/
+
+# Logs and local scratch
+*.log
+.codex-reviews/
+
+# Editor/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local-only Claude settings
+.claude/settings.local.json
+
+# Local secrets
+.env
+.env.*
+release-out/
+
+# Preserved native experiment and generated alpha drawings
+/target/
+/native-out/
+/alpha-out/
+/output/pdf/
+/tmp/pdfs/
+
+# Third-party source documents - NEVER commit (customer/OEM drawing sets, vendor datasheets)
+tmp/
+output/
+*.pdf
+
+# Local release verification scratch
+.verification-work/
+
+# Generated view output (regenerate with: thermite view ...)
+examples/*/out/
+
+# Internal milestone planning notes - kept private (archived in the source repo)
+docs/planning/

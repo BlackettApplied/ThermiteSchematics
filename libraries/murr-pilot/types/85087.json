@@ -1,0 +1,120 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85087",
+      "description": "Murrelektronik MCS 20-230/24 power supply / 1-phase / IN 185-265 V AC / OUT 24-28 V DC 20 A",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85087",
+        "document": {
+          "url": "https://www.se-import.com/documents/catalog/powering/murr/switch_mode/85087.pdf",
+          "title": "Murrelektronik INTERNET-DATASHEET of Art.-No. 85087 — MCS Power supply 1-phase, primary switched, IN 185-265VAC OUT 24-28V/20ADC",
+          "revision": "Created 11/12 (manufacturer-authored PDF, se-import.com mirror)",
+          "pages": "p.1 ratings; p.2 circuit diagram (1 PE, 2 N, 3 L, 4/5 DC-, 6/7 DC+) and dimension drawing"
+        },
+        "modelingNotes": [
+          "Exact Murrelektronik article85087; historic source manufacturer Murr is preserved. Manufacturer exact-product diagram establishes 1=PE,2=N,3=L,4/5=DC− and6/7=DC+. Diagram numbers are retained rather than connector-local table indices.",
+          "Adjustable output and universal/variable input are capability ranges. No input/output nominal_voltage or conditional current scalar is assigned. Output ratings are total supply capability, not independent allowances on duplicate clamps. Project intent must specify the chosen supply voltage.",
+          "Input pins1/2/3 are required for the powered abstraction. Output connections are application-dependent. No field bond to DC return is invented. The device outline is not a wire; function membership never creates net continuity.",
+          "Two explicit factory paths4–5 and6–7 are shown in the exact manufacturer diagram. Front restart/shutoff plug link exists but its contact inventory and selectable paths remain undocumented. Preserve partial coverage and invent no configuration pins or fixed selector bridge.",
+          "Input185–265 VAC; the source125–300 VDC claim is not established for85087. Output24–28 VDC,20 A subject to temperature/approval conditions. Do not infer DC-input use or a universal24 A rating from a catalog boost/UL field.",
+          "Clamp technology and installed manufacturing revision must be checked against the physical device; exact current diagrams do not prove every historical unit revision. No housing/mounting bond path is inferred from metalwork."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Seven documented field terminals and two output common paths. Front restart/shutoff selector contact inventory and any distinct conductive attachment interface remain unresolved; no extra pins or automatic bond are invented."
+      },
+      "terminals": {
+        "1": {
+          "description": "Protective earth input / PE (earth symbol on terminal 1)",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2": {
+          "description": "AC neutral input / N",
+          "role": "neutral",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "AC"
+          }
+        },
+        "3": {
+          "description": "AC line input / L",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "AC"
+          }
+        },
+        "4": {
+          "description": "DC- output (0 V return); internally common with terminal 5",
+          "role": "return",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "5": {
+          "description": "DC- output (0 V return); internally common with terminal 4",
+          "role": "return",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "6": {
+          "description": "DC+ output (24 V); internally common with terminal 7",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "7": {
+          "description": "DC+ output (24 V); internally common with terminal 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "INPUT": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "OUTPUT": {
+          "kind": "source",
+          "terminals": ["6", "4"]
+        },
+        "RETURN_EXTRA": {
+          "kind": "bus",
+          "terminals": ["5"]
+        },
+        "POSITIVE_EXTRA": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "INPUT": "load",
+        "OUTPUT": "source",
+        "RETURN_EXTRA": "terminal",
+        "POSITIVE_EXTRA": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": ["3", "2", "1", "7", "6", "5", "4"]
+    }
+  ]
+}

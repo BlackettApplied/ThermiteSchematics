@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "releco-pilot:c3-a30x-24dc",
+    "manufacturer": "Releco",
+    "orderNumber": "C3-A30X/24DC"
+  },
+  "type": {
+    "path": "types/c3-a30x-24dc.json",
+    "sha256": "c5607f4bd6c78471c6ab68c903e06450074370858915281fdab5bf1ff2905e8f"
+  },
+  "research": {
+    "path": "research/c3-a30x-24dc.md",
+    "sha256": "3314980f18b47bbb82c14d2a8bdbd4da8c05230ba864e562eb28a7043c4494bf"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+    "requiredTerminalKeys": ["2", "10"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "7bc40b85f3fb8f267defaa1f8080e55a81a6decfac1348386e16cd326016dddf",
+    "packet.request.json": "ff555ed6aa09e15fc28161eebe0b8c425b746ab1774299f674531c01269d0d26",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "6562f87afcec48bb23f2c37e50db39993e0ff0bd02ad0664f6bf25d3c5c828b2",
+    "system.json": "7b02e5eed345c5ebaca6f565bdd59352e2358dc8fd967b322aca5b6c72016856"
+  }
+}

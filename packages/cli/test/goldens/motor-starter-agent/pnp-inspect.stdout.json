@@ -1,0 +1,160 @@
+{
+  "format": "agent-tool-result/0.1",
+  "tool": "inspect",
+  "value": {
+    "command": "inspect",
+    "object": {
+      "kind": "device",
+      "uid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+      "designation": "LS1",
+      "description": "Three-wire PNP field proximity sensor permissive",
+      "aliases": [],
+      "typeId": "core:prox-pnp-3wire",
+      "location": "FIELD",
+      "terminals": [
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "1"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.1",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "net": {
+            "id": "net:sha256:60daec479719f7fc2252598484071dd48b005f24259024b9a7a301876204e575",
+            "potentials": [
+              {
+                "uid": "46be3efd-17b7-43ee-bb9d-a019c4fb2cdd",
+                "name": "+24VDC",
+                "electrical": {
+                  "nominal_voltage": 24,
+                  "polarity": "positive",
+                  "voltage_type": "DC"
+                }
+              }
+            ]
+          },
+          "elements": [
+            {
+              "kind": "wire",
+              "uid": "4f3f64e8-af7c-4b5d-9cbc-250368ad3e75",
+              "designation": "W-FLD-002",
+              "display": "W-FLD-002"
+            }
+          ]
+        },
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "3"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.3",
+          "role": "supply_return",
+          "net": {
+            "id": "net:sha256:f30c622e6a4691dd7b963a0555123bb6b2e1a073e5ce7ba6e29280aeca525b49",
+            "potentials": [
+              {
+                "uid": "aaccbc22-3208-42dd-ae26-54dce0250f8d",
+                "name": "0VDC",
+                "electrical": {
+                  "nominal_voltage": 0,
+                  "polarity": "return",
+                  "voltage_type": "DC"
+                }
+              }
+            ]
+          },
+          "elements": [
+            {
+              "kind": "wire",
+              "uid": "4afbc8b2-5bd7-4b92-8f9d-dcf124b85d01",
+              "designation": "W-FLD-004",
+              "display": "W-FLD-004"
+            }
+          ]
+        },
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "4"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.4",
+          "role": "signal_output",
+          "net": {
+            "id": "net:sha256:18a8e0f2eaa867a37d205621354e76aae3cb3399b0e7b568b1bf2400f95f9340",
+            "potentials": []
+          },
+          "elements": [
+            {
+              "kind": "wire",
+              "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+              "designation": "W-FLD-003",
+              "display": "W-FLD-003"
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "key": "output",
+          "kind": "channel",
+          "direction": "output",
+          "terminals": [
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "4"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.4",
+              "role": "signal_output"
+            }
+          ]
+        },
+        {
+          "key": "supply",
+          "kind": "load",
+          "terminals": [
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "1"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.1",
+              "role": "supply_positive",
+              "rating": {
+                "nominal_voltage": 24,
+                "voltage_type": "DC"
+              }
+            },
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.3",
+              "role": "supply_return"
+            }
+          ]
+        }
+      ],
+      "gangedGroups": [],
+      "internalRelations": [
+        {
+          "verb": "feeds_internal",
+          "fromFunctionKey": "supply",
+          "toFunctionKey": "output"
+        }
+      ],
+      "projectRelations": []
+    }
+  }
+}

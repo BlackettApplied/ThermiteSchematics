@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zbe-102",
+      "description": "Single NC contact block, silver alloy, screw-clamp terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZBE-102",
+        "document": {
+          "url": "https://qr.weger.it/MSR_Schneider_Taster/ZBE102/ZBE102_DATASHEET_WW_en-WW.pdf",
+          "title": "ZBE102 Product data sheet — Characteristics",
+          "revision": "22 July 2020",
+          "pages": "1–2; marked contact diagram in product photograph on page 1"
+        },
+        "modelingNotes": [
+          "Manufacturer-authored datasheet at a Weger mirror. The ZBE102 sheet photographs a block marked ZBE-102 with an NC diagram numbered 1–2; the job's hyphenated identity is preserved.",
+          "One single slow-break NC silver-alloy contact block with positive opening. Operator head, collar and enclosure are separate; no additional contacts, lamp or assembly bonding path are included.",
+          "The normally closed function does not merge nets. There are no permanent factory links; passive contact endpoints are application-dependent.",
+          "EN/IEC 60947-5-1 operational ratings: AC-15/A600 6 A at 120 V, 3 A at 240 V, 1.2 A at 600 V; DC-13/Q600 0.55 A at 125 V, 0.27 A at 250 V, 0.1 A at 600 V. Ith 10 A is thermal current; Ui 600 V at pollution degree 3 is insulation capability; Uimp 6 kV. No scalar nominal voltage or universal switching-current rating is assigned.",
+          "Screw-clamp tightening torque 0.8–1.2 N·m. Datasheet permits up to two 1.5 mm² conductors with cable ends per clamp; shared connection policy is not a physical wire-capacity check."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Both endpoints of the exact block's marked NC diagram are represented: screw-clamp terminals 1 and 2. This single passive contact block has no supply, return, PE/bond, shield, lighting or communication terminals. Separate operator/collar/enclosure interfaces and their bonding are outside this order's scope."
+      },
+      "terminals": {
+        "1": {
+          "description": "NC contact screw-clamp terminal 1",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2": {
+          "description": "NC contact screw-clamp terminal 2",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

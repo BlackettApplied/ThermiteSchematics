@@ -1,0 +1,20 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Operator console wiring example",
+    "description": "Proposed console interface; supply selection and construction review remain open."
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "industrial-pilot",
+      "version": "0.1.0",
+      "path": "../../libraries/industrial-pilot"
+    },
+    {
+      "name": "console-planning",
+      "version": "0.1.0",
+      "path": "lib"
+    }
+  ]
+}

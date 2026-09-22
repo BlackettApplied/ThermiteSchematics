@@ -1,0 +1,35 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "batch-boundary": {
+      "version": "0.1.0",
+      "path": "boundary",
+      "resolutionKind": "local",
+      "integrity": "sha256-eP6npK+FHc7UCUpUds7XwPsmHt634HNmqvp2C+4FIcM=",
+      "files": {
+        "library.json": "sha256-uz5iNAWVLE3sv/QCgEC9Nj70Nw0RzdpTtk5GrCxbD0M=",
+        "types.json": "sha256-0eUj/bZ4+vZcY8EIanObZRjoicKL6k6leUQ1wZprxsY="
+      }
+    },
+    "releco-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-le3NQzykbD2bXOy0YMiJcZBIfme/k8h81gt3tYXfWW4=",
+      "files": {
+        "library.json": "sha256-Q/X/bu+TARUow68AEEspTIDEClS4kwExo7Hp43qnPp0=",
+        "types/c3-a30x-24dc.json": "sha256-xWB/S9bHhHHGq2jJA+BkUAdDcIWJFSgf2rW/H/KQXo8=",
+        "types/c4-a40fx-24vdc.json": "sha256-4bmWg7g65BIY/KySt5amRJnZj+ozjthaE1y3BJI6iIs=",
+        "types/c4-a40x-230vac.json": "sha256-0ZbmsJY7B3g5qzr/DOvJwnfu4u00BAcdAhysK2ej89s=",
+        "types/c7-a20fx-24vdc.json": "sha256-btFFNMd7lcqCJ5pAIcLVdpZJgSc/Gs2mxvR28wRoOWU=",
+        "types/c7-a20x-230vac.json": "sha256-0n7Hu8zKOz1VvORvwyW775QvGjxfk0YW+gDE7yQ7X1w=",
+        "types/s3-b.json": "sha256-ATaIzT1Y48Sg9NLyD5sl/A2m0qtP637Lcl7fEfJTkgE=",
+        "types/s4-j.json": "sha256-ha2AyrwAW8gPGWCX7z5AqsNEqxVppyQQzG2AMuDtuqo=",
+        "types/s7-c.json": "sha256-S1DoXkVjFZpC/1hRYe381RXfvZd9QozseBPDUffgrnU=",
+        "types/s7-m.json": "sha256-0Mtw+SbaEWzjrGB3pjqjETKgGY9qVCgZHbs8rWFwDJw="
+      }
+    }
+  }
+}

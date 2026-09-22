@@ -1,0 +1,20 @@
+[
+  {
+    "code": "E300",
+    "severity": "error",
+    "message": "Potential declaration \"CONTROL\" conflicts with earlier declarations on the same net in field \"name\".",
+    "file": "sources/objects.json",
+    "line": 17,
+    "column": 5,
+    "jsonPointer": "/objects/2",
+    "uid": "30200000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "sources/objects.json",
+        "line": 10,
+        "column": 5,
+        "note": "Earlier potential declaration uid \"30200000-0000-4000-8000-000000000002\" conflicts here in field \"name\"."
+      }
+    ]
+  }
+]

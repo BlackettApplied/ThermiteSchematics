@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8570002140",
+      "description": "Protective cap for R. STAHL 8570/12 SolConeX 16 A four-pole (3P+PE) plug",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8570002140",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/03/0000000000000008570618300_001_03/Istruzioni_per_l_uso_8570618300_001_03.pdf",
+          "title": "R. STAHL Presa da muro, connettore 8570/11, 8570/12 - Istruzioni per l'uso",
+          "revision": "8570618300; S-BA-8570/11/12-03-it-31/01/2007",
+          "pages": "p.14 s.12 accessory table (protective cap 8570002140 for 16 A 4-pole connector); p.7 8570/12-4.. = 16 A 3P+PE; p.9 s.7.2 threaded cap protects plug pins"
+        },
+        "modelingNotes": [
+          "Manufacturer accessory table (page 14, section 12) explicitly lists order number 8570002140 as the protective cap (Cappuccio di protezione) 'per connettore 16 A a 4 poli' (for the 16 A four-pole connector). Order number preserved exactly; no successor, abbreviation or extra-low-voltage exclusion is applied.",
+          "Distinct from the sibling caps: 8570001140 is the 3-pole cap (marked 'non adatto per versione a bassissima tensione' / not for extra-low-voltage) and 8570003140 is the 5-pole cap. That extra-low-voltage exclusion belongs to the 3-pole cap only and is NOT transferred here.",
+          "Mechanical threaded protective cap with zero electrical terminals, pins, bonding or circuit functions. Per page 9 section 7.2 it screws onto the 8570/12 plug's contact end to protect the pins from dirt when the plug is unmated. It does not terminate, bond or short any pin.",
+          "'4-pole' equals 3P+PE: page 7 identifies the 8570/12-4.. series as 16 A, 3P + earth (four contacts).",
+          "The manufacturer does not assign the cap a separate IP rating, material, thread size or Ex marking in the accessory table. Sealing/ingress and Ex suitability of the capped assembly depend on the installed plug and application review; this model asserts none."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical protective cap; no electrical terminals, pins, bonding or circuit functions. Fit and installed environmental protection depend on the specified 4-pole 16 A R. STAHL 8570/12 plug and its assembly."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Protective cap for R. STAHL 8570/12 SolConeX 16 A four-pole (3P+PE) plug",
+          "description": "Mechanical threaded attachment over the plug contact end only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

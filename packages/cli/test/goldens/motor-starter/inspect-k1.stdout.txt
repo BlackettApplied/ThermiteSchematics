@@ -1,0 +1,166 @@
+device K1
+  uid 3e10f78a-52a2-42fd-baf6-26117d985757
+  type core:contactor-3p-1no
+  description "Motor contactor"
+  aliases:
+    (none)
+  location MAIN-PANEL
+  terminals:
+    terminal K1.1/L1
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"1/L1"}
+      device-designation K1
+      role power_input
+      net net:sha256:15c3458e516e2e6ed194933a7c8c6a37e40fe4232116d2eb4fea070353453efa
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-004 uid=713d6b10-9196-4088-9e4e-39302ccb5854
+    terminal K1.13
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"13"}
+      device-designation K1
+      role aux
+      net net:sha256:81c26503ab166cd920ccf3536cb4a19802cbdcd37b2627117c36a048f4868500
+      potentials:
+        (none)
+      elements:
+        (none)
+    terminal K1.14
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"14"}
+      device-designation K1
+      role aux
+      net net:sha256:b0ce95efc0b1716903ecd3c382552ecb2d8d118f2280b19aef67f300a11f0453
+      potentials:
+        (none)
+      elements:
+        (none)
+    terminal K1.2/T1
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"2/T1"}
+      device-designation K1
+      role power_output
+      net net:sha256:0ed8b5d5440f8c42b8e4f61d4332189c4e630922a2a804cdc1d2a2d79d6c64d5
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-007 uid=3c6cca2f-3f0e-40ad-af82-d310fb7243d1
+    terminal K1.3/L2
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"3/L2"}
+      device-designation K1
+      role power_input
+      net net:sha256:68258f3a152368afd62a501da7b3fb0dcf1083c89e35e8367f0a5eafd21119cc
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-005 uid=030d640b-a7ba-4a34-8bdc-a1e800ec4398
+    terminal K1.4/T2
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"4/T2"}
+      device-designation K1
+      role power_output
+      net net:sha256:d84193c45ef2dd9f0fd849a6d59cdce28071e8d0ba8652bc3470f8786de9cbb8
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-008 uid=4d2e1bd4-d553-470f-8c0f-e167bdb9c25a
+    terminal K1.5/L3
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"5/L3"}
+      device-designation K1
+      role power_input
+      net net:sha256:a956f28d654c65096eacbdec1189dd972cd8f06c30a87f2a8376164fd4c25db7
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-006 uid=5d508a7f-6602-4958-b590-f4285616f5f3
+    terminal K1.6/T3
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"6/T3"}
+      device-designation K1
+      role power_output
+      net net:sha256:cf554decaabe2bb3b6baeda86b2e38fb6dcf809ea7dc87419077832095cd3b12
+      potentials:
+        (none)
+      elements:
+        wire W-PWR-009 uid=698ecf0f-9bc4-4361-b2ce-932d8e7dba6c
+    terminal K1.A1
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"A1"}
+      device-designation K1
+      role coil
+      rating {"nominal_voltage":24,"voltage_type":"DC"}
+      net net:sha256:de8cd0d0a2b62f2b540a39b338e9701f6e5b5e9479a2b7dc96ab8e90fc998ce5
+      potentials:
+        (none)
+      elements:
+        wire W-CTL-007 uid=71881aaf-f3a4-41fd-8d3d-1afe88f122ce
+    terminal K1.A2
+      id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"A2"}
+      device-designation K1
+      role coil_return
+      net net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d
+      potentials:
+        potential 0VDC uid=aaccbc22-3208-42dd-ae26-54dce0250f8d electrical={"nominal_voltage":0,"polarity":"return","voltage_type":"DC"}
+      elements:
+        wire W-CTL-008 uid=de231b10-b644-4aea-8d9d-16252196c3d3
+  functions:
+    function aux13 kind=contact normal-state=open
+      terminals:
+        terminal K1.13
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"13"}
+          device-designation K1
+          role aux
+        terminal K1.14
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"14"}
+          device-designation K1
+          role aux
+    function coil kind=coil
+      terminals:
+        terminal K1.A1
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"A1"}
+          device-designation K1
+          role coil
+          rating {"nominal_voltage":24,"voltage_type":"DC"}
+        terminal K1.A2
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"A2"}
+          device-designation K1
+          role coil_return
+    function pole1 kind=contact normal-state=open
+      terminals:
+        terminal K1.1/L1
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"1/L1"}
+          device-designation K1
+          role power_input
+        terminal K1.2/T1
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"2/T1"}
+          device-designation K1
+          role power_output
+    function pole2 kind=contact normal-state=open
+      terminals:
+        terminal K1.3/L2
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"3/L2"}
+          device-designation K1
+          role power_input
+        terminal K1.4/T2
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"4/T2"}
+          device-designation K1
+          role power_output
+    function pole3 kind=contact normal-state=open
+      terminals:
+        terminal K1.5/L3
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"5/L3"}
+          device-designation K1
+          role power_input
+        terminal K1.6/T3
+          id {"deviceUid":"3e10f78a-52a2-42fd-baf6-26117d985757","terminalKey":"6/T3"}
+          device-designation K1
+          role power_output
+  ganged-groups:
+    group gang:sha256:5773084aeee691fec9a44d5d5b388662b42cb5d85e50af67ea24b559d6ec928a
+      functions:
+        function pole1
+        function pole2
+        function pole3
+  internal-relations:
+    relation actuates from=coil to=aux13
+    relation actuates from=coil to=pole1
+    relation actuates from=coil to=pole2
+    relation actuates from=coil to=pole3
+    relation ganged_with from=pole1 to=pole2
+    relation ganged_with from=pole2 to=pole3
+  project-relations:
+    relation incoming controls other=PLC1 other-uid=81148ad3-8c03-4c8d-8c70-6b33bb3b0266 via=REL-CONTROLS-001

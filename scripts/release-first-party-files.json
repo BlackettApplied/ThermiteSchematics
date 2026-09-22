@@ -1,0 +1,1951 @@
+{
+  "format": "thermite-schematics-release-first-party-files/0.1",
+  "packages": [
+    {
+      "name": "@thermite/agent-tools",
+      "sourceRoot": "packages/agent-tools",
+      "stagePath": "package/node_modules/@thermite/agent-tools",
+      "sourceManifest": {
+        "path": "packages/agent-tools/package.json",
+        "sha256": "feae2cd5c76a80e576df2ea4ce5cc0d67efc301e51ae175a03d5ab9796bdcdda"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/agent-tools/package.json",
+        "sha256": "572bdef2573421fdb2b04118831f827859d1b63a89c9abc2c10f793255fc1a80"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/agent-tools/dist/apply-source-patch.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/apply-source-patch.d.ts",
+          "role": "declaration",
+          "sourceSha256": "ff69fbc9d0dd8422d6af80087e96223e5fb5a6a03362a113b7088986aee51e85",
+          "stagedSha256": "ff69fbc9d0dd8422d6af80087e96223e5fb5a6a03362a113b7088986aee51e85"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/apply-source-patch.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/apply-source-patch.js",
+          "role": "runtime",
+          "sourceSha256": "7c40f4583fd05ad790805268ce6e2e31647a2bd2fd081d6f196376a84989bb5d",
+          "stagedSha256": "7c40f4583fd05ad790805268ce6e2e31647a2bd2fd081d6f196376a84989bb5d"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/contracts.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/contracts.d.ts",
+          "role": "declaration",
+          "sourceSha256": "610b0e814d11d5685e3bf1564573f3b972995a1da229e31897c185feb891b2ad",
+          "stagedSha256": "610b0e814d11d5685e3bf1564573f3b972995a1da229e31897c185feb891b2ad"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/contracts.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/contracts.js",
+          "role": "runtime",
+          "sourceSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "stagedSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/errors.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/errors.d.ts",
+          "role": "declaration",
+          "sourceSha256": "dfa115a3f512aaed9b1be63b5e6fc4d8fbc7341c39b26b20dcaef0956678c32f",
+          "stagedSha256": "dfa115a3f512aaed9b1be63b5e6fc4d8fbc7341c39b26b20dcaef0956678c32f"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/errors.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/errors.js",
+          "role": "runtime",
+          "sourceSha256": "71174fdb56d517e2df0187b0fb6aebf8f6af4fb5b702d085d312cf84b5ea6fd8",
+          "stagedSha256": "71174fdb56d517e2df0187b0fb6aebf8f6af4fb5b702d085d312cf84b5ea6fd8"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/immutable.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/immutable.d.ts",
+          "role": "declaration",
+          "sourceSha256": "40e4f04a4599689b8801795d28ebb8973831848fbee18301780e6a52594fb29b",
+          "stagedSha256": "40e4f04a4599689b8801795d28ebb8973831848fbee18301780e6a52594fb29b"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/immutable.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/immutable.js",
+          "role": "runtime",
+          "sourceSha256": "c838927c88a9e16e19dac8bb2c2fbe834f486a73dc171e2916f7e5bc142307fb",
+          "stagedSha256": "c838927c88a9e16e19dac8bb2c2fbe834f486a73dc171e2916f7e5bc142307fb"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/plain-json.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/plain-json.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e42775e7b95e772d402bc534d5b6b790fb0e4f497d71272cc06bd6f8cf3829ff",
+          "stagedSha256": "e42775e7b95e772d402bc534d5b6b790fb0e4f497d71272cc06bd6f8cf3829ff"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/plain-json.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/plain-json.js",
+          "role": "runtime",
+          "sourceSha256": "cbb5435f864abcfd55ba2f3a077a3a8a701b964758cc01716799d15660ac6559",
+          "stagedSha256": "cbb5435f864abcfd55ba2f3a077a3a8a701b964758cc01716799d15660ac6559"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/request-validation.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/request-validation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "6b1e0f4bbf14b002c8673eed60eb3cc64941273c4b3d6f64f850f18012ffd2b2",
+          "stagedSha256": "6b1e0f4bbf14b002c8673eed60eb3cc64941273c4b3d6f64f850f18012ffd2b2"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/request-validation.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/request-validation.js",
+          "role": "runtime",
+          "sourceSha256": "df87d0f7ce9ddc49817d5783470e7319fe0b3bd21a905647e8a85812b0554a5c",
+          "stagedSha256": "df87d0f7ce9ddc49817d5783470e7319fe0b3bd21a905647e8a85812b0554a5c"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/serializer.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/serializer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "1c09686d5c4b7a7d6166dc5a6f3ceac4e67236ea3b7507b153666b10a807d4d1",
+          "stagedSha256": "1c09686d5c4b7a7d6166dc5a6f3ceac4e67236ea3b7507b153666b10a807d4d1"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/serializer.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/serializer.js",
+          "role": "runtime",
+          "sourceSha256": "91ccd88ce8aac098005e3f30fefd7975091564ac3aac50bf462ea78ca39b4d33",
+          "stagedSha256": "91ccd88ce8aac098005e3f30fefd7975091564ac3aac50bf462ea78ca39b4d33"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/tool-failure.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/tool-failure.d.ts",
+          "role": "declaration",
+          "sourceSha256": "06b68469272e8ddeca6465fd76d055e48d444ff8ea9ed6010c07a04627f2e668",
+          "stagedSha256": "06b68469272e8ddeca6465fd76d055e48d444ff8ea9ed6010c07a04627f2e668"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/common/tool-failure.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/common/tool-failure.js",
+          "role": "runtime",
+          "sourceSha256": "3eddd5c283277bdab99dbdfa0683d963a04f2e8cff4f4fd671a26758818cfce7",
+          "stagedSha256": "3eddd5c283277bdab99dbdfa0683d963a04f2e8cff4f4fd671a26758818cfce7"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/create-view.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/create-view.d.ts",
+          "role": "declaration",
+          "sourceSha256": "68946d256304daf8eced6d82e6edadae40308f5323f2d8e4ba795fbad40169a8",
+          "stagedSha256": "68946d256304daf8eced6d82e6edadae40308f5323f2d8e4ba795fbad40169a8"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/create-view.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/create-view.js",
+          "role": "runtime",
+          "sourceSha256": "fe2de7edb65414938f45d51f2e813269a3158fe9ede627fd20b55943defc7f0f",
+          "stagedSha256": "fe2de7edb65414938f45d51f2e813269a3158fe9ede627fd20b55943defc7f0f"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e2ea0e615ab333ca03fe029629f115eda4596aeec971d3e01f995ae3faa8d9f9",
+          "stagedSha256": "e2ea0e615ab333ca03fe029629f115eda4596aeec971d3e01f995ae3faa8d9f9"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "6b4db38b2dea0f16c1524133aef5d96826bd6cfadf01c38b9c4139e93d39dabc",
+          "stagedSha256": "6b4db38b2dea0f16c1524133aef5d96826bd6cfadf01c38b9c4139e93d39dabc"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/inspect.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/inspect.d.ts",
+          "role": "declaration",
+          "sourceSha256": "5a7fa347607a1211600e8e4529c06d46294cb6f8e7ea525008ca8f2ae5721bb9",
+          "stagedSha256": "5a7fa347607a1211600e8e4529c06d46294cb6f8e7ea525008ca8f2ae5721bb9"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/inspect.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/inspect.js",
+          "role": "runtime",
+          "sourceSha256": "8c93980537a5fc992dc1c1f5b0f79bf6427c10740aaed52297390f1de78e3acc",
+          "stagedSha256": "8c93980537a5fc992dc1c1f5b0f79bf6427c10740aaed52297390f1de78e3acc"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/json-patch.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/json-patch.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7a6b104703ea28fcfac4bc519d442633e32ceca25a30977e7b13ed608ee2b890",
+          "stagedSha256": "7a6b104703ea28fcfac4bc519d442633e32ceca25a30977e7b13ed608ee2b890"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/json-patch.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/json-patch.js",
+          "role": "runtime",
+          "sourceSha256": "0164e0d43a6355278c8ffa75ff6e51cb149fd3fee03b8d8e3de7619d3a4a43a5",
+          "stagedSha256": "0164e0d43a6355278c8ffa75ff6e51cb149fd3fee03b8d8e3de7619d3a4a43a5"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/patch-filesystem.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/patch-filesystem.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7f2648f92f3ac1fedf5d3f46c0f0073a71789553e3661528f2f6a936c84ffb5f",
+          "stagedSha256": "7f2648f92f3ac1fedf5d3f46c0f0073a71789553e3661528f2f6a936c84ffb5f"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/patch-filesystem.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/patch-filesystem.js",
+          "role": "runtime",
+          "sourceSha256": "8c455289d84188f688e8d3e3cbfbb21ab232f3f223ba8dbf7746b82f1a679a50",
+          "stagedSha256": "8c455289d84188f688e8d3e3cbfbb21ab232f3f223ba8dbf7746b82f1a679a50"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/query.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/query.d.ts",
+          "role": "declaration",
+          "sourceSha256": "aa4577dab93fbd2de124ed5e7aee04f118d91bef6e88219f708aea811e2fe813",
+          "stagedSha256": "aa4577dab93fbd2de124ed5e7aee04f118d91bef6e88219f708aea811e2fe813"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/query.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/query.js",
+          "role": "runtime",
+          "sourceSha256": "4be26f2961dd0519324e689bbbff358ac4e9d18da0206847a79625bf412aece9",
+          "stagedSha256": "4be26f2961dd0519324e689bbbff358ac4e9d18da0206847a79625bf412aece9"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/read-tools.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/read-tools.d.ts",
+          "role": "declaration",
+          "sourceSha256": "92648b3cdecfec40bfeb17d2f90e40c3057412f3f05e088a1901b4ee4d0a2bbf",
+          "stagedSha256": "92648b3cdecfec40bfeb17d2f90e40c3057412f3f05e088a1901b4ee4d0a2bbf"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/read-tools.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/read-tools.js",
+          "role": "runtime",
+          "sourceSha256": "84d1e48b9f5f4a6f67f9358e902d0b24a010a65d412041c47eddf10e5388f5d5",
+          "stagedSha256": "84d1e48b9f5f4a6f67f9358e902d0b24a010a65d412041c47eddf10e5388f5d5"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/resolve.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/resolve.d.ts",
+          "role": "declaration",
+          "sourceSha256": "20fbd7ed0c06b486e0693325b33cd32ee49b1571c9426cff13f38cd3bd890e88",
+          "stagedSha256": "20fbd7ed0c06b486e0693325b33cd32ee49b1571c9426cff13f38cd3bd890e88"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/resolve.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/resolve.js",
+          "role": "runtime",
+          "sourceSha256": "9ac1faf79534c4d63d8d9ecfd226d226f566d146b9691f476d7b1bbb116e939d",
+          "stagedSha256": "9ac1faf79534c4d63d8d9ecfd226d226f566d146b9691f476d7b1bbb116e939d"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-patch-request.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-patch-request.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7bc00e0efc3a676ccff35720d3d049970e0880702a332f79c4530cd6a1c9454d",
+          "stagedSha256": "7bc00e0efc3a676ccff35720d3d049970e0880702a332f79c4530cd6a1c9454d"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-patch-request.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-patch-request.js",
+          "role": "runtime",
+          "sourceSha256": "b62544603ff142f488301f76d7465de7d240f2bf8d04046872cac1d52f8fcf64",
+          "stagedSha256": "b62544603ff142f488301f76d7465de7d240f2bf8d04046872cac1d52f8fcf64"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-patch.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-patch.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7c59161a58cd45dcb8a193a4a81c77edf028d77b1962c7c114c3014d0485053e",
+          "stagedSha256": "7c59161a58cd45dcb8a193a4a81c77edf028d77b1962c7c114c3014d0485053e"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-patch.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-patch.js",
+          "role": "runtime",
+          "sourceSha256": "98857cf89db1c3421af3742668c29efb7fb4f327d015cac96a590688505acb8f",
+          "stagedSha256": "98857cf89db1c3421af3742668c29efb7fb4f327d015cac96a590688505acb8f"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-serializer.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-serializer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "c2e71a50f22412620fda2075858f7cdd5cb7aadc7ec77a19c08e7719766b6336",
+          "stagedSha256": "c2e71a50f22412620fda2075858f7cdd5cb7aadc7ec77a19c08e7719766b6336"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/source-serializer.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/source-serializer.js",
+          "role": "runtime",
+          "sourceSha256": "3485fcdfd307718532b7401408c4bac8a2e7771f6ebe4657eb63eefd9c8c2f8f",
+          "stagedSha256": "3485fcdfd307718532b7401408c4bac8a2e7771f6ebe4657eb63eefd9c8c2f8f"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/toolbox.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/toolbox.d.ts",
+          "role": "declaration",
+          "sourceSha256": "3688f607e89b659468d9d788e1aafb4dd3f7619d0e8c77fb66194484c0676c66",
+          "stagedSha256": "3688f607e89b659468d9d788e1aafb4dd3f7619d0e8c77fb66194484c0676c66"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/toolbox.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/toolbox.js",
+          "role": "runtime",
+          "sourceSha256": "4e62def6800b4833e260fcdb81593a4488c1f9b61ce579cc0e4e7fc9565f73c9",
+          "stagedSha256": "4e62def6800b4833e260fcdb81593a4488c1f9b61ce579cc0e4e7fc9565f73c9"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/validate.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/validate.d.ts",
+          "role": "declaration",
+          "sourceSha256": "3615d7f9458a31148be412ff8074214e8857670a7dfc54da17f16c3291cafa92",
+          "stagedSha256": "3615d7f9458a31148be412ff8074214e8857670a7dfc54da17f16c3291cafa92"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/validate.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/validate.js",
+          "role": "runtime",
+          "sourceSha256": "d417feabf1d1b7c8095b3d50f639edfb455087f771df6536620a936bc2374ba4",
+          "stagedSha256": "d417feabf1d1b7c8095b3d50f639edfb455087f771df6536620a936bc2374ba4"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/version.d.ts",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/version.d.ts",
+          "role": "declaration",
+          "sourceSha256": "cb3793b13be8beb131bad0c4ef0b941bcdd8d20112844a198b429c5970ddfe02",
+          "stagedSha256": "cb3793b13be8beb131bad0c4ef0b941bcdd8d20112844a198b429c5970ddfe02"
+        },
+        {
+          "sourcePath": "packages/agent-tools/dist/version.js",
+          "stagePath": "package/node_modules/@thermite/agent-tools/dist/version.js",
+          "role": "runtime",
+          "sourceSha256": "784a73e465bc028759d58cc4e288f3cdcd8cc711af28cfa1cba44053e3c8a7ef",
+          "stagedSha256": "784a73e465bc028759d58cc4e288f3cdcd8cc711af28cfa1cba44053e3c8a7ef"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/cli",
+      "sourceRoot": "packages/cli",
+      "stagePath": "package",
+      "sourceManifest": {
+        "path": "packages/cli/package.json",
+        "sha256": "ae4dc2a6a54f02023ab5e4cd7804ff0af0b538b77cd03f62fdeb6b1f6482b8ad"
+      },
+      "stagedManifest": {
+        "path": "package/package.json",
+        "sha256": "ff6c6e57c8c83dc1e7bc474fe626bdbee5e97ea5713ed8bf4ce2c3d352049c3d"
+      },
+      "files": [
+        {
+          "sourcePath": "LICENSE",
+          "stagePath": "package/LICENSE",
+          "role": "license",
+          "sourceSha256": "78c6b186defa0ba97c91d71c7c52cbd36fad5ae57be5b605eef6b8c1ca19807d",
+          "stagedSha256": "78c6b186defa0ba97c91d71c7c52cbd36fad5ae57be5b605eef6b8c1ca19807d"
+        },
+        {
+          "sourcePath": "packages/cli/README.md",
+          "stagePath": "package/README.md",
+          "role": "readme",
+          "sourceSha256": "e70851839b261c634ab4ce004b6e1486f739761c295b08075b861aa0bab31f04",
+          "stagedSha256": "e70851839b261c634ab4ce004b6e1486f739761c295b08075b861aa0bab31f04"
+        },
+        {
+          "sourcePath": "packages/cli/assets/AGENTS.md",
+          "stagePath": "package/assets/AGENTS.md",
+          "role": "agent-guide",
+          "sourceSha256": "422c78b8d5edc7383b4cdbe39ef079502ac8562e86304fb9312b3476d605cb92",
+          "stagedSha256": "422c78b8d5edc7383b4cdbe39ef079502ac8562e86304fb9312b3476d605cb92"
+        },
+        {
+          "sourcePath": "packages/cli/dist/agent-command.d.ts",
+          "stagePath": "package/dist/agent-command.d.ts",
+          "role": "declaration",
+          "sourceSha256": "0a447c3f507571f5ff10a64fc8c3c2ddf86b122a85dfbefc492fecef244ade22",
+          "stagedSha256": "0a447c3f507571f5ff10a64fc8c3c2ddf86b122a85dfbefc492fecef244ade22"
+        },
+        {
+          "sourcePath": "packages/cli/dist/agent-command.js",
+          "stagePath": "package/dist/agent-command.js",
+          "role": "runtime",
+          "sourceSha256": "e7a51fda58831258cde00950e96763c2eb14807b9527942de60699f89727a19b",
+          "stagedSha256": "e7a51fda58831258cde00950e96763c2eb14807b9527942de60699f89727a19b"
+        },
+        {
+          "sourcePath": "packages/cli/dist/bin.d.ts",
+          "stagePath": "package/dist/bin.d.ts",
+          "role": "declaration",
+          "sourceSha256": "43e818adf60173644896298637f47b01d5819b17eda46eaa32d0c7d64724d012",
+          "stagedSha256": "43e818adf60173644896298637f47b01d5819b17eda46eaa32d0c7d64724d012"
+        },
+        {
+          "sourcePath": "packages/cli/dist/bin.js",
+          "stagePath": "package/dist/bin.js",
+          "role": "runtime",
+          "sourceSha256": "a36338a957315a5bc12a39e68d7cd649f5392060bb728d6ca7dc79da7785778b",
+          "stagedSha256": "a36338a957315a5bc12a39e68d7cd649f5392060bb728d6ca7dc79da7785778b"
+        },
+        {
+          "sourcePath": "packages/cli/dist/index.d.ts",
+          "stagePath": "package/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "eb88ab185d8306037b9f5d8ec234bad5fc27a7ed44020951ae7a43fce8005165",
+          "stagedSha256": "eb88ab185d8306037b9f5d8ec234bad5fc27a7ed44020951ae7a43fce8005165"
+        },
+        {
+          "sourcePath": "packages/cli/dist/index.js",
+          "stagePath": "package/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "e367cad385ef7784f895a1fe84f14028a2bc407e02c0f1aeac241af67b75c422",
+          "stagedSha256": "e367cad385ef7784f895a1fe84f14028a2bc407e02c0f1aeac241af67b75c422"
+        },
+        {
+          "sourcePath": "packages/cli/dist/init.d.ts",
+          "stagePath": "package/dist/init.d.ts",
+          "role": "declaration",
+          "sourceSha256": "ca9c67bbb5ee7525f2370c28d6bc8aab57a34c1c25b5274a2d433ef8e216a556",
+          "stagedSha256": "ca9c67bbb5ee7525f2370c28d6bc8aab57a34c1c25b5274a2d433ef8e216a556"
+        },
+        {
+          "sourcePath": "packages/cli/dist/init.js",
+          "stagePath": "package/dist/init.js",
+          "role": "runtime",
+          "sourceSha256": "0ebf0ca7923c533da6bf7d378e617f97ae872c2bb12263773fe3347ff5f1235c",
+          "stagedSha256": "0ebf0ca7923c533da6bf7d378e617f97ae872c2bb12263773fe3347ff5f1235c"
+        },
+        {
+          "sourcePath": "packages/cli/dist/query-renderer.d.ts",
+          "stagePath": "package/dist/query-renderer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7336b5e149e2abce31e494444401baf56a33c42ce4fd6f345c2c19c15b28770b",
+          "stagedSha256": "7336b5e149e2abce31e494444401baf56a33c42ce4fd6f345c2c19c15b28770b"
+        },
+        {
+          "sourcePath": "packages/cli/dist/query-renderer.js",
+          "stagePath": "package/dist/query-renderer.js",
+          "role": "runtime",
+          "sourceSha256": "e1792eca536bf530b6a35eb7492e6bd1282f1b92172f310a37a8e9401153423a",
+          "stagedSha256": "e1792eca536bf530b6a35eb7492e6bd1282f1b92172f310a37a8e9401153423a"
+        },
+        {
+          "sourcePath": "packages/cli/dist/render-command-serializer.d.ts",
+          "stagePath": "package/dist/render-command-serializer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "155e05d8fcc12e001cd399d26d0288d8c7ff6d62a27c0e610132d62b466e41c7",
+          "stagedSha256": "155e05d8fcc12e001cd399d26d0288d8c7ff6d62a27c0e610132d62b466e41c7"
+        },
+        {
+          "sourcePath": "packages/cli/dist/render-command-serializer.js",
+          "stagePath": "package/dist/render-command-serializer.js",
+          "role": "runtime",
+          "sourceSha256": "8220002464c97f1a625347752645f069ad932e1e7803d63938968ea0b9a5f652",
+          "stagedSha256": "8220002464c97f1a625347752645f069ad932e1e7803d63938968ea0b9a5f652"
+        },
+        {
+          "sourcePath": "packages/cli/dist/starter.d.ts",
+          "stagePath": "package/dist/starter.d.ts",
+          "role": "declaration",
+          "sourceSha256": "aaa7b3af908815b2c561947ff1690f989829b02201542d350d3c6cd646fdfa7b",
+          "stagedSha256": "aaa7b3af908815b2c561947ff1690f989829b02201542d350d3c6cd646fdfa7b"
+        },
+        {
+          "sourcePath": "packages/cli/dist/starter.js",
+          "stagePath": "package/dist/starter.js",
+          "role": "runtime",
+          "sourceSha256": "9ffe7223b39143a0626261401a87f21108b8d0bb5143536d925aa9ea05fe7426",
+          "stagedSha256": "9ffe7223b39143a0626261401a87f21108b8d0bb5143536d925aa9ea05fe7426"
+        },
+        {
+          "sourcePath": "packages/cli/dist/version.d.ts",
+          "stagePath": "package/dist/version.d.ts",
+          "role": "declaration",
+          "sourceSha256": "1c86253569703ac2b910b60d091af99d9c1b4062b15e8b72202bc8b01ff9fa3d",
+          "stagedSha256": "1c86253569703ac2b910b60d091af99d9c1b4062b15e8b72202bc8b01ff9fa3d"
+        },
+        {
+          "sourcePath": "packages/cli/dist/version.js",
+          "stagePath": "package/dist/version.js",
+          "role": "runtime",
+          "sourceSha256": "c68eadd3de8aef40060cc7cfc26eabb98635be599483bda99002af670ffb1843",
+          "stagedSha256": "c68eadd3de8aef40060cc7cfc26eabb98635be599483bda99002af670ffb1843"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/connections/control-power.json",
+          "stagePath": "package/templates/starter-default/connections/control-power.json",
+          "role": "starter-template",
+          "sourceSha256": "3ccdebfeeefeb45447ac40dac4f3d9574af22854fdf0b6e58a377aba19930d52",
+          "stagedSha256": "3ccdebfeeefeb45447ac40dac4f3d9574af22854fdf0b6e58a377aba19930d52"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/devices/equipment.json",
+          "stagePath": "package/templates/starter-default/devices/equipment.json",
+          "role": "starter-template",
+          "sourceSha256": "3e5f7dabe2d145821d4935bc8fa7bb3e1bb21c007513228230e2aa189358d0a2",
+          "stagedSha256": "3e5f7dabe2d145821d4935bc8fa7bb3e1bb21c007513228230e2aa189358d0a2"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/electrical-system.lock.json",
+          "stagePath": "package/templates/starter-default/electrical-system.lock.json",
+          "role": "starter-template",
+          "sourceSha256": "2be7baa61346b2deeab0ef589fe87fdfdb14a60d276c444671a7acae8342e3a0",
+          "stagedSha256": "2be7baa61346b2deeab0ef589fe87fdfdb14a60d276c444671a7acae8342e3a0"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/potentials/potentials.json",
+          "stagePath": "package/templates/starter-default/potentials/potentials.json",
+          "role": "starter-template",
+          "sourceSha256": "a91a63260759d0596c007cdbe0aad1a3fa7eb42e14034b899878093b584aa9c4",
+          "stagedSha256": "a91a63260759d0596c007cdbe0aad1a3fa7eb42e14034b899878093b584aa9c4"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/presentation.json",
+          "stagePath": "package/templates/starter-default/presentation.json",
+          "role": "starter-template",
+          "sourceSha256": "96839a315f2b040c91767b2850318c559a0856f1afda242717f3f64aabafc83f",
+          "stagedSha256": "96839a315f2b040c91767b2850318c559a0856f1afda242717f3f64aabafc83f"
+        },
+        {
+          "sourcePath": "packages/cli/templates/starter-default/system.json",
+          "stagePath": "package/templates/starter-default/system.json",
+          "role": "starter-template",
+          "sourceSha256": "edd9bc2b0a4480a66cd7631bfde4cf924389cace9fd070095cba29dd4d7d82a5",
+          "stagedSha256": "edd9bc2b0a4480a66cd7631bfde4cf924389cace9fd070095cba29dd4d7d82a5"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/compiler",
+      "sourceRoot": "packages/compiler",
+      "stagePath": "package/node_modules/@thermite/compiler",
+      "sourceManifest": {
+        "path": "packages/compiler/package.json",
+        "sha256": "569ac939dfdfd81f7ce218636daaeea8e8e1bf62b0e6bcb000c74cb979794803"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/compiler/package.json",
+        "sha256": "8703b4f00b0fb13ac6852f5ffbd8c93c7d46da9733e56c453eff3d09d357656e"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/compiler/dist/atomic-write.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/atomic-write.d.ts",
+          "role": "declaration",
+          "sourceSha256": "ec3a7986bd00ddaa8f02c3265821ba34bfad1e9d7fcad27b105ee8a0611042da",
+          "stagedSha256": "ec3a7986bd00ddaa8f02c3265821ba34bfad1e9d7fcad27b105ee8a0611042da"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/atomic-write.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/atomic-write.js",
+          "role": "runtime",
+          "sourceSha256": "8179ffdf299116b3a1b7d530dc299ead73d46ae577290542373582a4e03129db",
+          "stagedSha256": "8179ffdf299116b3a1b7d530dc299ead73d46ae577290542373582a4e03129db"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/canonical-json.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/canonical-json.d.ts",
+          "role": "declaration",
+          "sourceSha256": "b3ad831a4c79c987add0fb6759b2eb4d9c3c6492c2978bb0dcd463220ec3ee98",
+          "stagedSha256": "b3ad831a4c79c987add0fb6759b2eb4d9c3c6492c2978bb0dcd463220ec3ee98"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/canonical-json.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/canonical-json.js",
+          "role": "runtime",
+          "sourceSha256": "ed6f296e7b99990a26a6089ac773c554764f980829255605d30b155b6ea39a1b",
+          "stagedSha256": "ed6f296e7b99990a26a6089ac773c554764f980829255605d30b155b6ea39a1b"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/compiler.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/compiler.d.ts",
+          "role": "declaration",
+          "sourceSha256": "ca408f6c42c6774dc395f2f179cdbac907281c12adf79f37e0b2d2a2a07eaa6d",
+          "stagedSha256": "ca408f6c42c6774dc395f2f179cdbac907281c12adf79f37e0b2d2a2a07eaa6d"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/compiler.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/compiler.js",
+          "role": "runtime",
+          "sourceSha256": "5dd1b063018a944b105389187b14dce45aeac07efa34fc7de93facce47454be6",
+          "stagedSha256": "5dd1b063018a944b105389187b14dce45aeac07efa34fc7de93facce47454be6"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/expansion.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/expansion.d.ts",
+          "role": "declaration",
+          "sourceSha256": "abb774ed3acef72b677b61dc6c55297e100bd769800d08a369d3966027ae7fb7",
+          "stagedSha256": "abb774ed3acef72b677b61dc6c55297e100bd769800d08a369d3966027ae7fb7"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/expansion.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/expansion.js",
+          "role": "runtime",
+          "sourceSha256": "3a46b4ff01fdb23f7de32c17a04445112a5d7aa77741c5c1c2260f26d35873d1",
+          "stagedSha256": "3a46b4ff01fdb23f7de32c17a04445112a5d7aa77741c5c1c2260f26d35873d1"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/graph.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/graph.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e272175734ee7de2cf398e9e4df07096795a9ec70dcd89b6aa9d040475ba8d7f",
+          "stagedSha256": "e272175734ee7de2cf398e9e4df07096795a9ec70dcd89b6aa9d040475ba8d7f"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/graph.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/graph.js",
+          "role": "runtime",
+          "sourceSha256": "932f6defcd37e6fb73f393f426bbd4db9c16e45d3c3e3796f30dce7754946202",
+          "stagedSha256": "932f6defcd37e6fb73f393f426bbd4db9c16e45d3c3e3796f30dce7754946202"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "1ffa982dbf38aa619c26f0ef24ae98c22aeb1592af798a15db73099b95f7ced7",
+          "stagedSha256": "1ffa982dbf38aa619c26f0ef24ae98c22aeb1592af798a15db73099b95f7ced7"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "431841a01b5c7ba7d1a5a9a675248b51ed7e9da2f6c90b172d8d7e1621f4d629",
+          "stagedSha256": "431841a01b5c7ba7d1a5a9a675248b51ed7e9da2f6c90b172d8d7e1621f4d629"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/ir.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/ir.d.ts",
+          "role": "declaration",
+          "sourceSha256": "25f938da48be2de890d4f4609fcf94f78807ec5770eb4ab42f7a31da3a0de6d9",
+          "stagedSha256": "25f938da48be2de890d4f4609fcf94f78807ec5770eb4ab42f7a31da3a0de6d9"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/ir.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/ir.js",
+          "role": "runtime",
+          "sourceSha256": "37f6b0b77855fc46be9daca9c2cde38664cc0454c584f98ac7e4b6bceae7327c",
+          "stagedSha256": "37f6b0b77855fc46be9daca9c2cde38664cc0454c584f98ac7e4b6bceae7327c"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/loader.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/loader.d.ts",
+          "role": "declaration",
+          "sourceSha256": "3df6fd47e9c04f7469730b4e58b287ba023268cdccce388692d660517c7c0a8e",
+          "stagedSha256": "3df6fd47e9c04f7469730b4e58b287ba023268cdccce388692d660517c7c0a8e"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/loader.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/loader.js",
+          "role": "runtime",
+          "sourceSha256": "9369293b961b82ac5e9a07fffaa46c0b53aa27db4eb5e24fb491a13f52690d20",
+          "stagedSha256": "9369293b961b82ac5e9a07fffaa46c0b53aa27db4eb5e24fb491a13f52690d20"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/lock.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/lock.d.ts",
+          "role": "declaration",
+          "sourceSha256": "4e6350a507e284e74a394116d6c53f74685dbcb239b2a94ff65c817b53c60c60",
+          "stagedSha256": "4e6350a507e284e74a394116d6c53f74685dbcb239b2a94ff65c817b53c60c60"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/lock.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/lock.js",
+          "role": "runtime",
+          "sourceSha256": "ab65d345559c9f488f1930d2c46043b3ca9cd9d0cba7265974199302309ceb1a",
+          "stagedSha256": "ab65d345559c9f488f1930d2c46043b3ca9cd9d0cba7265974199302309ceb1a"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/nets.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/nets.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7ce637383278ecc24add01148903977ac75f3bac88ba9a1228b684cfe9f4eb54",
+          "stagedSha256": "7ce637383278ecc24add01148903977ac75f3bac88ba9a1228b684cfe9f4eb54"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/nets.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/nets.js",
+          "role": "runtime",
+          "sourceSha256": "0de0cd4885fc71bf764999d8d10fbb049027483c513b3fbd241ecea4b74e6471",
+          "stagedSha256": "0de0cd4885fc71bf764999d8d10fbb049027483c513b3fbd241ecea4b74e6471"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/resolution.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/resolution.d.ts",
+          "role": "declaration",
+          "sourceSha256": "6560e088a89632f79665b9a6596408c9a7eb800b4d17edfb2d18185ed8bfb6b0",
+          "stagedSha256": "6560e088a89632f79665b9a6596408c9a7eb800b4d17edfb2d18185ed8bfb6b0"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/resolution.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/resolution.js",
+          "role": "runtime",
+          "sourceSha256": "e31cb429e446595f8d64482361726ec0f7348e8207bcd9a25e62c338ccdf662f",
+          "stagedSha256": "e31cb429e446595f8d64482361726ec0f7348e8207bcd9a25e62c338ccdf662f"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/context.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/context.d.ts",
+          "role": "declaration",
+          "sourceSha256": "b741f6cc8b455dda26b6bbfc2d819455fbb121ae1d1194b9c97f17d533c78161",
+          "stagedSha256": "b741f6cc8b455dda26b6bbfc2d819455fbb121ae1d1194b9c97f17d533c78161"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/context.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/context.js",
+          "role": "runtime",
+          "sourceSha256": "0dfc487b288e0b17bdba01eeccf861fa7a8c7829666940f10c696809358c2025",
+          "stagedSha256": "0dfc487b288e0b17bdba01eeccf861fa7a8c7829666940f10c696809358c2025"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/duplicate-potential-intent.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/duplicate-potential-intent.d.ts",
+          "role": "declaration",
+          "sourceSha256": "eaba7ddfaaa299ac61c4495a6ee65253dd1dea8aa9ce179fcf0e07182f44dc7c",
+          "stagedSha256": "eaba7ddfaaa299ac61c4495a6ee65253dd1dea8aa9ce179fcf0e07182f44dc7c"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/duplicate-potential-intent.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/duplicate-potential-intent.js",
+          "role": "runtime",
+          "sourceSha256": "821d7d65e1de514ec2f79e7d9fe392076ff6ddbf2765058abac644f1323720ce",
+          "stagedSha256": "821d7d65e1de514ec2f79e7d9fe392076ff6ddbf2765058abac644f1323720ce"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/evaluate.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/evaluate.d.ts",
+          "role": "declaration",
+          "sourceSha256": "de2c820141c98986b2d265d89c3b0523e90fe57e3affac4b7d5f179ffaa3eac8",
+          "stagedSha256": "de2c820141c98986b2d265d89c3b0523e90fe57e3affac4b7d5f179ffaa3eac8"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/evaluate.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/evaluate.js",
+          "role": "runtime",
+          "sourceSha256": "bc6a5ed5b9d4c1dde9f681aa2411dd953a50336186c1a7eb0d9a5fd87daef42d",
+          "stagedSha256": "bc6a5ed5b9d4c1dde9f681aa2411dd953a50336186c1a7eb0d9a5fd87daef42d"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/exclusive-terminal-assignment.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/exclusive-terminal-assignment.d.ts",
+          "role": "declaration",
+          "sourceSha256": "1540944f9e0783f5384be2cb132d945bd6d2bd8e730981e34cf57fe246ce77a4",
+          "stagedSha256": "1540944f9e0783f5384be2cb132d945bd6d2bd8e730981e34cf57fe246ce77a4"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/exclusive-terminal-assignment.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/exclusive-terminal-assignment.js",
+          "role": "runtime",
+          "sourceSha256": "4c4adafcb8d753359d2e87feacabced26a7c50ace065422a694e2fc426f8fa27",
+          "stagedSha256": "4c4adafcb8d753359d2e87feacabced26a7c50ace065422a694e2fc426f8fa27"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "07a21ebebfc66bb1ef09d49ee65186603b2cb3a378b07adc8fe974b06aeda7e4",
+          "stagedSha256": "07a21ebebfc66bb1ef09d49ee65186603b2cb3a378b07adc8fe974b06aeda7e4"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/index.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/index.js",
+          "role": "runtime",
+          "sourceSha256": "5d019ff295975af2355d8133c351daffda0fe72f44be17f63006d0af6ccd1b05",
+          "stagedSha256": "5d019ff295975af2355d8133c351daffda0fe72f44be17f63006d0af6ccd1b05"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/invalid-cable-conductor.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/invalid-cable-conductor.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e85d430981e53a7b7b4c993a519b95875ea89d0d94f30c806958b11b2c0a97d2",
+          "stagedSha256": "e85d430981e53a7b7b4c993a519b95875ea89d0d94f30c806958b11b2c0a97d2"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/invalid-cable-conductor.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/invalid-cable-conductor.js",
+          "role": "runtime",
+          "sourceSha256": "334d008d894758b144f80318aa61babb37a17a2cbf4e95ba08d8f3bfe3689635",
+          "stagedSha256": "334d008d894758b144f80318aa61babb37a17a2cbf4e95ba08d8f3bfe3689635"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/nominal-voltage-class.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/nominal-voltage-class.d.ts",
+          "role": "declaration",
+          "sourceSha256": "9efed78154574f9d49e2a7c21519b42216e90b6d58216617cafaf0a099d3cd88",
+          "stagedSha256": "9efed78154574f9d49e2a7c21519b42216e90b6d58216617cafaf0a099d3cd88"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/nominal-voltage-class.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/nominal-voltage-class.js",
+          "role": "runtime",
+          "sourceSha256": "0fa0547e71a0759814f63c4da6058ed2fcc140c959231a033b502c9bb5e7226a",
+          "stagedSha256": "0fa0547e71a0759814f63c4da6058ed2fcc140c959231a033b502c9bb5e7226a"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/potential-analysis.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/potential-analysis.d.ts",
+          "role": "declaration",
+          "sourceSha256": "2b3cecdfd67dd16750209a3ce9d114f763734c8b347b0f63d6eee25c81c83c67",
+          "stagedSha256": "2b3cecdfd67dd16750209a3ce9d114f763734c8b347b0f63d6eee25c81c83c67"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/potential-analysis.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/potential-analysis.js",
+          "role": "runtime",
+          "sourceSha256": "c1d3ac23cd220ff18743fad66fb0a3e94f88029fe25beb08ccb362bea4891d2d",
+          "stagedSha256": "c1d3ac23cd220ff18743fad66fb0a3e94f88029fe25beb08ccb362bea4891d2d"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/potential-conflict.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/potential-conflict.d.ts",
+          "role": "declaration",
+          "sourceSha256": "f5e512876ba27b685233a65fc04e687fa1b26d3fd219b133bb63eea3185835a0",
+          "stagedSha256": "f5e512876ba27b685233a65fc04e687fa1b26d3fd219b133bb63eea3185835a0"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/potential-conflict.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/potential-conflict.js",
+          "role": "runtime",
+          "sourceSha256": "5bbc649e5c45c0b4ad17b275f2d5b63f492ce8609d32363394c5c39f25c19b72",
+          "stagedSha256": "5bbc649e5c45c0b4ad17b275f2d5b63f492ce8609d32363394c5c39f25c19b72"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/registry.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/registry.d.ts",
+          "role": "declaration",
+          "sourceSha256": "d89ccac52bedd44716f2aafd797c0d7ffece9fd6648cab54002094761b8a0780",
+          "stagedSha256": "d89ccac52bedd44716f2aafd797c0d7ffece9fd6648cab54002094761b8a0780"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/registry.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/registry.js",
+          "role": "runtime",
+          "sourceSha256": "81a04b7897efb5c12d7838080938cfe54a44769d616938118a5be8d9cc7da9ec",
+          "stagedSha256": "81a04b7897efb5c12d7838080938cfe54a44769d616938118a5be8d9cc7da9ec"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/terminal-compatibility.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/terminal-compatibility.d.ts",
+          "role": "declaration",
+          "sourceSha256": "0b6d525a718bca5f7e85893fc39acccd9e2dfb0c104773790e4d432cac6d1df1",
+          "stagedSha256": "0b6d525a718bca5f7e85893fc39acccd9e2dfb0c104773790e4d432cac6d1df1"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/terminal-compatibility.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/terminal-compatibility.js",
+          "role": "runtime",
+          "sourceSha256": "320859b2d27567dc6402d93fe747734d4187e0672881432e7b522d0b98acff0d",
+          "stagedSha256": "320859b2d27567dc6402d93fe747734d4187e0672881432e7b522d0b98acff0d"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/types.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/types.d.ts",
+          "role": "declaration",
+          "sourceSha256": "8c107e68029e12c59b14d73d8a8fa8d76d303ddde590e4374a9495a3140d70fe",
+          "stagedSha256": "8c107e68029e12c59b14d73d8a8fa8d76d303ddde590e4374a9495a3140d70fe"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/types.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/types.js",
+          "role": "runtime",
+          "sourceSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "stagedSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/voltage-type-compatibility.d.ts",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/voltage-type-compatibility.d.ts",
+          "role": "declaration",
+          "sourceSha256": "50080da6f1ab71786a6e007c01febc1ca9e8370fb018b830f2a1c0245c0278de",
+          "stagedSha256": "50080da6f1ab71786a6e007c01febc1ca9e8370fb018b830f2a1c0245c0278de"
+        },
+        {
+          "sourcePath": "packages/compiler/dist/rules/voltage-type-compatibility.js",
+          "stagePath": "package/node_modules/@thermite/compiler/dist/rules/voltage-type-compatibility.js",
+          "role": "runtime",
+          "sourceSha256": "9c8098cc27520d78ffe9435bf37078ddda01623f65cb4a2b785c99a1028a50f6",
+          "stagedSha256": "9c8098cc27520d78ffe9435bf37078ddda01623f65cb4a2b785c99a1028a50f6"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/core-library",
+      "sourceRoot": "packages/core-library",
+      "stagePath": "package/node_modules/@thermite/core-library",
+      "sourceManifest": {
+        "path": "packages/core-library/package.json",
+        "sha256": "d6cfb429cb8a793a9265b8402f04aa8d7dd6b304412393f77401faa42fbe25d0"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/core-library/package.json",
+        "sha256": "4c510319b7a21f647d3310451b0c2df5ea9b5b60d9d4520a9c33b4108b68ad57"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/core-library/LICENSE",
+          "stagePath": "package/node_modules/@thermite/core-library/LICENSE",
+          "role": "license",
+          "sourceSha256": "78c6b186defa0ba97c91d71c7c52cbd36fad5ae57be5b605eef6b8c1ca19807d",
+          "stagedSha256": "78c6b186defa0ba97c91d71c7c52cbd36fad5ae57be5b605eef6b8c1ca19807d"
+        },
+        {
+          "sourcePath": "packages/core-library/README.md",
+          "stagePath": "package/node_modules/@thermite/core-library/README.md",
+          "role": "readme",
+          "sourceSha256": "204ded953d61c5345130457fd4dcfe9ed5b5ab1dd9b049b5c3284c607fe3bdba",
+          "stagedSha256": "204ded953d61c5345130457fd4dcfe9ed5b5ab1dd9b049b5c3284c607fe3bdba"
+        },
+        {
+          "sourcePath": "packages/core-library/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/core-library/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e5a21b29c975b0275d375f18a8eca2c639e7e5bbe8a9efba3ffcd61731e0653f",
+          "stagedSha256": "e5a21b29c975b0275d375f18a8eca2c639e7e5bbe8a9efba3ffcd61731e0653f"
+        },
+        {
+          "sourcePath": "packages/core-library/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/core-library/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "bce1b1a4033f570095c114f33c90a0ac1b4c24b5d96444eaa51266bc604891d6",
+          "stagedSha256": "bce1b1a4033f570095c114f33c90a0ac1b4c24b5d96444eaa51266bc604891d6"
+        },
+        {
+          "sourcePath": "packages/core-library/library/library.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/library.json",
+          "role": "library",
+          "sourceSha256": "5259e11ba8ac4d4ba86fb01e1e5ff773301ea67299bfd625853f429b40290bc7",
+          "stagedSha256": "5259e11ba8ac4d4ba86fb01e1e5ff773301ea67299bfd625853f429b40290bc7"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/breaker-3p.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/breaker-3p.json",
+          "role": "library",
+          "sourceSha256": "c7c6c1d53f9ae5a6e7875cb97785671d7ef7d45ec87515d4ca8892ae44a15278",
+          "stagedSha256": "c7c6c1d53f9ae5a6e7875cb97785671d7ef7d45ec87515d4ca8892ae44a15278"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/cable-2pair-shielded.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/cable-2pair-shielded.json",
+          "role": "library",
+          "sourceSha256": "b37032b866c98f791bf06f03f30fff442330e34d4f410b2ff21c4d028ffad4eb",
+          "stagedSha256": "b37032b866c98f791bf06f03f30fff442330e34d4f410b2ff21c4d028ffad4eb"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/contactor-3p-1no.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/contactor-3p-1no.json",
+          "role": "library",
+          "sourceSha256": "b0c68675e57c7f85778e714fccfd29908618c55979ff8c2e46617627ee5ac116",
+          "stagedSha256": "b0c68675e57c7f85778e714fccfd29908618c55979ff8c2e46617627ee5ac116"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/junction-box-8.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/junction-box-8.json",
+          "role": "library",
+          "sourceSha256": "8328cb8ac1d94ae692821e2da44f1b517c4246d2d82573d33187f225a94c0a53",
+          "stagedSha256": "8328cb8ac1d94ae692821e2da44f1b517c4246d2d82573d33187f225a94c0a53"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/limit-switch-2wire.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/limit-switch-2wire.json",
+          "role": "library",
+          "sourceSha256": "dfe2178f0f9b56c37f189e598cd87a37c3991d2d255d71ca6e5eef812802010d",
+          "stagedSha256": "dfe2178f0f9b56c37f189e598cd87a37c3991d2d255d71ca6e5eef812802010d"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/motor-3ph.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/motor-3ph.json",
+          "role": "library",
+          "sourceSha256": "f9477c32c410424b5716ef329d6b2326c740d6e6bcf243cf1c67931e108e77f3",
+          "stagedSha256": "f9477c32c410424b5716ef329d6b2326c740d6e6bcf243cf1c67931e108e77f3"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/overload-3p-1nc.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/overload-3p-1nc.json",
+          "role": "library",
+          "sourceSha256": "77f398f4c8efac1328cbee58ecd1b35f6167e3b009cff65aa16e44b386544a02",
+          "stagedSha256": "77f398f4c8efac1328cbee58ecd1b35f6167e3b009cff65aa16e44b386544a02"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/plc-compact.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/plc-compact.json",
+          "role": "library",
+          "sourceSha256": "b858397f3dea443abb82635d38ed441d0740ad83b4eae4808ad5a994782fa0bc",
+          "stagedSha256": "b858397f3dea443abb82635d38ed441d0740ad83b4eae4808ad5a994782fa0bc"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/prox-pnp-3wire.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/prox-pnp-3wire.json",
+          "role": "library",
+          "sourceSha256": "30247b50ead32e5666905edab994df0964037072a232c39ecc177043f918c8cf",
+          "stagedSha256": "30247b50ead32e5666905edab994df0964037072a232c39ecc177043f918c8cf"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/psu-24vdc.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/psu-24vdc.json",
+          "role": "library",
+          "sourceSha256": "4cce8031477738faa2fe5d60c3fde7f89b0299f32acf612bcfcf46486acb5b7d",
+          "stagedSha256": "4cce8031477738faa2fe5d60c3fde7f89b0299f32acf612bcfcf46486acb5b7d"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/pushbutton-nc.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/pushbutton-nc.json",
+          "role": "library",
+          "sourceSha256": "b51c4ef3ab9e740a165e06d9215eb0e4a8ebfc7b38ca673ed0c1597cffefa91d",
+          "stagedSha256": "b51c4ef3ab9e740a165e06d9215eb0e4a8ebfc7b38ca673ed0c1597cffefa91d"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/supply-480v-3ph.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/supply-480v-3ph.json",
+          "role": "library",
+          "sourceSha256": "dc3e9a4704fb96cab049b9d15afd33095a9e29f930ed12afc027de10fd252b4a",
+          "stagedSha256": "dc3e9a4704fb96cab049b9d15afd33095a9e29f930ed12afc027de10fd252b4a"
+        },
+        {
+          "sourcePath": "packages/core-library/library/types/terminal-block-8.json",
+          "stagePath": "package/node_modules/@thermite/core-library/library/types/terminal-block-8.json",
+          "role": "library",
+          "sourceSha256": "1e8c0375448719a1ba75a89f051071e332b9d28bbf080fd7dbcfd4cd8a700800",
+          "stagedSha256": "1e8c0375448719a1ba75a89f051071e332b9d28bbf080fd7dbcfd4cd8a700800"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/query",
+      "sourceRoot": "packages/query",
+      "stagePath": "package/node_modules/@thermite/query",
+      "sourceManifest": {
+        "path": "packages/query/package.json",
+        "sha256": "33469f42e3213349748d2ddb3d96d402758b8cd9ae24315b937dff7e40025d19"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/query/package.json",
+        "sha256": "600b784d29e6f7ef1212d3688f6eaab87c2a95ff988c911bc14efced4a496f92"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/query/dist/engine.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/engine.d.ts",
+          "role": "declaration",
+          "sourceSha256": "68b2431670b7924ef00f551416d308d9989b57bdea87f377617edd25be92681c",
+          "stagedSha256": "68b2431670b7924ef00f551416d308d9989b57bdea87f377617edd25be92681c"
+        },
+        {
+          "sourcePath": "packages/query/dist/engine.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/engine.js",
+          "role": "runtime",
+          "sourceSha256": "36478d5b3e8558af36cf128061be170b8a472cc7bb932b40495704745244f76f",
+          "stagedSha256": "36478d5b3e8558af36cf128061be170b8a472cc7bb932b40495704745244f76f"
+        },
+        {
+          "sourcePath": "packages/query/dist/errors.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/errors.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7b4dca3833877976674a8f0915631644d899f39fde5b36ed43e755976423cb68",
+          "stagedSha256": "7b4dca3833877976674a8f0915631644d899f39fde5b36ed43e755976423cb68"
+        },
+        {
+          "sourcePath": "packages/query/dist/errors.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/errors.js",
+          "role": "runtime",
+          "sourceSha256": "ca66da9c2b984f586c121273cc39f0abbb6e0f8a9a520bba83ec80e1c6ed4e91",
+          "stagedSha256": "ca66da9c2b984f586c121273cc39f0abbb6e0f8a9a520bba83ec80e1c6ed4e91"
+        },
+        {
+          "sourcePath": "packages/query/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "eabbfd36a12527ffe291f9a37f9861102711a2ab55fa70b8f1970f3fc18ded5a",
+          "stagedSha256": "eabbfd36a12527ffe291f9a37f9861102711a2ab55fa70b8f1970f3fc18ded5a"
+        },
+        {
+          "sourcePath": "packages/query/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "0adb11cb97b08a7af2fbf94dfaae105883f57655309016a8df74adf71a637b7c",
+          "stagedSha256": "0adb11cb97b08a7af2fbf94dfaae105883f57655309016a8df74adf71a637b7c"
+        },
+        {
+          "sourcePath": "packages/query/dist/ordering.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/ordering.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e917ec2f775a8db46c68b776a38018d87e34eafe90fbfb2e603e55e6007f4547",
+          "stagedSha256": "e917ec2f775a8db46c68b776a38018d87e34eafe90fbfb2e603e55e6007f4547"
+        },
+        {
+          "sourcePath": "packages/query/dist/ordering.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/ordering.js",
+          "role": "runtime",
+          "sourceSha256": "432720bc53cb8f7933d1ab324cc7ee44c26cdcccd29e8ef7c88e31fefac5c3f7",
+          "stagedSha256": "432720bc53cb8f7933d1ab324cc7ee44c26cdcccd29e8ef7c88e31fefac5c3f7"
+        },
+        {
+          "sourcePath": "packages/query/dist/serializer.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/serializer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7255a1e9203d7ff10d414536a35bdd66080738e6765943cf2d88b0aa3c5efa84",
+          "stagedSha256": "7255a1e9203d7ff10d414536a35bdd66080738e6765943cf2d88b0aa3c5efa84"
+        },
+        {
+          "sourcePath": "packages/query/dist/serializer.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/serializer.js",
+          "role": "runtime",
+          "sourceSha256": "e0a279e4576022391ae8690cd3ff3b002dc53fb4bbaad24a5bc9cfd953b5b3cb",
+          "stagedSha256": "e0a279e4576022391ae8690cd3ff3b002dc53fb4bbaad24a5bc9cfd953b5b3cb"
+        },
+        {
+          "sourcePath": "packages/query/dist/traversal.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/traversal.d.ts",
+          "role": "declaration",
+          "sourceSha256": "0a62be657680a1b8bec6310be4b1aac722de9dea12a5789f7743c630284ea1e0",
+          "stagedSha256": "0a62be657680a1b8bec6310be4b1aac722de9dea12a5789f7743c630284ea1e0"
+        },
+        {
+          "sourcePath": "packages/query/dist/traversal.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/traversal.js",
+          "role": "runtime",
+          "sourceSha256": "c785f7ffc8df9099529839b01b8575b918e49b947700c0e0923b8968c1f6495c",
+          "stagedSha256": "c785f7ffc8df9099529839b01b8575b918e49b947700c0e0923b8968c1f6495c"
+        },
+        {
+          "sourcePath": "packages/query/dist/types.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/types.d.ts",
+          "role": "declaration",
+          "sourceSha256": "dde43b593410bc910580993d547dddd5a6efe69df2698cda565d372e12524d81",
+          "stagedSha256": "dde43b593410bc910580993d547dddd5a6efe69df2698cda565d372e12524d81"
+        },
+        {
+          "sourcePath": "packages/query/dist/types.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/types.js",
+          "role": "runtime",
+          "sourceSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "stagedSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "sourcePath": "packages/query/dist/views.d.ts",
+          "stagePath": "package/node_modules/@thermite/query/dist/views.d.ts",
+          "role": "declaration",
+          "sourceSha256": "4ddfe5b66182fa32c7eed35e33f846574ee3167af054e38cff71323ba93d554c",
+          "stagedSha256": "4ddfe5b66182fa32c7eed35e33f846574ee3167af054e38cff71323ba93d554c"
+        },
+        {
+          "sourcePath": "packages/query/dist/views.js",
+          "stagePath": "package/node_modules/@thermite/query/dist/views.js",
+          "role": "runtime",
+          "sourceSha256": "a5efaef7e39e703b20a1c61b9c16d4bbc02bc0f2483450b60cd5e5a3537726e7",
+          "stagedSha256": "a5efaef7e39e703b20a1c61b9c16d4bbc02bc0f2483450b60cd5e5a3537726e7"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/render",
+      "sourceRoot": "packages/render",
+      "stagePath": "package/node_modules/@thermite/render",
+      "sourceManifest": {
+        "path": "packages/render/package.json",
+        "sha256": "94adf1cd552dd1295061b0906c8b03cd351468fa564a5e7549a74931df8fb11c"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/render/package.json",
+        "sha256": "a750c815b0b1a4c797d9bcffcbc3c9af4b2ffb691160f85393910a495b59c23d"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/render/dist/errors.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/errors.d.ts",
+          "role": "declaration",
+          "sourceSha256": "18a9564d89ece2a74e250289383c207cab6f48882b62f1f86fe915b1615ffd13",
+          "stagedSha256": "18a9564d89ece2a74e250289383c207cab6f48882b62f1f86fe915b1615ffd13"
+        },
+        {
+          "sourcePath": "packages/render/dist/errors.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/errors.js",
+          "role": "runtime",
+          "sourceSha256": "23b9cc7105df6ce62f711362cbff41ee46f3462740c049f481717e47ca3a0eba",
+          "stagedSha256": "23b9cc7105df6ce62f711362cbff41ee46f3462740c049f481717e47ca3a0eba"
+        },
+        {
+          "sourcePath": "packages/render/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "2c80b3a338a812561b1139e128db6bb41124c262566a922b96997451613d11db",
+          "stagedSha256": "2c80b3a338a812561b1139e128db6bb41124c262566a922b96997451613d11db"
+        },
+        {
+          "sourcePath": "packages/render/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "c7bb972575f62fa29247851d3b29bd8a683d7ad2f0b11e8524e29b822f584523",
+          "stagedSha256": "c7bb972575f62fa29247851d3b29bd8a683d7ad2f0b11e8524e29b822f584523"
+        },
+        {
+          "sourcePath": "packages/render/dist/intent-rules.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/intent-rules.d.ts",
+          "role": "declaration",
+          "sourceSha256": "eb1d58506db55c47c848a36303470ad98429fd74af459cb2ddd2e41f122f9b56",
+          "stagedSha256": "eb1d58506db55c47c848a36303470ad98429fd74af459cb2ddd2e41f122f9b56"
+        },
+        {
+          "sourcePath": "packages/render/dist/intent-rules.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/intent-rules.js",
+          "role": "runtime",
+          "sourceSha256": "6f6019de0b16e2cc05cd199c1f2e018a0f363ba3fca7e2bf333ac3a78cc3c2c8",
+          "stagedSha256": "6f6019de0b16e2cc05cd199c1f2e018a0f363ba3fca7e2bf333ac3a78cc3c2c8"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/elk-adapter.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/elk-adapter.d.ts",
+          "role": "declaration",
+          "sourceSha256": "9b123935656f63454d90b81269fdbcfe0962ab4a59ecaeafca9f92a7298f4161",
+          "stagedSha256": "9b123935656f63454d90b81269fdbcfe0962ab4a59ecaeafca9f92a7298f4161"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/elk-adapter.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/elk-adapter.js",
+          "role": "runtime",
+          "sourceSha256": "a920d70281a798ca11b9f6c20db9dbd849c7124cad26c818ac3d822389cb96dc",
+          "stagedSha256": "a920d70281a798ca11b9f6c20db9dbd849c7124cad26c818ac3d822389cb96dc"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/options.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/options.d.ts",
+          "role": "declaration",
+          "sourceSha256": "bf180f297681708cf18e6e614d3d090d1ca9df021261696a60f2be640a21699b",
+          "stagedSha256": "bf180f297681708cf18e6e614d3d090d1ca9df021261696a60f2be640a21699b"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/options.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/options.js",
+          "role": "runtime",
+          "sourceSha256": "dfa5463837ae26f46268cdd6828e16fd01134ae83a75f034144bc191c9838f8a",
+          "stagedSha256": "dfa5463837ae26f46268cdd6828e16fd01134ae83a75f034144bc191c9838f8a"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/validate-output.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/validate-output.d.ts",
+          "role": "declaration",
+          "sourceSha256": "f3790b8ff484ddbc6134f41f74affab482f6947ec0a825c91b859687aec7a0b5",
+          "stagedSha256": "f3790b8ff484ddbc6134f41f74affab482f6947ec0a825c91b859687aec7a0b5"
+        },
+        {
+          "sourcePath": "packages/render/dist/layout/validate-output.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/layout/validate-output.js",
+          "role": "runtime",
+          "sourceSha256": "c26ad17b4899d5ae8eb100e9777f4f004a29917b0742405ddad6e55dd1c243cd",
+          "stagedSha256": "c26ad17b4899d5ae8eb100e9777f4f004a29917b0742405ddad6e55dd1c243cd"
+        },
+        {
+          "sourcePath": "packages/render/dist/ordering.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/ordering.d.ts",
+          "role": "declaration",
+          "sourceSha256": "9c3feb302246d8b7b2ae96b1cd8b7b06b83cec3bfa205ecf290bf6c1318b33d0",
+          "stagedSha256": "9c3feb302246d8b7b2ae96b1cd8b7b06b83cec3bfa205ecf290bf6c1318b33d0"
+        },
+        {
+          "sourcePath": "packages/render/dist/ordering.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/ordering.js",
+          "role": "runtime",
+          "sourceSha256": "1fdf933286c1880b7cab8617313bf5867c93d091f064fa3ca39154351e749b6c",
+          "stagedSha256": "1fdf933286c1880b7cab8617313bf5867c93d091f064fa3ca39154351e749b6c"
+        },
+        {
+          "sourcePath": "packages/render/dist/presentation.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/presentation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "b9e48952ccc2804908d0ff9e7fbbdf10bbab667ea4b0585c7a5ab900714d2108",
+          "stagedSha256": "b9e48952ccc2804908d0ff9e7fbbdf10bbab667ea4b0585c7a5ab900714d2108"
+        },
+        {
+          "sourcePath": "packages/render/dist/presentation.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/presentation.js",
+          "role": "runtime",
+          "sourceSha256": "aa7f1c8b2573b850d2642d87fd1673c4e9d70aba35254a410801ebeaf253bcb1",
+          "stagedSha256": "aa7f1c8b2573b850d2642d87fd1673c4e9d70aba35254a410801ebeaf253bcb1"
+        },
+        {
+          "sourcePath": "packages/render/dist/product-version.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/product-version.d.ts",
+          "role": "declaration",
+          "sourceSha256": "5196d206b0d2895d1cc9cb2e9fd8edde6cc1e7f7e1b2df06da38ba8c4b677294",
+          "stagedSha256": "5196d206b0d2895d1cc9cb2e9fd8edde6cc1e7f7e1b2df06da38ba8c4b677294"
+        },
+        {
+          "sourcePath": "packages/render/dist/product-version.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/product-version.js",
+          "role": "runtime",
+          "sourceSha256": "4f13577f2ddf3ea1b35b9a9454a4ff43026b8a1491ad22159800f4438a4e7ce9",
+          "stagedSha256": "4f13577f2ddf3ea1b35b9a9454a4ff43026b8a1491ad22159800f4438a4e7ce9"
+        },
+        {
+          "sourcePath": "packages/render/dist/renderer.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/renderer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "268773d0c8a6d608c1bebb60ffc033e5c7d8a05fba373eff241ec2865542b708",
+          "stagedSha256": "268773d0c8a6d608c1bebb60ffc033e5c7d8a05fba373eff241ec2865542b708"
+        },
+        {
+          "sourcePath": "packages/render/dist/renderer.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/renderer.js",
+          "role": "runtime",
+          "sourceSha256": "1f9a82a152f1291b04990865dd42183b6f7aacab8f24495a66efa587d1e5b0c4",
+          "stagedSha256": "1f9a82a152f1291b04990865dd42183b6f7aacab8f24495a66efa587d1e5b0c4"
+        },
+        {
+          "sourcePath": "packages/render/dist/selection.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/selection.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7ad4f9e06a6c508ec98fb01002436d8a2404aae952f1fcb8a46b682546cf3bba",
+          "stagedSha256": "7ad4f9e06a6c508ec98fb01002436d8a2404aae952f1fcb8a46b682546cf3bba"
+        },
+        {
+          "sourcePath": "packages/render/dist/selection.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/selection.js",
+          "role": "runtime",
+          "sourceSha256": "4848246f9bd70747aaa9c5a86ac6af69deafdc062d816b7d906970daeb6b6f8e",
+          "stagedSha256": "4848246f9bd70747aaa9c5a86ac6af69deafdc062d816b7d906970daeb6b6f8e"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/emitter.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/emitter.d.ts",
+          "role": "declaration",
+          "sourceSha256": "c6b401758bed222e1cce6c7d818c1cb5d9f313b7d76b4006e9f94eed1220fb45",
+          "stagedSha256": "c6b401758bed222e1cce6c7d818c1cb5d9f313b7d76b4006e9f94eed1220fb45"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/emitter.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/emitter.js",
+          "role": "runtime",
+          "sourceSha256": "33eae4f4317d8d5375f5ad5e2127a3794d8b46848477e93c516090b40bfd9b06",
+          "stagedSha256": "33eae4f4317d8d5375f5ad5e2127a3794d8b46848477e93c516090b40bfd9b06"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/escape.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/escape.d.ts",
+          "role": "declaration",
+          "sourceSha256": "a5f1c324e0018b57b0d5a8bb5a01c3cb1fcfafc6b85392dcec46ddccf38c42e2",
+          "stagedSha256": "a5f1c324e0018b57b0d5a8bb5a01c3cb1fcfafc6b85392dcec46ddccf38c42e2"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/escape.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/escape.js",
+          "role": "runtime",
+          "sourceSha256": "5df13819a15a818504192c16a4c1608e1a0422be28b2d8be483de741112ba8a2",
+          "stagedSha256": "5df13819a15a818504192c16a4c1608e1a0422be28b2d8be483de741112ba8a2"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/numbers.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/numbers.d.ts",
+          "role": "declaration",
+          "sourceSha256": "f8c86970dc9fe9b2468a84032e469be3cdff9789cae182c90646bd6de48881c2",
+          "stagedSha256": "f8c86970dc9fe9b2468a84032e469be3cdff9789cae182c90646bd6de48881c2"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/numbers.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/numbers.js",
+          "role": "runtime",
+          "sourceSha256": "9d4cbb2f76676ae56b48a7dce1647711509829fb42976bc54f7835fc2bae3b6f",
+          "stagedSha256": "9d4cbb2f76676ae56b48a7dce1647711509829fb42976bc54f7835fc2bae3b6f"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/source-registry.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/source-registry.d.ts",
+          "role": "declaration",
+          "sourceSha256": "554ee01b827eba107b7e5897c3123cbe42d7dbcaaf23cfc62b30cac01c209cfe",
+          "stagedSha256": "554ee01b827eba107b7e5897c3123cbe42d7dbcaaf23cfc62b30cac01c209cfe"
+        },
+        {
+          "sourcePath": "packages/render/dist/svg/source-registry.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/svg/source-registry.js",
+          "role": "runtime",
+          "sourceSha256": "e6298bf471e27a177bf451a70a13a8e5b3094619f37dba972a67fc24a8092d93",
+          "stagedSha256": "e6298bf471e27a177bf451a70a13a8e5b3094619f37dba972a67fc24a8092d93"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/catalog.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/catalog.d.ts",
+          "role": "declaration",
+          "sourceSha256": "58b48adccfdc428e36c06eb4d7e42b587039798bdb172b0f65ec157b91d54a2e",
+          "stagedSha256": "58b48adccfdc428e36c06eb4d7e42b587039798bdb172b0f65ec157b91d54a2e"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/catalog.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/catalog.js",
+          "role": "runtime",
+          "sourceSha256": "6a22646f577c13f4498a07b8f599a2da07906102f99b1c7c756a29d1720c19ca",
+          "stagedSha256": "6a22646f577c13f4498a07b8f599a2da07906102f99b1c7c756a29d1720c19ca"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/mappings.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/mappings.d.ts",
+          "role": "declaration",
+          "sourceSha256": "bc92bab17a596622f417efc02ce8e916ca23c70c6571fcfa7be97e536b29af05",
+          "stagedSha256": "bc92bab17a596622f417efc02ce8e916ca23c70c6571fcfa7be97e536b29af05"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/mappings.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/mappings.js",
+          "role": "runtime",
+          "sourceSha256": "14956b9c1a72c24dee390fd608a483d36f5ecef8ac7956253412d896312762bc",
+          "stagedSha256": "14956b9c1a72c24dee390fd608a483d36f5ecef8ac7956253412d896312762bc"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/types.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/types.d.ts",
+          "role": "declaration",
+          "sourceSha256": "bf268ffa45c8f37291d2f45140f61e8fd53b6285c9a652ad7ee05550688441c4",
+          "stagedSha256": "bf268ffa45c8f37291d2f45140f61e8fd53b6285c9a652ad7ee05550688441c4"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/types.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/types.js",
+          "role": "runtime",
+          "sourceSha256": "deffdea38fe69a5f3c7cd2bdaf41dbddaf9bf9d2e86f3f95fa98657de8a2fc15",
+          "stagedSha256": "deffdea38fe69a5f3c7cd2bdaf41dbddaf9bf9d2e86f3f95fa98657de8a2fc15"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/validate.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/validate.d.ts",
+          "role": "declaration",
+          "sourceSha256": "a8ae86ce4fc974de4e000a86f507b0e760415841163f523e2a47fad3ba6c9a6e",
+          "stagedSha256": "a8ae86ce4fc974de4e000a86f507b0e760415841163f523e2a47fad3ba6c9a6e"
+        },
+        {
+          "sourcePath": "packages/render/dist/symbols/validate.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/symbols/validate.js",
+          "role": "runtime",
+          "sourceSha256": "a91d9ddc69d76e1e4a41a88f99be1f187a9540813d4aff91e1d0e3c2cc77e02c",
+          "stagedSha256": "a91d9ddc69d76e1e4a41a88f99be1f187a9540813d4aff91e1d0e3c2cc77e02c"
+        },
+        {
+          "sourcePath": "packages/render/dist/title-block.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/title-block.d.ts",
+          "role": "declaration",
+          "sourceSha256": "d19d4e9609ee71d02200952241660a9b24861315c74fe8f73436a43585e132c0",
+          "stagedSha256": "d19d4e9609ee71d02200952241660a9b24861315c74fe8f73436a43585e132c0"
+        },
+        {
+          "sourcePath": "packages/render/dist/title-block.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/title-block.js",
+          "role": "runtime",
+          "sourceSha256": "90ea8112a67e923c0df33af3cc17d4565332f4ee9b1f49f71f5e386b9f958ae5",
+          "stagedSha256": "90ea8112a67e923c0df33af3cc17d4565332f4ee9b1f49f71f5e386b9f958ae5"
+        },
+        {
+          "sourcePath": "packages/render/dist/types.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/types.d.ts",
+          "role": "declaration",
+          "sourceSha256": "34ef688715480cf7f98909a655c16af059ec9ce781ddfc11981954ced9b67b4f",
+          "stagedSha256": "34ef688715480cf7f98909a655c16af059ec9ce781ddfc11981954ced9b67b4f"
+        },
+        {
+          "sourcePath": "packages/render/dist/types.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/types.js",
+          "role": "runtime",
+          "sourceSha256": "510a2aad38b633cc9f4c36aef5fc53bfe44cd9946c18432d00d2e01dc55e0857",
+          "stagedSha256": "510a2aad38b633cc9f4c36aef5fc53bfe44cd9946c18432d00d2e01dc55e0857"
+        },
+        {
+          "sourcePath": "packages/render/dist/view-spec.d.ts",
+          "stagePath": "package/node_modules/@thermite/render/dist/view-spec.d.ts",
+          "role": "declaration",
+          "sourceSha256": "31f979d9547c6ea8ee5b08cf48334527b18bceb60bd56116551a60b746aa84fb",
+          "stagedSha256": "31f979d9547c6ea8ee5b08cf48334527b18bceb60bd56116551a60b746aa84fb"
+        },
+        {
+          "sourcePath": "packages/render/dist/view-spec.js",
+          "stagePath": "package/node_modules/@thermite/render/dist/view-spec.js",
+          "role": "runtime",
+          "sourceSha256": "9eb5e0415cdf255ae6f84a7b1313c2bca03ea298acccd9071c3bff76e1b11428",
+          "stagedSha256": "9eb5e0415cdf255ae6f84a7b1313c2bca03ea298acccd9071c3bff76e1b11428"
+        }
+      ]
+    },
+    {
+      "name": "@thermite/schema",
+      "sourceRoot": "packages/schema",
+      "stagePath": "package/node_modules/@thermite/schema",
+      "sourceManifest": {
+        "path": "packages/schema/package.json",
+        "sha256": "be86d64585321fc839ba61cc5bca483d71079e14fdcb4a4a1e4604bd6fb83ef3"
+      },
+      "stagedManifest": {
+        "path": "package/node_modules/@thermite/schema/package.json",
+        "sha256": "d3ab7b83675345719f17be604fc8a9cef93d0e0dbfc8f45f45fac176b2037732"
+      },
+      "files": [
+        {
+          "sourcePath": "packages/schema/README.md",
+          "stagePath": "package/node_modules/@thermite/schema/README.md",
+          "role": "readme",
+          "sourceSha256": "995415fe8fa65c1c350bddb9de05e01a624ff53fddd64550d6bbf7e6855d4f14",
+          "stagedSha256": "995415fe8fa65c1c350bddb9de05e01a624ff53fddd64550d6bbf7e6855d4f14"
+        },
+        {
+          "sourcePath": "packages/schema/dist/ajv-validation.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/ajv-validation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "4a3077705a221f861547f4690409e237e835399eb6752ccb07fed053a6572fd6",
+          "stagedSha256": "4a3077705a221f861547f4690409e237e835399eb6752ccb07fed053a6572fd6"
+        },
+        {
+          "sourcePath": "packages/schema/dist/ajv-validation.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/ajv-validation.js",
+          "role": "runtime",
+          "sourceSha256": "24a77bde6c29126d64b7c9263cdaff5da4c4deacbbe45e9af2041fad0bdee08e",
+          "stagedSha256": "24a77bde6c29126d64b7c9263cdaff5da4c4deacbbe45e9af2041fad0bdee08e"
+        },
+        {
+          "sourcePath": "packages/schema/dist/diagnostic-catalog.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/diagnostic-catalog.d.ts",
+          "role": "declaration",
+          "sourceSha256": "255bd3042b7e50f71b39fcae9bbf58b51b23148040b3d079fc2ed7f4b2d11522",
+          "stagedSha256": "255bd3042b7e50f71b39fcae9bbf58b51b23148040b3d079fc2ed7f4b2d11522"
+        },
+        {
+          "sourcePath": "packages/schema/dist/diagnostic-catalog.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/diagnostic-catalog.js",
+          "role": "runtime",
+          "sourceSha256": "c42cfdf18229097082cacbe668111da205adbb423bc40d400cfdbfa6c8417fb2",
+          "stagedSha256": "c42cfdf18229097082cacbe668111da205adbb423bc40d400cfdbfa6c8417fb2"
+        },
+        {
+          "sourcePath": "packages/schema/dist/diagnostics.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/diagnostics.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7a234de051621a366c4dfb617969bed8fe04090893ae2b55bfcc30f37d648f89",
+          "stagedSha256": "7a234de051621a366c4dfb617969bed8fe04090893ae2b55bfcc30f37d648f89"
+        },
+        {
+          "sourcePath": "packages/schema/dist/diagnostics.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/diagnostics.js",
+          "role": "runtime",
+          "sourceSha256": "32d9bb602744a35e8e130f1d99af09bd055230603c56bde12ea403c3091eb728",
+          "stagedSha256": "32d9bb602744a35e8e130f1d99af09bd055230603c56bde12ea403c3091eb728"
+        },
+        {
+          "sourcePath": "packages/schema/dist/document-validation.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/document-validation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "fa58125a52ac4401b532f6a0de3d9457a9187289c773a312515c6c8711c4a3e4",
+          "stagedSha256": "fa58125a52ac4401b532f6a0de3d9457a9187289c773a312515c6c8711c4a3e4"
+        },
+        {
+          "sourcePath": "packages/schema/dist/document-validation.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/document-validation.js",
+          "role": "runtime",
+          "sourceSha256": "cb22ede89f03f40f857880aad58caea7afdaef3719bcc27402a9bdd3777ea52e",
+          "stagedSha256": "cb22ede89f03f40f857880aad58caea7afdaef3719bcc27402a9bdd3777ea52e"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/cable-type.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/cable-type.d.ts",
+          "role": "declaration",
+          "sourceSha256": "81443c2e2c4bce292d0524ed1167838b7633a5be14a7bcd5a03f56719fb76d83",
+          "stagedSha256": "81443c2e2c4bce292d0524ed1167838b7633a5be14a7bcd5a03f56719fb76d83"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/cable-type.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/cable-type.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/cable.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/cable.d.ts",
+          "role": "declaration",
+          "sourceSha256": "c255ba4a82e1d9ae617ffd249e48695f8da208a6bcd612b4aca27154810364e1",
+          "stagedSha256": "c255ba4a82e1d9ae617ffd249e48695f8da208a6bcd612b4aca27154810364e1"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/cable.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/cable.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/canonical-schemas.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/canonical-schemas.d.ts",
+          "role": "declaration",
+          "sourceSha256": "8c72185ed4fdd01d8b50415c3e8dad4096937b02d0b3a5c20f6d40774294b21d",
+          "stagedSha256": "8c72185ed4fdd01d8b50415c3e8dad4096937b02d0b3a5c20f6d40774294b21d"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/canonical-schemas.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/canonical-schemas.js",
+          "role": "runtime",
+          "sourceSha256": "f2d34ec0059cd04ba45eba7de5321875765aaae6ee2ff0f767ad8ac5421daca1",
+          "stagedSha256": "f2d34ec0059cd04ba45eba7de5321875765aaae6ee2ff0f767ad8ac5421daca1"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/device-type.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/device-type.d.ts",
+          "role": "declaration",
+          "sourceSha256": "eb0910ef909b662b253870fbf6c79d5987bedd70ca89f53f63f1c764148f3d53",
+          "stagedSha256": "eb0910ef909b662b253870fbf6c79d5987bedd70ca89f53f63f1c764148f3d53"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/device-type.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/device-type.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/device.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/device.d.ts",
+          "role": "declaration",
+          "sourceSha256": "7bf355df9d0076751df2fc578648d0e14236bad886a094b26d834ff4400170b7",
+          "stagedSha256": "7bf355df9d0076751df2fc578648d0e14236bad886a094b26d834ff4400170b7"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/device.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/device.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "89133dfad78dbb875f0eda9de6fd2ff786b44832a913715c274adc551181a1a8",
+          "stagedSha256": "89133dfad78dbb875f0eda9de6fd2ff786b44832a913715c274adc551181a1a8"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/index.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/index.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/jumper.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/jumper.d.ts",
+          "role": "declaration",
+          "sourceSha256": "9c296dd54f2ad8eb294ee93167690b663d73ed00ccb284f1792193d1ba7e0b92",
+          "stagedSha256": "9c296dd54f2ad8eb294ee93167690b663d73ed00ccb284f1792193d1ba7e0b92"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/jumper.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/jumper.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library-file.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library-file.d.ts",
+          "role": "declaration",
+          "sourceSha256": "ff8dcef013fa49a6d982e953c8dc2decb2795d8e6b9f0594705d5ec08c8279fd",
+          "stagedSha256": "ff8dcef013fa49a6d982e953c8dc2decb2795d8e6b9f0594705d5ec08c8279fd"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library-file.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library-file.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library-lock.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library-lock.d.ts",
+          "role": "declaration",
+          "sourceSha256": "a1b8ff6bcb61dece4f2746ae7e4c9bc1f9753e136cc00d44c79609214484642a",
+          "stagedSha256": "a1b8ff6bcb61dece4f2746ae7e4c9bc1f9753e136cc00d44c79609214484642a"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library-lock.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library-lock.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library.d.ts",
+          "role": "declaration",
+          "sourceSha256": "5349ec76f764fb47fe6f93a64d0316b774a32b44eb5814ac8faf54fdfbbd60d5",
+          "stagedSha256": "5349ec76f764fb47fe6f93a64d0316b774a32b44eb5814ac8faf54fdfbbd60d5"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/library.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/library.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/potential.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/potential.d.ts",
+          "role": "declaration",
+          "sourceSha256": "4eb9822f3baf471b61ce71aed72d9e704ebea1ca62e405b3d6961fc3acf4d44b",
+          "stagedSha256": "4eb9822f3baf471b61ce71aed72d9e704ebea1ca62e405b3d6961fc3acf4d44b"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/potential.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/potential.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/project-presentation.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/project-presentation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "67e8677bd0886cbe8a692e12b9376126724efb5d04c075eca78de96fb2c6c5f2",
+          "stagedSha256": "67e8677bd0886cbe8a692e12b9376126724efb5d04c075eca78de96fb2c6c5f2"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/project-presentation.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/project-presentation.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/project.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/project.d.ts",
+          "role": "declaration",
+          "sourceSha256": "5cb67de75f2407c8645c30b35a0a33c8c9cb97980cd2c981026b68ed83008027",
+          "stagedSha256": "5cb67de75f2407c8645c30b35a0a33c8c9cb97980cd2c981026b68ed83008027"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/project.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/project.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/relation.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/relation.d.ts",
+          "role": "declaration",
+          "sourceSha256": "05aa0962340f8383ee781adbeba40716df9fc9c8d3d4a15a907084fa852ea207",
+          "stagedSha256": "05aa0962340f8383ee781adbeba40716df9fc9c8d3d4a15a907084fa852ea207"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/relation.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/relation.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/source-file.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/source-file.d.ts",
+          "role": "declaration",
+          "sourceSha256": "0c04494ff0ba6fe3c3c83aa782c587dd2945ab3b0edea73a68452560325397fb",
+          "stagedSha256": "0c04494ff0ba6fe3c3c83aa782c587dd2945ab3b0edea73a68452560325397fb"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/source-file.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/source-file.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/wire.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/wire.d.ts",
+          "role": "declaration",
+          "sourceSha256": "6912c6c7dc43b079322ecbc9e774721e9127f687893d260a778f37edc13a6df3",
+          "stagedSha256": "6912c6c7dc43b079322ecbc9e774721e9127f687893d260a778f37edc13a6df3"
+        },
+        {
+          "sourcePath": "packages/schema/dist/generated/wire.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/generated/wire.js",
+          "role": "runtime",
+          "sourceSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055",
+          "stagedSha256": "b90ccb0683d15b4788c60f8bf7dae77dcba846b1892a6c8c528aa45f727cf055"
+        },
+        {
+          "sourcePath": "packages/schema/dist/index.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/index.d.ts",
+          "role": "declaration",
+          "sourceSha256": "e9b3d501c8265b007a9ed53d32f2f8eae64a87f26cd21b26d49c2166422387e7",
+          "stagedSha256": "e9b3d501c8265b007a9ed53d32f2f8eae64a87f26cd21b26d49c2166422387e7"
+        },
+        {
+          "sourcePath": "packages/schema/dist/index.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/index.js",
+          "role": "runtime",
+          "sourceSha256": "df9b4330c1ed374574332c204cbb50ec9f53f3a1758b3813627794677bd96283",
+          "stagedSha256": "df9b4330c1ed374574332c204cbb50ec9f53f3a1758b3813627794677bd96283"
+        },
+        {
+          "sourcePath": "packages/schema/dist/json-pointer.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/json-pointer.d.ts",
+          "role": "declaration",
+          "sourceSha256": "870944cb81807e9a69b7cd673022d7dd064a132d21cb953caa1e463ca6c70350",
+          "stagedSha256": "870944cb81807e9a69b7cd673022d7dd064a132d21cb953caa1e463ca6c70350"
+        },
+        {
+          "sourcePath": "packages/schema/dist/json-pointer.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/json-pointer.js",
+          "role": "runtime",
+          "sourceSha256": "0d4654d13afaa0279fa1b33537670a64945651fe769922eecbe41092276c73d4",
+          "stagedSha256": "0d4654d13afaa0279fa1b33537670a64945651fe769922eecbe41092276c73d4"
+        },
+        {
+          "sourcePath": "packages/schema/dist/parser.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/parser.d.ts",
+          "role": "declaration",
+          "sourceSha256": "c1e72ae3bb4802763a356a54a9d3bdbec0e018f04f2720fad3c62c724b50078d",
+          "stagedSha256": "c1e72ae3bb4802763a356a54a9d3bdbec0e018f04f2720fad3c62c724b50078d"
+        },
+        {
+          "sourcePath": "packages/schema/dist/parser.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/parser.js",
+          "role": "runtime",
+          "sourceSha256": "399868d8f0d7df0bfb4ccb2c7714095c993dd6458a46b98f2966fa85a86cc1a5",
+          "stagedSha256": "399868d8f0d7df0bfb4ccb2c7714095c993dd6458a46b98f2966fa85a86cc1a5"
+        },
+        {
+          "sourcePath": "packages/schema/dist/schema-registry.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/schema-registry.d.ts",
+          "role": "declaration",
+          "sourceSha256": "986e64ddfeeec32784787a3a72756c404061d30a7558b5e43358a5072d9be097",
+          "stagedSha256": "986e64ddfeeec32784787a3a72756c404061d30a7558b5e43358a5072d9be097"
+        },
+        {
+          "sourcePath": "packages/schema/dist/schema-registry.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/schema-registry.js",
+          "role": "runtime",
+          "sourceSha256": "51938651654ac80d816e55337136116e2ea74562bca96a319e7f26270a088691",
+          "stagedSha256": "51938651654ac80d816e55337136116e2ea74562bca96a319e7f26270a088691"
+        },
+        {
+          "sourcePath": "packages/schema/dist/source-types.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/source-types.d.ts",
+          "role": "declaration",
+          "sourceSha256": "44c6848b3396afedb144f551726b3ee6c86c1bc91f8e04ee4f2c47a37447705e",
+          "stagedSha256": "44c6848b3396afedb144f551726b3ee6c86c1bc91f8e04ee4f2c47a37447705e"
+        },
+        {
+          "sourcePath": "packages/schema/dist/source-types.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/source-types.js",
+          "role": "runtime",
+          "sourceSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+          "stagedSha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+        },
+        {
+          "sourcePath": "packages/schema/dist/structural-checks.d.ts",
+          "stagePath": "package/node_modules/@thermite/schema/dist/structural-checks.d.ts",
+          "role": "declaration",
+          "sourceSha256": "0b927dfb59a97c26663a1ad338f189770b13ebdc3f0c52cf72b64e29e0ddc713",
+          "stagedSha256": "0b927dfb59a97c26663a1ad338f189770b13ebdc3f0c52cf72b64e29e0ddc713"
+        },
+        {
+          "sourcePath": "packages/schema/dist/structural-checks.js",
+          "stagePath": "package/node_modules/@thermite/schema/dist/structural-checks.js",
+          "role": "runtime",
+          "sourceSha256": "8e86e366e688b75a2ca42ffa2a1608908ae21af332ec1a7c6e5c088836e27ded",
+          "stagedSha256": "8e86e366e688b75a2ca42ffa2a1608908ae21af332ec1a7c6e5c088836e27ded"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/cable-type.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/cable-type.schema.json",
+          "role": "schema",
+          "sourceSha256": "c47ae79178fb8cabf10f1d6f59445350d3a44f710ec35df8de21fd9eb3c1fc32",
+          "stagedSha256": "c47ae79178fb8cabf10f1d6f59445350d3a44f710ec35df8de21fd9eb3c1fc32"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/cable.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/cable.schema.json",
+          "role": "schema",
+          "sourceSha256": "7497e7d4cab35c89b477d4943db703b4bf584db877343d0eaac04f8800671e2a",
+          "stagedSha256": "7497e7d4cab35c89b477d4943db703b4bf584db877343d0eaac04f8800671e2a"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/common.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/common.schema.json",
+          "role": "schema",
+          "sourceSha256": "1d322158f8d8d60f179497b152fa6b4b3092d84027bc2754c36f8b3e09e68ca4",
+          "stagedSha256": "1d322158f8d8d60f179497b152fa6b4b3092d84027bc2754c36f8b3e09e68ca4"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/device-type.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/device-type.schema.json",
+          "role": "schema",
+          "sourceSha256": "2f8156acbc2196d42314163f90f7cd41a4fc58d19991dbb401a2a672b0c30874",
+          "stagedSha256": "2f8156acbc2196d42314163f90f7cd41a4fc58d19991dbb401a2a672b0c30874"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/device.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/device.schema.json",
+          "role": "schema",
+          "sourceSha256": "1e9d5788a416ab59d87f07a74c20df42e8bd36cf1be9457ade03a0d8319cd1ea",
+          "stagedSha256": "1e9d5788a416ab59d87f07a74c20df42e8bd36cf1be9457ade03a0d8319cd1ea"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/jumper.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/jumper.schema.json",
+          "role": "schema",
+          "sourceSha256": "9fcd196d4feaf4468e7e2f306424ff3bad36e8d7977ff0d7f4b2b0b7437e68e8",
+          "stagedSha256": "9fcd196d4feaf4468e7e2f306424ff3bad36e8d7977ff0d7f4b2b0b7437e68e8"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/library-file.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/library-file.schema.json",
+          "role": "schema",
+          "sourceSha256": "d97f2b7118489d743584c85b9f5bcc2442963f5ba34b3e5ae0fbf29bc807ad80",
+          "stagedSha256": "d97f2b7118489d743584c85b9f5bcc2442963f5ba34b3e5ae0fbf29bc807ad80"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/library-lock.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/library-lock.schema.json",
+          "role": "schema",
+          "sourceSha256": "2c49a165ef6bb60134032465481e734874c3ed49cc5cdb429f846cf90351c433",
+          "stagedSha256": "2c49a165ef6bb60134032465481e734874c3ed49cc5cdb429f846cf90351c433"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/library.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/library.schema.json",
+          "role": "schema",
+          "sourceSha256": "9121b16adcb681518d69d13b86c666aad8d4169995629b56e434d5c1d900ceb8",
+          "stagedSha256": "9121b16adcb681518d69d13b86c666aad8d4169995629b56e434d5c1d900ceb8"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/potential.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/potential.schema.json",
+          "role": "schema",
+          "sourceSha256": "77e47ab0592a612d2301312887014255402a738aacfc1b3c01962245cf313c65",
+          "stagedSha256": "77e47ab0592a612d2301312887014255402a738aacfc1b3c01962245cf313c65"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/project-presentation.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/project-presentation.schema.json",
+          "role": "schema",
+          "sourceSha256": "4845de7970c52ab5a7fabcfc62a4cc5c2c5ded0874afd0b1024ef31718c3108f",
+          "stagedSha256": "4845de7970c52ab5a7fabcfc62a4cc5c2c5ded0874afd0b1024ef31718c3108f"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/project.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/project.schema.json",
+          "role": "schema",
+          "sourceSha256": "4f8e99fa5ac5ec3eba24cb803c125bdcc6971bf83d23d0a6dd472d938cc771f7",
+          "stagedSha256": "4f8e99fa5ac5ec3eba24cb803c125bdcc6971bf83d23d0a6dd472d938cc771f7"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/relation.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/relation.schema.json",
+          "role": "schema",
+          "sourceSha256": "d1735aedb9283f5ef7222abcfbc3b24cc42f2db496a2b7bbd9dac0bfefe4bb2c",
+          "stagedSha256": "d1735aedb9283f5ef7222abcfbc3b24cc42f2db496a2b7bbd9dac0bfefe4bb2c"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/source-file.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/source-file.schema.json",
+          "role": "schema",
+          "sourceSha256": "3e8339109cbbc221ad7647f86919c1550385d31ee40038bf4bb5b9e76f1559c2",
+          "stagedSha256": "3e8339109cbbc221ad7647f86919c1550385d31ee40038bf4bb5b9e76f1559c2"
+        },
+        {
+          "sourcePath": "packages/schema/schemas/wire.schema.json",
+          "stagePath": "package/node_modules/@thermite/schema/schemas/wire.schema.json",
+          "role": "schema",
+          "sourceSha256": "d5d2456d5d3a1dd0fdb8025c5471bddce0055d83427ff7d7c67f5529a074702a",
+          "stagedSha256": "d5d2456d5d3a1dd0fdb8025c5471bddce0055d83427ff7d7c67f5529a074702a"
+        }
+      ]
+    }
+  ]
+}

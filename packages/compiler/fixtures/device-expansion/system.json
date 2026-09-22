@@ -1,0 +1,19 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Device expansion fixture"
+  },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.1.0"
+    },
+    {
+      "name": "expansion",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

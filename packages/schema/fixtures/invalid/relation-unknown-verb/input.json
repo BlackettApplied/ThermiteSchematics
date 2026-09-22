@@ -1,0 +1,7 @@
+{
+  "uid": "42345678-1234-4234-9234-123456789abc",
+  "kind": "relation",
+  "relation": "depends_on",
+  "from": { "device": "CB1" },
+  "to": { "device": "M1" }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/project-presentation.schema.json",
+  "title": "ProjectPresentationFile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "revision", "backgroundColor"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "format": {
+      "enum": ["project-presentation/0.1", "project-presentation/0.2"]
+    },
+    "revision": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[^\\u0009\\u000a\\u000d\\u0085\\u2028\\u2029]+$"
+    },
+    "backgroundColor": {
+      "type": "string",
+      "pattern": "^#[0-9a-f]{6}$"
+    },
+    "titleBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lines"],
+      "properties": {
+        "lines": {
+          "type": "array",
+          "maxItems": 4,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160,
+            "pattern": "^[^\\u0009\\u000a\\u000d\\u0085\\u2028\\u2029]+$"
+          }
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "size": {
+          "enum": ["letter", "tabloid", "a4", "a3"]
+        },
+        "orientation": {
+          "enum": ["landscape", "portrait"]
+        },
+        "marginMm": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 25
+        }
+      }
+    }
+  }
+}

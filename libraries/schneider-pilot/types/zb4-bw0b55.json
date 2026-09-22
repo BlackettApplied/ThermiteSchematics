@@ -1,0 +1,99 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw0b55",
+      "description": "Harmony XB4 body/collar with orange 24 V AC/DC integral protected LED and one NO plus one NC contact; head separate; source yellow conflict",
+      "category": "component",
+      "aliases": ["ZB4BW0B55"],
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW0B55",
+        "document": {
+          "url": "https://www.se.com/us/en/product/download-pdf/ZB4BW0B55?filename=Schneider+Electric_Harmony-XB4-ZB4-Metal-Push-Buttons_ZB4BW0B55.pdf",
+          "title": "Schneider Electric ZB4BW0B55 — body/contact assembly and integral LED light block",
+          "revision": "12 September 2026",
+          "pages": "Physical 1–2 exact characteristics; 7 rear six-terminal illustration; 8 fitted NO 3-4 circuit illustration"
+        },
+        "modelingNotes": [
+          "Source ZB4-BW0B55 is retained; manufacturer sources spell the same alphanumeric order ZB4BW0B55. The exact 2017 sheet and 2021 body row specify a Zamak collar/body, orange protected integral LED, 24 V AC/DC, and one NO plus one NC screw-clamp contact. No successor or neighboring color is substituted.",
+          "No opened evidence proves these names identify the same emitted color or installed assembly. This discrepancy remains unresolved and is not reconciled as amber/orange naming. The separate head/lens and installed unit were not inspected.",
+          "Exact current sheet physical p7 rear illustration shows six screw-clamp points directly: NO 3 and 4, LED X1 and X2, NC 1 and 2. P8 side illustration shows the fitted ZBE-101 NO circuit labeled 3-4. The mark 3 is not expanded to 13, nor 4 to 14. Terminal descriptions preserve actual visible labels with no invented block numbers.",
+          "The p7 rear illustration belongs to the exact ZB4BW0B55 sheet; its central lamp uses placeholder voltage markings. It is evidence for the six-terminal arrangement, not for emitted color, exact component printing or ratings. Orange/24 V characteristics come from the exact specifications. No LED terminal labels are borrowed from ZB4BVB3.",
+          "Both 2017 and current sheets abbreviate their ISO terminal field as (11-12)NC. That incomplete scalar field omits the other four endpoints and differs from the displayed physical NC marks 1-2; it is retained as a documentary discrepancy, not an extra pair or a claimed physical alias map. Historical installed terminal typography remains unverified.",
+          "One NC function spans 1-2, one NO function spans 3-4 and one lamp/load spans X1-X2. The functions describe normal states without joining nets. No permanent contact bridge, common supply node or fixed link is asserted. The NC contact has positive opening under the manufacturer stated EN/IEC 60947-5-1 appendix K condition.",
+          "The operator head is separate: the 2021 catalog physical 32 / printed 30 gives complete XB4BW35B5 = ZB4BW0B55 + ZB4BW353. No head mechanism, pushbutton symbol, spring return, simultaneous contact actuation or ganged relation is modeled. Each contact responds to its own actuator; the external head determines the sequence.",
+          "X1 and X2 are required by library policy for the operating LED; contact connections are application-dependent. LED nominal 24 V is exact and retained only on X1/X2, with no single AC/DC voltage_type because both are supported. 50/60 Hz applies to AC. No DC polarity or L/N assignment is asserted.",
+          "Exact LED characteristics: nominal 24 V AC/DC; limits 19.2–30 V DC and 21.6–26.4 V AC; consumption 18 mA; life 100000 h at rated voltage and 25 C. Contact capabilities remain conditional notes: Ith 10 A, Ui 600 V at pollution 3, Uimp 6 kV; AC-15/A600 Ie 6 A at 120 V, 3 A at 240 V, 1.2 A at 600 V; DC-13/Q600 Ie 0.55 A at 125 V, 0.27 A at 250 V, 0.1 A at 600 V. No scalar contact current/voltage or LED current is assigned.",
+          "Class I and the Zamak collar do not prove a protective bond. The collar/support/earthing interface is not established by the six lamp/contact terminals. No dedicated PE point, fastening-screw-as-PE identity or automatic bond through head/panel is invented. All-physical-interface coverage remains partial."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six documented screw-clamp endpoints are modeled directly from the exact-sheet rear illustration: NC 1/2, NO 3/4 and LED X1/X2. Lamp supply is required by library policy; contacts are application-dependent. The installation-dependent collar/support/earthing interface remains unverified and no PE point or automatic bond is invented. The head is separate; historical installed terminal marks and source Yellow versus manufacturer Orange remain unresolved."
+      },
+      "terminals": {
+        "1": {
+          "description": "NC contact screw-clamp terminal physically marked 1 in the exact manufacturer rear illustration",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "NC contact screw-clamp terminal physically marked 2 in the exact manufacturer rear illustration",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "3": {
+          "description": "NO contact screw-clamp terminal physically marked 3 in the exact manufacturer rear illustration",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "NO contact screw-clamp terminal physically marked 4 in the exact manufacturer rear illustration",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "X1": {
+          "description": "Integral protected-LED screw-clamp supply physically marked X1; exact 24 V AC/DC, no DC polarity assignment",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        },
+        "X2": {
+          "description": "Integral protected-LED screw-clamp supply physically marked X2; exact 24 V AC/DC, no DC polarity assignment",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "led": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc",
+        "no": "contact-no",
+        "led": "lamp"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "X1", "X2"]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "c74a6045-f9b3-4d4b-985c-f0f1a4e04a89",
+      "designation": "S1",
+      "type": "stahl-pilot:23d01ba05"
+    },
+    {
+      "kind": "device",
+      "uid": "8e9a9eb5-a6c9-4a1a-9db9-fb1f6ba8d3f1",
+      "designation": "X1",
+      "type": "stahl-twin-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "1576ecec-2f3b-44b8-8f10-50c48fb5ad8a",
+      "designation": "W11",
+      "endpoints": [
+        { "device": "X1", "terminal": "1" },
+        { "device": "S1", "terminal": "11" }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "ba303c1c-a04a-4f43-92d9-85e1f6d562e5",
+      "designation": "W12",
+      "endpoints": [
+        { "device": "S1", "terminal": "12" },
+        { "device": "X1", "terminal": "2" }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "9a46d558-2e7c-44d4-ac9a-8e4198e7f8a0",
+      "designation": "W13",
+      "endpoints": [
+        { "device": "X1", "terminal": "3" },
+        { "device": "S1", "terminal": "13" }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "f5945af8-af51-440d-a79a-a2eb1e070409",
+      "designation": "W14",
+      "endpoints": [
+        { "device": "S1", "terminal": "14" },
+        { "device": "X1", "terminal": "4" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,388 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "a277ab29-95c0-5a71-9c0b-63b9c0b1e44f",
+      "designation": "Q1",
+      "type": "stahl-pilot:8527-21-11-0001"
+    },
+    {
+      "kind": "device",
+      "uid": "761e2799-12e5-5ebc-baeb-d40ed1964bfd",
+      "designation": "XS",
+      "type": "stahl-pilot:8570-11-306"
+    },
+    {
+      "kind": "device",
+      "uid": "ba6fca63-f55d-5fe5-a4fa-2e83cc1e0c0b",
+      "designation": "XP",
+      "type": "stahl-pilot:8570-12-306"
+    },
+    {
+      "kind": "device",
+      "uid": "0792f808-d231-524a-b741-77d3b5f9607b",
+      "designation": "XC",
+      "type": "stahl-pilot:8575-14-306"
+    },
+    {
+      "kind": "device",
+      "uid": "35eec359-8967-56ee-bcf6-1f534855e186",
+      "designation": "CAP",
+      "type": "stahl-pilot:8570001140"
+    },
+    {
+      "kind": "device",
+      "uid": "d23e2dff-406f-5f8a-8f6e-dddd4dab43c2",
+      "designation": "IN",
+      "type": "stahl-fixture:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "e45e2f01-7013-57bb-849a-b61ab20595f1",
+      "designation": "OUT",
+      "type": "stahl-fixture:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "ec4fdfff-fa5c-59b9-a0b6-8907b9908427",
+      "designation": "Q-IN1",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "1"
+        },
+        {
+          "device": "Q1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "a24cb054-178a-5603-b1e2-033eca704c6a",
+      "designation": "Q-OUT1",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "2"
+        },
+        {
+          "device": "OUT",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "d2ceeab8-b9e9-5b3a-b4a3-6e55d12abf8b",
+      "designation": "Q-IN2",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "2"
+        },
+        {
+          "device": "Q1",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "15bb7f90-c7e6-5db6-a2ec-999bf95cf1b5",
+      "designation": "Q-OUT2",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "4"
+        },
+        {
+          "device": "OUT",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "f96f7f30-560a-54b4-baba-ac14d5bb2902",
+      "designation": "Q-IN3",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "3"
+        },
+        {
+          "device": "Q1",
+          "terminal": "5"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "758deeee-4ff3-5df3-9565-e5bf3ff8650a",
+      "designation": "Q-OUT3",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "6"
+        },
+        {
+          "device": "OUT",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "3d25c219-259d-5676-a9c7-7e8be6912201",
+      "designation": "Q-PE",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "4"
+        },
+        {
+          "device": "Q1",
+          "terminal": "PE"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "7fcb356d-8d1c-58c5-b3f5-8d23e88dd6ac",
+      "designation": "XS-P1",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "5"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.P1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "8300ab73-c5f3-54e3-8155-51853f02ca48",
+      "designation": "XS-P2",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "6"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.P2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "9a5b1d23-e5ee-5589-87a2-b3737ba73df3",
+      "designation": "XS-PE",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "7"
+        },
+        {
+          "device": "XS",
+          "terminal": "C.PE"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "dd06acc1-d4ed-544d-b880-86b0ee8cf63a",
+      "designation": "XS-INTERNAL-PE",
+      "endpoints": [
+        {
+          "device": "XS",
+          "terminal": "C.PE"
+        },
+        {
+          "device": "XS",
+          "terminal": "M.PE"
+        }
+      ],
+      "description": "Fixed internal conductor represented explicitly; not a field-installed bridge."
+    },
+    {
+      "kind": "wire",
+      "uid": "3bf50ff1-80f6-5be6-a104-63edf2281331",
+      "designation": "XP-P1",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "8"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.P1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "51135548-612a-5b1c-b0ca-9fbf050d5f02",
+      "designation": "XP-P2",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "9"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.P2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "43851d49-b97c-5c0a-ad97-8122b59a9d99",
+      "designation": "XP-PE",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "10"
+        },
+        {
+          "device": "XP",
+          "terminal": "C.PE"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "3ac1f1db-7b86-533c-b323-225f62441ea3",
+      "designation": "XP-INTERNAL-P1",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.P1"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.P1"
+        }
+      ],
+      "description": "Fixed internal conductor represented explicitly; not a field-installed bridge."
+    },
+    {
+      "kind": "jumper",
+      "uid": "ef81091a-5376-57db-8d62-f715b6f2ce33",
+      "designation": "XP-INTERNAL-P2",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.P2"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.P2"
+        }
+      ],
+      "description": "Fixed internal conductor represented explicitly; not a field-installed bridge."
+    },
+    {
+      "kind": "jumper",
+      "uid": "f08d5f8c-1fa1-5fdf-8eec-67efe618fbde",
+      "designation": "XP-INTERNAL-PE",
+      "endpoints": [
+        {
+          "device": "XP",
+          "terminal": "C.PE"
+        },
+        {
+          "device": "XP",
+          "terminal": "M.PE"
+        }
+      ],
+      "description": "Fixed internal conductor represented explicitly; not a field-installed bridge."
+    },
+    {
+      "kind": "wire",
+      "uid": "d0b31f9e-0977-575e-bba1-5d0a88751df4",
+      "designation": "XC-P1",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "11"
+        },
+        {
+          "device": "XC",
+          "terminal": "C.P1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "ec7975d2-b5c2-58be-b6b7-d1ff988f1277",
+      "designation": "XC-P2",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "12"
+        },
+        {
+          "device": "XC",
+          "terminal": "C.P2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "b832f1b5-b366-587e-9a8d-89a0bbc230d4",
+      "designation": "XC-PE",
+      "endpoints": [
+        {
+          "device": "IN",
+          "terminal": "13"
+        },
+        {
+          "device": "XC",
+          "terminal": "C.PE"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "aec603a1-7d52-59ba-abc3-da5d289cc88e",
+      "designation": "XC-INTERNAL-PE",
+      "endpoints": [
+        {
+          "device": "XC",
+          "terminal": "C.PE"
+        },
+        {
+          "device": "XC",
+          "terminal": "M.PE"
+        }
+      ],
+      "description": "Fixed internal conductor represented explicitly; not a field-installed bridge."
+    },
+    {
+      "kind": "relation",
+      "uid": "eadf49b7-eaff-5a4c-a176-e6efd8df237b",
+      "designation": "CAP-FIT",
+      "relation": "associated_with",
+      "from": {
+        "device": "XP"
+      },
+      "to": {
+        "device": "CAP"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "MATE",
+        "toPort": "COVER",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Mechanical protective cap has no electrical contacts; the attachment does not change plug nets."
+        },
+        "status": "documented"
+      }
+    }
+  ]
+}

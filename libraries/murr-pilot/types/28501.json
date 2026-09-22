@@ -1,0 +1,201 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:28501",
+      "description": "Murrelektronik MCVO 28501 proportional amplifier; 18-32 V DC supply, 0-10 V unipolar command, PWM valve output; exact eleven-clamp field interface, partial return commoning scope",
+      "category": "component",
+      "aliases": ["MCVO 28501", "MUR.28501", "Murrelektronik 28501"],
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "28501",
+        "document": {
+          "url": "https://shop.murrelektronik.com/out/media/28501_ina_x_11.zip",
+          "title": "Murrelektronik MCVO-Proportional amplifier 24 V / 2.5 A — exact 28501 operating instructions, English file 28501_ina_en_11.pdf in manufacturer archive",
+          "revision": "28501 V1.1, 24.02.2022; accompanying German 202 28 501 V1.1, 29.03.2022",
+          "pages": "English pp.1-2; p.2 section 3 exact eleven-clamp layout and detailed circuit; section 4 alternative setpoint wiring"
+        },
+        "modelingNotes": [
+          "Exact legacy order 28501 is established by its own manufacturer instruction and historical catalog physical p.6/printed 1.4.6 right-hand 24 V column. Source make Murr and order 28501 are retained; manufacturer name is Murrelektronik. The manufacturer old/new index, Audin mirror physical p.3/printed 1.11.3, maps 28501 to 7000-31261-0000000; this proposal uses the exact 28501 manual for its physical interface rather than transferring a generic modern photograph.",
+          "Exact manual p.2 front layout: upper row PE, 2-, 1+; middle row PE, 24V, 0, 0; lower row 0, IN, 10V, 0. There are eleven field clamps, including four distinct printed 0 clamps and two printed PE clamps. PE-in/PE-out and 0-supply-a/b/0-signal-left/right are library aliases for the groups/positions shown in that drawing, not additional stamped text. OUT and unpolarized 1/2 from the simplified catalog schematic are superseded here by exact layout marks 10V, 1+, 2-.",
+          "Supply 24V accepts 18-32 V DC, with maximum 10% ripple and 2200 uF buffer capacitance per ampere of load; approximately 10 s start-up, own consumption at most 50 mA. Observe supply polarity even though protection is specified. No exact 24 V input scalar or whole-device voltage/current scalar is assigned to a supported range.",
+          "IN is a positive unipolar 0-10 V DC command, input resistance at least 200 kOhm. Physical 10V is a generated +10 V reference, tolerance+/-5%, maximum 5 mA at 24 V supply; do not externally feed it. The nominal 10 V scalar describes this actual reference output only.",
+          "Manual p.2 section 4 alternatives: external command uses IN and the illustrated right-hand lower 0 with 10V open; an external potentiometer of at least 2 kOhm uses 10V, IN (wiper) and the illustrated left-hand lower 0; internal parameter setting uses an installer-supplied IN-to-10V jumper. Reference 10V is optional. The application jumper is not factory continuity.",
+          "Valve output 1+/2- is polarity marked and PWM current controlled for a single-acting solenoid. Output voltage follows operating supply minus at most 1.2 V, pulse width modulated; it is not a fixed 24 V source. Inductive current capability 2.5 A, Imax setting 0.2 A to 2.5 A +10% in the 2022 manuals, factory 1 A; Imin approximately 10 mA factory, adjustable to 30-40% of Imax. These remain conditional notes, not nominal output/current scalars.",
+          "Factory conductive paths retained in conformance: the supply 0 pair is explicitly joined in the exact 28501 historical catalog circuit, and the two PE endpoints have a direct line in the exact manual p.2. Function or symbol metadata does not create these net joins; fixture/promotion must materialize the conformance fixed links.",
+          "Partial return continuity: the manual layout shows four 0 clamps but its block diagram collapses return occurrences to one 0 reference; the historical diagram routes a control 0 into the converter separately. Individual bonds between the two control 0 clamps and the supply 0 pair are not explicitly traced, so no further return links are asserted. This omission is not proof of electrical isolation and prevents claiming complete internal connectivity.",
+          "Manual p.2 places R_sens between 0 and 2-. Do not author a fixed path from 2- to 0 across that resistor. Likewise no permanent path from 24V to 1+, from 1+ to 2-, from 10V to 24V or from 10V to IN is implied through reverse-polarity protection, PWM electronics, conversion or recovery diode. Detailed electronic transfer behavior is not simulated by this field-interface model.",
+          "Required 24V and representative 0-supply-a express powered use; the fixed supply 0 pair permits using the duplicate return. Requiring PE-in is explicit library policy for modeled protective bonding, not a manufacturer assertion that this exact clamp is universally wired. An internal PE link can satisfy a presence diagnostic without proving an external bond. Remaining clamps, including 10V and alternate control returns, are application-dependent and not universally required.",
+          "Front Imin/Imax and underside f/tR are adjustment potentiometers, not field terminals; the status indicator is internal. Frequency range 40 Hz-5% to 400 Hz+10%, factory 400 Hz; equal ramp-up/down adjustment 0.2 s+20% to 10 s+20%, factory minimum. Short-circuit protection is temporary, at most 2 s; overtemperature/overload shutdown is documented, not unlimited short-circuit capability.",
+          "Revision differences remain unresolved: 2022 EN/DE manuals give Imax minimum 0.2 A; historical catalog gives 0.02 A +20%. Manual ambient -25 to +60 C differs from catalog/current -20 to +60 C; manual dimension tuple 75 x 85 x 22.5 mm differs from catalog 75 x 22.5 x 102 mm and dimension labels. Do not silently harmonize these into one exact specification. Manual gives IP 20 and 1.5 mm² clamp connection without a detailed conductor preparation/count table.",
+          "Coverage is partial despite the established eleven field clamps: individual return bonds, any rail bonding contact and mating contacts exposed by unplugging/disassembly are not exhaustively documented. No automatic DIN-rail bond or hidden pin inventory is invented. Generic interface/earth symbols depict the bounded field functions.",
+          "Presentation uses existing load, source, terminal, earth and interface symbols for field functions. It does not reproduce the internal PWM, amplifier, conversion or sensing circuit."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Exact 28501 manual p.2 establishes eleven assembled field clamps, including both lower control 0 positions and polarized 1+/2-. The supply 0 pair and PE pair have evidence-backed fixed paths. Full four-return commoning and disassembled mating/rail-bond inventory are not established; missing return links do not imply galvanic isolation. PWM/converter/sensing electronics are functional abstractions, with no fixed net joins through them."
+      },
+      "terminals": {
+        "PE-out": {
+          "description": "Printed PE, upper valve row left; linked to middle-row PE-in. Alias names the field-clamp group.",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2-": {
+          "description": "Printed 2-, upper valve row middle: negative PWM valve terminal. R_sens separates it from the 0 reference; no fixed return short.",
+          "role": "output",
+          "connection_policy": "exclusive",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "1+": {
+          "description": "Printed 1+, upper valve row right: positive PWM valve terminal. Output is supply dependent, not fixed 24 V.",
+          "role": "output",
+          "connection_policy": "exclusive",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "PE-in": {
+          "description": "Printed PE, middle supply row left; linked to upper-row PE-out. Required by explicit library bonding policy; external bonding is not proved by the internal link.",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "24V": {
+          "description": "Printed 24V, middle supply row second: positive 18-32 V DC operating supply, subject to ripple/buffer conditions.",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "0-supply-a": {
+          "description": "Printed 0, middle supply row third: first supply return. Alias distinguishes it from three other 0 clamps; fixed to 0-supply-b.",
+          "role": "supply_return",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "0-supply-b": {
+          "description": "Printed 0, middle supply row fourth: second supply return, fixed to 0-supply-a.",
+          "role": "supply_return",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "0-signal-left": {
+          "description": "Printed 0, lower control row left: reference used by manual external-potentiometer example. Its individual commoning with other 0 clamps remains unmodeled.",
+          "role": "signal_common",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "IN": {
+          "description": "Printed IN, lower control row second: unipolar 0-10 V command. See alternative external-command/potentiometer/installer-jumper arrangements.",
+          "role": "signal_input",
+          "connection_policy": "exclusive",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "10V": {
+          "description": "Printed 10V, lower control row third: optional generated +10 V reference, +/-5%, maximum 5 mA at 24 V supply; never externally feed.",
+          "role": "reference_output",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 10,
+            "voltage_type": "DC"
+          }
+        },
+        "0-signal-right": {
+          "description": "Printed 0, lower control row right: reference used by manual external-voltage example. Its individual commoning with other 0 clamps remains unmodeled.",
+          "role": "signal_common",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "supply_input": {
+          "kind": "load",
+          "terminals": ["24V", "0-supply-a"]
+        },
+        "supply_common": {
+          "kind": "bus",
+          "terminals": ["0-supply-b"]
+        },
+        "reference_output": {
+          "kind": "source",
+          "terminals": ["10V"]
+        },
+        "command_input": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["IN"]
+        },
+        "signal_common_left": {
+          "kind": "bus",
+          "terminals": ["0-signal-left"]
+        },
+        "signal_common_right": {
+          "kind": "bus",
+          "terminals": ["0-signal-right"]
+        },
+        "valve_output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1+", "2-"]
+        },
+        "earth_in": {
+          "kind": "bus",
+          "terminals": ["PE-in"]
+        },
+        "earth_out": {
+          "kind": "bus",
+          "terminals": ["PE-out"]
+        }
+      },
+      "circuitSymbols": {
+        "supply_input": "load",
+        "supply_common": "terminal",
+        "reference_output": "source",
+        "command_input": "interface",
+        "signal_common_left": "terminal",
+        "signal_common_right": "terminal",
+        "valve_output": "interface",
+        "earth_in": "earth",
+        "earth_out": "earth"
+      },
+      "terminalOrder": [
+        "PE-out",
+        "2-",
+        "1+",
+        "PE-in",
+        "24V",
+        "0-supply-a",
+        "0-supply-b",
+        "0-signal-left",
+        "IN",
+        "10V",
+        "0-signal-right"
+      ]
+    }
+  ]
+}

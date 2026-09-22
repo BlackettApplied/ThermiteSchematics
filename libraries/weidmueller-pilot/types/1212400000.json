@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1212400000",
+      "description": "Bulkhead housing / HDC 24B ABU / size 8 / lower part without cover / no cable entries / IP65 in plugged condition",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1212400000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1212400000/scope/2/",
+          "title": "Weidmüller Data sheet — HDC 24B ABU, Order No. 1212400000",
+          "revision": "Creation date 17.02.2026 01:50:39 MEZ; retrieved 2026-09-11",
+          "pages": "p.1 exact ordering data and product image; pp.2–3 technical data; p.4 dimension drawing"
+        },
+        "modelingNotes": [
+          "Exact order number 1212400000 is HDC 24B ABU, installation size 8, standard bulkhead housing, lower part without cover and without cable entries. The side-locking clamp is on the lower side and is not replaceable. GTIN 4008190083939. Source: manufacturer datasheet pp.1–3; RockStar catalogue 2721750000, D.28 (physical PDF p.250) distinguishes this order from the N variant.",
+          "The current datasheet documents die-cast aluminium with powder coating, stainless-steel locking elements and NBR sealing. IP65 is expressly in the plugged condition; the manufacturer also instructs that the flat gasket be correctly seated when mounting. These are component/assembly conditions, not an assertion about any installation.",
+          "This proposal contains no electrical terminals, functions or fixed links. The product image, dimension drawing and exact catalogue row do not identify a bonding terminal or prove an electrical path through the panel, insert, housing, locking clamp or mounting hardware. Absence of such detail is not proof that the physical bonding-interface inventory is empty; connection coverage remains partial.",
+          "HOUSING is metadata for the mechanical mounting/mating interface only. Contact inserts and mating parts are separate items; no insert pins or PE contacts are assigned to this housing and no electrical mating continuity is authored.",
+          "The exact manufacturer datasheet was obtained successfully over normal TLS on 2026-09-11, replacing the earlier access limitation. Its p.2 limit temperature is -40 °C to 125 °C. No voltage or current capability is authored. Current and historical dimension values are not combined into an asserted installation drawing."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Exact mechanical housing variant is established. This model authors no electrical terminals or fixed links, but the reviewed manufacturer image/dimension drawing does not establish a complete bonding-terminal or other electrical-interface inventory. No earth continuity is inferred through the metal housing, panel mounting, insert, screws or locking clamp. HOUSING is mechanical metadata only. IP65 applies in the plugged condition with the manufacturer mounting/sealing conditions satisfied."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "HOUSING": {
+          "connector": "Weidmüller HDC 24B ABU, order 1212400000, size-8 standard bulkhead housing, lower part without cover or cable entries, lower side-locking clamp",
+          "description": "Mechanical mounting/mating interface metadata; no electrical terminals or pin mapping authored. Bonding-interface inventory remains unresolved."
+        }
+      }
+    }
+  ]
+}

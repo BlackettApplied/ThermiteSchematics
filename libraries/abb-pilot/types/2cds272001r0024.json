@@ -1,0 +1,94 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds272001r0024",
+      "description": "S202M-C2 miniature circuit breaker, two poles, C characteristic, 2 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS272001R0024",
+        "document": {
+          "url": "https://library.e.abb.com/public/d9ecbe04345340d78aeb32059bf6ec8b/2CSC400002D0211.pdf",
+          "title": "ABB System pro M compact catalogue",
+          "revision": "2CSC400002D0211; separate issue date not verified",
+          "pages": "Printed 2/15-16, 2/18, 2/20, 2/38, 11/2 (physical PDF 41-42, 44, 46, 64, 1068)"
+        },
+        "modelingNotes": [
+          "S1 exact order selection row: printed 2/38. S202 family diagram on 11/2 establishes 1-2 and 3-4 poles and mechanical ganging; both pages visually reviewed.",
+          "Rated current 2 A. IEC/EN 60898-1: 400 V AC, Icn 10 kA; C tripping reference temperature 30 deg C. Voltage is documented capability, not an assigned supply. Alternate standard and DC ratings are not encoded.",
+          "Each numbered node includes its twin conductor/busbar terminal portions. Shared connection policy does not assert unlimited conductor capacity. No separate mating connector contacts.",
+          "Bare breaker only; mountable auxiliary/signal contacts and releases are separate accessories. No PE, shield or communication terminals. No permanent links across switched poles.",
+          "Open is the diagram reference state, not an assertion of installed switch position. Ganging and breaker symbols do not simulate tripping or create continuity. Connections remain application-dependent."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four numbered electrical terminal nodes of the bare two-pole breaker are covered. Twin entry portions share their numbered node. Separately fitted accessories are excluded; no PE, shield, signal or communication connections."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, manufacturer terminal 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "2": {
+          "description": "Pole 1, manufacturer terminal 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "3": {
+          "description": "Pole 2, manufacturer terminal 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        },
+        "4": {
+          "description": "Pole 2, manufacturer terminal 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 2
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

@@ -1,0 +1,1423 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "weidmueller-pilot:1211100000"
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001000",
+      "designation": "B1",
+      "type": "batch-boundary:endpoint-1"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100000",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "B1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001001",
+      "designation": "B2",
+      "type": "batch-boundary:endpoint-2"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100001",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "B2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001002",
+      "designation": "B3",
+      "type": "batch-boundary:endpoint-3"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100002",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "B3",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001003",
+      "designation": "B4",
+      "type": "batch-boundary:endpoint-4"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100003",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "B4",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001004",
+      "designation": "B5",
+      "type": "batch-boundary:endpoint-5"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100004",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.5"
+        },
+        {
+          "device": "B5",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001005",
+      "designation": "B6",
+      "type": "batch-boundary:endpoint-6"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100005",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.6"
+        },
+        {
+          "device": "B6",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001006",
+      "designation": "B7",
+      "type": "batch-boundary:endpoint-7"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100006",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.7"
+        },
+        {
+          "device": "B7",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001007",
+      "designation": "B8",
+      "type": "batch-boundary:endpoint-8"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100007",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.8"
+        },
+        {
+          "device": "B8",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001008",
+      "designation": "B9",
+      "type": "batch-boundary:endpoint-9"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100008",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.9"
+        },
+        {
+          "device": "B9",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001009",
+      "designation": "B10",
+      "type": "batch-boundary:endpoint-10"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100009",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.10"
+        },
+        {
+          "device": "B10",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001010",
+      "designation": "B11",
+      "type": "batch-boundary:endpoint-11"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100010",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.11"
+        },
+        {
+          "device": "B11",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001011",
+      "designation": "B12",
+      "type": "batch-boundary:endpoint-12"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100011",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.12"
+        },
+        {
+          "device": "B12",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001012",
+      "designation": "B13",
+      "type": "batch-boundary:endpoint-13"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100012",
+      "designation": "W13",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.13"
+        },
+        {
+          "device": "B13",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001013",
+      "designation": "B14",
+      "type": "batch-boundary:endpoint-14"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100013",
+      "designation": "W14",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.14"
+        },
+        {
+          "device": "B14",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001014",
+      "designation": "B15",
+      "type": "batch-boundary:endpoint-15"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100014",
+      "designation": "W15",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.15"
+        },
+        {
+          "device": "B15",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001015",
+      "designation": "B16",
+      "type": "batch-boundary:endpoint-16"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100015",
+      "designation": "W16",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.16"
+        },
+        {
+          "device": "B16",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001016",
+      "designation": "B17",
+      "type": "batch-boundary:endpoint-17"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100016",
+      "designation": "W17",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.17"
+        },
+        {
+          "device": "B17",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001017",
+      "designation": "B18",
+      "type": "batch-boundary:endpoint-18"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100017",
+      "designation": "W18",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.18"
+        },
+        {
+          "device": "B18",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001018",
+      "designation": "B19",
+      "type": "batch-boundary:endpoint-19"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100018",
+      "designation": "W19",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.19"
+        },
+        {
+          "device": "B19",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001019",
+      "designation": "B20",
+      "type": "batch-boundary:endpoint-20"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100019",
+      "designation": "W20",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.20"
+        },
+        {
+          "device": "B20",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001020",
+      "designation": "B21",
+      "type": "batch-boundary:endpoint-21"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100020",
+      "designation": "W21",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.21"
+        },
+        {
+          "device": "B21",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001021",
+      "designation": "B22",
+      "type": "batch-boundary:endpoint-22"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100021",
+      "designation": "W22",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.22"
+        },
+        {
+          "device": "B22",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001022",
+      "designation": "B23",
+      "type": "batch-boundary:endpoint-23"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100022",
+      "designation": "W23",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.23"
+        },
+        {
+          "device": "B23",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001023",
+      "designation": "B24",
+      "type": "batch-boundary:endpoint-24"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100023",
+      "designation": "W24",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.24"
+        },
+        {
+          "device": "B24",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001024",
+      "designation": "B25",
+      "type": "batch-boundary:endpoint-25"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100024",
+      "designation": "W25",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        },
+        {
+          "device": "B25",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001025",
+      "designation": "B26",
+      "type": "batch-boundary:endpoint-26"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100025",
+      "designation": "W26",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        },
+        {
+          "device": "B26",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001026",
+      "designation": "B27",
+      "type": "batch-boundary:endpoint-27"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100026",
+      "designation": "W27",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        },
+        {
+          "device": "B27",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001027",
+      "designation": "B28",
+      "type": "batch-boundary:endpoint-28"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100027",
+      "designation": "W28",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        },
+        {
+          "device": "B28",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001028",
+      "designation": "B29",
+      "type": "batch-boundary:endpoint-29"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100028",
+      "designation": "W29",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.5"
+        },
+        {
+          "device": "B29",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001029",
+      "designation": "B30",
+      "type": "batch-boundary:endpoint-30"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100029",
+      "designation": "W30",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.6"
+        },
+        {
+          "device": "B30",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001030",
+      "designation": "B31",
+      "type": "batch-boundary:endpoint-31"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100030",
+      "designation": "W31",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.7"
+        },
+        {
+          "device": "B31",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001031",
+      "designation": "B32",
+      "type": "batch-boundary:endpoint-32"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100031",
+      "designation": "W32",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.8"
+        },
+        {
+          "device": "B32",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001032",
+      "designation": "B33",
+      "type": "batch-boundary:endpoint-33"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100032",
+      "designation": "W33",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.9"
+        },
+        {
+          "device": "B33",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001033",
+      "designation": "B34",
+      "type": "batch-boundary:endpoint-34"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100033",
+      "designation": "W34",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.10"
+        },
+        {
+          "device": "B34",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001034",
+      "designation": "B35",
+      "type": "batch-boundary:endpoint-35"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100034",
+      "designation": "W35",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.11"
+        },
+        {
+          "device": "B35",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001035",
+      "designation": "B36",
+      "type": "batch-boundary:endpoint-36"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100035",
+      "designation": "W36",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.12"
+        },
+        {
+          "device": "B36",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001036",
+      "designation": "B37",
+      "type": "batch-boundary:endpoint-37"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100036",
+      "designation": "W37",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.13"
+        },
+        {
+          "device": "B37",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001037",
+      "designation": "B38",
+      "type": "batch-boundary:endpoint-38"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100037",
+      "designation": "W38",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.14"
+        },
+        {
+          "device": "B38",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001038",
+      "designation": "B39",
+      "type": "batch-boundary:endpoint-39"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100038",
+      "designation": "W39",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.15"
+        },
+        {
+          "device": "B39",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001039",
+      "designation": "B40",
+      "type": "batch-boundary:endpoint-40"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100039",
+      "designation": "W40",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.16"
+        },
+        {
+          "device": "B40",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001040",
+      "designation": "B41",
+      "type": "batch-boundary:endpoint-41"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100040",
+      "designation": "W41",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.17"
+        },
+        {
+          "device": "B41",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001041",
+      "designation": "B42",
+      "type": "batch-boundary:endpoint-42"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100041",
+      "designation": "W42",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.18"
+        },
+        {
+          "device": "B42",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001042",
+      "designation": "B43",
+      "type": "batch-boundary:endpoint-43"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100042",
+      "designation": "W43",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.19"
+        },
+        {
+          "device": "B43",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001043",
+      "designation": "B44",
+      "type": "batch-boundary:endpoint-44"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100043",
+      "designation": "W44",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.20"
+        },
+        {
+          "device": "B44",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001044",
+      "designation": "B45",
+      "type": "batch-boundary:endpoint-45"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100044",
+      "designation": "W45",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.21"
+        },
+        {
+          "device": "B45",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001045",
+      "designation": "B46",
+      "type": "batch-boundary:endpoint-46"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100045",
+      "designation": "W46",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.22"
+        },
+        {
+          "device": "B46",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001046",
+      "designation": "B47",
+      "type": "batch-boundary:endpoint-47"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100046",
+      "designation": "W47",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.23"
+        },
+        {
+          "device": "B47",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001047",
+      "designation": "B48",
+      "type": "batch-boundary:endpoint-48"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100047",
+      "designation": "W48",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "M.24"
+        },
+        {
+          "device": "B48",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "cba70000-0000-4000-8000-000000001048",
+      "designation": "B49",
+      "type": "batch-boundary:endpoint-49"
+    },
+    {
+      "kind": "wire",
+      "uid": "cba70000-0000-4000-8000-000000100048",
+      "designation": "W49",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "PE"
+        },
+        {
+          "device": "B49",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200000",
+      "designation": "FIXED1",
+      "description": "WM-CAT-1282180000: Contact 1 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.1"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.1"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200001",
+      "designation": "FIXED2",
+      "description": "WM-CAT-1282180000: Contact 2 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.2"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.2"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200002",
+      "designation": "FIXED3",
+      "description": "WM-CAT-1282180000: Contact 3 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.3"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.3"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200003",
+      "designation": "FIXED4",
+      "description": "WM-CAT-1282180000: Contact 4 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.4"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.4"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200004",
+      "designation": "FIXED5",
+      "description": "WM-CAT-1282180000: Contact 5 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.5"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.5"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200005",
+      "designation": "FIXED6",
+      "description": "WM-CAT-1282180000: Contact 6 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.6"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.6"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200006",
+      "designation": "FIXED7",
+      "description": "WM-CAT-1282180000: Contact 7 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.7"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.7"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200007",
+      "designation": "FIXED8",
+      "description": "WM-CAT-1282180000: Contact 8 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.8"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.8"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200008",
+      "designation": "FIXED9",
+      "description": "WM-CAT-1282180000: Contact 9 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.9"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.9"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200009",
+      "designation": "FIXED10",
+      "description": "WM-CAT-1282180000: Contact 10 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.10"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.10"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200010",
+      "designation": "FIXED11",
+      "description": "WM-CAT-1282180000: Contact 11 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.11"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.11"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200011",
+      "designation": "FIXED12",
+      "description": "WM-CAT-1282180000: Contact 12 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.12"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.12"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200012",
+      "designation": "FIXED13",
+      "description": "WM-CAT-1282180000: Contact 13 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.13"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.13"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200013",
+      "designation": "FIXED14",
+      "description": "WM-CAT-1282180000: Contact 14 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.14"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.14"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200014",
+      "designation": "FIXED15",
+      "description": "WM-CAT-1282180000: Contact 15 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.15"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.15"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200015",
+      "designation": "FIXED16",
+      "description": "WM-CAT-1282180000: Contact 16 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.16"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.16"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200016",
+      "designation": "FIXED17",
+      "description": "WM-CAT-1282180000: Contact 17 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.17"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.17"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200017",
+      "designation": "FIXED18",
+      "description": "WM-CAT-1282180000: Contact 18 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.18"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.18"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200018",
+      "designation": "FIXED19",
+      "description": "WM-CAT-1282180000: Contact 19 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.19"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.19"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200019",
+      "designation": "FIXED20",
+      "description": "WM-CAT-1282180000: Contact 20 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.20"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.20"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200020",
+      "designation": "FIXED21",
+      "description": "WM-CAT-1282180000: Contact 21 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.21"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.21"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200021",
+      "designation": "FIXED22",
+      "description": "WM-CAT-1282180000: Contact 22 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.22"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.22"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200022",
+      "designation": "FIXED23",
+      "description": "WM-CAT-1282180000: Contact 23 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.23"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.23"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "cba70000-0000-4000-8000-000000200023",
+      "designation": "FIXED24",
+      "description": "WM-CAT-1282180000: Contact 24 is explicitly numbered in the exact-order male arrangement. The passive screw insert provides one fixed contact path; C/M split is an authoring convention, not additional physical pins or a field-installed jumper. Construction basis also uses WM-EXACT-DATASHEET.",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "C.24"
+        },
+        {
+          "device": "D1",
+          "terminal": "M.24"
+        }
+      ]
+    }
+  ]
+}

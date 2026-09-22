@@ -1,0 +1,4 @@
+* text=auto eol=lf
+
+# Byte-sensitive test fixtures: no EOL conversion ever
+packages/schema/fixtures/invalid/** -text

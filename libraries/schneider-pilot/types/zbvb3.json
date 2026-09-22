@@ -1,0 +1,64 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zbvb3",
+      "description": "Light block for Ø22 head, green, integral protected LED, 24 V AC/DC direct supply, screw clamp terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZBVB3",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/SQD-ZBVB3.PDF",
+          "title": "Schneider Electric product data sheet ZBVB3 - green light block for head Ø22 integral LED 24V screw clamp terminals",
+          "revision": "Feb 1, 2016",
+          "pages": "p.1 characteristics; p.2 environment/standards; p.3 dimension drawings"
+        },
+        "modelingNotes": [
+          "Exact manufacturer identity: Schneider Electric ZBVB3, device short name ZBV, Harmony XB4/XB5 light block. Reference is the unbroken token ZBVB3 (no hyphen/space); some resellers print 'ZBV-B3'. Confirmed in the Harmony XB4 metal catalog 10/2021 (se.com iPortal), catalog p.77 / PDF p.79 selection row 'Green, 24 z (50/60 Hz), ZBVB3, lots of 5, 0.017 kg', and in datasheet SQD-ZBVB3 (Feb 1, 2016).",
+          "Scope is the electrical light block only: the separately-ordered LED illumination module that clips into an illuminated head/body. It is NOT the head, NOT the fixing collar (ZB4BZ009/ZB5AZ009, separate parts carrying the metal) and NOT a contact block. No NO/NC contacts.",
+          "Datasheet: 'Light block supply: Direct'; protected integral LED; signalling steady; light source colour green; [Us] rated supply voltage 24 V AC/DC 50/60 Hz; supply-voltage limits 21.6-26.4 V AC and 19.2-30 V DC; current consumption 18 mA; service life 100000 h at rated voltage/25 C; screw clamp terminals >=1x0.22 mm2 / <=2x1.5 mm2 (EN 60947-1); tightening 0.8-1.2 N.m; IP20; front mounting.",
+          "Exact current manufacturer ZBVB3 PDF dated12 September2026, page1 product photograph, contains the lamp schematic labeled X1/X2. Page6 application photograph independently shows the two supply screws labeled X1/X2, but its installed context is not an exact revision or wiring instruction. Keys X1/X2 are now supported physical labels, not invented functional aliases. The page1 photograph is family marked ZBV and says14 mA; exact product specifications state18 mA. The schematic is used for the interface, while exact historical specifications govern green24 V AC/DC identity.",
+          "Nominal supply24 V AC/DC is supported by the exact2016 datasheet and2021 catalog row. No DC polarity assignment or guarantee of polarity-insensitivity is made. Nominal voltage24 is retained; current scalar removed because the manufacturer-assigned photo says14 mA while the exact text says18 mA. These are documentary values, not a single modeled current limit.",
+          "No PE/bond terminal: the light block is IP20 plastic and front-mounted; panel/metalwork bonding belongs to the separate head/fixing collar and is outside this type. Clip-to-body attachment is mechanical, not an electrical connection.",
+          "Source-vs-manufacturer note: the BOM phrase 'Light led with increased intensity of light' has no counterpart in the Schneider catalog/datasheet, which describe a standard integral protected LED; treated as a wording discrepancy. Identity (ZBVB3, green, 24 V AC/DC) otherwise matches.",
+          "Additional exact-product evidence: https://www.se.com/au/en/product/download-pdf/ZBVB3 ,12 September2026, pages1 and6 visually inspected. The page1 photograph uses generic family marking; no installed production revision or claim of increased light intensity is established."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Two field supply screws X1 and X2 on the bare LED light block, supported by the exact manufacturer-associated body schematic and screw-label photographs. No switch contact, PE/bond, shield or communication terminal is included. Separately ordered head/collar and their bonding remain outside this bare-block scope. Generic photo does not establish installed production revision."
+      },
+      "terminals": {
+        "X1": {
+          "description": "LED supply screw X1,24 V AC/DC; physical label supported by exact-product images, no DC polarity assigned",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        },
+        "X2": {
+          "description": "LED supply screw X2,24 V AC/DC; physical label supported by exact-product images, no DC polarity assigned",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        }
+      },
+      "functions": {
+        "light": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "light": "lamp"
+      },
+      "terminalOrder": ["X1", "X2"]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "kind": "potential",
+  "name": "+24VDC",
+  "at": { "device": "PS1", "terminal": "+" },
+  "electrical": {
+    "nominal_voltage": 24,
+    "voltage_type": "DC",
+    "polarity": "positive"
+  }
+}

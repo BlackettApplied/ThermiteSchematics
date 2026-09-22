@@ -1,0 +1,41 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:siemens-im155-6pn-st-bundle",
+      "description": "IM 155-6 PN ST bundle - IM, RJ45 BusAdapter, server module",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "P1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "BusAdapter port engineering identifier"
+        },
+        "P2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "BusAdapter port engineering identifier"
+        }
+      },
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7155-6AA02-0BN0",
+        "document": {
+          "url": "https://mall.industry.siemens.com/mall/en/interhydroilown/Catalog/Product/6ES7155-6AA02-0BN0",
+          "title": "IM 155-6 PN ST bundle catalog entry",
+          "revision": "Accessed 2026-09-06",
+          "pages": "Product description"
+        },
+        "modelingNotes": [
+          "Assembly inventory includes 6ES7155-6AU02-0BN0, BA 2xRJ45 6ES7193-6AR00-0AA0, and server module 6ES7193-6PA00-0AA0. Do not order these again as separate quantities.",
+          "Only Ethernet connectors are modeled. P1/P2 are engineering aliases; power/backplane/pin layout not yet modeled."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Ethernet connectors only. Power, backplane and physical pin layout are not modeled."
+      }
+    }
+  ]
+}

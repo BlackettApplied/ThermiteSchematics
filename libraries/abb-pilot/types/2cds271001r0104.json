@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds271001r0104",
+      "description": "S201M-C10 miniature circuit breaker / 1 pole / C characteristic / 10 A / Icn 10 kA",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS271001R0104",
+        "document": {
+          "url": "https://new.abb.com/docs/librariesprovider74/lp-materials/prom-2014-2csc400002d0211.pdf?sfvrsn=2",
+          "title": "System pro M compact — DIN Rail components for low voltage installation",
+          "revision": "Catalogue 2014; 2CSC400002D0211",
+          "pages": "Printed 2/14-2/16, 2/20, 2/38, 11/2; physical PDF 40-42, 46, 64, 1068"
+        },
+        "modelingNotes": [
+          "S1: ABB 2014 catalog, printed 2/38, explicitly maps 2CDS271001R0104 to S 201 M-C 10: one pole, C characteristic, rated current 10 A.",
+          "S1 printed 11/2 shows the S201 single-pole circuit with manufacturer terminal numbers 1 and 2 and an open breaker contact. Applied to the S201M variant using the same catalog S200/S200M construction and exact one-pole selection. normal_state=open records the depicted OFF state, not automatic spring return or an asserted installed state.",
+          "S1 printed 2/14-2/15 and 2/20 describe top and bottom twin terminals, each with conductor and busbar entry parts. Each numbered electrical terminal is represented once with shared connection policy; insertion openings are not additional numbered poles. Supply side is selectable. No phase or mandatory line/load direction is assigned.",
+          "S1 printed 2/16: IEC/EN 60898-1 one-pole Un 230/400 V AC, Icn 10 kA, frequency 50/60 Hz, C-curve reference temperature 30 degrees C. IEC/EN 60947-2 one-pole Ue 230 V AC, Icu 15 kA, Ics 11.2 kA for In <=40 A; C reference temperature 55 degrees C. Voltage and interrupting limits remain conditional documentation, not scalar supply intent. Terminal current field is rated In, not trip threshold or wire ampacity.",
+          "S1 printed 2/20: top/bottom conductor cross-sections 35 mm2 solid/stranded or 25 mm2 flexible; busbar 10 mm2; tightening torque 2.8 Nm. Insertion capacity and tightening are not automatically enforced by shared connection policy.",
+          "Bare breaker only. Auxiliary and signal contacts, releases and motor operators are separately fitted accessories, not connections supplied by this order code. No neutral, PE/bond, shield or communications connection is shown for the one-pole insulated breaker.",
+          "No fixed link connects terminals 1 and 2: the breaker opens manually or on trip. The contact function and circuit symbol do not merge nets. Neither terminal is universally required in every authored instance; application wiring determines usage."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Bare ordered breaker: two numbered electrical terminals, 1 and 2, each a twin terminal with conductor and busbar insertion parts (four insertion parts total). Both parts of each terminal use its one shared electrical key. One interruptible pole; no neutral, PE/bond, shield, signal, communication or fitted auxiliary-contact terminals. Accessories are outside this identity."
+      },
+      "terminals": {
+        "1": {
+          "description": "Manufacturer terminal 1; shared conductor/busbar twin terminal; either supply direction",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        },
+        "2": {
+          "description": "Manufacturer terminal 2; shared conductor/busbar twin terminal; either supply direction",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

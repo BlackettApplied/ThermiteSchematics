@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/relation.schema.json",
+  "title": "Relation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uid", "kind", "relation", "from", "to"],
+  "properties": {
+    "uid": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/uid"
+    },
+    "kind": {
+      "const": "relation"
+    },
+    "designation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "actuates",
+        "protects",
+        "controls",
+        "measures",
+        "monitors",
+        "feeds",
+        "associated_with"
+      ]
+    },
+    "from": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/deviceRef"
+    },
+    "to": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/deviceRef"
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fromPort", "toPort", "medium", "protocol"],
+      "properties": {
+        "fromPort": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "toPort": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "protocol": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "medium": {
+          "type": "string",
+          "enum": ["ethernet", "nrg-bus"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "verified"]
+        },
+        "cable": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["specification"],
+          "properties": {
+            "specification": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "lengthM": {
+              "type": "number",
+              "minimum": 0.001
+            },
+            "route": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            }
+          }
+        }
+      }
+    },
+    "assembly": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "fromPort", "toPort", "pinMapping"],
+      "properties": {
+        "kind": {
+          "enum": ["cable", "direct", "cap"]
+        },
+        "fromPort": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "toPort": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "pinMapping": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason"],
+          "properties": {
+            "status": {
+              "enum": ["unresolved", "not-applicable"]
+            },
+            "reason": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            }
+          }
+        },
+        "cable": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["specification"],
+          "properties": {
+            "specification": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "manufacturer": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "orderNumber": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            },
+            "lengthM": {
+              "type": "number",
+              "minimum": 0.001
+            },
+            "route": {
+              "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+            }
+          }
+        },
+        "status": {
+          "enum": ["documented", "planned", "verified"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,399 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1651350000",
+      "description": "HDC HVE 10+2 MS male screw insert, size 8; 10 power + 2 pilot + aggregate PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1651350000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1651350000/scope/2/",
+          "title": "Data sheet: HDC HVE 10+2 MS",
+          "revision": "Creation date 17.02.2026 04:16:35 MEZ",
+          "pages": "1, 3–4"
+        },
+        "modelingNotes": [
+          "Exact order 1651350000, HDC HVE 10+2 MS: male screw insert, size 8, ten power contacts plus two pilot/signal contacts and PE. No housing or optional accessory is included.",
+          "S2 physical page 6 was visually reviewed at full page and in a 600 DPI contact-diagram crop. Populated markings: 1, 3, 5, 7, 9, 11, 14, 16, 18, 20, 22, 24. Do not fill the unused body positions or renumber 1–12.",
+          "S3 printed B.86 male SCREW diagram and exact order row were visually reviewed. Comparing positions and counts with S2 makes 1 and 24 pilot/signal contacts; 3, 5, 7, 9, 11, 14, 16, 18, 20 and 22 are power contacts. S2 filled circles mark the two pilots; S3 open circles mark them. The tension-clamp diagram has a different orientation and is not substituted.",
+          "C.n and M.n are authoring aliases for the cable screw termination and mating end of manufacturer contact n. Each numbered contact is one passive conductor: explicitly author C.n–M.n factory-continuity jumpers in the project. Singleton bus functions and connector metadata do not join nets. Pilot designation does not introduce a switch inside this male insert, and no continuity to a separate mating device is implied.",
+          "PE is a single aggregate authoring endpoint for the documented protective-earth assembly. Individual screws, mating interfaces and metalwork continuity are unresolved. Do not add C.PE/M.PE, a central pin, housing bond or PE fixed link. required:true on PE is library policy; its presence check does not prove external protective bonding.",
+          "S1 DIN EN 61984 capability is 830 V, 20 A, 8 kV impulse at pollution severity 3; UL/CSA voltage is 600 V AC/DC. S2 specifies 500 V for signal contacts and 23 A legacy current; S3 says 20 A and supplies conductor/temperature-dependent derating curves. Hardware revision and reason for the change are unresolved; no scalar current, assigned nominal voltage or AC-only rating is authored.",
+          "S2 specifies main screw conductors 0.5–2.5 mm², 9 mm stripping, 0.5–0.55 Nm; PE 0.5–4 mm², 10 mm, 1.2–1.5 Nm. S1 includes 4 mm² maxima for some conductor forms while its general maximum is 2.5 mm²; installed revision and conductor preparation need review. No conductor size is selected.",
+          "No additional neutral, shield or communication interface is documented. Numbered poles are application-dependent and are not required. Shared endpoint policy permits representation of factory paths plus external wires; it does not authorize multiple field conductors under one screw."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All twelve documented numbered contacts have separate cable and mating endpoints. PE is aggregate only: individual PE screw/mating positions and bonding paths remain unverified. C/M and textual PE are authoring aliases; no housing or accessory connections are asserted."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable screw termination of numbered contact 1; pilot/signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.1": {
+          "description": "Male mating end of numbered contact 1; pilot/signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.3": {
+          "description": "Cable screw termination of numbered contact 3; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.3": {
+          "description": "Male mating end of numbered contact 3; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.5": {
+          "description": "Cable screw termination of numbered contact 5; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.5": {
+          "description": "Male mating end of numbered contact 5; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.7": {
+          "description": "Cable screw termination of numbered contact 7; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.7": {
+          "description": "Male mating end of numbered contact 7; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.9": {
+          "description": "Cable screw termination of numbered contact 9; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.9": {
+          "description": "Male mating end of numbered contact 9; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.11": {
+          "description": "Cable screw termination of numbered contact 11; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.11": {
+          "description": "Male mating end of numbered contact 11; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.14": {
+          "description": "Cable screw termination of numbered contact 14; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.14": {
+          "description": "Male mating end of numbered contact 14; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.16": {
+          "description": "Cable screw termination of numbered contact 16; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.16": {
+          "description": "Male mating end of numbered contact 16; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.18": {
+          "description": "Cable screw termination of numbered contact 18; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.18": {
+          "description": "Male mating end of numbered contact 18; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.20": {
+          "description": "Cable screw termination of numbered contact 20; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.20": {
+          "description": "Male mating end of numbered contact 20; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.22": {
+          "description": "Cable screw termination of numbered contact 22; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.22": {
+          "description": "Male mating end of numbered contact 22; power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.24": {
+          "description": "Cable screw termination of numbered contact 24; pilot/signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.24": {
+          "description": "Male mating end of numbered contact 24; pilot/signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "PE": {
+          "description": "Aggregate documented protective-earth assembly; physical subdivision unresolved",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        },
+        "C.16": {
+          "kind": "bus",
+          "terminals": ["C.16"]
+        },
+        "M.16": {
+          "kind": "bus",
+          "terminals": ["M.16"]
+        },
+        "C.18": {
+          "kind": "bus",
+          "terminals": ["C.18"]
+        },
+        "M.18": {
+          "kind": "bus",
+          "terminals": ["M.18"]
+        },
+        "C.20": {
+          "kind": "bus",
+          "terminals": ["C.20"]
+        },
+        "M.20": {
+          "kind": "bus",
+          "terminals": ["M.20"]
+        },
+        "C.22": {
+          "kind": "bus",
+          "terminals": ["C.22"]
+        },
+        "M.22": {
+          "kind": "bus",
+          "terminals": ["M.22"]
+        },
+        "C.24": {
+          "kind": "bus",
+          "terminals": ["C.24"]
+        },
+        "M.24": {
+          "kind": "bus",
+          "terminals": ["M.24"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "M.1": "terminal",
+        "C.3": "terminal",
+        "M.3": "terminal",
+        "C.5": "terminal",
+        "M.5": "terminal",
+        "C.7": "terminal",
+        "M.7": "terminal",
+        "C.9": "terminal",
+        "M.9": "terminal",
+        "C.11": "terminal",
+        "M.11": "terminal",
+        "C.14": "terminal",
+        "M.14": "terminal",
+        "C.16": "terminal",
+        "M.16": "terminal",
+        "C.18": "terminal",
+        "M.18": "terminal",
+        "C.20": "terminal",
+        "M.20": "terminal",
+        "C.22": "terminal",
+        "M.22": "terminal",
+        "C.24": "terminal",
+        "M.24": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": [
+        "C.1",
+        "M.1",
+        "C.3",
+        "M.3",
+        "C.5",
+        "M.5",
+        "C.7",
+        "M.7",
+        "C.9",
+        "M.9",
+        "C.11",
+        "M.11",
+        "C.14",
+        "M.14",
+        "C.16",
+        "M.16",
+        "C.18",
+        "M.18",
+        "C.20",
+        "M.20",
+        "C.22",
+        "M.22",
+        "C.24",
+        "M.24",
+        "PE"
+      ],
+      "connectorPorts": {
+        "MATE": {
+          "connector": "HDC HVE 10+2 MS male numbered contacts",
+          "description": "Numbered contact subset only; unresolved PE assembly is represented separately as aggregate PE. No mating orientation or phase assignment asserted.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Pilot/signal"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Power"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Power"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Power"
+            },
+            "9": {
+              "terminal": "M.9",
+              "description": "Power"
+            },
+            "11": {
+              "terminal": "M.11",
+              "description": "Power"
+            },
+            "14": {
+              "terminal": "M.14",
+              "description": "Power"
+            },
+            "16": {
+              "terminal": "M.16",
+              "description": "Power"
+            },
+            "18": {
+              "terminal": "M.18",
+              "description": "Power"
+            },
+            "20": {
+              "terminal": "M.20",
+              "description": "Power"
+            },
+            "22": {
+              "terminal": "M.22",
+              "description": "Power"
+            },
+            "24": {
+              "terminal": "M.24",
+              "description": "Pilot/signal"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

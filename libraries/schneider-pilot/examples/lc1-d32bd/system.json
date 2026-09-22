@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "LC1-D32BD component verification"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "schneider-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "batch-boundary",
+      "version": "0.1.0",
+      "path": "boundary"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bvm6",
+      "description": "Harmony XB4 blue integral protected-LED body/light block with Zamak fixing collar, 230–240 V AC 50/60 Hz; head separate; source 24 V conflict",
+      "category": "component",
+      "symbol": "thermite:lamp",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BVM6",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/ZB4BVM6",
+          "title": "Schneider Electric ZB4BVM6 — blue integral LED light block with body fixing collar",
+          "revision": "12 September 2026; exact discontinued-order product sheet",
+          "pages": "Physical 1–2 exact characteristics; 8–9 generic body circuit/terminal illustrations. Applicable ZBV-M diagram: FAQ FA272320."
+        },
+        "modelingNotes": [
+          "Source order ZB4-BVM6 is retained; Schneider catalogs use ZB4BVM6 for the same alphanumeric order and blue integral-LED body/fixing-collar composition. The exact row already appears in the July 2019 catalog, physical 85 / printed 84, as 230–240 V AC 50/60 Hz. No successor or differently suffixed voltage variant is substituted.",
+          "This model describes the catalog order only.",
+          "Included: blue integral protected-LED light block and Zamak body/fixing collar with two screw-clamp supply terminals. The 2021 catalog physical 68 / printed 66 explicitly decomposes the complete XB4BVM6 light as ZB4BVM6 plus separate ZB4BV063 head. No external head/lens, contact block, test accessory or grounding plate is included in this type.",
+          "Exact ZB4BVM6 product sheet p1 explicitly identifies (X1-X2)PL and screw-clamp connections. The applicable right-hand ZBZ-M156 circuit in Schneider FAQ FA272320 is labeled for ZBV-M light blocks and shows each lamp at X1/X2 between AC conductors. The exact ZB4BVM6 body row and ZBVM6 light-block row establish M-series applicability; no neighboring color's ratings are transferred.",
+          "The exact product sheet's alternate illustrations show a generic ZBV-XX body with X1/X2 and placeholder electrical values; they corroborate the family physical terminal form, but are not photographs proving an exact blue unit or its ratings. The part-specific text and applicable M-series circuit are the terminal and supply authority.",
+          "One lamp/load function spans X1 and X2. Both endpoints are required by library policy for the modeled operating lamp. AC supply is documented; no L/N or DC polarity assignment is invented. Load membership does not join the two supply nets and no fixed internal links exist in the candidate. The FAQ T terminals, diodes, switches and external wires belong to the separate test arrangement.",
+          "Rated supply 230–240 V AC at 50/60 Hz; operating limits 195–264 V AC. Exact ZB4BVM6 p1 reports 14 mA consumption and 100000 h at rated voltage and 25 C. Ui 600 V at pollution degree 3 and Uimp 6 kV are insulation capabilities. These ranges/conditions remain notes: no arbitrary 230 V nominal scalar, frequency scalar or universal current rating is assigned.",
+          "Exact sheet p2 states Class I. The metal collar does not prove installed protective bonding. The 2021 catalog physical 83 / printed 81 and NHA93116_01 show a separately ordered ZBZ110 grounding plate; the latter requires connection to the grounding circuit on non-conducting or painted support. No plate inclusion, PE terminal on the base light block, fastening-screw-to-PE identity or automatic collar/panel bond is assumed. All-physical-interface coverage remains partial."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both exact X1/X2 screw-clamp light-block supply endpoints are modeled. The installation-dependent Zamak collar/support/earthing interface and its electrical continuity remain unverified; the separately ordered grounding plate is not included and no PE point or automatic panel bond is invented. The source 24 Vac/dc description conflicts with the exact 230–240 V AC order and does not establish installed voltage."
+      },
+      "terminals": {
+        "X1": {
+          "description": "Integral protected-LED light-block screw-clamp supply terminal X1; exact manufacturer (X1-X2)PL designation; AC supply, no DC polarity or L/N assignment",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "AC"
+          }
+        },
+        "X2": {
+          "description": "Integral protected-LED light-block screw-clamp supply terminal X2; exact manufacturer (X1-X2)PL designation; AC supply, no DC polarity or L/N assignment",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "illumination": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "illumination": "lamp"
+      },
+      "terminalOrder": ["X1", "X2"]
+    }
+  ]
+}

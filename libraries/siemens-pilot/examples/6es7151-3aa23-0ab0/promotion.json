@@ -1,0 +1,66 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "siemens-pilot:6es7151-3aa23-0ab0",
+    "manufacturer": "Siemens",
+    "orderNumber": "6ES7151-3AA23-0AB0"
+  },
+  "type": {
+    "path": "types/6es7151-3aa23-0ab0.json",
+    "sha256": "3b05ef998b535d7e000d2d934b7561179e032ad40b21d557daa44f60ec0a68a1"
+  },
+  "research": {
+    "path": "research/6es7151-3aa23-0ab0.md",
+    "sha256": "ad3c0bf99d51cb67530a65b6832137ea72956d7eea9dec75a333f9927338a11d"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "1L+",
+      "1M",
+      "2L+",
+      "2M",
+      "X1.P1.1",
+      "X1.P1.2",
+      "X1.P1.3",
+      "X1.P1.4",
+      "X1.P1.5",
+      "X1.P1.6",
+      "X1.P1.7",
+      "X1.P1.8",
+      "X1.P1.SHIELD",
+      "X1.P2.1",
+      "X1.P2.2",
+      "X1.P2.3",
+      "X1.P2.4",
+      "X1.P2.5",
+      "X1.P2.6",
+      "X1.P2.7",
+      "X1.P2.8",
+      "X1.P2.SHIELD"
+    ],
+    "requiredTerminalKeys": ["1L+", "1M"],
+    "fixedLinks": [
+      {
+        "from": "1L+",
+        "to": "2L+",
+        "sourceId": "S1"
+      },
+      {
+        "from": "1M",
+        "to": "2M",
+        "sourceId": "S1"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "4f36eb7d0d0f993d4135a691e6090417fcabb3d8e0e387a71367d1624f7c8a10",
+    "packet.request.json": "496db5eb122c09d452b714eb915ea3d87862ec076dffab722c43a62b8ae1d0a1",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "072b982eba23645fef109a3973dc58cc25fe5766abef37e10a0e3a79b72ba6c2",
+    "system.json": "dd5950e39dd33e1915d0aa016821c5fd94db50e56bb2a9d296f410f6ee88fd1a"
+  }
+}

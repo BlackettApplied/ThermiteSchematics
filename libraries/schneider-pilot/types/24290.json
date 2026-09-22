@@ -1,0 +1,125 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24290",
+      "description": "C60N miniature circuit breaker, 3 poles, C curve, 63 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24290",
+        "document": {
+          "url": "https://img.yumpu.com/16219073/17/1200x1600/multi-9-sistema-apparecchiature-modulari.jpg",
+          "title": "Schneider Electric Multi 9 — Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010-2011",
+          "pages": "Printed p.15, 3P selection block and diagram E45095; ratings printed p.14"
+        },
+        "modelingNotes": [
+          "Manufacturer-authored Italian catalog, Catalogo 2010-2011, mirrored by Yumpu (job provenance identifies distributor carnevale.bz). Printed p.15, 3P table, 63 A row, curva C column explicitly specifies 24290; no successor or accessory substitution.",
+          "Printed p.15 diagram E45095 applies to the 3P selection block: terminal pairs 1-2, 3-4, 5-6; dashed mechanical ganging does not connect poles electrically. Open contact state follows the drawn reference position, not an assertion of installed operating state. No permanent links.",
+          "Printed p.14: rated current 63 A at 30 degrees C; C-curve magnetic operation between 5 and 10 times In. Current metadata represents rated current, not conductor ampacity or a simulated trip curve.",
+          "Printed p.14: Ue 400 V AC; CEI EN 60898 Icn 6000 A at 400 V for 3P (O-CO). CEI EN 60947-2 Icu 20 kA at 230-240 V and 10 kA at 400-415 V for 3P (O-CO); Ui 500 V AC and Uimp 6 kV. These are conditional capabilities; no nominal_voltage or exclusive AC-only restriction is assigned in the model.",
+          "For In 32-63 A, p.14 cage terminals accept up to 25 mm2 flexible or 35 mm2 rigid conductors. Connection policy does not assert multiple conductors fit one clamp.",
+          "Scope is the base 24290 breaker: six main electrical connections, no neutral, PE, shield, communication or auxiliary terminals in the applicable diagram. Separately added auxiliary or residual-current equipment requires its own model. Terminal numbers are literal manufacturer labels; endpoint descriptions do not assign phases or a mandatory feed direction.",
+          "No terminal is universally required by this inventory model: pole use is application-dependent. Contact functions and ganged_with relations provide circuit representation only; protection dynamics and installation suitability are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Complete six-terminal inventory for the base 24290 breaker per its 3P catalog diagram: 1/2, 3/4, 5/6. No separately ordered accessory connections included; no PE or neutral terminal shown for this three-pole device."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, terminal 1 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        },
+        "2": {
+          "description": "Pole 1, terminal 2 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        },
+        "3": {
+          "description": "Pole 2, terminal 3 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        },
+        "4": {
+          "description": "Pole 2, terminal 4 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        },
+        "5": {
+          "description": "Pole 3, terminal 5 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        },
+        "6": {
+          "description": "Pole 3, terminal 6 (manufacturer marking)",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 63
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "6"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1", "3", "5", "2", "4", "6"]
+    }
+  ]
+}

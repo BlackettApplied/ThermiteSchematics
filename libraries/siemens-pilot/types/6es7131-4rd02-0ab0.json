@@ -1,0 +1,146 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7131-4rd02-0ab0",
+      "description": "ET 200S 4DI NAMUR electronic module; partial assembled eight-clamp field interface",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7131-4RD02-0AB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/489/25390489/att_64901/v1/et200s_4di_namur_manual_en-US_en-US.pdf",
+          "title": "Digital electronic module 4DI NAMUR (6ES7131-4RD02-0AB0)",
+          "revision": "03/2010; A5E02773488-01",
+          "pages": "7, 8, 14–16 (printed and physical PDF)"
+        },
+        "modelingNotes": [
+          "Assembled field-interface abstraction on separately ordered TM-E15S24-01, TM-E15C24-01 or TM-E15N24-01, per manual p.8. The electronic card alone does not own the base clamps. Installed terminal module is not established.",
+          "Manufacturer assignment p.7: 1=DI0, 5=DI1, 2=DI2, 6=DI3; 3/4/7/8=Vs. Figure 1-1 p.14 explicitly joins 3/4/7/8: represent with explicit project jumpers 3-4, 3-7, 3-8. Metadata never joins nets. Never jumper an input to Vs or another input.",
+          "All field connections are application-dependent. Backplane and P1/P2 supply interfaces are needed for operation but their individual contacts and polarity are not enumerated. BACKPLANE and POWER are authoring aliases, not manufacturer connector markings.",
+          "A3/A4/A7/A8 AUX1 facilities belong to other terminal-base arrangements (p.7–8); none is present on selected 24-01 arrangement. No PE, bond or shield field terminal is established for this abstraction.",
+          "Siemens datasheet 09/29/2017, modified 09/21/2017, pp.1–3, distributor mirror https://www.nexinstrument.com/assets/images/28092017-siemens/pdf/12.pdf : module supply nominal 24 VDC, permissible 20.4–28.8 VDC; one sensor supply rated 45 mA, minimum 8.2 V loaded. No per-clamp 45 mA capability or 24 V input is implied.",
+          "Manual pp.15–16: NAMUR signal 0 is 0.35–1.2 mA; signal 1 is 2.1–7 mA. Sensor supply electronically short-circuit protected; additional redundant supply prohibited. Conditional values kept in notes, not scalar terminal ratings.",
+          "Manual p.15 input delay 4.6 ms differs from mirrored datasheet p.2 4.6 microseconds; manual two-byte address space differs from datasheet four packed bits/one unpacked byte. Unresolved; timing and process-image behavior not modeled.",
+          "Single-terminal input channels and sensor-supply bus endpoints provide circuit rendering only; no converter simulation, diagnostic behavior or automatic internal continuity."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Eight field clamps of documented 24-01 terminal-base arrangement covered. Separate base is not included in electronic-card order. Backplane and P1/P2 supply contacts remain unenumerated; represented only as unpinned interface metadata. AUX1 belongs to other base variants, not this arrangement. Installed base unknown."
+      },
+      "terminals": {
+        "1": {
+          "description": "DI0, assembled field input",
+          "role": "signal",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "5": {
+          "description": "DI1, assembled field input",
+          "role": "signal",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "2": {
+          "description": "DI2, assembled field input",
+          "role": "signal",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "6": {
+          "description": "DI3, assembled field input",
+          "role": "signal",
+          "required": false,
+          "connection_policy": "exclusive"
+        },
+        "3": {
+          "description": "Vs, common sensor-supply field endpoint",
+          "role": "power",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "Vs, common sensor-supply field endpoint",
+          "role": "power",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "7": {
+          "description": "Vs, common sensor-supply field endpoint",
+          "role": "power",
+          "required": false,
+          "connection_policy": "shared"
+        },
+        "8": {
+          "description": "Vs, common sensor-supply field endpoint",
+          "role": "power",
+          "required": false,
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "DI0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["1"]
+        },
+        "DI1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["5"]
+        },
+        "DI2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["2"]
+        },
+        "DI3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["6"]
+        },
+        "VS3": {
+          "kind": "bus",
+          "terminals": ["3"]
+        },
+        "VS4": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "VS7": {
+          "kind": "bus",
+          "terminals": ["7"]
+        },
+        "VS8": {
+          "kind": "bus",
+          "terminals": ["8"]
+        }
+      },
+      "circuitSymbols": {
+        "DI0": "interface",
+        "DI1": "interface",
+        "DI2": "interface",
+        "DI3": "interface",
+        "VS3": "terminal",
+        "VS4": "terminal",
+        "VS7": "terminal",
+        "VS8": "terminal"
+      },
+      "terminalOrder": ["1", "5", "2", "6", "3", "4", "7", "8"],
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "ET 200S backplane bus",
+          "description": "Manual Figure 1-1; individual contacts not enumerated. Key is an authoring alias.",
+          "required": true
+        },
+        "POWER": {
+          "connector": "ET 200S P1/P2 supply interface",
+          "description": "Manual Figure 1-1 collective P1/P2 label; individual contact positions and polarity not established. Key is an authoring alias.",
+          "required": true
+        }
+      }
+    }
+  ]
+}

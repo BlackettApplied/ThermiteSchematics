@@ -1,0 +1,20 @@
+[
+  {
+    "code": "E300",
+    "severity": "error",
+    "message": "Potential declaration \"+24VDC\" conflicts with earlier declarations on the same net in field \"nominal_voltage\".",
+    "file": "sources/objects.json",
+    "line": 21,
+    "column": 5,
+    "jsonPointer": "/objects/2",
+    "uid": "30300000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "sources/objects.json",
+        "line": 10,
+        "column": 5,
+        "note": "Earlier potential declaration uid \"30300000-0000-4000-8000-000000000002\" conflicts here in field \"nominal_voltage\"."
+      }
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gvae20",
+      "description": "Auxiliary contact block, TeSys, 2 N.O. instantaneous, front mounting, for GV2/GV3P motor circuit breaker",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GVAE20",
+        "document": {
+          "url": "https://media.automation24.com/datasheet/en/GVAE20_document.pdf",
+          "title": "Schneider Electric Product data sheet GVAE20 - Auxiliary contact block, TeSys Deca, 2NO, front mounting, for GV2 (Characteristics; Connections and Schema)",
+          "revision": "Sep 16, 2022 (Schneider-authored export; distributor mirror)",
+          "pages": "p.1 characteristics/ratings; p.3 Connections and Schema (terminals 13-14, 23-24)"
+        },
+        "modelingNotes": [
+          "Identity confirmed as instantaneous auxiliary contact block for GV2 or GV3P, front mounting, contact type N.O. + N.O. in Schneider catalog 0100CT1501 (Digest 178) Section 18, p.36, Table 18.134. Bare GVAE20 uses screw clamp terminals; the spring-terminal variant is GVAE203 (catalog footnote: 'for spring terminals add 3'). Reversible N.O./N.C. mounting applies to GVAE1, not to GVAE20.",
+          "Connection diagram (datasheet p.3, inspected at 600 DPI) shows two normally-open contacts marked 13-14 and 23-24, both driven from one common actuator (dashed mechanical-link line). Terminal markings follow IEC 60947-5-1 for two instantaneous N.O. auxiliary contacts. Four electrical terminals total; no coil, no PE/bond terminal.",
+          "The two contacts are mechanically ganged (single actuator) and follow the host breaker position; the coupling to the host GV2/GV3P device is mechanical only, is not an electrical terminal, and the host device is outside this block's type. The ganged relation and normal-open states describe operation only and never join physical nets.",
+          "Ratings retained as notes, not scalar terminal ratings, because the contacts are AC/DC universal-range switching points: [Ith] 2.5 A; [Ui] 300 V (UL 508 / CSA C22.2 No.14), 250 V (IEC 60947-1); [Ue] 24...240 V AC and 24...60 V DC; minimum switching 5 mA / 17 V. AC-15: 120 VA at 110-240 V, 48 VA at 24 V, 60 VA at 48 V. DC-13: 24 W at 24 V, 15 W at 48 V, 9 W at 60 V. A range maximum is a capability, not an assigned circuit voltage; the contacts are rated for both AC and DC, so no voltage_type is assigned.",
+          "Screw clamp terminals, tightening torque 1.4 N.m; dimensions 11 (H) x 45 (W) x 29 (D) mm; mechanical durability 100000 cycles."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four contact terminals (13-14 and 23-24) from the manufacturer connection diagram are modeled. The block has no coil and no PE/bond terminal. The mechanical coupling to the host GV2/GV3P breaker is not an electrical terminal, and no enclosure/panel bonding is asserted by this accessory."
+      },
+      "terminals": {
+        "13": {
+          "description": "N.O. auxiliary contact terminal 13 (contact no1)",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "N.O. auxiliary contact terminal 14 (contact no1)",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "23": {
+          "description": "N.O. auxiliary contact terminal 23 (contact no2)",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "24": {
+          "description": "N.O. auxiliary contact terminal 24 (contact no2)",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "no1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "no2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["23", "24"]
+        }
+      },
+      "circuitSymbols": {
+        "no1": "contact-no",
+        "no2": "contact-no"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no1",
+          "to": "no2"
+        }
+      ],
+      "terminalOrder": ["13", "14", "23", "24"]
+    }
+  ]
+}

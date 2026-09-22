@@ -1,0 +1,111 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7134-4GB11-0AB0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "AI0",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AI0"
+            }
+          ],
+          "conductors": ["W1", "W2"]
+        },
+        {
+          "id": "g2",
+          "label": "3 / 7",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "7"
+            }
+          ],
+          "conductors": ["W3", "W7", "FIXED1"]
+        },
+        {
+          "id": "g3",
+          "label": "4 / 8 / P2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "4"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "8"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2"
+            }
+          ],
+          "conductors": ["W4", "W8", "W10", "FIXED2", "FIXED3"]
+        },
+        {
+          "id": "g4",
+          "label": "AI1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "AI1"
+            }
+          ],
+          "conductors": ["W5", "W6"]
+        },
+        {
+          "id": "g5",
+          "label": "P1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1"
+            }
+          ],
+          "conductors": ["W9"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

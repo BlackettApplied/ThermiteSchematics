@@ -1,0 +1,65 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24049",
+      "description": "C60N miniature circuit breaker, 1 pole, 6 A, B curve",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24049",
+        "document": {
+          "url": "https://download.se.com/files?p_Doc_Ref=lowvoltagemulti9catalog_EN&p_File_Ext=.PDF",
+          "title": "Low voltage — Multi 9, Low Voltage Final Distribution Products 0.5A to 125A",
+          "revision": "Catalogue 2011; 04/2011",
+          "pages": "Printed pp.8–9 (physical PDF pp.7–8); 1P diagram and exact 24049 row on printed p.9"
+        },
+        "modelingNotes": [
+          "Exact 24049 selection row and its 1P diagram establish terminal markings 1 and 2. Standalone breaker only; no separately ordered auxiliary is included.",
+          "6 A B curve calibrated at 30 °C; magnetic operation 3–5 In. Trip behavior is not simulated.",
+          "Ue 440 V AC, Ui 500 V AC, Uimp 6 kV are manufacturer capabilities, not assigned circuit nominal voltage. No nominal_voltage or voltage_type is imposed.",
+          "1P IEC 60898 Icn 6000 A at catalog 230/400 V. IEC 60947-2 Icu 10 kA at 230–240 V; 3 kA at 400–415 V only for the specified single-pole IT isolated-neutral double-fault condition. No unconditional breaking-capacity scalar is modeled.",
+          "Tunnel terminals: up to 16 mm² flexible or 25 mm² rigid for ratings up to 25 A (2011 catalog).",
+          "Reverse feeding is permitted by Schneider Multi 9 System Catalog, 03/2008, printed p.26 (physical p.5), manufacturer-authored mirror https://docs.rs-online.com/0054/0900766b813b9128.pdf. Terminal roles therefore do not constrain feed direction.",
+          "Open contact state follows the catalog schematic, not an as-built state. The switching pole is not a fixed conductive link. Terminal connections are application-dependent."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Standalone 1P order: two documented power terminals 1 and 2. No neutral, PE, signal, communication or auxiliary terminals in its circuit diagram. Separately ordered auxiliaries excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Marked terminal 1; upper endpoint in manufacturer schematic; reversible feed",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        },
+        "2": {
+          "description": "Marked terminal 2; lower endpoint in manufacturer schematic; reversible feed",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 6
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

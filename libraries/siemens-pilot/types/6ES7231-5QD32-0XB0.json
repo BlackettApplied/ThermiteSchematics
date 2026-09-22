@@ -1,0 +1,148 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6ES7231-5QD32-0XB0",
+      "description": "S7-1200 SM 1231 AI 4 x TC, 16 bit",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7231-5QD32-0XB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/241/109797241/att_1066673/v1/s71200_system_manual_en-US_en-US.pdf",
+          "title": "S7-1200 Programmable controller system manual",
+          "revision": "V4.5 05/2021, A5E02486680-AO; reviewed 2026-09-08",
+          "pages": "A.11.1; pp.1284-1289; connector tables A-170/A-171 pp.1288-1289"
+        },
+        "modelingNotes": [
+          "Exact Siemens order-number candidate. The SM1231 family name alone does not establish this order number, channel configuration or generation.",
+          "All 14 X10/X11 connector positions are inventoried:11 assigned,3 manufacturer no-connection positions. Both connectors require gold contacts. L+/M supply terminals are required even though the reference diagram omits them.",
+          "Differential channels preserve both terminals as distinct electrical endpoints. No internal physical net joins or automatic shorting are inferred.",
+          "TC alloy, range, filtering and cold-junction configuration are project choices. The cited manual discusses unused-input shorting and channel deactivation; apply the documented selected mode explicitly rather than inventing catalog jumpers.",
+          "Backplane bus, module electronics, diagnostic behavior and complete installation requirements are not modeled. No-connection positions are inventory annotations; this version does not enforce a do-not-wire policy.",
+          "The original continuous thermite:io-module profile does not render two-terminal analog channel functions. Use signal-loop or terminal-wiring views for these channels and retain unsupported-view diagnostics."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All external field connector positions are inventoried; internal backplane bus and configuration-dependent diagnostics are not modeled."
+      },
+      "terminals": {
+        "X10.1": {
+          "description": "L+ 24 V DC module power input",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "X10.2": {
+          "description": "M 24 V DC module power return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "X10.3": {
+          "description": "Functional earth",
+          "role": "functional_earth"
+        },
+        "X10.4": {
+          "description": "AI0+ thermocouple positive",
+          "role": "analog_input_positive"
+        },
+        "X10.5": {
+          "description": "AI0- thermocouple negative",
+          "role": "analog_input_negative"
+        },
+        "X10.6": {
+          "description": "AI1+ thermocouple positive",
+          "role": "analog_input_positive"
+        },
+        "X10.7": {
+          "description": "AI1- thermocouple negative",
+          "role": "analog_input_negative"
+        },
+        "X11.1": {
+          "description": "No connection; manufacturer unassigned connector position",
+          "role": "no_connection"
+        },
+        "X11.2": {
+          "description": "No connection; manufacturer unassigned connector position",
+          "role": "no_connection"
+        },
+        "X11.3": {
+          "description": "No connection; manufacturer unassigned connector position",
+          "role": "no_connection"
+        },
+        "X11.4": {
+          "description": "AI2+ thermocouple positive",
+          "role": "analog_input_positive"
+        },
+        "X11.5": {
+          "description": "AI2- thermocouple negative",
+          "role": "analog_input_negative"
+        },
+        "X11.6": {
+          "description": "AI3+ thermocouple positive",
+          "role": "analog_input_positive"
+        },
+        "X11.7": {
+          "description": "AI3- thermocouple negative",
+          "role": "analog_input_negative"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["X10.1", "X10.2"]
+        },
+        "functional_earth": {
+          "kind": "bus",
+          "terminals": ["X10.3"]
+        },
+        "ch0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.4", "X10.5"]
+        },
+        "ch1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.6", "X10.7"]
+        },
+        "ch2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.4", "X11.5"]
+        },
+        "ch3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.6", "X11.7"]
+        }
+      },
+      "terminalOrder": [
+        "X10.1",
+        "X10.2",
+        "X10.3",
+        "X10.4",
+        "X10.5",
+        "X10.6",
+        "X10.7",
+        "X11.1",
+        "X11.2",
+        "X11.3",
+        "X11.4",
+        "X11.5",
+        "X11.6",
+        "X11.7"
+      ]
+    }
+  ]
+}

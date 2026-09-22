@@ -1,0 +1,210 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6AV2124-0JC01-0AX0",
+      "description": "SIMATIC HMI TP900 Comfort",
+      "category": "controller",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6AV2124-0JC01-0AX0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/233/49313233/att_904646/v1/HWComfortPanelsenUS_en-US.pdf",
+          "title": "Comfort Panels operating instructions",
+          "revision": "07/2022, A5E36770603-AE; reviewed 2026-09-08",
+          "pages": "p.21 interface inventory; p.220 electrical specifications; pp.229-231 connector assignments"
+        },
+        "modelingNotes": [
+          "Exact TP900 Comfort order-number candidate, independently verified by Siemens product data: https://support.industry.siemens.com/teddatasheet/?caller=SIOS&format=pdf&language=en&mlfbs=6AV2124-0JC01-0AX0. The abbreviated TP900 family name does not establish this variant.",
+          "X80.1=+24 V DC and X80.2=return; separate functional earth. Supply 19.2-28.8 V DC, 0.75 A nominal and 1.05 A maximum load-dependent; nominal power 18 W. Range/inrush/installation conditions are not inferred from the nominal schema rating.",
+          "X1 has two 10/100 Mbps RJ45 sockets with integrated switch and one IP address; normalized keys X1.P1/P2 distinguish the sockets. No X3 gigabit connector exists on the 9-inch model.",
+          "Optional X2 serial/PROFIBUS, X61/X62 USB-A, X60 Mini-B and X90 audio pins are independently inventoried. X2 pin purpose depends on selected RS422/485 mode; the model does not validate that configuration.",
+          "Ethernet shields, connector shells, storage-card contacts and internal circuitry are not modeled as electrical terminals. No functional-earth, signal-ground, USB-ground or floating-supply commoning is inferred.",
+          "Manufacturer no-connection positions remain visible as annotations; a do-not-wire policy is not enforced. Optional interface pins carry no modeled behavior; supply is the only load function."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Power/functional-earth, Ethernet sockets and optional serial/USB/audio pin inventory modeled; shield/shell/storage contacts and mode-specific electrical behavior remain outside coverage."
+      },
+      "terminals": {
+        "X80.1": {
+          "description": "+24 V DC power input; 19.2-28.8 V permitted",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "X80.2": {
+          "description": "0 V power return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "FE": {
+          "description": "Separate functional-earth connection; not X80.2",
+          "role": "functional_earth"
+        },
+        "X2.1": {
+          "description": "Not connected",
+          "role": "no_connection"
+        },
+        "X2.2": {
+          "description": "GND 24 V",
+          "role": "serial_interface"
+        },
+        "X2.3": {
+          "description": "RS422 TxD+ / RS485 data B+",
+          "role": "serial_interface"
+        },
+        "X2.4": {
+          "description": "RS422 RxD+ / RS485 RTS",
+          "role": "serial_interface"
+        },
+        "X2.5": {
+          "description": "GND 5 V floating",
+          "role": "serial_interface"
+        },
+        "X2.6": {
+          "description": "+5 V DC floating",
+          "role": "serial_interface"
+        },
+        "X2.7": {
+          "description": "+24 V DC output;max 100 mA",
+          "role": "serial_interface"
+        },
+        "X2.8": {
+          "description": "RS422 TxD- / RS485 data A-",
+          "role": "serial_interface"
+        },
+        "X2.9": {
+          "description": "RS422 RxD- / RS485 not connected",
+          "role": "serial_interface"
+        },
+        "X61.1": {
+          "description": "VBUS +5 V output; max 500 mA",
+          "role": "usb_interface"
+        },
+        "X61.2": {
+          "description": "D- bidirectional",
+          "role": "usb_interface"
+        },
+        "X61.3": {
+          "description": "D+ bidirectional",
+          "role": "usb_interface"
+        },
+        "X61.4": {
+          "description": "GND",
+          "role": "usb_interface"
+        },
+        "X62.1": {
+          "description": "VBUS +5 V output; max 500 mA",
+          "role": "usb_interface"
+        },
+        "X62.2": {
+          "description": "D- bidirectional",
+          "role": "usb_interface"
+        },
+        "X62.3": {
+          "description": "D+ bidirectional",
+          "role": "usb_interface"
+        },
+        "X62.4": {
+          "description": "GND",
+          "role": "usb_interface"
+        },
+        "X60.1": {
+          "description": "VBUS unassigned",
+          "role": "no_connection"
+        },
+        "X60.2": {
+          "description": "D- bidirectional",
+          "role": "usb_interface"
+        },
+        "X60.3": {
+          "description": "D+ bidirectional",
+          "role": "usb_interface"
+        },
+        "X60.4": {
+          "description": "ID unassigned",
+          "role": "no_connection"
+        },
+        "X60.5": {
+          "description": "GND",
+          "role": "usb_interface"
+        },
+        "X90.1": {
+          "description": "Left audio",
+          "role": "audio_interface"
+        },
+        "X90.2": {
+          "description": "Right audio",
+          "role": "audio_interface"
+        },
+        "X90.3": {
+          "description": "GND",
+          "role": "audio_interface"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["X80.1", "X80.2"]
+        },
+        "functional_earth": {
+          "kind": "bus",
+          "terminals": ["FE"]
+        }
+      },
+      "terminalOrder": [
+        "X80.1",
+        "X80.2",
+        "FE",
+        "X2.1",
+        "X2.2",
+        "X2.3",
+        "X2.4",
+        "X2.5",
+        "X2.6",
+        "X2.7",
+        "X2.8",
+        "X2.9",
+        "X61.1",
+        "X61.2",
+        "X61.3",
+        "X61.4",
+        "X62.1",
+        "X62.2",
+        "X62.3",
+        "X62.4",
+        "X60.1",
+        "X60.2",
+        "X60.3",
+        "X60.4",
+        "X60.5",
+        "X90.1",
+        "X90.2",
+        "X90.3"
+      ],
+      "ports": {
+        "X1.P1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET X1 socket 1; 10/100 Mbps shared interface"
+        },
+        "X1.P2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET X1 socket 2; 10/100 Mbps shared interface"
+        }
+      }
+    }
+  ]
+}

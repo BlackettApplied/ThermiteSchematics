@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:la9-ff970",
+      "description": "Mechanical interlock for two horizontally mounted LC1-F115 or LC1-F150 contactors",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LA9-FF970",
+        "document": {
+          "url": "https://www.unisgroup.bg/pdf/EN/Schneider-Electric-Selection-Guide-2010.pdf",
+          "title": "The essential guide of Automation & Control 2010",
+          "revision": "DIA1ED2040506EN; 02/2010 V7.0; manufacturer-authored catalog at Unis Group mirror",
+          "pages": "Physical PDF p.219; printed p.5/9"
+        },
+        "modelingNotes": [
+          "Exact historical LA9-FF970 rows identify the mechanical interlock for two identical horizontal LC1-F115 or LC1-F150 contactors. Separate power connection sets and host terminals are excluded.",
+          "Later Schneider LA9FF970 datasheet (13 Sep 2019, p.1) identifies a mechanical accessory; Digest Plus places LA9FF970 in the column without electrical interlock. Later unhyphenated spelling is interpreted as catalog formatting, not a successor substitution.",
+          "Zero documented electrical terminals and fixed links. Attachment metalwork, any PE/bond interface, and historical assembly-kit contents are not fully specified; no bonding continuity is inferred.",
+          "Accessory documentation view only. Mechanical interlocking behavior is descriptive and is not electrically simulated. No host contact, coil, rating, or circuit symbol is transferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical accessory with zero documented electrical terminals. Reviewed sources do not specify conductive attachment or PE/bond interfaces; empty inventory is not proof of exhaustive electrical isolation. Host and separately ordered electrical interlock/power-link connections are outside scope."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

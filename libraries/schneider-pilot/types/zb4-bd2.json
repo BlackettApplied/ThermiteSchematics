@@ -1,0 +1,33 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bd2",
+      "description": "Black standard-handle selector head, 22 mm, two maintained positions, 90 degrees",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BD2",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-ZB4BD2.PDF",
+          "title": "Product data sheet — ZB4BD2",
+          "revision": "15 August 2018",
+          "pages": "1 characteristics; 3 dimensions; 17 sequence for separately fitted contacts"
+        },
+        "modelingNotes": [
+          "Job spelling ZB4-BD2 is preserved. Manufacturer spelling ZB4BD2 is matched by the full alphanumeric code and exact operating-head characteristics; separator equivalence is a research inference, not an explicit manufacturer cross-reference.",
+          "October 2021 Harmony XB4 catalog, printed page 54, identifies ZB4BD2 as heads only. Body/contact assemblies are separate; no contacts or light blocks are included here.",
+          "Mechanical head: black standard handle, chromium-plated metal bezel, 22 mm mounting, two maintained positions separated by 90 degrees. The product page says unmarked; historical 0-1 notation is not modeled as supplied markings.",
+          "Zero documented electrical terminals and no established fixed links. Reviewed metal-head drawings and Class I classification do not establish a PE terminal or installed bonding path through the collar or panel.",
+          "Documentation view only; empty circuit functions. No nominal voltage or current is assigned to the head, and separately fitted contacts are outside this order's scope."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Head-only order with zero documented electrical terminals; separate contact/light blocks are excluded. Metal-head attachment and protective-bonding interfaces are not established by the reviewed documentation. Empty terminals do not assert complete isolation or an installed panel bond."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

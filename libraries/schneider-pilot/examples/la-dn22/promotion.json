@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:la-dn22",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LA-DN22"
+  },
+  "type": {
+    "path": "types/la-dn22.json",
+    "sha256": "bfc7c5aaffd9b7219ed25d60b07b94e568eba79503f69c1d8634c9519da34060"
+  },
+  "research": {
+    "path": "research/la-dn22.md",
+    "sha256": "b64e0b7ea3e4e6d6293a97fac28ad51e5c3d124c292cabba7c3d581c379fc04a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["53", "54", "61", "62", "71", "72", "83", "84"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "bc9af361756aa1cb1789ae7c0889d1bdeec5d0f3d41cfc4c0d47212dbef227b9",
+    "packet.request.json": "1b1073065b3580075bcc31ef66db1b411ccd1dae5c3655ce34cb0cebaebe8c16",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "9895a17f42431b0a74696fab3b5d4c1ee95bfffc84dcadd8947deed040793340",
+    "system.json": "f5fc9de55db22c4555f90e9db8ce4c5438e01408ac057474d0d259841f957d08"
+  }
+}

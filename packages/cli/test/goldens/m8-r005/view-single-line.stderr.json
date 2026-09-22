@@ -1,0 +1,15 @@
+{
+  "format": "agent-tool-report/0.1",
+  "tool": "create-view",
+  "diagnostics": [],
+  "error": {
+    "code": "R005",
+    "message": "Invalid render text: view normalized-view field title.view-line contains forbidden-single-line-code-point.",
+    "family": "control",
+    "ownerKind": "view",
+    "ownerId": "normalized-view",
+    "field": "title.view-line",
+    "reason": "forbidden-single-line-code-point",
+    "root": "LS1 BROKEN"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "fixture": {
+      "version": "0.1.0",
+      "path": "library",
+      "resolutionKind": "local",
+      "integrity": "sha256-EhP4a93o4NrAkTFXySaYa2UYozZ8ASvGTjrSq3QZsfM=",
+      "files": {
+        "library.json": "sha256-j0n2O8DyAHF44ahPSxpvu+R1jE3GAUT52u3hgDOEUvI=",
+        "types/module.json": "sha256-0rEzqrK+FUa7sBXQb+SRdWJe0ZBY0LuCRtsIg3o53hM="
+      }
+    }
+  }
+}

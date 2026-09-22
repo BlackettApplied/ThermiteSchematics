@@ -1,0 +1,50 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "31400000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "NO_DECLARATION",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "UNRATED",
+      "type": "voltage-rules:unrated"
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000003",
+      "kind": "potential",
+      "name": "UNRATED-INTENT",
+      "at": { "device": "UNRATED", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24, "voltage_type": "DC" }
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "NOMINAL_ONLY",
+      "type": "voltage-rules:nominal-48"
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000005",
+      "kind": "potential",
+      "name": "TYPE-ONLY-INTENT",
+      "at": { "device": "NOMINAL_ONLY", "terminal": "T" },
+      "electrical": { "voltage_type": "DC" }
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000006",
+      "kind": "device",
+      "designation": "TYPE_ONLY",
+      "type": "voltage-rules:type-dc"
+    },
+    {
+      "uid": "31400000-0000-4000-8000-000000000007",
+      "kind": "potential",
+      "name": "NOMINAL-ONLY-INTENT",
+      "at": { "device": "TYPE_ONLY", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24 }
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-dt20p7",
+      "description": "TeSys D four-pole contactor, 4NO + 1NO/1NC auxiliaries, 230 V AC 50/60 Hz coil",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-DT20P7",
+        "document": {
+          "url": "https://www.mecampbell.com/media/pdf/fb7f087d4097d29718e63a119a005d5692fa1a29.pdf",
+          "title": "Product data sheet LC1DT20P7 — Characteristics",
+          "revision": "Jan 14, 2020",
+          "pages": "1–4"
+        },
+        "modelingNotes": [
+          "Manufacturer spells LC1DT20P7; source LC1-DT20P7 uses a presentation hyphen. Exact datasheet and B8/12 selection confirm matching pole, current, coil and auxiliary specifications.",
+          "Terminal marks and contact states: https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF, B8/79, diagram 127267.eps (LC1DT20 to DT80A), linked from exact B8/12 selection row. Keys retain the diagram markings; no phase assignment is inferred.",
+          "Four main NO pairs plus factory NO and NC auxiliaries share coil actuation. Relations are mechanical, not electrical continuity. No fixed conductor links are established, including across the normally closed contact or coil.",
+          "Coil A1–A2: 230 V AC 50/60 Hz, without built-in suppressor module (exact datasheet p3). No DC polarity, suppression accessory or duplicate coil clamp is inferred.",
+          "Main contacts: 20 A AC-1 non-inductive loads at <=440 V AC and <=60 °C. Separately stated capability <=690 V AC 25–400 Hz and <=300 V DC is not nominal voltage or a universal 20 A switching rating. Auxiliary 10 A at 60 °C is thermal current, not a universal switching limit.",
+          "No documented PE, shield or communication terminal. Passive contacts are application-dependent; A1/A2 are required by library policy for electrical coil operation. Physical coverage limitations are explicit."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 14 endpoints of diagram 127267.eps are modeled. Physical access-point inventory, particularly duplicated coil access and any factory links, is not established; no duplicates are invented. Optional accessories and installation bonding are outside this circuit abstraction."
+      },
+      "terminals": {
+        "14": {
+          "role": "control",
+          "description": "auxNO contact endpoint 14",
+          "connection_policy": "shared"
+        },
+        "22": {
+          "role": "control",
+          "description": "auxNC contact endpoint 22",
+          "connection_policy": "shared"
+        },
+        "1/L1": {
+          "role": "power",
+          "description": "main1 contact endpoint 1/L1",
+          "connection_policy": "shared"
+        },
+        "2/T1": {
+          "role": "power",
+          "description": "main1 contact endpoint 2/T1",
+          "connection_policy": "shared"
+        },
+        "3/L2": {
+          "role": "power",
+          "description": "main2 contact endpoint 3/L2",
+          "connection_policy": "shared"
+        },
+        "4/T2": {
+          "role": "power",
+          "description": "main2 contact endpoint 4/T2",
+          "connection_policy": "shared"
+        },
+        "5/L3": {
+          "role": "power",
+          "description": "main3 contact endpoint 5/L3",
+          "connection_policy": "shared"
+        },
+        "6/T3": {
+          "role": "power",
+          "description": "main3 contact endpoint 6/T3",
+          "connection_policy": "shared"
+        },
+        "7/L4": {
+          "role": "power",
+          "description": "main4 contact endpoint 7/L4",
+          "connection_policy": "shared"
+        },
+        "8/T4": {
+          "role": "power",
+          "description": "main4 contact endpoint 8/T4",
+          "connection_policy": "shared"
+        },
+        "13/NO": {
+          "role": "control",
+          "description": "auxNO contact endpoint 13/NO",
+          "connection_policy": "shared"
+        },
+        "21/NC": {
+          "role": "control",
+          "description": "auxNC contact endpoint 21/NC",
+          "connection_policy": "shared"
+        },
+        "A1": {
+          "role": "control",
+          "description": "AC coil endpoint A1; 230 V AC 50/60 Hz",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          },
+          "required": true
+        },
+        "A2": {
+          "role": "control",
+          "description": "AC coil endpoint A2; 230 V AC 50/60 Hz",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          },
+          "required": true
+        }
+      },
+      "functions": {
+        "main1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "main2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "main3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "main4": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["7/L4", "8/T4"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13/NO", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21/NC", "22"]
+        },
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        }
+      },
+      "circuitSymbols": {
+        "main1": "contact-no",
+        "main2": "contact-no",
+        "main3": "contact-no",
+        "main4": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc",
+        "coil": "coil"
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main4"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "terminalOrder": [
+        "1/L1",
+        "2/T1",
+        "3/L2",
+        "4/T2",
+        "5/L3",
+        "6/T3",
+        "7/L4",
+        "8/T4",
+        "13/NO",
+        "14",
+        "21/NC",
+        "22",
+        "A1",
+        "A2"
+      ]
+    }
+  ]
+}

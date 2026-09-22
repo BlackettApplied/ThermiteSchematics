@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "murr-pilot:85040",
+    "manufacturer": "Murr",
+    "orderNumber": "85040"
+  },
+  "type": {
+    "path": "types/85040.json",
+    "sha256": "b4a361552acd74b9259d59d2550a04c1a81e35ed0361d1dc4995ed2f877b728f"
+  },
+  "research": {
+    "path": "research/85040.md",
+    "sha256": "ab9ec9f4ae0407c82f79bbf68e5c3187ddbbb852eddb38b5da8266fc8ddb9493"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5"],
+    "requiredTerminalKeys": ["1", "2", "3"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "286b9b921be1c28552318e872571665620ce47b48bd533df23201b4b2f619d29",
+    "packet.request.json": "7592103ff7f12e7ea8d8684e68a91b22d8ee5ae08a228892ae2dd3b8e9dd0759",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "8d217dfead70e0bf0b8669fa4b130531cd6369d708daaac51d68acaf8e2f9323",
+    "system.json": "226aad0656eb342153b15978ffaa72b956b4c98fe36f1dd65eda5c7bb8a665e9"
+  }
+}

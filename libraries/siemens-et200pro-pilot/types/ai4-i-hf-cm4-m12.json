@@ -1,0 +1,366 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-et200pro-pilot:ai4-i-hf-cm4-m12",
+      "description": "ET 200pro 4 AI I HF with CM IO 4 x M12",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7144-4GF01-0AB0 + 6ES7194-4CA00-0AA0",
+        "document": {
+          "url": "https://support.industry.siemens.com/cs/attachments/21210852/et200pro_operating_instructions_en-US_en-US.pdf",
+          "title": "ET 200pro distributed I/O system operating instructions",
+          "revision": "08/2025, A5E00335544-AR",
+          "pages": "pp.123-124, Table 6-23 (indexed primary text); exact 01 revision"
+        },
+        "modelingNotes": [
+          "The orderNumber field lists an electronic module plus its required connection module. This is a documented two-part assembly, not a single Siemens order number.",
+          "Every exposed field-connector pin is inventoried, including unassigned pins. Terminal keys Xn.p identify connector Xn, physical pin p. Descriptive signal names are not alternative physical terminals.",
+          "The internal backplane contacts, module-to-module power distribution, protective behavior and configuration are not modeled. No backplane supply screw terminals are invented.",
+          "Connector pin metadata, functions and repeated 1M/2M/FE/Us labels do not join physical nets. Author any verified conductor continuity explicitly. No-connection positions are inventory annotations; a do-not-wire rule is not implemented.",
+          "Connector presence is separate from electrical continuity. A cable assembly with an unresolved pin map does not satisfy a required electrical terminal. Unused socket sealing and hardware installation requirements remain project review items.",
+          "The 08/2025 manufacturer pin table was available as indexed primary-source text; its PDF endpoint refused direct retrieval. Product identity is independently confirmed by the Siemens Industry Mall exact order-number page. See library README for evidence and retrieval limits.",
+          "Connection-module pairing is confirmed by Siemens cable_and_connector_for_ems_en.pdf, revised 12 July 2022, p.1. No substitution of older 4FF00 or 4GF00 module revisions is intended.",
+          "Supported current ranges include ±20 mA, 0–20 mA and 4–20 mA. Transmitter wiring mode and selected range belong in project source; do not bridge I- to 1M automatically."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All exposed field-connector pins are inventoried. Internal backplane contacts, power distribution, connector shell bonding and configuration-dependent behavior are outside this model."
+      },
+      "terminals": {
+        "X1.1": {
+          "description": "Us 24 V sensor/actuator supply",
+          "role": "sensor_actuator_supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X1.2": {
+          "description": "I0+ input positive",
+          "role": "analog_input_positive"
+        },
+        "X1.3": {
+          "description": "1M electronics and sensor/actuator supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X1.4": {
+          "description": "I0- input negative",
+          "role": "analog_input_negative"
+        },
+        "X1.5": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        },
+        "X2.1": {
+          "description": "Us 24 V sensor/actuator supply",
+          "role": "sensor_actuator_supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X2.2": {
+          "description": "I1+ input positive",
+          "role": "analog_input_positive"
+        },
+        "X2.3": {
+          "description": "1M electronics and sensor/actuator supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X2.4": {
+          "description": "I1- input negative",
+          "role": "analog_input_negative"
+        },
+        "X2.5": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        },
+        "X3.1": {
+          "description": "Us 24 V sensor/actuator supply",
+          "role": "sensor_actuator_supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X3.2": {
+          "description": "I2+ input positive",
+          "role": "analog_input_positive"
+        },
+        "X3.3": {
+          "description": "1M electronics and sensor/actuator supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X3.4": {
+          "description": "I2- input negative",
+          "role": "analog_input_negative"
+        },
+        "X3.5": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        },
+        "X4.1": {
+          "description": "Us 24 V sensor/actuator supply",
+          "role": "sensor_actuator_supply",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X4.2": {
+          "description": "I3+ input positive",
+          "role": "analog_input_positive"
+        },
+        "X4.3": {
+          "description": "1M electronics and sensor/actuator supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X4.4": {
+          "description": "I3- input negative",
+          "role": "analog_input_negative"
+        },
+        "X4.5": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        }
+      },
+      "functions": {
+        "X1.1": {
+          "kind": "source",
+          "terminals": ["X1.1"]
+        },
+        "X1.3": {
+          "kind": "bus",
+          "terminals": ["X1.3"]
+        },
+        "X1.5": {
+          "kind": "bus",
+          "terminals": ["X1.5"]
+        },
+        "ch0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X1.2", "X1.4"]
+        },
+        "X2.1": {
+          "kind": "source",
+          "terminals": ["X2.1"]
+        },
+        "X2.3": {
+          "kind": "bus",
+          "terminals": ["X2.3"]
+        },
+        "X2.5": {
+          "kind": "bus",
+          "terminals": ["X2.5"]
+        },
+        "ch1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X2.2", "X2.4"]
+        },
+        "X3.1": {
+          "kind": "source",
+          "terminals": ["X3.1"]
+        },
+        "X3.3": {
+          "kind": "bus",
+          "terminals": ["X3.3"]
+        },
+        "X3.5": {
+          "kind": "bus",
+          "terminals": ["X3.5"]
+        },
+        "ch2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X3.2", "X3.4"]
+        },
+        "X4.1": {
+          "kind": "source",
+          "terminals": ["X4.1"]
+        },
+        "X4.3": {
+          "kind": "bus",
+          "terminals": ["X4.3"]
+        },
+        "X4.5": {
+          "kind": "bus",
+          "terminals": ["X4.5"]
+        },
+        "ch3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X4.2", "X4.4"]
+        }
+      },
+      "circuitSymbols": {
+        "X1.1": "source",
+        "X1.3": "terminal",
+        "X1.5": "earth",
+        "ch0": "interface",
+        "X2.1": "source",
+        "X2.3": "terminal",
+        "X2.5": "earth",
+        "ch1": "interface",
+        "X3.1": "source",
+        "X3.3": "terminal",
+        "X3.5": "earth",
+        "ch2": "interface",
+        "X4.1": "source",
+        "X4.3": "terminal",
+        "X4.5": "earth",
+        "ch3": "interface"
+      },
+      "connectorPorts": {
+        "X1": {
+          "connector": "M12 A-coded female, 5-pin",
+          "description": "Channel 0 field connector",
+          "pins": {
+            "1": {
+              "terminal": "X1.1",
+              "description": "Us 24 V sensor/actuator supply"
+            },
+            "2": {
+              "terminal": "X1.2",
+              "description": "I0+ input positive"
+            },
+            "3": {
+              "terminal": "X1.3",
+              "description": "1M electronics and sensor/actuator supply return"
+            },
+            "4": {
+              "terminal": "X1.4",
+              "description": "I0- input negative"
+            },
+            "5": {
+              "terminal": "X1.5",
+              "description": "FE functional earth"
+            }
+          }
+        },
+        "X2": {
+          "connector": "M12 A-coded female, 5-pin",
+          "description": "Channel 1 field connector",
+          "pins": {
+            "1": {
+              "terminal": "X2.1",
+              "description": "Us 24 V sensor/actuator supply"
+            },
+            "2": {
+              "terminal": "X2.2",
+              "description": "I1+ input positive"
+            },
+            "3": {
+              "terminal": "X2.3",
+              "description": "1M electronics and sensor/actuator supply return"
+            },
+            "4": {
+              "terminal": "X2.4",
+              "description": "I1- input negative"
+            },
+            "5": {
+              "terminal": "X2.5",
+              "description": "FE functional earth"
+            }
+          }
+        },
+        "X3": {
+          "connector": "M12 A-coded female, 5-pin",
+          "description": "Channel 2 field connector",
+          "pins": {
+            "1": {
+              "terminal": "X3.1",
+              "description": "Us 24 V sensor/actuator supply"
+            },
+            "2": {
+              "terminal": "X3.2",
+              "description": "I2+ input positive"
+            },
+            "3": {
+              "terminal": "X3.3",
+              "description": "1M electronics and sensor/actuator supply return"
+            },
+            "4": {
+              "terminal": "X3.4",
+              "description": "I2- input negative"
+            },
+            "5": {
+              "terminal": "X3.5",
+              "description": "FE functional earth"
+            }
+          }
+        },
+        "X4": {
+          "connector": "M12 A-coded female, 5-pin",
+          "description": "Channel 3 field connector",
+          "pins": {
+            "1": {
+              "terminal": "X4.1",
+              "description": "Us 24 V sensor/actuator supply"
+            },
+            "2": {
+              "terminal": "X4.2",
+              "description": "I3+ input positive"
+            },
+            "3": {
+              "terminal": "X4.3",
+              "description": "1M electronics and sensor/actuator supply return"
+            },
+            "4": {
+              "terminal": "X4.4",
+              "description": "I3- input negative"
+            },
+            "5": {
+              "terminal": "X4.5",
+              "description": "FE functional earth"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "X1.1",
+        "X1.2",
+        "X1.3",
+        "X1.4",
+        "X1.5",
+        "X2.1",
+        "X2.2",
+        "X2.3",
+        "X2.4",
+        "X2.5",
+        "X3.1",
+        "X3.2",
+        "X3.3",
+        "X3.4",
+        "X3.5",
+        "X4.1",
+        "X4.2",
+        "X4.3",
+        "X4.4",
+        "X4.5"
+      ]
+    }
+  ]
+}

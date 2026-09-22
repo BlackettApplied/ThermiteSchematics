@@ -1,0 +1,32 @@
+[
+  {
+    "code": "E301",
+    "severity": "error",
+    "message": "Effective voltage type \"AC\" is incompatible with terminal ratings at \"ALPHA.T\", \"MID.T\", \"ZETA.T\".",
+    "file": "sources/objects.json",
+    "line": 40,
+    "column": 5,
+    "jsonPointer": "/objects/5",
+    "uid": "31000000-0000-4000-8000-000000000006",
+    "related": [
+      {
+        "file": "../voltage-library/types/terminals.json",
+        "line": 8,
+        "column": 14,
+        "note": "Terminal \"ALPHA.T\" is rated for voltage type \"DC\" here."
+      },
+      {
+        "file": "../voltage-library/types/terminals.json",
+        "line": 8,
+        "column": 14,
+        "note": "Terminal \"MID.T\" is rated for voltage type \"DC\" here."
+      },
+      {
+        "file": "../voltage-library/types/terminals.json",
+        "line": 8,
+        "column": 14,
+        "note": "Terminal \"ZETA.T\" is rated for voltage type \"DC\" here."
+      }
+    ]
+  }
+]

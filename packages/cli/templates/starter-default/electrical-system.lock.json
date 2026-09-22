@@ -1,0 +1,29 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "core": {
+      "version": "0.1.0",
+      "path": "ais-shipped:core@0.1.0",
+      "resolutionKind": "shipped",
+      "integrity": "sha256-wH3++2nHUtTlWVwLKBthaNst8i11KLzuj/s2PDF5OlA=",
+      "files": {
+        "library.json": "sha256-uiROKj7Mk/sF9IKBHi6POz8LNRrf1XVgT8A11zkwlTI=",
+        "types/breaker-3p.json": "sha256-Y8k6Cj6352pSrxFex6v4tzTsTSO6yk5uyYFtkKEb19c=",
+        "types/cable-2pair-shielded.json": "sha256-07W5Vhr9MwHArYCCM5iXdZqvr6FWgTubqrkv9KNQh+k=",
+        "types/contactor-3p-1no.json": "sha256-rExmdIYNM+AjnbQ0tBWoD7xiGJ3C44JkxyX5wth2sqM=",
+        "types/junction-box-8.json": "sha256-RTIQ0bf2oXwY02pu5/FLmdRqd+yjgldthtJ28IaPwKM=",
+        "types/limit-switch-2wire.json": "sha256-mZA27k1otaRQvQd4WksNTMkg9c6/pW93eQs1yy/HVhE=",
+        "types/motor-3ph.json": "sha256-RpdoAaaDRAw3x+kHUz/ZU8ZbRpYYUP5yCebI3OEozYE=",
+        "types/overload-3p-1nc.json": "sha256-S2iTE6kSmw7EJ6Eugnn+1O9FAWWsTUUVrWORq8M01jk=",
+        "types/plc-compact.json": "sha256-rf6Hg67CdRTT3hqSbGMZzxkhgFX1wuTE9EeYWYKIG9o=",
+        "types/prox-pnp-3wire.json": "sha256-3cgXOpd/9icdpbk3/My2QyAfyUTQLrrSr4RBWbU2uHU=",
+        "types/psu-24vdc.json": "sha256-IkqQlIhQfF6RTl3J/eN6e0KPxit2TcjAwSoNYek0mDc=",
+        "types/pushbutton-nc.json": "sha256-CH832r5FCG5sAnKLWNdsXeskEgBBUuItHLnp7s/G6tM=",
+        "types/supply-480v-3ph.json": "sha256-LU31pSqZWiaB9oqLWHb1rJ9LKxv0BMp64sLFWahS+kw=",
+        "types/terminal-block-8.json": "sha256-nUAUf4BqmxDys37jsTa0pkcxNcJQCxe7cn66kZbemCU="
+      }
+    }
+  }
+}

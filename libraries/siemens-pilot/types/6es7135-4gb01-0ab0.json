@@ -1,0 +1,150 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7135-4gb01-0ab0",
+      "description": "ET 200S 2AO I ST analog current output module; eight-clamp TM-E15C24-01 assembled field interface",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7135-4GB01-0AB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/054/25546054/att_78377/v1/et200s_2ao_i_st_manual_en-US.pdf",
+          "title": "2AO I ST analog electronic module (6ES7135-4GB01-0AB0)",
+          "revision": "04/2007, A5E01076949-01",
+          "pages": "7–11, 19; terminal/base and block diagrams p.8"
+        },
+        "modelingNotes": [
+          "Assembled field-interface abstraction on documented TM-E15C24-01 (6ES7193-4CB30-0AA0): eight field clamps, no AUX clamps. Card and base are separately ordered. Verify the installed per-slot pairing before use. Do not duplicate these field clamps with a second base instance in the same circuit.",
+          "P1=L+ and P2=1M are the power-bus supply identities in Figure 1-1, not additional field screw terminals. BACKPLANE is an authoring alias for the unenumerated ET 200S bus interface. Its physical contact count and pinout are not modeled.",
+          "Exact p.7 terminal table and p.8 compatible-base diagram document eight numbered clamps: 1=QI0, 5=QI1; 3/7=MANA; 2/6/4/8=n.c. AUX1 field clamps occur on other base variants, not the selected 24-01.",
+          "Figure 1-1 directly joins 3 and 7 (MANA): represent by explicit project jumper. Neither channel metadata nor supply function creates continuity. P2/1M is isolated from MANA; no output-to-return permanent link is allowed.",
+          "Load supply is nominal 24 VDC from the power module, maximum module consumption 150 mA. Signal capability is ±20 mA or 4–20 mA into maximum 500 ohms; signal ratings are retained here without assigning output voltage or a misleading scalar current limit.",
+          "Channels can be deactivated (p.11); numbered terminals are not universally required. Supply P1/P2 are required. Shared policy for 3/7 supports the explicit fixed-link representation and is not a clamp wire-count approval.",
+          "Shielded twisted-pair wiring is recommended; p.19 distinguishes grounding both ends from one-end grounding where endpoint potential differences occur. External shield/bonding hardware is outside the electronic-card inventory.",
+          "Partial physical inventory: numbered clamps belong to the selected separate base; P1/P2 identify internal functional supplies, not every mating finger. Backplane contacts, actual per-slot pairing and external shield/bonding hardware remain unverified. No additional PE or AUX bond is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Partial physical inventory: numbered clamps belong to the selected separate base; P1/P2 identify internal functional supplies, not every mating finger. Backplane contacts, actual per-slot pairing and external shield/bonding hardware remain unverified. No additional PE or AUX bond is inferred."
+      },
+      "terminals": {
+        "1": {
+          "description": "QI0: channel 0 current output",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "2": {
+          "description": "n.c.: unconnected base terminal",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "3": {
+          "description": "MANA: analog return",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "n.c.: unconnected base terminal",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "5": {
+          "description": "QI1: channel 1 current output",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "6": {
+          "description": "n.c.: unconnected base terminal",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "7": {
+          "description": "MANA: analog return",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8": {
+          "description": "n.c.: unconnected base terminal",
+          "role": "passive",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "P1": {
+          "description": "L+: power-bus supply contact",
+          "role": "power",
+          "connection_policy": "exclusive",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "P2": {
+          "description": "1M: power-bus supply return",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": true
+        }
+      },
+      "functions": {
+        "AO0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1", "3"]
+        },
+        "AO1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["5", "7"]
+        },
+        "SUPPLY": {
+          "kind": "load",
+          "terminals": ["P1", "P2"]
+        },
+        "NC2": {
+          "kind": "bus",
+          "terminals": ["2"]
+        },
+        "NC6": {
+          "kind": "bus",
+          "terminals": ["6"]
+        },
+        "NC4": {
+          "kind": "bus",
+          "terminals": ["4"]
+        },
+        "NC8": {
+          "kind": "bus",
+          "terminals": ["8"]
+        }
+      },
+      "circuitSymbols": {
+        "AO0": "interface",
+        "AO1": "interface",
+        "SUPPLY": "load",
+        "NC2": "terminal",
+        "NC6": "terminal",
+        "NC4": "terminal",
+        "NC8": "terminal"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8", "P1", "P2"],
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "ET 200S backplane bus interface",
+          "description": "Unenumerated interface in Figure 1-1; BACKPLANE is an authoring alias, not a manufacturer pin legend. No contact numbers or continuity inferred.",
+          "required": true
+        }
+      }
+    }
+  ]
+}

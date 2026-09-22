@@ -1,0 +1,151 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:siemens-aq4ui-st-2wire",
+      "description": "AQ 4xU/I ST / current or 2-wire voltage",
+      "terminals": {
+        "1": {
+          "description": "Q0+",
+          "connection_policy": "exclusive"
+        },
+        "2": {
+          "description": "Q1+",
+          "connection_policy": "exclusive"
+        },
+        "3": {
+          "description": "Q2+",
+          "connection_policy": "exclusive"
+        },
+        "4": {
+          "description": "Q3+",
+          "connection_policy": "exclusive"
+        },
+        "5": {
+          "description": "Q0-",
+          "connection_policy": "exclusive"
+        },
+        "6": {
+          "description": "Q1-",
+          "connection_policy": "exclusive"
+        },
+        "7": {
+          "description": "Q2-",
+          "connection_policy": "exclusive"
+        },
+        "8": {
+          "description": "Q3-",
+          "connection_policy": "exclusive"
+        },
+        "9": {
+          "description": "S0+ voltage sense"
+        },
+        "10": {
+          "description": "S1+ voltage sense"
+        },
+        "11": {
+          "description": "S2+ voltage sense"
+        },
+        "12": {
+          "description": "S3+ voltage sense"
+        },
+        "13": {
+          "description": "S0- voltage sense"
+        },
+        "14": {
+          "description": "S1- voltage sense"
+        },
+        "15": {
+          "description": "S2- voltage sense"
+        },
+        "16": {
+          "description": "S3- voltage sense"
+        },
+        "L+": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true,
+          "role": "supply_positive"
+        },
+        "M": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true,
+          "role": "supply_return"
+        }
+      },
+      "functions": {
+        "ch0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1", "5"]
+        },
+        "ch1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["2", "6"]
+        },
+        "ch2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["3", "7"]
+        },
+        "ch3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["4", "8"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["L+", "M"]
+        }
+      },
+      "category": "io-module",
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "L+",
+        "M"
+      ],
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7135-6HD00-0BA1",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/612/59753612/att_880087/v1/et200sp_aq_4xu_i_st_manual_en-US_en-US.pdf",
+          "title": "AQ 4xU/I ST equipment manual",
+          "revision": "07/2014 A5E03573365-AC",
+          "pages": "10, Table 3-1 (2-wire voltage/current); 12-14, Tables 4-1 and 4-2"
+        },
+        "modelingNotes": [
+          "Terminal keys are BaseUnit landing positions for this module; BaseUnit itself is a separate inventory item. Backplane and power rails are not automatically connected.",
+          "Qn+/Qn- are the published two-wire current and voltage landings. Output type/range is configured per channel, including 4-20 mA and +/-10 V. Project channel descriptions record the intended mode; this library does not configure or validate PLC parameters.",
+          "Sense terminals Sn+/Sn- remain unconnected for the two-wire arrangement shown in Table 3-1. Remote four-wire sensing is outside this profile; no implicit sense connections or jumper requirements are invented.",
+          "The analog command does not supply an actuator with operating power. Load impedance, cable drop, bonding, shielding and output-stop behavior require application review."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "BaseUnit landing positions for this signal module are modeled. Backplane and power rails are not automatically connected; their distribution must be documented separately."
+      }
+    }
+  ]
+}

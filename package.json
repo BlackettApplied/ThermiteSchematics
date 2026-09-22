@@ -1,0 +1,43 @@
+{
+  "name": "thermite-schematics",
+  "version": "0.2.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": "^22.12.0 || >=24"
+  },
+  "scripts": {
+    "build": "tsc -b && npm run build:assets --workspace @thermite/cli",
+    "test": "node scripts/test.mjs",
+    "release:pack": "bash scripts/release-pack.sh",
+    "release:accept": "node scripts/release-acceptance.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check:committed-json": "node scripts/assert-prettier-stable-json.mjs",
+    "check": "npm run generate:types:check && npm run build && npm run test && npm run format:check && npm run check:committed-json",
+    "generate:types": "npm run generate:types --workspace @thermite/schema",
+    "generate:types:check": "npm run generate:types:check --workspace @thermite/schema",
+    "test:release-evidence": "node scripts/run-vitest-and-audit.mjs && node packages/cli/dist/bin.js validate \"packages/cli/fixtures/valid project\" --json",
+    "thermite": "node packages/cli/dist/thermite-bin.js",
+    "setup": "npm ci && npm run build",
+    "alpha:pack": "node scripts/pack-alpha.mjs",
+    "test:legacy-package": "node scripts/test.mjs packages/cli/test/release-package.test.ts",
+    "demo:machine": "node scripts/demo-machine.mjs",
+    "demo:change": "node scripts/demo-change.mjs"
+  },
+  "devDependencies": {
+    "@types/fontkit": "^2.0.8",
+    "@types/node": "^22.20.1",
+    "@types/pdfkit": "^0.17.3",
+    "@types/svg-to-pdfkit": "^0.1.4",
+    "linkedom": "^0.18.12",
+    "prettier": "^3.9.6",
+    "typescript": "~5.9.3",
+    "vitest": "^4.1.11"
+  }
+}

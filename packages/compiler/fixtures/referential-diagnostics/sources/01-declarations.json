@@ -1,0 +1,87 @@
+{
+  "objects": [
+    {
+      "uid": "00000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "=F1+P1-K1",
+      "type": "catalog:opaque",
+      "aliases": ["ALIAS-K1"]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "BAD-UNKNOWN",
+      "type": "catalog:missing"
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "BAD-WRONG",
+      "type": "catalog:cable"
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000004",
+      "kind": "cable",
+      "designation": "CABLE-VALID",
+      "type": "catalog:cable",
+      "conductors": []
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000005",
+      "kind": "cable",
+      "designation": "CABLE-UNKNOWN",
+      "type": "catalog:missing-cable",
+      "conductors": []
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000006",
+      "kind": "cable",
+      "designation": "CABLE-WRONG",
+      "type": "catalog:opaque",
+      "conductors": []
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000007",
+      "kind": "wire",
+      "designation": "WIRE-ONLY",
+      "endpoints": [
+        { "device": "=F1+P1-K1", "terminal": "13/NO" },
+        { "device": "=F1+P1-K1", "terminal": "1/L1" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000008",
+      "kind": "device",
+      "designation": "DUP-DEVICE",
+      "type": "catalog:opaque"
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000009",
+      "kind": "jumper",
+      "designation": "DUP-NONDEVICE",
+      "endpoints": [
+        { "device": "=F1+P1-K1", "terminal": "13/NO" },
+        { "device": "=F1+P1-K1", "terminal": "1/L1" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000000a",
+      "kind": "device",
+      "designation": "DUP-MIXED",
+      "type": "catalog:opaque"
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000000b",
+      "kind": "potential",
+      "name": "POTENTIAL-NAME-ONLY",
+      "at": { "device": "=F1+P1-K1", "terminal": "X2.14" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000000c",
+      "kind": "device",
+      "designation": "CASE-MISS",
+      "type": "catalog:unused"
+    }
+  ]
+}

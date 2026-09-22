@@ -1,0 +1,117 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022710r0100",
+      "description": "ABB OT250E03P switch-disconnector / 3-pole / front operated, pistol handle / 250 A / IEC 60947-3",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022710R0100",
+        "document": {
+          "url": "https://library.e.abb.com/public/29ab19b1ccfa4f059733ca339e8f6a04/ABB_Spinace%20OT_katEN14.pdf",
+          "title": "ABB Switches — Switch-disconnectors OT and OTM (technical catalogue)",
+          "revision": "1SCC301020C0201, EN 14",
+          "pages": "p.10 technical data (OT160EV…800 E-frame); p.24 selection table (OT250E03P = 1SCA022710R0100); pp.72-73 dimension drawings"
+        },
+        "modelingNotes": [
+          "Exact identity confirmed in an opened ABB source: catalogue 1SCC301020C0201 selection table p.24 row '3 | 250 | 250/250 | OT250E03P | 1SCA022710R0100', and ABB product data sheet 1SCC301020C0201 (Product ID 1SCA022710R0100, EAN 6417019225944). Bare switch-disconnector (isolator); not a fuse, fuse base, switch-fuse (OS/OSM) or motorised (OTM) type.",
+          "3-pole, front operated, base mounting, black IP65 pistol handle + shaft, terminal-bolt kit included. One handle opens/closes all three poles simultaneously (ganged). 'Special Functions: No' — no auxiliary contacts, motor or release in this order code.",
+          "Ratings (IEC 60947-3, AC utilization; conditional — not a single assigned circuit voltage): Ie = 250 A for AC-21A (380–1000 V), AC-22A and AC-23A (380–690 V); Ith/Ithe = 250 A @40 °C. AC-23A power: 75 kW@220–240 V, 145 kW@400–415 V, 170 kW@500 V, 250 kW@690 V. Ui = 1000 V; Uimp = 12 kV; Icw = 8 kA/1 s; Icm = 30 kA@690 V; power loss ≈ 6.5 W/pole. DC ratings not covered by reviewed documents. Only per-pole current capability (250 A) is placed on terminals; voltage capability is left in notes to avoid asserting a fixed supply voltage.",
+          "Manufacturer terminal markings were not established in the reviewed installation and dimension drawings. L1/L2/L3 and T1/T2/T3 are explicit functional authoring aliases for the two ends of each independent pole, not claimed inscriptions or an as-built phase assignment. The product data sheet permits Top In–Bottom Out or Bottom In–Top Out; these aliases do not require a fixed line/load direction.",
+          "No PE/earth terminal and no neutral in this 3-pole variant. A neutral link (OS_N3/OXN250), a 4th pole (OTZ250E), auxiliary contacts (OA1G10/OA3G01) and interlocks are separately ordered accessories; the 4-pole switch is a different order code (OT250E04P, 1SCA022710R0520). Base mounting is mechanical only and asserts no bonding path.",
+          "No permanent internal links: a switch pole must not be modelled as permanently joined merely because it conducts when closed. The three poles are mechanically ganged (operated together) but electrically independent switched paths. Terminals: lug type, 20 mm width, M8 bolt, 15…22 N·m; mechanical durability 20 000 operations."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All six main electrical connection positions are represented by three ganged switched poles. Physical inscriptions and detailed terminal/accessory interfaces have not been established; L/T keys are functional aliases, and line/load orientation is reversible. No neutral, auxiliary contacts or PE terminal is added to the documented base-switch inventory. Optional accessories are separate orders."
+      },
+      "terminals": {
+        "L1": {
+          "description": "Pole 1, one side (functional alias; marking unverified, reversible line/load)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "T1": {
+          "description": "Pole 1, other side (functional alias; marking unverified, reversible line/load)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "L2": {
+          "description": "Pole 2, one side (functional alias; marking unverified, reversible line/load)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "T2": {
+          "description": "Pole 2, other side (functional alias; marking unverified, reversible line/load)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "L3": {
+          "description": "Pole 3, one side (functional alias; marking unverified, reversible line/load)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        },
+        "T3": {
+          "description": "Pole 3, other side (functional alias; marking unverified, reversible line/load)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 250
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["L1", "T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["L2", "T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["L3", "T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "switch-no",
+        "pole2": "switch-no",
+        "pole3": "switch-no"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["L1", "L2", "L3", "T1", "T2", "T3"]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24268",
+      "description": "C60N miniature circuit breaker, 2 poles, 10 A, C curve; bare breaker",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24268",
+        "document": {
+          "url": "https://www.sportellotelematicocastionedellapresolana.it/sites/default/files/2023-02/3481-Schede%20tecniche-R1.pdf",
+          "title": "Protezione dei circuiti — Interruttori C60N, Curve B e C; reproduced in Schede tecniche dei materiali",
+          "revision": "Underlying Schneider catalog revision unstated; municipal compilation dated December 2022",
+          "pages": "Printed 14–15; physical PDF 5–6; exact 24268 row and diagram E45094 on PDF 6"
+        },
+        "modelingNotes": [
+          "Manufacturer-authored catalog pages at a municipal mirror. Exact 24268 row establishes 2P, 10 A, curve C; diagram E45094 establishes terminal markings 1/2 and 3/4.",
+          "10 A rating at 30 degrees C; curve C magnetic operation 5–10 times In. Icn 6000 A at 400 V AC under CEI EN 60898. Icu 20 kA at 230–240 V AC or 10 kA at 400–415 V AC under CEI EN 60947-2. These conditions are not an assigned installation voltage or a universal interrupting rating.",
+          "Ui 500 V AC; Uimp 6 kV. At 10 A the cage terminals accept up to 16 mm² flexible or 25 mm² rigid conductor. These are documented capabilities, not conductor-sizing validation.",
+          "Diagram shows upper terminals 1 and 3 and lower terminals 2 and 4. No inferred phase/neutral aliases or enforced supply direction. Open contact state depicts the illustrated off position. Two poles are mechanically ganged, with no permanent conducting links.",
+          "Bare breaker only: separately ordered auxiliaries and residual-current accessories are not included. Trip dynamics, coordination and installation suitability are not modeled."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four power terminals in the exact selection table's 2P diagram E45094 are represented. No auxiliary, coil, PE, shield or communication terminals belong to the documented bare-breaker interface; accessory assemblies are excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 upper terminal, manufacturer marking 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        },
+        "2": {
+          "description": "Pole 1 lower terminal, manufacturer marking 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        },
+        "3": {
+          "description": "Pole 2 upper terminal, manufacturer marking 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        },
+        "4": {
+          "description": "Pole 2 lower terminal, manufacturer marking 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 10
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

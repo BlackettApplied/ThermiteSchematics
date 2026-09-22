@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Portable paths"
+  },
+  "sources": ["sources/**/*.json"],
+  "libraries": [
+    {
+      "name": "parent",
+      "version": "0.1.0",
+      "path": "../library/core"
+    },
+    {
+      "name": "nested",
+      "version": "0.1.0",
+      "path": "libraries/vendor/core"
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "LC1-D128P7 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "noPole1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "noPole1"
+            }
+          ],
+          "conductors": ["W1", "W2"]
+        },
+        {
+          "id": "g2",
+          "label": "noPole2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "noPole2"
+            }
+          ],
+          "conductors": ["W3", "W4"]
+        },
+        {
+          "id": "g3",
+          "label": "ncPole1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "ncPole1"
+            }
+          ],
+          "conductors": ["W5", "W6"]
+        },
+        {
+          "id": "g4",
+          "label": "ncPole2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "ncPole2"
+            }
+          ],
+          "conductors": ["W7", "W8"]
+        },
+        {
+          "id": "g5",
+          "label": "auxNO",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "auxNO"
+            }
+          ],
+          "conductors": ["W9", "W10"]
+        },
+        {
+          "id": "g6",
+          "label": "auxNC",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "auxNC"
+            }
+          ],
+          "conductors": ["W11", "W12"]
+        },
+        {
+          "id": "g7",
+          "label": "coil",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "coil"
+            }
+          ],
+          "conductors": ["W13", "W14"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,414 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7151-3aa23-0ab0",
+      "description": "ET 200S IM 151-3 PN ST interface module",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7151-3AA23-0AB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/131/30598131/att_80295/v1/et200s_im151_3_pn_manual_en-US_en-US.pdf",
+          "title": "Interface module IM151-3 PN (6ES7151-3AA23-0AB0)",
+          "revision": "08/2010, A5E01638907-04; firmware V7.0 onward",
+          "pages": "3 (scope), 7-8 (rail coupling/two-port switch), 12-15 (pin/block diagrams, ratings, front view), 23 (X1P1/X1P2 configuration); printed and PDF numbering coincide"
+        },
+        "modelingNotes": [
+          "Field-interface model of exact 6ES7151-3AA23-0AB0 IM151-3 PN ST, with its depicted supply connector and two RJ45 sockets. No separately ordered ET 200S terminal-module clamps are transferred. Manual A5E01638907-04, 08/2010, applies from firmware V7.0; installed hardware/firmware remains unknown.",
+          "X1.P1 and X1.P2 are authoring namespaces for manufacturer X1P1/X1P2 (manual p.23), shown under X1 PROFINET P1/P2 on the front view. Dotted terminal keys preserve each socket pin number. SHIELD is an alias for depicted socket shielding, not pin 9 or a PE clamp. These are device mating contacts; no cable-plug termination endpoints are invented.",
+          "Logical ports X1.P1/X1.P2 expose the two RJ45 sockets as Ethernet communication endpoints. Physical connectorPorts X1.P1.CONTACTS/X1.P2.CONTACTS retain each socket pin inventory. CONTACTS is an authoring suffix required because the compiler rejects a key declared in both port collections (E207); it is not a printed marking. Each logical port and corresponding pin map describe the same socket, not separate connectable hardware. PROFINET protocol belongs on authored communication relations; logical links do not join physical nets. Do not author independent cables to both representations of one socket.",
+          "Pp.8,13,23 document an integrated two-port switch and separately configurable X1P1/X1P2 ports. The transmission procedure is 100BASE-TX; PROFINET IO is 100 Mbit/s full duplex and Ethernet services also support 10 Mbit/s. Autonegotiation and autocrossing are supported. No permanent inter-port wire or fixed RJ45 signal continuity is asserted through the active switch.",
+          "Table 1-1 p.12 identifies 1L+/1M as the 24 V DC supply and 2L+/2M as loop-through. Represent the two factory feed paths with explicit project jumpers 1L+-2L+ and 1M-2M. These are not field jumper installation instructions. Function and connector metadata never join nets. Shared supply policy accommodates fixture jumpers and field wiring without asserting clamp conductor count or ampacity.",
+          "1L+ and 1M are required because this active IM needs its rated 24 V DC supply and return; each can be connected through its documented loop-through path. 2L+ and 2M are not independently required. Neither P1 nor P2 is universally required individually: network use is topology-dependent and p.8 supports port disabling. This schema cannot express an at-least-one-of-two communication requirement; a working PROFINET application must establish the intended communication path.",
+          "P.7 explicitly documents an RC combination between supply reference M and the rail (protective conductor), enabling an earth-free configuration. It is not a direct fixed wire and is not modeled as a jumper. The exact physical rail-contact/RC endpoint inventory remains unenumerated. P.14 documents Ethernet-to-electronics galvanic isolation, and no isolation between electronics and either supply or rear-panel bus; these are functional ratings, not a detailed terminal continuity map.",
+          "RJ45 pins 4,5,7,8 are GND in Table 1-1. The table does not specify a complete pin-to-pin, socket-shell, rail or M continuity matrix; matching GND names alone are not converted into fixed links. Omitted paths do not prove physical isolation. Backplane and MMC contacts also remain unenumerated, so connectionCoverage is partial.",
+          "Figure 1-1 p.13 uses unexplained supply-side numbers 2(P1),6(P1),3(P2),7(P2), unlike Table 1-1 and the front view. They are not used as RJ45 mappings or additional supply legends. The supply loop-through claims rely on Table 1-1; the block diagram shows duplicate feed branches without resolving that labeling discrepancy.",
+          "Rated supply is 24 V DC. P.14 gives approximately 200 mA input consumption and 3.3 W dissipation, reverse-polarity protection, minimum 20 ms power-failure bypass, permitted rail potential difference 75 V DC/60 V AC and insulation-test voltage 500 V DC. These do not establish loop-through ampacity, external bond adequacy or an allowable supply range."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "22 field-interface terminals: 1L+/1M with 2L+/2M loop-through and both RJ45 sockets, each with pins 1-8 and shielding. Two logical Ethernet ports with separately named physical pin-map aliases add communication semantics, not terminals. Backplane/MMC contacts and physical rail/RC endpoints remain unenumerated; detailed GND/shield/rail continuity is not modeled. Known M-to-rail RC coupling and documented Ethernet isolation are retained in notes."
+      },
+      "terminals": {
+        "1L+": {
+          "role": "power",
+          "description": "24 V DC supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "1M": {
+          "role": "return",
+          "description": "Supply ground",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "2L+": {
+          "role": "power",
+          "description": "24 V DC loop-through",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "2M": {
+          "role": "return",
+          "description": "Ground loop-through",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "X1.P1.1": {
+          "description": "TD / Transmit Data +",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.2": {
+          "description": "TD_N / Transmit Data -",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.3": {
+          "description": "RD / Receive Data +",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.4": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.5": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.6": {
+          "description": "RD_N / Receive Data -",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.7": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.8": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P1.SHIELD": {
+          "description": "Shielding; authoring alias for socket shell",
+          "role": "shield",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.1": {
+          "description": "TD / Transmit Data +",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.2": {
+          "description": "TD_N / Transmit Data -",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.3": {
+          "description": "RD / Receive Data +",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.4": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.5": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.6": {
+          "description": "RD_N / Receive Data -",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.7": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.8": {
+          "description": "GND / Ground",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "X1.P2.SHIELD": {
+          "description": "Shielding; authoring alias for socket shell",
+          "role": "shield",
+          "connection_policy": "exclusive",
+          "required": false
+        }
+      },
+      "functions": {
+        "SUPPLY": {
+          "kind": "load",
+          "terminals": ["1L+", "1M"]
+        },
+        "2L+": {
+          "kind": "bus",
+          "terminals": ["2L+"]
+        },
+        "2M": {
+          "kind": "bus",
+          "terminals": ["2M"]
+        },
+        "X1.P1.1": {
+          "kind": "bus",
+          "terminals": ["X1.P1.1"]
+        },
+        "X1.P1.2": {
+          "kind": "bus",
+          "terminals": ["X1.P1.2"]
+        },
+        "X1.P1.3": {
+          "kind": "bus",
+          "terminals": ["X1.P1.3"]
+        },
+        "X1.P1.4": {
+          "kind": "bus",
+          "terminals": ["X1.P1.4"]
+        },
+        "X1.P1.5": {
+          "kind": "bus",
+          "terminals": ["X1.P1.5"]
+        },
+        "X1.P1.6": {
+          "kind": "bus",
+          "terminals": ["X1.P1.6"]
+        },
+        "X1.P1.7": {
+          "kind": "bus",
+          "terminals": ["X1.P1.7"]
+        },
+        "X1.P1.8": {
+          "kind": "bus",
+          "terminals": ["X1.P1.8"]
+        },
+        "X1.P1.SHIELD": {
+          "kind": "bus",
+          "terminals": ["X1.P1.SHIELD"]
+        },
+        "X1.P2.1": {
+          "kind": "bus",
+          "terminals": ["X1.P2.1"]
+        },
+        "X1.P2.2": {
+          "kind": "bus",
+          "terminals": ["X1.P2.2"]
+        },
+        "X1.P2.3": {
+          "kind": "bus",
+          "terminals": ["X1.P2.3"]
+        },
+        "X1.P2.4": {
+          "kind": "bus",
+          "terminals": ["X1.P2.4"]
+        },
+        "X1.P2.5": {
+          "kind": "bus",
+          "terminals": ["X1.P2.5"]
+        },
+        "X1.P2.6": {
+          "kind": "bus",
+          "terminals": ["X1.P2.6"]
+        },
+        "X1.P2.7": {
+          "kind": "bus",
+          "terminals": ["X1.P2.7"]
+        },
+        "X1.P2.8": {
+          "kind": "bus",
+          "terminals": ["X1.P2.8"]
+        },
+        "X1.P2.SHIELD": {
+          "kind": "bus",
+          "terminals": ["X1.P2.SHIELD"]
+        }
+      },
+      "circuitSymbols": {
+        "SUPPLY": "load",
+        "2L+": "terminal",
+        "2M": "terminal",
+        "X1.P1.1": "terminal",
+        "X1.P1.2": "terminal",
+        "X1.P1.3": "terminal",
+        "X1.P1.4": "terminal",
+        "X1.P1.5": "terminal",
+        "X1.P1.6": "terminal",
+        "X1.P1.7": "terminal",
+        "X1.P1.8": "terminal",
+        "X1.P1.SHIELD": "terminal",
+        "X1.P2.1": "terminal",
+        "X1.P2.2": "terminal",
+        "X1.P2.3": "terminal",
+        "X1.P2.4": "terminal",
+        "X1.P2.5": "terminal",
+        "X1.P2.6": "terminal",
+        "X1.P2.7": "terminal",
+        "X1.P2.8": "terminal",
+        "X1.P2.SHIELD": "terminal"
+      },
+      "connectorPorts": {
+        "X1.P1.CONTACTS": {
+          "connector": "RJ45",
+          "description": "Physical pin-map authoring alias for the same X1.P1 RJ45 socket represented by its logical Ethernet port; CONTACTS is not a manufacturer marking. Pin assignment per Table 1-1.",
+          "required": false,
+          "pins": {
+            "1": {
+              "terminal": "X1.P1.1",
+              "description": "TD / Transmit Data +"
+            },
+            "2": {
+              "terminal": "X1.P1.2",
+              "description": "TD_N / Transmit Data -"
+            },
+            "3": {
+              "terminal": "X1.P1.3",
+              "description": "RD / Receive Data +"
+            },
+            "4": {
+              "terminal": "X1.P1.4",
+              "description": "GND / Ground"
+            },
+            "5": {
+              "terminal": "X1.P1.5",
+              "description": "GND / Ground"
+            },
+            "6": {
+              "terminal": "X1.P1.6",
+              "description": "RD_N / Receive Data -"
+            },
+            "7": {
+              "terminal": "X1.P1.7",
+              "description": "GND / Ground"
+            },
+            "8": {
+              "terminal": "X1.P1.8",
+              "description": "GND / Ground"
+            },
+            "SHIELD": {
+              "terminal": "X1.P1.SHIELD",
+              "description": "Shielding; authoring alias for socket shell"
+            }
+          }
+        },
+        "X1.P2.CONTACTS": {
+          "connector": "RJ45",
+          "description": "Physical pin-map authoring alias for the same X1.P2 RJ45 socket represented by its logical Ethernet port; CONTACTS is not a manufacturer marking. Pin assignment per Table 1-1.",
+          "required": false,
+          "pins": {
+            "1": {
+              "terminal": "X1.P2.1",
+              "description": "TD / Transmit Data +"
+            },
+            "2": {
+              "terminal": "X1.P2.2",
+              "description": "TD_N / Transmit Data -"
+            },
+            "3": {
+              "terminal": "X1.P2.3",
+              "description": "RD / Receive Data +"
+            },
+            "4": {
+              "terminal": "X1.P2.4",
+              "description": "GND / Ground"
+            },
+            "5": {
+              "terminal": "X1.P2.5",
+              "description": "GND / Ground"
+            },
+            "6": {
+              "terminal": "X1.P2.6",
+              "description": "RD_N / Receive Data -"
+            },
+            "7": {
+              "terminal": "X1.P2.7",
+              "description": "GND / Ground"
+            },
+            "8": {
+              "terminal": "X1.P2.8",
+              "description": "GND / Ground"
+            },
+            "SHIELD": {
+              "terminal": "X1.P2.SHIELD",
+              "description": "Shielding; authoring alias for socket shell"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "1L+",
+        "1M",
+        "2L+",
+        "2M",
+        "X1.P1.1",
+        "X1.P1.2",
+        "X1.P1.3",
+        "X1.P1.4",
+        "X1.P1.5",
+        "X1.P1.6",
+        "X1.P1.7",
+        "X1.P1.8",
+        "X1.P1.SHIELD",
+        "X1.P2.1",
+        "X1.P2.2",
+        "X1.P2.3",
+        "X1.P2.4",
+        "X1.P2.5",
+        "X1.P2.6",
+        "X1.P2.7",
+        "X1.P2.8",
+        "X1.P2.SHIELD"
+      ],
+      "ports": {
+        "X1.P1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET IO X1 port P1 (manufacturer X1P1); integrated two-port switch, 100BASE-TX, 100 Mbit/s full duplex for PROFINET IO; 10 Mbit/s Ethernet services also documented. Logical communication endpoint; connector-port pins are inventoried separately.",
+          "required": false
+        },
+        "X1.P2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET IO X1 port P2 (manufacturer X1P2); integrated two-port switch, 100BASE-TX, 100 Mbit/s full duplex for PROFINET IO; 10 Mbit/s Ethernet services also documented. Logical communication endpoint; connector-port pins are inventoried separately.",
+          "required": false
+        }
+      }
+    }
+  ]
+}

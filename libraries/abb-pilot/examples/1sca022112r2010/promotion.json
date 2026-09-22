@@ -1,0 +1,53 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1sca022112r2010",
+    "manufacturer": "ABB",
+    "orderNumber": "1SCA022112R2010"
+  },
+  "type": {
+    "path": "types/1sca022112r2010.json",
+    "sha256": "fd68354cba9c8afb1adaabe99b6e912babf4d80f6de5998cfe7b6d09a5f8e27c"
+  },
+  "research": {
+    "path": "research/1sca022112r2010.md",
+    "sha256": "54182b9d02607485946fd10bebb6d2fd85decaedb90f5fbb7cad6f9eb71965df"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["TAB.A", "FUSE.A", "TAP.A", "TAB.B", "FUSE.B", "TAP.B"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "TAB.A",
+        "to": "FUSE.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "TAB.A",
+        "to": "TAP.A",
+        "sourceId": "S1"
+      },
+      {
+        "from": "TAB.B",
+        "to": "FUSE.B",
+        "sourceId": "S1"
+      },
+      {
+        "from": "TAB.B",
+        "to": "TAP.B",
+        "sourceId": "S1"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "8e5c67f87da7b038007c809c91c72b6e3292aa901aaa710771fa09b13af55f07",
+    "packet.request.json": "811f7f902147ee209b2f174829fed5f6a7313b2dd556097eaa7efef60e26d949",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "c960b716059dd5cc5b46ab5faf68c1e6d5b8b3087b3856cc8ef60a709fd5a77c",
+    "system.json": "844a4ce3ad7bab764f444bbbbf5e71d007fee228750eed57ca625223119d7521"
+  }
+}

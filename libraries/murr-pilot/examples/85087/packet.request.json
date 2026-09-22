@@ -1,0 +1,76 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "85087 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "INPUT",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "INPUT"
+            }
+          ],
+          "conductors": ["W1", "W2"]
+        },
+        {
+          "id": "g2",
+          "label": "PE",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "PE"
+            }
+          ],
+          "conductors": ["W3"]
+        },
+        {
+          "id": "g3",
+          "label": "OUTPUT / RETURN_EXTRA / POSITIVE_EXTRA",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "OUTPUT"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "RETURN_EXTRA"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "POSITIVE_EXTRA"
+            }
+          ],
+          "conductors": ["W4", "W5", "W6", "W7", "FIXED1", "FIXED2"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

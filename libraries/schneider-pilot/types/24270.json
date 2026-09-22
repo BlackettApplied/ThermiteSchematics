@@ -1,0 +1,95 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24270",
+      "description": "C60N miniature circuit breaker / 2P / 16 A / C curve / base breaker",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24270",
+        "document": {
+          "url": "https://www.yumpu.com/it/document/view/16219073/multi-9-sistema-apparecchiature-modulari",
+          "title": "Multi 9 — Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010-2011",
+          "pages": "Printed pp.14-15; viewer pages 16-17; diagram E45094"
+        },
+        "modelingNotes": [
+          "Schneider-authored Italian Multi 9 catalog 2010-2011, mirrored by carnevale.bz on Yumpu. Printed p.15 (viewer page 17) explicitly lists 24270 under 2P, 16 A, C curve; adjacent diagram E45094 establishes terminals 1-2 and 3-4 and mechanical ganging. Page images were visually reviewed.",
+          "Base breaker only. Four cage terminals; auxiliary contacts, releases and Vigi add-ons are separately selected hardware and are not included. No PE, shield, return or communication connection appears in the base breaker circuit diagram.",
+          "16 A rated current at 30 degrees C; C-curve magnetic operation 5-10 times In. Printed p.14 gives Ue 400 V AC, Ui 500 V AC and Uimp 6 kV. These capabilities are not an assigned circuit voltage; nominal_voltage and voltage_type are omitted.",
+          "For 2P: Icn 6000 A at 400 V under CEI EN 60898; Icu 20 kA at 230-240 V and 10 kA at 400-415 V under CEI EN 60947-2. Conditional breaking capacities remain notes. DC use and installation coordination were not established.",
+          "For this 16 A rating, cage terminals accept cable up to 16 mm2 flexible or 25 mm2 rigid (printed p.14). Shared connection policy does not establish permitted multiple-conductor combinations.",
+          "Contact functions depict the open state shown in diagram E45094, not an installed handle position. Neither contacts nor ganging create permanent net continuity. No fixed links. Terminal use is application-dependent; none is universally required."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four base-breaker power terminals 1, 2, 3, 4, documented by exact-order selection table and 2P diagram E45094. No built-in auxiliary, PE, shield or communication terminals; separately selected accessories excluded."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 upper terminal, marking 1",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "2": {
+          "description": "Pole 1 lower terminal, marking 2",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "3": {
+          "description": "Pole 2 upper terminal, marking 3",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        },
+        "4": {
+          "description": "Pole 2 lower terminal, marking 4",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

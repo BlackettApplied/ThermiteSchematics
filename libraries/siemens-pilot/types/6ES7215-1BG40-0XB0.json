@@ -1,0 +1,517 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6ES7215-1BG40-0XB0",
+      "description": "S7-1200 CPU 1215C AC/DC/relay",
+      "category": "controller",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7215-1BG40-0XB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/241/109797241/att_1066673/v1/s71200_system_manual_en-US_en-US.pdf",
+          "title": "S7-1200 Programmable controller system manual",
+          "revision": "V4.5 05/2021, A5E02486680-AO; reviewed 2026-09-08",
+          "pages": "A.7; pp.1228-1238; connector tables A-81/A-82 pp.1237-1238"
+        },
+        "modelingNotes": [
+          "Exact Siemens order-number candidate. Abbreviated CPU family names do not establish this order number or hardware revision. Review the selected hardware before use.",
+          "All 38 assigned X10/X11/X12 field terminals are inventoried. X10.1/.2 are the CPU power inputs. X10.4/.5 are sensor supply outputs, not power inputs. X11 uses gold connectors.",
+          "14 digital inputs, 10 relay outputs, two 0-10 V analog inputs and two 0-20 mA analog outputs. Ratings are descriptive; load category, output commons, input reference wiring, power budget, firmware and installation conditions require review.",
+          "Two PROFINET RJ45 sockets belong to interface X1; X1.P1 and X1.P2 are normalized port keys. Memory-card, optional signal-board and expansion/backplane connectors are not modeled.",
+          "Channel functions identify I/O endpoints. Relay common/contact behavior, CPU electronics, analog reference and sensor-supply connections do not create physical continuity or implied energization.",
+          "Manufacturer web cross-check: https://docs.tia.siemens.cloud/r/simatic_s7_1200_manual_collection_enus_20/technical-specifications/cpu-1215c/cpu-1215c-wiring-diagrams ; V20 tables 1-2, publication 11/2024.",
+          "thermite:io-module supports the single-terminal I/O symbols. The AC supply function is not supported by the original continuous profile; use terminal-wiring views for its explicit power terminals. Unsupported functions must remain visible as renderer diagnostics."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Complete assigned field-terminal and Ethernet inventory; signal-board/backplane/programming interfaces and relay-contact internal behavior are not fully modeled."
+      },
+      "terminals": {
+        "X10.1": {
+          "description": "L1 CPU AC power input; 85-264 V AC, 47-63 Hz",
+          "role": "supply_line",
+          "rating": {
+            "voltage_type": "AC"
+          },
+          "required": true
+        },
+        "X10.2": {
+          "description": "N/L2 CPU AC power input; non-polarized AC supply",
+          "role": "supply_return",
+          "rating": {
+            "voltage_type": "AC"
+          },
+          "required": true
+        },
+        "X10.3": {
+          "description": "Functional earth",
+          "role": "functional_earth"
+        },
+        "X10.4": {
+          "description": "L+ 24 V DC sensor power output",
+          "role": "dc_positive_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.5": {
+          "description": "M 24 V DC sensor power output return",
+          "role": "dc_return_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.6": {
+          "description": "1M digital input common",
+          "role": "digital_common"
+        },
+        "X10.7": {
+          "description": "DI a.0",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.8": {
+          "description": "DI a.1",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.9": {
+          "description": "DI a.2",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.10": {
+          "description": "DI a.3",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.11": {
+          "description": "DI a.4",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.12": {
+          "description": "DI a.5",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.13": {
+          "description": "DI a.6",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.14": {
+          "description": "DI a.7",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.15": {
+          "description": "DI b.0",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.16": {
+          "description": "DI b.1",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.17": {
+          "description": "DI b.2",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.18": {
+          "description": "DI b.3",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.19": {
+          "description": "DI b.4",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X10.20": {
+          "description": "DI b.5",
+          "role": "digital_input",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X11.1": {
+          "description": "2M analog output common",
+          "role": "analog_common"
+        },
+        "X11.2": {
+          "description": "AQ0; 0-20 mA",
+          "role": "analog_output"
+        },
+        "X11.3": {
+          "description": "AQ1; 0-20 mA",
+          "role": "analog_output"
+        },
+        "X11.4": {
+          "description": "3M analog input common",
+          "role": "analog_common"
+        },
+        "X11.5": {
+          "description": "AI0; 0-10 V DC",
+          "role": "analog_input"
+        },
+        "X11.6": {
+          "description": "AI1; 0-10 V DC",
+          "role": "analog_input"
+        },
+        "X12.1": {
+          "description": "1L relay output common",
+          "role": "relay_common"
+        },
+        "X12.2": {
+          "description": "DQ a.0; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.3": {
+          "description": "DQ a.1; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.4": {
+          "description": "DQ a.2; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.5": {
+          "description": "DQ a.3; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.6": {
+          "description": "DQ a.4; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.7": {
+          "description": "2L relay output common",
+          "role": "relay_common"
+        },
+        "X12.8": {
+          "description": "DQ a.5; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.9": {
+          "description": "DQ a.6; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.10": {
+          "description": "DQ a.7; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.11": {
+          "description": "DQ b.0; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        },
+        "X12.12": {
+          "description": "DQ b.1; relay output, 2 A rated",
+          "role": "digital_output",
+          "rating": {
+            "current": 2
+          }
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["X10.1", "X10.2"]
+        },
+        "sensor_supply": {
+          "kind": "source",
+          "terminals": ["X10.4", "X10.5"]
+        },
+        "functional_earth": {
+          "kind": "bus",
+          "terminals": ["X10.3"]
+        },
+        "digital_common": {
+          "kind": "bus",
+          "terminals": ["X10.6"]
+        },
+        "di0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.7"]
+        },
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.8"]
+        },
+        "di2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.9"]
+        },
+        "di3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.10"]
+        },
+        "di4": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.11"]
+        },
+        "di5": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.12"]
+        },
+        "di6": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.13"]
+        },
+        "di7": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.14"]
+        },
+        "di8": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.15"]
+        },
+        "di9": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.16"]
+        },
+        "di10": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.17"]
+        },
+        "di11": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.18"]
+        },
+        "di12": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.19"]
+        },
+        "di13": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X10.20"]
+        },
+        "aq0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X11.2"]
+        },
+        "ai0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.5"]
+        },
+        "aq1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X11.3"]
+        },
+        "ai1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X11.6"]
+        },
+        "analog_output_common": {
+          "kind": "bus",
+          "terminals": ["X11.1"]
+        },
+        "analog_input_common": {
+          "kind": "bus",
+          "terminals": ["X11.4"]
+        },
+        "relay_common_1": {
+          "kind": "bus",
+          "terminals": ["X12.1"]
+        },
+        "relay_common_7": {
+          "kind": "bus",
+          "terminals": ["X12.7"]
+        },
+        "dq0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.2"]
+        },
+        "dq1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.3"]
+        },
+        "dq2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.4"]
+        },
+        "dq3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.5"]
+        },
+        "dq4": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.6"]
+        },
+        "dq5": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.8"]
+        },
+        "dq6": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.9"]
+        },
+        "dq7": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.10"]
+        },
+        "dq8": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.11"]
+        },
+        "dq9": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X12.12"]
+        }
+      },
+      "terminalOrder": [
+        "X10.1",
+        "X10.2",
+        "X10.3",
+        "X10.4",
+        "X10.5",
+        "X10.6",
+        "X10.7",
+        "X10.8",
+        "X10.9",
+        "X10.10",
+        "X10.11",
+        "X10.12",
+        "X10.13",
+        "X10.14",
+        "X10.15",
+        "X10.16",
+        "X10.17",
+        "X10.18",
+        "X10.19",
+        "X10.20",
+        "X11.1",
+        "X11.2",
+        "X11.3",
+        "X11.4",
+        "X11.5",
+        "X11.6",
+        "X12.1",
+        "X12.2",
+        "X12.3",
+        "X12.4",
+        "X12.5",
+        "X12.6",
+        "X12.7",
+        "X12.8",
+        "X12.9",
+        "X12.10",
+        "X12.11",
+        "X12.12"
+      ],
+      "ports": {
+        "X1.P1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET interface X1, port 1"
+        },
+        "X1.P2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "PROFINET interface X1, port 2"
+        }
+      }
+    }
+  ]
+}

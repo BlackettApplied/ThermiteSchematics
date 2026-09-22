@@ -1,0 +1,110 @@
+{
+  "objects": [
+    {
+      "uid": "00000000-0000-4000-8000-000000000014",
+      "kind": "wire",
+      "designation": "REFERENCE-WIRE",
+      "endpoints": [
+        { "device": "MISSING-WIRE", "terminal": "not-a-terminal" },
+        { "device": "=F1+P1-K1", "terminal": "missing-wire-terminal" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000015",
+      "kind": "jumper",
+      "designation": "REFERENCE-JUMPER",
+      "endpoints": [
+        { "device": "MISSING-JUMPER", "terminal": "not-a-terminal" },
+        { "device": "=F1+P1-K1", "terminal": "missing-jumper-terminal" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000016",
+      "kind": "cable",
+      "designation": "REFERENCE-CABLE",
+      "type": "catalog:cable",
+      "conductors": [
+        {
+          "id": "pair/1",
+          "endpoints": [
+            { "device": "MISSING-CABLE", "terminal": "not-a-terminal" },
+            { "device": "=F1+P1-K1", "terminal": "missing-cable-terminal" }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000017",
+      "kind": "relation",
+      "designation": "REFERENCE-RELATION",
+      "relation": "associated_with",
+      "from": { "device": "MISSING-RELATION-FROM" },
+      "to": { "device": "WIRE-ONLY" }
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000018",
+      "kind": "relation",
+      "designation": "TYPE-RELATION-RESOLUTION",
+      "relation": "associated_with",
+      "from": { "device": "BAD-UNKNOWN" },
+      "to": { "device": "BAD-WRONG" }
+    },
+    {
+      "uid": "00000000-0000-4000-8000-000000000019",
+      "kind": "potential",
+      "designation": "MISSING-DEVICE-POTENTIAL",
+      "name": "missing device",
+      "at": { "device": "MISSING-POTENTIAL", "terminal": "not-a-terminal" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001a",
+      "kind": "potential",
+      "designation": "MISSING-TERMINAL-POTENTIAL",
+      "name": "missing terminal",
+      "at": { "device": "=F1+P1-K1", "terminal": "missing-potential-terminal" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001b",
+      "kind": "potential",
+      "designation": "ALIAS-REFERENCE",
+      "name": "alias does not resolve",
+      "at": { "device": "ALIAS-K1", "terminal": "13/NO" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001c",
+      "kind": "potential",
+      "designation": "NAME-REFERENCE",
+      "name": "name does not resolve",
+      "at": { "device": "POTENTIAL-NAME-ONLY", "terminal": "13/NO" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001d",
+      "kind": "jumper",
+      "designation": "TYPE-CASCADE-SUPPRESSION",
+      "endpoints": [
+        { "device": "BAD-UNKNOWN", "terminal": "not-a-terminal" },
+        { "device": "BAD-WRONG", "terminal": "not-a-terminal" }
+      ]
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001e",
+      "kind": "potential",
+      "designation": "CASE-CASCADE-SUPPRESSION",
+      "name": "case-sensitive type lookup",
+      "at": { "device": "CASE-MISS", "terminal": "not-a-terminal" },
+      "electrical": {}
+    },
+    {
+      "uid": "00000000-0000-4000-8000-00000000001f",
+      "kind": "potential",
+      "designation": "OPAQUE-POTENTIAL",
+      "name": "opaque exact resolution",
+      "at": { "device": "=F1+P1-K1", "terminal": "X2.14" },
+      "electrical": {}
+    }
+  ]
+}

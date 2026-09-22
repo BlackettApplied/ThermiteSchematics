@@ -1,0 +1,33 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:la9-d09981",
+      "description": "Mechanical mounting bracket for TeSys suppressor blocks; historical LA9-D09981, no documented electrical terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LA9-D09981",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/LA9D09981",
+          "title": "Schneider Electric product datasheet - suppressor bracket, for TeSys F (LA9D09981)",
+          "revision": "Product datasheet, generated 13 Sept 2026",
+          "pages": "p.1 Main/Complementary/Packing (Range=TeSys F, type=Suppressor bracket, Mounting accessory, compatibility=LA4F, net weight 0.01 kg); p.2 environmental"
+        },
+        "modelingNotes": [
+          "Exact historical LA9-D09981 appears in the Telemecanique LC1-F catalog, physicalp.26/printed25, in the suppressor section alongside LA9-D09980. The bracket drawing is individually captioned LA9-D09981. This supports the historical spelling and suppressor-bracket scope without guessing from a neighboring order.",
+          "Current exact LA9D09981 manufacturer sheet p.1 identifies a TeSys F mounting accessory and lists LA4F compatibility. Historical and current scope are recorded separately; the current LA4F field alone does not disprove the source pairing with LA9-D09980. No successor equivalence or installed manufacturing revision is asserted.",
+          "Zero documented electrical terminals, no coil or switch functions and no fixed links. Host suppressor leads and contactor terminals belong to their own parts. Do not invent a mechanical attachment as an electrical connector port.",
+          "The exact photograph shows a mechanical arm/base assembly but does not establish a35mm DIN-rail mounting specification or an intentional protective bond. Conductive attachment/material and installed bonding remain unresolved; coverage is partial. No panel/rail/host continuity is claimed.",
+          "Use a documentation/BOM view. No electrical ratings or unsupported circuit geometry are assigned."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical accessory with zero documented electrical terminals. Conductive attachment and protective-bond interface remain unresolved; no invented electrical connector, rail specification or installed bond."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+[{"code":"E021","jsonPointer":"/conductors/1/id","line":1,"column":215,"related":[{"file":"fixtures/invalid/cable-duplicate-conductor-id/input.json","line":1,"column":123,"note":"First declaration of this conductor id."}]}]

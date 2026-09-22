@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022661r3610",
+      "description": "OHZX10 black shaft alignment ring",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022661R3610",
+        "document": {
+          "url": "https://library.e.abb.com/public/d8e4e6b6859641708660a9fb38f702b1/OT_OTC2012PL.pdf",
+          "title": "Katalog techniczny: Rozłączniki izolacyjne i przełączniki",
+          "revision": "3106PL321-W4-pl; edition 03.2012",
+          "pages": "Physical/printed p.32: shaft alignment ring; physical p.166: edition"
+        },
+        "modelingNotes": [
+          "ABB p.32 identifies OHZX10 / 1SCA022661R3610 as a black mechanical shaft alignment ring for handles OH_45...275J5...12; catalog mass 0.23 kg.",
+          "The ring improves operation when handle and shaft are misaligned. It has no electrical terminals, functions or fixed electrical links; associated switch and enclosure bonding are separate.",
+          "Historical handle compatibility is recorded without asserting current or installed fit. No electrical ratings are assigned.",
+          "ALIGNMENT is an authoring alias for a mechanical interface, not a manufacturer terminal marking. Use an accessory documentation view."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical shaft alignment ring only. No power, return, PE/bond, shield, signal, communication or auxiliary-contact terminals; no required connections or fixed electrical links."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "ALIGNMENT": {
+          "connector": "OHZX10 mechanical shaft alignment ring",
+          "description": "Mechanical alignment interface only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

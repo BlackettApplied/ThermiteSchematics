@@ -1,0 +1,10 @@
+{
+  "kind": "device_type",
+  "id": "fixture:connection-policy",
+  "terminals": {
+    "X1": { "connection_policy": "exclusive" },
+    "X2": { "connection_policy": "shared" },
+    "X3": {}
+  },
+  "functions": {}
+}

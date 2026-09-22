@@ -1,0 +1,82 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds200936r0001",
+      "description": "S2C-H11L left-mounted auxiliary switch, 1 NO + 1 NC",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS200936R0001",
+        "document": {
+          "url": "https://library.e.abb.com/public/6db6e1dfafef4787ab043d79c4c79e10/Catalogo%20System%20ProM%20%282014%29.pdf",
+          "title": "ABB System pro M compact catalogue",
+          "revision": "2014; 2CSC 400 002 D0211",
+          "pages": "4/8-4/9 (physical PDF 334-335)"
+        },
+        "modelingNotes": [
+          "S2C-H11L is the exact left-mounted 1 NO + 1 NC accessory; breaker terminals and separately purchased accessories are excluded.",
+          "ABB German catalogue excerpt, printed 1/87-1/88, diagram 2CDC 092 099 F0007, manufacturer-authored distributor mirror: https://www.hiv-hoffmann.de/wp-content/uploads/abb-system_pro_m_compact-datenblatt.pdf. Visually verified 13-14 NO and 21-22 NC, mechanically coupled; no fixed electrical links.",
+          "Four passive contact terminal positions; application-dependent wiring, no universally required terminal. Contact metadata and mechanical coupling do not join nets.",
+          "Conditional switching ratings (German catalogue section 3.3): AC-14 1 A at 400 V / 2 A at 230 V; DC-12 1 A at 220 V / 1.5 A at 110 V; DC-13 2 A at 60 V / 4 A at 24 V. Free-air thermal current 10 A is not a universal switching rating.",
+          "Conditional short-circuit withstand 1000 A at 230 V AC with S201 K4; impulse withstand 4 kV (1.2/50 microseconds), overvoltage category III; maximum tightening torque 0.8 N m, up to 2 x 1.5 mm² conductors.",
+          "2014 catalogue minimum operation: 10 mA at 12 V or 5 mA at 24 V. Undated German table specifies minimum 24 V AC/DC and 0.12 VA, with 5 mA AC-12/DC-12 under clean indoor conditions. No assigned voltage or scalar terminal rating is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four external contact terminals verified in ABB S2C-H11L diagram 2CDC 092 099 F0007 and InSite manual page 20. Two mechanically coupled, electrically separate contact paths; no supply, PE, shield or communication connection for this accessory. Breaker and enclosure connections excluded."
+      },
+      "terminals": {
+        "13": {
+          "description": "Normally open contact terminal 13",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "Normally open contact terminal 14",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "21": {
+          "description": "Normally closed contact terminal 21",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "22": {
+          "description": "Normally closed contact terminal 22",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        },
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "no",
+          "to": "nc"
+        }
+      ],
+      "circuitSymbols": {
+        "no": "contact-no",
+        "nc": "contact-nc"
+      },
+      "terminalOrder": ["13", "14", "21", "22"]
+    }
+  ]
+}

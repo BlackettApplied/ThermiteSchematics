@@ -1,0 +1,49 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "batch-boundary": {
+      "version": "0.1.0",
+      "path": "boundary",
+      "resolutionKind": "local",
+      "integrity": "sha256-Xxw0gLXZACUvplsHqi3rlEdMw9NuxaVCFKxxmDmh3qA=",
+      "files": {
+        "library.json": "sha256-uz5iNAWVLE3sv/QCgEC9Nj70Nw0RzdpTtk5GrCxbD0M=",
+        "types.json": "sha256-ZtCXfr0qKIjU7xkDbD2mbUyP1Z8J4tJDcCcI90ansRU="
+      }
+    },
+    "siemens-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-y6UszG1rkrucAzFC9SRIWXI8aOROadP/KMb0YI/l+uU=",
+      "files": {
+        "library.json": "sha256-wNu8ajxIQXzOb4dePx0WLxdLtPGOf1uSLji+rDhj4Pw=",
+        "types/3na3122.json": "sha256-CO0xSOLm79KYt43kArrCFcyfvL5BS/OTO33+zRzfmq4=",
+        "types/3na3810.json": "sha256-H/0E2EIczG80rdXVtBd7d9dMQQWrR5Oc9+DBVzz3tqk=",
+        "types/3na3836.json": "sha256-N7l0PBwunCykoj7DZYIsgpQCEbhGY1xKXFN8sdc/1YA=",
+        "types/3sb3420-0c.json": "sha256-xdT0fDAX0COYe42nUDhKuZSJHh4PkBsLu6EsT07ohAo=",
+        "types/6AV2124-0JC01-0AX0.json": "sha256-nJWX8+OO/P/DsCNBJLRgc+WB3kB8w3JB1xwRCK6xLvw=",
+        "types/6ES7131-6BF01-0BA0.json": "sha256-a+gAl4l79PvZRcJqQhD8Bbq2If716C0mt+sFIiQ4AsI=",
+        "types/6ES7132-6BF01-0BA0.json": "sha256-qoLZF604xBMI2rFXhIDtqpCoCnNAz1TvRG4G99/7BYA=",
+        "types/6ES7212-1AE40-0XB0.json": "sha256-mAasCBUZ+yvP+1YtmMF3HbvMwAxzTCVEb5a5pCs6g/M=",
+        "types/6ES7215-1BG40-0XB0.json": "sha256-NctfK6s4vxjGLzNnGZ+n1U04B/4blzCm8wrCOacjjxw=",
+        "types/6ES7231-5QD32-0XB0.json": "sha256-bbu1UduTOVndVNCbHi4Jq0Gp2cjF7lcTRdAsJOM2VR8=",
+        "types/6ep1332-1sh43.json": "sha256-AJvL6zaZLgIA8T1XR3RJRewgaiDXlGcmZU5zjcQl9dM=",
+        "types/6es7131-4bf00-0aa0.json": "sha256-QNWlij+2lpEyyBSp+1q4ce8ZHUBXcEECzWvJ7WuZmzY=",
+        "types/6es7131-4rd02-0ab0.json": "sha256-RzaOUlpNeuNsnzauU8dwv8yITAfb1hw9mro+AtuAXII=",
+        "types/6es7132-4bb31-0aa0.json": "sha256-GTzPkmRCsYgCX++NJiG+r+CBVE4dMf2jWt8NnHe3brg=",
+        "types/6es7132-4bd32-0aa0.json": "sha256-aYVPB4LtBZiM2bSvKkmR59sPB5Y4VXbWlI7M5Sjv9PY=",
+        "types/6es7132-4bf00-0aa0.json": "sha256-M8h7fU6fQY66wX4t6ldHQbylflYHzyoAQZNcdbCZaHE=",
+        "types/6es7134-4gb11-0ab0.json": "sha256-thAoYZYYKe8IUuzchTHxOgKpOppqHTJXL6fBw9/Vvps=",
+        "types/6es7135-4fb01-0ab0.json": "sha256-ExHggSOWlunE989kB52qygJPLPhiKJvbgmYVbR5zsbs=",
+        "types/6es7135-4gb01-0ab0.json": "sha256-MufnVNoAf/+RDX+eBB3iKe/V0R73neNdEhDIjoCBFj8=",
+        "types/6es7138-4ca01-0aa0.json": "sha256-FY3KKK3luzvl/qyowBjbi9033SqeCammTtGFib1lbHo=",
+        "types/6es7151-3aa23-0ab0.json": "sha256-OwXvmYtTXX4ADS2TS3VhF54DKtQLIdVX2qRPYOwKaKE=",
+        "types/6es7193-4cb30-0aa0.json": "sha256-evfndHiTvb6xYsSGgcZcdQ+iZlrUFxolm0ai8dVqlIo=",
+        "types/6es7193-4cd30-0aa0.json": "sha256-dCCg2lSQXkxF0KrM9xTFbI4CdG5NvDRt6b+2SZeQp+0="
+      }
+    }
+  }
+}

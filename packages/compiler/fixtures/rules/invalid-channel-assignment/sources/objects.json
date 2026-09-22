@@ -1,0 +1,18 @@
+{
+  "objects": [
+    {
+      "uid": "ce33b8c4-b8b2-42ae-a39b-34f06a8312d6",
+      "kind": "device",
+      "designation": "IO1",
+      "type": "fixture:module",
+      "io": {
+        "addressSpace": "PLC1",
+        "channels": {
+          "di99": {
+            "address": "I0.0"
+          }
+        }
+      }
+    }
+  ]
+}

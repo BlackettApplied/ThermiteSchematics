@@ -1,0 +1,41 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "ff8382fb-4da2-4200-9bf1-48a5a85e3692",
+      "kind": "relation",
+      "designation": "REL-PROTECTS-001",
+      "relation": "protects",
+      "from": { "device": "CB1" },
+      "to": { "device": "M1" },
+      "description": "CB1 provides branch protection for M1"
+    },
+    {
+      "uid": "6b809d65-0107-4dfb-93ea-2a8b937243af",
+      "kind": "relation",
+      "designation": "REL-PROTECTS-002",
+      "relation": "protects",
+      "from": { "device": "CB2" },
+      "to": { "device": "M2" },
+      "description": "CB2 provides branch protection for M2"
+    },
+    {
+      "uid": "4c3afa60-68bb-4104-9631-9980aaa57ba0",
+      "kind": "relation",
+      "designation": "REL-CONTROLS-001",
+      "relation": "controls",
+      "from": { "device": "PLC1" },
+      "to": { "device": "K1" },
+      "description": "PLC1 output controls the K1 coil through the stop and OL1 chain"
+    },
+    {
+      "uid": "67c1effa-45b5-469a-a49c-06d9656ff60b",
+      "kind": "relation",
+      "designation": "REL-CONTROLS-002",
+      "relation": "controls",
+      "from": { "device": "PLC1" },
+      "to": { "device": "K2" },
+      "description": "PLC1 output controls the K2 coil through the stop and OL2 chain"
+    }
+  ]
+}

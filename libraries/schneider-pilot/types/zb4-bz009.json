@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bz009",
+      "description": "Harmony XB4 metal fixing collar for contact/light blocks; mechanical scope with unresolved bonding interface",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BZ009",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 Metal Control and Signaling Units — Catalog",
+          "revision": "DIA5ED2121212EN, October 2021 - V13.0",
+          "pages": "Physical PDF p.78 (catalog p.76) Body/fixing collar row + product photo; footnote physical p.111 (mounting required, ordered separately)"
+        },
+        "modelingNotes": [
+          "Catalog p.78 lists 'Body/fixing collar — For use with: Electrical block (contact or light) — Sold in lots of 10 — ZB4BZ009 — 0.038/0.084 kg/lb'. Manufacturer prints the order number without the presentation hyphen as 'ZB4BZ009'; job identity uses 'ZB4-BZ009'.",
+          "Mechanical metal collar for mounting the operator and carrying separately ordered contact/light blocks. No switching contacts or light source are included. Zero documented field-wire terminal keys in this scoped model do not assert absence of conductive attachment/bonding interfaces.",
+          "Contacts/LEDs from a complete assembly are not imported here; contact/load membership never joins nets.",
+          "The reviewed catalog does not define an electrical terminal inventory for the collar. Schneider FAQ FA284040 calls the collar fastening screw a grounding screw during XB4/ZB4 installation. Its exact electrical attachment method and installed protective continuity are not modeled, so coverage remains partial; no automatic panel bond or invented numbered PE terminal is asserted. https://www.se.com/us/en/faqs/FA284040/",
+          "No electrical rating applies to a mechanical mounting collar."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical Ø22 mm metal fixing collar / body carrier with no documented electrical terminals. It holds separately ordered contact/light blocks and clamps the operator head to the panel. Any metal-to-panel/insert bonding interface is undocumented and is modeled as zero terminals rather than an assumed bond."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "MOUNT": {
+          "connector": "Ø22 mm panel fixing collar / operator-head body carrier",
+          "description": "Mechanical only: clamps the XB4 operator head to a Ø22 mm panel cut-out and carries snap-in contact/light blocks (ordered separately). No electrical pins; any metal-to-panel bonding is undocumented."
+        }
+      }
+    }
+  ]
+}

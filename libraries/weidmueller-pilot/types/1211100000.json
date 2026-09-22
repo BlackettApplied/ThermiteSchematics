@@ -1,0 +1,835 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1211100000",
+      "description": "Heavy-duty male screw insert / HDC HE 24 MS / 24 numbered contacts and PE assembly / size 8 / 16 A DIN EN 61984",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1211100000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1211100000/scope/2/",
+          "title": "Weidmüller HDC HE 24 MS — exact order 1211100000 data sheet",
+          "revision": "Creation date 17.02.2026 06:45:43 MEZ; Catalogue status / Drawings",
+          "pages": "1 identity; 3–4 electrical and termination data; 5 PE dimension view"
+        },
+        "modelingNotes": [
+          "Exact order 1211100000 is HDC HE 24 MS, male screw insert, installation size 8. The exact datasheet dated 17.02.2026 establishes identity. Manufacturer RockStar catalogue 1282180000 (2012/2013), printed B.26 / physical 68, and catalogue 2028800000, B.26 / physical 70, each place this exact screw order beside a male contact-arrangement drawing numbered 1–24. These are manufacturer documents retrieved from distributor mirrors; numbering is not inferred from the separate 25–48 variant or another brand.",
+          "The reviewed male drawings show 24 numbered contact positions and distinguish the PE/end hardware. C.1–C.24 and M.1–M.24 are cable/mating authoring aliases for the same 24 physical numbered paths, not 48 physical pins. Twenty-four explicit C.n–M.n project links represent fixed continuity through the passive insert. This continuity interpretation uses the screw-contact construction and contact arrangement, not a published electrical schematic. Functions and connector metadata alone do not join nets.",
+          "PE is an aggregate endpoint for the insert protective-earth assembly. The datasheet photo and dimension drawing show hardware at the insert ends, and separate PE screw specifications are supplied. They do not enumerate every cable clamp, mating area and mounting/bonding interface separately. No single central PE pin, exact PE screw count or separately inventoried C.PE/M.PE path is asserted. There is no additional fixed PE link.",
+          "PE.required is an explicit library policy for this model when used for protective-earth connections, not a quoted universal manufacturer instruction. The aggregate shared PE endpoint permits authoring multiple electrical edges; it does not approve multiple wires under any one physical screw. Required-terminal diagnostics check modeled connection presence and do not prove external protective bonding, hardware continuity, enclosure bonding or engineering suitability. Numbered contacts remain application-dependent.",
+          "DIN EN 61984 capability is 500 V / 16 A, with 6 kV impulse and pollution severity 3; the datasheet separately states 600 V AC/DC under UL/CSA. No nominal_voltage or voltage_type scalar assigns a supply voltage. The retained numbered-contact current 16 refers only to the DIN EN 61984 rating, not universal ampacity: UR/cUR approval currents vary with AWG, and catalogue derating curves vary with conductor size, contact loading and temperature. No current rating is assigned to aggregate PE.",
+          "The exact datasheet pp. 3–4 lists main M3 screw connections, 0.5–2.5 mm2 / AWG 20–14, 9 mm strip, and 0.6–0.7 Nm; PE uses separate M4, 4 mm2 rated cross-section / AWG 20–12, 10 mm strip, and 1.2–1.5 Nm. Its UR/cUR table also contains AWG 12 values despite the main termination table ending at AWG 14. That discrepancy is retained for installation review and does not authorize AWG 12 on main contacts.",
+          "The exact product downloads link HDC_Tightening_torques, catalogue 1460950000 (2014/2015), A.17. It specifies HE main M3 screws at 0.5–0.55 Nm, differing from the 2026 exact datasheet 0.6–0.7 Nm; PE M4 remains 1.2–1.5 Nm. These are document-specific values.",
+          "Coverage is partial because individual PE interfaces, installed accessory interfaces and physical mating orientation are not encoded. The exact datasheet identifies 24 power and zero dedicated signal contacts; their application may nevertheless carry control signals. No separate neutral, shield, communication or auxiliary terminal is evidenced. No housing, hood, mating assembly, IP/Ex suitability or installation geometry is implied."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Twenty-four manufacturer-numbered paths 1–24 have explicit cable/mating authoring endpoints and 24 fixed links. One aggregate PE endpoint gives 49 logical endpoints, not a physical contact/clamp count. Individual PE cable clamps, mating areas and mounting/bonding interfaces are not separately enumerated. Exact-order male drawings were visually reviewed in manufacturer catalogues 1282180000 B.26 and 2028800000 B.26; installed geometry, housing/accessory interfaces and hardware revision remain outside scope."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable-side screw termination / contact 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.2": {
+          "description": "Cable-side screw termination / contact 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.3": {
+          "description": "Cable-side screw termination / contact 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.4": {
+          "description": "Cable-side screw termination / contact 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.5": {
+          "description": "Cable-side screw termination / contact 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.6": {
+          "description": "Cable-side screw termination / contact 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.7": {
+          "description": "Cable-side screw termination / contact 7",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.8": {
+          "description": "Cable-side screw termination / contact 8",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.9": {
+          "description": "Cable-side screw termination / contact 9",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.10": {
+          "description": "Cable-side screw termination / contact 10",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.11": {
+          "description": "Cable-side screw termination / contact 11",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.12": {
+          "description": "Cable-side screw termination / contact 12",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.13": {
+          "description": "Cable-side screw termination / contact 13",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.14": {
+          "description": "Cable-side screw termination / contact 14",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.15": {
+          "description": "Cable-side screw termination / contact 15",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.16": {
+          "description": "Cable-side screw termination / contact 16",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.17": {
+          "description": "Cable-side screw termination / contact 17",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.18": {
+          "description": "Cable-side screw termination / contact 18",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.19": {
+          "description": "Cable-side screw termination / contact 19",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.20": {
+          "description": "Cable-side screw termination / contact 20",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.21": {
+          "description": "Cable-side screw termination / contact 21",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.22": {
+          "description": "Cable-side screw termination / contact 22",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.23": {
+          "description": "Cable-side screw termination / contact 23",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "C.24": {
+          "description": "Cable-side screw termination / contact 24",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.1": {
+          "description": "Mating pin contact / contact 1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.2": {
+          "description": "Mating pin contact / contact 2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.3": {
+          "description": "Mating pin contact / contact 3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.4": {
+          "description": "Mating pin contact / contact 4",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.5": {
+          "description": "Mating pin contact / contact 5",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.6": {
+          "description": "Mating pin contact / contact 6",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.7": {
+          "description": "Mating pin contact / contact 7",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.8": {
+          "description": "Mating pin contact / contact 8",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.9": {
+          "description": "Mating pin contact / contact 9",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.10": {
+          "description": "Mating pin contact / contact 10",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.11": {
+          "description": "Mating pin contact / contact 11",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.12": {
+          "description": "Mating pin contact / contact 12",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.13": {
+          "description": "Mating pin contact / contact 13",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.14": {
+          "description": "Mating pin contact / contact 14",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.15": {
+          "description": "Mating pin contact / contact 15",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.16": {
+          "description": "Mating pin contact / contact 16",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.17": {
+          "description": "Mating pin contact / contact 17",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.18": {
+          "description": "Mating pin contact / contact 18",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.19": {
+          "description": "Mating pin contact / contact 19",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.20": {
+          "description": "Mating pin contact / contact 20",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.21": {
+          "description": "Mating pin contact / contact 21",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.22": {
+          "description": "Mating pin contact / contact 22",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.23": {
+          "description": "Mating pin contact / contact 23",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "M.24": {
+          "description": "Mating pin contact / contact 24",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 16
+          }
+        },
+        "PE": {
+          "description": "Aggregate insert protective-earth assembly; individual physical clamps and mating areas not separately modeled",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.2": {
+          "kind": "bus",
+          "terminals": ["C.2"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.4": {
+          "kind": "bus",
+          "terminals": ["C.4"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.6": {
+          "kind": "bus",
+          "terminals": ["C.6"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.8": {
+          "kind": "bus",
+          "terminals": ["C.8"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "C.10": {
+          "kind": "bus",
+          "terminals": ["C.10"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "C.12": {
+          "kind": "bus",
+          "terminals": ["C.12"]
+        },
+        "C.13": {
+          "kind": "bus",
+          "terminals": ["C.13"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "C.15": {
+          "kind": "bus",
+          "terminals": ["C.15"]
+        },
+        "C.16": {
+          "kind": "bus",
+          "terminals": ["C.16"]
+        },
+        "C.17": {
+          "kind": "bus",
+          "terminals": ["C.17"]
+        },
+        "C.18": {
+          "kind": "bus",
+          "terminals": ["C.18"]
+        },
+        "C.19": {
+          "kind": "bus",
+          "terminals": ["C.19"]
+        },
+        "C.20": {
+          "kind": "bus",
+          "terminals": ["C.20"]
+        },
+        "C.21": {
+          "kind": "bus",
+          "terminals": ["C.21"]
+        },
+        "C.22": {
+          "kind": "bus",
+          "terminals": ["C.22"]
+        },
+        "C.23": {
+          "kind": "bus",
+          "terminals": ["C.23"]
+        },
+        "C.24": {
+          "kind": "bus",
+          "terminals": ["C.24"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.2": {
+          "kind": "bus",
+          "terminals": ["M.2"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.4": {
+          "kind": "bus",
+          "terminals": ["M.4"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.6": {
+          "kind": "bus",
+          "terminals": ["M.6"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.8": {
+          "kind": "bus",
+          "terminals": ["M.8"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "M.10": {
+          "kind": "bus",
+          "terminals": ["M.10"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        },
+        "M.12": {
+          "kind": "bus",
+          "terminals": ["M.12"]
+        },
+        "M.13": {
+          "kind": "bus",
+          "terminals": ["M.13"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        },
+        "M.15": {
+          "kind": "bus",
+          "terminals": ["M.15"]
+        },
+        "M.16": {
+          "kind": "bus",
+          "terminals": ["M.16"]
+        },
+        "M.17": {
+          "kind": "bus",
+          "terminals": ["M.17"]
+        },
+        "M.18": {
+          "kind": "bus",
+          "terminals": ["M.18"]
+        },
+        "M.19": {
+          "kind": "bus",
+          "terminals": ["M.19"]
+        },
+        "M.20": {
+          "kind": "bus",
+          "terminals": ["M.20"]
+        },
+        "M.21": {
+          "kind": "bus",
+          "terminals": ["M.21"]
+        },
+        "M.22": {
+          "kind": "bus",
+          "terminals": ["M.22"]
+        },
+        "M.23": {
+          "kind": "bus",
+          "terminals": ["M.23"]
+        },
+        "M.24": {
+          "kind": "bus",
+          "terminals": ["M.24"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.2": "terminal",
+        "C.3": "terminal",
+        "C.4": "terminal",
+        "C.5": "terminal",
+        "C.6": "terminal",
+        "C.7": "terminal",
+        "C.8": "terminal",
+        "C.9": "terminal",
+        "C.10": "terminal",
+        "C.11": "terminal",
+        "C.12": "terminal",
+        "C.13": "terminal",
+        "C.14": "terminal",
+        "C.15": "terminal",
+        "C.16": "terminal",
+        "C.17": "terminal",
+        "C.18": "terminal",
+        "C.19": "terminal",
+        "C.20": "terminal",
+        "C.21": "terminal",
+        "C.22": "terminal",
+        "C.23": "terminal",
+        "C.24": "terminal",
+        "M.1": "terminal",
+        "M.2": "terminal",
+        "M.3": "terminal",
+        "M.4": "terminal",
+        "M.5": "terminal",
+        "M.6": "terminal",
+        "M.7": "terminal",
+        "M.8": "terminal",
+        "M.9": "terminal",
+        "M.10": "terminal",
+        "M.11": "terminal",
+        "M.12": "terminal",
+        "M.13": "terminal",
+        "M.14": "terminal",
+        "M.15": "terminal",
+        "M.16": "terminal",
+        "M.17": "terminal",
+        "M.18": "terminal",
+        "M.19": "terminal",
+        "M.20": "terminal",
+        "M.21": "terminal",
+        "M.22": "terminal",
+        "M.23": "terminal",
+        "M.24": "terminal",
+        "PE": "earth"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "Weidmüller HDC HE 24 MS male insert, 24 numbered contacts and aggregate PE, size 8",
+          "description": "Logical mating interface. Numbers 1–24 are read directly from the male arrangement accompanying exact order 1211100000 in manufacturer catalogue B.26. PE is the aggregate insert assembly, not one enumerated physical pin. C/M and the PE key are authoring conventions; physical coordinates and as-built orientation are not asserted.",
+          "pins": {
+            "1": {
+              "terminal": "M.1",
+              "description": "Manufacturer contact 1 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "2": {
+              "terminal": "M.2",
+              "description": "Manufacturer contact 2 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "3": {
+              "terminal": "M.3",
+              "description": "Manufacturer contact 3 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "4": {
+              "terminal": "M.4",
+              "description": "Manufacturer contact 4 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "5": {
+              "terminal": "M.5",
+              "description": "Manufacturer contact 5 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "6": {
+              "terminal": "M.6",
+              "description": "Manufacturer contact 6 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "7": {
+              "terminal": "M.7",
+              "description": "Manufacturer contact 7 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "8": {
+              "terminal": "M.8",
+              "description": "Manufacturer contact 8 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "9": {
+              "terminal": "M.9",
+              "description": "Manufacturer contact 9 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "10": {
+              "terminal": "M.10",
+              "description": "Manufacturer contact 10 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "11": {
+              "terminal": "M.11",
+              "description": "Manufacturer contact 11 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "12": {
+              "terminal": "M.12",
+              "description": "Manufacturer contact 12 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "13": {
+              "terminal": "M.13",
+              "description": "Manufacturer contact 13 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "14": {
+              "terminal": "M.14",
+              "description": "Manufacturer contact 14 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "15": {
+              "terminal": "M.15",
+              "description": "Manufacturer contact 15 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "16": {
+              "terminal": "M.16",
+              "description": "Manufacturer contact 16 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "17": {
+              "terminal": "M.17",
+              "description": "Manufacturer contact 17 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "18": {
+              "terminal": "M.18",
+              "description": "Manufacturer contact 18 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "19": {
+              "terminal": "M.19",
+              "description": "Manufacturer contact 19 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "20": {
+              "terminal": "M.20",
+              "description": "Manufacturer contact 20 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "21": {
+              "terminal": "M.21",
+              "description": "Manufacturer contact 21 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "22": {
+              "terminal": "M.22",
+              "description": "Manufacturer contact 22 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "23": {
+              "terminal": "M.23",
+              "description": "Manufacturer contact 23 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "24": {
+              "terminal": "M.24",
+              "description": "Manufacturer contact 24 verified in exact-order male catalogue drawing; coordinates not encoded"
+            },
+            "PE": {
+              "terminal": "PE",
+              "description": "Aggregate insert PE assembly; individual physical mating areas and cable clamps are not separately inventoried"
+            }
+          }
+        }
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.2",
+        "C.3",
+        "C.4",
+        "C.5",
+        "C.6",
+        "C.7",
+        "C.8",
+        "C.9",
+        "C.10",
+        "C.11",
+        "C.12",
+        "C.13",
+        "C.14",
+        "C.15",
+        "C.16",
+        "C.17",
+        "C.18",
+        "C.19",
+        "C.20",
+        "C.21",
+        "C.22",
+        "C.23",
+        "C.24",
+        "M.1",
+        "M.2",
+        "M.3",
+        "M.4",
+        "M.5",
+        "M.6",
+        "M.7",
+        "M.8",
+        "M.9",
+        "M.10",
+        "M.11",
+        "M.12",
+        "M.13",
+        "M.14",
+        "M.15",
+        "M.16",
+        "M.17",
+        "M.18",
+        "M.19",
+        "M.20",
+        "M.21",
+        "M.22",
+        "M.23",
+        "M.24",
+        "PE"
+      ]
+    }
+  ]
+}

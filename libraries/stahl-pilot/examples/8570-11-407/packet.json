@@ -1,0 +1,69 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "8570/11-407 / 3P+PE / 480-500 V / 7h",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "socket",
+          "label": "Three interlocked switched poles / explicit fixed PE",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "L1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "L2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "L3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "C.PE"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "M.PE"
+            }
+          ],
+          "conductors": [
+            "IN-L1",
+            "OUT-L1",
+            "IN-L2",
+            "OUT-L2",
+            "IN-L3",
+            "OUT-L3",
+            "IN-PE",
+            "OUT-PE",
+            "INTERNAL-PE"
+          ]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized component check; no installed supply, load or protection is specified.",
+        "C = cable-side functional pole; M = mating contact. Exact cable-clamp markings and 7h coordinates remain unverified.",
+        "INTERNAL-PE represents the fixed factory conductor. Never permanently jumper any switched power pole."
+      ]
+    }
+  ]
+}

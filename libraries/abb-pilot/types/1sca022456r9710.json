@@ -1,0 +1,177 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022456r9710",
+      "description": "OS32D12 three-pole DIN 000/00 switch fuse; 12 schematic endpoint aliases, removable fuse links unmodeled",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022456R9710",
+        "document": {
+          "url": "https://library.e.abb.com/public/c222b425864f8c1ec2256eb60029348d/1SCC311006C0201.pdf",
+          "title": "Fusegear — PowerLine switch fuses OS and OESA",
+          "revision": "1SCC311006C0201; back-cover imprint 06_09, date interpretation not asserted",
+          "pages": "12 exact identity and conditional ratings; installation diagram in separate source S2"
+        },
+        "modelingNotes": [
+          "S1: ABB Fusegear, PowerLine switch fuses OS and OESA, 1SCC311006C0201, p. 12 maps exact order 1SCA022456R9710 to OS32D12, three poles, DIN 000/00. Current 32 A applies to AC-20 through AC-23 at up to 690 V; AC-23 powers are 15/18.5/22 kW at 400/500/690 V. These conditional capabilities are not assigned supply voltage, installed fuse rating or verified application suitability.",
+          "S2: ABB Control Oy, PowerLine OS30_-OS63_, 34 OS 63 C / VL 2249 6522, physical PDF pp. 1-2, manufacturer-authored instructions at an Onninen mirror: https://kesko-onninen-pim-resources-production.s3-eu-west-1.amazonaws.com/pimdocuments/IMG_1752576.pdf. Page 1 explicitly shows OS32D12 DIN 000/00 fuse insertion. The three-pole schematic on page 2 shows a fuse between separate switching contacts on both sides of each pole.",
+          "P1/P2/P3, EXT/FUSE and A/B are schematic functional authoring aliases. They are not manufacturer terminal marks, physical left/right positions, top/bottom clamping positions, line/load directions or an L1/L2/L3 phase assignment. The six cable endpoints and six fuse-seat endpoints are inventoried; a physical installation must resolve markings and orientation independently.",
+          "For each schematic pole: EXT.A to FUSE.A is one switched segment, and EXT.B to FUSE.B is the other. The removable fuse would fit between FUSE.A and FUSE.B. That fuse link is outside this type scope: no installed fuse order, rating, characteristic or protective behavior is asserted. No fixed link joins any pair of endpoints.",
+          "The six contact functions represent the open/off schematic position and are mechanically operated together. Ganged relations and functions describe behavior only; neither joins nets or simulates switching. The generic contact symbols do not certify isolating performance.",
+          "No separately ordered auxiliary, neutral pole, fuse monitor or terminal accessory is incorporated. The recovered drawing does not establish an exhaustive physical interface inventory, clamp subdivision, bonding interface or accessory fit of the historical installed assembly. Those remain outside the documented partial scope; no PE or auxiliary pins are invented.",
+          "Page 12 identifies protected tunnel terminals and requires shrouds to maintain IP20 with conductors below 10 mm2. Installation-sheet cable figure gives 2.5-25 mm2 and 3-3.5 N m. This records source conditions without selecting conductors, torque procedure or accessories. Passive pole use is application-dependent; no terminal is universally required."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Twelve schematic endpoint roles: six external cable terminals and six fuse-blade mating contacts, with separate switching on both sides of each fuse. Functional aliases do not establish terminal inscriptions, physical positions, conductor-entry subdivision or exhaustive installed-assembly interfaces. Removable fuse links and optional accessories are unmodeled."
+      },
+      "terminals": {
+        "P1.EXT.A": {
+          "description": "P1 External cable terminal at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.FUSE.A": {
+          "description": "P1 Fuse-blade mating contact at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.FUSE.B": {
+          "description": "P1 Fuse-blade mating contact at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.EXT.B": {
+          "description": "P1 External cable terminal at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.EXT.A": {
+          "description": "P2 External cable terminal at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.FUSE.A": {
+          "description": "P2 Fuse-blade mating contact at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.FUSE.B": {
+          "description": "P2 Fuse-blade mating contact at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.EXT.B": {
+          "description": "P2 External cable terminal at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P3.EXT.A": {
+          "description": "P3 External cable terminal at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P3.FUSE.A": {
+          "description": "P3 Fuse-blade mating contact at schematic end A; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P3.FUSE.B": {
+          "description": "P3 Fuse-blade mating contact at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P3.EXT.B": {
+          "description": "P3 External cable terminal at schematic end B; functional authoring alias, no physical marking or orientation asserted",
+          "role": "power",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "P1.A": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P1.EXT.A", "P1.FUSE.A"]
+        },
+        "P1.B": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P1.EXT.B", "P1.FUSE.B"]
+        },
+        "P2.A": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P2.EXT.A", "P2.FUSE.A"]
+        },
+        "P2.B": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P2.EXT.B", "P2.FUSE.B"]
+        },
+        "P3.A": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P3.EXT.A", "P3.FUSE.A"]
+        },
+        "P3.B": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["P3.EXT.B", "P3.FUSE.B"]
+        }
+      },
+      "circuitSymbols": {
+        "P1.A": "contact-no",
+        "P1.B": "contact-no",
+        "P2.A": "contact-no",
+        "P2.B": "contact-no",
+        "P3.A": "contact-no",
+        "P3.B": "contact-no"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "P1.A",
+          "to": "P1.B"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "P1.A",
+          "to": "P2.A"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "P1.A",
+          "to": "P2.B"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "P1.A",
+          "to": "P3.A"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "P1.A",
+          "to": "P3.B"
+        }
+      ],
+      "terminalOrder": [
+        "P1.EXT.A",
+        "P1.FUSE.A",
+        "P1.FUSE.B",
+        "P1.EXT.B",
+        "P2.EXT.A",
+        "P2.FUSE.A",
+        "P2.FUSE.B",
+        "P2.EXT.B",
+        "P3.EXT.A",
+        "P3.FUSE.A",
+        "P3.FUSE.B",
+        "P3.EXT.B"
+      ]
+    }
+  ]
+}

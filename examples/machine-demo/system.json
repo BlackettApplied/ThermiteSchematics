@@ -1,0 +1,26 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Machine Documentation Demo",
+    "description": "Representative two-cabinet demonstration. Not an engineered press design."
+  },
+  "sources": [
+    "devices/*.json",
+    "connections/*.json",
+    "cables/*.json",
+    "potentials/*.json"
+  ],
+  "presentation": "presentation.json",
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.1.0",
+      "path": "libraries/core"
+    },
+    {
+      "name": "siemens-pilot",
+      "version": "0.1.0",
+      "path": "libraries/siemens-pilot"
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bvb1",
+      "description": "Harmony XB4 metal complete light body: white integral-LED light block + Zamak fixing collar / 24 V AC/DC steady pilot light",
+      "category": "component",
+      "symbol": "thermite:lamp",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BVB1",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Schneider Electric Harmony XB4 metal control and signaling units, catalog",
+          "revision": "10/2021 (October 2021)",
+          "pages": "Physical PDF p.88 (printed 86): Complete light bodies (fixing collar + light block with integral LED) lists 24 z / White / ZB4BVB1; physical PDF p.79 (printed 77): light block ZBVB1 (24 z, white, screw clamp)"
+        },
+        "modelingNotes": [
+          "Exact identity. Harmony XB4 metal catalog 10/2021 (PDF p.88) lists ZB4BVB1 as 'Complete light body (fixing collar + light block with integral LED)', 24 z (AC/DC), White; the light block itself is ZBVB1 (24 z white, PDF p.79). Product datasheet 'ZB4BVB1' (9 May 2023) repeats: 'Complete body/light block assembly, Harmony XB4, metal, universal LED, body/fixing collar, 24V AC DC'. Manufacturer prints the code without a hyphen (ZB4BVB1); the type keeps the job order number ZB4-BVB1 and the hyphen is presentation only.",
+          "Scope: this reference is the body + Zamak fixing collar + white integral-LED light block (the electrical part). It does NOT include the operator lens/head; the complete panel pilot light is ZB4BVB1 + ZB4BV013 (catalog).",
+          "Terminals: two screw-clamp LED supply terminals marked X1 and X2 ('Terminals description ISO n°1 (X1-X2)', product datasheet 9 May 2023). No DC polarity is assigned. FAQ FA117146 names ZBVB1; it is not used as a universal guarantee for all body revisions. Screw clamp <= 2 x 1.5 mm2 with cable end / >= 1 x 0.22 mm2 without; tightening 0.8-1.2 N.m.",
+          "Function 'light' is the integral white LED load across X1-X2. It normally conducts but is a load, not a wire/jumper, so NO fixed link joins the two nets; load metadata never manufactures continuity. Both supply terminals are required (lamp/supply library policy).",
+          "Ratings: [Us] 24 V AC/DC at 50/60 Hz, signalling type Steady. rating.nominal_voltage = 24 encodes the fixed nominal and matches 24 V circuit intent; voltage_type is deliberately omitted because the block operates on BOTH AC and DC (no AC-only/DC-only metadata asserted). Documentation only, kept out of the scalar rating: supply limits 19.2-30 V DC / 21.6-26.4 V AC, current consumption 18 mA, [Ui] 600 V, [Uimp] 6 kV, service life 100000 h.",
+          "Coordinator scope: included metal collar/support protective bonding is not proven by Class I classification. No PE screw, automatic panel bond or exhaustive absence of an electrical attachment interface is asserted. Coverage remains partial.",
+          "Exact manufacturer ZB4BVB1 PDF dated12 September2026, 7 rear terminals;8 body-printed lamp diagram, was visually reviewed. The two screws are X1 and X2, and the side drawing shows a lamp between them. Its alternate artwork uses generic ZBV-XX/xx V placeholders; use it only for the matching two-terminal body interface, not exact electrical ratings, LED color or production revision. URL: https://www.se.com/au/en/product/download-pdf/ZB4BVB1"
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both documented lamp supply clamps X1 and X2 are represented. The included metal fixing collar/support bonding interface and its installed continuity remain unresolved and unmodeled. No dedicated PE endpoint, automatic panel bond or exhaustive absence of conductive attachments is asserted. Head/lens and added electrical blocks are separate."
+      },
+      "terminals": {
+        "X1": {
+          "description": "white LED supply terminal X1,24 V AC/DC; no DC polarity assigned",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        },
+        "X2": {
+          "description": "white LED supply terminal X2,24 V AC/DC; no DC polarity assigned",
+          "role": "supply",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24
+          }
+        }
+      },
+      "functions": {
+        "light": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "light": "lamp"
+      },
+      "terminalOrder": ["X1", "X2"]
+    }
+  ]
+}

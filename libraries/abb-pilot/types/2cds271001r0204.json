@@ -1,0 +1,64 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:2cds271001r0204",
+      "description": "S201M-C20 miniature circuit breaker, one pole, C characteristic, 20 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "2CDS271001R0204",
+        "document": {
+          "url": "https://new.abb.com/docs/librariesprovider74/lp-materials/prom-2014-2csc400002d0211.pdf?sfvrsn=2",
+          "title": "System pro M compact — DIN Rail components for low voltage installation",
+          "revision": "Catalogue 2014; 2CSC 400 002 D0211",
+          "pages": "2/38 identity; 2/15-2/16 and 2/20 terminals/ratings; 11/2 wiring (PDF 64, 41-42, 46, 1068)"
+        },
+        "modelingNotes": [
+          "S1 exact selection table establishes S201M-C20. S201-family diagram verifies terminal markings 1 and 2 and an open-drawn interruptible pole. Supply direction is optional; terminal roles are bidirectional.",
+          "20 A rated current; 50/60 Hz. C-curve reference temperatures: 30 °C under IEC/EN 60898-1, 55 °C under IEC/EN 60947-2. The scalar current is a device rating, not wire ampacity.",
+          "Historical catalog: IEC/EN 60898-1 single-pole Un 230/400 V AC and Icn 10 kA; IEC/EN 60947-2 single-pole Ue 230 V AC, Icu 15 kA, Ics 11.2 kA at this current. Conditional ratings are not flattened into scalar voltage or breaking-capacity fields.",
+          "ABB Connect exact page https://www.abbconnect.nl/details/index.aspx?id=1626682 lists 6 kA at 230 V in a structured field despite its 10 kA headline and catalog evidence; discrepancy preserved in research.md.",
+          "Each numbered cylinder-lift twin terminal accepts conductor and busbar entries. Shared connection policy represents the same electrical terminal, not unlimited conductor capacity. No optional accessory terminals are included.",
+          "Open normal_state follows the manufacturer drawing, not a claim about installed handle position. No fixed continuity crosses the breaker; trip behavior and coordination are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Both numbered electrical terminals of the base one-pole breaker are represented. Twin wire/busbar entries share each numbered terminal. No neutral, PE, shield, communication or integral auxiliary connections; separately ordered accessories are outside this identity."
+      },
+      "terminals": {
+        "1": {
+          "description": "Main pole terminal 1; either supply direction permitted",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 20
+          }
+        },
+        "2": {
+          "description": "Main pole terminal 2; either supply direction permitted",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 20
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker"
+      },
+      "terminalOrder": ["1", "2"]
+    }
+  ]
+}

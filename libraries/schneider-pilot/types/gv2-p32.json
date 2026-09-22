@@ -1,0 +1,105 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p32",
+      "description": "Three-pole thermal-magnetic motor protection breaker, 24–32 A, rotary knob; bare device",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P32",
+        "document": {
+          "url": "https://www.ilecsys.co.uk/sites/default/files/GV2P32.pdf",
+          "title": "Schneider Electric Product data sheet GV2P32 (manufacturer-authored, iLECSYS mirror)",
+          "revision": "November 6, 2019",
+          "pages": "1 (identity and ratings), 8 (Connections and Schema)"
+        },
+        "modelingNotes": [
+          "Manufacturer catalog spelling GV2P32; exact-product nameplate photograph prints GV2-P32. Source rocker-lever description conflicts with documented rotary knob.",
+          "Historical sheets specify thermal adjustment 24–32 A and magnetic trip 416 A. AC 50/60 Hz; voltage capability 690 V AC is not assigned nominal voltage. No installed trip setting is inferred.",
+          "2017 manufacturer sheet gives Icu 35 kA at 400/415 V; 2019 sheet gives 50 kA there. Breaking capacity is voltage- and revision-dependent; see research.md.",
+          "Diagram terminal markings are retained verbatim. Three poles are ganged; open means OFF/tripped reference state. Contacts do not establish permanent net continuity. Thermal/magnetic dynamics are not simulated.",
+          "Auxiliary blocks and voltage releases are separate accessories, excluded from this bare order. Connections remain application-dependent."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Six main screw-clamp connections of the bare GV2-P32, established by its exact-product sheet diagram. No integral auxiliary, PE, shield, return supply or communication connection is specified; separately ordered accessories are excluded."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Pole 1 line screw-clamp terminal 1/L1",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2/T1": {
+          "description": "Pole 1 load screw-clamp terminal 2/T1",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Pole 2 line screw-clamp terminal 3/L2",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4/T2": {
+          "description": "Pole 2 load screw-clamp terminal 4/T2",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Pole 3 line screw-clamp terminal 5/L3",
+          "role": "line",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "6/T3": {
+          "description": "Pole 3 load screw-clamp terminal 6/T3",
+          "role": "load",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

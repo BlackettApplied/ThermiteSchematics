@@ -1,0 +1,24 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:siemens-bu-0ba1",
+      "description": "A1 temperature BaseUnit - extends load group",
+      "terminals": {},
+      "functions": {},
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7193-6BP00-0BA1",
+        "document": {
+          "url": "https://mall.industry.siemens.com/mall/en/fescomelsaownuy/Catalog/Product?SiepCountryCode=OE&mlfb=6ES7193-6BP00-0BA1",
+          "title": "BaseUnit product specification",
+          "revision": "Accessed 2026-09-06",
+          "pages": "Product description"
+        },
+        "modelingNotes": [
+          "Inventory-only BaseUnit; temperature acquisition supported. Terminal landings appear under the installed I/O module to avoid duplicating physical terminals. Backplane bridges and power-group continuity are not modeled."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "23D01BA05 / twin pushbutton contact check",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "twin",
+          "label": "Historical terminal diagram 08007E00 / independent actuators",
+          "functions": [
+            { "device": { "by": "designation", "value": "S1" }, "key": "nc" },
+            { "device": { "by": "designation", "value": "S1" }, "key": "no" }
+          ],
+          "conductors": ["W11", "W12", "W13", "W14"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized check. Red 0 / green I labels are specified; individual colour-to-contact assignment is unverified.",
+        "NC 11-12 and NO 13-14 are not fixed internal links. Enclosure, physical clamps and ratings require separate review."
+      ]
+    }
+  ]
+}

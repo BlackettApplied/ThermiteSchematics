@@ -1,0 +1,67 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:29450",
+      "description": "Standard auxiliary/indication contact, 1 change-over (1 NO/NC), circuit-breaker status OF/SD/SDE/SDV, screwless spring terminals",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "29450",
+        "document": {
+          "url": "https://docs.rs-online.com/796e/A700000011227846.pdf",
+          "title": "Schneider Electric ComPacT / PowerPacT / TeSys / EasyPacT Auxiliary Signalling Contact - Instruction Sheet (29450 / 29452)",
+          "revision": "NNZ4314501-02, 09/2021",
+          "pages": "pp.4-5 slot-defines-function; p.9 (4.1) 29450 spring-terminal contact; p.13 (7) accessory-label numbering; pp.14-15 (8) check accessory continuity 1-2 / 1-4"
+        },
+        "modelingNotes": [
+          "Identity: order 29450 = Schneider standard auxiliary/indication contact, signal-contact composition 1 NO/NC (a single change-over/SPDT micro-switch), circuit-breaker status OF/SD/SDE/SDV, screwless spring terminals. Confirmed on se.com product 29450 and Schneider 29450 product data sheet (2015-05-12).",
+          "Intrinsic bare-part markings are1(common C),2(NC/break),4(NO/make), as drawn in NNZ4314501-02 p.9. Normal states describe the unactuated accessory, not a universal breaker state. Section8 pp.14–15 distinguishes installed functions: OF has1–2 closed for breaker open/tripped and1–4 for closed; SD has1–2 for not-tripped open/closed and1–4 for trip; SDE transfers to1–4 on electrical trip; SDV transfers on earth-leakage trip. Static functions do not simulate these mechanisms.",
+          "The installation slot defines the function (OF/SD/SDE/SDV); the shipped accessory label renumbers the same 1/2/4 terminals per slot (section 7, p.13): OF1 11/12/14, OF2 21/22/24, OF3 31/32/34, OF4 41/42/44, SD 91/92/94, SDE 81/82/84, SDV 71/72/74 (pattern common x1, NC x2, NO x4). These are applied labels, not additional physical terminals; the type models the bare contact's intrinsic 1/2/4.",
+          "No permanent conducting jumper: common terminal 1 is joined to 2 or to 4 only through the breaker-driven mechanism (a change-over has no fixed internal link). No PE, coil, supply, shield or communication terminal exists on this part.",
+          "Ratings are conditional and cover AC and DC, so no scalar terminal rating is asserted. Product data sheet p.1: Ith 6 A conventional free-air thermal current; minimum load 100 mA at 24 V; Ie e.g. AC-12 6 A up to 690 V, AC-15 0.1 A at 660/690 V / 2 A at 380/440 V / 4 A at 220/240 V / 5 A at 110 V, DC-12 6 A at 24 V down to 0.3 A at 250 V, DC-14 1 A at 24 V down to 0.003 A at 250 V. Spring terminals accept 0.5-1.5 mm2 / 20-16 AWG.",
+          "Companion part 29452 is the screw-terminal ('low level') equivalent; the instruction sheet warns the terminal positions differ between 29450 and 29452. An RS Components reseller listing calling Merlin Gerin 29450 a 'screw terminal' contact is not corroborated by a manufacturer source and does not change the 1/2/4 change-over model.",
+          "The opened data sheet lists ComPacT NSX 100-250/400-630, CVS, INS, INV, NG160, NR, NSC100; the instruction sheet also covers ComPacT NS630b-3200. Exact fit onto the legacy Merlin-Gerin Compact NS100-630 frame is not itemised in the opened docs; order code, 1 NO/NC composition and OF/SD/SDE/SDV function set match exactly."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All three electrical terminals of the single change-over contact are inventoried: common (1), NC/break (2) and NO/make (4). This is the part's entire electrical connection set - no PE, coil, supply or communication terminal exists. Function per slot (OF/SD/SDE/SDV) and the applied label numbering (11/12/14... 91/92/94... 71/72/74) are application-dependent and are documented, not added as extra terminals."
+      },
+      "terminals": {
+        "1": {
+          "description": "Common pole (marked 'C'); relabelled x1 by slot (11/21/31/41 OF, 91 SD, 81 SDE, 71 SDV)",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "NC/break throw in the bare-contact reference state; installed actuation depends on OF/SD/SDE/SDV slot. Applied label x2.",
+          "role": "signal",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "NO/make throw in the bare-contact reference state; installed actuation depends on OF/SD/SDE/SDV slot. Applied label x4.",
+          "role": "signal",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc",
+        "no": "contact-no"
+      },
+      "terminalOrder": ["1", "2", "4"]
+    }
+  ]
+}

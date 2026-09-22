@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "STAHL component research demonstrations"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "stahl-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "stahl-fixture",
+      "version": "1.0.0",
+      "path": "fixture"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "20300000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "TARGET",
+      "type": "rules:policy-terminal"
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "WIRE-PEER",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "JUMPER-PEER",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "CABLE-PEER",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000005",
+      "kind": "wire",
+      "designation": "W-FIRST",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "E" },
+        { "device": "WIRE-PEER", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000006",
+      "kind": "jumper",
+      "designation": "J-SECOND",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "E" },
+        { "device": "JUMPER-PEER", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "20300000-0000-4000-8000-000000000007",
+      "kind": "cable",
+      "designation": "CBL-THIRD",
+      "type": "rules:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            { "device": "TARGET", "terminal": "E" },
+            { "device": "CABLE-PEER", "terminal": "T" }
+          ]
+        }
+      ]
+    }
+  ]
+}

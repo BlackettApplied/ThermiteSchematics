@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lad-4rcu",
+      "description": "LAD-4RCU / LAD4RCU clip-on RC coil suppressor",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LAD-4RCU",
+        "document": {
+          "url": "https://iportal2.schneider-electric.com/Contents/docs/B8_CONTACTORS_EN_CATALOGUE.PDF",
+          "title": "TeSys contactors, Chapter B8 — TeSys D suppressor modules",
+          "revision": "Undated chapter; no issue revision on reviewed pages",
+          "pages": "B8/24 exact selection and installation notes; B8/69 characteristics"
+        },
+        "modelingNotes": [
+          "Manufacturer spelling LAD4RCU; source LAD-4RCU retained exactly. Matching RC technology, host ranges and mounting support treating the hyphen as a presentation separator.",
+          "Two-ended passive series RC network. LAD4RC installation illustration: https://download.se.com/files?p_Doc_Ref=1378322_01A55&p_File_Name=1378322_01A55-10.pdf&p_enDocType=Instruction+sheet , page 1, W9 1378322 0211 A10, 04/2021.",
+          "RC.1 and RC.2 are unordered functional authoring aliases for the two plug-in RC endpoints. They are not printed terminal numbers, polarity, top/bottom positions or a physical A1/A2 mating map.",
+          "Clipping establishes connection across the separately ordered host coil. The type does not import host contacts or coil terminals and does not create cross-device continuity. The RC network is not a fixed link or short circuit.",
+          "Legacy 250 V suitability is not established. No scalar nominal voltage is assigned.",
+          "For virtually sinusoidal voltage with less than 5% THD: peak limited to 3 Uc; oscillation at most 400 Hz; dropout 1.2–2 times normal. Natural RC frequency 100 Hz in B8/69's 110/240 V category is not mains frequency. No R/C values or current limit asserted.",
+          "Both functional attachment ends are required for an installed suppressor to operate. A physical clip-on connection must still be represented in project topology; no host mating map is automatically inferred. Host bonding is outside this accessory scope.",
+          "Generic load symbol represents the complete RC impedance. No dedicated RC circuit mark exists in the supplied symbol enum; internal junction and component geometry are not invented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both functional plug-in endpoints in the LAD4RC diagram are represented. Physical contact markings and exact mating-position mapping remain undocumented; aliases assert neither. No additional power, PE, shield or communications connection is established. Host terminals and bonding are outside scope."
+      },
+      "terminals": {
+        "RC.1": {
+          "role": "control",
+          "description": "One end of the RC suppressor; unordered functional alias",
+          "required": true
+        },
+        "RC.2": {
+          "role": "control",
+          "description": "Other end of the RC suppressor; unordered functional alias",
+          "required": true
+        }
+      },
+      "functions": {
+        "suppression": {
+          "kind": "load",
+          "terminals": ["RC.1", "RC.2"]
+        }
+      },
+      "circuitSymbols": {
+        "suppression": "load"
+      },
+      "terminalOrder": ["RC.1", "RC.2"]
+    }
+  ]
+}

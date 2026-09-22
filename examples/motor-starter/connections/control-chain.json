@@ -1,0 +1,57 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "70dc52cc-2b19-4f80-aa32-ef9a1dd61f07",
+      "kind": "wire",
+      "designation": "W-CTL-005",
+      "endpoints": [
+        { "device": "PLC1", "terminal": "X2.0" },
+        { "device": "PB1", "terminal": "11" }
+      ],
+      "properties": {
+        "label": "PLC1-DO0-STOP",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "74280b71-4394-4895-b34b-6c159bb9748d",
+      "kind": "wire",
+      "designation": "W-CTL-006",
+      "endpoints": [
+        { "device": "PB1", "terminal": "12" },
+        { "device": "OL1", "terminal": "95" }
+      ],
+      "properties": { "label": "STOP-OL1-NC", "size": "18AWG", "color": "blue" }
+    },
+    {
+      "uid": "71881aaf-f3a4-41fd-8d3d-1afe88f122ce",
+      "kind": "wire",
+      "designation": "W-CTL-007",
+      "endpoints": [
+        { "device": "OL1", "terminal": "96" },
+        { "device": "K1", "terminal": "A1" }
+      ],
+      "properties": {
+        "label": "OL1-NC-K1-A1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "de231b10-b644-4aea-8d9d-16252196c3d3",
+      "kind": "wire",
+      "designation": "W-CTL-008",
+      "endpoints": [
+        { "device": "K1", "terminal": "A2" },
+        { "device": "PS1", "terminal": "-" }
+      ],
+      "properties": {
+        "label": "K1-A2-0V",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    }
+  ]
+}

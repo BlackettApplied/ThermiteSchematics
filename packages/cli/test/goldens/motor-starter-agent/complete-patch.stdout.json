@@ -1,0 +1,25 @@
+{
+  "format": "agent-tool-result/0.1",
+  "tool": "apply-source-patch",
+  "value": {
+    "dryRun": false,
+    "applied": true,
+    "atomicity": "per-file",
+    "files": [
+      {
+        "path": "connections/field-terminations.json",
+        "beforeIntegrity": "sha256-uH5wquZl1n/aAVaxmhG7cdvaUl7sOUBVYKjQOaYKvmE=",
+        "afterIntegrity": "sha256-R60hhwHH0iSb5ptHXmc/AzS0ha3XeTwb1W7j0MdiNr8=",
+        "byteLength": 2165,
+        "changed": true
+      },
+      {
+        "path": "devices/equipment.json",
+        "beforeIntegrity": "sha256-NORh7LZPQdPLk7cGwHOwZjAjADVy+YVsJJEU13oOx7Y=",
+        "afterIntegrity": "sha256-9qBJJLOs0ScXY2derhvqFW9XysVFatnjj5un7khgoKc=",
+        "byteLength": 2741,
+        "changed": true
+      }
+    ]
+  }
+}

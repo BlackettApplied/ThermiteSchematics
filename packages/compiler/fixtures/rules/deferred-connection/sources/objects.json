@@ -1,0 +1,18 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "4f4dd7df-166f-5b76-a57b-79b4377761ab",
+      "designation": "D1",
+      "type": "fixture:module",
+      "connectionReview": {
+        "terminals": {
+          "1": {
+            "status": "deferred",
+            "reason": "Supply design is pending."
+          }
+        }
+      }
+    }
+  ]
+}

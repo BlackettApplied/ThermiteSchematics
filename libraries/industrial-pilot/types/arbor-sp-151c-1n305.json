@@ -1,0 +1,72 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:arbor-sp-151c-1n305",
+      "description": "ARBOR SP-151C / HMI",
+      "terminals": {
+        "DC-IN.1": {
+          "description": "+12-36 V",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "DC-IN.2": {
+          "description": "DC return",
+          "connection_policy": "exclusive",
+          "required": true
+        },
+        "REMOTE.1": {
+          "description": "Remote switch GND",
+          "connection_policy": "exclusive"
+        },
+        "REMOTE.2": {
+          "description": "Remote PWR_SW",
+          "connection_policy": "exclusive"
+        },
+        "CHASSIS": {
+          "description": "Shell bonding point; physical attachment review pending",
+          "connection_policy": "exclusive"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["DC-IN.1", "DC-IN.2"]
+        }
+      },
+      "ports": {
+        "ETH1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "Engineering port identifier; physical socket mapping pending"
+        },
+        "ETH2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "Engineering port identifier; physical socket mapping pending"
+        }
+      },
+      "catalog": {
+        "manufacturer": "ARBOR",
+        "orderNumber": "SP-151C-1N305",
+        "document": {
+          "url": "https://partnerzone.arbor-technology.com/Doc/Manual/ARBOR_SP-XXXC-1N305_Series_UM.pdf",
+          "title": "SP-XXXC-1N305 Series user manual",
+          "revision": "v1.0, 2025.07",
+          "pages": "5-6, 11 section 2.2.3, 14"
+        },
+        "modelingNotes": [
+          "Manufacturer manual reviewed via public transcript: https://manualzz.com/doc/87495714/arbor-technology-sp-151c-1n305-user-manual. Official download returned HTTP 403.",
+          "DC-IN pin 1 positive, pin 2 GND; use the product specified 12-36 V range. REMOTE 1 GND / 2 PWR_SW. ETH1/2 are engineering aliases.",
+          "CHASSIS is an engineering bonding point, not a numbered connector pin. Physical shell attachment requires review; optional USB/serial interfaces are not inventoried.",
+          "The listed 19 V 120 W accessory adapter does not establish device consumption or inrush."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "DC input and remote power-switch pins modeled. Verify Ethernet socket aliases and shell bonding attachment; USB/serial and internal headers are not inventoried."
+      },
+      "terminalOrder": ["DC-IN.1", "DC-IN.2", "REMOTE.1", "REMOTE.2", "CHASSIS"]
+    }
+  ]
+}

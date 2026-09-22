@@ -1,0 +1,199 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "a1cb725d-078f-405a-95bc-4c74c5e5e647",
+      "designation": "SUPPLY",
+      "type": "candidate-fixture:source-boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "4ed36cc2-795f-468a-b9b5-18f06dd119f4",
+      "designation": "CPU",
+      "type": "siemens-pilot:6ES7215-1BG40-0XB0"
+    },
+    {
+      "kind": "device",
+      "uid": "92317d2e-2def-464d-b05d-2242d5f8ac31",
+      "designation": "TCI",
+      "type": "siemens-pilot:6ES7231-5QD32-0XB0"
+    },
+    {
+      "kind": "device",
+      "uid": "c073e7c7-8a27-4425-b695-b0020dd2ff4b",
+      "designation": "HMI",
+      "type": "siemens-pilot:6AV2124-0JC01-0AX0"
+    },
+    {
+      "kind": "device",
+      "uid": "5624200c-c261-41c7-a2f5-5b89cbcaf46b",
+      "designation": "PROBE",
+      "type": "candidate-fixture:thermocouple"
+    },
+    {
+      "kind": "wire",
+      "uid": "191b81d2-e893-494f-a588-78603b65d99d",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "L"
+        },
+        {
+          "device": "CPU",
+          "terminal": "X10.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e00574b7-e511-493d-ae8c-2a433479734c",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "N"
+        },
+        {
+          "device": "CPU",
+          "terminal": "X10.2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "eee1b88d-07da-4392-a7ad-143c38e492a4",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "FE"
+        },
+        {
+          "device": "CPU",
+          "terminal": "X10.3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "1ee209eb-7e06-43d0-acfd-83eaa10348e3",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "+24V"
+        },
+        {
+          "device": "TCI",
+          "terminal": "X10.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "a7c2394d-4e0f-4676-8313-2acd956aee92",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "0V"
+        },
+        {
+          "device": "TCI",
+          "terminal": "X10.2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "52371f4c-e953-45fb-a9a8-ccc0bc07cb2b",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "FE"
+        },
+        {
+          "device": "TCI",
+          "terminal": "X10.3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e53aa27f-9aa9-45de-9f99-53a5c73c540b",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "+24V"
+        },
+        {
+          "device": "HMI",
+          "terminal": "X80.1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "c9c573d2-6853-43aa-b850-5d3a7e2beb88",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "0V"
+        },
+        {
+          "device": "HMI",
+          "terminal": "X80.2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "10957a9c-2e14-4123-9a2c-17d3cea9f062",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "SUPPLY",
+          "terminal": "FE"
+        },
+        {
+          "device": "HMI",
+          "terminal": "FE"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "e5f966db-d7b1-4b87-98d5-254ba3d540b1",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "PROBE",
+          "terminal": "+"
+        },
+        {
+          "device": "TCI",
+          "terminal": "X10.4"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "586b8de9-1426-43be-9a37-9a67bb4e56b4",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "PROBE",
+          "terminal": "-"
+        },
+        {
+          "device": "TCI",
+          "terminal": "X10.5"
+        }
+      ]
+    }
+  ]
+}

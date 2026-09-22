@@ -1,0 +1,66 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bvm1",
+      "description": "Harmony XB4 white integral-LED light body with metal fixing collar, 230–240 VAC, 50/60 Hz; source 24 VAC/DC description conflicts",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BVM1",
+        "document": {
+          "url": "https://media.distributordatasolutions.com/schneider2/2019q4/912d9bb11a40a5d2ae33882b3d897c0c498d09c9.pdf",
+          "title": "Schneider Electric ZB4BVM1 product data sheet",
+          "revision": "October 5, 2019",
+          "pages": "1 and 3; applicable manufacturer FAQ FA272320 circuit and NHA93116 bonding instruction are cited in modelingNotes"
+        },
+        "modelingNotes": [
+          "SOURCE CONFLICT: source order ZB4-BVM1 is described as 24 VAC/DC, but exact Schneider ZB4BVM1 evidence from July/October 2019 and October 2021 specifies 230–240 VAC 50/60 Hz. This is an exact catalog-order model, not verification of the installed unit. Do not silently substitute ZB4BVB1 or alter wiring to resolve the conflict.",
+          "All alphanumeric characters in source ZB4-BVM1 match manufacturer ZB4BVM1; the source presentation hyphen is retained verbatim in orderNumber. Matching body/collar/white integral LED scope supports normalization; the conflicting voltage remains explicitly unresolved at installed-identity level.",
+          "Included assembly is the Zamak fixing collar plus white protected integral LED light block with two screw-clamp terminals. The external lens/head is separate: manufacturer October 2021 catalogue physical 68 / printed 66 gives XB4BVM1 = ZB4BVM1 + ZB4BV013. No contact blocks, test accessory or grounding plate are asserted included.",
+          "Exact 5 October 2019 sheet documents (X1-X2)PL. Applicable Schneider FAQ FA272320 https://www.se.com/fr/fr/faqs/FA272320/ expressly names ZB4BVM1 and its right-hand ZBZ-M156 drawing for ZBV-M blocks depicts the two X1/X2 lamp screws on AC rails. T terminals, test contacts and diode links belong to the separate optional test arrangement, not this base body.",
+          "Rated lamp supply range is 230–240 VAC at 50/60 Hz; supply limits 195–264 VAC are a separate operating range. Only AC type is scalar metadata: no arbitrary midpoint nominal_voltage or single frequency is invented. No DC rating, DC positive/negative polarity or fixed L/N assignment is established. X1/X2 remain the manufacturer terminal names.",
+          "One load function with the existing lamp symbol represents the light circuit. The input electronics, described by the manufacturer FAQ as including a coupling capacitor and diodes, are not fixed continuity. No fixed net links or extra test/PE/contact terminals are modeled.",
+          "Class I shock-protection classification and metal collar presence do not prove an upstream protective bond. No separate PE screw is identified on the base LED body. The collar fixing screw remains mechanical; no lamp terminal is joined to metalwork.",
+          "Protective bonding is an installation requirement to be established by the project. Separate accessory ZBZ110 is shown in manufacturer NHA93116 01, 06-2021: https://download.se.com/files?p_Doc_Ref=NHA93116&p_File_Name=NHA93116_01.pdf&p_enDocType=Instruction+sheet. For nonconducting or painted support, its ground terminal is to be connected to the grounding circuit. Mounting/bonding continuity is not modeled; coverage is partial.",
+          "X1 and X2 are required under library policy for the modeled operating lamp. Required endpoints do not establish voltage suitability, physical assembly or installed wiring correctness.",
+          "Exact historical sheet conditional details: 14 mA lamp consumption, 100,000 h stated life at rated voltage and 25 °C, 600 V insulation at pollution degree 3 and 6 kV impulse withstand; these are not contact switching ratings or nominal supply. Screw clamps and conductor/torque limits remain documentary."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Both documented lamp field screws X1 and X2 are modeled; one load function, no fixed links. Exact assembly includes metal fixing collar and LED block. Installation-dependent collar/support/earthing interface and its protective continuity are not modeled or proven. Separate head, contact/test blocks and grounding plate are excluded; no PE screw or factory panel bond is invented. Source 24 VAC/DC versus manufacturer 230–240 VAC remains unresolved for the installed unit."
+      },
+      "terminals": {
+        "X1": {
+          "role": "power",
+          "description": "Lamp supply terminal X1; 230–240 VAC across X1-X2, 50/60 Hz. No DC polarity or assigned L/N alias.",
+          "required": true,
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC"
+          }
+        },
+        "X2": {
+          "role": "power",
+          "description": "Other lamp supply terminal X2; 230–240 VAC across X1-X2, 50/60 Hz. Distinct from X1; no DC polarity or assigned L/N alias.",
+          "required": true,
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "lamp": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "lamp": "lamp"
+      },
+      "terminalOrder": ["X1", "X2"]
+    }
+  ]
+}

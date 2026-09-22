@@ -1,0 +1,88 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "murr-pilot:85040",
+      "description": "Murrelektronik MCS 5-115-230/12 single-phase switch-mode power supply / universal input 90-265 V AC (110-300 V DC), 50-60 Hz / output 12 V DC (adjustable to 15 V), 5 A, 60 W / SELV isolated / DIN TH35",
+      "category": "power-supply",
+      "catalog": {
+        "manufacturer": "Murr",
+        "orderNumber": "85040",
+        "document": {
+          "url": "https://shop.murrelektronik.com/index.php?anid=000000000000085040_1&cl=details&fnc=outputSpecSheet&lang=1",
+          "title": "Murrelektronik Product-PDF Article 85040 - MCS POWER SUPPLY 1-PHASE, IN: 90-265VAC OUT: 10-15V/5ADC (model MCS 5-115-230/12)",
+          "revision": "Product-PDF, Version 2026-09-13",
+          "pages": "pp.1-3; terminal connection diagram p.1; input/output electrical data and Connection type 2-2 tables pp.2-3"
+        },
+        "modelingNotes": [
+          "Exact Murrelektronik article85040; historic source manufacturer Murr is preserved. Manufacturer exact-product diagram establishes 1=PE,2=N,3=L,4=DC− and5=DC+. Diagram numbers are retained rather than connector-local table indices.",
+          "Adjustable output and universal/variable input are capability ranges. No input/output nominal_voltage or conditional current scalar is assigned. Output ratings are total supply capability, not independent allowances on duplicate clamps. Project intent must specify the chosen supply voltage.",
+          "Input pins1/2/3 are required for the powered abstraction. Output connections are application-dependent. No field bond to DC return is invented. The device outline is not a wire; function membership never creates net continuity.",
+          "Five field terminals, no duplicate output clamps. Exact diagram and inventory show no additional signal/communication/PE interface; output indication and adjuster are not signal terminals. No permanent terminal-to-terminal links are asserted.",
+          "Input90–265 VAC /110–300 VDC. Output12 VDC nominal,5 A,60 W total; exact current sheet disagrees internally on adjustment lower bound10 V versus12 V. Upper bound15 V. Preserve that discrepancy and avoid a fixed12 V compiler constraint.",
+          "Clamp technology and installed manufacturing revision must be checked against the physical device; exact current diagrams do not prove every historical unit revision. No housing/mounting bond path is inferred from metalwork."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All five documented terminals inventoried from the manufacturer connection diagram: 3-pole input (L, N, PE) and 2-pole output (DC+, DC-). No signal, communication, remote-sense or DC-OK terminals exist on this model. Output is SELV-isolated from input."
+      },
+      "terminals": {
+        "1": {
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "description": "Input terminal 1 = PE (protective earth); 3-pole input spring-clamp FK block",
+          "required": true
+        },
+        "2": {
+          "role": "neutral",
+          "connection_policy": "shared",
+          "description": "Input terminal 2 = N (neutral); 3-pole input spring-clamp FK block",
+          "required": true
+        },
+        "3": {
+          "role": "line",
+          "connection_policy": "shared",
+          "description": "Input terminal 3 = L (line); 3-pole input spring-clamp FK block. Universal input 90-265 V AC / 110-300 V DC, 50-60 Hz (range in notes; no single nominal assigned)",
+          "required": true
+        },
+        "4": {
+          "role": "dc_negative",
+          "connection_policy": "shared",
+          "description": "Output terminal 4 = DC- (negative); 2-pole output spring-clamp FK block",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "5": {
+          "role": "dc_positive",
+          "connection_policy": "shared",
+          "description": "Output terminal 5 = DC+ (positive); 2-pole output spring-clamp FK block. 12 V DC nominal, adjustable to 15 V; 5 A (6 A UL/45 C)",
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "input": {
+          "kind": "load",
+          "terminals": ["3", "2"]
+        },
+        "output": {
+          "kind": "source",
+          "terminals": ["5", "4"]
+        },
+        "earth": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      },
+      "circuitSymbols": {
+        "input": "load",
+        "output": "source",
+        "earth": "earth"
+      },
+      "terminalOrder": ["3", "2", "1", "5", "4"]
+    }
+  ]
+}

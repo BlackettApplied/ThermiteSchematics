@@ -1,0 +1,20 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "batch-boundary:endpoint-1",
+      "description": "Synthetic unenergized test endpoint; no installed source or load",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "role": "pe"
+        }
+      },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified."
+      }
+    }
+  ]
+}

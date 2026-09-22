@@ -1,0 +1,56 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1826790000",
+      "description": "HDC HEE 32 MC male insert body, size 6, 32 crimp-contact cavities; crimp contacts supplied separately",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1826790000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1826790000/scope/2/",
+          "title": "Weidmüller HDC HEE 32 MC data sheet",
+          "revision": "Created 27.02.2026 08:09:42 MEZ",
+          "pages": "1: exact order and excluded crimp contacts; 3: PE screw interface and conditional ratings; 4: PE-marked dimensional drawing"
+        },
+        "modelingNotes": [
+          "Exact order 1826790000 is HDC HEE 32 MC, a male insert body with 32 crimp-contact positions. Manufacturer page 1 explicitly states that crimp contacts are not delivered with the inserts. The numbered cavity pattern is not an inventory of supplied conductive contacts.",
+          "This bare-order model therefore omits 32 populated power/signal terminals and all cable-to-mating contact links. Actual crimp contacts must be selected, modeled and fitted separately; no contact order, plating, wire size or populated position is assumed.",
+          "Page 3 documents a screw PE connection, and page 4 marks PE interfaces on the insert frame. One aggregate PE terminal represents that documented interface. Separate clamp, mating, frame and housing endpoints and their complete bonding matrix are not established; no PE fixed link or external housing bond is invented.",
+          "Aggregate PE is required under library protective-earth policy. Connection presence does not establish an external protective bond. Mechanical attachment, empty cavities and connector metadata never join circuit nets.",
+          "Catalog capabilities for the appropriately assembled connector: 500 V under DIN EN 61984, 600 V AC/DC under UL/CSA, 16 A subject to contact/conductor and temperature conditions. These are not ratings of an absent contact or an assigned circuit voltage. The manufacturer offers separate gold/silver crimp-contact choices; no variant is selected here.",
+          "PE screw data: M4, 1.2–1.5 N m, 10 mm strip length, rated cross-section 4 mm², AWG 20–12. These are source data, not a completed installation specification. Physical PE subdivision remains partial."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Bare insert order with 32 empty crimp-contact cavities and one aggregate documented PE interface. Crimp contacts are explicitly supplied separately. Individual PE clamp/mating/frame interfaces and their complete bonding paths are not enumerated; no populated numbered pins or contact continuity are asserted."
+      },
+      "terminals": {
+        "PE": {
+          "description": "Aggregate documented protective-earth interface; physical clamp/mating/frame subdivision unresolved",
+          "role": "pe",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "PE": "terminal"
+      },
+      "connectorPorts": {
+        "INSERT": {
+          "connector": "HDC HEE 32 MC insert body, size 6",
+          "description": "Mechanical body for 32 separately ordered crimp contacts. No populated electrical pin map is asserted."
+        }
+      },
+      "terminalOrder": ["PE"]
+    }
+  ]
+}

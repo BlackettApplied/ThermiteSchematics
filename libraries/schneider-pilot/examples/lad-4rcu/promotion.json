@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:lad-4rcu",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LAD-4RCU"
+  },
+  "type": {
+    "path": "types/lad-4rcu.json",
+    "sha256": "8e2f2dd407553fbab6b270d52e2e258b2930c2487f799a929b7c3ab9902db79e"
+  },
+  "research": {
+    "path": "research/lad-4rcu.md",
+    "sha256": "3f5bc7dce86c1de94605d504ac520c7fd160e968d698a71a0af7178000cf57a9"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["RC.1", "RC.2"],
+    "requiredTerminalKeys": ["RC.1", "RC.2"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "2b155f2084d28883ecd4de9dfd6c55557b2886bc25d9fb30616c9cff7764f48f",
+    "packet.request.json": "bfac58673bb3a66b181b8bff710373caf40e507e02ba3afa4c4af408e30e045c",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "4de5e19d440e4d5c3794c01911a1da3e265c1b22581a8bd820df7e33d88df6aa",
+    "system.json": "121ff5b27602db9f17ff5b73a2eacc0429b36ad1c9e5fdae7a729e1eedf21a80"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "title": "SourceFile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["objects"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "objects": {
+      "type": "array",
+      "items": true
+    }
+  }
+}

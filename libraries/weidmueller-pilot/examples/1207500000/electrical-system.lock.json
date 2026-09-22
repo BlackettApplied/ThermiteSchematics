@@ -1,0 +1,61 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "batch-boundary": {
+      "version": "0.1.0",
+      "path": "boundary",
+      "resolutionKind": "local",
+      "integrity": "sha256-3GkodPIXSo2p2p4ThsujKqXI6gf2uJ18k7B3FkEdtQA=",
+      "files": {
+        "library.json": "sha256-uz5iNAWVLE3sv/QCgEC9Nj70Nw0RzdpTtk5GrCxbD0M=",
+        "types.json": "sha256-YB+9dSma9WAKwcDKNurki0nlNY849UX90ThHKYYrVhI="
+      }
+    },
+    "weidmueller-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-xIFAhQr7PDxcbnwtMpz+fNFFbvww3Gwxce6KYs0KkzU=",
+      "files": {
+        "library.json": "sha256-pCsMJE2FRCSCDJJOoDN4/pwApuue/N6YUAJ2nthxoDE=",
+        "types/1205000000.json": "sha256-KYksMb/oT4Imlli/+40siyEQlmmtndkNf68FttDQQ5g=",
+        "types/1207500000.json": "sha256-CFVGS6x0/Kb2Nai3DNJRuoIZXlx+27CNWgmG8/bCXWM=",
+        "types/1207700000.json": "sha256-1979OEHxQQY5SlX79GyMQswLbKdxcytmvEbN5F27XVk=",
+        "types/1208600000.json": "sha256-oSlZiQLLFosl5TMPBB4Uw8SpJ3iWkBnxqc6GuLBS7gE=",
+        "types/1211100000.json": "sha256-zpBHxApgP2CWTZBqAvDUvoRNy9aZGXuhKfCqec8OUJU=",
+        "types/1211300000.json": "sha256-5kfwwJuQeJlMSb7Vx+8JBS3RnAMmJlmA0OUOBF+3bV8=",
+        "types/1212400000.json": "sha256-BMag9hopwu6eFM2evI38LgOca/Zd8J873hehaKyOIkw=",
+        "types/1498700000.json": "sha256-7NZE6TQO/2mq44pyh4nL9oeOPGgRguhS2J9LpRKrvtE=",
+        "types/1498900000.json": "sha256-O/O3LWeAwhsnJcs2e/3KM+d8K1QeIWVcjhexy5O/OE4=",
+        "types/1651310000.json": "sha256-7VRtlm/B7E6I5ZPH1njouXVuUrY2194GBClhMMtPPcE=",
+        "types/1651320000.json": "sha256-cDcWarmLxA461B7cWco1UfiepU9ZsUg9gA+1+kWq2uM=",
+        "types/1651330000.json": "sha256-qsHvIu5nRXKuHOyqiLi0WNnSEleogfuI5tOWrXi16iM=",
+        "types/1651340000.json": "sha256-/6B33XkwRx50TvWKMKGjVzN662D9iXjtntoLUg4DIc4=",
+        "types/1651350000.json": "sha256-tuuomJZmJ1Khams535MIKayxJCWrxLXZWh6ua62v2Eo=",
+        "types/1651360000.json": "sha256-odk2Q0B2/t8a5zxgrYrtkNhv6Vp28TLHzqV52phj9F8=",
+        "types/1665230000.json": "sha256-18mEIOIzV+5cUpaQME0OygtN487xVnkcLVxQaRb03KU=",
+        "types/1665240000.json": "sha256-ZBbueCnfN+3F0C7qUuENvZFJZWtyo3PjSWjA8hpfIOs=",
+        "types/1665260000.json": "sha256-tDEbm23q0YGiPVwT5dlE0sslnFjlY9ZBYqL87ywFoGg=",
+        "types/1665270000.json": "sha256-DZlNEv9wNO5G9hSfzMJXdpTN2B/8CnplHrOysQONu8M=",
+        "types/1665630000.json": "sha256-4LTc3RSnVaHENbOzo4NVODFXm0OMxMTpLL1GuVnVvwM=",
+        "types/1665640000.json": "sha256-dRlfqG4MEmvaoOlsX6d9GDh7NUf4KEMeUxWPCZI0wys=",
+        "types/1786880000.json": "sha256-Spu1vjkttD7ib4ein2MeaZUL4x7va0pVTSURdNg7zZM=",
+        "types/1787000000.json": "sha256-RrMYPt/Iw7HeFp4jD6X8Qtn3AlI6aB8z3BYBX4aqTXI=",
+        "types/1787550000.json": "sha256-FDeoORiLpQjYAbwKlh4s+4/tQ3xMARYxkjh0H5j7luc=",
+        "types/1787750000.json": "sha256-l6MdXyrDPOLV+qHnoEInNIhyNqCKS0BwC1+uaklB1jg=",
+        "types/1787760000.json": "sha256-HmDFPEzr71YKi4eUVe6SbR2Sc5EqKTqt6StaeNOl10E=",
+        "types/1788180000.json": "sha256-sMHytsfb7wBISwCLPirPwt+TIGTN8rw9SE/HgYDhCyE=",
+        "types/1788240000.json": "sha256-6mT40R0ex+jcPVHV7DK8gIsGi3ydNxBq7aVh5IV5nkc=",
+        "types/1789960000.json": "sha256-xnCm9tdYUHju1r1qyw/VbTrMykQCVfomVXIdoKJ0cmA=",
+        "types/1789970000.json": "sha256-6pjqAq41gDBRpL8H3ecBiDNJHUzVeLS1g08VWene7dA=",
+        "types/1826790000.json": "sha256-93tD+KpwWtGITptRw+R7ZqLO32abjzYwmufuOyMoj94=",
+        "types/1826800000.json": "sha256-V1Oq4TMV0PfBcEWxCD/cPbtu/oaBFvVsFFvjSKDk084=",
+        "types/1899980000.json": "sha256-gACQzAAISqToRyLuqQpPNYYgBqowx8TfCE8AhXbDJzI=",
+        "types/1901150000.json": "sha256-XxYP4mW/323lXeErX4M4MRbSnUO36ox62aiz34RgFUw=",
+        "types/1902990000.json": "sha256-8VXYRugb38srnUTTX3YrhItJDsCcdfqdQAFwWTGWZ/8="
+      }
+    }
+  }
+}

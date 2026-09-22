@@ -1,0 +1,15 @@
+# zb4-ba4 — Schneider ZB4-BA4
+
+Decision: **candidate**, limited to the mechanical head, with **partial** connection coverage.
+
+The job's `ZB4-BA4` is retained verbatim. Schneider publishes `ZB4BA4`: the same alphanumeric code and matching red, round, flush head description support treating the hyphen as historical presentation. This is an identity reconciliation, not an explicit manufacturer cross-reference of the hyphenated spelling. Historical “countersunk” is recorded as Schneider's “flush”; no high-guard or recessed variant is substituted.
+
+Evidence opened and reviewed:
+
+- **S1 — [Schneider product page](https://www.se.com/in/en/product/ZB4BA4/push-button-head-metal-flush-red-%C3%B822-spring-return-unmarked/)**, undated, accessed 2026-09-12. Identifies ZB4BA4, red unmarked flush pushbutton head, spring return, 22 mm mounting and chromium-plated metal bezel. Generic page statements about terminal technologies do not identify connections supplied on this head.
+- **S2 — [Harmony XB4 metal control and signaling units catalog](https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF)**, 10/2021, printed p.26 / physical PDF p.28. Supplied manufacturer PDF inspected locally; web open failed. Visually reviewed the exact red ZB4BA4 row under “Heads only,” its labeled photograph and page context. The complete-unit section explicitly adds a body/contact assembly to this head. No contact or light block is included in the head-only scope.
+- **S3 — [Product datasheet: ZB4BA4](https://www.farnell.com/datasheets/2331759.pdf)**, Schneider-authored, Farnell mirror, 2017-03-09. Read pp.1–2; visually reviewed p.3 dimensions and pp.8–12 composition diagrams/legend. Those diagrams describe permissible separately assembled contact arrangements, not a terminal inventory of the head. The sheet lists 10 million mechanical cycles and operating/storage temperature −40 to +70 °C. Its “Class I conforming to IEC 60536” entry appears under “Overvoltage category”; this wording does not establish a physical PE terminal or bond path.
+
+Modeling: zero documented power, return, signal, communication, shield or PE terminals; no required terminals or fixed links. No contact states, electrical ratings, supply voltage or lamp are assigned. Empty functions use an accessory documentation view; no electrical symbol or geometry is invented. Connection coverage remains partial because the head-to-collar/panel bonding interface is not established by the reviewed evidence. Neither absence of a bonding label nor the metal outline proves isolation or continuity. An installed contact configuration requires separate evidence and separate parts.
+
+Acquisition note: attempted the direct Schneider `https://iportal.se.com/Contents/docs/SQD-ZB4BA4.PDF` address without success; the exact manufacturer datasheet was obtained from Farnell instead. Local PDFs and reviewed page renders remain in `references/`. No build, install, repository test or bespoke fixture was run; central verification is left to the coordinator.

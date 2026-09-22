@@ -1,0 +1,132 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "28501 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "earth_in / earth_out",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "earth_in"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "earth_out"
+            }
+          ],
+          "conductors": ["W1", "W4", "FIXED2"]
+        },
+        {
+          "id": "g2",
+          "label": "valve_output",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "valve_output"
+            }
+          ],
+          "conductors": ["W2", "W3"]
+        },
+        {
+          "id": "g3",
+          "label": "supply_input / supply_common",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "supply_input"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "supply_common"
+            }
+          ],
+          "conductors": ["W5", "W6", "W7", "FIXED1"]
+        },
+        {
+          "id": "g4",
+          "label": "signal_common_left",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "signal_common_left"
+            }
+          ],
+          "conductors": ["W8"]
+        },
+        {
+          "id": "g5",
+          "label": "command_input",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "command_input"
+            }
+          ],
+          "conductors": ["W9"]
+        },
+        {
+          "id": "g6",
+          "label": "reference_output",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "reference_output"
+            }
+          ],
+          "conductors": ["W10"]
+        },
+        {
+          "id": "g7",
+          "label": "signal_common_right",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "signal_common_right"
+            }
+          ],
+          "conductors": ["W11"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+node_modules/
+**/dist/
+**/*.tsbuildinfo
+.npm-cache/
+.claude/
+docs/
+packages/schema/fixtures/invalid/
+packages/compiler/test/goldens/
+packages/compiler/fixtures/shipped-library-unavailable/
+packages/cli/test/goldens/
+
+# Preserved native experiment and generated alpha drawings
+/target/
+/native-out/
+/alpha-out/
+/output/pdf/
+/tmp/pdfs/
+
+# Independently versioned machine projects
+/projects/
+
+# Local release verification scratch
+.verification-work/

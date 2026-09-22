@@ -1,0 +1,38 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8571001140",
+      "description": "Protection cap for R. STAHL SolConeX 8571/12 plug, 32 A, 4-pole (3 P + PE)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8571001140",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/05/0000000000000008571601300_001_05/Mode_d_emploi_8571601300_001_05.pdf",
+          "title": "R. STAHL Operating Instructions - Wall-Mounted Socket, Plug 8571/11, 8571/12",
+          "revision": "8571601300; S-BA-8571/11/12-05-en-31/01/2007",
+          "pages": "Ch.12 Accessories and Spare Parts, PDF p.32 (EN) / p.16 (DE), printed p.14; mounting note Sec.7.2"
+        },
+        "modelingNotes": [
+          "Manufacturer accessory table (Chapter 12, illustration 05365E00) lists 'Protection caps - for plug 32 A - 4 poles - 8571001140' (5-pole variant is 8571002140).",
+          "Mechanical protective cap with zero electrical terminals or circuit functions. It covers the plug pins to prevent soiling when unplugged; it does not electrically terminate, bond, or short any pin.",
+          "The 32 A and pole count identify the compatible legacy plug. No electrical voltage/current or standalone ingress rating is assigned to the cap. No bonding is inferred through its body or attachment.",
+          "The exact legacy accessory row is the identity evidence. Equivalence with current article number 150856 has not been established and is not asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Mechanical protection cap; no electrical terminals. Fit and any installed environmental protection depend on the specified 8571/12 4-pole (3 P + PE) plug and its mating/assembly state."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "COVER": {
+          "connector": "Protection cap for R. STAHL SolConeX 8571/12 32 A 4-pole (3 P + PE) plug",
+          "description": "Mechanical attachment only; covers the plug pins. No electrical pins."
+        }
+      }
+    }
+  ]
+}

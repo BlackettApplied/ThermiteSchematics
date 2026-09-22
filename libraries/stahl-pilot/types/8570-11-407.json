@@ -1,0 +1,186 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8570-11-407",
+      "description": "Socket / 16 A / 480-500 V AC / 3P+PE / 7h / black",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8570/11-407",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/05/0000000000000008570601300_001_05/Betriebsanleitung_8570601300_001_05.pdf",
+          "title": "R. STAHL SolConeX Wall-Mounted Socket, 16 A, Series 8570/11",
+          "revision": "150646 / 8570601300; 2014-04-08 BA00 III en 05",
+          "pages": "English pp.6-9 technical data and 8570/11-4.. contacts; pp.11-13 installation and operation (PDF24-27,29-31)"
+        },
+        "modelingNotes": [
+          "Exact unsuffixed 8570/11-407, article 150554: 16 A, 480-500 V AC, 50-60 Hz, 4 contacts (3P+PE), black, 7h. Manufacturer selection: Wall-Mounting Sockets, Series 8570/11 SolConeX 16 A, 24.03.2019 PO en, PDF2: https://www.rstahl.hu/uploads/8570-11-adatlap.pdf. Terminal capability 500 V is the range upper bound, not an authored supply voltage. Installed hardware revision is unverified; newer replacements are not implied.",
+          "Manual PDF26 diagram 06556E00 identifies L1, L2, L3 and the protective-earth symbol for 8570/11-4.., viewed from the front at 6h. PDF27 specifies 7h for the 480-500 V variant. No rotation, exact 7h pin coordinates, rear-view layout, numerical pin mapping or installed phase assignment is inferred.",
+          "C.L1/C.L2/C.L3/C.PE are functional cable-side pole endpoints; C is not a manufacturer marking and actual cable-clamp legends and individual screw positions are unverified. M.L1/M.L2/M.L3/M.PE expose the corresponding mating-contact identities. PE is a textual alias for the earth symbol. C/M distinguish sides and are not stamped terminal numbers.",
+          "The base catalog row has no auxiliary contacts. The 8570/11-407-S001 accessory-equipped variant and 8570/11-407-S020 are different selections. Optional auxiliary accessory seats are not fitted electrical terminals in this type. No neutral, shield, signal, communication or additional bond screw is verified.",
+          "Three main poles are interlocked and ganged; open is the OFF reference position, not a simulated state. Never permanently jumper C.L1-M.L1, C.L2-M.L2 or C.L3-M.L3. Only explicit wires, jumpers and terminated cable cores join nets; function and connector-port metadata do not conduct.",
+          "Always connect cable-side PE. Author the fixed internal C.PE-M.PE conductor as an explicit project jumper. The shared connection policy permits that internal representation plus an external lead; it does not approve multiple field conductors under a clamp. A presence check can pass with only an internal PE jumper and cannot prove an external protective-earth supply.",
+          "The 2019 catalog PDF3 gives -30 to +40 degrees C for the unsuffixed base, while the 2014 manual gives a broader family temperature range. No automatic temperature, ingress, Ex approval, motor-load or protection-coordination verdict is encoded. IP66 depends on the applicable complete assembly; review the installed nameplate, seals, entries, protection and manual revision.",
+          "The 2014 manual PDF31 restricts use to the stated R. STAHL plug families and operation with a plug inserted. This type does not assert compatibility with every family member or a modern successor; verify exact poles, voltage, clock code, approvals and hardware revision separately."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Four cable-side pole endpoints and four mating contacts are inventoried, with three switched poles and PE. The four-contact manufacturer drawing identifies L1/L2/L3/earth but is a 6h front view: exact 7h orientation, physical cable-clamp markings and individual screw/bond positions remain unverified. No optional accessories are fitted. C/M and textual PE are authoring aliases; fixed PE needs an explicit project jumper."
+      },
+      "terminals": {
+        "C.L1": {
+          "description": "Cable-side functional pole / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L2": {
+          "description": "Cable-side functional pole / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L3": {
+          "description": "Cable-side functional pole / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.PE": {
+          "description": "Cable-side functional pole / PE",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "M.L1": {
+          "description": "Mating contact / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L2": {
+          "description": "Mating contact / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L3": {
+          "description": "Mating contact / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 500,
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.PE": {
+          "description": "Mating contact / PE",
+          "role": "protective_earth",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "L1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L1", "M.L1"]
+        },
+        "L2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L2", "M.L2"]
+        },
+        "L3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["C.L3", "M.L3"]
+        },
+        "C.PE": {
+          "kind": "bus",
+          "terminals": ["C.PE"]
+        },
+        "M.PE": {
+          "kind": "bus",
+          "terminals": ["M.PE"]
+        }
+      },
+      "circuitSymbols": {
+        "L1": "switch-no",
+        "L2": "switch-no",
+        "L3": "switch-no",
+        "C.PE": "terminal",
+        "M.PE": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "R. STAHL 8570/11-407 socket, 3P+PE, 7h, black",
+          "description": "L1/L2/L3 and earth identities from the 8570/11-4.. contact diagram; no exact 7h coordinates, numeric renaming or rear-view orientation is asserted.",
+          "pins": {
+            "L1": {
+              "terminal": "M.L1",
+              "description": "L1 identity from four-contact family drawing; no numeric pin alias or exact 7h coordinates"
+            },
+            "L2": {
+              "terminal": "M.L2",
+              "description": "L2 identity from four-contact family drawing; no numeric pin alias or exact 7h coordinates"
+            },
+            "L3": {
+              "terminal": "M.L3",
+              "description": "L3 identity from four-contact family drawing; no numeric pin alias or exact 7h coordinates"
+            },
+            "PE": {
+              "terminal": "M.PE",
+              "description": "Textual alias for the protective-earth symbol; exact 7h coordinates unverified"
+            }
+          }
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "L1",
+          "to": "L2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "L2",
+          "to": "L3"
+        }
+      ],
+      "terminalOrder": [
+        "C.L1",
+        "C.L2",
+        "C.L3",
+        "C.PE",
+        "M.L1",
+        "M.L2",
+        "M.L3",
+        "M.PE"
+      ]
+    }
+  ]
+}

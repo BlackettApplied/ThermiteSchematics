@@ -1,0 +1,47 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "releco-pilot:c4-a40x-230vac",
+    "manufacturer": "Releco",
+    "orderNumber": "C4-A40X/230VAC"
+  },
+  "type": {
+    "path": "types/c4-a40x-230vac.json",
+    "sha256": "d196e6b0963b077839ab3aff0cebc9c277eee2ed3404071d021cac2b67a3f3db"
+  },
+  "research": {
+    "path": "research/c4-a40x-230vac.md",
+    "sha256": "4e816b35f69564195055da6182d5068a2c21f0894e937d951c39ea39b3ea028a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    "requiredTerminalKeys": ["13", "14"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "f53dbccb04cb69870c0b1dd9bad5039019e0608a234efc01f62eb1f47f4ac0fa",
+    "packet.request.json": "4687ad20e2be72ceaeae65744e57ea6eaa6e26ce469b33e1c4f4def134448f69",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "d1e523fdb678faf65c63c1086a739b6518e889c28bea4ea5794435c19a6bc6c6",
+    "system.json": "aad0748574cdd1e15fd27cd715799f8fb3aa8d51157c6f5b9fa9d273e6b1c21b"
+  }
+}

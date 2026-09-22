@@ -1,0 +1,38 @@
+[
+  {
+    "code": "E301",
+    "severity": "error",
+    "message": "Effective voltage type \"AC\" is incompatible with terminal ratings at \"TYPE_TARGET.T\".",
+    "file": "sources/objects.json",
+    "line": 17,
+    "column": 5,
+    "jsonPointer": "/objects/2",
+    "uid": "31600000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "../voltage-library/types/terminals.json",
+        "line": 8,
+        "column": 14,
+        "note": "Terminal \"TYPE_TARGET.T\" is rated for voltage type \"DC\" here."
+      }
+    ]
+  },
+  {
+    "code": "E302",
+    "severity": "error",
+    "message": "Effective nominal voltage 24 V is incompatible with terminal ratings at \"VOLTAGE_TARGET.T\".",
+    "file": "sources/objects.json",
+    "line": 37,
+    "column": 5,
+    "jsonPointer": "/objects/5",
+    "uid": "31600000-0000-4000-8000-000000000006",
+    "related": [
+      {
+        "file": "../voltage-library/types/terminals.json",
+        "line": 16,
+        "column": 14,
+        "note": "Terminal \"VOLTAGE_TARGET.T\" is rated for nominal voltage 48 V here."
+      }
+    ]
+  }
+]

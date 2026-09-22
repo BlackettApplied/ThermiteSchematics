@@ -1,0 +1,12 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Motor Starter Example",
+    "description": "Task 6 manifest fixture"
+  },
+  "sources": ["sources/**/*.json"],
+  "libraries": [
+    { "name": "core", "version": "0.1.0", "path": "../../library/core" }
+  ]
+}

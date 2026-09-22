@@ -1,0 +1,8 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/project.schema.json",
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Agent patch filesystem fixture"
+  },
+  "sources": ["sources/*.json"]
+}

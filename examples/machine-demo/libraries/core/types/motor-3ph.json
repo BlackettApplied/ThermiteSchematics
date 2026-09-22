@@ -1,0 +1,22 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:motor-3ph",
+      "description": "Three-phase induction motor load with protective earth",
+      "terminals": {
+        "U": { "role": "phase_u_input" },
+        "V": { "role": "phase_v_input" },
+        "W": { "role": "phase_w_input" },
+        "PE": { "role": "protective_earth" }
+      },
+      "functions": {
+        "motor_load": { "kind": "load", "terminals": ["U", "V", "W"] },
+        "protective_earth": { "kind": "bus", "terminals": ["PE"] }
+      },
+      "internal_relations": [],
+      "symbol": "iec:three-phase-motor"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8527-21-11-0001",
+      "description": "Motor protection breaker / 9-12.5 A / three poles / no accessories",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8527/21-11-0001",
+        "document": {
+          "url": "https://r-stahl.com/fileadmin/tx_aimeos/Files/1_/02/0000000000000008527602300_001_02/Istruzioni_per_l_uso_8527602300_001_02.pdf",
+          "title": "R. STAHL Motor protection circuit-breaker, Series 8527/2",
+          "revision": "147234 / 8527602300; 2013-03-06 BA00 III en 02",
+          "pages": "English pp.6-8 technical data, p.11 diagram11530E00 and protective conductor (PDF32-34,37)"
+        },
+        "modelingNotes": [
+          "Exact no-ammeter, no-auxiliary-contact, no-release variant verified in manufacturer Series 8527 catalog selection table, printed 10/13 (PDF 2): https://mega-ex.com/product_hazardous/Electrical%20Equipment/STAHL/10012015.pdf. Manufacturer-authored historical catalog, distributor mirror; undated copy.",
+          "Thermal adjustment 9-12.5 A, maximum operating voltage 690 V AC, 50/60 Hz. Current capability field 12.5 A is the adjustment upper bound, not an installation trip setting or wire ampacity.",
+          "Keys 1/2,3/4,5/6 are numeric main terminals, also shown as 1L1/2T1,3L2/4T2,5L3/6T3. PE is a functional authoring alias for the required protective-conductor connection; exact physical PE screw count/marking is unverified.",
+          "No C1/C2, D1/D2,auxiliary contacts or ammeter are fitted in this order variant. Three poles are ganged; functions do not create conductive shorts. Trip curves, backup-fuse coordination and hazardous-area installation are not evaluated.",
+          "Main terminals accept 2x1.5-10 mm² solid or2x1.5-6 mm² stranded, tightening 1.8-2.0 Nm (2013 manual). These conditional limits are documentation, not automated conductor-sizing checks."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All six main terminals plus one functional PE connection are declared. Exact physical PE connection inventory and protective behavior remain unmodeled; no auxiliary hardware is claimed."
+      },
+      "terminals": {
+        "1": {
+          "description": "Line terminal 1",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "2": {
+          "description": "Load terminal 2",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "3": {
+          "description": "Line terminal 3",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "4": {
+          "description": "Load terminal 4",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "5": {
+          "description": "Line terminal 5",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "6": {
+          "description": "Load terminal 6",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 690,
+            "voltage_type": "AC",
+            "current": 12.5
+          }
+        },
+        "PE": {
+          "description": "Required protective conductor; functional PE alias",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "6"]
+        },
+        "earth": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker",
+        "earth": "earth"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1", "3", "5", "2", "4", "6", "PE"]
+    }
+  ]
+}

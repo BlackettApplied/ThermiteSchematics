@@ -1,0 +1,1 @@
+{"kind":"device_type","id":"core:bad-relation-pairing","terminals":{"13":{},"14":{}},"functions":{"trip":{"kind":"mechanism","terminals":[]},"contact":{"kind":"contact","normal_state":"open","terminals":["13","14"]}},"internal_relations":[{"relation":"feeds_internal","from":"trip","to":"contact"}]}

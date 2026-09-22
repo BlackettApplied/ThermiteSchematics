@@ -1,0 +1,20 @@
+[
+  {
+    "code": "W902",
+    "severity": "warning",
+    "message": "Potential declaration \"+24VDC\" exactly duplicates an earlier declaration's complete intent on the same net.",
+    "file": "sources/objects.json",
+    "line": 24,
+    "column": 5,
+    "jsonPointer": "/objects/2",
+    "uid": "30000000-0000-4000-8000-000000000003",
+    "related": [
+      {
+        "file": "sources/objects.json",
+        "line": 10,
+        "column": 5,
+        "note": "Earliest exact duplicate declaration uid \"30000000-0000-4000-8000-000000000002\" is here."
+      }
+    ]
+  }
+]

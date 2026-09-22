@@ -1,0 +1,86 @@
+[
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/0/path",
+    "line": 13,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/1/path",
+    "line": 18,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/2/path",
+    "line": 23,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/3/path",
+    "line": 28,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/4/path",
+    "line": 33,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/5/path",
+    "line": 38,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/6/path",
+    "line": 43,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/7/path",
+    "line": 48,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/8/path",
+    "line": 53,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/9/path",
+    "line": 58,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/10/path",
+    "line": 63,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/11/path",
+    "line": 68,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/12/path",
+    "line": 73,
+    "column": 15
+  },
+  {
+    "code": "E013",
+    "jsonPointer": "/libraries/13/path",
+    "line": 78,
+    "column": 15
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-twin-fixture:boundary",
+      "description": "Four independent synthetic test boundaries / unenergized",
+      "symbol": "thermite:terminal-strip",
+      "terminals": { "1": {}, "2": {}, "3": {}, "4": {} },
+      "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic unenergized wiring boundary; no real supply, load or installation is specified."
+      }
+    }
+  ]
+}

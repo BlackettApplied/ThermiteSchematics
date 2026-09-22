@@ -1,0 +1,19 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "R. STAHL 8570/12-407 component check"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "stahl-pilot",
+      "version": "0.1.0",
+      "path": "../.."
+    },
+    {
+      "name": "stahl-8570-12-407-fixture",
+      "version": "1.0.0",
+      "path": "fixture"
+    }
+  ]
+}

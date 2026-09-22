@@ -1,0 +1,195 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:lc1-d40p7",
+      "description": "TeSys D 3-pole contactor, 230 V AC 50/60 Hz coil, factory 1 NO + 1 NC auxiliary contacts",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "LC1-D40P7",
+        "document": {
+          "url": "https://sy-dep-epc-lpc.web.cern.ch/components/datasheets/epc-lpc%20%28converters%29/LC1-D_Breaker%20Contactor_Telemecanique.pdf",
+          "title": "TeSys contactors — Model d, historical Schneider Electric / Telemecanique extract",
+          "revision": "24501-EN_Ver6.0; 24532-EN_Ver2.11; publication date not stated",
+          "pages": "PDF 1 (24501/2), PDF 13 (24532/2)"
+        },
+        "modelingNotes": [
+          "Historical selection explicitly supports LC1-D40P7. Modern exact datasheet spells LC1D40P7; LC1D40AP7 is a distinct replacement, excluded.",
+          "Exact product ratings: Schneider Electric LC1D40P7 datasheet, October 10, 2023, pp. 1–2, manufacturer-authored distributor mirror: https://files.kempstoncontrols.com/files/6910a94da3ba87d916791800fa6adff8/LC1D40P7.pdf",
+          "Main capability: 40 A AC-3 at <=440 V and ambient <60 deg C; 60 A AC-1 at the same conditions; 18.5 kW at 380–400 V AC 50 Hz AC-3. No unconditional main-current or nominal-main-voltage scalar asserted.",
+          "P7 coil: 230 V AC, 50/60 Hz; no built-in bidirectional peak limiting diode suppressor according to exact datasheet. No accessory suppressor modeled. No polarity assigned.",
+          "Terminal keys preserve S1 diagram labels exactly, including T1/2, T2/4, T3/6, 13/NO and 21/NC; no phase or physical orientation inference.",
+          "A1 and A2 are required for electrical operation. Main and auxiliary contact usage is application-dependent. Coil and contact functions and mechanical actuation relations never join nets; no fixed links are asserted.",
+          "All documented circuit functions are modeled. Physical duplicated coil access and exhaustive clamp inventory are unverified. Optional add-on contact blocks, suppressors and enclosing-panel bonding are outside this selected-order model."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 12 endpoints of the applicable historical 3-pole LC1-D09 to D150 diagram are included. Exact physical clamping/access-point inventory, especially possible duplicated coil access, is not established; no duplicate endpoints or internal links invented. No PE/shield/communication endpoint is documented for the selected circuit."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Main NO contact endpoint 1/L1; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "T1/2": {
+          "description": "Main NO contact endpoint T1/2; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3/L2": {
+          "description": "Main NO contact endpoint 3/L2; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "T2/4": {
+          "description": "Main NO contact endpoint T2/4; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "5/L3": {
+          "description": "Main NO contact endpoint 5/L3; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "T3/6": {
+          "description": "Main NO contact endpoint T3/6; marking from S1 diagram",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "13/NO": {
+          "description": "Factory auxiliary contact endpoint 13/NO; marking from S1 diagram",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "14": {
+          "description": "Factory auxiliary contact endpoint 14; marking from S1 diagram",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "21/NC": {
+          "description": "Factory auxiliary contact endpoint 21/NC; marking from S1 diagram",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "22": {
+          "description": "Factory auxiliary contact endpoint 22; marking from S1 diagram",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "A1": {
+          "description": "230 V AC 50/60 Hz coil endpoint A1; no polarity assigned",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        },
+        "A2": {
+          "description": "230 V AC 50/60 Hz coil endpoint A2; no polarity assigned",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 230,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "main1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "T1/2"]
+        },
+        "main2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "T2/4"]
+        },
+        "main3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "T3/6"]
+        },
+        "auxNO": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13/NO", "14"]
+        },
+        "auxNC": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21/NC", "22"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main1"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main2"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "main3"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNO"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "auxNC"
+        }
+      ],
+      "circuitSymbols": {
+        "coil": "coil",
+        "main1": "contact-no",
+        "main2": "contact-no",
+        "main3": "contact-no",
+        "auxNO": "contact-no",
+        "auxNC": "contact-nc"
+      },
+      "terminalOrder": [
+        "A1",
+        "A2",
+        "1/L1",
+        "T1/2",
+        "3/L2",
+        "T2/4",
+        "5/L3",
+        "T3/6",
+        "13/NO",
+        "14",
+        "21/NC",
+        "22"
+      ]
+    }
+  ]
+}

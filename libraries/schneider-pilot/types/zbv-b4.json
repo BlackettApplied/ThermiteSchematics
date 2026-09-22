@@ -1,0 +1,57 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zbv-b4",
+      "description": "Red integral LED light block, 24 V AC/DC, screw clamps, for 22 mm Harmony XB4/XB5 heads",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZBV-B4",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-ZBVB4.PDF",
+          "title": "Product data sheet: ZBVB4",
+          "revision": "2017-08-04",
+          "pages": "1-2"
+        },
+        "modelingNotes": [
+          "The library preserves the spelling ZBV-B4. The Schneider ZBVB4 sheet and historical ZBV B4 selection row support the presentation-separator mapping.",
+          "Bare red integral LED light block only. Head, fixing collar, contacts, transformer and test-light accessories are separately specified.",
+          "X1/X2 lamp schematic visually verified on manufacturer image XB4_632_CPSCT16033 linked from the exact ZBVB4 product page: https://download.se.com/files?default_image=DefaultProductImage.png&p_Doc_Ref=XB4_632_CPSCT16033&p_File_Type=rendition_1500_jpg. The image is family marked ZBV; exact production revision is not asserted.",
+          "Rated supply 24 V AC/DC, AC 50/60 Hz; operating limits 19.2-30 V DC and 21.6-26.4 V AC. No polarity assignment is inferred from adjacent models.",
+          "Exact datasheet states 18 mA consumption; linked image shows 14 mA (Ieff). No scalar current rating is encoded because these disagree.",
+          "Screw clamp torque 0.8-1.2 N m; up to two 1.5 mm2 conductors with cable ends; minimum one 0.22 mm2 without cable end. Shared terminal policy permits the documented two-conductor connection.",
+          "Both supply terminals required under lamp modeling policy. Load membership does not join nets; there is no factory fixed wire link between X1 and X2. No surrounding collar/panel bonding path is asserted."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Two external screw-clamp lamp connections X1 and X2, supported by the exact product-linked body schematic and product sheet. Bare light block only; no contact, PE/bond, shield or communication terminals. Separately ordered heads, collars and accessories and their bonding interfaces are outside this scope."
+      },
+      "terminals": {
+        "X1": {
+          "description": "Lamp supply terminal X1; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "X2": {
+          "description": "Lamp supply terminal X2; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "light": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "light": "lamp"
+      },
+      "terminalOrder": ["X1", "X2"]
+    }
+  ]
+}

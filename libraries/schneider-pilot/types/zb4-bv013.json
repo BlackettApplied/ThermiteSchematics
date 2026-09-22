@@ -1,0 +1,40 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bv013",
+      "description": "Harmony XB4 metal pilot light HEAD sub-assembly - plain lens, white, Ø22 mm; head only (lens + metal bezel), for a body with integral/universal LED. No electrical terminals.",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BV013",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal control and signaling units for Ø 22 mm - Catalog",
+          "revision": "DIA5ED2121212EN, October 2021 - V13.0",
+          "pages": "PDF p.69 (printed 67) Heads only / With plain lens / White ZB4BV013; PDF p.68 (printed 66) complete-unit composition XB4BVB1 = ZB4BVB1 + ZB4BV013; PDF p.21 (printed 18) sub-assembly overview"
+        },
+        "modelingNotes": [
+          "ZB4BV013 is a head-only sub-assembly: white plain lens + Ø22 mm metal bezel. Catalog 'Heads only' table (PDF p.69) lists it under 'With plain lens / White', footnote 'For use with bodies comprising a light source with integral LED only.' The se.com product page (https://www.se.com/us/en/product/ZB4BV013/) describes it as 'Head for pilot light, Harmony XB4, metal, white, 22 mm, universal LED, plain lens' and lists no electrical connection or voltage.",
+          "Purely mechanical/optical scope: zero electrical terminals, no LED, no contacts. The integral LED light source and the screw-clamp supply terminals reside in the SEPARATELY ORDERED body sub-assembly (e.g., ZB4BVB1 24 V, ZB4BVG1 110-120 V, ZB4BVM1 230-240 V). Complete illuminated unit XB4BVB1 = ZB4BVB1 body + ZB4BV013 head (PDF p.68). None of those LED/terminal parts are imported into this head type.",
+          "Order identity kept as expected 'ZB4-BV013'; the manufacturer omits the presentation hyphen and spells it 'ZB4BV013' in the catalog rows and product URL. Job hint anticipated this hyphen difference.",
+          "No electrical bond is documented on the head. The panel-clamping fixing collar belongs to the body sub-assembly (catalog p.24 footnote: 'the body (fixing collar and contact)'), so any panel/metalwork bonding is outside this head's scope and is not asserted. No invented electrical pins or screw positions.",
+          "Exact suffix matters: plain lens = ZB4BV013 (this part); legend-insertion lens = ZB4BV013E; grooved lens = ZB4BV013S. Source 'With plain lens, White' matches the plain, non-legend, non-grooved white head. Color digit 1 = white.",
+          "White plain-lens mechanical head with zero documented electrical terminals; LED supply block is separate. The metal head/collar/panel attachment and bonding interface is not electrically established. No exhaustive absence of conductive interfaces or installed bond is claimed."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "White plain-lens mechanical head with zero documented electrical terminals; LED supply block is separate. The metal head/collar/panel attachment and bonding interface is not electrically established. No exhaustive absence of conductive interfaces or installed bond is claimed."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "HEAD": {
+          "connector": "Ø22 mm plain white lens head (metal bezel + plain lens)",
+          "description": "Mechanical/optical head for a Harmony XB4 integral-LED pilot light body; snap-fits onto the separately ordered body sub-assembly. No electrical pins."
+        }
+      }
+    }
+  ]
+}

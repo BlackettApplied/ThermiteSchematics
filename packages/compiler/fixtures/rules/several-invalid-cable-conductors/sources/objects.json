@@ -1,0 +1,46 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "20000000-0000-4000-8000-000000000011",
+      "kind": "device",
+      "designation": "LEFT",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000012",
+      "kind": "device",
+      "designation": "RIGHT",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000013",
+      "kind": "cable",
+      "designation": "CBL-MULTI",
+      "type": "rules:cable",
+      "conductors": [
+        {
+          "id": "Z",
+          "endpoints": [
+            { "device": "LEFT", "terminal": "T" },
+            { "device": "RIGHT", "terminal": "T" }
+          ]
+        },
+        {
+          "id": "2",
+          "endpoints": [
+            { "device": "LEFT", "terminal": "T" },
+            { "device": "RIGHT", "terminal": "T" }
+          ]
+        },
+        {
+          "id": "A",
+          "endpoints": [
+            { "device": "LEFT", "terminal": "T" },
+            { "device": "RIGHT", "terminal": "T" }
+          ]
+        }
+      ]
+    }
+  ]
+}

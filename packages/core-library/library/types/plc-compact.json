@@ -1,0 +1,70 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:plc-compact",
+      "description": "Compact 24 VDC PLC with two digital inputs and two digital outputs",
+      "terminals": {
+        "L+": {
+          "role": "supply_positive",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" }
+        },
+        "M": {
+          "role": "supply_return",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" }
+        },
+        "X1.0": {
+          "role": "digital_input_0",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" },
+          "connection_policy": "exclusive"
+        },
+        "X1.1": {
+          "role": "digital_input_1",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" },
+          "connection_policy": "exclusive"
+        },
+        "X2.0": {
+          "role": "digital_output_0",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" },
+          "connection_policy": "exclusive"
+        },
+        "X2.1": {
+          "role": "digital_output_1",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" },
+          "connection_policy": "exclusive"
+        }
+      },
+      "functions": {
+        "supply": { "kind": "load", "terminals": ["L+", "M"] },
+        "di0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X1.0"]
+        },
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["X1.1"]
+        },
+        "do0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X2.0"]
+        },
+        "do1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["X2.1"]
+        }
+      },
+      "internal_relations": [
+        { "relation": "feeds_internal", "from": "supply", "to": "di0" },
+        { "relation": "feeds_internal", "from": "supply", "to": "di1" },
+        { "relation": "feeds_internal", "from": "supply", "to": "do0" },
+        { "relation": "feeds_internal", "from": "supply", "to": "do1" }
+      ],
+      "symbol": "iec:plc"
+    }
+  ]
+}

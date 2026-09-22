@@ -1,0 +1,59 @@
+trace LS1
+  uid 596f728b-1445-4c4b-8974-a3b4ea703636
+  components:
+    component net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a
+      roots:
+        terminal LS1.13
+      potentials:
+        potential +24VDC uid=46be3efd-17b7-43ee-bb9d-a019c4fb2cdd electrical={"nominal_voltage":24,"polarity":"positive","voltage_type":"DC"}
+      visits:
+        visit 0 LS1.13
+        visit 1 JB1.X1.1 via W-FLD-002 from LS1.13
+        visit 2 TB1.2 via CBL1.1+ from JB1.X1.1
+        visit 3 TB1.1 via JP1 from TB1.2
+        visit 4 PS1.+ via W-CTL-003 from TB1.1
+        visit 5 PLC1.L+ via W-CTL-001 from PS1.+
+      edges:
+        edge
+          wire W-CTL-001 uid=5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d
+          from PLC1.L+
+          to PS1.+
+        edge
+          wire W-CTL-003 uid=c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c
+          from PS1.+
+          to TB1.1
+        edge
+          wire W-FLD-002 uid=4f3f64e8-af7c-4b5d-9cbc-250368ad3e75
+          from JB1.X1.1
+          to LS1.13
+        edge
+          jumper JP1 uid=7bdee01c-ec15-4747-9208-ee650da1e681
+          from TB1.1
+          to TB1.2
+        edge
+          cable-conductor CBL1.1+ cable-uid=c4c1bfdf-567a-4f6c-9e08-147342061afe conductor-id=1+
+          from JB1.X1.1
+          to TB1.2
+    component net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9
+      roots:
+        terminal LS1.14
+      potentials:
+        (none)
+      visits:
+        visit 0 LS1.14
+        visit 1 JB1.X1.2 via W-FLD-003 from LS1.14
+        visit 2 TB1.3 via CBL1.1- from JB1.X1.2
+        visit 3 PLC1.X1.0 via W-FLD-001 from TB1.3
+      edges:
+        edge
+          wire W-FLD-001 uid=e84a9629-373c-4946-8b48-184b7464d474
+          from PLC1.X1.0
+          to TB1.3
+        edge
+          wire W-FLD-003 uid=c2dccef7-ec9d-48dc-b58b-6e0dd990dd51
+          from JB1.X1.2
+          to LS1.14
+        edge
+          cable-conductor CBL1.1- cable-uid=c4c1bfdf-567a-4f6c-9e08-147342061afe conductor-id=1-
+          from JB1.X1.2
+          to TB1.3

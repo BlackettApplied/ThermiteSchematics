@@ -1,0 +1,71 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "phoenix-terminal-pilot:3036149",
+      "description": "Phoenix Contact ST 16, gray, feed-through, 2 ordinary wire clamps",
+      "category": "terminal-strip",
+      "symbol": "thermite:terminal-strip",
+      "catalog": {
+        "manufacturer": "Phoenix Contact",
+        "orderNumber": "3036149",
+        "document": {
+          "url": "https://www.phoenixcontact.net/catalog/downloads/CLIPLINE_1_EN.pdf",
+          "title": "CLIPLINE complete - Modular terminal blocks, part 1",
+          "revision": "2011 catalog; component hardware revision not stated",
+          "pages": "Printed p.147, PDF p.149: exact order, IEC data and circuit diagram; see evidence/sources.md for cross-checks"
+        },
+        "modelingNotes": [
+          "Exact order 3036149, gray; a catalog candidate selected from a representative industrial materials list, not confirmation of its purchase or installed strip position.",
+          "A1/A2/B1/B2 are neutral authoring identifiers for ordinary wire clamps, not manufacturer-printed numbers or the project terminal-strip position. A is the left side of the cited circuit diagram; B is the right side. Unused keys do not exist on smaller variants.",
+          "All ordinary clamps belong to one physical busbar. The type does not join nets automatically: the project must explicitly author the fixed internal-common jumpers shown in the example.",
+          "Only authored wires, jumpers and terminated cable cores join physical nets. Function symbols never create continuity. Shared connection policy accommodates the internal-common representation; it does not authorize arbitrary multiple external conductors in one clamp.",
+          "Ordinary passive clamps are not universally required. Projects may require selected external connections using connectionReview; unused clamp capacity is legitimate.",
+          "The IEC nominal capability is attached to each ordinary point for inspection, not multiplied by the number of clamps. Ratings are subject to the catalog conductor, bridge, installation and approval conditions; the compiler does not verify these conditions or aggregate block current.",
+          "The ordinary block has no protective-earth, shield or power-supply terminal. DIN-rail mounting does not make this a PE terminal. Optional bridge shafts, test interfaces and fitted accessories are not modeled.",
+          "IEC 2011 catalog rating: 1000 V, 76 A at 16 mm2; maximum 90 A with 25 mm2 conductor. Solid 0.2-25 mm2; stranded 0.2-16 mm2; ferruled 0.25-16 mm2; stripping 18 mm. The manufacturer catalog extract dated 2009-09-30 instead lists 800 V; this model follows the stated 2011 catalog revision and does not retroactively uprate an installed older block."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 2 ordinary spring-cage wire clamps are inventoried. Accessory bridge/test interfaces and accessory assemblies are unmodeled. Fixed internal commoning requires explicit project jumpers; switch state and clamp occupancy limits are not evaluated."
+      },
+      "terminals": {
+        "A1": {
+          "role": "passive_connection",
+          "description": "ST 16 ordinary spring-cage wire clamp A1; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 1000,
+            "current": 76
+          }
+        },
+        "B1": {
+          "role": "passive_connection",
+          "description": "ST 16 ordinary spring-cage wire clamp B1; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 1000,
+            "current": 76
+          }
+        }
+      },
+      "terminalOrder": ["A1", "B1"],
+      "functions": {
+        "A1": {
+          "kind": "bus",
+          "terminals": ["A1"]
+        },
+        "B1": {
+          "kind": "bus",
+          "terminals": ["B1"]
+        }
+      },
+      "circuitSymbols": {
+        "A1": "terminal",
+        "B1": "terminal"
+      }
+    }
+  ]
+}

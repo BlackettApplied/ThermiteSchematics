@@ -1,0 +1,127 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p07",
+      "description": "Motor circuit breaker / TeSys GV2 (GV2P07) / thermal-magnetic / 3 poles / adjustment 1.6-2.5 A / rotary knob / no accessories",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P07",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/SQD-GV2P07.PDF",
+          "title": "Schneider Electric / Square D product data sheet GV2P07 - TeSys GV2 Motor circuit breaker, thermal-magnetic, 1.6...2.5 A",
+          "revision": "Dec 06, 2017 (SQD-GV2P07)",
+          "pages": "pp.1–3 exact characteristics; applicable GV2P•• circuit in official GV2P05_DATA SHEET.PDF p.9; exact selection in2017 Section18 p.33"
+        },
+        "modelingNotes": [
+          "Exact order GV2P07 confirmed in three Schneider-authored documents: SQD-GV2P07.PDF (iportal.se.com, Dec 06 2017), IE datasheet GV2P07_DATASHEET (Jul 27 2023), and US Digest 0100CT1501 Sec.18 Table 18.123 (1.6-2.5 A -> GV2P07). Manufacturer spelling is GV2P07 (no hyphen); the GV2-P07 hyphen in the source/job is a presentation separator, not a variant. No successor substituted.",
+          "TeSys GV2 3-pole thermal-magnetic motor circuit breaker with rotary operator. SQD sheet: 'Control type: Rotary knob'; IE datasheet: 'rotary handle'. Matches source 'operating with rotary knob'.",
+          "Three poles are mechanically linked (single rotary operator, common thermal-magnetic trip): modeled as ganged_with. Poles are switching contacts and do NOT form permanent conductive joins; no fixed links are declared.",
+          "Ratings (capabilities, with conditions): thermal adjustment 1.6-2.5 A (In up to 2.5 A) conforming to IEC 60947-4-1; fixed magnetic tripping current 33.5 A (approx. 13x In upper); Ue 690 V AC 50/60 Hz, Ui 690 V, Uimp 6 kV; Icu 100 kA at 230/240/400/415/440/500 V and 8 kA at 690 V (IEC 60947-2); phase-failure sensitivity yes; suitability for isolation yes; power dissipation 2.5 W/pole; 100 000 cycles.",
+          "rating.nominal_voltage is intentionally left unassigned on terminals: the device is multi-voltage (rated up to 690 V AC, usable 230-690 V). 690 V AC is the maximum capability recorded here, not an assigned circuit voltage. terminals carry voltage_type AC (device is AC / AC-3). current 2.5 A on terminals is the adjustment upper bound, not a trip setting or conductor ampacity.",
+          "Connections: screw clamp terminals, 2 conductors 1-6 mm2 solid / 1.5-6 mm2 flexible / 1-4 mm2 with ferrule, tightening 1.7 N.m. 35 mm DIN-rail (clip) or panel (2x M4). 89 x 45 x 97 mm, dark grey, IP20, IK04. These conditional installation limits are documentation, not automated conductor checks.",
+          "No auxiliary contacts, undervoltage/shunt releases, or fault/position-signaling contacts are part of the GV2P07 base order; those are separate add-on orders (e.g. GVAE1, GVAE11, GVAN11, GVAE20, GVAN20, GVAU/GVAS/GVAD releases, GVAM signaling, GV2AK00). GV2P07 has no protective-earth terminal; panel/enclosure bonding is external and not a device pin.",
+          "Trip curves, short-circuit/backup coordination, group-motor and UL 508 Type E/F application (line-side barrier GV2GH7) are not evaluated.",
+          "Coordinator visually inspected the explicitly labeled GV2P•• connection diagram on physical page9 of the official GV2P05 data sheet. It directly establishes the GV2P main terminal scheme 1/L1–2/T1,3/L2–4/T2,5/L3–6/T3 with three mechanically ganged switched poles; exact GV2P07 identity and1.6–2.5 A setting remain established by the exact product data and Section18 Table18.123. The unrelated GV7R diagram is not used as terminal evidence. https://iportal.se.com/Contents/docs/GV2P05_DATA%20SHEET.PDF"
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All six main power terminals of the three poles are declared; this is the entire electrical interface of the GV2P07 base device. No protective-earth terminal exists on the device, and no auxiliary/release/signaling contacts are part of this order (separate GVA*/GV2AK00 accessories)."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Pole 1 line terminal, marked 1/L1",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        },
+        "2/T1": {
+          "description": "Pole 1 load terminal, marked 2/T1",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        },
+        "3/L2": {
+          "description": "Pole 2 line terminal, marked 3/L2",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        },
+        "4/T2": {
+          "description": "Pole 2 load terminal, marked 4/T2",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        },
+        "5/L3": {
+          "description": "Pole 3 line terminal, marked 5/L3",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        },
+        "6/T3": {
+          "description": "Pole 3 load terminal, marked 6/T3",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 2.5
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

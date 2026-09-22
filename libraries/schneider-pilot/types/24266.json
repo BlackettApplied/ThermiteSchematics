@@ -1,0 +1,96 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24266",
+      "description": "Schneider Electric Multi 9 C60N circuit breaker, 2P, curve C, 4 A",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24266",
+        "document": {
+          "url": "https://www.sportellotelematicocastionedellapresolana.it/sites/default/files/2023-02/3481-Schede%20tecniche-R1.pdf",
+          "title": "Schneider Electric Multi 9 — Interruttori C60N, Curve B e C (reproduced in Schede tecniche-R1)",
+          "revision": "Undated municipal compilation; pages match Multi 9 Catalogo 2010–2011",
+          "pages": "Printed 14–15; PDF physical 5–6"
+        },
+        "modelingNotes": [
+          "Exact 24266 row: C60N, 2P, curve C, 4 A; width four 9 mm steps. Manufacturer catalog printed p.15, 2P diagram E45094.",
+          "Terminal markings 1 and 3 above, 2 and 4 below; switched pole pairs 1–2 and 3–4. No phase, neutral or supply-direction assignment is inferred. Ganging is mechanical and creates no fixed electrical links.",
+          "Current rating 4 A at 30 °C; curve C magnetic operation 5–10 times In. Trip simulation and installation coordination are not modeled.",
+          "AC ratings on printed p.14: Ue 400 V; CEI EN 60898 Icn 6000 A at 400 V for 2P. CEI EN 60947-2 Icu 20 kA at 230–240 V and 10 kA at 400–415 V for 2P. Ui 500 V AC; Uimp 6 kV. Conditional capabilities are not assigned circuit voltage; nominal_voltage and voltage_type omitted.",
+          "Cage terminals: for In up to 25 A, conductor capacity up to 16 mm² flexible or 25 mm² rigid. This is not an automated conductor-sizing rule.",
+          "Bare breaker only; separately fitted auxiliary/release/residual-current accessories are outside this order model. No PE, shield or communication terminal is shown for this breaker. Connections are application-dependent, so none is universally required. Open contact state follows the catalog schematic, not an asserted operating state.",
+          "Manufacturer-authored pages at a municipal mirror; supplied catalog cover and pp.14–15 images were also visually inspected. Both pole functions use the existing breaker circuit symbol."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Four main cage terminals 1, 2, 3, 4 in the applicable 2P diagram E45094. Scope is exact bare 24266 breaker; no accessory terminals or external bonding paths are included."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1, terminal 1; catalog upper endpoint",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "2": {
+          "description": "Pole 1, terminal 2; catalog lower endpoint",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "3": {
+          "description": "Pole 2, terminal 3; catalog upper endpoint",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        },
+        "4": {
+          "description": "Pole 2, terminal 4; catalog lower endpoint",
+          "role": "passive",
+          "connection_policy": "shared",
+          "required": false,
+          "rating": {
+            "current": 4
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "terminalOrder": ["1", "3", "2", "4"]
+    }
+  ]
+}

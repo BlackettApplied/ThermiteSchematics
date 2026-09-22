@@ -1,0 +1,39 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-ba1",
+      "description": "Head for non-illuminated push-button, Harmony XB4, metal, flush, white, 22 mm, spring return, unmarked (mechanical actuator head only; no contacts)",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BA1",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal - Control and signaling units, Catalog",
+          "revision": "October 2021 - V13.0, ref DIA5ED2121212EN",
+          "pages": "catalog p.26 (physical PDF page 28): Spring return pushbuttons, unmarked - Heads only; body/contact assemblies p.74"
+        },
+        "modelingNotes": [
+          "ZB4BA1 is the mechanical push-button HEAD only (Harmony XB4, metal, flush, white, 22 mm, spring return, unmarked). It has no electrical contacts, no terminals and no lamp. Catalog page 26 lists it under 'Heads only'; the complete unit XB4BA11 (white, 1 NO) is explicitly ZB4BZ101 + ZB4BA1, so the contacts belong to the separately ordered body ZB4BZ101, not to this head.",
+          "Manufacturer prints the order code without a hyphen (ZB4BA1); this library uses a presentation hyphen (ZB4-BA1). Same product.",
+          "Zero documented electrical terminals on this head-only order; contacts and light blocks belong to separately ordered bodies. The metal-head/collar/panel attachment and bonding interface is not electrically established by the reviewed evidence. No installed bond, exhaustive electrical isolation or PE terminal is inferred.",
+          "connectorPorts.HEAD documents the mechanical snap-fit of the head onto a ZB4BZ body/fixing collar. It is an assembly relation only and carries no electrical pins.",
+          "No switching rating is claimed for the head; switching/electrical ratings belong to the contact block (body). Mechanical/environmental figures from the manufacturer product page (IP66/IP67/IP69/IP69K, -40 to +70 C, high mechanical durability) are documentation notes only and are not modeled as terminal electrical ratings."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical head with zero documented electrical terminals; contacts and light blocks are separate. Metal-head attachment and bonding through collar/panel remain unresolved; an exhaustive empty physical inventory or installed bond is not asserted."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "HEAD": {
+          "connector": "Harmony XB4 push-button head snap-fit interface to ZB4BZ body/fixing collar",
+          "description": "Mechanical actuator/mounting interface only; no electrical pins. Contacts are provided by the separately ordered body/contact assembly."
+        }
+      }
+    }
+  ]
+}

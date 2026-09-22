@@ -1,0 +1,90 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "releco-pilot:s7-c",
+    "manufacturer": "Releco",
+    "orderNumber": "S7-C"
+  },
+  "type": {
+    "path": "types/s7-c.json",
+    "sha256": "4b50e85e4563159a42ff585161edfcd515dfbd977d428cec7813c351f7e0ae75"
+  },
+  "research": {
+    "path": "research/s7-c.md",
+    "sha256": "712a7d98813aaff3a1468246542e961e34115c32a963b93793d7f3063f008934"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "C.5",
+      "C.6",
+      "C.7",
+      "C.8",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4",
+      "M.5",
+      "M.6",
+      "M.7",
+      "M.8"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.5",
+        "to": "M.5",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.6",
+        "to": "M.6",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.7",
+        "to": "M.7",
+        "sourceId": "wor32"
+      },
+      {
+        "from": "C.8",
+        "to": "M.8",
+        "sourceId": "wor32"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "1ab27d61fbea0d60d632d7706bd2f8198a7e3294ce9e456e798e511fcc581a54",
+    "packet.request.json": "e4c0ef1d8953c659de5d256635c6c05624c6dcd71625ebf9742154d6f0f36431",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "ca91dc672d307c6edb576bf386c8fd47383158ee81db5127d9b8cc4976f45c05",
+    "system.json": "4406cd4479bbacdecb731c08f3dc9a427699d4a38a21fe477f86602eee68b464"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/cable-type.schema.json",
+  "title": "CableType",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "id", "conductors"],
+  "properties": {
+    "kind": { "const": "cable_type" },
+    "id": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/typeId"
+    },
+    "conductors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "color"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "color": { "type": "string" },
+          "size": {
+            "type": "string",
+            "description": "Conductor-size trade designation, such as 18AWG or 1.5mm2."
+          }
+        }
+      }
+    },
+    "shield": { "type": "boolean" },
+    "construction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "outer_diameter": {
+          "type": "string",
+          "description": "Outer-diameter trade designation including its unit."
+        },
+        "jacket_material": { "type": "string" },
+        "conductor_material": { "type": "string" },
+        "shield_construction": { "type": "string" }
+      }
+    },
+    "description": { "type": "string" },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    }
+  }
+}

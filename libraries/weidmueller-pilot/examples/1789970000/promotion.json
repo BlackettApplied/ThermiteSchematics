@@ -1,0 +1,63 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "weidmueller-pilot:1789970000",
+    "manufacturer": "Weidmüller",
+    "orderNumber": "1789970000"
+  },
+  "type": {
+    "path": "types/1789970000.json",
+    "sha256": "ea98ea02ae35803051a4bf07dde7018833491d4cd578b4b5834f1559e9deedd0"
+  },
+  "research": {
+    "path": "research/1789970000.md",
+    "sha256": "9ed56b59a2e96a59e3b5be796a7cbf9e2f35c57287f5230985856a19678c0d5a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "C.1",
+      "C.2",
+      "C.3",
+      "C.4",
+      "PE",
+      "M.1",
+      "M.2",
+      "M.3",
+      "M.4"
+    ],
+    "requiredTerminalKeys": ["PE"],
+    "fixedLinks": [
+      {
+        "from": "C.1",
+        "to": "M.1",
+        "sourceId": "rockstar-2012"
+      },
+      {
+        "from": "C.2",
+        "to": "M.2",
+        "sourceId": "rockstar-2012"
+      },
+      {
+        "from": "C.3",
+        "to": "M.3",
+        "sourceId": "rockstar-2012"
+      },
+      {
+        "from": "C.4",
+        "to": "M.4",
+        "sourceId": "rockstar-2012"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "0dbfefde35ce0623d7f9239fa59e0aaa962256f2784eaf9e8b94c8aec0635924",
+    "packet.request.json": "66e9699e0c49e7c2c0ac8c389a1b56200c30eb64490c75101b7fa7444b9e69a9",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "ed7dae458706ae925d0e32e8487f7e38087e9e4b26183553fb0f61e8dbf56a32",
+    "system.json": "72518865aaae20e2e2dd84d43d8cd01e85792abc32526ffbb296e43283f338c0"
+  }
+}

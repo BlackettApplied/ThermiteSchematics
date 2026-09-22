@@ -1,0 +1,138 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sna356204r1100",
+      "description": "BRU125AL / historical BRU125A single-pole eight-connection distribution block",
+      "category": "terminal-strip",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SNA356204R1100",
+        "document": {
+          "url": "https://tv.lvsweb.com.mx/archivosclasifica/BLOQUES%20DE%20DISTRIBUCION.pdf",
+          "title": "ABB BRU distribution terminal blocks — Single pole, 27 mm spacing, BRU125AL",
+          "revision": "1SNC166002S0201; image reference 1SNC166037V0014; undated",
+          "pages": "PDF p.2, printed ABB | 1"
+        },
+        "modelingNotes": [
+          "Exact order appears as BRU125AL in S1/S2 and BRU125A in historical S3. Installed hardware revision is unknown.",
+          "LARGE, MEDIUM and BRANCH1–BRANCH6 are authoring aliases, not manufacturer legends. The six branch ordinals do not specify physical order. S2 inventories one 10 mm, one 7 mm and six 6.5 mm openings; historical S3 visually corroborates two larger and six branch positions.",
+          "All eight connections share one fixed feed-through pole. Author explicit project links LARGE to every other terminal to represent factory continuity. Singleton bus functions never join nets. Shared policy permits representation links and external wiring, not arbitrary multiple conductors per clamp.",
+          "No connection is universally required; unused passive distribution positions are valid. No phase, neutral or protective-earth potential is assigned. No separate bond, shield, signal, communication or accessory terminal is evidenced.",
+          "S2: IEC copper maximum 125 A at 35 mm²; aluminium 100 A at 35 mm²; UL copper 115 A at 2 AWG. IEC voltage 1000 V AC / 1500 V DC; UL 600 V. These are conditional capabilities, not assigned supplies or per-branch current limits. No scalar ratings are modeled.",
+          "S3 historical exact-order table: 600 V / 125 A, inputs 10–35 and 6–16 mm²; six bare-wire branch outputs 2.5–16 mm² but only four with ferrules. Historical job description says 690 V. Reconcile installed revision and applicable standard before applying ratings; do not uprate existing hardware from S2.",
+          "S2 strip/torque: 10 mm opening 15 mm / 3.5–5 N·m; 7 mm and 6.5 mm openings 11 mm / 2–3 N·m. S1 prints 4.2 A 1 s withstand versus S2 4.2 kA; no withstand rating is modeled.",
+          "S2 URL: https://tv.lvsweb.com.mx/archivosclasifica/BLOQUES%20DE%20DISTRIBUCION.pdf. S3 visual drawing: https://cs-cs.net/wp-uploads/generic/documents/ABB_BRU-BRT.pdf , 9CND0000000037, PDF p.1 / printed p.39. See research.md for authority and access limitations. Separate lateral jumper accessories are excluded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "Eight base-block cable terminations: one large, one medium, six equivalent branch points on one fixed pole. Functional aliases only; no physical order or printed numbering asserted. No separately purchased jumpers or additional connection classes included."
+      },
+      "terminals": {
+        "LARGE": {
+          "role": "power",
+          "description": "Large cable termination; authoring alias",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "MEDIUM": {
+          "role": "power",
+          "description": "Medium cable termination; authoring alias",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH1": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH2": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH3": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH4": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH5": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "BRANCH6": {
+          "role": "power",
+          "description": "Equivalent branch cable termination; authoring ordinal, no physical-position mapping",
+          "connection_policy": "shared",
+          "required": false
+        }
+      },
+      "functions": {
+        "LARGE": {
+          "kind": "bus",
+          "terminals": ["LARGE"]
+        },
+        "MEDIUM": {
+          "kind": "bus",
+          "terminals": ["MEDIUM"]
+        },
+        "BRANCH1": {
+          "kind": "bus",
+          "terminals": ["BRANCH1"]
+        },
+        "BRANCH2": {
+          "kind": "bus",
+          "terminals": ["BRANCH2"]
+        },
+        "BRANCH3": {
+          "kind": "bus",
+          "terminals": ["BRANCH3"]
+        },
+        "BRANCH4": {
+          "kind": "bus",
+          "terminals": ["BRANCH4"]
+        },
+        "BRANCH5": {
+          "kind": "bus",
+          "terminals": ["BRANCH5"]
+        },
+        "BRANCH6": {
+          "kind": "bus",
+          "terminals": ["BRANCH6"]
+        }
+      },
+      "circuitSymbols": {
+        "LARGE": "terminal",
+        "MEDIUM": "terminal",
+        "BRANCH1": "terminal",
+        "BRANCH2": "terminal",
+        "BRANCH3": "terminal",
+        "BRANCH4": "terminal",
+        "BRANCH5": "terminal",
+        "BRANCH6": "terminal"
+      },
+      "terminalOrder": [
+        "LARGE",
+        "MEDIUM",
+        "BRANCH1",
+        "BRANCH2",
+        "BRANCH3",
+        "BRANCH4",
+        "BRANCH5",
+        "BRANCH6"
+      ]
+    }
+  ]
+}

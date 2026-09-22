@@ -1,0 +1,17 @@
+# zb4-bj2 — Schneider ZB4-BJ2
+
+Decision: **candidate**, limited to the mechanical head; partial connection coverage.
+
+The historical spelling `ZB4-BJ2` is mapped to Schneider's `ZB4BJ2`: identical ordered characters, with the separator after the ZB4 family removed. The exact catalog row corroborates the historical long-handle, two-position, 90° description. This is a presentation-spelling inference, not a manufacturer declaration about legacy punctuation. Preserve `Schneider Electric`, `ZB4-BJ2`, and `schneider-pilot:zb4-bj2` in the proposal. The historical `0-1` wording does not establish supplied printed legends.
+
+Evidence opened and reviewed:
+
+- **S1:** [Schneider Product data sheet — ZB4BJ2](https://iportal.se.com/Contents/docs/SQD-ZB4BJ2.PDF), dated January 16, 2017, pp. 1–3 and 17. Identifies a black long-handle, maintained 90° selector head, 22 mm mounting, chromium-plated metal bezel. Visually inspected the exact head dimensions on p. 3 and the fitted-body contact sequence on p. 17. The latter describes added contacts, not included terminals. Local copy: `references/zb4bj2.pdf`.
+- **S2:** [Schneider Harmony XB4 metal control and signaling units catalog](https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF), October 2021, printed p. 55 / physical PDF p. 57. Visually inspected the exact ZB4BJ2 row under “Heads only” and its adjacent two-position maintained operator scheme. The same page explicitly separates the head from the body/contact assembly in the complete-unit composition. The illustration labeled ZB4BJ3 is a neighboring head and was not used as proof of this part's features. Supplied local copy: `references/schneider-xb4-2021.pdf`; browser opening failed on document size, so the local primary document was inspected.
+- **S3:** [Schneider ZB4BJ2 product page](https://www.se.com/us/en/product/ZB4BJ2/head-for-selector-switch-harmony-xb4-metal-black-22mm-long-handle-2-positions-stay-put/), undated, accessed September 12, 2026. Corroborates current unhyphenated identity and head description. Generic connection-method marketing is not evidence of head terminals.
+
+Independent connection inventory: zero documented electrical terminals; no included contact or light blocks, power/return, signal, communications or shield connections established for this head. No documented fixed electrical links. Electrical blocks and fixing collar belong to a separate assembly. A fitted contact's conducting state would not establish a permanent link.
+
+The metal head's PE/bonding interface through collar or panel remains undocumented in the reviewed evidence. No PE pin or panel continuity is inferred from the outline or metal material. Consequently the model has empty terminals/functions and **partial**, not complete, coverage. This limitation permits a mechanical documentation candidate, not a complete installed switch model. Use an accessory documentation view; no electrical symbol or geometry is authored.
+
+No electrical voltage/current rating is assigned to the head. The source's switch-subassembly description is consistent with mechanical scope but does not prove installed block selection. An official-domain search for the exact hyphenated spelling did not locate an explicit manufacturer punctuation cross-reference. No successor or additional component was researched. The coordinator performs schema and rendering verification; no builds, tests or bespoke fixture were run.

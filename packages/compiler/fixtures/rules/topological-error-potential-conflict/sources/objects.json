@@ -1,0 +1,55 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "30500000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "TARGET",
+      "type": "rules:policy-terminal"
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "FIRST",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "SECOND",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000004",
+      "kind": "wire",
+      "designation": "W-FIRST",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "E" },
+        { "device": "FIRST", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000005",
+      "kind": "wire",
+      "designation": "W-SECOND",
+      "endpoints": [
+        { "device": "TARGET", "terminal": "E" },
+        { "device": "SECOND", "terminal": "T" }
+      ]
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000006",
+      "kind": "potential",
+      "name": "+24VDC",
+      "at": { "device": "TARGET", "terminal": "E" },
+      "electrical": { "nominal_voltage": 24 }
+    },
+    {
+      "uid": "30500000-0000-4000-8000-000000000007",
+      "kind": "potential",
+      "name": "CONTROL",
+      "at": { "device": "TARGET", "terminal": "E" },
+      "electrical": { "nominal_voltage": 48 }
+    }
+  ]
+}

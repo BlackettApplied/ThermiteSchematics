@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "et200pro-fixture": {
+      "version": "1.0.0",
+      "path": "fixture",
+      "resolutionKind": "local",
+      "integrity": "sha256-vsmrCqEtHk8FQKFjutpdoUkKB5Yo0oc0+MGDQWzkC9E=",
+      "files": {
+        "library.json": "sha256-bAdawzI9KwsZpkY7Wca7vxwnOSxZl9F4wfklJdW+rjQ=",
+        "types.json": "sha256-75oqX4NanNcO+T4E0gdtyB/dRUDLxGO29dlv2Lp3aPQ="
+      }
+    },
+    "siemens-et200pro-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-oYeTJIzulqVDOeABoF2BBxGU+qDyG6ogWkJCWbFBDtU=",
+      "files": {
+        "library.json": "sha256-ncquQRXqSA7obdzGiQ+iXJMwUvTLmrvcKUOzmLMwEOY=",
+        "types/6EP1961-2BA41.json": "sha256-C7oEHOStyqjqMuT1E3cutBaYXuysrtAtTzVAN+nf0+s=",
+        "types/ai4-i-hf-cm4-m12.json": "sha256-f2pfJnekRyLj7j6u3idmv52bOkiGrgWq4sNbLzWi9rw=",
+        "types/ai4-u-hf-cm4-m12.json": "sha256-BDFzdvlzN3pRAnfGG3jEGakAICkxxC1i/VI2yaEOF3c=",
+        "types/ao4-u-hf-cm4-m12.json": "sha256-UyGPpqY7JPlXmdIdoNe/hox4g1oEiFeLwCkOzqOKjjw=",
+        "types/di8-hf-cm8-m12.json": "sha256-rbkdBl1s0Ehh8WsYvwdCgmXtlh1ltYSFOaXOu/rXzQM=",
+        "types/dq4-2a-hf-cm4-m12p.json": "sha256-UqmbFXIX9r18rcm8ixSTUqwb4pteHzmPBR5LHi1X//I=",
+        "types/im154-4-pn-hf-cm-m12-7-8.json": "sha256-FndasFmvSr3uW1R5ZN/BMA33wfnMfrW92ujlwHmADHA="
+      }
+    }
+  }
+}

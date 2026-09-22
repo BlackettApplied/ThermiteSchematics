@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/schema" },
+    { "path": "./packages/core-library" },
+    { "path": "./packages/compiler" },
+    { "path": "./packages/query" },
+    { "path": "./packages/render" },
+    { "path": "./packages/agent-tools" },
+    { "path": "./packages/cli" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "fixture:module",
+      "terminals": {
+        "1": {}
+      },
+      "functions": {}
+    }
+  ]
+}

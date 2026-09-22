@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bv063",
+      "description": "Blue plain-lens pilot-light head, Harmony metal, 22 mm; for integral-LED body",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BV063",
+        "document": {
+          "url": "https://www.farnell.com/datasheets/1644676.pdf",
+          "title": "Control and Signaling — Harmony style 4 pilot-light heads",
+          "revision": "April 2004; Schneider Electric / Telemecanique; Farnell mirror",
+          "pages": "Physical and printed p.31"
+        },
+        "modelingNotes": [
+          "Exact historical order ZB4-BV063 is a blue plain-lens head for a body comprising an integral LED; mass 0.026 kg. The 10/2021 catalog p.67 prints the matching head as ZB4BV063.",
+          "Mechanical/optical head only. No LED light block, contacts, transformer or fixing collar is included in this abstraction. No lamp supply terminals, electrical ratings or circuit functions are assigned.",
+          "The exact 2025 product sheet identifies a chromium-plated metal bezel and 22 mm mounting diameter. Its P1/P2 composition drawings describe compatible light-block arrangements, not installed head terminals.",
+          "No documented fixed electrical links. Protective bonding through the head, panel or attachment hardware is unresolved and is not asserted. Use an accessory documentation view."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Zero documented electrical terminals on the selected mechanical head. Manufacturer evidence separates the head from the light-source body. The metal head's protective-bond and attachment interface is not established; an exhaustive empty physical inventory or installed bond is not claimed."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

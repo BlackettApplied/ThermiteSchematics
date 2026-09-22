@@ -1,0 +1,124 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p22",
+      "description": "Motor circuit breaker / TeSys GV2 (Deca) / 3-pole / thermal-magnetic 20-25 A / 327 A fixed magnetic trip / rotary-handle control",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P22",
+        "document": {
+          "url": "https://docs.rs-online.com/cccf/A700000007865945.pdf",
+          "title": "Schneider Electric Product data sheet – Characteristics GV2P22 (Motor circuit breaker, TeSys Deca, 3P, 20 to 25A, thermal magnetic, screw clamp terminals, rotary handle)",
+          "revision": "Product data sheet, dated Jul 27, 2023 (RS Online manufacturer mirror)",
+          "pages": "pp.1-2 (characteristics); terminal schematic from TeSys GV Catalogue 2017 p.9 fig. DF569068"
+        },
+        "modelingNotes": [
+          "Manufacturer catalog spelling is GV2P22 (no hyphen); the source/job order 'GV2-P22' hyphen is a presentation separator, not a distinct reference or successor. Verified as a currently commercialised TeSys GV2 / TeSys Deca reference.",
+          "Identity and ratings from the Schneider Product data sheet (RS Online mirror, Jul 27 2023): 3P, motor circuit breaker, thermal-magnetic, rotary handle; In 25 A; thermal adjustment 20-25 A; magnetic tripping 327 A (fixed, non-adjustable); Ith 25 A; Ue/Ui 690 V AC 50/60 Hz; Uimp 6 kV; suitable for isolation; phase-failure sensitive; screw-clamp terminals, tightening 1.7 N.m; 45x89x97 mm; 2.5 W/pole; Cat A / AC-3.",
+          "Breaking capacity Icu is voltage-dependent: 100 kA @230/240 V, 50 kA @400/415 V, 20 kA @440 V, 10 kA @500 V, 4 kA @690 V AC (IEC 60947-2). The 690 V Ue is a capability maximum, not an assigned circuit voltage; terminal nominal_voltage is intentionally left unassigned. current 25 A on each pole is In (max thermal setting), a capability value.",
+          "Main-terminal markings verified visually from the TeSys GV Catalogue 2017 (Schneider-authored, electrocentr.com.ua mirror) p.9 schematic DF569068 'Thermal magnetic protection circuit breaker (with rotary control)': line 1/L1,3/L2,5/L3 (top); load 2/T1,4/T2,6/T3 (bottom). GV2P22 selection row (p.20) confirms 20...25 A / 327 A.",
+          "Three poles are switched contacts operated together by a single rotary handle and a common trip (internal_relations ganged_with). Ganging is mechanical only and does NOT create electrical continuity: no fixed links between poles or terminals.",
+          "Base GV2P22 has only the six main power terminals and no protective-earth terminal (IP20; 35 mm DIN-rail clip or 2xM4 panel mount). Auxiliary/signalling contacts (GVAE11, GVAE20, GVAED...), shunt/undervoltage releases (D1/D2), and short-circuit / position signalling (97/98, 05/06) are separate accessory orders and are excluded."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All six main power terminals of the base breaker are inventoried from the manufacturer schematic; the bare device has no other electrical connections. Optional auxiliary contacts, undervoltage/shunt trips and signalling contacts are separately ordered accessories and are not part of GV2P22. As-installed thermal dial setting and external protective bonding are outside the device model."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Pole 1 line terminal (top / L1)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        },
+        "3/L2": {
+          "description": "Pole 2 line terminal (top / L2)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        },
+        "5/L3": {
+          "description": "Pole 3 line terminal (top / L3)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        },
+        "2/T1": {
+          "description": "Pole 1 load terminal (bottom / T1)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        },
+        "4/T2": {
+          "description": "Pole 2 load terminal (bottom / T2)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        },
+        "6/T3": {
+          "description": "Pole 3 load terminal (bottom / T3)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 25
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zbe-205",
+      "description": "Harmony XB4/XB5 bare double contact block, 1 NC plus 1 NO, screw clamps; external head and collar separate",
+      "category": "component",
+      "aliases": ["ZBE205"],
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZBE-205",
+        "document": {
+          "url": "https://www.se.com/us/en/product/download-pdf/ZBE205",
+          "title": "Schneider Electric ZBE205 — double 1 NO + 1 NC screw-clamp contact block",
+          "revision": "12 September 2026",
+          "pages": "Physical 1 exact-marked ZBE-205 body circuit photograph; physical 6 alternate terminal view"
+        },
+        "modelingNotes": [
+          "Exact identity: manufacturer datasheets/catalog name ZBE205, while the current exact product photograph visibly prints ZBE-205 on the block itself. Both spellings are directly evidenced. This is a bare double standard slow-break contact block with one NO and one NC, not a complete operator or a body/fixing-collar assembly.",
+          "Physical terminals are 1 and 2 for NC, 3 and 4 for NO. The current exact manufacturer photograph p1 shows both numbered contact diagrams on the ZBE-205 body; p6 independently shows all four terminal marks with NO/NC labels. No number is inferred from another double-block order or an IEC numbering convention.",
+          "The March 2016 exact sheet lists only (11-12)NC in its ISO terminal-description field and omits the NO pair. This incomplete/differently numbered field is retained as a documentary discrepancy; it is not a complete physical inventory or evidence that the pictured device bears 11/12, 13/14 or 23/24. Historical installed terminal typography remains unverified.",
+          "One normally closed function spans 1-2 and one normally open function spans 3-4. The dashed linkage in the exact body diagram is mechanical coupling, recorded as ganged_with between the contact functions, not an electrical common. Neither the normal closed state nor the mechanical relation creates a fixed link or joins compiler nets.",
+          "Exact sheets specify slow-break contacts, NC state change at 1.5 mm travel, NO state change at 2.6 mm and total travel 4.3 mm; positive opening applies to the NC under EN/IEC 60947-5-1 appendix K. This static model does not simulate contact travel or supply a separately ordered head, spring-return behavior, selector positions or an emergency-stop assembly claim.",
+          "All four documented electrical screw-clamp endpoints of the manufacturer-photographed exact block are modeled. The optional external head, mounting collar and their installation bonding are outside this bare block order. No lamp, coil, extra contact, electrical attachment pin, PE or common supply is added.",
+          "Passive contact use is application-dependent, so no terminal is universally required. Contact functions describe normal states only; there are no intrinsic fixed links in the candidate.",
+          "Conditional contact capabilities remain notes: Ith 10 A, Ui 600 V at pollution degree 3, Uimp 6 kV; AC-15/A600 Ie 6 A at 120 V, 3 A at 240 V, 1.2 A at 600 V; DC-13/Q600 Ie 0.55 A at 125 V, 0.27 A at 250 V, 0.1 A at 600 V. No scalar nominal voltage, current or single AC/DC type is assigned.",
+          "Revision qualifications: the 2016 sheet reports 5 million mechanical cycles and the 2026 sheet 10 million. These properties are not flattened into one value or used to identify the unexamined installed unit."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All four physical electrical terminals of the exact manufacturer-photographed bare ZBE-205 are modeled: NC 1/2 and NO 3/4, two separate contact paths. No head/collar or their installation bonding is included. Complete inventory is scoped to this documented block; the older ISO (11-12)NC field and historical installed terminal typography remain qualified in the source notes."
+      },
+      "terminals": {
+        "1": {
+          "description": "NC contact screw-clamp terminal physically marked 1 on the exact ZBE-205 manufacturer photograph",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "2": {
+          "description": "NC contact screw-clamp terminal physically marked 2 on the exact ZBE-205 manufacturer photograph",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "3": {
+          "description": "NO contact screw-clamp terminal physically marked 3 on the exact ZBE-205 manufacturer photograph",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "4": {
+          "description": "NO contact screw-clamp terminal physically marked 4 on the exact ZBE-205 manufacturer photograph",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "nc",
+          "to": "no"
+        }
+      ],
+      "circuitSymbols": {
+        "nc": "contact-nc",
+        "no": "contact-no"
+      },
+      "terminalOrder": ["1", "2", "3", "4"]
+    }
+  ]
+}

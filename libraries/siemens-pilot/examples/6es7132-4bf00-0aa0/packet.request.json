@@ -1,0 +1,160 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "6ES7132-4BF00-0AA0 / structural component check",
+      "columns": 2,
+      "groups": [
+        {
+          "id": "g1",
+          "label": "DO0",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO0"
+            }
+          ],
+          "conductors": ["W1"]
+        },
+        {
+          "id": "g2",
+          "label": "DO1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO1"
+            }
+          ],
+          "conductors": ["W2"]
+        },
+        {
+          "id": "g3",
+          "label": "DO2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO2"
+            }
+          ],
+          "conductors": ["W3"]
+        },
+        {
+          "id": "g4",
+          "label": "DO3",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO3"
+            }
+          ],
+          "conductors": ["W4"]
+        },
+        {
+          "id": "g5",
+          "label": "DO4",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO4"
+            }
+          ],
+          "conductors": ["W5"]
+        },
+        {
+          "id": "g6",
+          "label": "DO5",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO5"
+            }
+          ],
+          "conductors": ["W6"]
+        },
+        {
+          "id": "g7",
+          "label": "DO6",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO6"
+            }
+          ],
+          "conductors": ["W7"]
+        },
+        {
+          "id": "g8",
+          "label": "DO7",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "DO7"
+            }
+          ],
+          "conductors": ["W8"]
+        },
+        {
+          "id": "g9",
+          "label": "P1",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P1"
+            }
+          ],
+          "conductors": ["W9"]
+        },
+        {
+          "id": "g10",
+          "label": "P2",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "P2"
+            }
+          ],
+          "conductors": ["W10"]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized test boundaries. No installed circuit, protection or external bonding is specified.",
+        "Functions and connector metadata never imply continuity. Fixed links are explicit source jumpers requiring manufacturer review."
+      ]
+    }
+  ]
+}

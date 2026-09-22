@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/wire.schema.json",
+  "title": "Wire",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["uid", "kind", "designation", "endpoints"],
+  "properties": {
+    "uid": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/uid"
+    },
+    "kind": {
+      "const": "wire"
+    },
+    "designation": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+    },
+    "description": {
+      "type": "string"
+    },
+    "aliases": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
+    },
+    "endpoints": {
+      "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/endpointPair"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string",
+          "description": "Conductor-size trade designation, such as 18AWG or 1.5mm2; it is not a numeric quantity."
+        },
+        "color": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:neousys-poc-610",
+      "description": "Neousys POC-610 - communication ports only",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "ETH1": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "Engineering port identifier; match physical socket at commissioning"
+        },
+        "ETH2": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "Engineering port identifier; match physical socket at commissioning"
+        },
+        "ETH3": {
+          "medium": "ethernet",
+          "connector": "RJ45",
+          "description": "Engineering port identifier; match physical socket at commissioning"
+        }
+      },
+      "catalog": {
+        "manufacturer": "Neousys",
+        "orderNumber": "POC-610",
+        "document": {
+          "url": "https://www.neousys.eu/images/uploaded/2026A1-neousys-catalog.pdf",
+          "title": "POC-600 series, POC-610 ordering entry",
+          "revision": "Manufacturer catalog 2026 / accessed 2026-09-06",
+          "pages": "96-97, POC-610 ordering information"
+        },
+        "modelingNotes": [
+          "Three Ethernet sockets; POC-610 is the non-PoE variant. ETH1-3 are engineering aliases, not verified case markings.",
+          "Port-only model; DC input connector, grounding, optional I/O, and PROFINET runtime support are not modeled."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Communication ports only. DC input connector, grounding and optional I/O are not modeled."
+      }
+    }
+  ]
+}

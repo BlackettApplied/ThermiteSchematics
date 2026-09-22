@@ -1,0 +1,69 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "query:a",
+      "terminals": {
+        "B": {},
+        "B.C": {},
+        "B.C.D": {},
+        ".C": {},
+        "C": {}
+      },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:a-dot-b",
+      "terminals": { "C": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:a-dot",
+      "terminals": { "C": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:plc",
+      "terminals": { "X1.0": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:iec",
+      "terminals": { "A1": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:k",
+      "terminals": { "13/NO": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:panel",
+      "terminals": { "13 NO": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "query:plain",
+      "terminals": { "T": {} },
+      "functions": {}
+    },
+    {
+      "kind": "cable_type",
+      "id": "query:cable",
+      "shield": false,
+      "construction": {
+        "jacket_material": "test jacket",
+        "conductor_material": "copper"
+      },
+      "conductors": [{ "id": "1", "color": "blue", "size": "1 mm2" }]
+    }
+  ]
+}

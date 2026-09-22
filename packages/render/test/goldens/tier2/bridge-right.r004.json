@@ -1,0 +1,10 @@
+{
+  "diagnostics": [],
+  "error": {
+    "code": "R004",
+    "message": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"] and [\"wire\",\"00000000-0000-4000-8000-000000000302\"] overlap collinearly.",
+    "family": "control",
+    "netId": "net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308",
+    "root": "LS1"
+  }
+}

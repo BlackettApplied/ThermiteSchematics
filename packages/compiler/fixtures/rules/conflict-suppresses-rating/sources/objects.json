@@ -1,0 +1,25 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "31500000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "DC_LOAD",
+      "type": "voltage-rules:dc-24"
+    },
+    {
+      "uid": "31500000-0000-4000-8000-000000000002",
+      "kind": "potential",
+      "name": "CONTROL",
+      "at": { "device": "DC_LOAD", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24, "voltage_type": "DC" }
+    },
+    {
+      "uid": "31500000-0000-4000-8000-000000000003",
+      "kind": "potential",
+      "name": "CONTROL",
+      "at": { "device": "DC_LOAD", "terminal": "T" },
+      "electrical": { "nominal_voltage": 48, "voltage_type": "AC" }
+    }
+  ]
+}

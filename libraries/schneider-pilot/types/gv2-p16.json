@@ -1,0 +1,125 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:gv2-p16",
+      "description": "Motor circuit breaker / TeSys GV2 (Deca) / thermal-magnetic / 3-pole / 9-14 A adjustable / magnetic trip 170 A / rotary knob / screw clamp / no accessories",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "GV2-P16",
+        "document": {
+          "url": "https://docs.rs-online.com/f8d1/A700000007865769.pdf",
+          "title": "Schneider Electric product data sheet — Characteristics GV2P16 (Motor circuit breaker, TeSys Deca/GV2, 3P, 9-14 A, thermal-magnetic, screw clamp terminals, rotary handle); RS Components mirror",
+          "revision": "2023-07-27",
+          "pages": "pp.1-3"
+        },
+        "modelingNotes": [
+          "Manufacturer catalog spelling is GV2P16 (no separator); the job expectedOrderNumber GV2-P16 differs only by a presentation hyphen and denotes the same device, not a successor.",
+          "Terminal markings verified visually from the Schneider TeSys GV Catalogue 2017 (ref. LVCATESGV_EN, 06-2017) page 9 schematic DF510744: line 1/L1, 3/L2, 5/L3; load 2/T1, 4/T2, 6/T3; three poles, each thermal + magnetic (I>) element, mechanically linked by the common operating mechanism. https://www.electrocentr.com.ua/files/documentation/SE/motor-control/cb/TeSys_GV_cat_2017_en.pdf",
+          "Ratings (datasheet): In/Ith 14 A; thermal overload adjustable 9…14 A; magnetic trip fixed 170 A ±20 % (non-adjustable); Ue 690 V AC 50/60 Hz, Ui 690 V, Uimp 6 kV; AC-3 / Category A; Icu 100 kA at 400/415 V. These are capabilities/adjustment bounds, not a circuit voltage or installed trip setting.",
+          "Screw-clamp terminals, tightening torque 1.7 N·m; W45×H89×D97 mm; IP20; phase-failure sensitive; suitable for isolation (IEC 60947-1 §7-1-6). Conductor size, trip curves and short-circuit coordination are documentation, not automated conductor sizing.",
+          "Base GV2P16 carries only the 6 main power terminals: no protective-earth terminal (plastic-housed DIN-rail/panel device) and no integral auxiliary contact. Auxiliary/signaling blocks (GVAE, GVAD, GVAN), undervoltage/shunt releases and the GV2AK00 visible-isolation block are separately ordered add-ons with their own terminals and are not part of this order.",
+          "Three poles are mechanically ganged (common trip/handle), modeled as internal_relations ganged_with. Poles are switching contacts, not permanent net joins: no fixed links are declared.",
+          "The coordinator visually re-read2017 Section18 Table18.123: GV2P is in the rotary-handle column and GV2ME in the push-button column. The original worker reversed the column alignment; there is no North-American naming inversion in this table."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "The bare GV2P16 device's physical connection set is exactly the six main power terminals (line 1/L1, 3/L2, 5/L3; load 2/T1, 4/T2, 6/T3). No protective-earth terminal and no integral auxiliary contact exist on the device; separately-ordered accessory blocks are out of scope."
+      },
+      "terminals": {
+        "1/L1": {
+          "description": "Line terminal, pole 1 (also NA marking L1)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        },
+        "2/T1": {
+          "description": "Load terminal, pole 1 (also NA marking T1)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        },
+        "3/L2": {
+          "description": "Line terminal, pole 2 (also NA marking L2)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        },
+        "4/T2": {
+          "description": "Load terminal, pole 2 (also NA marking T2)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        },
+        "5/L3": {
+          "description": "Line terminal, pole 3 (also NA marking L3)",
+          "role": "line",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        },
+        "6/T3": {
+          "description": "Load terminal, pole 3 (also NA marking T3)",
+          "role": "load",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 14
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1/L1", "3/L2", "5/L3", "2/T1", "4/T2", "6/T3"]
+    }
+  ]
+}

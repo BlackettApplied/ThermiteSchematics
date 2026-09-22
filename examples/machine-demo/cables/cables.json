@@ -1,0 +1,54 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "4b1a196b-faae-51db-b286-bfe168a5d443",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cable-2pair-shielded",
+      "description": "Process switch cable: two used cores and two loose spares",
+      "conductors": [
+        {
+          "id": "1+",
+          "endpoints": [
+            {
+              "device": "TB1",
+              "terminal": "2"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.1"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "1-",
+          "endpoints": [
+            {
+              "device": "TB1",
+              "terminal": "3"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.2"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "2+",
+          "endpoints": [null, null],
+          "usage": "spare"
+        },
+        {
+          "id": "2-",
+          "endpoints": [null, null],
+          "usage": "spare"
+        }
+      ],
+      "fromLocation": "CONTROL CABINET",
+      "toLocation": "FIELD CABINET"
+    }
+  ]
+}

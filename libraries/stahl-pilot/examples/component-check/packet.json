@@ -1,0 +1,226 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Three-pole motor protection / verified main terminal numbers",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "breaker",
+          "label": "8527/21-11-0001 / no auxiliaries / open reference position",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "Q1"
+              },
+              "key": "pole1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "Q1"
+              },
+              "key": "pole2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "Q1"
+              },
+              "key": "pole3"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "Q1"
+              },
+              "key": "earth"
+            }
+          ],
+          "conductors": [
+            "Q-IN1",
+            "Q-IN2",
+            "Q-IN3",
+            "Q-OUT1",
+            "Q-OUT2",
+            "Q-OUT3",
+            "Q-PE"
+          ]
+        }
+      ],
+      "notes": [
+        "Synthetic unenergized component check; no installed motor or protection coordination is claimed.",
+        "PE is a functional alias; exact physical PE screw inventory remains unverified."
+      ]
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "8570/11-306 / functional pole demonstration",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "XS",
+          "label": "Interlocked switched poles",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "P1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "P2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "C.PE"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XS"
+              },
+              "key": "M.PE"
+            }
+          ],
+          "conductors": ["XS-P1", "XS-P2", "XS-PE", "XS-INTERNAL-PE"]
+        }
+      ],
+      "notes": [
+        "C = cable side; M = mating side. P1/P2 are functional aliases, not stamped pin numbers.",
+        "No mating orientation, installation L/N assignment or compatibility is implied."
+      ]
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "8570/12-306 / functional pole demonstration",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "XP",
+          "label": "Fixed plug conductors shown explicitly",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.P1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.P2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "C.PE"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.P1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.P2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XP"
+              },
+              "key": "M.PE"
+            }
+          ],
+          "conductors": [
+            "XP-P1",
+            "XP-P2",
+            "XP-PE",
+            "XP-INTERNAL-P1",
+            "XP-INTERNAL-P2",
+            "XP-INTERNAL-PE"
+          ]
+        }
+      ],
+      "notes": [
+        "C = cable side; M = mating side. P1/P2 are functional aliases, not stamped pin numbers.",
+        "No mating orientation, installation L/N assignment or compatibility is implied."
+      ]
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "8575/14-306 / functional pole demonstration",
+      "columns": 1,
+      "groups": [
+        {
+          "id": "XC",
+          "label": "Interlocked switched poles",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "XC"
+              },
+              "key": "P1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XC"
+              },
+              "key": "P2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XC"
+              },
+              "key": "C.PE"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "XC"
+              },
+              "key": "M.PE"
+            }
+          ],
+          "conductors": ["XC-P1", "XC-P2", "XC-PE", "XC-INTERNAL-PE"]
+        }
+      ],
+      "notes": [
+        "C = cable side; M = mating side. P1/P2 are functional aliases, not stamped pin numbers.",
+        "No mating orientation, installation L/N assignment or compatibility is implied."
+      ]
+    },
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "title": "Protective cap / mechanical attachment",
+      "assemblies": ["CAP-FIT"],
+      "notes": [
+        "Cap 8570001140 has no electrical pins. Attachment cannot supply power or short plug contacts."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7131-4bf00-0aa0",
+      "description": "ET 200S 8DI DC24V electronic module; partial assembled field interface with compatible TM-E15x24-01 base",
+      "category": "io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7131-4BF00-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/564/25511564/att_107651/v1/et200s_8di_dc24v_manual_en-US_en-US.pdf",
+          "title": "Digital electronic module 8DI DC24V (6ES7131-4BF00-0AA0)",
+          "revision": "06/2013; A5E01077339-02",
+          "pages": "7–11; diagrams visually reviewed on physical pages 8, 9 and 10"
+        },
+        "modelingNotes": [
+          "Assembled field-interface abstraction using TM-E15C24-01, TM-E15S24-01 or TM-E15N24-01 as listed in S1 page 8. Base clamps are separate hardware, not included in this electronic-module order.",
+          "1M is the common net label in S1 figure 1-1, used here as a functional internal-return alias; it is not a verified physical clamp or backplane pin number. Its required connection can be provided by explicit assembly wiring; it is not an instruction to wire an external clamp.",
+          "Alternative 26-A1 bases expose AUX1 terminals A3/A4/A7/A8. They and their continuity belong to the separate base arrangement and are outside this 24-01 abstraction.",
+          "Backplane bus individual contact inventory and P1/P2 contact mapping are unresolved. No numbered backplane contacts or external L+ clamp are inferred.",
+          "Nominal supply is 24 VDC from the power module. Inputs: high 15–30 V, low −30–5 V; typical 5 mA at 24 V, delay 2–4.5 ms. Ratings are retained as notes rather than scalar limits.",
+          "Channels are application-dependent and do not create fixed electrical links to common or one another. No PE or shield clamp is established for the electronic card by S1."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Eight field inputs plus functional internal common 1M are represented for the documented 24-01 base arrangement. Individual backplane supply/common/communication contacts are not enumerated. AUX-equipped 26-A1 bases and their clamps/links are outside this abstraction; electronic card and base remain distinct products."
+      },
+      "terminals": {
+        "1": {
+          "role": "signal",
+          "description": "DI0 input at separate compatible terminal-base clamp 1",
+          "required": false
+        },
+        "5": {
+          "role": "signal",
+          "description": "DI1 input at separate compatible terminal-base clamp 5",
+          "required": false
+        },
+        "2": {
+          "role": "signal",
+          "description": "DI2 input at separate compatible terminal-base clamp 2",
+          "required": false
+        },
+        "6": {
+          "role": "signal",
+          "description": "DI3 input at separate compatible terminal-base clamp 6",
+          "required": false
+        },
+        "3": {
+          "role": "signal",
+          "description": "DI4 input at separate compatible terminal-base clamp 3",
+          "required": false
+        },
+        "7": {
+          "role": "signal",
+          "description": "DI5 input at separate compatible terminal-base clamp 7",
+          "required": false
+        },
+        "4": {
+          "role": "signal",
+          "description": "DI6 input at separate compatible terminal-base clamp 4",
+          "required": false
+        },
+        "8": {
+          "role": "signal",
+          "description": "DI7 input at separate compatible terminal-base clamp 8",
+          "required": false
+        },
+        "1M": {
+          "role": "return",
+          "description": "Functional internal common alias from S1 figure 1-1; no physical clamp/pin number asserted",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "DI0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["1", "1M"]
+        },
+        "DI1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["5", "1M"]
+        },
+        "DI2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["2", "1M"]
+        },
+        "DI3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["6", "1M"]
+        },
+        "DI4": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["3", "1M"]
+        },
+        "DI5": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["7", "1M"]
+        },
+        "DI6": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["4", "1M"]
+        },
+        "DI7": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["8", "1M"]
+        },
+        "common": {
+          "kind": "bus",
+          "terminals": ["1M"]
+        }
+      },
+      "circuitSymbols": {
+        "DI0": "interface",
+        "DI1": "interface",
+        "DI2": "interface",
+        "DI3": "interface",
+        "DI4": "interface",
+        "DI5": "interface",
+        "DI6": "interface",
+        "DI7": "interface",
+        "common": "terminal"
+      },
+      "terminalOrder": ["1", "5", "2", "6", "3", "7", "4", "8", "1M"],
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "ET 200S backplane interface",
+          "description": "S1 page 10: internal bus interface; physical supply, common and communication contacts not enumerated. 1M is represented only as a functional terminal alias.",
+          "required": true
+        }
+      }
+    }
+  ]
+}

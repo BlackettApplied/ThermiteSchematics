@@ -1,0 +1,73 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bz103",
+      "description": "Harmony XB4 body/fixing collar with two separate NO contact blocks; head separate",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BZ103",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/ZB4BZ103",
+          "title": "Schneider Electric ZB4BZ103 — Single contact block with body fixing collar, 2NO",
+          "revision": "12 September 2026",
+          "pages": "Physical 1–2 specifications; 7–8 exact assembly photographs, p8 rear terminal markings"
+        },
+        "modelingNotes": [
+          "Source order ZB4-BZ103 is preserved. Opened Schneider sources use ZB4BZ103 for the same alphanumeric order and exact two-NO body/fixing-collar composition. This association is a documented punctuation normalization, not a substitution with a suffixed variant. A manufacturer statement explicitly equating the hyphenated spelling was not retrieved; historical installed markings remain unverified.",
+          "Scope is the exact illustrated body/contact assembly: metal Zamak fixing collar and two single standard NO contact blocks. The operator head is separately selected. No lamp, coil, additional contact block, head actuation sequence or ganged relation is included.",
+          "The exact current sheet p8 rear photograph shows four screw-clamp connection points: each fitted NO block is physically marked 3 and 4. The p1/p7 side photograph shows the ZBE-101 NO 3-4 circuit diagram. The second block is independently labeled NO 3 and 4 in the exact assembly rear view; its marks are not inferred from a neighboring part.",
+          "B1 and B2 are library block qualifiers, not printed manufacturer marks. In the p8 rear-facing photograph, with the central collar fastening screw at the bottom and the terminal 3 marks above the green actuators, B1 is the block at photo-left and B2 is the block at photo-right. B1.3/B1.4 and B2.3/B2.4 preserve each block's actual 3/4 markings and distinguish four physical clamps. This photo orientation is not a claim about an installed operator's left/right or auto/manual function.",
+          "The single datasheet ISO field (13-14)NO is incomplete for this two-contact assembly. Schneider FAQ FA23069 draws application contact designations 13-14 and 23-24 with a separately specified selector head; no manufacturer mapping of those application designations to B1/B2 was established. They are not modeled as physical terminal marks or additional terminals.",
+          "Each NO path is normally open and closes when its own contact block is actuated. Whether the two blocks actuate together or in separate selector positions depends on the separately specified head. No fixed internal links or common electrical node are asserted. Contact function membership never joins compiler nets.",
+          "Passive contact connections are application-dependent and have no universally required terminals. The collar fastening screw and metal frame are mechanical features; their electrical bonding or a dedicated attachment/bond interface is undocumented. No PE terminal or automatic panel bond is invented; coverage remains partial.",
+          "Conditional capabilities remain notes: Ith 10 A, Ui 600 V at pollution degree 3, Uimp 6 kV; Ie AC-15/A600 6 A at 120 V, 3 A at 240 V, 1.2 A at 600 V; DC-13/Q600 0.55 A at 125 V, 0.27 A at 250 V, 0.1 A at 600 V. These values are not an assigned circuit voltage or a universal 10 A switching rating."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All four screw-clamp electrical terminals of the exact illustrated two-NO assembly are modeled using explicit B1/B2 qualifiers for repeated physical 3/4 marks. Fixing-collar/panel bonding and any dedicated electrical attachment interface remain undocumented; no PE point or automatic metalwork bond is asserted. Historical installed markings and external selector-position mapping are unverified."
+      },
+      "terminals": {
+        "B1.3": {
+          "description": "B1 NO block (photo-left in defined manufacturer rear view), screw clamp physically marked 3; B1 is a library qualifier",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "B1.4": {
+          "description": "B1 NO block (photo-left in defined manufacturer rear view), screw clamp physically marked 4; B1 is a library qualifier",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "B2.3": {
+          "description": "B2 NO block (photo-right in defined manufacturer rear view), screw clamp physically marked 3; B2 is a library qualifier",
+          "role": "control",
+          "connection_policy": "shared"
+        },
+        "B2.4": {
+          "description": "B2 NO block (photo-right in defined manufacturer rear view), screw clamp physically marked 4; B2 is a library qualifier",
+          "role": "control",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "b1_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["B1.3", "B1.4"]
+        },
+        "b2_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["B2.3", "B2.4"]
+        }
+      },
+      "circuitSymbols": {
+        "b1_no": "contact-no",
+        "b2_no": "contact-no"
+      },
+      "terminalOrder": ["B1.3", "B1.4", "B2.3", "B2.4"]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:breaker-3p",
+      "description": "Three-pole circuit breaker",
+      "terminals": {
+        "1/L1": { "role": "power_input" },
+        "2/T1": { "role": "power_output" },
+        "3/L2": { "role": "power_input" },
+        "4/T2": { "role": "power_output" },
+        "5/L3": { "role": "power_input" },
+        "6/T3": { "role": "power_output" }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["5/L3", "6/T3"]
+        },
+        "trip": { "kind": "mechanism", "terminals": [] }
+      },
+      "internal_relations": [
+        { "relation": "trips", "from": "trip", "to": "pole1" },
+        { "relation": "trips", "from": "trip", "to": "pole2" },
+        { "relation": "trips", "from": "trip", "to": "pole3" },
+        { "relation": "ganged_with", "from": "pole1", "to": "pole2" },
+        { "relation": "ganged_with", "from": "pole2", "to": "pole3" }
+      ],
+      "symbol": "iec:circuit-breaker"
+    }
+  ]
+}

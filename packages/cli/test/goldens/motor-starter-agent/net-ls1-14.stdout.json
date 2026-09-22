@@ -1,0 +1,155 @@
+{
+  "format": "agent-tool-result/0.1",
+  "tool": "query",
+  "value": {
+    "command": "net",
+    "selectedTerminal": {
+      "id": {
+        "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+        "terminalKey": "14"
+      },
+      "deviceDesignation": "LS1",
+      "display": "LS1.14",
+      "role": "no_contact"
+    },
+    "net": {
+      "id": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9",
+      "potentials": [],
+      "terminals": [
+        {
+          "id": {
+            "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+            "terminalKey": "X1.2"
+          },
+          "deviceDesignation": "JB1",
+          "display": "JB1.X1.2",
+          "role": "field_terminal"
+        },
+        {
+          "id": {
+            "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+            "terminalKey": "14"
+          },
+          "deviceDesignation": "LS1",
+          "display": "LS1.14",
+          "role": "no_contact"
+        },
+        {
+          "id": {
+            "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+            "terminalKey": "X1.0"
+          },
+          "deviceDesignation": "PLC1",
+          "display": "PLC1.X1.0",
+          "role": "digital_input_0",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "connectionPolicy": "exclusive"
+        },
+        {
+          "id": {
+            "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+            "terminalKey": "3"
+          },
+          "deviceDesignation": "TB1",
+          "display": "TB1.3",
+          "role": "terminal_point"
+        }
+      ],
+      "elements": [
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "e84a9629-373c-4946-8b48-184b7464d474",
+            "designation": "W-FLD-001",
+            "display": "W-FLD-001"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+                "terminalKey": "X1.0"
+              },
+              "deviceDesignation": "PLC1",
+              "display": "PLC1.X1.0",
+              "role": "digital_input_0",
+              "rating": {
+                "nominal_voltage": 24,
+                "voltage_type": "DC"
+              },
+              "connectionPolicy": "exclusive"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.3",
+              "role": "terminal_point"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "wire",
+            "uid": "c2dccef7-ec9d-48dc-b58b-6e0dd990dd51",
+            "designation": "W-FLD-003",
+            "display": "W-FLD-003"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.2"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.2",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+                "terminalKey": "14"
+              },
+              "deviceDesignation": "LS1",
+              "display": "LS1.14",
+              "role": "no_contact"
+            }
+          ]
+        },
+        {
+          "element": {
+            "kind": "cable_conductor",
+            "cableUid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+            "cableDesignation": "CBL1",
+            "conductorId": "1-",
+            "display": "CBL1.1-"
+          },
+          "endpoints": [
+            {
+              "id": {
+                "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+                "terminalKey": "X1.2"
+              },
+              "deviceDesignation": "JB1",
+              "display": "JB1.X1.2",
+              "role": "field_terminal"
+            },
+            {
+              "id": {
+                "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+                "terminalKey": "3"
+              },
+              "deviceDesignation": "TB1",
+              "display": "TB1.3",
+              "role": "terminal_point"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:lrd-10",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "LRD-10"
+  },
+  "type": {
+    "path": "types/lrd-10.json",
+    "sha256": "6c117f2449009f0367ac22fbd880dad10269ec1faa5b731e26306ed153daceb2"
+  },
+  "research": {
+    "path": "research/lrd-10.md",
+    "sha256": "233b7ff42f0c5805fdd1b916484ea83fe67c759df74b0532f77d37c433216fdd"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2", "3", "4", "5", "6", "95", "96", "97", "98"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "5cb203f4bfd9d0bb0d1f561570e227797ced8a741f35bb1e4c91c3ae48b5fac9",
+    "packet.request.json": "58560d4e42df1667b3310eb72da9b2599a21ee81d338a6f8e1efe9949ad42566",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "4762a399374c0b6999d49129a9989e0bb94498c0dd6aa45d84d68e4df8244715",
+    "system.json": "7a24330c6b7e7c2f6c7bbb703be6b5322c2c4e2e0c20af3c60b026f589f98f72"
+  }
+}

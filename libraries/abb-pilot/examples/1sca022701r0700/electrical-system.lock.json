@@ -1,0 +1,52 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-lock.schema.json",
+  "lockfile_version": 1,
+  "project_format": "electrical-system/0.1",
+  "libraries": {
+    "abb-pilot": {
+      "version": "0.1.0",
+      "path": "../..",
+      "resolutionKind": "local",
+      "integrity": "sha256-gQrv5wkg1oWASqBGgbTVs+RhGA9n3XFvZezxDtIfjbE=",
+      "files": {
+        "library.json": "sha256-G7Y3YdcXUe/nOVRE+4VSIT0aFc8r2dTjwGNUfojw9yY=",
+        "types/1saj240100r0003.json": "sha256-LddggNQtj/L7MInii9sA47drYo9AXrEw7n0gpkjX4Jw=",
+        "types/1sca022042r6110.json": "sha256-vMcnBahCBWZeyRXIKyATA8LlrnXx6qUvvE21Y6x/0As=",
+        "types/1sca022042r6530.json": "sha256-PipPDSErK4fpOov/ROgvmnYl5zcT0030DMlRZ4jDmYo=",
+        "types/1sca022112r2010.json": "sha256-/Wg1TLqcivsa2qvpm26RK6v02A9t5ZmM/nttCaX44nw=",
+        "types/1sca022112r2440.json": "sha256-R5wDV9CewUriXQwBYYNdsBKCGYQALYVvFdFoaCr8nhk=",
+        "types/1sca022190r1560.json": "sha256-QlcrRR8LeYmIjOyfHnyIwtxBY/bwFHToWQMRO1nNpKc=",
+        "types/1sca022456r9710.json": "sha256-2i6bivAFkDG6nXvXj3A/X7QmiQHLmCwk9auBs33KzY4=",
+        "types/1sca022661r3610.json": "sha256-ivXA3D+jA/MYOuHoZAg8al/btsVoMJWsWjuv+tgaSOE=",
+        "types/1sca022701r0700.json": "sha256-CQXkkSjYL+Wb2Oi0eERJFFKNSdvOHplnDT6hC940o1A=",
+        "types/1sca022710r0100.json": "sha256-xo0q9AevdJqVnyj5zaFdhZVYpT8GZGdN6+cj0nfRBss=",
+        "types/1sca022731r8150.json": "sha256-I3Ix8M4tq3/NdKCHR7VPDs/ABtBxSIltYub7sM+56cc=",
+        "types/1sna356204r1100.json": "sha256-aQBy4aUlXqiDAb8doNbP/maXMstuJNVWomT5jCtBsvM=",
+        "types/1svr430720r0400.json": "sha256-/IWxqjH1D5WEMrr9T1vqTvbADYJ4UVBTI0uFb7EYA40=",
+        "types/1svr430831r1400.json": "sha256-NhHl5Rm9k/jxDWw/MEQcrPr1UbD0rHW142GqBD+lTeg=",
+        "types/2cds200936r0001.json": "sha256-4oJ2IE+zp81FzkwOutHig83orSdz8UY2GvzBsEmbwSw=",
+        "types/2cds271001r0044.json": "sha256-yVOL5xDBGWEXJd9zj/60voUjo3XCQTLxrfbZycrsudA=",
+        "types/2cds271001r0065.json": "sha256-oPlyNnR2F1ofWX1SMVOVGadWNP9i7p4bj/U96wHtefY=",
+        "types/2cds271001r0104.json": "sha256-vp22e8b33OHMp7H5SMmTwn/+scEA57r2zyEldJJAvdg=",
+        "types/2cds271001r0204.json": "sha256-vMxYMFCwE0MnDTXERSUPuGrX2wg7bQYMHXNrQ/udVqQ=",
+        "types/2cds271001r0254.json": "sha256-pyzAwPAx/ON29NuA32PAeGOG1KuVVFfTxCFHyv5OKKE=",
+        "types/2cds272001r0024.json": "sha256-QVs7vfTsxQm86A0y7ZJqbK3OMOf5LRYz7GRXJkuiXd0=",
+        "types/2cds272001r0044.json": "sha256-NqAh0iDLJKb5tTrfrGZAUh5MEJahT4unlM3u0/Mpknw=",
+        "types/2cds272001r0064.json": "sha256-3LvLdF0DqTcUQFZXwPrnGDk5P5MEVOVBQqS6W7wH4Fk=",
+        "types/2cds272001r0164.json": "sha256-lhzeH/BSD+pS/nAPPJUcFH6dK7kB1whl4Djx5OIOAbs=",
+        "types/2cds272001r0204.json": "sha256-b+dbum/2hJDFQA95wwRZevYRGmYTzT8XfuffJgh4mPk=",
+        "types/2csr272140r1164.json": "sha256-Gj73lt81ZPk0BbDanu90mVIKndcpu3+Fi7mSvqCkd5o="
+      }
+    },
+    "batch-boundary": {
+      "version": "0.1.0",
+      "path": "boundary",
+      "resolutionKind": "local",
+      "integrity": "sha256-WCdTNBu4g57uwzww+kPK22x/DrcBRoY/MlCOUvNLV1E=",
+      "files": {
+        "library.json": "sha256-uz5iNAWVLE3sv/QCgEC9Nj70Nw0RzdpTtk5GrCxbD0M=",
+        "types.json": "sha256-Jr3emiJJcl1S7cCAcOdqn4x7mWuLN0HT3rSOveXSIto="
+      }
+    }
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-et200pro-pilot:im154-4-pn-hf-cm-m12-7-8",
+      "description": "ET 200pro IM 154-4 PN HF with CM IM PN M12 / 7/8-inch",
+      "category": "controller",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7154-4AB10-0AB0 + 6ES7194-4AJ00-0AA0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/852/21210852/att_857898/v1/et200pro_operating_instructions_en-US_en-US.pdf",
+          "title": "ET 200pro distributed I/O system operating instructions",
+          "revision": "09/2015, A5E00335544-AJ",
+          "pages": "p.94 pin-assignment table; p.258 connection-module identity; p.309 interface-module identity"
+        },
+        "modelingNotes": [
+          "The orderNumber field lists an electronic module plus its required connection module. This is a documented two-part assembly, not a single Siemens order number.",
+          "Every exposed field-connector pin is inventoried, including unassigned pins. Terminal keys Xn.p identify connector Xn, physical pin p. Descriptive signal names are not alternative physical terminals.",
+          "The internal backplane contacts, module-to-module power distribution, protective behavior and configuration are not modeled. No backplane supply screw terminals are invented.",
+          "Connector pin metadata, functions and repeated 1M/2M/FE/Us labels do not join physical nets. Author any verified conductor continuity explicitly. No-connection positions are inventory annotations; a do-not-wire rule is not implemented.",
+          "Connector presence is separate from electrical continuity. A cable assembly with an unresolved pin map does not satisfy a required electrical terminal. Unused socket sealing and hardware installation requirements remain project review items.",
+          "X03 is the supply feed and X04 is the loop-through. X03 pin 4 (1L+) and pin 2 (1M) are universally required for interface electronics. Load supply 2L+/2M is application-dependent; require it in the project when needed.",
+          "Ethernet remains in communication ports only. Verified p.94 physical assignment: X02P1 pins 1/2/3/4 = TD+/RD+/TD-/RD-; X02P2 pins 1/2/3/4 = RD+/TD+/RD-/TD-; connector thread FE. Ethernet signal terminals and thread bonding are documented here but not represented as physical electrical endpoints.",
+          "No permanent net tie between X03 and X04 or the internal backplane is asserted by this model. The documented loop-through identity does not yet provide an internal conductive-link primitive."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All ten X03/X04 power pins and both PROFINET ports are inventoried. Ethernet physical signal/thread endpoints, backplane contacts, internal loop-through continuity and mounting/bonding details are not modeled."
+      },
+      "terminals": {
+        "X03.1": {
+          "description": "2M load supply return",
+          "role": "load_supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X03.2": {
+          "description": "1M electronics and sensor supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "X03.3": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        },
+        "X03.4": {
+          "description": "1L+ electronics and sensor 24 V supply",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "X03.5": {
+          "description": "2L+ load 24 V supply",
+          "role": "load_supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X04.1": {
+          "description": "2M load supply return",
+          "role": "load_supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X04.2": {
+          "description": "1M electronics and sensor supply return",
+          "role": "supply_return",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X04.3": {
+          "description": "FE functional earth",
+          "role": "functional_earth"
+        },
+        "X04.4": {
+          "description": "1L+ electronics and sensor 24 V supply",
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "X04.5": {
+          "description": "2L+ load 24 V supply",
+          "role": "load_supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "X03.1": {
+          "kind": "bus",
+          "terminals": ["X03.1"]
+        },
+        "X03.2": {
+          "kind": "bus",
+          "terminals": ["X03.2"]
+        },
+        "X03.3": {
+          "kind": "bus",
+          "terminals": ["X03.3"]
+        },
+        "X03.4": {
+          "kind": "bus",
+          "terminals": ["X03.4"]
+        },
+        "X03.5": {
+          "kind": "bus",
+          "terminals": ["X03.5"]
+        },
+        "X04.1": {
+          "kind": "bus",
+          "terminals": ["X04.1"]
+        },
+        "X04.2": {
+          "kind": "bus",
+          "terminals": ["X04.2"]
+        },
+        "X04.3": {
+          "kind": "bus",
+          "terminals": ["X04.3"]
+        },
+        "X04.4": {
+          "kind": "bus",
+          "terminals": ["X04.4"]
+        },
+        "X04.5": {
+          "kind": "bus",
+          "terminals": ["X04.5"]
+        }
+      },
+      "circuitSymbols": {
+        "X03.1": "terminal",
+        "X03.2": "terminal",
+        "X03.3": "earth",
+        "X03.4": "terminal",
+        "X03.5": "terminal",
+        "X04.1": "terminal",
+        "X04.2": "terminal",
+        "X04.3": "earth",
+        "X04.4": "terminal",
+        "X04.5": "terminal"
+      },
+      "connectorPorts": {
+        "X03": {
+          "connector": "7/8-inch male, 5-pin",
+          "description": "24 V supply feed",
+          "pins": {
+            "1": {
+              "terminal": "X03.1",
+              "description": "2M load supply return"
+            },
+            "2": {
+              "terminal": "X03.2",
+              "description": "1M electronics and sensor supply return"
+            },
+            "3": {
+              "terminal": "X03.3",
+              "description": "FE functional earth"
+            },
+            "4": {
+              "terminal": "X03.4",
+              "description": "1L+ electronics and sensor 24 V supply"
+            },
+            "5": {
+              "terminal": "X03.5",
+              "description": "2L+ load 24 V supply"
+            }
+          },
+          "required": true
+        },
+        "X04": {
+          "connector": "7/8-inch female, 5-pin",
+          "description": "24 V supply loop-through",
+          "pins": {
+            "1": {
+              "terminal": "X04.1",
+              "description": "2M load supply return"
+            },
+            "2": {
+              "terminal": "X04.2",
+              "description": "1M electronics and sensor supply return"
+            },
+            "3": {
+              "terminal": "X04.3",
+              "description": "FE functional earth"
+            },
+            "4": {
+              "terminal": "X04.4",
+              "description": "1L+ electronics and sensor 24 V supply"
+            },
+            "5": {
+              "terminal": "X04.5",
+              "description": "2L+ load 24 V supply"
+            }
+          }
+        }
+      },
+      "ports": {
+        "X02P1": {
+          "medium": "ethernet",
+          "connector": "M12 D-coded female, 4-pin",
+          "description": "PROFINET port 1"
+        },
+        "X02P2": {
+          "medium": "ethernet",
+          "connector": "M12 D-coded female, 4-pin",
+          "description": "PROFINET port 2"
+        }
+      },
+      "terminalOrder": [
+        "X03.1",
+        "X03.2",
+        "X03.3",
+        "X03.4",
+        "X03.5",
+        "X04.1",
+        "X04.2",
+        "X04.3",
+        "X04.4",
+        "X04.5"
+      ]
+    }
+  ]
+}

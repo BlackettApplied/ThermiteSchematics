@@ -1,0 +1,94 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bw0b45",
+      "description": "Red 24 V AC/DC LED body with fixing collar, one NO and one NC contact; head excluded",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BW0B45",
+        "document": {
+          "url": "https://www.se.com/au/en/product/download-pdf/ZB4BW0B45",
+          "title": "ZB4BW0B45 product datasheet",
+          "revision": "12 September2026",
+          "pages": "1-2 specifications;7 rear terminal marks;8 constituent NO diagram"
+        },
+        "modelingNotes": [
+          "Source ZB4-BW0B45 is retained. Exact manufacturer ZB4BW0B45 identifies a red integral-LED body with fixing collar,24 V AC/DC and1NO+1NC. Matching alphanumeric code and exact composition support punctuation correspondence; no successor or different voltage/color is substituted.",
+          "The October2021 catalog physical86/printed84 confirms this body/contact/light composition. An operator head, added contact blocks and optional test accessories are separate; no particular pushbutton or selector actuation or universal contact gang is assigned.",
+          "Exact-product datasheet dated12 September2026, page7 rear view, shows NO3/4, lampX1/X2 and NC1/2 as six separate screw clamps. Page8 side view has the NO3-4 body diagram. Model keys follow those physical markings. The earlier and current ISO text field says only11-12 NC; that documentary discrepancy is retained without inventing more clamps or formal aliases.",
+          "The datasheet calls these alternate images; the pictured lamp looks green even though the exact specification says red. Use its correctly composed NO/NC/lamp terminal view as manufacturer-associated interface evidence, not proof of the installed LED color, production revision or an itemized internal bill of materials. The exact order specification governs red color.",
+          "Lamp supply24 V AC/DC,50/60 Hz for AC; limits19.2-30 V DC and21.6-26.4 V AC,18 mA consumption. No DC polarity assignment or guaranteed polarity-insensitivity is inferred from a neighboring product.",
+          "Passive contacts are application-dependent; lampX1/X2 are required under library policy. Neither switched contacts nor LED electronics establish permanent net continuity. No fixed links.",
+          "Conditional contact ratings, including AC-15 at3 A/240 V and DC-13 at0.27 A/250 V, remain research notes. Thermal/insulation capabilities are not one universal switching rating.",
+          "Class I and the included metal collar do not prove a protective bond. Attachment/collar/support earthing remains unresolved and unmodeled; no PE pin or automatic panel bond is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Six documented field clamps: NC1/2,NO3/4 and lampX1/X2. Physical marks differ from the abbreviated ISO description, which is retained without aliases. Metal collar/support bonding and installation-dependent continuity remain unresolved."
+      },
+      "terminals": {
+        "1": {
+          "description": "Physical NC contact clamp 1",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "2": {
+          "description": "Physical NC contact clamp 2",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "3": {
+          "description": "Physical NO contact clamp 3",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "Physical NO contact clamp 4",
+          "role": "control",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "X1": {
+          "description": "Red LED supply X1,24 V AC/DC; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "X2": {
+          "description": "Red LED supply X2,24 V AC/DC; no DC polarity assigned",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        },
+        "no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "lamp": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "circuitSymbols": {
+        "nc": "contact-nc",
+        "no": "contact-no",
+        "lamp": "lamp"
+      },
+      "terminalOrder": ["3", "4", "X1", "X2", "1", "2"]
+    }
+  ]
+}

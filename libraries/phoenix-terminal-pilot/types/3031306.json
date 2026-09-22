@@ -1,0 +1,99 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "phoenix-terminal-pilot:3031306",
+      "description": "Phoenix Contact ST 2,5-QUATTRO, gray, feed-through, 4 ordinary wire clamps",
+      "category": "terminal-strip",
+      "symbol": "thermite:terminal-strip",
+      "catalog": {
+        "manufacturer": "Phoenix Contact",
+        "orderNumber": "3031306",
+        "document": {
+          "url": "https://www.phoenixcontact.net/catalog/downloads/CLIPLINE_1_EN.pdf",
+          "title": "CLIPLINE complete - Modular terminal blocks, part 1",
+          "revision": "2011 catalog; component hardware revision not stated",
+          "pages": "Printed p.161, PDF p.163: exact order, IEC data and circuit diagram; see evidence/sources.md for cross-checks"
+        },
+        "modelingNotes": [
+          "Exact order 3031306, gray; a catalog candidate selected from a representative industrial materials list, not confirmation of its purchase or installed strip position.",
+          "A1/A2/B1/B2 are neutral authoring identifiers for ordinary wire clamps, not manufacturer-printed numbers or the project terminal-strip position. A is the left side of the cited circuit diagram; B is the right side. Unused keys do not exist on smaller variants.",
+          "All ordinary clamps belong to one physical busbar. The type does not join nets automatically: the project must explicitly author the fixed internal-common jumpers shown in the example.",
+          "Only authored wires, jumpers and terminated cable cores join physical nets. Function symbols never create continuity. Shared connection policy accommodates the internal-common representation; it does not authorize arbitrary multiple external conductors in one clamp.",
+          "Ordinary passive clamps are not universally required. Projects may require selected external connections using connectionReview; unused clamp capacity is legitimate.",
+          "The IEC nominal capability is attached to each ordinary point for inspection, not multiplied by the number of clamps. Ratings are subject to the catalog conductor, bridge, installation and approval conditions; the compiler does not verify these conditions or aggregate block current.",
+          "The ordinary block has no protective-earth, shield or power-supply terminal. DIN-rail mounting does not make this a PE terminal. Optional bridge shafts, test interfaces and fitted accessories are not modeled.",
+          "IEC catalog rating: 800 V, 24 A at nominal 2.5 mm2; maximum 28 A with 4 mm2 conductor, subject to the total-current limit across all connected conductors. Solid 0.08-4 mm2; stranded 0.08-2.5 mm2; ferruled 0.14-2.5 mm2; stripping 10 mm in the cited 2011 catalog. Conditions are not interchangeable with UL/CSA or Ex ratings."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All 4 ordinary spring-cage wire clamps are inventoried. Accessory bridge/test interfaces and accessory assemblies are unmodeled. Fixed internal commoning requires explicit project jumpers; switch state and clamp occupancy limits are not evaluated."
+      },
+      "terminals": {
+        "A1": {
+          "role": "passive_connection",
+          "description": "ST 2,5-QUATTRO ordinary spring-cage wire clamp A1; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 800,
+            "current": 24
+          }
+        },
+        "A2": {
+          "role": "passive_connection",
+          "description": "ST 2,5-QUATTRO ordinary spring-cage wire clamp A2; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 800,
+            "current": 24
+          }
+        },
+        "B1": {
+          "role": "passive_connection",
+          "description": "ST 2,5-QUATTRO ordinary spring-cage wire clamp B1; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 800,
+            "current": 24
+          }
+        },
+        "B2": {
+          "role": "passive_connection",
+          "description": "ST 2,5-QUATTRO ordinary spring-cage wire clamp B2; authoring label",
+          "connection_policy": "shared",
+          "rating": {
+            "nominal_voltage": 800,
+            "current": 24
+          }
+        }
+      },
+      "terminalOrder": ["A1", "A2", "B1", "B2"],
+      "functions": {
+        "A1": {
+          "kind": "bus",
+          "terminals": ["A1"]
+        },
+        "A2": {
+          "kind": "bus",
+          "terminals": ["A2"]
+        },
+        "B1": {
+          "kind": "bus",
+          "terminals": ["B1"]
+        },
+        "B2": {
+          "kind": "bus",
+          "terminals": ["B2"]
+        }
+      },
+      "circuitSymbols": {
+        "A1": "terminal",
+        "A2": "terminal",
+        "B1": "terminal",
+        "B2": "terminal"
+      }
+    }
+  ]
+}

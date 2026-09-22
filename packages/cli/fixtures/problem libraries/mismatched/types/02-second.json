@@ -1,0 +1,9 @@
+{
+  "types": [
+    {
+      "kind": "cable_type",
+      "id": "wrong:duplicate",
+      "conductors": []
+    }
+  ]
+}

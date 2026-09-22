@@ -1,0 +1,342 @@
+{
+  "command": "neighbors",
+  "device": {
+    "kind": "device",
+    "uid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+    "designation": "K1",
+    "description": "Motor contactor",
+    "aliases": [],
+    "typeId": "core:contactor-3p-1no",
+    "location": "MAIN-PANEL"
+  },
+  "conductive": [
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "1/L1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.1/L1",
+        "role": "power_input"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "713d6b10-9196-4088-9e4e-39302ccb5854",
+        "designation": "W-PWR-004",
+        "display": "W-PWR-004"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+          "terminalKey": "2/T1"
+        },
+        "deviceDesignation": "CB1",
+        "display": "CB1.2/T1",
+        "role": "power_output"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+        "designation": "CB1",
+        "description": "Motor branch circuit breaker",
+        "aliases": [],
+        "typeId": "core:breaker-3p",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "2/T1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.2/T1",
+        "role": "power_output"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "3c6cca2f-3f0e-40ad-af82-d310fb7243d1",
+        "designation": "W-PWR-007",
+        "display": "W-PWR-007"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+          "terminalKey": "1/L1"
+        },
+        "deviceDesignation": "OL1",
+        "display": "OL1.1/L1",
+        "role": "power_input"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+        "designation": "OL1",
+        "description": "Motor overload relay",
+        "aliases": [],
+        "typeId": "core:overload-3p-1nc",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "3/L2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.3/L2",
+        "role": "power_input"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "030d640b-a7ba-4a34-8bdc-a1e800ec4398",
+        "designation": "W-PWR-005",
+        "display": "W-PWR-005"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+          "terminalKey": "4/T2"
+        },
+        "deviceDesignation": "CB1",
+        "display": "CB1.4/T2",
+        "role": "power_output"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+        "designation": "CB1",
+        "description": "Motor branch circuit breaker",
+        "aliases": [],
+        "typeId": "core:breaker-3p",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "4/T2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.4/T2",
+        "role": "power_output"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "4d2e1bd4-d553-470f-8c0f-e167bdb9c25a",
+        "designation": "W-PWR-008",
+        "display": "W-PWR-008"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+          "terminalKey": "3/L2"
+        },
+        "deviceDesignation": "OL1",
+        "display": "OL1.3/L2",
+        "role": "power_input"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+        "designation": "OL1",
+        "description": "Motor overload relay",
+        "aliases": [],
+        "typeId": "core:overload-3p-1nc",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "5/L3"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.5/L3",
+        "role": "power_input"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "5d508a7f-6602-4958-b590-f4285616f5f3",
+        "designation": "W-PWR-006",
+        "display": "W-PWR-006"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+          "terminalKey": "6/T3"
+        },
+        "deviceDesignation": "CB1",
+        "display": "CB1.6/T3",
+        "role": "power_output"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "aee2da0e-8230-411e-87d0-f72742194a4c",
+        "designation": "CB1",
+        "description": "Motor branch circuit breaker",
+        "aliases": [],
+        "typeId": "core:breaker-3p",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "6/T3"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.6/T3",
+        "role": "power_output"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "698ecf0f-9bc4-4361-b2ce-932d8e7dba6c",
+        "designation": "W-PWR-009",
+        "display": "W-PWR-009"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+          "terminalKey": "5/L3"
+        },
+        "deviceDesignation": "OL1",
+        "display": "OL1.5/L3",
+        "role": "power_input"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+        "designation": "OL1",
+        "description": "Motor overload relay",
+        "aliases": [],
+        "typeId": "core:overload-3p-1nc",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "A1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.A1",
+        "role": "coil",
+        "rating": {
+          "nominal_voltage": 24,
+          "voltage_type": "DC"
+        }
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "71881aaf-f3a4-41fd-8d3d-1afe88f122ce",
+        "designation": "W-CTL-007",
+        "display": "W-CTL-007"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+          "terminalKey": "96"
+        },
+        "deviceDesignation": "OL1",
+        "display": "OL1.96",
+        "role": "aux"
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "313fb03a-5f18-4af4-97f8-a7a542403e14",
+        "designation": "OL1",
+        "description": "Motor overload relay",
+        "aliases": [],
+        "typeId": "core:overload-3p-1nc",
+        "location": "MAIN-PANEL"
+      }
+    },
+    {
+      "terminal": {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "A2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.A2",
+        "role": "coil_return"
+      },
+      "element": {
+        "kind": "wire",
+        "uid": "de231b10-b644-4aea-8d9d-16252196c3d3",
+        "designation": "W-CTL-008",
+        "display": "W-CTL-008"
+      },
+      "otherTerminal": {
+        "id": {
+          "deviceUid": "33a15867-296b-40e4-a56b-15282f131b4c",
+          "terminalKey": "-"
+        },
+        "deviceDesignation": "PS1",
+        "display": "PS1.-",
+        "role": "dc_return_output",
+        "rating": {
+          "current": 2.5,
+          "nominal_voltage": 24,
+          "power": 60,
+          "voltage_type": "DC"
+        }
+      },
+      "otherDevice": {
+        "kind": "device",
+        "uid": "33a15867-296b-40e4-a56b-15282f131b4c",
+        "designation": "PS1",
+        "description": "480 VAC line-to-line to 24 VDC control power supply",
+        "aliases": [],
+        "typeId": "core:psu-24vdc",
+        "location": "MAIN-PANEL"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "relation": {
+        "uid": "11056adf-ae12-42cd-a9ea-da6d815dc7f6",
+        "designation": "REL-CONTROLS-001",
+        "display": "REL-CONTROLS-001",
+        "verb": "controls",
+        "from": {
+          "kind": "device",
+          "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+          "designation": "PLC1",
+          "description": "Motor starter control PLC",
+          "aliases": [],
+          "typeId": "core:plc-compact",
+          "location": "MAIN-PANEL"
+        },
+        "to": {
+          "kind": "device",
+          "uid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "designation": "K1",
+          "description": "Motor contactor",
+          "aliases": [],
+          "typeId": "core:contactor-3p-1no",
+          "location": "MAIN-PANEL"
+        }
+      },
+      "direction": "incoming",
+      "otherDevice": {
+        "kind": "device",
+        "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+        "designation": "PLC1",
+        "description": "Motor starter control PLC",
+        "aliases": [],
+        "typeId": "core:plc-compact",
+        "location": "MAIN-PANEL"
+      }
+    }
+  ]
+}

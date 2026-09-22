@@ -1,0 +1,15 @@
+{
+  "format": "project-presentation/0.2",
+  "revision": "DEMO A",
+  "backgroundColor": "#ffffff",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape",
+    "marginMm": 10
+  },
+  "titleBlock": {
+    "lines": [
+      "Machine demo - illustrative wiring; engineering design and parts selection incomplete"
+    ]
+  }
+}

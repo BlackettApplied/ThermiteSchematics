@@ -1,0 +1,123 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "siemens-pilot:6es7193-4cb30-0aa0",
+    "manufacturer": "Siemens",
+    "orderNumber": "6ES7193-4CB30-0AA0"
+  },
+  "type": {
+    "path": "types/6es7193-4cb30-0aa0.json",
+    "sha256": "7af7e7747893bdbeb162c48681c65c750fa2665ad4171a259b46a2f1d56a948a"
+  },
+  "research": {
+    "path": "research/6es7193-4cb30-0aa0.md",
+    "sha256": "9e78c4df69e22f115080b600b5705fe43b3b93f5c9ff38e7347f82ebfe6a989a"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "EM.1",
+      "EM.2",
+      "EM.3",
+      "EM.4",
+      "EM.5",
+      "EM.6",
+      "EM.7",
+      "EM.8",
+      "P1.L",
+      "P1.R",
+      "P1.EM",
+      "P2.L",
+      "P2.R",
+      "P2.EM",
+      "AUX1.L",
+      "AUX1.R"
+    ],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [
+      {
+        "from": "1",
+        "to": "EM.1",
+        "sourceId": "S2"
+      },
+      {
+        "from": "2",
+        "to": "EM.2",
+        "sourceId": "S2"
+      },
+      {
+        "from": "3",
+        "to": "EM.3",
+        "sourceId": "S2"
+      },
+      {
+        "from": "4",
+        "to": "EM.4",
+        "sourceId": "S2"
+      },
+      {
+        "from": "5",
+        "to": "EM.5",
+        "sourceId": "S2"
+      },
+      {
+        "from": "6",
+        "to": "EM.6",
+        "sourceId": "S2"
+      },
+      {
+        "from": "7",
+        "to": "EM.7",
+        "sourceId": "S2"
+      },
+      {
+        "from": "8",
+        "to": "EM.8",
+        "sourceId": "S2"
+      },
+      {
+        "from": "P1.L",
+        "to": "P1.R",
+        "sourceId": "S3"
+      },
+      {
+        "from": "P1.L",
+        "to": "P1.EM",
+        "sourceId": "S3"
+      },
+      {
+        "from": "P2.L",
+        "to": "P2.R",
+        "sourceId": "S3"
+      },
+      {
+        "from": "P2.L",
+        "to": "P2.EM",
+        "sourceId": "S3"
+      },
+      {
+        "from": "AUX1.L",
+        "to": "AUX1.R",
+        "sourceId": "S2"
+      }
+    ],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "82eb146d7ef61f475612fb44f9e051b068830ef3b45e4a469f490e0262fbccaf",
+    "packet.request.json": "e0826cdb4847c08f4acd69b3b63ef4c676fc86b1b88778e020074d4c1f1867b6",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "66d0977ebd2a2888d4ef19036c3da66d4c8fd59f09e2d243702708f746a7b115",
+    "system.json": "613f7acf53c804eaa7152188540f7b0d433f4c1f302a2a7a3c1a69f3450cbfd1"
+  }
+}

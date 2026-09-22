@@ -1,0 +1,6 @@
+{
+  "format": "electrical-system/0.1",
+  "project": { "name": "invalid-communication-port" },
+  "sources": ["sources/*.json"],
+  "libraries": [{ "name": "fixture", "version": "0.1.0", "path": "library" }]
+}

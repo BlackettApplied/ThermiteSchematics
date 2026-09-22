@@ -1,0 +1,9 @@
+{
+  "uid": "32345678-1234-4234-9234-123456789abc",
+  "kind": "jumper",
+  "designation": "JP1",
+  "endpoints": [
+    { "device": "TB1", "terminal": "1" },
+    { "device": "TB1", "terminal": "2" }
+  ]
+}

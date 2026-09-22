@@ -1,0 +1,47 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:dc-24",
+      "terminals": {
+        "T": { "rating": { "nominal_voltage": 24, "voltage_type": "DC" } }
+      },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:dc-48",
+      "terminals": {
+        "T": { "rating": { "nominal_voltage": 48, "voltage_type": "DC" } }
+      },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:ac-48",
+      "terminals": {
+        "T": { "rating": { "nominal_voltage": 48, "voltage_type": "AC" } }
+      },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:unrated",
+      "terminals": { "T": {} },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:nominal-48",
+      "terminals": { "T": { "rating": { "nominal_voltage": 48 } } },
+      "functions": {}
+    },
+    {
+      "kind": "device_type",
+      "id": "voltage-rules:type-dc",
+      "terminals": { "T": { "rating": { "voltage_type": "DC" } } },
+      "functions": {}
+    }
+  ]
+}

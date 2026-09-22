@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:zbe-102",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "ZBE-102"
+  },
+  "type": {
+    "path": "types/zbe-102.json",
+    "sha256": "cdee2a5a0c7e49c1111def53a94afe11c4b1ff42ce3180362faeaed2da538b84"
+  },
+  "research": {
+    "path": "research/zbe-102.md",
+    "sha256": "0b1172b64f6135afeef2904675bc7ea5d4289270aa3b189fdaba34b2ff17da85"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["1", "2"],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "309f5fcb7d0f48aa664016c9f2bb3512447f9d480e6c292ebffe123c6ac8d6ef",
+    "packet.request.json": "3dfe9564c39159592cde2ea8827cebd9e4e0b67a0a6cbebf02e055bbc850d3f1",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "4de5e19d440e4d5c3794c01911a1da3e265c1b22581a8bd820df7e33d88df6aa",
+    "system.json": "6b1a656577be8f9857ee83717ee77e1aeaef213c24c981c3f979bd544905586b"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "format": "agent-tool-result/0.1",
+  "tool": "resolve",
+  "value": {
+    "mode": "search",
+    "matches": [
+      {
+        "object": {
+          "kind": "device",
+          "uid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+          "designation": "LS1",
+          "description": "Normally open field limit switch permissive",
+          "aliases": []
+        },
+        "match": {
+          "kind": "exact",
+          "field": "designation",
+          "text": "LS1"
+        }
+      },
+      {
+        "object": {
+          "kind": "cable",
+          "uid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+          "designation": "CBL1",
+          "description": "LS1 field cable; conductor 2- is a terminated spare",
+          "aliases": []
+        },
+        "match": {
+          "kind": "prefix",
+          "field": "description",
+          "text": "LS1 field cable; conductor 2- is a terminated spare"
+        }
+      },
+      {
+        "object": {
+          "kind": "jumper",
+          "uid": "7bdee01c-ec15-4747-9208-ee650da1e681",
+          "designation": "JP1",
+          "description": "Distributes +24 VDC from TB1.1 to the LS1 cable feed at TB1.2",
+          "aliases": []
+        },
+        "match": {
+          "kind": "substring",
+          "field": "description",
+          "text": "Distributes +24 VDC from TB1.1 to the LS1 cable feed at TB1.2"
+        }
+      },
+      {
+        "object": {
+          "kind": "device",
+          "uid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+          "designation": "JB1",
+          "description": "Field junction box for LS1",
+          "aliases": []
+        },
+        "match": {
+          "kind": "substring",
+          "field": "description",
+          "text": "Field junction box for LS1"
+        }
+      }
+    ]
+  }
+}

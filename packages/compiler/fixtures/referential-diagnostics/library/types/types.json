@@ -1,0 +1,26 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "catalog:opaque",
+      "terminals": {
+        "13/NO": {},
+        "1/L1": {},
+        "X2.14": {}
+      },
+      "functions": {}
+    },
+    {
+      "kind": "cable_type",
+      "id": "catalog:cable",
+      "conductors": []
+    },
+    {
+      "kind": "device_type",
+      "id": "catalog:Unused",
+      "aliases": ["catalog:unused"],
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

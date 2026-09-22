@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Completeness example"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "audit",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

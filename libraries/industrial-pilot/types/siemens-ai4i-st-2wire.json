@@ -1,0 +1,149 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "industrial-pilot:siemens-ai4i-st-2wire",
+      "description": "AI 4xI ST - two-wire loop configuration",
+      "terminals": {
+        "1": {
+          "description": "1I0+ external-powered input"
+        },
+        "2": {
+          "description": "1I1+ external-powered input"
+        },
+        "3": {
+          "description": "1I2+ external-powered input"
+        },
+        "4": {
+          "description": "1I3+ external-powered input"
+        },
+        "5": {
+          "description": "1I0- external-powered return"
+        },
+        "6": {
+          "description": "1I1- external-powered return"
+        },
+        "7": {
+          "description": "1I2- external-powered return"
+        },
+        "8": {
+          "description": "1I3- external-powered return"
+        },
+        "9": {
+          "description": "UV0 two-wire transmitter supply",
+          "connection_policy": "exclusive"
+        },
+        "10": {
+          "description": "UV1 two-wire transmitter supply",
+          "connection_policy": "exclusive"
+        },
+        "11": {
+          "description": "UV2 two-wire transmitter supply",
+          "connection_policy": "exclusive"
+        },
+        "12": {
+          "description": "UV3 two-wire transmitter supply",
+          "connection_policy": "exclusive"
+        },
+        "13": {
+          "description": "2I0+ two-wire input",
+          "connection_policy": "exclusive"
+        },
+        "14": {
+          "description": "2I1+ two-wire input",
+          "connection_policy": "exclusive"
+        },
+        "15": {
+          "description": "2I2+ two-wire input",
+          "connection_policy": "exclusive"
+        },
+        "16": {
+          "description": "2I3+ two-wire input",
+          "connection_policy": "exclusive"
+        },
+        "L+": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true,
+          "role": "supply_positive"
+        },
+        "M": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true,
+          "role": "supply_return"
+        }
+      },
+      "functions": {
+        "ch0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["9", "13"]
+        },
+        "ch1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["10", "14"]
+        },
+        "ch2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["11", "15"]
+        },
+        "ch3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["12", "16"]
+        },
+        "supply": {
+          "kind": "load",
+          "terminals": ["L+", "M"]
+        }
+      },
+      "category": "io-module",
+      "terminalOrder": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "L+",
+        "M"
+      ],
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7134-6GD01-0BA1",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/161/59768161/att_109158/v1/et200sp_ai_4xi_2_4_wire_st_manual_en-US_en-US.pdf",
+          "title": "AI 4xI 2-/4-wire ST equipment manual",
+          "revision": "06/2020 A5E03551866-AF",
+          "pages": "14-15, Figure 3-1"
+        },
+        "modelingNotes": [
+          "Terminal keys are BaseUnit landing positions for this module; BaseUnit itself is a separate inventory item. Backplane and power rails are not automatically connected.",
+          "Two-wire loop mode is modeled by UVn and 2In+ channel terminals. Four-wire mode is documented but not selected by these functions."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "BaseUnit landing positions for this signal module are modeled. Backplane and power rails are not automatically connected; their distribution must be documented separately."
+      }
+    }
+  ]
+}

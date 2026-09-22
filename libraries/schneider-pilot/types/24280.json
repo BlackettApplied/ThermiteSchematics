@@ -1,0 +1,116 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:24280",
+      "description": "C60N miniature circuit breaker, three poles, 4 A, curve C",
+      "category": "component",
+      "symbol": "thermite:breaker",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "24280",
+        "document": {
+          "url": "https://www.yumpu.com/it/document/view/16219073/multi-9-sistema-apparecchiature-modulari",
+          "title": "Multi 9 — Sistema apparecchiature modulari",
+          "revision": "Catalogo 2010–2011",
+          "pages": "Printed pp.14–15; viewer pp.16–17; diagram E45095"
+        },
+        "modelingNotes": [
+          "Manufacturer-authored catalog mirrored on Yumpu under distributor carnevale.bz. Cover and pp.14–15 visually reviewed. Exact identity independently confirmed at https://www.se.com/fr/fr/product/24280/disjoncteur-c60n-3p-4a-c/.",
+          "4 A at 30 degrees C. Curve C magnetic trip band 5–10 In. CEI EN 60898: Icn 6 kA at 400 V AC for 3P. CEI EN 60947-2: 3P Icu 20 kA at 230–240 V and 10 kA at 400–415 V. Voltage capabilities are not assigned circuit voltage; no nominal_voltage or AC-only constraint is set.",
+          "Diagram E45095 identifies top terminals 1,3,5 and bottom terminals 2,4,6, paired 1–2,3–4,5–6. No phase aliases or mandatory feed direction are asserted. Open reference state follows the drawing, not the installed handle position.",
+          "Base breaker only. Accessory contacts are not included. Mechanical ganging and contact functions do not create net continuity; no fixed links. Protection dynamics and coordination are not simulated."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All six main connections of the exact base 3P breaker are represented from its catalog selection diagram. No neutral, PE, signal or accessory terminals belong to the illustrated base circuit. No separately fitted accessory is modeled."
+      },
+      "terminals": {
+        "1": {
+          "description": "Pole 1 upper terminal 1",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "2": {
+          "description": "Pole 1 lower terminal 2",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "3": {
+          "description": "Pole 2 upper terminal 3",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "4": {
+          "description": "Pole 2 lower terminal 4",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "5": {
+          "description": "Pole 3 upper terminal 5",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        },
+        "6": {
+          "description": "Pole 3 lower terminal 6",
+          "role": "passive",
+          "connection_policy": "shared",
+          "rating": {
+            "current": 4
+          }
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1", "2"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3", "4"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5", "6"]
+        }
+      },
+      "circuitSymbols": {
+        "pole1": "breaker",
+        "pole2": "breaker",
+        "pole3": "breaker"
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ],
+      "terminalOrder": ["1", "3", "5", "2", "4", "6"]
+    }
+  ]
+}

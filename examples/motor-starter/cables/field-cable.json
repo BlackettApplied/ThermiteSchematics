@@ -1,0 +1,42 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "c4c1bfdf-567a-4f6c-9e08-147342061afe",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cable-2pair-shielded",
+      "description": "LS1 field cable; conductor 2- is a terminated spare",
+      "conductors": [
+        {
+          "id": "1+",
+          "endpoints": [
+            { "device": "TB1", "terminal": "2" },
+            { "device": "JB1", "terminal": "X1.1" }
+          ]
+        },
+        {
+          "id": "1-",
+          "endpoints": [
+            { "device": "TB1", "terminal": "3" },
+            { "device": "JB1", "terminal": "X1.2" }
+          ]
+        },
+        {
+          "id": "2+",
+          "endpoints": [
+            { "device": "TB1", "terminal": "4" },
+            { "device": "JB1", "terminal": "X1.3" }
+          ]
+        },
+        {
+          "id": "2-",
+          "endpoints": [
+            { "device": "TB1", "terminal": "5" },
+            { "device": "JB1", "terminal": "X1.4" }
+          ]
+        }
+      ]
+    }
+  ]
+}

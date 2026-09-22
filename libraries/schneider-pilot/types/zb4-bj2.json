@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bj2",
+      "description": "Harmony XB4 mechanical selector head, black long handle, two maintained positions 90 degrees",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BJ2",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Harmony XB4 metal control and signaling units",
+          "revision": "10/2021",
+          "pages": "Printed p. 55; physical PDF p. 57"
+        },
+        "modelingNotes": [
+          "Exact ZB4BJ2 selection row is under Heads only; body/contact assemblies are separate. No contact or light blocks are included in this abstraction.",
+          "Historical ZB4-BJ2 is retained; mapping to manufacturer ZB4BJ2 treats the family separator as presentation punctuation, corroborated by the exact long-handle two-position 90-degree description. No manufacturer legacy punctuation cross-reference was found.",
+          "Zero documented electrical terminals and fixed links. Bonding through the metal head, fixing collar or panel is unresolved and is not modeled.",
+          "Mechanical documentation view only. No electrical rating, printed 0-1 legend, contact function or installed switch assembly is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical head with zero documented electrical terminals; separate electrical blocks are excluded. Reviewed drawings do not establish a PE terminal or the metal head/collar/panel bonding interface. Empty terminals do not assert exhaustive absence of a bonding interface."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

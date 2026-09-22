@@ -1,0 +1,8 @@
+{
+  "kind": "device_type",
+  "id": "fixture:non-string-connection-policy",
+  "terminals": {
+    "X1": { "connection_policy": 42 }
+  },
+  "functions": {}
+}

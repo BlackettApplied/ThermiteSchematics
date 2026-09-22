@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Referential diagnostics"
+  },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "catalog",
+      "version": "1.0.0",
+      "path": "library"
+    }
+  ]
+}

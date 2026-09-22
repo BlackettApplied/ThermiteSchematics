@@ -1,0 +1,387 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "weidmueller-pilot:1651360000",
+      "description": "HDC HVE 10+2 FS / female screw connector insert / size 8 / 10 power + 2 pilot + PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Weidmüller",
+        "orderNumber": "1651360000",
+        "document": {
+          "url": "https://datasheet.weidmueller.com/pdf/en/1651360000/scope/2/",
+          "title": "Data sheet HDC HVE 10+2 FS",
+          "revision": "Creation date 25.02.2026 08:08:24 MEZ",
+          "pages": "1, 3–4"
+        },
+        "modelingNotes": [
+          "Exact order 1651360000 is HDC HVE 10+2 FS, female screw insert, size 8: ten power contacts, two lagging pilot/signal contacts and PE. No housing or accessory is included.",
+          "Legacy exact female diagram (S2 p.6) verifies populated numbers 1,3,5,7,9,11,14,16,18,20,22,24. Comparison with the exact female screw diagram and legend in S3 B.104 identifies 1 and 24 as pilot contacts. Legacy filled circles correspond to modern open switch-contact circles; the ten remaining positions are operating/power contacts. Do not populate the unused positions of a 24-position body.",
+          "C.n and M.n are authoring aliases for the cable termination and female mating end of the same numbered conductor. They are not additional manufacturer markings. Each numbered conductor requires an explicit project jumper C.n-M.n to express factory continuity. Pilot designation describes mating sequence, not a switch within the insert. No links between different numbers or across the unmated connector are implied.",
+          "PE is one aggregate endpoint, a textual alias for the earth symbol. Physical PE subdivisions, individual screw positions, mating interface and metalwork bonding paths remain unresolved. No C.PE/M.PE link or central PE mating pin is invented. required:true on PE is library policy; a presence diagnostic does not establish external bonding.",
+          "S3 gives 20 A and conductor/temperature-dependent derating. No scalar current is assigned while the installed revision and rating discrepancy remain unresolved.",
+          "830 V is a capability, not an assigned circuit voltage; S2 qualifies signal contacts at 500 V. S1 lists 600 V AC/DC to UL/CSA, 8 kV impulse and pollution severity 3. No nominal_voltage or AC-only metadata is assigned.",
+          "S1 p.3 specifies main-contact torque 0.5–0.55 Nm and 9 mm strip length; PE 1.2–1.5 Nm and 10 mm. Its overall conductor range 0.5–2.5 mm² conflicts with some conductor-form rows reaching 4 mm²; no conductor size is selected.",
+          "Each endpoint uses a singleton bus function and existing terminal symbol (earth for PE). Symbols and connector metadata do not create net continuity. Shared connection policy allows representation of the internal conductor plus an external connection, not permission for multiple field wires under one clamp."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "All twelve numbered conductors have separate cable and mating endpoints. PE is a single aggregate endpoint because its physical subdivision and bonding paths are undocumented. No additional shield, communication, neutral or accessory connections are established; power phase assignments are application-dependent."
+      },
+      "terminals": {
+        "C.1": {
+          "description": "Cable termination / 1 / lagging pilot signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.3": {
+          "description": "Cable termination / 3 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.5": {
+          "description": "Cable termination / 5 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.7": {
+          "description": "Cable termination / 7 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.9": {
+          "description": "Cable termination / 9 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.11": {
+          "description": "Cable termination / 11 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.14": {
+          "description": "Cable termination / 14 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.16": {
+          "description": "Cable termination / 16 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.18": {
+          "description": "Cable termination / 18 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.20": {
+          "description": "Cable termination / 20 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.22": {
+          "description": "Cable termination / 22 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "C.24": {
+          "description": "Cable termination / 24 / lagging pilot signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.1": {
+          "description": "Female mating contact / 1 / lagging pilot signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.3": {
+          "description": "Female mating contact / 3 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.5": {
+          "description": "Female mating contact / 5 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.7": {
+          "description": "Female mating contact / 7 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.9": {
+          "description": "Female mating contact / 9 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.11": {
+          "description": "Female mating contact / 11 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.14": {
+          "description": "Female mating contact / 14 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.16": {
+          "description": "Female mating contact / 16 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.18": {
+          "description": "Female mating contact / 18 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.20": {
+          "description": "Female mating contact / 20 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.22": {
+          "description": "Female mating contact / 22 / power",
+          "role": "power",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "M.24": {
+          "description": "Female mating contact / 24 / lagging pilot signal",
+          "role": "signal",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "PE": {
+          "description": "Aggregate protective-earth connection; physical subdivision unresolved",
+          "role": "protective_earth",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "C.1": {
+          "kind": "bus",
+          "terminals": ["C.1"]
+        },
+        "C.3": {
+          "kind": "bus",
+          "terminals": ["C.3"]
+        },
+        "C.5": {
+          "kind": "bus",
+          "terminals": ["C.5"]
+        },
+        "C.7": {
+          "kind": "bus",
+          "terminals": ["C.7"]
+        },
+        "C.9": {
+          "kind": "bus",
+          "terminals": ["C.9"]
+        },
+        "C.11": {
+          "kind": "bus",
+          "terminals": ["C.11"]
+        },
+        "C.14": {
+          "kind": "bus",
+          "terminals": ["C.14"]
+        },
+        "C.16": {
+          "kind": "bus",
+          "terminals": ["C.16"]
+        },
+        "C.18": {
+          "kind": "bus",
+          "terminals": ["C.18"]
+        },
+        "C.20": {
+          "kind": "bus",
+          "terminals": ["C.20"]
+        },
+        "C.22": {
+          "kind": "bus",
+          "terminals": ["C.22"]
+        },
+        "C.24": {
+          "kind": "bus",
+          "terminals": ["C.24"]
+        },
+        "M.1": {
+          "kind": "bus",
+          "terminals": ["M.1"]
+        },
+        "M.3": {
+          "kind": "bus",
+          "terminals": ["M.3"]
+        },
+        "M.5": {
+          "kind": "bus",
+          "terminals": ["M.5"]
+        },
+        "M.7": {
+          "kind": "bus",
+          "terminals": ["M.7"]
+        },
+        "M.9": {
+          "kind": "bus",
+          "terminals": ["M.9"]
+        },
+        "M.11": {
+          "kind": "bus",
+          "terminals": ["M.11"]
+        },
+        "M.14": {
+          "kind": "bus",
+          "terminals": ["M.14"]
+        },
+        "M.16": {
+          "kind": "bus",
+          "terminals": ["M.16"]
+        },
+        "M.18": {
+          "kind": "bus",
+          "terminals": ["M.18"]
+        },
+        "M.20": {
+          "kind": "bus",
+          "terminals": ["M.20"]
+        },
+        "M.22": {
+          "kind": "bus",
+          "terminals": ["M.22"]
+        },
+        "M.24": {
+          "kind": "bus",
+          "terminals": ["M.24"]
+        },
+        "PE": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "circuitSymbols": {
+        "C.1": "terminal",
+        "C.3": "terminal",
+        "C.5": "terminal",
+        "C.7": "terminal",
+        "C.9": "terminal",
+        "C.11": "terminal",
+        "C.14": "terminal",
+        "C.16": "terminal",
+        "C.18": "terminal",
+        "C.20": "terminal",
+        "C.22": "terminal",
+        "C.24": "terminal",
+        "M.1": "terminal",
+        "M.3": "terminal",
+        "M.5": "terminal",
+        "M.7": "terminal",
+        "M.9": "terminal",
+        "M.11": "terminal",
+        "M.14": "terminal",
+        "M.16": "terminal",
+        "M.18": "terminal",
+        "M.20": "terminal",
+        "M.22": "terminal",
+        "M.24": "terminal",
+        "PE": "earth"
+      },
+      "terminalOrder": [
+        "C.1",
+        "C.3",
+        "C.5",
+        "C.7",
+        "C.9",
+        "C.11",
+        "C.14",
+        "C.16",
+        "C.18",
+        "C.20",
+        "C.22",
+        "C.24",
+        "M.1",
+        "M.3",
+        "M.5",
+        "M.7",
+        "M.9",
+        "M.11",
+        "M.14",
+        "M.16",
+        "M.18",
+        "M.20",
+        "M.22",
+        "M.24",
+        "PE"
+      ],
+      "connectorPorts": {
+        "MATE": {
+          "connector": "HDC HVE 10+2 FS female numbered contacts",
+          "description": "Numbered contacts only; PE mating interface unresolved and intentionally not represented as an invented pin.",
+          "pins": {
+            "1": {
+              "terminal": "M.1"
+            },
+            "3": {
+              "terminal": "M.3"
+            },
+            "5": {
+              "terminal": "M.5"
+            },
+            "7": {
+              "terminal": "M.7"
+            },
+            "9": {
+              "terminal": "M.9"
+            },
+            "11": {
+              "terminal": "M.11"
+            },
+            "14": {
+              "terminal": "M.14"
+            },
+            "16": {
+              "terminal": "M.16"
+            },
+            "18": {
+              "terminal": "M.18"
+            },
+            "20": {
+              "terminal": "M.20"
+            },
+            "22": {
+              "terminal": "M.22"
+            },
+            "24": {
+              "terminal": "M.24"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

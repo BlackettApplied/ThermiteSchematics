@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "schneider-pilot:zb4-bj5",
+    "manufacturer": "Schneider Electric",
+    "orderNumber": "ZB4-BJ5"
+  },
+  "type": {
+    "path": "types/zb4-bj5.json",
+    "sha256": "e09c6a986a588e75ce750517591c259e73e88a3897c3b73dec512a863f59bce1"
+  },
+  "research": {
+    "path": "research/zb4-bj5.md",
+    "sha256": "b6ad843321514b241e16c8a3146294048bb8bd48e7bf2f623cbeea9aff9c1d3d"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": [],
+    "requiredTerminalKeys": [],
+    "fixedLinks": [],
+    "renderKind": "accessory"
+  },
+  "files": {
+    "source.json": "6a57a15a91f1d10c183366f18de774e7635bbdee0f86addf94ac581d13cc6269",
+    "packet.request.json": "7fe9cfa468e1b56848818e977cf7033818061f0978622d83d70a3c39126143a2",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "457563eddf07f2d8637aaa5737ff966a10d321cdd5114d1e9e377e8e6465f9dd",
+    "system.json": "6eaf37fb1a5ce8dd8cca9527bb055d9f90f0764f0ccef12217a6439e0e0e5f1a"
+  }
+}

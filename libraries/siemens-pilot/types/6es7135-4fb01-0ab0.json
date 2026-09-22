@@ -1,0 +1,146 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "siemens-pilot:6es7135-4fb01-0ab0",
+      "description": "ET 200S 2AO U ST; assembled field-interface abstraction with TM-E15C24-01; partial backplane coverage",
+      "category": "io-module",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "Siemens",
+        "orderNumber": "6ES7135-4FB01-0AB0",
+        "document": {
+          "url": "https://cache.industry.siemens.com/dl/files/040/25546040/att_54202/v1/et200s_2ao_u_st_manual_en-US.pdf",
+          "title": "2AO U ST analog electronic module (6ES7135-4FB01-0AB0)",
+          "revision": "04/2007, A5E01076916-01",
+          "pages": "7-10, 19"
+        },
+        "modelingNotes": [
+          "Field terminals refer to the assembled TM-E15C24-01 arrangement documented on p.8; clamps are on a separately ordered terminal module, not included with this electronic card. This base choice is not an as-built assertion.",
+          "Other compatible bases have AUX1 terminals A3/A4/A7/A8. They are separate-base features, absent from the chosen 24-01 arrangement. No PE or screen clamp is invented.",
+          "P1=L+ and P2=1M are internal supply-contact identities from p.8, not external field clamps. Backplane individual signal contacts and card-to-base mating positions are not enumerated.",
+          "24 VDC load supply from power module; maximum module consumption 130 mA. Analog ranges +/-10 V or 1-5 V; load at least 1 kohm, capacitance at most 1 microfarad. Range limits are not assigned nominal voltage.",
+          "Only 3-7 is a verified fixed link (p.8 MANA bus); instantiate it as an explicit jumper. Never link P2 to MANA automatically. Two-wire sense bridges are application wiring, not factory continuity.",
+          "Channels and sense functions do not join nets or simulate output regulation. Channel use is optional by application; P1/P2 supply presence is required. Shared common connections permit the fixed jumper and field lead, without asserting clamp wire capacity.",
+          "Assembled field-interface abstraction on documented TM-E15C24-01 (6ES7193-4CB30-0AA0): eight field clamps, no AUX clamps. Card and base are separately ordered. Verify the installed per-slot pairing before use. Do not duplicate these field clamps with a second base instance in the same circuit.",
+          "Partial physical inventory: numbered clamps belong to the selected separate base; P1/P2 identify internal functional supplies, not every mating finger. Backplane contacts, actual per-slot pairing and external shield/bonding hardware remain unverified. No additional PE or AUX bond is inferred."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Partial physical inventory: numbered clamps belong to the selected separate base; P1/P2 identify internal functional supplies, not every mating finger. Backplane contacts, actual per-slot pairing and external shield/bonding hardware remain unverified. No additional PE or AUX bond is inferred."
+      },
+      "terminals": {
+        "1": {
+          "description": "QV0: voltage output channel 0",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "2": {
+          "description": "S0+: positive remote-sense input channel 0",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "3": {
+          "description": "Mana: analog common",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "4": {
+          "description": "S0-: negative remote-sense input channel 0",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "5": {
+          "description": "QV1: voltage output channel 1",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "6": {
+          "description": "S1+: positive remote-sense input channel 1",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "7": {
+          "description": "Mana: analog common",
+          "role": "return",
+          "connection_policy": "shared",
+          "required": false
+        },
+        "8": {
+          "description": "S1-: negative remote-sense input channel 1",
+          "role": "signal",
+          "connection_policy": "exclusive",
+          "required": false
+        },
+        "P1": {
+          "description": "L+: internal load-supply contact",
+          "role": "power",
+          "connection_policy": "exclusive",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "P2": {
+          "description": "1M: internal load-supply return contact",
+          "role": "return",
+          "connection_policy": "exclusive",
+          "required": true,
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "AO0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["1", "3"]
+        },
+        "AO1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["5", "7"]
+        },
+        "SENSE0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["2", "4"]
+        },
+        "SENSE1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["6", "8"]
+        },
+        "SUPPLY": {
+          "kind": "load",
+          "terminals": ["P1", "P2"]
+        }
+      },
+      "circuitSymbols": {
+        "AO0": "interface",
+        "AO1": "interface",
+        "SENSE0": "interface",
+        "SENSE1": "interface",
+        "SUPPLY": "load"
+      },
+      "terminalOrder": ["1", "2", "3", "4", "5", "6", "7", "8", "P1", "P2"],
+      "connectorPorts": {
+        "BACKPLANE": {
+          "connector": "ET 200S backplane bus interface",
+          "description": "Existence established by S1 p.8; physical pins unenumerated and no continuity or protocol wiring is modeled.",
+          "required": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,434 @@
+{
+  "command": "inspect",
+  "object": {
+    "kind": "device",
+    "uid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+    "designation": "K1",
+    "description": "Motor contactor",
+    "aliases": [],
+    "typeId": "core:contactor-3p-1no",
+    "location": "MAIN-PANEL",
+    "terminals": [
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "1/L1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.1/L1",
+        "role": "power_input",
+        "net": {
+          "id": "net:sha256:15c3458e516e2e6ed194933a7c8c6a37e40fe4232116d2eb4fea070353453efa",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "713d6b10-9196-4088-9e4e-39302ccb5854",
+            "designation": "W-PWR-004",
+            "display": "W-PWR-004"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "13"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.13",
+        "role": "aux",
+        "net": {
+          "id": "net:sha256:81c26503ab166cd920ccf3536cb4a19802cbdcd37b2627117c36a048f4868500",
+          "potentials": []
+        },
+        "elements": []
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "14"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.14",
+        "role": "aux",
+        "net": {
+          "id": "net:sha256:b0ce95efc0b1716903ecd3c382552ecb2d8d118f2280b19aef67f300a11f0453",
+          "potentials": []
+        },
+        "elements": []
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "2/T1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.2/T1",
+        "role": "power_output",
+        "net": {
+          "id": "net:sha256:0ed8b5d5440f8c42b8e4f61d4332189c4e630922a2a804cdc1d2a2d79d6c64d5",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "3c6cca2f-3f0e-40ad-af82-d310fb7243d1",
+            "designation": "W-PWR-007",
+            "display": "W-PWR-007"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "3/L2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.3/L2",
+        "role": "power_input",
+        "net": {
+          "id": "net:sha256:68258f3a152368afd62a501da7b3fb0dcf1083c89e35e8367f0a5eafd21119cc",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "030d640b-a7ba-4a34-8bdc-a1e800ec4398",
+            "designation": "W-PWR-005",
+            "display": "W-PWR-005"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "4/T2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.4/T2",
+        "role": "power_output",
+        "net": {
+          "id": "net:sha256:d84193c45ef2dd9f0fd849a6d59cdce28071e8d0ba8652bc3470f8786de9cbb8",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "4d2e1bd4-d553-470f-8c0f-e167bdb9c25a",
+            "designation": "W-PWR-008",
+            "display": "W-PWR-008"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "5/L3"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.5/L3",
+        "role": "power_input",
+        "net": {
+          "id": "net:sha256:a956f28d654c65096eacbdec1189dd972cd8f06c30a87f2a8376164fd4c25db7",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "5d508a7f-6602-4958-b590-f4285616f5f3",
+            "designation": "W-PWR-006",
+            "display": "W-PWR-006"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "6/T3"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.6/T3",
+        "role": "power_output",
+        "net": {
+          "id": "net:sha256:cf554decaabe2bb3b6baeda86b2e38fb6dcf809ea7dc87419077832095cd3b12",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "698ecf0f-9bc4-4361-b2ce-932d8e7dba6c",
+            "designation": "W-PWR-009",
+            "display": "W-PWR-009"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "A1"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.A1",
+        "role": "coil",
+        "rating": {
+          "nominal_voltage": 24,
+          "voltage_type": "DC"
+        },
+        "net": {
+          "id": "net:sha256:de8cd0d0a2b62f2b540a39b338e9701f6e5b5e9479a2b7dc96ab8e90fc998ce5",
+          "potentials": []
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "71881aaf-f3a4-41fd-8d3d-1afe88f122ce",
+            "designation": "W-CTL-007",
+            "display": "W-CTL-007"
+          }
+        ]
+      },
+      {
+        "id": {
+          "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+          "terminalKey": "A2"
+        },
+        "deviceDesignation": "K1",
+        "display": "K1.A2",
+        "role": "coil_return",
+        "net": {
+          "id": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d",
+          "potentials": [
+            {
+              "uid": "aaccbc22-3208-42dd-ae26-54dce0250f8d",
+              "name": "0VDC",
+              "electrical": {
+                "nominal_voltage": 0,
+                "polarity": "return",
+                "voltage_type": "DC"
+              }
+            }
+          ]
+        },
+        "elements": [
+          {
+            "kind": "wire",
+            "uid": "de231b10-b644-4aea-8d9d-16252196c3d3",
+            "designation": "W-CTL-008",
+            "display": "W-CTL-008"
+          }
+        ]
+      }
+    ],
+    "functions": [
+      {
+        "key": "aux13",
+        "kind": "contact",
+        "normalState": "open",
+        "terminals": [
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "13"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.13",
+            "role": "aux"
+          },
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "14"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.14",
+            "role": "aux"
+          }
+        ]
+      },
+      {
+        "key": "coil",
+        "kind": "coil",
+        "terminals": [
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "A1"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.A1",
+            "role": "coil",
+            "rating": {
+              "nominal_voltage": 24,
+              "voltage_type": "DC"
+            }
+          },
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "A2"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.A2",
+            "role": "coil_return"
+          }
+        ]
+      },
+      {
+        "key": "pole1",
+        "kind": "contact",
+        "normalState": "open",
+        "terminals": [
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "1/L1"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.1/L1",
+            "role": "power_input"
+          },
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "2/T1"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.2/T1",
+            "role": "power_output"
+          }
+        ]
+      },
+      {
+        "key": "pole2",
+        "kind": "contact",
+        "normalState": "open",
+        "terminals": [
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "3/L2"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.3/L2",
+            "role": "power_input"
+          },
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "4/T2"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.4/T2",
+            "role": "power_output"
+          }
+        ]
+      },
+      {
+        "key": "pole3",
+        "kind": "contact",
+        "normalState": "open",
+        "terminals": [
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "5/L3"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.5/L3",
+            "role": "power_input"
+          },
+          {
+            "id": {
+              "deviceUid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+              "terminalKey": "6/T3"
+            },
+            "deviceDesignation": "K1",
+            "display": "K1.6/T3",
+            "role": "power_output"
+          }
+        ]
+      }
+    ],
+    "gangedGroups": [
+      {
+        "id": "gang:sha256:5773084aeee691fec9a44d5d5b388662b42cb5d85e50af67ea24b559d6ec928a",
+        "functionKeys": [
+          "pole1",
+          "pole2",
+          "pole3"
+        ]
+      }
+    ],
+    "internalRelations": [
+      {
+        "verb": "actuates",
+        "fromFunctionKey": "coil",
+        "toFunctionKey": "aux13"
+      },
+      {
+        "verb": "actuates",
+        "fromFunctionKey": "coil",
+        "toFunctionKey": "pole1"
+      },
+      {
+        "verb": "actuates",
+        "fromFunctionKey": "coil",
+        "toFunctionKey": "pole2"
+      },
+      {
+        "verb": "actuates",
+        "fromFunctionKey": "coil",
+        "toFunctionKey": "pole3"
+      },
+      {
+        "verb": "ganged_with",
+        "fromFunctionKey": "pole1",
+        "toFunctionKey": "pole2"
+      },
+      {
+        "verb": "ganged_with",
+        "fromFunctionKey": "pole2",
+        "toFunctionKey": "pole3"
+      }
+    ],
+    "projectRelations": [
+      {
+        "relation": {
+          "uid": "11056adf-ae12-42cd-a9ea-da6d815dc7f6",
+          "designation": "REL-CONTROLS-001",
+          "display": "REL-CONTROLS-001",
+          "verb": "controls",
+          "from": {
+            "kind": "device",
+            "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+            "designation": "PLC1",
+            "description": "Motor starter control PLC",
+            "aliases": [],
+            "typeId": "core:plc-compact",
+            "location": "MAIN-PANEL"
+          },
+          "to": {
+            "kind": "device",
+            "uid": "3e10f78a-52a2-42fd-baf6-26117d985757",
+            "designation": "K1",
+            "description": "Motor contactor",
+            "aliases": [],
+            "typeId": "core:contactor-3p-1no",
+            "location": "MAIN-PANEL"
+          }
+        },
+        "direction": "incoming",
+        "otherDevice": {
+          "kind": "device",
+          "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+          "designation": "PLC1",
+          "description": "Motor starter control PLC",
+          "aliases": [],
+          "typeId": "core:plc-compact",
+          "location": "MAIN-PANEL"
+        }
+      }
+    ]
+  }
+}

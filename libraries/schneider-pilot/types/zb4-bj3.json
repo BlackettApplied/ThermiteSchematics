@@ -1,0 +1,42 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "schneider-pilot:zb4-bj3",
+      "description": "Harmony XB4 black long-handle selector head, 22 mm, three maintained positions +/-45 degrees; head only",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "Schneider Electric",
+        "orderNumber": "ZB4-BJ3",
+        "document": {
+          "url": "https://iportal.se.com/Contents/docs/HARMONY%20XB4%20METAL%20CONTROL%20AND%20SIGNALING%20UNITS_CATALOG.PDF",
+          "title": "Schneider Electric — Harmony XB4 metal, Control and signaling units, catalog",
+          "revision": "10/2021",
+          "pages": "PDF page 57 (catalog p.55): 'Selector switches with long handle — Heads only', row ZB4BJ3; footnote (1) refers contacts to the body/fixing collar (page 24)"
+        },
+        "modelingNotes": [
+          "Operator HEAD only. The catalog lists ZB4BJ3 under 'Heads only' with blank NO/NC contact columns; the contacts appear only in the complete unit XB4BJ33 = (ZB4BZ103 body/fixing collar + 2 NO) + ZB4BJ3 head. Contacts and their screw-clamp terminals belong to the separately ordered body/fixing collar, not to this head.",
+          "Manufacturer product page (https://www.se.com/us/en/product/ZB4BJ3/, accessed 2026-09-12) confirms 'Head for selector switch … metal, black, 22mm, long handle, 3 positions, stay put', operator head only with no contact blocks; a choice of contact blocks is ordered separately.",
+          "Mechanical scope: Ø22 panel-mount selector actuator, long black handle, three maintained positions I-0-II at ±45° (source '1-0-2 45dgr'), stay put (vs spring-return ZB4BJ5/J7/J8). Standard chromium-plated bezel; optional black metal bezel = suffix 7 (ZB4BJ37).",
+          "Zero electrical terminals: no contact, lamp/LED, supply, return, signal, shield, communication or PE/bond terminal is present on the head. No net-joining continuity is asserted; contact/collar membership never manufactures continuity.",
+          "Bonding: the metal bezel/collar-to-panel interface is not documented as an electrical terminal, so no PE/bond path is asserted through the head (undocumented mechanical interface, not an installed bond).",
+          "No successor or completed suffix substituted.",
+          "Position notation I-0-II describes operating positions, not supplied printed legends. Empty circuit functions preserve the mechanical documentation scope. Source order spelling ZB4-BJ3 is retained.",
+          "Head-level environmental/standards values (up to IP66/IP67/IP69/IP69K, −40…+70 °C, EN/IEC 60947-5-1, UL 508, CSA C22.2 No 14) are catalog family values and are not modeled as electrical ratings for this zero-terminal head."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Mechanical selector head with zero electrical terminals. Switching terminals reside in the separately ordered body/fixing collar + contact blocks (e.g. ZB4BZ10x), which is out of scope for this head. The metal bezel/collar-to-panel bonding interface is not documented as a terminal, so no PE/bond path is asserted."
+      },
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "MOUNT": {
+          "connector": "Ø22 panel-mount selector actuator head; snap-fits to a separately ordered body/fixing collar (e.g. ZB4BZ10x)",
+          "description": "Mechanical mounting/attachment interface only; no electrical pins."
+        }
+      }
+    }
+  ]
+}

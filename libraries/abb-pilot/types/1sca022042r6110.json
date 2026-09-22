@@ -1,0 +1,32 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022042r6110",
+      "description": "OXP12X535 mechanical operating shaft for pistol handles, 535 mm length, 12 mm diameter",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022042R6110",
+        "document": {
+          "url": "https://new.abb.com/docs/librariesprovider22/default-document-library/12_switch-disconnectors-%281%29.pdf?sfvrsn=44c6c60a_0",
+          "title": "Switch-disconnectors — High performance, compact solution",
+          "revision": "1SCC301020C0201_21-03",
+          "pages": "130 (physical and printed)"
+        },
+        "modelingNotes": [
+          "Exact ABB ordering row identifies OXP12X535 as a 535 mm shaft, diameter 12 mm, weight 0.59 kg.",
+          "Mechanical accessory only; zero documented electrical terminals, functions or fixed electrical links. Documentation view is appropriate.",
+          "No installed bonding path through shaft, handle, switch or panel is established by the reviewed evidence.",
+          "That association is unresolved; no switch identity or rating is transferred to this exact order."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Zero documented electrical connections on the separately cataloged mechanical shaft. Reviewed evidence does not specify an installed bonding interface; no exhaustive absence of such interfaces or continuity through surrounding metalwork is asserted."
+      },
+      "terminals": {},
+      "functions": {}
+    }
+  ]
+}

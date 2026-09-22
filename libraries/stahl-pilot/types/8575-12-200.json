@@ -1,0 +1,145 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "stahl-pilot:8575-12-200",
+      "description": "Plug / 16 A / 20-25 V AC (extra-low voltage) / 50-60 Hz / 3 P / violet / no PE",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "R. STAHL",
+        "orderNumber": "8575/12-200",
+        "document": {
+          "url": "https://media.w-f.ch/asset_external/downloads/lieferanten/r.stahl%20ag/datenbl%C3%A4tter/steckvorrichtung_2.pdf",
+          "title": "R. STAHL Steckvorrichtungen CES, Reihe 8575",
+          "revision": "2010-06·EK00·III·de",
+          "pages": "E3/2 exact selection and plug diagram 09193E00; E3/9 technical data"
+        },
+        "modelingNotes": [
+          "Exact 8575/12-200 selection: CES 16 A extra-low-voltage plug, three poles, 20–25 V, violet, 50/60 Hz. No dedicated PE or neutral contact. Different orders and successors are not substituted.",
+          "Manufacturer plug diagram 09193E00 on E3/2 explicitly labels L1, L2 and L3. These are contact markings, not an assigned circuit phase map. C/M distinguish cable termination from mating contact; individual clamp legends and installed orientation remain unverified.",
+          "Three fixed plug paths C.L1–M.L1, C.L2–M.L2, C.L3–M.L3 represent passive hardware continuity. They must be explicit project jumpers; bus/connector functions do not join nets.",
+          "Rated current 16 A; coded operating range 20–25 V AC, 50/60 Hz. Family maximum voltage capability is not encoded as rating.nominal_voltage because the compiler treats that field as an exact voltage compatibility constraint.",
+          "Mechanical keying has a main keyway and no auxiliary keyway for this selection. No physical pin coordinates, field phase assignment or mating assembly certification is asserted.",
+          "Older catalog selection reports 0.35 kg; the 2010 exact selection reports 0.230 kg. Installed revision is unknown; no mass or environmental rating is encoded.",
+          "Terminals are application-dependent. No accessory or host housing is included in this type; installed accessory presence is unverified."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Three cable-side functional endpoints and three mating contacts, with verified manufacturer L1/L2/L3 legends from plug diagram09193E00. C/M are authoring-side aliases; exact clamp legends and installed orientation remain unverified. No dedicated PE or neutral. Three fixed paths are explicit source jumpers."
+      },
+      "terminals": {
+        "C.L1": {
+          "description": "Cable-side functional endpoint / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L2": {
+          "description": "Cable-side functional endpoint / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "C.L3": {
+          "description": "Cable-side functional endpoint / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L1": {
+          "description": "Mating contact / L1",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L2": {
+          "description": "Mating contact / L2",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        },
+        "M.L3": {
+          "description": "Mating contact / L3",
+          "role": "power",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC",
+            "current": 16
+          }
+        }
+      },
+      "functions": {
+        "C.L1": {
+          "kind": "bus",
+          "terminals": ["C.L1"]
+        },
+        "C.L2": {
+          "kind": "bus",
+          "terminals": ["C.L2"]
+        },
+        "C.L3": {
+          "kind": "bus",
+          "terminals": ["C.L3"]
+        },
+        "M.L1": {
+          "kind": "bus",
+          "terminals": ["M.L1"]
+        },
+        "M.L2": {
+          "kind": "bus",
+          "terminals": ["M.L2"]
+        },
+        "M.L3": {
+          "kind": "bus",
+          "terminals": ["M.L3"]
+        }
+      },
+      "circuitSymbols": {
+        "C.L1": "terminal",
+        "C.L2": "terminal",
+        "C.L3": "terminal",
+        "M.L1": "terminal",
+        "M.L2": "terminal",
+        "M.L3": "terminal"
+      },
+      "connectorPorts": {
+        "MATE": {
+          "connector": "R. STAHL 8575/12-200 plug, CES system, 3 P, 20-25 V violet, main keyway 6h, no auxiliary keyway",
+          "description": "Three manufacturer-marked contacts L1/L2/L3; no dedicated PE or neutral contact. Physical coordinates are not encoded.",
+          "pins": {
+            "L1": {
+              "terminal": "M.L1",
+              "description": "Manufacturer contact L1, diagram09193E00; no field phase assignment"
+            },
+            "L2": {
+              "terminal": "M.L2",
+              "description": "Manufacturer contact L2, diagram09193E00; no field phase assignment"
+            },
+            "L3": {
+              "terminal": "M.L3",
+              "description": "Manufacturer contact L3, diagram09193E00; no field phase assignment"
+            }
+          }
+        }
+      },
+      "terminalOrder": ["C.L1", "C.L2", "C.L3", "M.L1", "M.L2", "M.L3"]
+    }
+  ]
+}

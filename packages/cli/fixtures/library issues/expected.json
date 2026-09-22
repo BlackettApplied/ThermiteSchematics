@@ -1,0 +1,68 @@
+[
+  {
+    "code": "E027",
+    "file": "../problem libraries/mismatched/types/01-first.json",
+    "jsonPointer": "/types/0/id",
+    "line": 5,
+    "column": 13
+  },
+  {
+    "code": "E022",
+    "file": "../problem libraries/mismatched/types/02-second.json",
+    "jsonPointer": "/types/0/id",
+    "line": 5,
+    "column": 13,
+    "related": [
+      {
+        "file": "../problem libraries/mismatched/types/01-first.json",
+        "line": 5,
+        "column": 13,
+        "note": "First declaration of this type id."
+      }
+    ]
+  },
+  {
+    "code": "E027",
+    "file": "../problem libraries/mismatched/types/02-second.json",
+    "jsonPointer": "/types/0/id",
+    "line": 5,
+    "column": 13
+  },
+  {
+    "code": "E028",
+    "file": "system.json",
+    "jsonPointer": "/libraries/0/name",
+    "line": 7,
+    "column": 15,
+    "related": [
+      {
+        "file": "../problem libraries/mismatched/library.json",
+        "line": 2,
+        "column": 11,
+        "note": "Library declares name \"actual\"."
+      }
+    ]
+  },
+  {
+    "code": "E028",
+    "file": "system.json",
+    "jsonPointer": "/libraries/0/version",
+    "line": 8,
+    "column": 18,
+    "related": [
+      {
+        "file": "../problem libraries/mismatched/library.json",
+        "line": 3,
+        "column": 14,
+        "note": "Library declares version \"2.0.0\"."
+      }
+    ]
+  },
+  {
+    "code": "E029",
+    "file": "system.json",
+    "jsonPointer": "/libraries/1",
+    "line": 11,
+    "column": 5
+  }
+]

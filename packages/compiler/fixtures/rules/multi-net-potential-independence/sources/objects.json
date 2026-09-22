@@ -1,0 +1,45 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "30600000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "NET-A",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "30600000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "NET-B",
+      "type": "rules:terminal"
+    },
+    {
+      "uid": "30600000-0000-4000-8000-000000000003",
+      "kind": "potential",
+      "name": "A-ORIGINAL",
+      "at": { "device": "NET-A", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24 }
+    },
+    {
+      "uid": "30600000-0000-4000-8000-000000000004",
+      "kind": "potential",
+      "name": "A-CONFLICT",
+      "at": { "device": "NET-A", "terminal": "T" },
+      "electrical": { "nominal_voltage": 24 }
+    },
+    {
+      "uid": "30600000-0000-4000-8000-000000000005",
+      "kind": "potential",
+      "name": "B-CLEAN",
+      "at": { "device": "NET-B", "terminal": "T" },
+      "electrical": { "voltage_type": "DC", "current": 2 }
+    },
+    {
+      "uid": "30600000-0000-4000-8000-000000000006",
+      "kind": "potential",
+      "name": "B-CLEAN",
+      "at": { "device": "NET-B", "terminal": "T" },
+      "electrical": { "voltage_type": "DC", "current": 2 }
+    }
+  ]
+}

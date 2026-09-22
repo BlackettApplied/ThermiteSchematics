@@ -1,0 +1,34 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:prox-pnp-3wire",
+      "description": "Three-wire PNP proximity sensor",
+      "terminals": {
+        "1": {
+          "role": "supply_positive",
+          "rating": { "nominal_voltage": 24, "voltage_type": "DC" }
+        },
+        "3": { "role": "supply_return" },
+        "4": { "role": "signal_output" }
+      },
+      "functions": {
+        "supply": { "kind": "load", "terminals": ["1", "3"] },
+        "output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["4"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "output"
+        }
+      ],
+      "symbol": "iec:proximity-sensor"
+    }
+  ]
+}

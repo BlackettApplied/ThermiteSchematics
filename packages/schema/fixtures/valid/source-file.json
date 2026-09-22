@@ -1,0 +1,57 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/source-file.schema.json",
+  "objects": [
+    {
+      "uid": "11111111-1111-4111-8111-111111111111",
+      "kind": "device",
+      "designation": "K1",
+      "type": "core:contactor-3p-1no"
+    },
+    {
+      "uid": "22222222-2222-4222-8222-222222222222",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        { "device": "K1", "terminal": "A1" },
+        { "device": "TB1", "terminal": "1" }
+      ]
+    },
+    {
+      "uid": "33333333-3333-4333-8333-333333333333",
+      "kind": "jumper",
+      "endpoints": [
+        { "device": "TB1", "terminal": "1" },
+        { "device": "TB1", "terminal": "2" }
+      ]
+    },
+    {
+      "uid": "44444444-4444-4444-8444-444444444444",
+      "kind": "relation",
+      "relation": "controls",
+      "from": { "device": "PB1" },
+      "to": { "device": "K1" }
+    },
+    {
+      "uid": "55555555-5555-4555-8555-555555555555",
+      "kind": "potential",
+      "name": "+24VDC",
+      "at": { "device": "PS1", "terminal": "+" },
+      "electrical": { "nominal_voltage": 24, "voltage_type": "DC" }
+    },
+    {
+      "uid": "66666666-6666-4666-8666-666666666666",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cable-2pair-shielded",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            { "device": "JB1", "terminal": "1" },
+            { "device": "LS1", "terminal": "1" }
+          ]
+        }
+      ]
+    }
+  ]
+}

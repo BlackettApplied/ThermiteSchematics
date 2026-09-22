@@ -1,0 +1,173 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1sca022112r2440",
+      "description": "OFAX 00 S2L two-pole fuse base, size 00, 160 A, Ui 1000 V, 20 mm tabs; fuses and terminal accessories excluded",
+      "category": "component",
+      "symbol": "thermite:io-module",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SCA022112R2440",
+        "document": {
+          "url": "https://library.e.abb.com/public/12419534cc9c4dedb8baac925c205f26/1SCC316001C0201.pdf",
+          "title": "BaseLine, OFAX Fuse Bases",
+          "revision": "1SCC316001C0201; Brochure OFA1GB 02_09",
+          "pages": "2-3 construction; 5 exact order and ratings; 7 terminal dimensions"
+        },
+        "modelingNotes": [
+          "Exact order 1SCA022112R2440 is OFAX 00 S2L, two independent fuse poles, size 00, 160 A, Ui 1000 V, 20 mm tabs and IP20 (ABB 1SCC316001C0201, p.5). Ui is insulation capability, not an assigned circuit voltage. The older BaseLine catalog also lists 690 V; that entry must not be equated with Ui.",
+          "Construction drawing S00288A on p.3 and the two-pole arrangement S00317A on p.7 establish two opposed conductive end assemblies per pole. Each end has a main connection tab, a fuse-blade mating contact and a built-in measuring/monitoring terminal. This exact two-pole arrangement was reviewed independently; it is not an inferred order-code expansion.",
+          "P1/P2, TAB/FUSE/TAP and A/B are functional authoring aliases, not terminal inscriptions, physical left/right positions or line/load assignments. The bare connection tabs are included; separately ordered main cable clamps and bolt accessories are excluded.",
+          "At each of the four end assemblies, explicit source jumpers implement TAB–FUSE and TAB–TAP continuity. Eight local fixed links form four separate nets. There is no fixed path across an empty fuse gap or between the poles. Functions and mounting metadata never create continuity.",
+          "Built-in measuring terminals are described as 2.5 mm². The base’s 160 A capability is not assigned to these taps. Separate fuse links, their ratings and protective behavior are outside this type.",
+          "Twelve singleton terminal functions document the supported interfaces. All terminal use is application-dependent. Physical inscriptions, individual conductor entries and exhaustive mounting/bonding interfaces remain partial; no extra PE or automatic DIN-rail bond is invented."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Twelve functional endpoints: four main tabs, four fuse mating contacts and four built-in measuring taps. Exact two-pole construction supports eight local links and four isolated end assemblies. Terminal inscriptions, clamp-entry subdivision and mounting/bonding interfaces remain unenumerated. Removable fuses and separately ordered terminal accessories are excluded."
+      },
+      "terminals": {
+        "P1.TAB.A": {
+          "description": "P1 end A: bare main connection tab; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.FUSE.A": {
+          "description": "P1 end A: fuse-blade mating contact; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.TAP.A": {
+          "description": "P1 end A: built-in 2.5 mm² measuring/monitoring tap; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.TAB.B": {
+          "description": "P1 end B: bare main connection tab; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.FUSE.B": {
+          "description": "P1 end B: fuse-blade mating contact; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P1.TAP.B": {
+          "description": "P1 end B: built-in 2.5 mm² measuring/monitoring tap; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.TAB.A": {
+          "description": "P2 end A: bare main connection tab; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.FUSE.A": {
+          "description": "P2 end A: fuse-blade mating contact; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.TAP.A": {
+          "description": "P2 end A: built-in 2.5 mm² measuring/monitoring tap; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.TAB.B": {
+          "description": "P2 end B: bare main connection tab; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.FUSE.B": {
+          "description": "P2 end B: fuse-blade mating contact; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        },
+        "P2.TAP.B": {
+          "description": "P2 end B: built-in 2.5 mm² measuring/monitoring tap; functional alias",
+          "role": "power",
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "P1.TAB.A": {
+          "kind": "bus",
+          "terminals": ["P1.TAB.A"]
+        },
+        "P1.FUSE.A": {
+          "kind": "bus",
+          "terminals": ["P1.FUSE.A"]
+        },
+        "P1.TAP.A": {
+          "kind": "bus",
+          "terminals": ["P1.TAP.A"]
+        },
+        "P1.TAB.B": {
+          "kind": "bus",
+          "terminals": ["P1.TAB.B"]
+        },
+        "P1.FUSE.B": {
+          "kind": "bus",
+          "terminals": ["P1.FUSE.B"]
+        },
+        "P1.TAP.B": {
+          "kind": "bus",
+          "terminals": ["P1.TAP.B"]
+        },
+        "P2.TAB.A": {
+          "kind": "bus",
+          "terminals": ["P2.TAB.A"]
+        },
+        "P2.FUSE.A": {
+          "kind": "bus",
+          "terminals": ["P2.FUSE.A"]
+        },
+        "P2.TAP.A": {
+          "kind": "bus",
+          "terminals": ["P2.TAP.A"]
+        },
+        "P2.TAB.B": {
+          "kind": "bus",
+          "terminals": ["P2.TAB.B"]
+        },
+        "P2.FUSE.B": {
+          "kind": "bus",
+          "terminals": ["P2.FUSE.B"]
+        },
+        "P2.TAP.B": {
+          "kind": "bus",
+          "terminals": ["P2.TAP.B"]
+        }
+      },
+      "circuitSymbols": {
+        "P1.TAB.A": "terminal",
+        "P1.FUSE.A": "terminal",
+        "P1.TAP.A": "terminal",
+        "P1.TAB.B": "terminal",
+        "P1.FUSE.B": "terminal",
+        "P1.TAP.B": "terminal",
+        "P2.TAB.A": "terminal",
+        "P2.FUSE.A": "terminal",
+        "P2.TAP.A": "terminal",
+        "P2.TAB.B": "terminal",
+        "P2.FUSE.B": "terminal",
+        "P2.TAP.B": "terminal"
+      },
+      "terminalOrder": [
+        "P1.TAB.A",
+        "P1.FUSE.A",
+        "P1.TAP.A",
+        "P1.TAB.B",
+        "P1.FUSE.B",
+        "P1.TAP.B",
+        "P2.TAB.A",
+        "P2.FUSE.A",
+        "P2.TAP.A",
+        "P2.TAB.B",
+        "P2.FUSE.B",
+        "P2.TAP.B"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "format": "thermite-component-promotion/0.2",
+  "identity": {
+    "typeId": "abb-pilot:1svr430831r1400",
+    "manufacturer": "ABB",
+    "orderNumber": "1SVR430831R1400"
+  },
+  "type": {
+    "path": "types/1svr430831r1400.json",
+    "sha256": "3611e5e519bd93f8f10d6c3f30441cacfaf551b0f4ac75b5e361aa043fa54de8"
+  },
+  "research": {
+    "path": "research/1svr430831r1400.md",
+    "sha256": "e3ff851e434e92e7ca6d6731ea9b8da86ad42cad710184e70ee952f4be883356"
+  },
+  "provenance": {
+    "kind": "public-catalog"
+  },
+  "conformance": {
+    "terminalKeys": ["A1", "A2", "B", "C", "11", "12", "14", "21", "22", "24"],
+    "requiredTerminalKeys": ["A1", "A2", "B", "C"],
+    "fixedLinks": [],
+    "renderKind": "circuit"
+  },
+  "files": {
+    "source.json": "c60d7b9a29b861a675cc207fef9d048da1147db9affbd83ce6788ebc5efae586",
+    "packet.request.json": "061e93cb8046285eecb63a8699d0a07bdd218e92ccda367ca0790230c171c5c2",
+    "boundary/library.json": "bb3e623405952c4decbff4028040bd363ef4370d11cdda53b64e46ac2c5b0f43",
+    "boundary/types.json": "f73153fbd86c5a8cc6de9db93d909b89db9af1b7826135982126269cc5740cfd",
+    "system.json": "0b86d3bf5c2c4d32cf510cc857a8041e9b071f394f87b4776d6ac7251cb4e694"
+  }
+}

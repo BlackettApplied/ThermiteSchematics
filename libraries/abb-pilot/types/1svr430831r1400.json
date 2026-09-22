@@ -1,0 +1,148 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "abb-pilot:1svr430831r1400",
+      "description": "ABB CM-ESS.2 single-phase RMS voltage monitoring relay / 220-240 V AC supply / measuring input B-C (ranges 3-600 V) / 2 c/o (SPDT) outputs",
+      "category": "component",
+      "catalog": {
+        "manufacturer": "ABB",
+        "orderNumber": "1SVR430831R1400",
+        "document": {
+          "url": "https://library.e.abb.com/public/86f83eddf78e8717c1257337003d1859/2CDC112102D0201.pdf",
+          "title": "ABB Data sheet - Measuring and monitoring relays CM-ESS.2, Voltage monitoring relays single-phase AC/DC",
+          "revision": "2CDC 112 102 D0201 (07/07)",
+          "pages": "p.1 order data (order code 1SVR 430 831 R1400); p.2 function/connection diagram (fig. 2CDC 252 207 F0005) and DIP functions; pp.3-4 technical data"
+        },
+        "modelingNotes": [
+          "Exact order code 1SVR 430 831 R1400 = CM-ESS.2, 220-240 V AC control supply, verified in the ABB data sheet 2CDC112102 D0201 (07/07) order-data table retrieved from library.e.abb.com. This is the original 1SVR430-series generation; the current successors CM-ESS.2S 1SVR730831R1400 (screw) and CM-ESS.2P 1SVR740831R1400 (push-in) are a different order code and were not substituted.",
+          "Supply A1-A2 for this SKU: 220-240 V AC, 50/60 Hz, -15/+10 %, ~12 mA / 2.6 VA at 230 V, 20 ms power-failure buffering. Left as a range in notes rather than a scalar nominal_voltage; voltage_type AC is applied because this control-supply version is AC-only.",
+          "Measuring input B-C: RMS, 4 selectable ranges 3-30 / 6-60 / 30-300 / 60-600 V, input resistance 600 kOhm, pulse overload 800 V (<1 s), continuous 660 V. Range, threshold, hysteresis (3-30 %), over- vs under-voltage mode (DIP 1) and trip delay TV (0; 0.1-30 s) are set on the device and are NOT fixed by the order code.",
+          "Two c/o (SPDT) output relays operating together (open-circuit principle, energize when the measured value crosses the adjusted threshold): contact 1 common 11 with NC 11-12 and NO 11-14; contact 2 common 21 with NC 21-22 and NO 21-24. ABB also prints an alternate marking set (15-16/18, 25-26/28) on the same contacts; the 11/12/14 & 21/22/24 markings are modeled.",
+          "Output-contact ratings (capability, not assigned circuit intent): Ue 250 V; AgNi; min 24 V/10 mA; max 250 V AC / 4 A AC; AC-12 4 A / AC-15 3 A at 230 V; DC-12 4 A / DC-13 2 A at 24 V; max fuse 10 A fast-acting. Contacts are AC- and DC-capable, so no AC-only metadata is assigned to them.",
+          "Plastic enclosure (PA 6), IP50 housing / IP20 terminals; the device has no protective-earth or shield terminal, so no bonding path is modeled. No fixed internal jumper exists; a normally-closed contact conducts when de-energized but is a switched pole, not a permanent link.",
+          "The exact-order legacy ABB source 2CDC112102D0201 establishes this model. Later successor data sheets are not used to transfer construction, dimensions, terminal torque, fire classification or other ratings to this order. Legacy page 4 specifies PA6, 22.5 x 78 x 100 mm, 8 mm strip length, 0.8 Nm terminal torque, operating ambient -20 to +60 degrees C, enclosure IP50 / terminals IP20.",
+          "Manufacturer alternate contact labels refer to the same six contacts: 11=15 (common 1), 12=16 (NC 1), 14=18 (NO 1), 21=25 (common 2), 22=26 (NC 2), 24=28 (NO 2). Keys use the 11/12/14 and 21/22/24 convention printed in legacy page 3. Alternate labels are documentary aliases, not additional endpoints or fixed links; project authors must use the modeled keys.",
+          "The A1-A2 function represents the powered electronic monitoring circuit as a load, not a direct connection to the output contact actuator. B-C remains a separate input channel. Supply and measuring terminals are required by library policy for an actively used voltage monitor; optional output contacts allow either or both poles and throws to be selected by the project. The type does not simulate threshold/timing behavior or join any of these circuit groups."
+        ]
+      },
+      "connectionCoverage": {
+        "status": "complete",
+        "notes": "All ten device terminals from the ABB connection diagram are modeled: supply A1-A2, measuring input B-C, and two c/o outputs 11-12-14 and 21-22-24. Installed setpoints (mode, range, threshold, hysteresis, trip delay) and output-contact use are application-dependent and are not encoded here."
+      },
+      "terminals": {
+        "11": {
+          "description": "Output relay 1, common (c/o); ABB alternate marking 15 denotes this same terminal",
+          "role": "contact_common",
+          "connection_policy": "shared"
+        },
+        "12": {
+          "description": "Output relay 1, normally-closed contact; ABB alternate marking 16 denotes this same terminal",
+          "role": "contact_nc",
+          "connection_policy": "shared"
+        },
+        "14": {
+          "description": "Output relay 1, normally-open contact; ABB alternate marking 18 denotes this same terminal",
+          "role": "contact_no",
+          "connection_policy": "shared"
+        },
+        "21": {
+          "description": "Output relay 2, common (c/o); ABB alternate marking 25 denotes this same terminal",
+          "role": "contact_common",
+          "connection_policy": "shared"
+        },
+        "22": {
+          "description": "Output relay 2, normally-closed contact; ABB alternate marking 26 denotes this same terminal",
+          "role": "contact_nc",
+          "connection_policy": "shared"
+        },
+        "24": {
+          "description": "Output relay 2, normally-open contact; ABB alternate marking 28 denotes this same terminal",
+          "role": "contact_no",
+          "connection_policy": "shared"
+        },
+        "A1": {
+          "description": "Control supply voltage (this SKU 220-240 V AC)",
+          "role": "supply",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC"
+          },
+          "required": true
+        },
+        "A2": {
+          "description": "Control supply voltage return (this SKU 220-240 V AC)",
+          "role": "supply",
+          "connection_policy": "shared",
+          "rating": {
+            "voltage_type": "AC"
+          },
+          "required": true
+        },
+        "B": {
+          "description": "Measuring input B (voltage to be monitored); ranges 3-600 V, see notes",
+          "role": "measuring",
+          "connection_policy": "shared",
+          "required": true
+        },
+        "C": {
+          "description": "Measuring input C (voltage to be monitored); ranges 3-600 V, see notes",
+          "role": "measuring",
+          "connection_policy": "shared",
+          "required": true
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["A1", "A2"]
+        },
+        "measure": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["B", "C"]
+        },
+        "out1_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        },
+        "out1_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["11", "14"]
+        },
+        "out2_nc": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["21", "22"]
+        },
+        "out2_no": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["21", "24"]
+        }
+      },
+      "circuitSymbols": {
+        "supply": "load",
+        "measure": "interface",
+        "out1_nc": "contact-nc",
+        "out1_no": "contact-no",
+        "out2_nc": "contact-nc",
+        "out2_no": "contact-no"
+      },
+      "terminalOrder": [
+        "A1",
+        "A2",
+        "B",
+        "C",
+        "11",
+        "12",
+        "14",
+        "21",
+        "22",
+        "24"
+      ]
+    }
+  ]
+}
