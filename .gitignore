@@ -49,3 +49,8 @@ examples/*/out/
 
 # Internal milestone planning notes - kept private (archived in the source repo)
 docs/planning/
+
+# Local working projects - NEVER commit. Customer and reference work lives here;
+# it must stay out of this repository. Tracked here rather than in
+# .git/info/exclude so the rule survives a fresh clone.
+/projects/
