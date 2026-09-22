@@ -36,6 +36,7 @@ release-out/
 /tmp/pdfs/
 
 # Third-party source documents - NEVER commit (customer/OEM drawing sets, vendor datasheets)
+examples/legacy-cad-examples/
 tmp/
 output/
 *.pdf
