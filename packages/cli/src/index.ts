@@ -924,7 +924,7 @@ export async function runCli(
 
   program
     .name("thermite")
-    .description("AI Schmatics command-line tools")
+    .description("Thermite Schematics command-line tools")
     .version(CLI_VERSION)
     .configureOutput({
       writeOut: (text) => stdout.write(text),
