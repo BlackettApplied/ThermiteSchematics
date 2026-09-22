@@ -50,6 +50,10 @@ examples/*/out/
 # Internal milestone planning notes - kept private (archived in the source repo)
 docs/planning/
 
+# Per-user agent configuration - private to each developer. Shared agent
+# guidance belongs in AGENTS.md, which is tracked.
+.claude/
+
 # Local working projects - NEVER commit. Customer and reference work lives here;
 # it must stay out of this repository. Tracked here rather than in
 # .git/info/exclude so the rule survives a fresh clone.
