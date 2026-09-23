@@ -422,6 +422,18 @@ describe("Thermite alpha printable sheets", () => {
       marginMm: 15,
     });
   });
+  it("protects an ordinary request file when the input uses a filesystem alias", async () => {
+    const path = await project();
+    const request = join(path, "packet.json"),
+      alias = join(path, "packet-alias.json"),
+      before = '{"keep":true}';
+    await writeFile(request, before);
+    await symlink(request, alias);
+    await expect(
+      writeAlphaOutput(path, request, "bad", [alias]),
+    ).rejects.toThrow("request file");
+    expect(await readFile(request, "utf8")).toBe(before);
+  });
   it("protects source, request, library and linked targets and refuses multi-sheet SVG truncation", async () => {
     const path = await project();
     const source = join(path, "devices/equipment.json"),

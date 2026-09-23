@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
 import { afterEach, expect, it } from "vitest";
 import {
   analyzeCompleteness,
@@ -22,6 +22,11 @@ async function fixture() {
   const path = await mkdtemp(join(tmpdir(), "thermite-im151-"));
   temporary.push(path);
   await cp(example, path, { recursive: true });
+  // Keep the library local even when Windows puts the checkout and temp on
+  // different drives; authored library paths must remain relative.
+  await cp(resolve(example, "../.."), join(path, "libraries/siemens-pilot"), {
+    recursive: true,
+  });
   const read = async (file: string) =>
     JSON.parse(await readFile(join(path, file), "utf8"));
   const write = (file: string, value: unknown) =>
@@ -29,7 +34,7 @@ async function fixture() {
   const system = await read("system.json");
   system.libraries.find(
     (library: any) => library.name === "siemens-pilot",
-  ).path = relative(path, resolve(example, "../..")).replaceAll("\\", "/");
+  ).path = "libraries/siemens-pilot";
   await write("system.json", system);
   const boundary = await read("boundary/types.json");
   boundary.types.push({

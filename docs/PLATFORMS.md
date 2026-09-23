@@ -9,7 +9,10 @@ elsewhere; set `THERMITE_RESEARCH_PYTHON` to override the executable.
 
 These results are from development snapshots of the Bun 1.4.2 cross-platform
 work. They verify local preview builds, not published release candidates. Every
-release must repeat its checks from a clean committed tree.
+release must repeat its checks from a clean committed tree. For a published
+version, use its [release notes and verification reports](https://github.com/BlackettApplied/ThermiteSchematics/releases)
+for the exact commit and verified targets; the table below records the initial
+local development checks.
 
 | Platform | Environment | Source check | Runtime package |
 | --- | --- | --- | --- |
@@ -22,8 +25,8 @@ release must repeat its checks from a clean committed tree.
 The ordinary CI workflow is configured to run the complete check and runtime
 packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022`. Configuration alone
 does not establish a passing CI run. Windows ARM64 and non-glibc Linux systems
-have not been validated. Linux x64 still needs a successful native run; the
-emulated run did not complete. The packer builds for its current OS and architecture;
+have not been validated. Linux x64 release acceptance uses native Ubuntu CI;
+the earlier emulated run did not complete. The packer builds for its current OS and architecture;
 it does not cross-compile.
 
 Package acceptance exercises both project templates, validation, all six agent

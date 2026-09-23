@@ -82,6 +82,29 @@ During packaging, the verifier additionally compares SVG, HTML and PDF bytes
 against the isolated source build using the same electrical project. A standalone
 verification has no source build to compare, and its report reflects that.
 
+### Verify a GitHub Release on hosted runners
+
+After uploading a release's assets, run **Verify runtime release downloads**
+(`.github/workflows/runtime-download.yml`) from GitHub Actions with its
+`release_tag` input. The workflow must exist on the selected workflow ref, and
+the release tag must contain the download verifier. It checks out that exact
+tag and downloads the actual release ZIP and SHA-256 sidecar for macOS ARM64,
+Windows x64, and Linux x64. Each target must have exactly one clean runtime ZIP
+and its matching sidecar; previews and ambiguous selections fail.
+
+The workflow uses a read-only repository token, so it also works while the
+repository and release remain private. It binds the runtime manifest's full
+commit to the checked-out tag before executing downloaded code, then runs the
+same package acceptance checks as `package:verify`. Linux acceptance runs in
+Docker with networking disabled and requires that isolation in its report.
+macOS uses its network sandbox; Windows reports `not-enforced`.
+
+Inspect all three job results and their printed verification reports before
+announcing the release. Reports include the downloaded ZIP digest and source
+commit. This workflow neither builds replacement packages nor publishes a
+release, changes visibility, or invokes the historical private release gates.
+Linux ARM64, when distributed, needs its own matching-host download acceptance.
+
 ## Publish and upgrade deliberately
 
 After repository review and the public release checklist, publish the clean

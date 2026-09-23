@@ -1,0 +1,58 @@
+name: Verify runtime release downloads
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing GitHub Release tag to download and verify
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            target: darwin-arm64
+          - os: windows-2022
+            target: win32-x64
+          - os: ubuntu-24.04
+            target: linux-x64
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      RUNTIME_TARGET: ${{ matrix.target }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ inputs.release_tag }}
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.4.2"
+      - run: bun install --frozen-lockfile --ignore-scripts
+      - name: Download the selected release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bun scripts/runtime-package/release-download.mjs download "$RELEASE_TAG" "$RUNTIME_TARGET" release-out/download
+      - name: Verify downloaded macOS or Windows runtime
+        if: runner.os != 'Linux'
+        run: bun scripts/runtime-package/release-download.mjs verify "$RUNTIME_TARGET" "$(git rev-parse HEAD)" release-out/download
+      - name: Verify downloaded Linux runtime without network access
+        if: runner.os == 'Linux'
+        run: |
+          docker pull oven/bun:1.4.2
+          docker run --rm --network=none --user "$(id -u):$(id -g)" \
+            --volume "$PWD:/work:ro" --volume "$PWD/release-out/download:/downloads" \
+            --workdir /work oven/bun:1.4.2 \
+            bun scripts/runtime-package/release-download.mjs verify \
+            "$RUNTIME_TARGET" "$(git rev-parse HEAD)" /downloads --require-offline

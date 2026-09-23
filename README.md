@@ -98,7 +98,7 @@ Do not invent electrical ratings, pinouts, or engineering repairs. Explain
 unresolved assumptions; generated drawings need qualified engineering review.
 ```
 
-**0.3.0-alpha.2 · Cross-platform development preview.** Runs locally with
+**0.3.0-alpha.2 · Public alpha.** Runs locally with
 Bun 1.4.2 (pinned in `.bun-version`) on macOS, Windows, and Linux. See the
 [platform checks](docs/PLATFORMS.md) for tested systems and limitations.
 

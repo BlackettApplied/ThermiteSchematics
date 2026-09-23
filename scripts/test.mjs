@@ -35,9 +35,10 @@ try {
       "--pool=forks",
       "--testTimeout=120000",
       "--hookTimeout=120000",
-      // Review archives contain independent historical source checkouts. Their
+      // Release and review archives contain independent source checkouts. Their
       // copied tests are not tests of the active checkout.
       "--exclude=alpha-out/**",
+      "--exclude=release-out/**",
       ...selection,
     ],
     {

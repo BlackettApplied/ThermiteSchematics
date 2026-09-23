@@ -1996,7 +1996,7 @@ describe("M6 Task 6 view subprocess stream and exit matrix", () => {
         });
       }
       expect(await readFile(sentinelOutput, "utf8")).toBe(sentinel);
-      expect(await readdir(root)).toEqual([
+      expect((await readdir(root)).sort()).toEqual([
         "json-view.svg",
         "raw-view.svg",
         "sentinel.svg",
