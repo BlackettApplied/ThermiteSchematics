@@ -128,6 +128,12 @@ export function verifyEntries(entries) {
   ]) {
     if (!byPath.has(path)) throw new Error(`Missing runtime resource: ${path}`);
   }
+  const notice = byPath.get("NOTICE").toString("utf8");
+  if (
+    !notice.includes("node_modules/@thermite/cli/assets/fonts/OFL.txt") ||
+    notice.includes("packages/cli/assets/fonts/OFL.txt")
+  )
+    throw new Error("Runtime NOTICE must reference the packaged font license.");
   const packagePaths = [...byPath.keys()].filter((path) =>
     /(?:^|\/)node_modules\/(?:@[^/]+\/)?[^/]+\/package\.json$/.test(path),
   );

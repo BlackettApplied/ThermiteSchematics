@@ -230,7 +230,18 @@ describe("frozen release workflow topology", () => {
     expect(text).toContain("run: bun install --frozen-lockfile");
     expect(text).toContain("run: bun run check");
     expect(text).toContain("run: bun run package:pack");
-    expect(text).not.toMatch(/artifact|candidate|pull_request_target/u);
+    expect(text).toContain("--network=none");
+    expect(text).toContain("if: runner.os == 'Linux'");
+    expect(text).toContain(
+      "runtime-${{ runner.os }}-${{ runner.arch }}-${{ github.sha }}",
+    );
+    expect(text).toContain("release-out/runtime/**/*.zip");
+    expect(text).toContain("if-no-files-found: error");
+    // Ordinary CI retains its own runtime outputs, without invoking or
+    // acquiring the frozen private release pipeline's evidence authority.
+    expect(text).not.toMatch(
+      /pull_request_target|run-vitest-and-audit|release-evidence-audit|release-publish\.mjs|THERMITE_SCHEMATICS_RELEASE_/u,
+    );
   });
 
   it("parses the exact protected producer, consumer, and gate graph", async () => {

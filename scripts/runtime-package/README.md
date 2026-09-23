@@ -36,11 +36,18 @@ switch the command path used for your project. Retain the previous runtime and
 review validation and drawing changes. Your project's JSON and local libraries
 remain in the project folder; no automatic update rewrites them.
 
-Found a bug or missing feature? Have your agent prepare a focused fix using the
-[source repository](https://github.com/BlackettApplied/ThermiteSchematics) and its
-contribution guide. Develop in a separate source checkout; do not patch files in
-this runtime folder. Keep private machine data out of issues and pull requests.
-Human contributors review changes and accept any CLA themselves.
+Found a bug, missing feature, or unclear documentation? Have your agent check
+[existing issues](https://github.com/BlackettApplied/ThermiteSchematics/issues)
+and submit a clear issue. Include the use case, expected behavior, Thermite/Bun
+versions, and operating system; for bugs, add actual behavior, a minimal
+reproduction, and relevant diagnostics. Exclude private machine data and
+credentials. If GitHub access is unavailable, ask for a ready-to-submit issue
+title and body. Do not patch files in this runtime folder.
+
+To contribute a fix, use a separate
+[source checkout](https://github.com/BlackettApplied/ThermiteSchematics) and
+follow its AGENTS.md and CONTRIBUTING.md. Human contributors review changes and
+accept any CLA themselves.
 
 Thermite is Apache-2.0; see `LICENSE` and `NOTICE`. Third-party material retains
 its own licenses; see `THIRD_PARTY_NOTICES.md`, the dependency inventory in

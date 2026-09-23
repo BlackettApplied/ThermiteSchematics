@@ -163,8 +163,15 @@ try {
       });
     }
   }
-  for (const file of ["LICENSE", "NOTICE", "bun.lock"])
+  for (const file of ["LICENSE", "bun.lock"])
     await cp(join(source, file), join(runtime, file));
+  await writeFile(
+    join(runtime, "NOTICE"),
+    (await readFile(join(source, "NOTICE"), "utf8")).replaceAll(
+      "packages/cli/assets/",
+      "node_modules/@thermite/cli/assets/",
+    ),
+  );
   const notices = (
     await readFile(join(source, "THIRD_PARTY_NOTICES.md"), "utf8")
   )

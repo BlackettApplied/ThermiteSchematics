@@ -8,11 +8,17 @@ build inside it. A source checkout needs
 `bun install --frozen-lockfile && bun run build` before use, and a rebuild after
 engine changes. Keep the runtime or engine checkout separate from this project.
 
-When you find a bug, missing capability, or unclear documentation, clone
-https://github.com/BlackettApplied/ThermiteSchematics into a separate engine
-checkout (or use your existing one), make a focused fix, and contribute it
-upstream following its AGENTS.md and CONTRIBUTING.md. Do not patch a downloaded
-runtime in place. Keep this project's machine data out of engine pull requests.
+When using a runtime package, report bugs, missing capabilities, and unclear
+documentation at https://github.com/BlackettApplied/ThermiteSchematics/issues.
+Check existing issues first. Include the use case, expected behavior,
+Thermite/Bun versions, and operating system; for bugs, add actual behavior, a
+minimal reproduction, and relevant diagnostics. If GitHub access is unavailable,
+provide a ready-to-submit issue title and body. Do not patch a downloaded runtime
+in place.
+
+When working from source, make a focused fix in the separate engine checkout and
+contribute a pull request following its AGENTS.md and CONTRIBUTING.md. Keep this
+project's private machine data and credentials out of issues and pull requests.
 The human contributor must review and accept any CLA; an agent must not sign it.
 Advanced documentation and examples referenced below live in that source repository.
 

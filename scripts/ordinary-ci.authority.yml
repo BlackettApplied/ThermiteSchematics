@@ -16,6 +16,9 @@ jobs:
       matrix:
         os: [macos-14, ubuntu-24.04, windows-2022]
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      VITEST_MAX_WORKERS: 2
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,3 +34,32 @@ jobs:
         env:
           THERMITE_RESEARCH_PYTHON: python
       - run: bun run package:pack
+      - name: Verify Linux candidate without network access
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          docker pull oven/bun:1.4.2
+          for archive in release-out/runtime/*/*.zip; do
+            docker run --rm --network=none --user "$(id -u):$(id -g)" \
+              --volume "$PWD:/work:ro" --volume "$PWD/release-out:/evidence" \
+              --workdir /work oven/bun:1.4.2 bun -e '
+                import { verifyRuntimeArchive } from "./scripts/runtime-package/verify.mjs";
+                import { writeFileSync } from "node:fs";
+                const report = await verifyRuntimeArchive(process.argv[1]);
+                if (report.networkIsolation !== "loopback-only-network-namespace")
+                  throw new Error("Linux acceptance requires network isolation");
+                writeFileSync(process.argv[2], JSON.stringify(report, null, 2) + "\n");
+              ' "/work/$archive" "/evidence/${archive#release-out/}.network-verification.json"
+          done
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: runtime-${{ runner.os }}-${{ runner.arch }}-${{ github.sha }}
+          path: |
+            release-out/runtime/**/*.zip
+            release-out/runtime/**/*.zip.sha256
+            release-out/runtime/**/*.zip.json
+            release-out/runtime/**/verification.json
+            release-out/runtime/**/*.network-verification.json
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0

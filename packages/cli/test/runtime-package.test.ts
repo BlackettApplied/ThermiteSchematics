@@ -47,7 +47,12 @@ function fixture() {
     "thermite.mjs": "// fixture launcher\n",
     "README.md": "Runtime fixture\n",
     LICENSE: "Apache fixture",
-    NOTICE: "Notice fixture",
+    NOTICE: `Thermite Schematics
+
+Bundled Noto fonts are Copyright 2018 The Noto Project Authors and are
+licensed under the SIL Open Font License 1.1, not the Apache License.
+See node_modules/@thermite/cli/assets/fonts/OFL.txt and THIRD_PARTY_NOTICES.md.
+`,
     "THIRD_PARTY_NOTICES.md": "Notices fixture",
     "third-party/sources.json": "{}",
     "third-party/ELK-SOURCE.md": "Source fixture",
@@ -195,6 +200,20 @@ describe("public runtime package boundary", () => {
     expect(() => verifyEntries(missingLicense.seal())).toThrow(
       /Missing dependency license/,
     );
+  });
+  it("rejects a font notice pointing outside the packaged layout even when hashes match", () => {
+    for (const path of ["packages/cli/assets/fonts/OFL.txt", "fonts/OFL.txt"]) {
+      const value = fixture();
+      const notice = value.entries.find((entry) => entry.path === "NOTICE")!;
+      notice.bytes = Buffer.from(
+        notice.bytes
+          .toString("utf8")
+          .replace("node_modules/@thermite/cli/assets/fonts/OFL.txt", path),
+      );
+      expect(() => verifyEntries(value.seal())).toThrow(
+        /NOTICE must reference the packaged font license/,
+      );
+    }
   });
   it("rejects a dependency version not bound to the provenance lock", () => {
     const value = fixture();
