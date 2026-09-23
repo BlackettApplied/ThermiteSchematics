@@ -14,28 +14,29 @@ questions and focused views without first assembling a fixed drawing set.
 
 ## How to use
 
-Choose a **runtime package** to start designing, or a **source checkout** to
+You can choose a **runtime package** to start designing, or a **source checkout** to
 work on the engine too. Both initialize the same electrical project in its own
-folder. Thermite is Apache-2.0, and agent-authored improvements are welcome.
+folder. Thermite is Apache-2.0, and agent-authored improvements are welcome. See instructions
+below for each workflow.
 
-### Use a runtime package
+### Using a runtime package
 
 Download a versioned runtime ZIP and its SHA-256 sidecar from
 [GitHub Releases](https://github.com/BlackettApplied/ThermiteSchematics/releases).
-It contains the built engine and dependencies; you only need Bun 1.4.2.
-The first public runtime package is being prepared; if no runtime ZIP is listed,
-use the source option below. GitHub's automatic source ZIP is a different artifact.
+Choose the archive for your operating system and CPU architecture. It contains
+the built engine and dependencies; you only need Bun 1.4.2. No dependency
+installation or build is required.
 
 Copy this prompt to your agent:
 
 ```text
-Help me start an electrical project with the Thermite Schematics runtime package.
+Let's start an electrical project with the Thermite Schematics runtime package.
 
 1. Identify my operating system and CPU architecture. Find the matching
    published runtime ZIP and its .sha256 sidecar at
    https://github.com/BlackettApplied/ThermiteSchematics/releases. Use a versioned
-   release, not a preview or the automatic source archive. If none is available,
-   tell me and offer the source workflow in the repository README.
+   release, not a preview or the automatic source archive. If my platform isn't
+   listed, offer the source workflow in the repository README.
 2. Download both, verify the SHA-256, and extract into a new runtime folder
    separate from my electrical project. Use Bun 1.4.2. Read the package README;
    no dependency installation or build is needed.
@@ -47,9 +48,13 @@ Help me start an electrical project with the Thermite Schematics runtime package
 4. Tell me where to open the drawing, then help me model my electrical system.
    Use that same runtime for each command. Keep JSON authoritative, preserve
    diagnostics, and use the guarded agent workflow for existing source edits.
-5. If you find an engine bug or missing capability, prepare a focused fix in a
-   separate source checkout and contribute it upstream under CONTRIBUTING.md.
-   Keep my machine data out of PRs, and leave CLA acceptance to me.
+5. If you find an engine bug or missing capability, check existing issues and
+   submit a clear issue at https://github.com/BlackettApplied/ThermiteSchematics/issues.
+   Explain the use case and expected behavior, and include Thermite/Bun versions
+   and my operating system. For bugs, include actual behavior, a minimal
+   reproduction, and relevant diagnostics. Keep private machine data and
+   credentials out of the issue. If GitHub access is unavailable, give me a
+   ready-to-submit issue title and body.
 
 Do not invent electrical ratings, pinouts, or engineering repairs. Explain
 unresolved assumptions; generated drawings need qualified engineering review.
