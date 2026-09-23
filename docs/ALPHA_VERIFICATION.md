@@ -59,7 +59,7 @@ printer was tested.
 
 At the time of this verification, this was a local source-alpha preview and
 public licensing had not been selected. The current checkout now uses
-[Apache-2.0](../LICENSE); see the [public release checklist](PUBLIC_RELEASE.md).
+[Apache-2.0](../LICENSE); see the [runtime packaging guide](RUNTIME_PACKAGE.md).
 This dated record does not establish verification of later changes. Generic component libraries are present as editable project
 files. Reviewed manufacturer-specific catalogs remain future work. An earlier Rust
 experiment is not included in this source release.

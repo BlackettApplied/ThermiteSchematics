@@ -140,8 +140,9 @@ remain separate and are not asserted by the source-alpha check.
 
 Run `bun run package:pack` from a clean committed tree to build and verify the
 public runtime ZIP, or add `--preview` for an uncommitted local test build.
-See [Public release checklist](docs/PUBLIC_RELEASE.md) for runtime and source
-distributions and their third-party notices. Workspace packages
+See the [runtime packaging guide](docs/RUNTIME_PACKAGE.md) and
+[platform checks](docs/PLATFORMS.md) for packaging, acceptance, and verified
+targets. Workspace packages
 remain `private: true` to prevent accidental npm publication; that flag does not
 restrict the source license.
 

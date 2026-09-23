@@ -255,8 +255,7 @@ release-evidence checks are separate; their legacy Node/npm commands and
 prerequisites for using or contributing to the public alpha.
 Build and verify runtime downloads with `bun run package:pack`; see the
 [runtime packaging guide](docs/RUNTIME_PACKAGE.md).
-See the [public release checklist](docs/PUBLIC_RELEASE.md) for release
-verification and the [original POC guide](docs/PROOF_OF_CONCEPT.md) for history.
+See the [original POC guide](docs/PROOF_OF_CONCEPT.md) for history.
 
 The [component batch workflow](scripts/library-batch/README.md) coordinates exact
 part research and review before promotion into the visible libraries.

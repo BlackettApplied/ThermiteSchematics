@@ -8,7 +8,7 @@ make a local build, current checkout, or documentation-only change release autho
 
 This checklist applies only to the historical private v0.2.0 artifact and its
 protected publisher. It does not describe the current Apache-2.0 source alpha;
-see [Public source release checklist](PUBLIC_RELEASE.md). Public npm publication
+see the [runtime packaging guide](RUNTIME_PACKAGE.md). Public npm publication
 and direct GitHub Release asset uploads remain outside this legacy pipeline.
 
 ## End-user prerequisite and install

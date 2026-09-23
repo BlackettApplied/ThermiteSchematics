@@ -128,6 +128,6 @@ missing device behavior or layout needs as small reproducible source examples.
 Expand to the rest of the machine after that comparison. Generated views document
 selected intent; a successful compile alone does not prove the design is complete.
 
-The current release was checked on Apple Silicon macOS only. Safari behavior and
+See [platform checks](PLATFORMS.md) for the currently verified targets. Safari behavior and
 physical printing need a local user check. The source is licensed under [Apache-2.0](../LICENSE); publication remains a
-separate owner action. See the [public release checklist](PUBLIC_RELEASE.md).
+separate owner action. See the [runtime packaging guide](RUNTIME_PACKAGE.md).

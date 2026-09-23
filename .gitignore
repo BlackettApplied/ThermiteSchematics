@@ -58,3 +58,6 @@ docs/planning/
 # it must stay out of this repository. Tracked here rather than in
 # .git/info/exclude so the rule survives a fresh clone.
 /projects/
+
+# Local release coordination; public procedures live in docs/RUNTIME_PACKAGE.md.
+/docs/PUBLIC_RELEASE.md

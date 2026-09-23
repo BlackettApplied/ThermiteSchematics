@@ -7,9 +7,9 @@ elsewhere; set `THERMITE_RESEARCH_PYTHON` to override the executable.
 
 ## Validation matrix
 
-The cross-platform pass uses the source changes based on commit `84af5ad`.
-These are development previews, not published release candidates. Every release
-must repeat its checks from a clean committed tree.
+These results are from development snapshots of the Bun 1.4.2 cross-platform
+work. They verify local preview builds, not published release candidates. Every
+release must repeat its checks from a clean committed tree.
 
 | Platform | Environment | Source check | Runtime package |
 | --- | --- | --- | --- |
