@@ -100,7 +100,7 @@ unresolved assumptions; generated drawings need qualified engineering review.
 
 **0.3.0-alpha.2 · Public alpha.** Runs locally with
 Bun 1.4.2 (pinned in `.bun-version`) on macOS, Windows, and Linux. See the
-[platform checks](docs/PLATFORMS.md) for tested systems and limitations.
+[platform checks](docs/platforms.md) for tested systems and limitations.
 
 > **Generated drawings are not a substitute for engineering review.** Thermite
 > validates the model you give it; it does not certify that a design is safe,
@@ -130,7 +130,7 @@ bun thermite.mjs view PS1 --loads --project ../electrical-project -o ../electric
 and `thermite.mjs` runs the built workspace JavaScript.
 
 Open the generated HTML in your browser. For a larger example, follow the
-[Machine demo runbook](docs/MACHINE_DEMO.md), including its guarded wiring change.
+[Machine demo runbook](docs/machine-demo.md), including its guarded wiring change.
 
 You can also keep the checkout in a project's `tools/thermite` directory and
 invoke `bun /path/to/tools/thermite/thermite.mjs` from anywhere. Keep engine
@@ -202,7 +202,7 @@ Beyond the standard circuit drawing, each view type has its own reference:
 
 - [Circuit views](docs/circuit-views.md) separate a device's contacts, coil and
   I/O functions into source-selected drawing groups, with validated
-  [function-level symbols](docs/CIRCUIT_SYMBOLS.md) for devices that have several
+  [function-level symbols](docs/circuit-symbols.md) for devices that have several
   kinds of contact.
 - [Terminal wiring](docs/terminal-wiring.md) shows selected physical conductors,
   with explicit references to connections outside the view.
@@ -217,7 +217,7 @@ Beyond the standard circuit drawing, each view type has its own reference:
   [field interfaces](libraries/field-interfaces/README.md) library. Generic
   connector pin maps are proposals until the actual hardware is selected.
 
-The [reference comparison protocol](docs/REFERENCE_PARITY.md) describes how
+The [reference comparison protocol](docs/reference-parity.md) describes how
 synthetic electrical projects exercise rendering, conductor coverage and
 manufacturer-model boundaries.
 
@@ -227,7 +227,7 @@ Initialization writes a project-specific `AGENTS.md`. The existing six stateless
 agent tools preserve JSON requests, separate result/diagnostic streams, current
 source hashes, dry-run patches, and validation before applying changes. They do
 not invent electrical repairs. See the [alpha agent guide](packages/cli/assets/THERMITE_AGENTS.md)
-and [format notes](docs/TYPESCRIPT_ALPHA.md).
+and [format notes](docs/formats-and-compatibility.md).
 
 ## Improve Thermite with your agent
 
@@ -254,8 +254,7 @@ release-evidence checks are separate; their legacy Node/npm commands and
 `package-lock.json` apply only in their original release context. They are not
 prerequisites for using or contributing to the public alpha.
 Build and verify runtime downloads with `bun run package:pack`; see the
-[runtime packaging guide](docs/RUNTIME_PACKAGE.md).
-See the [original POC guide](docs/PROOF_OF_CONCEPT.md) for history.
+[runtime packaging guide](docs/runtime-package.md).
 
 The [component batch workflow](scripts/library-batch/README.md) coordinates exact
 part research and review before promotion into the visible libraries.

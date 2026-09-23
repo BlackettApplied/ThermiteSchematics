@@ -3,10 +3,11 @@
 ## Authority and versions
 
 Thermite Schematics stores project and presentation facts in version-controlled JSON.
-`electrical-system/0.1` remains the project format. M8 adds two compatible manifest
-extensions: an optional `presentation` reference and a name/version-only dependency
-arm for shipped libraries. Electrical topology remains `electrical-ir/0.1`;
-presentation normalizes separately as `project-presentation/0.1`.
+`electrical-system/0.1` is the project format. Its manifest supports an optional
+`presentation` reference and local or name/version-only shipped library references.
+Electrical topology remains `electrical-ir/0.1`; presentation is compiled separately.
+The [format reference](formats-and-compatibility.md) describes compatible paper,
+packet and cable extensions.
 
 Source describes physical and functional engineering facts. Locks bind library bytes.
 Derived nets, reverse indexes, normalized views, layout, SVG, reports, and serialized
@@ -24,13 +25,15 @@ electrical-system.lock.json
 devices/equipment.json
 connections/control-power.json
 potentials/potentials.json
+libraries/core/library.json
+libraries/core/types/*.json
 ```
 
 `system.json` names the project, source patterns, optional presentation file, and
 exact libraries. Source files may group multiple objects; file boundaries are a
 source-management concern, not electrical identity.
 
-`presentation.json` contains:
+`presentation.json` can contain the original format:
 
 ```json
 {
@@ -44,7 +47,8 @@ source-management concern, not electrical identity.
 Revision is 1-128 Unicode code points. The background is lowercase `#rrggbb`. The
 optional title block has zero to four ordered single-line strings of 1-160 code
 points. Presentation changes drawing identity and canvas only; it does not change
-electrical IR or semantic view selection.
+electrical IR or semantic view selection. `project-presentation/0.2` also supports
+printable page settings; see [paper and packets](formats-and-compatibility.md#paper-and-packets).
 
 ## Identity and designation
 
@@ -198,7 +202,10 @@ two endpoints:
 ```
 
 The cable type supplies invariant conductor metadata. Every authored conductor
-becomes independently addressable in IR.
+becomes independently addressable in IR. Annotated cables can preserve end A/B
+ordering and explicitly spare, partially terminated cores; see
+[cable assignments](formats-and-compatibility.md#cable-assignments). Missing
+assignments never imply spare status.
 
 ## Functional relations
 
@@ -256,7 +263,7 @@ materialized terminals, conductive entities, nets, typed relations, effective
 electrical properties, source provenance, reverse indexes, and local/shipped library
 provenance.
 
-The successful compile also returns detached presentation:
+The successful compile also returns detached presentation. The original fields are:
 
 ```text
 format: project-presentation/0.1

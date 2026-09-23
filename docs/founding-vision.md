@@ -1,5 +1,9 @@
 # Founding Vision
 
+This document records the product direction, including aspirations beyond the
+implemented compiler and rendering features. See the [README](../README.md) and
+[format reference](formats-and-compatibility.md) for current capabilities and limits.
+
 ## Thesis
 
 Electrical documentation should describe the **system**, not a predetermined set of drawing pages.

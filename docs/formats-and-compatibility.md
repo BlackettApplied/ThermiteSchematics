@@ -1,8 +1,9 @@
-# TypeScript alpha formats and compatibility
+# Formats and compatibility
 
-The alpha product entry point is Thermite 0.3.0-alpha.2. The workspace package
-versions and original `thermite` interfaces retain their POC compatibility identities;
-this is a source-distribution preview, not a new registry release.
+Thermite 0.3.0-alpha.2 supports the formats below through its runtime ZIP and
+source workflows. Workspace package versions and original `thermite` interfaces
+retain their compatibility identities. These are file and API contracts, not
+separate public registry packages.
 
 ## Paper and packets
 
@@ -86,10 +87,9 @@ configuration. Symlinked/hard-linked output paths are rejected. Output must use
 SVG, HTML, JSON, PDF, or CSV extensions; a file matching an authored source glob is also
 rejected. The CLI uses atomic file replacement for ordinary generated outputs.
 
-Development/CI currently targets Apple Silicon macOS and Bun 1.4.2. No Windows,
-Linux, or Intel Mac build is part of the alpha iteration loop. The former native
-implementation is not included in this source release.
-
+Runtime and source workflows use Bun 1.4.2 on the systems listed in
+[platform checks](platforms.md). Keep the runtime or source checkout separate
+from the electrical project; see [runtime packaging](runtime-package.md).
 
 ## Documentation and library metadata
 
@@ -113,7 +113,7 @@ labels: byte/word overlap, PLC configuration and online state are not validated.
 Circuit drawings also accept explicit per-function `circuitSymbols` in device
 types. E206 rejects unknown function keys and marks incompatible with declared
 function kind, terminal count or contact state. See the [closed mark catalog and
-diagnostic contract](CIRCUIT_SYMBOLS.md).
+diagnostic contract](circuit-symbols.md).
 
 Symbol profiles are explicit: `thermite:io-module`, `thermite:terminal-strip`,
 and `thermite:dc-supply`. Supported shapes are single-terminal channels and bus

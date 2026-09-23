@@ -7,7 +7,7 @@ equipment and wiring are illustrative and require engineering review before use.
 
 ## Start the demonstration
 
-From the source checkout on an Apple Silicon Mac with Bun 1.4.2:
+From a source checkout with Bun 1.4.2 on a [verified platform](platforms.md):
 
 ```sh
 bun install --frozen-lockfile
@@ -22,7 +22,7 @@ The command validates `examples/machine-demo`, then writes:
 - `alpha-out/machine-io.csv`, `machine-bom.csv`, `machine-wires.csv`,
   `machine-cables.csv`, `machine-terminals.csv`: derived schedules.
 
-Open the HTML in Safari, or open the PDF in Preview. HTML defaults to fit-to-window;
+Open the HTML in a browser, or open the PDF in a PDF viewer. HTML defaults to fit-to-window;
 Actual size provides a full-size scrollable view. Search a device designation,
 choose a sheet, or follow a conductor continuation link. Printing includes all
 sheets even when search is filtering the screen. For printing, use Tabloid at
@@ -128,6 +128,6 @@ missing device behavior or layout needs as small reproducible source examples.
 Expand to the rest of the machine after that comparison. Generated views document
 selected intent; a successful compile alone does not prove the design is complete.
 
-See [platform checks](PLATFORMS.md) for the currently verified targets. Safari behavior and
-physical printing need a local user check. The source is licensed under [Apache-2.0](../LICENSE); publication remains a
-separate owner action. See the [runtime packaging guide](RUNTIME_PACKAGE.md).
+See [platform checks](platforms.md) for the currently verified targets. Browser
+behavior and physical printing need a local user check. The source is licensed
+under [Apache-2.0](../LICENSE). See the [runtime packaging guide](runtime-package.md).

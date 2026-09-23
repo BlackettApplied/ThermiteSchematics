@@ -35,7 +35,7 @@ Partial-coverage warnings, including W904, are expected for the synthetic
 boundaries and for components whose connection inventory remains incomplete.
 Preserve the diagnostics and read each `connectionCoverage` note. A successful
 compile or a readable packet does not turn a partial component into a complete
-model. See [connection completeness](../docs/COMPLETENESS.md).
+model. See [connection completeness](../docs/completeness.md).
 
 ## Generate and inspect a packet
 

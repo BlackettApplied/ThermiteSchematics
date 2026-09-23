@@ -7,27 +7,24 @@ elsewhere; set `THERMITE_RESEARCH_PYTHON` to override the executable.
 
 ## Validation matrix
 
-These results are from development snapshots of the Bun 1.4.2 cross-platform
-work. They verify local preview builds, not published release candidates. Every
-release must repeat its checks from a clean committed tree. For a published
-version, use its [release notes and verification reports](https://github.com/BlackettApplied/ThermiteSchematics/releases)
-for the exact commit and verified targets; the table below records the initial
-local development checks.
+These targets have passed source checks and runtime package acceptance during
+release preparation. Each release repeats verification from its exact source
+commit. Use its [release notes and verification reports](https://github.com/BlackettApplied/ThermiteSchematics/releases)
+for the commit, test counts, skips and downloaded-asset evidence.
 
 | Platform | Environment | Source check | Runtime package |
 | --- | --- | --- | --- |
-| macOS ARM64 | Apple Silicon Mac | 1,880 passed; 6 skipped | Verified |
-| Windows x64 | Native Windows 10 Pro, build 19045 | 1,883 passed; 3 skipped | Verified |
-| Linux ARM64 | Debian container in Docker Desktop | 1,881 passed; 5 skipped | Verified with network disabled |
-| Linux x64 | Emulated Debian container in Docker Desktop | Not verified | Not verified |
+| macOS ARM64 | Apple Silicon Mac and macos-14 CI | Verified | Verified with network disabled |
+| Windows x64 | Native windows-2022 CI | Verified | Verified; network isolation not enforced |
+| Linux ARM64 | Debian container in Docker Desktop | Verified | Verified with network disabled |
+| Linux x64 | Native ubuntu-24.04 CI | Verified | Verified with network disabled |
 | macOS x64 | No local test host | Not verified | Not verified |
 
-The ordinary CI workflow is configured to run the complete check and runtime
-packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022`. Configuration alone
-does not establish a passing CI run. Windows ARM64 and non-glibc Linux systems
-have not been validated. Linux x64 release acceptance uses native Ubuntu CI;
-the earlier emulated run did not complete. The packer builds for its current OS and architecture;
-it does not cross-compile.
+The [ordinary CI workflow](../.github/workflows/ci.yml) runs the complete check
+and runtime packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022`.
+Linux network-disabled acceptance uses a matching-architecture container;
+Windows ARM64 and non-glibc Linux systems have not been validated. The packer
+builds for its current OS and architecture; it does not cross-compile.
 
 Package acceptance exercises both project templates, validation, all six agent
 commands, guarded patch dry-run/apply/stale rejection, deterministic SVG/HTML/PDF,

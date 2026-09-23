@@ -11,7 +11,7 @@ The alpha is developed from source using Bun 1.4.2 (pinned in `.bun-version`)
 on macOS, Windows, and Linux. Install Python 3.12 or later for the full development
 checks (`python` on Windows, `python3` elsewhere, or set
 `THERMITE_RESEARCH_PYTHON`). Runtime users do not need Python. See
-[platform checks](docs/PLATFORMS.md). Clone this repository, run `bun install --frozen-lockfile`,
+[platform checks](docs/platforms.md). Clone this repository, run `bun install --frozen-lockfile`,
 then `bun run build`. Use `bun thermite.mjs` from the checkout. For a quick
 feedback loop, run `bun run test -- <affected test file>` (not `bun test`; the
 suite runs on Vitest); run `bun run check` before submitting a change. Commit
@@ -112,7 +112,7 @@ A new manufacturer type should include:
 - Function and symbol mappings with a minimal valid wiring example.
 - Notes separating verified facts from unsupported or unmodeled features.
 - A complete inventory of power, return, protective bonding, shield, signal and communication connections, including optional pins.
-- Explicit `required: true` on universally required terminals/ports, and `connectionCoverage` with review notes. Mark incomplete models `partial`; do not claim complete coverage for a port-only device. See [connection completeness](docs/COMPLETENESS.md).
+- Explicit `required: true` on universally required terminals/ports, and `connectionCoverage` with review notes. Mark incomplete models `partial`; do not claim complete coverage for a port-only device. See [connection completeness](docs/completeness.md).
 
 Do not copy a manufacturer's complete manual into the repository without the
 necessary permission. Do not extrapolate one part's pinout to a product family.
@@ -140,8 +140,8 @@ remain separate and are not asserted by the source-alpha check.
 
 Run `bun run package:pack` from a clean committed tree to build and verify the
 public runtime ZIP, or add `--preview` for an uncommitted local test build.
-See the [runtime packaging guide](docs/RUNTIME_PACKAGE.md) and
-[platform checks](docs/PLATFORMS.md) for packaging, acceptance, and verified
+See the [runtime packaging guide](docs/runtime-package.md) and
+[platform checks](docs/platforms.md) for packaging, acceptance, and verified
 targets. Workspace packages
 remain `private: true` to prevent accidental npm publication; that flag does not
 restrict the source license.

@@ -3,7 +3,7 @@
 Users download a runtime ZIP, install Bun 1.4.2 separately, and run
 `bun /path/to/runtime/thermite.mjs`. They do not need Git, a dependency install,
 or a build. Choose the archive matching the operating system and CPU architecture;
-see [platform checks](PLATFORMS.md). Electrical projects live in separate folders
+see [platform checks](platforms.md). Electrical projects live in separate folders
 and use the same JSON format as source users.
 
 ## Produce a candidate

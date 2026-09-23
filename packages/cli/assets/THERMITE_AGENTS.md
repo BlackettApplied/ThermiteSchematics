@@ -246,7 +246,7 @@ a larger sheet without changing the source topology to obtain a drawing.
 Library `circuitSymbols` maps real function keys to explicit closed-catalog marks.
 Use it when one device needs different marks for its main and auxiliary contacts.
 E206 checks function existence, kind, terminal count and contact state. Follow
-the engine's `docs/CIRCUIT_SYMBOLS.md` and `docs/circuit-views.md`; never infer a
+the engine's `docs/circuit-symbols.md` and `docs/circuit-views.md`; never infer a
 mark from a tag or part-number substring. Marks do not create continuity or bonds.
 After an intentional library edit, lock and validate the project again.
 

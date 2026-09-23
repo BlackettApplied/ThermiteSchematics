@@ -38,7 +38,8 @@ The repository has seven private workspaces:
   IR construction, net derivation, and engineering rules;
 - `@thermite/query`: deterministic read-only queries over successful in-memory
   IR;
-- `@thermite/render`: semantic selection, pinned ELK layout, and canonical SVG;
+- `@thermite/render`: semantic selection, pinned ELK layout, SVG sheets and
+  printable packets;
 - `@thermite/agent-tools`: six typed stateless tools and guarded JSON Patch; and
 - `@thermite/cli`: the human and JSON-agent `thermite` transport plus deterministic
   project initialization.
@@ -49,7 +50,7 @@ query or rendering, and no package exposes a persistent project session.
 ## Project composition
 
 An initialized project has one manifest, one referenced presentation document, one
-lock, three source documents, and the copied agent guide:
+lock, three source documents, the copied agent guide, and a visible local core library:
 
 ```text
 AGENTS.md
@@ -59,6 +60,8 @@ electrical-system.lock.json
 devices/equipment.json
 connections/control-power.json
 potentials/potentials.json
+libraries/core/library.json
+libraries/core/types/*.json
 ```
 
 `system.json` retains the backward-compatible `electrical-system/0.1` format:
@@ -73,7 +76,7 @@ potentials/potentials.json
     "potentials/**/*.json"
   ],
   "presentation": "presentation.json",
-  "libraries": [{ "name": "core", "version": "0.1.0" }]
+  "libraries": [{ "name": "core", "version": "0.1.0", "path": "libraries/core" }]
 }
 ```
 
@@ -82,15 +85,17 @@ one `project_presentation` document. Presentation is removed from source-glob
 dispatch if the same canonical file matches a source pattern. Alias and reparse
 escapes remain invalid.
 
-`presentation.json` uses `project-presentation/0.1` and declares revision, one
-lowercase six-digit canvas color, and up to four title lines. The compiler returns a
-detached normalized presentation beside IR. Defaults are revision `UNSPECIFIED`,
-background `#ffffff`, and no authored lines.
+`presentation.json` supports `project-presentation/0.1` and `/0.2`, with revision,
+one lowercase six-digit canvas color, and up to four title lines. Optional page
+settings control printable paper size, orientation and margins. The compiler
+returns normalized presentation beside IR. Defaults are revision `UNSPECIFIED`,
+background `#ffffff`, and no authored lines; printable pages default to Tabloid
+landscape with a 10 mm margin. See [formats and compatibility](formats-and-compatibility.md).
 
 ## Library resolution and locking
 
 A dependency with an explicit `path` always uses the local path loader. Omitting
-`path` selects only a library shipped by exact name/version; M8 ships exactly
+`path` selects only a library shipped by exact name/version; the shipped set is
 `core@0.1.0` in `@thermite/core-library`. There is no npm, network,
 `NODE_PATH`, environment, cwd-ancestor, or user-cache fallback.
 
@@ -138,11 +143,20 @@ compiled presentation. It normalizes the semantic view, selects an electrical
 subgraph, maps only supported symbols, constructs a fresh pinned ELK DTO, validates
 returned geometry, then emits canonical `render/0.3` SVG.
 
-Presentation does not change ELK input or semantic view formats. After non-painting
-metadata/style/defs, one opaque background is the first painted element. The existing
-diagram is not translated or relaid out; a deterministic footer is added below it
-with project, revision, normalized view identity, fixed product/renderer version, and
-authored lines. SVG is generated output.
+The original continuous SVG renderer preserves its geometry and adds a deterministic
+footer. Printable rendering composes circuit sheets, complete conductor inventories,
+and documentation tables into SVG, HTML or PDF packets. Pagination and compact
+layout preserve electrical topology and minimum circuit text size; requests that
+cannot fit safely fail explicitly. The [format reference](formats-and-compatibility.md)
+describes packet limits, continuations, output formats and semantic review.
+
+Electrical selection and symbol semantics constrain the layout solver. Geometry
+never creates connectivity: crossing paths are not electrical junctions unless the
+compiled topology says so. Agents select semantic views and edit source facts;
+they do not place symbols or draw conductors. Reproducible output requires the
+same resolved model, normalized request, presentation, and renderer/dependency
+versions. Saved requests and generated drawings remain derived views, not a second
+electrical source of truth.
 
 ## Agent boundary
 
@@ -176,23 +190,18 @@ component UIDs. Electrical source intentionally contains no schematic X/Y
 coordinates. Logical topology, physical installation, and drawing presentation remain
 separate concerns.
 
-## Private distribution
+## Distribution
 
-The end-user boundary is one self-contained private CLI tarball installed offline
-into an isolated npm prefix. The package contains compiled runtime/declarations,
-shipped schemas/core library, starter templates, the agent guide, Apache-2.0 license,
-and positively inventoried third-party runtime/licenses. Authored payloads are
-ordinary files/directories only; npm-owned prefix launchers are separately verified.
+Users run a versioned runtime ZIP or a source checkout with Bun 1.4.2. A runtime
+contains the built engine, production dependencies, schemas, templates, core
+library, fonts and licenses. Its manifest records source identity and payload
+hashes. Source users install from the frozen Bun lock and build locally. Both
+workflows initialize a separate electrical project with the same JSON formats.
+See [runtime packaging](runtime-package.md) and [platform checks](platforms.md).
 
-Candidate authority begins only from a protected post-merge `dev` build in the exact
-private, non-fork repository. The immutable candidate is tested across
-Ubuntu/Windows and Node 22.12/24 before a protected publisher may attach exactly the
-tarball and SHA file to private Release `v0.2.0`. See the
-[private release checklist](RELEASE_CHECKLIST.md) for the frozen Task 6/9
-implementation and publication state machine.
-
-Public npm publication, direct Release upload, source release, a public/internal/fork
-repository, and locally supplied tar/SHA authority are outside the architecture.
+The historical private v0.2.0 tarball and its protected publisher remain separate.
+Their [legacy release contract](legacy/private-release.md) does not govern the
+current runtime ZIP workflow.
 
 ## Standards posture
 
