@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { readFile } from "node:fs/promises";
 import { basename, posix, win32 } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -330,12 +331,13 @@ describe("canonical schema metadata", async () => {
   it("exports every canonical file through the package schema subpath", async () => {
     for (const fileName of EXPECTED_SCHEMA_FILES) {
       const specifier = `@thermite/schema/schemas/${fileName}`;
-      const resolved = import.meta.resolve(specifier);
+      // Use the native resolver: Vitest rewrites import.meta.resolve and its
+      // Windows file-URL base is not understood by Bun. This still exercises
+      // the package exports map for every canonical JSON subpath.
+      const resolved = createRequire(import.meta.url).resolve(specifier);
 
-      expect(basename(fileURLToPath(resolved))).toBe(fileName);
-      await expect(
-        readFile(fileURLToPath(resolved), "utf8"),
-      ).resolves.toContain(
+      expect(basename(resolved)).toBe(fileName);
+      await expect(readFile(resolved, "utf8")).resolves.toContain(
         `https://thermiteschematics.com/schemas/0.1/${fileName}`,
       );
     }

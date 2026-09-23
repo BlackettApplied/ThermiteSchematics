@@ -223,7 +223,8 @@ describe("frozen release workflow topology", () => {
     expect(text).toContain("push:\n    branches: [dev]");
     expect(text).toContain("permissions:\n  contents: read");
     expect(text).toContain("persist-credentials: false");
-    expect(text).toContain("runs-on: macos-14");
+    expect(text).toContain("runs-on: ${{ matrix.os }}");
+    expect(text).toContain("os: [macos-14, ubuntu-24.04, windows-2022]");
     expect(text).toContain("oven-sh/setup-bun@v2");
     expect(text).toContain("bun-version-file: .bun-version");
     expect(text).toContain("run: bun install --frozen-lockfile");

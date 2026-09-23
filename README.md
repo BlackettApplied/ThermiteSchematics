@@ -31,10 +31,11 @@ Copy this prompt to your agent:
 ```text
 Help me start an electrical project with the Thermite Schematics runtime package.
 
-1. Find a published runtime ZIP for Apple Silicon macOS and its .sha256 sidecar
-   at https://github.com/BlackettApplied/ThermiteSchematics/releases. Use a
-   versioned release, not a preview or the automatic source archive. If none is
-   available, tell me and offer the source workflow in the repository README.
+1. Identify my operating system and CPU architecture. Find the matching
+   published runtime ZIP and its .sha256 sidecar at
+   https://github.com/BlackettApplied/ThermiteSchematics/releases. Use a versioned
+   release, not a preview or the automatic source archive. If none is available,
+   tell me and offer the source workflow in the repository README.
 2. Download both, verify the SHA-256, and extract into a new runtime folder
    separate from my electrical project. Use Bun 1.4.2. Read the package README;
    no dependency installation or build is needed.
@@ -68,7 +69,8 @@ Help me start using Thermite Schematics from source.
 1. Clone https://github.com/BlackettApplied/ThermiteSchematics.git into a
    dedicated checkout (or use my existing checkout without overwriting work).
    Read its AGENTS.md and CONTRIBUTING.md before making changes.
-2. Use Bun 1.4.2. From the checkout, run bun install --frozen-lockfile,
+2. Use Bun 1.4.2 and Python 3.12 or later for the development checks.
+   From the checkout, run bun install --frozen-lockfile,
    bun run build, and bun run check. Report failures and preserve compiler
    diagnostics.
 3. Run bun thermite.mjs --help. Initialize a new project outside the engine
@@ -91,9 +93,9 @@ Do not invent electrical ratings, pinouts, or engineering repairs. Explain
 unresolved assumptions; generated drawings need qualified engineering review.
 ```
 
-**0.3.0-alpha.2 · Apple Silicon Mac development preview.** Development and CI
-currently target Bun 1.4.2 (pinned in `.bun-version`) on Apple Silicon macOS;
-other platforms are not yet verified.
+**0.3.0-alpha.2 · Cross-platform development preview.** Runs locally with
+Bun 1.4.2 (pinned in `.bun-version`) on macOS, Windows, and Linux. See the
+[platform checks](docs/PLATFORMS.md) for tested systems and limitations.
 
 > **Generated drawings are not a substitute for engineering review.** Thermite
 > validates the model you give it; it does not certify that a design is safe,

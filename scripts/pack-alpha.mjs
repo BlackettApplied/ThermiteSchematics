@@ -35,7 +35,7 @@ await writeFile(
       commit,
       archive: filename,
       sha256: digest,
-      verifiedTarget: "darwin-arm64 / Bun 1.4.2",
+      packagedOn: `${process.platform}-${process.arch} / ${globalThis.Bun ? `Bun ${Bun.version}` : `Node ${process.version}`}`,
       setup: [
         "bun install --frozen-lockfile",
         "bun run build",

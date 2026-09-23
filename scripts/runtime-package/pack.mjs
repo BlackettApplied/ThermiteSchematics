@@ -8,12 +8,11 @@ import {
   readdir,
   realpath,
   rm,
-  utimes,
   writeFile,
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { basename, dirname, join, posix, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import {
   fileInventory,
   json,
@@ -24,6 +23,9 @@ import {
   readJson,
   sha256,
 } from "./common.mjs";
+import { assertRuntimePlatform, currentTarget } from "./platform.mjs";
+import { createRuntimeZip } from "./zip.mjs";
+import { extractSafeZipArchive } from "../safe-zip-reader.mjs";
 import { verifyRuntimeArchive } from "./verify.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -31,14 +33,7 @@ const args = process.argv.slice(2);
 if (args.some((arg) => arg !== "--preview"))
   throw new Error("Usage: bun run package:pack [--preview]");
 const preview = args.includes("--preview");
-if (
-  Bun.version !== "1.4.2" ||
-  process.platform !== "darwin" ||
-  process.arch !== "arm64"
-)
-  throw new Error(
-    "Build and verify runtime packages on Apple Silicon macOS with Bun 1.4.2.",
-  );
+assertRuntimePlatform();
 const git = (...args) =>
   execFileSync("git", args, {
     cwd: root,
@@ -63,8 +58,8 @@ const run = (args, cwd) =>
     env: { ...process.env, COPYFILE_DISABLE: "1" },
   });
 try {
-  await mkdir(source);
   if (preview) {
+    await mkdir(source);
     // Git's ignore rules exclude customer projects, secrets, dependencies and builds.
     const files = [
       ...new Set(
@@ -87,11 +82,11 @@ try {
       await cp(join(root, file), join(source, file));
     }
   } else {
-    const archive = execFileSync("git", ["archive", "--format=tar", commit], {
+    const archive = execFileSync("git", ["archive", "--format=zip", commit], {
       cwd: root,
       maxBuffer: 128 * 1024 * 1024,
     });
-    execFileSync("tar", ["-xf", "-", "-C", source], { input: archive });
+    await extractSafeZipArchive(archive, source);
   }
   const sourceDigest = sha256(json(await fileInventory(source)));
   const sourceLock = await readFile(join(source, "bun.lock"));
@@ -101,7 +96,7 @@ try {
   );
   run(["run", "build"], source);
   const { THERMITE_VERSION: version } = await import(
-    join(source, "packages/cli/dist/alpha.js")
+    pathToFileURL(join(source, "packages/cli/dist/alpha.js")).href
   );
   if (!/^[0-9A-Za-z.-]+$/.test(version))
     throw new Error("Unsafe runtime version.");
@@ -146,7 +141,7 @@ try {
     const nested = join(
       production,
       "packages",
-      directory.split("/").at(-1),
+      basename(directory),
       "node_modules",
     );
     try {
@@ -207,7 +202,7 @@ try {
   await cp(supplementsRoot, join(runtime, "third-party"), { recursive: true });
   const dependencies = [];
   const { readBunLock } = await import(
-    join(source, "scripts/read-bun-lock.mjs")
+    pathToFileURL(join(source, "scripts/read-bun-lock.mjs")).href
   );
   const lock = await readBunLock(source);
   for (const path of (await listFiles(runtime)).filter((file) =>
@@ -215,7 +210,7 @@ try {
   )) {
     const metadata = await readJson(join(runtime, path));
     if (metadata.name.startsWith("@thermite/")) continue;
-    const directory = dirname(path);
+    const directory = posix.dirname(path);
     const licenses = (await listFiles(join(runtime, directory))).filter(
       isLicenseFile,
     );
@@ -256,27 +251,15 @@ try {
         }),
     preview,
     runtime: "Bun 1.4.2",
-    target: "darwin-arm64",
+    target: currentTarget(),
     dependencies,
     files: await fileInventory(runtime),
   };
   await writeFile(join(runtime, manifestName), json(manifest));
   const filename = runtimeFilename(manifest);
-  // Sorted entries and fixed timestamps make identical payloads reproducible.
-  const files = await listFiles(runtime);
-  for (const file of files)
-    await utimes(
-      join(runtime, file),
-      new Date("2000-01-01T00:00:00Z"),
-      new Date("2000-01-01T00:00:00Z"),
-    );
   const archive = join(temporary, filename);
-  execFileSync("zip", ["-q", "-X", archive, "-@"], {
-    cwd: runtime,
-    input: files.join("\n") + "\n",
-    env: { ...process.env, TZ: "UTC", COPYFILE_DISABLE: "1" },
-  });
-  const bytes = await readFile(archive);
+  const bytes = await createRuntimeZip(runtime);
+  await writeFile(archive, bytes);
   await writeFile(`${archive}.sha256`, `${sha256(bytes)}  ${filename}\n`);
   const report = await verifyRuntimeArchive(archive, {
     sourceCli: join(source, "thermite.mjs"),
@@ -290,7 +273,7 @@ try {
   await writeFile(join(output, `${filename}.json`), json(manifest));
   await writeFile(join(output, "verification.json"), json(report));
   process.stdout.write(
-    `Verified ${preview ? "PREVIEW (not for publication)" : "release candidate"}: ${join(output, filename)}\n`,
+    `Verified ${preview ? "PREVIEW (not for publication)" : "release candidate"}: ${join(output, filename)}\nNetwork isolation: ${report.networkIsolation}\n`,
   );
 } finally {
   await rm(temporary, { recursive: true, force: true });

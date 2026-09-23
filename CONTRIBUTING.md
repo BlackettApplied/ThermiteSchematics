@@ -8,7 +8,10 @@ Small, focused contributions are useful; you do not need to wait for a large
 feature to be finished.
 
 The alpha is developed from source using Bun 1.4.2 (pinned in `.bun-version`)
-on Apple Silicon macOS. Clone this repository, run `bun install --frozen-lockfile`,
+on macOS, Windows, and Linux. Install Python 3.12 or later for the full development
+checks (`python` on Windows, `python3` elsewhere, or set
+`THERMITE_RESEARCH_PYTHON`). Runtime users do not need Python. See
+[platform checks](docs/PLATFORMS.md). Clone this repository, run `bun install --frozen-lockfile`,
 then `bun run build`. Use `bun thermite.mjs` from the checkout. For a quick
 feedback loop, run `bun run test -- <affected test file>` (not `bun test`; the
 suite runs on Vitest); run `bun run check` before submitting a change. Commit
@@ -125,7 +128,7 @@ current inventory and the limits of each model.
 
 ## Checks and releases
 
-The normal check is the Apple Silicon source-alpha development check. It
+The normal check is the cross-platform source-alpha development check. It
 excludes the frozen private 0.2.0 tarball inventory suite, which remains available
 as `npm run test:legacy-package` on its historical source revision with its
 original Node/npm toolchain. Source
@@ -133,7 +136,7 @@ archives are verified separately by extracting, installing, building, and runnin
 the alpha CLI. Some historical
 private-release consumer tests intentionally skip without a downloaded release
 candidate; the test output reports those skips. Protected release-evidence audits
-remain separate and are not asserted by the Mac alpha check.
+remain separate and are not asserted by the source-alpha check.
 
 Run `bun run package:pack` from a clean committed tree to build and verify the
 public runtime ZIP, or add `--preview` for an uncommitted local test build.

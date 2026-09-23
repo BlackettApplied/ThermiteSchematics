@@ -184,7 +184,7 @@ describe("M7 Task 9 final inventories", () => {
     });
   });
 
-  it("runs the alpha repository check on Apple Silicon macOS", async () => {
+  it("runs the alpha repository check on macOS, Linux, and Windows", async () => {
     const workflow = await readFile(
       join(repositoryRoot, ".github", "workflows", "ci.yml"),
       "utf8",
@@ -193,7 +193,8 @@ describe("M7 Task 9 final inventories", () => {
       await readFile(join(repositoryRoot, "package.json"), "utf8"),
     ) as { scripts: Record<string, string> };
 
-    expect(workflow).toContain("runs-on: macos-14");
+    expect(workflow).toContain("os: [macos-14, ubuntu-24.04, windows-2022]");
+    expect(workflow).toContain("runs-on: ${{ matrix.os }}");
     expect(workflow).toContain("- run: bun run check");
     expect(rootPackage.scripts.check).toContain("bun run test");
     expect(rootPackage.scripts.test).toBe("bun scripts/test.mjs");

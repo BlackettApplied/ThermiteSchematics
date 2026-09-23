@@ -2,8 +2,9 @@
 
 Define electrical projects in JSON and generate deterministic drawings on demand.
 This download contains the built engine, runtime dependencies, fonts, templates,
-and core library. Install **Bun 1.4.2** separately. The verified target is
-**Apple Silicon macOS**. No Git, dependency installation, or build is needed.
+and core library. Install **Bun 1.4.2** separately and choose the archive for your
+operating system and CPU architecture (recorded as `target` in
+`runtime-manifest.json`). No Git, dependency installation, or build is needed.
 
 Keep this folder intact and separate from your electrical project. From this
 folder, run:
@@ -25,7 +26,9 @@ engineering review; validation does not certify electrical safety.
 The `runtime-manifest.json` records the version, source commit, dependency
 licenses, and every payload file's SHA-256. Verify the download against its
 `.sha256` sidecar before extraction with `shasum -a 256 -c <archive>.sha256`.
-Keep the ZIP and its sidecar together when running that command. A filename
+On Linux, use `sha256sum -c <archive>.sha256`. On Windows PowerShell, compare
+`(Get-FileHash <archive>.zip -Algorithm SHA256).Hash` with the hash in the sidecar.
+Keep the ZIP and its sidecar together when checking them. A filename
 containing `preview` identifies an uncommitted development build, not a release.
 
 To upgrade, extract a newer release into a new runtime folder, then deliberately

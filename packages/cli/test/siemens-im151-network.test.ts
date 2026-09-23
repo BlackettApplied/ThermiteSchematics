@@ -29,7 +29,7 @@ async function fixture() {
   const system = await read("system.json");
   system.libraries.find(
     (library: any) => library.name === "siemens-pilot",
-  ).path = relative(path, resolve(example, "../.."));
+  ).path = relative(path, resolve(example, "../..")).replaceAll("\\", "/");
   await write("system.json", system);
   const boundary = await read("boundary/types.json");
   boundary.types.push({

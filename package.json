@@ -30,7 +30,8 @@
     "demo:machine": "bun scripts/demo-machine.mjs",
     "demo:change": "bun scripts/demo-change.mjs",
     "package:pack": "bun scripts/runtime-package/pack.mjs",
-    "package:verify": "bun scripts/runtime-package/verify.mjs"
+    "package:verify": "bun scripts/runtime-package/verify.mjs",
+    "check:linux": "bun scripts/platform/check-linux.mjs"
   },
   "devDependencies": {
     "@types/fontkit": "^2.0.8",

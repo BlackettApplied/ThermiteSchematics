@@ -6,7 +6,9 @@ This checkout is the Thermite TypeScript + ELK alpha source. For engine work,
 run `bun install --frozen-lockfile`, `bun run build`, and `bun run check`; invoke
 the source entry point with `bun thermite.mjs`. Run focused tests with
 `bun run test -- <file>`, not `bun test`; the suite runs on Vitest. Development
-and CI currently target Apple Silicon macOS with Bun 1.4.2. `bun.lock` is the
+and CI target macOS, Windows, and Linux with Bun 1.4.2. Full development checks
+also need Python 3.12 or later (`python` on Windows, `python3` elsewhere; override
+with `THERMITE_RESEARCH_PYTHON`). See docs/PLATFORMS.md. `bun.lock` is the
 active lock; `package-lock.json` serves only the frozen historical release
 tooling. Preserve the original renderer and guarded agent contracts. See
 CONTRIBUTING.md for engine and library review expectations.

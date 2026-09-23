@@ -1,3 +1,8 @@
+import {
+  assertRuntimePlatform,
+  consumerExecution,
+  currentTarget,
+} from "./platform.mjs";
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
 import {
@@ -31,14 +36,8 @@ export async function verifyRuntimeArchive(
   archivePath,
   { sourceCli, allowPreview = false } = {},
 ) {
-  if (
-    Bun.version !== "1.4.2" ||
-    process.platform !== "darwin" ||
-    process.arch !== "arm64"
-  )
-    throw new Error(
-      "Runtime acceptance requires Bun 1.4.2 on Apple Silicon macOS.",
-    );
+  assertRuntimePlatform();
+  const execution = consumerExecution();
   const bytes = await readFile(archivePath);
   const digest = sha256(bytes);
   assert.equal(
@@ -49,6 +48,11 @@ export async function verifyRuntimeArchive(
   const entries = await readSafeZipArchive(bytes);
   const manifest = verifyEntries(entries);
   verifyArchiveIdentity(manifest, basename(archivePath), { allowPreview });
+  assert.equal(
+    manifest.target,
+    currentTarget(),
+    "Verify on the archive target platform",
+  );
   const temporary = await mkdtemp(
     join(await realpath(tmpdir()), "thermite-runtime-consumer-"),
   );
@@ -70,16 +74,32 @@ export async function verifyRuntimeArchive(
     await mkdir(home);
     for (const name of ["node", "npm", "npx", "git", "tsc", "bun"]) {
       await writeFile(
-        join(tools, name),
-        '#!/bin/sh\necho "Unexpected development tool invocation" >&2\nexit 97\n',
+        join(tools, process.platform === "win32" ? `${name}.cmd` : name),
+        process.platform === "win32"
+          ? "@echo Unexpected development tool invocation 1>&2\r\n@exit /b 97\r\n"
+          : '#!/bin/sh\necho "Unexpected development tool invocation" >&2\nexit 97\n',
       );
-      await chmod(join(tools, name), 0o755);
+      if (process.platform !== "win32") await chmod(join(tools, name), 0o755);
     }
-    // System sandbox denies all network access. No source checkout or package
-    // cache is available through PATH/HOME/NODE_PATH in consumer subprocesses.
+    // Keep development tools and caches out of consumer processes. Preserve
+    // only Windows system locations needed to load OS libraries. Network
+    // isolation is measured and reported separately on each platform.
     const env = {
       PATH: tools,
       HOME: home,
+      USERPROFILE: home,
+      TEMP: temporary,
+      TMP: temporary,
+      ...(process.platform === "win32"
+        ? {
+            SystemRoot: process.env.SystemRoot ?? process.env.SYSTEMROOT,
+            WINDIR: process.env.WINDIR,
+            ComSpec: process.env.ComSpec,
+            PATHEXT: ".COM;.EXE;.BAT;.CMD",
+            LOCALAPPDATA: home,
+            APPDATA: home,
+          }
+        : {}),
       TMPDIR: temporary,
       BUN_INSTALL_CACHE_DIR: join(home, "empty-cache"),
       NODE_PATH: "",
@@ -88,14 +108,8 @@ export async function verifyRuntimeArchive(
     const cli = join(runtime, "thermite.mjs");
     const invoke = (args, input, expected = 0) => {
       const result = spawnSync(
-        "/usr/bin/sandbox-exec",
-        [
-          "-p",
-          "(version 1)(allow default)(deny network*)",
-          process.execPath,
-          cli,
-          ...args,
-        ],
+        execution.command,
+        [...execution.prefix, cli, ...args],
         {
           cwd: temporary,
           env,
@@ -119,7 +133,7 @@ export async function verifyRuntimeArchive(
     assert.equal(invoke(["--version"]).stdout.trim(), manifest.version);
     assert.match(invoke(["--help"]).stdout, /Thermite/);
     check(
-      "relocated, read-only package; Bun only; network denied; version and help",
+      `relocated, read-only package; Bun only; network isolation: ${execution.networkIsolation}; version and help`,
     );
     const project = join(temporary, "electrical project");
     invoke(["init", project, "--name", "Package acceptance"]);
@@ -168,11 +182,9 @@ export async function verifyRuntimeArchive(
       if (sourceCli) {
         const sourceOutput = join(project, `source.${extension}`);
         execFileSync(
-          "/usr/bin/sandbox-exec",
+          execution.command,
           [
-            "-p",
-            "(version 1)(allow default)(deny network*)",
-            process.execPath,
+            ...execution.prefix,
             sourceCli,
             "view",
             "PS1",
@@ -292,7 +304,8 @@ export async function verifyRuntimeArchive(
       sourceDigest: manifest.sourceDigest,
       preview: manifest.preview,
       runtime: `Bun ${Bun.version}`,
-      target: `${process.platform}-${process.arch}`,
+      target: currentTarget(),
+      networkIsolation: execution.networkIsolation,
       checks,
     };
   } finally {

@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import {
   cp,
+  mkdir,
   link,
   mkdtemp,
   readFile,
@@ -10,6 +11,11 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { createRuntimeZip } from "../../../scripts/runtime-package/zip.mjs";
+import {
+  readSafeZipArchive,
+  extractSafeZipArchive,
+} from "../../../scripts/safe-zip-reader.mjs";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   json,
@@ -117,6 +123,50 @@ function fixture() {
 }
 
 describe("public runtime package boundary", () => {
+  it("round-trips deterministic portable ZIPs with spaces, Unicode and empty files", async () => {
+    const root = await directory();
+    await mkdir(join(root, "nested space"));
+    await writeFile(join(root, "nested space", "café.json"), '{"ok":true}');
+    await writeFile(join(root, "empty"), "");
+    const first = await createRuntimeZip(root);
+    expect(await createRuntimeZip(root)).toEqual(first);
+    // All CI platforms must produce the same fixed ZIP fixture bytes.
+    expect(sha256(first)).toBe(
+      "14c5b9dd61cd75a4444e570d7f8919cee1e9e117a1e38925ee9081fb78cb9a15",
+    );
+    const entries = await readSafeZipArchive(first);
+    expect(entries.map((entry: Entry) => entry.path)).toEqual([
+      "empty",
+      "nested space/café.json",
+    ]);
+    const parent = await directory();
+    await extractSafeZipArchive(first, join(parent, "extracted"));
+    expect(
+      await readFile(
+        join(parent, "extracted", "nested space", "café.json"),
+        "utf8",
+      ),
+    ).toBe('{"ok":true}');
+  });
+  it("binds archive names to each supported platform and refuses unknown targets", () => {
+    for (const target of [
+      "darwin-arm64",
+      "darwin-x64",
+      "linux-arm64",
+      "linux-x64",
+      "win32-x64",
+    ]) {
+      const value = fixture();
+      value.manifest.target = target;
+      expect(verifyEntries(value.seal()).target).toBe(target);
+      expect(runtimeFilename(value.manifest)).toContain(`-${target}-bun-`);
+    }
+    const value = fixture();
+    value.manifest.target = "unknown-target";
+    expect(() => verifyEntries(value.seal())).toThrow(
+      /Invalid runtime manifest/,
+    );
+  });
   it("accepts a complete inventory and rejects tampered or unlisted bytes", () => {
     const value = fixture();
     expect(verifyEntries(value.seal()).preview).toBe(false);

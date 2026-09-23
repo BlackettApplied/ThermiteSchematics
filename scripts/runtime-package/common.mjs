@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { lstat, readFile, readdir } from "node:fs/promises";
 import { join, posix } from "node:path";
+import { runtimeTargets } from "./platform.mjs";
 import { parseBunLockText } from "../read-bun-lock.mjs";
 
 export const sha256 = (bytes) =>
@@ -14,7 +15,7 @@ export const isLicenseFile = (path) =>
     path,
   );
 export const runtimeFilename = (manifest) =>
-  `thermite-${manifest.version}-darwin-arm64-bun-${manifest.preview ? `preview-${manifest.sourceDigest.slice(0, 8)}` : manifest.commit.slice(0, 8)}.zip`;
+  `thermite-${manifest.version}-${manifest.target}-bun-${manifest.preview ? `preview-${manifest.sourceDigest.slice(0, 8)}` : manifest.commit.slice(0, 8)}.zip`;
 export function verifyArchiveIdentity(
   manifest,
   filename,
@@ -66,7 +67,7 @@ export function verifyEntries(entries) {
   if (
     manifest.format !== "thermite-runtime-release/0.1" ||
     manifest.runtime !== "Bun 1.4.2" ||
-    manifest.target !== "darwin-arm64" ||
+    !runtimeTargets.includes(manifest.target) ||
     typeof manifest.preview !== "boolean" ||
     !/^[a-f0-9]{40}$/.test(manifest.commit) ||
     !/^[a-f0-9]{64}$/.test(manifest.sourceDigest) ||

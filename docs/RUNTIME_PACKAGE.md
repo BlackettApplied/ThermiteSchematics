@@ -2,12 +2,13 @@
 
 Users download a runtime ZIP, install Bun 1.4.2 separately, and run
 `bun /path/to/runtime/thermite.mjs`. They do not need Git, a dependency install,
-or a build. The currently verified target is Apple Silicon macOS. Electrical
-projects live in separate folders and use the same JSON format as source users.
+or a build. Choose the archive matching the operating system and CPU architecture;
+see [platform checks](PLATFORMS.md). Electrical projects live in separate folders
+and use the same JSON format as source users.
 
 ## Produce a candidate
 
-From a clean committed checkout with Bun 1.4.2 on Apple Silicon macOS:
+From a clean committed checkout with Bun 1.4.2 on the target platform:
 
 ```sh
 bun run package:pack
@@ -26,7 +27,7 @@ install from it.
 Before any artifact is copied to `release-out/runtime/`, the packer verifies it.
 Each candidate directory contains:
 
-- A versioned `thermite-<version>-darwin-arm64-bun-<commit8>.zip`.
+- A versioned `thermite-<version>-<target>-bun-<commit8>.zip`.
 - A `.zip.sha256` sidecar covering the exact ZIP bytes.
 - A `.zip.json` copy of the runtime manifest inside the ZIP, recording source
   identity, dependencies, license locations, and payload hashes.
@@ -51,10 +52,11 @@ reviewed changes and generate a clean candidate before publication.
 ## Recheck the actual download
 
 Keep the ZIP and its sidecar together, then run from a source checkout
-(`commit8` is the first eight characters of the source commit):
+(`commit8` is the first eight characters of the source commit and `target` is
+for example `darwin-arm64`, `win32-x64`, or `linux-arm64`):
 
 ```sh
-bun run package:verify /absolute/path/to/thermite-<version>-darwin-arm64-bun-<commit8>.zip
+bun run package:verify /absolute/path/to/thermite-<version>-<target>-bun-<commit8>.zip
 ```
 
 Standalone verification rejects previews unless `--allow-preview` is explicitly
@@ -62,9 +64,12 @@ added for local testing. It checks the filename against the manifest identity.
 The verifier checks the sidecar, safe ZIP paths, the exact file inventory and
 hashes, dependency license references, and required runtime assets before use.
 It extracts into a fresh temporary directory and relocates the runtime to a path
-containing spaces. Consumer commands run under the macOS sandbox with all network
-access denied, an empty home/cache, and no Node/npm/npx/Git/build tools on PATH.
-The package files are read-only. It checks:
+containing spaces. Consumer commands use an empty home/cache, no
+Node/npm/npx/Git/build tools on PATH, and read-only package files. On macOS the
+consumer runs in a network-denying sandbox. Linux acceptance uses Docker
+`--network=none` via `bun run check:linux`. Native Windows verification has no
+network sandbox; its report records `networkIsolation: "not-enforced"`. Read this
+field before making any offline-isolation claim. It checks:
 
 - Version/help, both initialization templates, refusal to overwrite a project,
   validation, core-library notices, and spare-conductor queries.
@@ -81,8 +86,10 @@ verification has no source build to compare, and its report reflects that.
 
 After repository review and the public release checklist, publish the clean
 candidate ZIP, SHA-256 sidecar, manifest and verification report together in a
-versioned GitHub Release. Include Bun 1.4.2, Apple Silicon macOS, the exact source
-commit, and third-party source availability instructions in the release notes.
+versioned GitHub Release. Include Bun 1.4.2, each verified operating system and
+architecture, the exact source commit, and third-party source availability
+instructions in the release notes. Build and verify each target on that target;
+the packer does not cross-compile or establish support for untested systems.
 The SHA-256 detects changed bytes; it is not a signature authenticating a publisher.
 Download the published assets and run the verifier again before announcing them.
 The historical private release workflows are separate and must not be repurposed.
