@@ -2,7 +2,7 @@
 
 Thermite's original source is licensed under [Apache-2.0](LICENSE). This does
 not relicense third-party material. Keep this file, [NOTICE](NOTICE), and the
-applicable license texts with source distributions.
+applicable license texts with distributions.
 
 ## Bundled fonts
 
@@ -35,11 +35,20 @@ separate third-party dependency; Thermite's Apache license does not replace its
 terms. The [EPL-2.0 distribution provisions](https://www.eclipse.org/legal/epl/epl-v20.html)
 include source availability and notice requirements when redistributing it.
 
-If distributing built software or copying dependencies into an archive, include
-the licenses/notices for the actual runtime dependency tree, including transitive
-dependencies, and satisfy applicable source availability requirements. The
-`scripts/release-third-party-*` inventories belong to the frozen private 0.2.0
-packager; they are not an inventory of the current source alpha's dependencies.
+The runtime ZIP produced by `bun run package:pack` includes the complete installed
+production dependency packages, preserving their original license and notice
+files. `runtime-manifest.json` indexes every dependency by installation path,
+version, lock integrity, and license files, including nested versions. Supplementary
+standard license terms for three packages that declare MIT without supplying
+its full text, plus the applicable Brotli vendor licenses, are copied into those
+packages. Their declarations, origins, transformations and hashes are recorded in
+`scripts/runtime-package/third-party/sources.json` in the source repository and
+`third-party/sources.json` in the runtime ZIP. Its `third-party/ELK-SOURCE.md`
+provides source availability instructions for the unmodified ELK distribution.
+Bun itself is installed separately and is not redistributed in this ZIP.
+
+The `scripts/release-third-party-*` inventories belong to the frozen private
+0.2.0 packager; they are not the current runtime dependency inventory.
 
 ## Component research
 

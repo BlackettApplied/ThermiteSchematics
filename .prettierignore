@@ -24,3 +24,7 @@ packages/cli/test/goldens/
 
 # Bun owns the text lockfile formatting.
 bun.lock
+
+# Generated runtime release artifacts and verbatim upstream license texts.
+/release-out/
+scripts/runtime-package/third-party/*-LICENSE

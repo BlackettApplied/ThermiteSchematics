@@ -10,7 +10,7 @@ const temporary = realpathSync(tmpdir());
 const sidecars = mkdtempSync(join(temporary, "thermite-test-sidecars-"));
 const selected = process.argv.slice(2);
 // This suite builds the frozen private 0.2.0 tarball against its historical
-// byte inventory. The alpha ships source and has its own archive acceptance.
+// byte inventory. The public alpha has separate source and runtime archive acceptance.
 const selection = selected.some((argument) =>
   argument.endsWith("/release-package.test.ts"),
 )

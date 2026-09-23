@@ -28,7 +28,9 @@
     "alpha:pack": "bun scripts/pack-alpha.mjs",
     "test:legacy-package": "node scripts/test.mjs packages/cli/test/release-package.test.ts",
     "demo:machine": "bun scripts/demo-machine.mjs",
-    "demo:change": "bun scripts/demo-change.mjs"
+    "demo:change": "bun scripts/demo-change.mjs",
+    "package:pack": "bun scripts/runtime-package/pack.mjs",
+    "package:verify": "bun scripts/runtime-package/verify.mjs"
   },
   "devDependencies": {
     "@types/fontkit": "^2.0.8",

@@ -1,7 +1,8 @@
 # Contributing to Thermite
 
-Thermite is meant to be used and improved from a local source checkout. Human
-and agent-authored pull requests are welcome: fix bugs you encounter, clarify
+Thermite can be used through a prebuilt runtime package or a source checkout.
+Engine improvements belong in a separate source checkout. Human and
+agent-authored pull requests are welcome: fix bugs you encounter, clarify
 confusing instructions, improve rendering, or add carefully sourced components.
 Small, focused contributions are useful; you do not need to wait for a large
 feature to be finished.
@@ -134,11 +135,13 @@ private-release consumer tests intentionally skip without a downloaded release
 candidate; the test output reports those skips. Protected release-evidence audits
 remain separate and are not asserted by the Mac alpha check.
 
-See [Public source release checklist](docs/PUBLIC_RELEASE.md) for the current
-Apache-2.0 source distribution and its third-party notices. Workspace packages
+Run `bun run package:pack` from a clean committed tree to build and verify the
+public runtime ZIP, or add `--preview` for an uncommitted local test build.
+See [Public release checklist](docs/PUBLIC_RELEASE.md) for runtime and source
+distributions and their third-party notices. Workspace packages
 remain `private: true` to prevent accidental npm publication; that flag does not
 restrict the source license.
 
 Keep historical private release controls intact. Do not publish a package, change repository
 visibility, select a license, or upload machine-project data as part of a routine
-fix. A source release should identify the exact commit and supported runtime.
+fix. Every release should identify the exact commit and supported runtime.

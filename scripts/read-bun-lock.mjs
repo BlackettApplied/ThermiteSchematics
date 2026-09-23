@@ -5,10 +5,11 @@ import ts from "typescript";
 // Bun's committed text lockfile permits trailing commas; it is not strict JSON.
 export async function readBunLock(repositoryRoot) {
   const path = join(repositoryRoot, "bun.lock");
-  const { config, error } = ts.parseConfigFileTextToJson(
-    path,
-    await readFile(path, "utf8"),
-  );
+  return parseBunLockText(await readFile(path, "utf8"), path);
+}
+
+export function parseBunLockText(text, path = "bun.lock") {
+  const { config, error } = ts.parseConfigFileTextToJson(path, text);
   if (error)
     throw new Error(ts.flattenDiagnosticMessageText(error.messageText, "\n"));
   if (config?.lockfileVersion !== 1 || !config.workspaces || !config.packages)

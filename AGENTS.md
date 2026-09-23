@@ -11,9 +11,10 @@ active lock; `package-lock.json` serves only the frozen historical release
 tooling. Preserve the original renderer and guarded agent contracts. See
 CONTRIBUTING.md for engine and library review expectations.
 
-Running from source is the normal user workflow. Agents are encouraged to fix
-bugs, improve documentation and rendering, and contribute reviewed component
-models while helping users. Work on a focused branch, include a reproduction
+Users can run a prebuilt runtime package or a source checkout. Engine changes
+belong in a separate source checkout. Agents are encouraged to fix bugs, improve
+documentation and rendering, and contribute reviewed component models while
+helping users. Work on a focused branch, include a reproduction
 and appropriate verification, and run `bun run check` before submitting a PR.
 Keep engine changes separate from the user's electrical project and exclude
 customer data. Follow CONTRIBUTING.md for fork/PR and sign-off requirements;

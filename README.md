@@ -14,12 +14,50 @@ questions and focused views without first assembling a fixed drawing set.
 
 ## How to use
 
-**Run from source. Improve it as you use it. Contribute the improvements back.**
-Thermite is an Apache-2.0 TypeScript + ELK project, and agent-authored pull
-requests are welcome: bug fixes, clearer docs, rendering improvements, and
-carefully sourced component libraries.
+Choose a **runtime package** to start designing, or a **source checkout** to
+work on the engine too. Both initialize the same electrical project in its own
+folder. Thermite is Apache-2.0, and agent-authored improvements are welcome.
 
-## Give this to your agent to get started
+### Use a runtime package
+
+Download a versioned runtime ZIP and its SHA-256 sidecar from
+[GitHub Releases](https://github.com/BlackettApplied/ThermiteSchematics/releases).
+It contains the built engine and dependencies; you only need Bun 1.4.2.
+The first public runtime package is being prepared; if no runtime ZIP is listed,
+use the source option below. GitHub's automatic source ZIP is a different artifact.
+
+Copy this prompt to your agent:
+
+```text
+Help me start an electrical project with the Thermite Schematics runtime package.
+
+1. Find a published runtime ZIP for Apple Silicon macOS and its .sha256 sidecar
+   at https://github.com/BlackettApplied/ThermiteSchematics/releases. Use a
+   versioned release, not a preview or the automatic source archive. If none is
+   available, tell me and offer the source workflow in the repository README.
+2. Download both, verify the SHA-256, and extract into a new runtime folder
+   separate from my electrical project. Use Bun 1.4.2. Read the package README;
+   no dependency installation or build is needed.
+3. Using bun /absolute/path/to/runtime/thermite.mjs, initialize a new project
+   folder with init <project-folder> --name "My project". Do not overwrite an
+   existing directory. Read the generated AGENTS.md, validate the project, and
+   render view PS1 --loads --project <project-folder>
+   -o <project-folder>/drawings/control-power.html as one command.
+4. Tell me where to open the drawing, then help me model my electrical system.
+   Use that same runtime for each command. Keep JSON authoritative, preserve
+   diagnostics, and use the guarded agent workflow for existing source edits.
+5. If you find an engine bug or missing capability, prepare a focused fix in a
+   separate source checkout and contribute it upstream under CONTRIBUTING.md.
+   Keep my machine data out of PRs, and leave CLA acceptance to me.
+
+Do not invent electrical ratings, pinouts, or engineering repairs. Explain
+unresolved assumptions; generated drawings need qualified engineering review.
+```
+
+### Develop and contribute from source
+
+Clone the engine to inspect and improve it as you work. Bug fixes, clearer docs,
+rendering improvements, and carefully sourced component libraries are welcome.
 
 Copy this prompt into your coding agent. It's written in your voice, addressed
 to your agent:
@@ -66,8 +104,9 @@ other platforms are not yet verified.
 
 ## Run from a source checkout
 
-The checkout is the intended way to use Thermite, so your agent can inspect and
-improve the same code that generates your drawings. No global install is needed.
+A checkout lets your agent inspect and improve the engine that generates your
+drawings. No global install is needed. Keep it separate from the electrical
+project, just as you would a downloaded runtime.
 
 ```sh
 git clone https://github.com/BlackettApplied/ThermiteSchematics.git
@@ -206,8 +245,10 @@ customer drawings, credentials, and machine-specific data out of contributions.
 The normal check covers the source alpha. Historical private 0.2.0 packaging and
 release-evidence checks are separate; their legacy Node/npm commands and
 `package-lock.json` apply only in their original release context. They are not
-prerequisites for using or contributing to this source release.
-See the [public source release checklist](docs/PUBLIC_RELEASE.md) for release
+prerequisites for using or contributing to the public alpha.
+Build and verify runtime downloads with `bun run package:pack`; see the
+[runtime packaging guide](docs/RUNTIME_PACKAGE.md).
+See the [public release checklist](docs/PUBLIC_RELEASE.md) for release
 verification and the [original POC guide](docs/PROOF_OF_CONCEPT.md) for history.
 
 The [component batch workflow](scripts/library-batch/README.md) coordinates exact

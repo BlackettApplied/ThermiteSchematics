@@ -228,6 +228,7 @@ describe("frozen release workflow topology", () => {
     expect(text).toContain("bun-version-file: .bun-version");
     expect(text).toContain("run: bun install --frozen-lockfile");
     expect(text).toContain("run: bun run check");
+    expect(text).toContain("run: bun run package:pack");
     expect(text).not.toMatch(/artifact|candidate|pull_request_target/u);
   });
 
