@@ -1,16 +1,28 @@
 # Thermite Schematics
 
-Electrical schematics as code, built for agents. Author electrical systems in
-JSON; validate, inspect, and render printable drawings locally.
+Electrical schematics as code, built for agentic workflows. Author electrical systems in
+JSON; validate, inspect, and render deterministic printable drawings on the fly.
 
-**Run from source. Improve it as you use it. Send the improvements back.**
+Define your electrical project in a connected source model: the code is the
+schematic, and deterministic drawings are generated from it on demand. The
+compiler checks that model for errors, inconsistencies, and missing connections
+within its supported rules, reducing the need to hunt for problems page by page.
+
+You can ask your agent what a sensor is connected to, which conductors are unused, or to draw
+the part of the system you need to understand. Explore your project through
+questions and focused views without first assembling a fixed drawing set.
+
+## How to use
+
+**Run from source. Improve it as you use it. Contribute the improvements back.**
 Thermite is an Apache-2.0 TypeScript + ELK project, and agent-authored pull
 requests are welcome: bug fixes, clearer docs, rendering improvements, and
 carefully sourced component libraries.
 
-## Give this to your agent
+## Give this to your agent to get started
 
-Copy this prompt into your coding agent:
+Copy this prompt into your coding agent. It's written in your voice, addressed
+to your agent:
 
 ```text
 Help me start using Thermite Schematics from source.
