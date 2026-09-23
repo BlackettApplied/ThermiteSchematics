@@ -35,6 +35,17 @@ describe("D9 canonical source serialization", () => {
     expect(text(bytes)).not.toContain("\r");
   });
 
+  it("rejects pathological depth before encoding while accepting wide source arrays", () => {
+    let deep: JsonValue = null;
+    for (let depth = 0; depth < 4100; depth += 1) deep = [deep];
+    expect(() => serializeSourceValue(deep)).toThrow(RangeError);
+    expect(() => serializeSourceValue(deep)).toThrow(
+      "Source serialization depth exceeded.",
+    );
+    const wide = Array.from({ length: 5000 }, (_, id) => ({ id }));
+    expect(JSON.parse(text(serializeSourceValue(wide)))).toEqual(wide);
+  });
+
   it("calculates exact before/after hashes, lengths, and byte-only changed", () => {
     const compact = Buffer.from('{"a":1}\n', "utf8");
     const proposal = createSourceByteProposal({

@@ -18,9 +18,9 @@ Function state is not simulated, and no function creates physical continuity.
 From the repository root, after the normal source build:
 
 ```sh
-node thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
+bun thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
 node libraries/phoenix-terminal-pilot/examples/terminal-wiring/verify.mjs
-node thermite.mjs packet --project libraries/phoenix-terminal-pilot/examples/terminal-wiring --input libraries/phoenix-terminal-pilot/examples/terminal-wiring/packet.json --output /tmp/phoenix-terminal-example.html
+bun thermite.mjs packet --project libraries/phoenix-terminal-pilot/examples/terminal-wiring --input libraries/phoenix-terminal-pilot/examples/terminal-wiring/packet.json --output /tmp/phoenix-terminal-example.html
 ```
 
 Use an output path outside any component library. The packet contains four
@@ -37,5 +37,5 @@ then produces W903. Changing one library byte produces E108 until relocked.
 After an intentional type edit:
 
 ```sh
-node thermite.mjs lock libraries/phoenix-terminal-pilot/examples/terminal-wiring
+bun thermite.mjs lock libraries/phoenix-terminal-pilot/examples/terminal-wiring
 ```

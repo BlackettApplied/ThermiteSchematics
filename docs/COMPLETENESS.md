@@ -5,11 +5,11 @@ terminals and communication ports, with required connections, review notes and
 component-model coverage. It reads the project without changing it.
 
 ```sh
-node thermite.mjs diagnostics --project path/to/project
-node thermite.mjs diagnostics --project path/to/project --device HMI1 --json
-node thermite.mjs diagnostics --project path/to/project --location "HMI console"
-node thermite.mjs diagnostics --project path/to/project -o audit.json
-node thermite.mjs diagnostics --project path/to/project -o audit.csv
+bun thermite.mjs diagnostics --project path/to/project
+bun thermite.mjs diagnostics --project path/to/project --device HMI1 --json
+bun thermite.mjs diagnostics --project path/to/project --location "HMI console"
+bun thermite.mjs diagnostics --project path/to/project -o audit.json
+bun thermite.mjs diagnostics --project path/to/project -o audit.csv
 ```
 
 Text groups warnings before information and includes source locations. JSON uses

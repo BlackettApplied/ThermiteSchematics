@@ -86,9 +86,9 @@ configuration. Symlinked/hard-linked output paths are rejected. Output must use
 SVG, HTML, JSON, PDF, or CSV extensions; a file matching an authored source glob is also
 rejected. The CLI uses atomic file replacement for ordinary generated outputs.
 
-Development/CI currently targets Apple Silicon macOS and Node 24. No Windows,
+Development/CI currently targets Apple Silicon macOS and Bun 1.4.2. No Windows,
 Linux, or Intel Mac build is part of the alpha iteration loop. The former native
-implementation is preserved on `codex/thermite-alpha`, commit `dfb21e0`.
+implementation is not included in this source release.
 
 
 ## Documentation and library metadata

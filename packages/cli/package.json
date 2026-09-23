@@ -5,10 +5,10 @@
   "license": "Apache-2.0",
   "type": "module",
   "scripts": {
-    "build:assets": "node ../../scripts/copy-agent-guide.mjs"
+    "build:assets": "bun ../../scripts/copy-agent-guide.mjs"
   },
   "engines": {
-    "node": "^22.12.0 || >=24"
+    "bun": ">=1.4.2"
   },
   "exports": {
     ".": {

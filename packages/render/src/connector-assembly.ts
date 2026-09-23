@@ -1,11 +1,11 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { buildConnectorAssemblyInventory } from "@thermite/query";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 
 export interface ConnectorAssemblyViewRequest {
   readonly format: "connector-assembly-view-request/0.1";
@@ -27,7 +27,6 @@ export interface ConnectorAssemblyDrawing {
   }[];
   note: string;
 }
-const Constructor = BundledElk as unknown as { new (): ELK };
 const n = (x: number) => String(Number(x.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 const width = (s: string) =>
@@ -264,7 +263,7 @@ export async function prepareConnectorAssemblyDrawing(
       })),
     };
   });
-  const graph: ElkNode = await new Constructor().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "connector-assembly",
     layoutOptions: {
       "elk.algorithm": "layered",

@@ -1,4 +1,3 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
 import type {
   ELK as ElkApi,
   ElkExtendedEdge,
@@ -36,6 +35,7 @@ import type {
   SelectedSubgraph,
   SymbolPresentationNode,
 } from "../types.js";
+import { createElkEngine } from "./elk-runtime.js";
 import {
   DEVICE_LABEL_PADDING,
   DEVICE_PADDING,
@@ -66,10 +66,6 @@ export interface ElkLayoutRequestOptions {
   readonly selected?: Readonly<SelectedSubgraph>;
   readonly spacingProfile?: "compact" | "dense";
 }
-
-const ElkConstructor = BundledElk as unknown as {
-  new (): ElkApi;
-};
 
 interface OptionGroup {
   readonly targetKind: ElkOptionAssignment["targetKind"];
@@ -794,7 +790,7 @@ export function buildElkAdapterGraph(
 
 export async function validateElkRuntimeOptions(
   build: Readonly<ElkAdapterBuild>,
-  engine: ElkApi = new ElkConstructor(),
+  engine: ElkApi = createElkEngine(),
 ): Promise<readonly ElkOptionMetadataSnapshot[]> {
   const targets: Record<ElkOptionAssignment["targetKind"], Set<string>> = {
     parent: new Set([build.graph.id]),
@@ -864,7 +860,7 @@ export async function layoutPresentationGraph(
   options: Readonly<ElkLayoutRequestOptions> = {},
 ): Promise<RenderOutcome<NormalizedSchematicLayout>> {
   const catalog = options.catalog ?? SYMBOL_CATALOG;
-  const engine = options.engine ?? new ElkConstructor();
+  const engine = options.engine ?? createElkEngine();
   const build = buildElkAdapterGraph(graph, options.selected);
   await validateElkRuntimeOptions(build, engine);
   const input = structuredClone(build.graph);

@@ -1,4 +1,3 @@
-import Elk from "elkjs/lib/elk.bundled.js";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { evaluateRules, type ElectricalIr } from "@thermite/compiler";
@@ -7,6 +6,7 @@ import {
   buildElkAdapterGraph,
   serializeElkAdapterForTest,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { normalizeAndValidateLayout } from "../src/layout/validate-output.js";
 import {
   buildPresentationGraph,
@@ -1413,8 +1413,10 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
           serializeElkAdapterForTest(build),
         );
 
-        const output = await new Elk().layout(structuredClone(build.graph));
-        const reversedOutput = await new Elk().layout(
+        const output = await createElkEngine().layout(
+          structuredClone(build.graph),
+        );
+        const reversedOutput = await createElkEngine().layout(
           structuredClone(reversedBuild.graph),
         );
         expect(canonicalElkOutput(reversedOutput)).toBe(
@@ -1540,7 +1542,9 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
           )
           .map(({ id }) => id),
       ).toEqual([ROUND9_PRIORITY_EDGE_ID]);
-      const output = await new Elk().layout(structuredClone(build.graph));
+      const output = await createElkEngine().layout(
+        structuredClone(build.graph),
+      );
       const valid = normalizeAndValidateLayout(
         presented.value.graph,
         build.graph,

@@ -1,5 +1,4 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode, ElkExtendedEdge } from "elkjs/lib/elk-api.js";
+import type { ElkNode, ElkExtendedEdge } from "elkjs/lib/elk-api.js";
 import type {
   ElectricalIr,
   IrDevice,
@@ -12,6 +11,7 @@ import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 import {
   circuitAttachment,
   circuitBlock,
@@ -125,7 +125,6 @@ type DeviceNode = {
 };
 const PITCH = 7;
 const TERMINAL_TEXT_SIZE = 2.5;
-const Constructor = BundledElk as unknown as { new (): ELK };
 const n = (v: number) => String(Number(v.toFixed(3)));
 const key = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
 const fkey = (f: IrFunction) =>
@@ -1053,7 +1052,7 @@ async function layoutGroup(
       ],
     };
   });
-  const graph: ElkNode = await new Constructor().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "circuit",
     layoutOptions: {
       "elk.algorithm": "layered",

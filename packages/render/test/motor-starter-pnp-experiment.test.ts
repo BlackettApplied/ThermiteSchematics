@@ -9,12 +9,7 @@ import {
   type ElectricalIr,
   type TerminalId,
 } from "@thermite/compiler";
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type {
-  ELK as ElkApi,
-  ElkExtendedEdge,
-  ElkNode,
-} from "elkjs/lib/elk-api.js";
+import type { ElkExtendedEdge, ElkNode } from "elkjs/lib/elk-api.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -23,6 +18,7 @@ import {
   validateElkRuntimeOptions,
   type ElkAdapterBuild,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { ELK_OPTIONS } from "../src/layout/options.js";
 import { normalizeAndValidateLayout } from "../src/layout/validate-output.js";
 import { buildPresentationGraph } from "../src/presentation.js";
@@ -59,8 +55,6 @@ import { checkRestrictedSvgXml } from "./xml-checker.js";
 const testRoot = dirname(fileURLToPath(import.meta.url));
 const baselineGoldenRoot = join(testRoot, "goldens", "motor-starter");
 const pnpGoldenRoot = join(testRoot, "goldens", "motor-starter-pnp");
-
-const ElkConstructor = BundledElk as unknown as { new (): ElkApi };
 
 type SuccessfulCompile = Extract<CompileResult, { readonly ok: true }>;
 type FailedCompile = Extract<CompileResult, { readonly ok: false }>;
@@ -477,7 +471,7 @@ function removePriorityDirection(graph: ElkNode): ElkNode {
 }
 
 async function rawLayout(graph: ElkNode): Promise<ElkNode> {
-  return new ElkConstructor().layout(structuredClone(graph));
+  return createElkEngine().layout(structuredClone(graph));
 }
 
 function requiredPortLabelOffset(

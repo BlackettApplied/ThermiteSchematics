@@ -60,6 +60,13 @@ export async function initializeAlphaProject(
         { flag: "wx" },
       );
     }
+    // Apache-2.0 notices travel with the copied library, outside its locked sources.
+    for (const notice of ["LICENSE", "NOTICE"])
+      await writeFile(
+        join(stage, "libraries/core", notice),
+        await readFile(join(core.packageRootPath, notice)),
+        { flag: "wx" },
+      );
     const manifest = JSON.parse(
       await readFile(join(stage, "system.json"), "utf8"),
     );

@@ -1,7 +1,6 @@
 # `@thermite/schema`
 
-Requires Node.js `^22.12.0 || >=24`: use Node 22.12 or a supported later
-release. Node 23 is excluded.
+The current source workflow uses Bun 1.4.2. See the [repository quick start](../../README.md).
 
 This private package contains the canonical JSON Schemas, schema-derived TypeScript
 source types, strict JSON parser, schema registry, and source-location-aware
@@ -119,8 +118,8 @@ registrations, and validation behavior as filesystem-loaded canonical schemas, w
 no schema discovery I/O.
 
 Generated types are committed under `src/generated`. Repository maintainers run
-`npm run generate:types` after changing a schema;
-`npm run generate:types:check` performs the byte-for-byte drift check used by the
+`bun run generate:types` after changing a schema;
+`bun run generate:types:check` performs the byte-for-byte drift check used by the
 root repository check.
 
 The parsing layer uses `jsonc-parser` 3.3.1 in strict JSON mode. It rejects duplicate

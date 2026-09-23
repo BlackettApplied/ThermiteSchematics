@@ -40,24 +40,24 @@ model. See [connection completeness](../docs/COMPLETENESS.md).
 ## Generate and inspect a packet
 
 Run these commands from the source checkout after installing dependencies and
-building it with `npm ci` and `npm run build`. This example uses the ABB
+building it with `bun install --frozen-lockfile` and `bun run build`. This example uses the ABB
 2CDS271001R0044 fixture; substitute another promoted example's directory and
 `packet.request.json` together.
 
 ```sh
-node thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
-node thermite.mjs packet \
+bun thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs packet \
   --project libraries/abb-pilot/examples/2cds271001r0044 \
   --input libraries/abb-pilot/examples/2cds271001r0044/packet.request.json \
   -o alpha-out/component-examples/2cds271001r0044.html
-node thermite.mjs packet \
+bun thermite.mjs packet \
   --project libraries/abb-pilot/examples/2cds271001r0044 \
   --input libraries/abb-pilot/examples/2cds271001r0044/packet.request.json \
   -o alpha-out/component-examples/2cds271001r0044.pdf
 ```
 
 The output extension selects HTML or PDF. The stored packet request supplies the
-views and page settings; `node thermite.mjs packet --help` lists optional paper,
+views and page settings; `bun thermite.mjs packet --help` lists optional paper,
 orientation and index overrides. Earlier examples may use `packet.json` instead;
 follow their local README for the correct input filename.
 
@@ -70,8 +70,8 @@ After intentional changes to a referenced library, refresh the example's byte
 lock and validate again before rendering:
 
 ```sh
-node thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
-node thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
 ```
 
 Adding a type to a library can make earlier examples' locks stale. Refresh all

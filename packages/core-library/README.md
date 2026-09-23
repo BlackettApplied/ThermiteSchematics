@@ -1,7 +1,6 @@
 # `@thermite/core-library`
 
-Requires Node.js `^22.12.0 || >=24`: use Node 22.12 or a supported later
-release. Node 23 is excluded.
+The current source workflow uses Bun 1.4.2. See the [repository quick start](../../README.md).
 
 This private Thermite Schematics 0.2.0 package contains the shipped electrical component
 library `core@0.1.0`, its fixed ordinary-file inventory, and deterministic resolver
@@ -28,5 +27,9 @@ after its bytes change.
 
 The package's positive content boundary is its compiled resolver entry point,
 `library/library.json`, the declared JSON files below `library/types/`, this
-README, and the proprietary license. It performs no npm, network, environment,
+README, the Apache-2.0 license, and its copyright NOTICE. It performs no npm, network, environment,
 `NODE_PATH`, cwd-ancestor, or user-cache discovery.
+
+The source-alpha initializer copies the library, LICENSE, and NOTICE into each
+new project's `libraries/core` directory. Retain the notices when sharing the
+library; they are separate from its locked JSON sources.

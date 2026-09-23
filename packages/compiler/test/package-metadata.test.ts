@@ -5,6 +5,8 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
+import { readBunLock } from "../../../scripts/read-bun-lock.mjs";
+
 import { CLI_VERSION } from "../../cli/src/version.js";
 import { THERMITE_SCHEMATICS_PRODUCT_VERSION } from "../../render/src/product-version.js";
 import {
@@ -36,7 +38,7 @@ interface PackageManifest {
   readonly license: string;
   readonly packageManager?: string;
   readonly workspaces?: readonly string[];
-  readonly engines: { readonly node: string };
+  readonly engines: { readonly bun: string };
   readonly scripts?: Readonly<Record<string, string>>;
   readonly dependencies?: Readonly<Record<string, string>>;
   readonly publishConfig?: unknown;
@@ -155,12 +157,7 @@ describe("M8 Task 1 package metadata", () => {
   it("keeps every current and future workspace private, Apache-2.0, and on the v0.2.0 floor", async () => {
     const root = await readManifest(join(repositoryRoot, "package.json"));
     const workspacePaths = await workspaceManifestPaths(root);
-    const lock = JSON.parse(
-      await readFile(join(repositoryRoot, "package-lock.json"), "utf8"),
-    ) as {
-      version: string;
-      packages: Record<string, PackageManifest>;
-    };
+    const lock = await readBunLock(repositoryRoot);
     const records = [
       { lockKey: "", manifest: root },
       ...(await Promise.all(
@@ -171,7 +168,7 @@ describe("M8 Task 1 package metadata", () => {
       )),
     ];
 
-    expect(root.packageManager).toBe("npm@11.6.2");
+    expect(root.packageManager).toBe("bun@1.4.2");
     expect(new Set(records.map(({ manifest }) => manifest.name)).size).toBe(
       records.length,
     );
@@ -180,7 +177,7 @@ describe("M8 Task 1 package metadata", () => {
         version: "0.2.0",
         private: true,
         license: "Apache-2.0",
-        engines: { node: "^22.12.0 || >=24" },
+        engines: { bun: ">=1.4.2" },
       });
       expect(manifest.publishConfig).toBeUndefined();
       expect(manifest.scripts?.publish).toBeUndefined();
@@ -189,17 +186,14 @@ describe("M8 Task 1 package metadata", () => {
       )) {
         if (name.startsWith("@thermite/")) expect(version).toBe("0.2.0");
       }
-      expect(lock.packages[lockKey]).toMatchObject({
+      expect(lock.workspaces[lockKey]).toMatchObject({
         name: manifest.name,
-        version: "0.2.0",
-        license: "Apache-2.0",
-        engines: { node: "^22.12.0 || >=24" },
+        ...(lockKey === "" ? {} : { version: "0.2.0" }),
       });
-      expect(lock.packages[lockKey]?.dependencies).toEqual(
+      expect(lock.workspaces[lockKey]?.dependencies).toEqual(
         manifest.dependencies,
       );
     }
-    expect(lock.version).toBe("0.2.0");
     expect(CLI_VERSION).toBe("0.2.0");
     expect(THERMITE_SCHEMATICS_PRODUCT_VERSION).toBe("0.2.0");
   });

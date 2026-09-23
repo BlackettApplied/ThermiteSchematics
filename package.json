@@ -4,31 +4,31 @@
   "private": true,
   "license": "Apache-2.0",
   "type": "module",
-  "packageManager": "npm@11.6.2",
+  "packageManager": "bun@1.4.2",
   "workspaces": [
     "packages/*"
   ],
   "engines": {
-    "node": "^22.12.0 || >=24"
+    "bun": ">=1.4.2"
   },
   "scripts": {
-    "build": "tsc -b && npm run build:assets --workspace @thermite/cli",
-    "test": "node scripts/test.mjs",
+    "build": "bun --bun tsc -b && bun run --cwd packages/cli build:assets",
+    "test": "bun scripts/test.mjs",
     "release:pack": "bash scripts/release-pack.sh",
     "release:accept": "node scripts/release-acceptance.mjs",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "check:committed-json": "node scripts/assert-prettier-stable-json.mjs",
-    "check": "npm run generate:types:check && npm run build && npm run test && npm run format:check && npm run check:committed-json",
-    "generate:types": "npm run generate:types --workspace @thermite/schema",
-    "generate:types:check": "npm run generate:types:check --workspace @thermite/schema",
+    "format": "bun --bun prettier --write .",
+    "format:check": "bun --bun prettier --check .",
+    "check:committed-json": "bun scripts/assert-prettier-stable-json.mjs",
+    "check": "bun run generate:types:check && bun run build && bun run test && bun run format:check && bun run check:committed-json",
+    "generate:types": "bun run --cwd packages/schema generate:types",
+    "generate:types:check": "bun run --cwd packages/schema generate:types:check",
     "test:release-evidence": "node scripts/run-vitest-and-audit.mjs && node packages/cli/dist/bin.js validate \"packages/cli/fixtures/valid project\" --json",
-    "thermite": "node packages/cli/dist/thermite-bin.js",
-    "setup": "npm ci && npm run build",
-    "alpha:pack": "node scripts/pack-alpha.mjs",
+    "thermite": "bun thermite.mjs",
+    "setup": "bun install --frozen-lockfile && bun run build",
+    "alpha:pack": "bun scripts/pack-alpha.mjs",
     "test:legacy-package": "node scripts/test.mjs packages/cli/test/release-package.test.ts",
-    "demo:machine": "node scripts/demo-machine.mjs",
-    "demo:change": "node scripts/demo-change.mjs"
+    "demo:machine": "bun scripts/demo-machine.mjs",
+    "demo:change": "bun scripts/demo-change.mjs"
   },
   "devDependencies": {
     "@types/fontkit": "^2.0.8",

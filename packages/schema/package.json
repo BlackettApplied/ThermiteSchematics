@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
-    "node": "^22.12.0 || >=24"
+    "bun": ">=1.4.2"
   },
   "exports": {
     ".": {
@@ -27,7 +27,7 @@
     "json-schema-to-typescript": "15.0.4"
   },
   "scripts": {
-    "generate:types": "node scripts/generate-types.mjs",
-    "generate:types:check": "node scripts/generate-types.mjs --check"
+    "generate:types": "bun scripts/generate-types.mjs",
+    "generate:types:check": "bun scripts/generate-types.mjs --check"
   }
 }

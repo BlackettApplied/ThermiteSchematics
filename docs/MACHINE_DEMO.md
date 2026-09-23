@@ -7,12 +7,12 @@ equipment and wiring are illustrative and require engineering review before use.
 
 ## Start the demonstration
 
-From the source checkout on an Apple Silicon Mac with Node 24:
+From the source checkout on an Apple Silicon Mac with Bun 1.4.2:
 
 ```sh
-npm ci
-npm run build
-npm run demo:machine
+bun install --frozen-lockfile
+bun run build
+bun run demo:machine
 ```
 
 The command validates `examples/machine-demo`, then writes:
@@ -50,7 +50,7 @@ view of the project. All modeled wires and cable cores remain in the schedules.
 ## Demonstrate a reviewed change
 
 ```sh
-npm run demo:change
+bun run demo:change
 ```
 
 This copies the demo to a new `alpha-out/machine-revision-b` directory, snapshots
@@ -70,16 +70,16 @@ The original demo is unchanged. The script refuses to overwrite an existing
 revision directory. For another run, choose a new destination:
 
 ```sh
-node scripts/demo-change.mjs alpha-out/machine-revision-b-second-run
+bun scripts/demo-change.mjs alpha-out/machine-revision-b-second-run
 ```
 
 ## Useful commands
 
 ```sh
-node thermite.mjs packet --project examples/machine-demo --input examples/machine-demo/packet.request.json --paper letter -o alpha-out/machine-letter.pdf
-node thermite.mjs report terminals --device PLC1 --project examples/machine-demo -o alpha-out/plc1-terminals.pdf
-node thermite.mjs report io --device RIO1 --project examples/machine-demo -o alpha-out/rio1.csv
-node thermite.mjs watch --project examples/machine-demo --input examples/machine-demo/packet.request.json -o alpha-out/machine-demo.html
+bun thermite.mjs packet --project examples/machine-demo --input examples/machine-demo/packet.request.json --paper letter -o alpha-out/machine-letter.pdf
+bun thermite.mjs report terminals --device PLC1 --project examples/machine-demo -o alpha-out/plc1-terminals.pdf
+bun thermite.mjs report io --device RIO1 --project examples/machine-demo -o alpha-out/rio1.csv
+bun thermite.mjs watch --project examples/machine-demo --input examples/machine-demo/packet.request.json -o alpha-out/machine-demo.html
 ```
 
 Watch checks declared source, library references and the packet request every
@@ -129,5 +129,5 @@ Expand to the rest of the machine after that comparison. Generated views documen
 selected intent; a successful compile alone does not prove the design is complete.
 
 The current release was checked on Apple Silicon macOS only. Safari behavior and
-physical printing need a local user check. Public publication and selection of
-an open-source license remain separate owner decisions.
+physical printing need a local user check. The source is licensed under [Apache-2.0](../LICENSE); publication remains a
+separate owner action. See the [public release checklist](PUBLIC_RELEASE.md).

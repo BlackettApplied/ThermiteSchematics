@@ -4,7 +4,7 @@ This example shows 24 V console power, a separate protective bond, Siemens KP8
 outputs, four interface relays and a red/amber/green stack light with a buzzer.
 It includes ordinary source JSON, visible component libraries and a packet request.
 
-From the engine root, run `node thermite.mjs packet --project examples/operator-console
+From the engine root, run `bun thermite.mjs packet --project examples/operator-console
 --input examples/operator-console/packet.request.json -o /tmp/operator-console.html`
 (on one command line). Use PDF output for a printable packet.
 

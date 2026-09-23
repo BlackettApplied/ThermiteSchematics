@@ -3,7 +3,6 @@ import {
   type CompiledProjectPresentation,
   type ElectricalIr,
 } from "@thermite/compiler";
-import Elk from "elkjs/lib/elk.bundled.js";
 import type { ELK } from "elkjs/lib/elk-api.js";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +20,7 @@ import {
   incompleteLoadsPathError,
   incompleteTracePathError,
 } from "../src/errors.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { createSchematicRendererWithDependencies } from "../src/renderer.js";
 import { buildPresentationGraph } from "../src/presentation.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
@@ -360,7 +360,7 @@ describe("integrated renderer", () => {
       const rawSizes: (readonly [number | undefined, number | undefined])[] =
         [];
       const canonicalOutputs: string[] = [];
-      const delegate = new Elk();
+      const delegate = createElkEngine();
       const renderer = createSchematicRendererWithDependencies({
         layoutEngine: {
           knownLayoutOptions: () => delegate.knownLayoutOptions(),
@@ -616,7 +616,7 @@ describe("integrated renderer", () => {
   });
 
   it("returns exact v0.2 R004 without emitting an artifact", async () => {
-    const delegate = new Elk();
+    const delegate = createElkEngine();
     const layout = vi.fn(async () => ({ id: "root" }));
     const result = await createSchematicRendererWithDependencies({
       layoutEngine: {

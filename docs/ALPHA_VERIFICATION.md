@@ -55,10 +55,11 @@ Safari/browser verification was not completed. Responsive screen styling and
 physical print dimensions were checked in source/output tests. No physical
 printer was tested.
 
-## Release scope
+## Historical release scope
 
-This is a local source-alpha preview. The existing license and repository
-visibility remain unchanged; a public open-source release needs the owner's
-license selection. Generic component libraries are present as editable project
-files. Reviewed manufacturer-specific catalogs remain future work. The Rust
-experiment is preserved independently on `codex/thermite-alpha`.
+At the time of this verification, this was a local source-alpha preview and
+public licensing had not been selected. The current checkout now uses
+[Apache-2.0](../LICENSE); see the [public release checklist](PUBLIC_RELEASE.md).
+This dated record does not establish verification of later changes. Generic component libraries are present as editable project
+files. Reviewed manufacturer-specific catalogs remain future work. An earlier Rust
+experiment is not included in this source release.

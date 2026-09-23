@@ -1,11 +1,11 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { buildCommunicationInventory } from "@thermite/query";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 
 export interface CommunicationViewRequest {
   readonly format: "communication-view-request/0.1";
@@ -25,7 +25,6 @@ export interface CommunicationDrawing {
   }[];
   note: string;
 }
-const Constructor = BundledElk as unknown as { new (): ELK };
 const n = (v: number) => String(Number(v.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 // Conservative advance bounds for Arial/Noto Sans at 2.7 mm, including wide text.
@@ -216,7 +215,7 @@ export async function prepareCommunicationDrawing(
       }),
     };
   });
-  const elk = new Constructor();
+  const elk = createElkEngine();
   const graph: ElkNode = await elk.layout({
     id: "communication",
     layoutOptions: {

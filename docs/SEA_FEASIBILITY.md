@@ -160,7 +160,7 @@ Legal keys are `legal/LICENSE`,
 `legal/@thermite/core-library/LICENSE`,
 `legal/THIRD_PARTY_LICENSES.json`, and the exact 26 `role: license` file rows from
 `scripts/release-third-party-stage-files.json`, mapped by removing the leading
-`package/` and prefixing `legal/`. The two proprietary-license keys intentionally have
+`package/` and prefixing `legal/`. The two first-party license keys intentionally have
 the same bytes. This gives 65 initial embedded keys: 36 runtime semantic assets and 29
 legal assets. The committed Task 6 inventories, rather than a manually repeated digest
 list, remain the byte authority.

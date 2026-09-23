@@ -92,7 +92,7 @@ ELK places blocks, ports and paths. Visible labels preserve device names/descrip
 
 Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and overlaps are checked. Oversized views fail explicitly; select fewer assemblies or larger paper. Page count is secondary to readable source coverage.
 
-Run `node thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
+Run `bun thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
 
 The query API `buildConnectorAssemblyInventory(ir)` returns `connector-assembly-inventory/0.1` with `assemblies` and `ports`. Device inspection includes `connectorPorts`; relation and incident-relation inspection includes `assembly`.
 

@@ -1,9 +1,49 @@
 # Thermite Schematics
 
-Thermite turns electrical project JSON into consistent, printable schematic
-sheets. People and agents author equipment, terminals, connections, potentials,
-and presentation settings; the compiler checks them and the renderer generates
-vector drawings with TypeScript and ELK.
+Electrical schematics as code, built for agents. Author electrical systems in
+JSON; validate, inspect, and render printable drawings locally.
+
+**Run from source. Improve it as you use it. Send the improvements back.**
+Thermite is an Apache-2.0 TypeScript + ELK project, and agent-authored pull
+requests are welcome: bug fixes, clearer docs, rendering improvements, and
+carefully sourced component libraries.
+
+## Give this to your agent
+
+Copy this prompt into your coding agent:
+
+```text
+Help me start using Thermite Schematics from source.
+
+1. Clone https://github.com/BlackettApplied/ThermiteSchematics.git into a
+   dedicated checkout (or use my existing checkout without overwriting work).
+   Read its AGENTS.md and CONTRIBUTING.md before making changes.
+2. Use Bun 1.4.2. From the checkout, run bun install --frozen-lockfile,
+   bun run build, and bun run check. Report failures and preserve compiler
+   diagnostics.
+3. Run bun thermite.mjs --help. Initialize a new project outside the engine
+   checkout with bun thermite.mjs init ../electrical-project --name "My project"
+   (choose a new directory if that one exists). Read its generated AGENTS.md.
+4. Validate it with bun thermite.mjs validate ../electrical-project and render
+   bun thermite.mjs view PS1 --loads --project ../electrical-project
+   -o ../electrical-project/drawings/control-power.html
+   as one command. Tell me where to open the drawing, then help me describe
+   and model the electrical system I want to build. Keep electrical JSON
+   authoritative and use the guarded agent workflow for existing source edits.
+5. Run Thermite from this checkout as we work. If you find a bug, missing
+   capability, or unclear documentation, fix it on a focused engine branch,
+   add appropriate verification, and run bun run check. Open a pull request
+   upstream from my fork when GitHub access is available; otherwise leave a
+   reviewable patch and PR description. Keep my machine data out of the PR.
+   Follow CONTRIBUTING.md, and leave CLA acceptance to me.
+
+Do not invent electrical ratings, pinouts, or engineering repairs. Explain
+unresolved assumptions; generated drawings need qualified engineering review.
+```
+
+**0.3.0-alpha.2 · Apple Silicon Mac development preview.** Development and CI
+currently target Bun 1.4.2 (pinned in `.bun-version`) on Apple Silicon macOS;
+other platforms are not yet verified.
 
 > **Generated drawings are not a substitute for engineering review.** Thermite
 > validates the model you give it; it does not certify that a design is safe,
@@ -12,52 +52,39 @@ vector drawings with TypeScript and ELK.
 > build, modify, or maintain equipment. The software is provided without
 > warranty, as set out in the [Apache License 2.0](LICENSE).
 
-**0.3.0-alpha.2 · Apple Silicon Mac development preview**
-
-This alpha carries the original symbol catalog, ELK routing, electrical
-validation, deterministic output, and guarded agent tools forward. It adds:
-
-- Letter, Tabloid, A4 and A3 sheets, landscape or portrait.
-- Readable pagination with paired conductor continuation references.
-- Numbered multi-view packets, responsive browser viewing, and print styling.
-- Cable jackets, core inventories, explicitly spare cores, and loose ends.
-- Visible project-local component libraries with integrity locks.
-- Terminal plans, all-channel PLC I/O schedules, BOM and wire/cable CSV exports.
-- A drawing index and device/function references with sheet/zone locations.
-- Compact layout selection and folded sections on one sheet where they fit.
-- Required connection checks and an [electrical completeness inventory](docs/COMPLETENESS.md).
-- Semantic snapshots and readable change reviews using stable object identities.
-- Direct, repeatable PDF export with bundled fonts, plus local regeneration.
-- Visible manufacturer libraries with exact part research and wiring examples.
-- A source checkout workflow with a short `thermite` entry point.
-
-Start with the [Machine demo runbook](docs/MACHINE_DEMO.md). It includes a two-cabinet
-example and a guarded wiring-change demonstration.
-
-The Rust experiment is preserved on `codex/thermite-alpha`. Active alpha work
-continues here in TypeScript. The original private POC guide is retained in
-[docs/PROOF_OF_CONCEPT.md](docs/PROOF_OF_CONCEPT.md).
-
 ## Run from a source checkout
 
-Use Node.js `^22.12.0 || >=24` (Node 23 is excluded). Development and verification
-currently target Node 24 on Apple Silicon macOS. No global install is required.
+The checkout is the intended way to use Thermite, so your agent can inspect and
+improve the same code that generates your drawings. No global install is needed.
 
 ```sh
-npm ci
-npm run build
-node thermite.mjs --help
-node thermite.mjs init ../electrical-project --name "Machine 01"
-node thermite.mjs validate ../electrical-project
-node thermite.mjs view PS1 --loads --project ../electrical-project -o ../electrical-project/drawings/control-power.html
+git clone https://github.com/BlackettApplied/ThermiteSchematics.git
+cd ThermiteSchematics
+bun install --frozen-lockfile
+bun run build
+bun thermite.mjs --help
+bun thermite.mjs init ../electrical-project --name "Machine 01"
+bun thermite.mjs validate ../electrical-project
+bun thermite.mjs view PS1 --loads --project ../electrical-project -o ../electrical-project/drawings/control-power.html
 ```
 
-You can place this checkout in a project's `tools/thermite` directory. Invoke it
-from anywhere with `node /path/to/tools/thermite/thermite.mjs`. Pin the checkout
-commit or use a Git submodule so drawing generation doesn't change unexpectedly.
-Rebuild after pulling an intentional upgrade. Use `npm run thermite -- ...` as
-a checkout-local shortcut. The `thermite` interface retains the original POC commands
-and SVG contract.
+`bun.lock` is the authoritative dependency lock. The build compiles with `tsc`,
+and `thermite.mjs` runs the built workspace JavaScript.
+
+Open the generated HTML in your browser. For a larger example, follow the
+[Machine demo runbook](docs/MACHINE_DEMO.md), including its guarded wiring change.
+
+You can also keep the checkout in a project's `tools/thermite` directory and
+invoke `bun /path/to/tools/thermite/thermite.mjs` from anywhere. Keep engine
+changes in their own repository or submodule, separate from machine design data.
+Record the checkout commit or pin the submodule for repeatable drawings, and
+rebuild after changing or intentionally upgrading the engine. `bun run thermite
+-- ...` is a checkout-local shortcut.
+
+Thermite includes printable Letter/Tabloid/A4/A3 sheets, multi-view packets,
+cable and terminal views, PLC I/O schedules, BOM and wire/cable CSV reports,
+local component libraries, connection completeness checks, semantic change
+reviews, and direct PDF export. The sections below cover those workflows.
 
 ## Print a packet
 
@@ -67,8 +94,8 @@ presentation using the guarded agent workflow. Page orientation and drawing flow
 are independent: `--flow top-to-bottom` changes the circuit layout.
 
 ```sh
-node thermite.mjs view M1 --power --project examples/motor-starter -o alpha-out/motor-power.html
-node thermite.mjs packet --project examples/motor-starter --input examples/alpha/motor-starter.packet.json -o alpha-out/motor-starter.html
+bun thermite.mjs view M1 --power --project examples/motor-starter -o alpha-out/motor-power.html
+bun thermite.mjs packet --project examples/motor-starter --input examples/alpha/motor-starter.packet.json -o alpha-out/motor-starter.html
 ```
 
 HTML is a self-contained packet of vector SVG sheets. It fits the browser window;
@@ -90,9 +117,9 @@ an actionable explanation; use a larger sheet, another flow, or a narrower view.
 ## Cables and component libraries
 
 ```sh
-node thermite.mjs init ../cable-example --template cabinets
-node thermite.mjs cable CBL1 --project ../cable-example --json
-node thermite.mjs view CBL1 --conductors --project ../cable-example -o ../cable-example/cable.svg
+bun thermite.mjs init ../cable-example --template cabinets
+bun thermite.mjs cable CBL1 --project ../cable-example --json
+bun thermite.mjs view CBL1 --conductors --project ../cable-example -o ../cable-example/cable.svg
 ```
 
 Cable cores may be terminated at both ends, at one end, or left explicitly spare.
@@ -144,24 +171,40 @@ source hashes, dry-run patches, and validation before applying changes. They do
 not invent electrical repairs. See the [alpha agent guide](packages/cli/assets/THERMITE_AGENTS.md)
 and [format notes](docs/TYPESCRIPT_ALPHA.md).
 
-## Develop and contribute
+## Improve Thermite with your agent
+
+Contributing is part of the source workflow. When something breaks, a workflow
+is awkward, or a component is missing, have your agent make a focused fix and
+submit a pull request. Documentation corrections and small improvements are
+welcome too. Include the problem, expected behavior, a minimal reproducible
+example when relevant, and the checks you ran.
 
 ```sh
-npm run check
-npm run test -- packages/cli/test/alpha.test.ts
+bun run test -- packages/cli/test/alpha.test.ts
+bun run check
 ```
 
-The normal check runs locally on macOS. Historical private release-evidence
-checks are separate under `npm run test:release-evidence`; the frozen private
-0.2.0 tarball inventory suite is under `npm run test:legacy-package` and requires
-its historical source revision. Those are not the Mac source-alpha readiness
-check. The alpha source archive is verified independently. CI currently runs only on an Apple Silicon Mac.
+Use `bun run test`, not `bun test`: the suite runs on Vitest.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing electrical semantics,
-layout, or library definitions. Thermite Schematics is released under the
-[Apache License 2.0](LICENSE).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) for the branch/fork workflow, engineering
+review expectations, commit sign-off, and [CLA](CLA.md). The person contributing
+reviews and accepts the CLA; an agent cannot accept it on their behalf. Keep
+customer drawings, credentials, and machine-specific data out of contributions.
 
-The [component batch workflow](scripts/library-batch/README.md) coordinates one
-exact part per CLI worker, then checks and promotes reviewed results into the
-visible libraries, with adjustable concurrency, resumable queues and explicit
-evidence holds.
+The normal check covers the source alpha. Historical private 0.2.0 packaging and
+release-evidence checks are separate; their legacy Node/npm commands and
+`package-lock.json` apply only in their original release context. They are not
+prerequisites for using or contributing to this source release.
+See the [public source release checklist](docs/PUBLIC_RELEASE.md) for release
+verification and the [original POC guide](docs/PROOF_OF_CONCEPT.md) for history.
+
+The [component batch workflow](scripts/library-batch/README.md) coordinates exact
+part research and review before promotion into the visible libraries.
+
+## License
+
+Thermite's original code, documentation, examples, and component definitions are
+licensed under [Apache-2.0](LICENSE), with attribution in [NOTICE](NOTICE).
+Bundled fonts and installed dependencies retain their own licenses; see
+[third-party notices](THIRD_PARTY_NOTICES.md). Manufacturer names and source
+references do not imply certification or endorsement.

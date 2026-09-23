@@ -1,7 +1,11 @@
 # `@thermite/cli`
 
-Requires Node.js `^22.12.0 || >=24`: use Node 22.12 or a supported later
-release. Node 23 is excluded.
+The current source workflow uses Bun 1.4.2: install with
+`bun install --frozen-lockfile`, build with `bun run build`, and invoke
+`bun thermite.mjs` from the repository root. See the [quick start](../../README.md).
+
+The private offline installation below is historical and requires its original
+Node.js `^22.12.0 || >=24` toolchain (excluding Node 23) and source revision.
 
 This private package provides the `thermite` command for initializing, locking,
 validating, compiling, querying, and rendering `electrical-system/0.1` projects. It

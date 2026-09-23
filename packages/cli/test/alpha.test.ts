@@ -4,7 +4,11 @@ import { mkdtemp, readFile, rm, writeFile, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { compileProject, lockProject } from "@thermite/compiler";
+import {
+  compileProject,
+  lockProject,
+  resolveShippedCoreLibrary,
+} from "@thermite/compiler";
 import { buildCableSchedule, createQueryEngine } from "@thermite/query";
 import {
   normalizePaperPage,
@@ -59,6 +63,17 @@ describe("Thermite alpha physical cable semantics", () => {
       await readFile(join(path, "system.json"), "utf8"),
     );
     expect(manifest.libraries[0].path).toBe("libraries/core");
+    const shipped = resolveShippedCoreLibrary();
+    for (const notice of ["LICENSE", "NOTICE"])
+      expect(
+        await readFile(join(path, "libraries/core", notice)),
+        notice,
+      ).toEqual(await readFile(join(shipped.packageRootPath, notice)));
+    const lockFile = join(path, "electrical-system.lock.json"),
+      lockBytes = await readFile(lockFile);
+    expect(lockBytes.toString("utf8")).not.toMatch(/LICENSE|NOTICE/);
+    expect((await lockProject(path)).ok).toBe(true);
+    expect(await readFile(lockFile)).toEqual(lockBytes);
     const cable = result.ir.cables[0]!;
     const schedule = buildCableSchedule(result.ir, cable.uid);
     expect(schedule.counts).toEqual({

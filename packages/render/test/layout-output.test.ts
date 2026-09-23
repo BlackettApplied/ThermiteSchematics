@@ -1,5 +1,4 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { createQueryEngine } from "@thermite/query";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -8,6 +7,7 @@ import {
   buildElkAdapterGraph,
   layoutPresentationGraph,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import {
   MAX_SVG_MAGNITUDE,
   normalizeAndValidateLayout,
@@ -28,8 +28,6 @@ import {
   required,
   selectCoreSubgraph,
 } from "./fixtures.js";
-
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 
 let coreIr: ElectricalIr;
 
@@ -196,7 +194,7 @@ async function rawLayout(graph: PresentationGraph): Promise<{
   readonly output: ElkNode;
 }> {
   const input = buildElkAdapterGraph(graph).graph;
-  const output = await new ElkConstructor().layout(structuredClone(input));
+  const output = await createElkEngine().layout(structuredClone(input));
   return { input, output };
 }
 

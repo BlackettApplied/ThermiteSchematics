@@ -97,7 +97,7 @@ describe("generated schema types", () => {
       await readFile(join(repositoryRoot, "package.json"), "utf8"),
     ) as { scripts: Record<string, string> };
     expect(packageJson.scripts.check).toMatch(
-      /^npm run generate:types:check && npm run build/,
+      /^bun run generate:types:check && bun run build/,
     );
   });
 });

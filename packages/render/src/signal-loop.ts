@@ -1,11 +1,11 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 import { createQueryEngine } from "@thermite/query";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 import { fieldDeviceBody, connectorPort } from "./symbols/field-device.js";
 import { drawEnclosures } from "./signal-loop-enclosures.js";
 
@@ -762,8 +762,7 @@ export async function prepareSignalLoopDrawing(
             : !p.assembly &&
               p.terminal === e.ends[side === "out" ? 0 : 1].terminalKey),
       )!.id;
-  const Elk = BundledElk as unknown as { new (): ELK };
-  const graph: ElkNode = await new Elk().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "loop",
     layoutOptions: {
       "elk.algorithm": "layered",

@@ -1,9 +1,18 @@
 # Contributing to Thermite
 
-The alpha is developed from source using Node 24 on Apple Silicon macOS. Clone
-this repository, run `npm ci`, then `npm run build`. Use `node thermite.mjs` from
-the checkout. For a quick feedback loop, run `npm test -- <affected test file>`;
-run `npm run check` before submitting a change.
+Thermite is meant to be used and improved from a local source checkout. Human
+and agent-authored pull requests are welcome: fix bugs you encounter, clarify
+confusing instructions, improve rendering, or add carefully sourced components.
+Small, focused contributions are useful; you do not need to wait for a large
+feature to be finished.
+
+The alpha is developed from source using Bun 1.4.2 (pinned in `.bun-version`)
+on Apple Silicon macOS. Clone this repository, run `bun install --frozen-lockfile`,
+then `bun run build`. Use `bun thermite.mjs` from the checkout. For a quick
+feedback loop, run `bun run test -- <affected test file>` (not `bun test`; the
+suite runs on Vitest); run `bun run check` before submitting a change. Commit
+`bun.lock` changes with any dependency change; `package-lock.json` is retained
+only for the frozen historical private release tooling.
 
 This project is licensed under the [Apache License 2.0](LICENSE). Before your
 first pull request is merged, sign the [Contributor License Agreement](CLA.md)
@@ -13,11 +22,40 @@ by adding this line to the pull request description:
 I have read the CLA document and I hereby sign the CLA.
 ```
 
+The human contributor must read and accept the CLA. Agents may prepare changes
+and a PR description, but must not insert an acceptance statement or represent
+that they have signed for someone else. Maintainers verify acceptance before
+merging; the PR template alone is not a signature.
+
 You keep the copyright in your contributions; the CLA is a licence, not an
-assignment. Sign your commits with `git commit -s` so each carries a
-`Signed-off-by` trailer. If you are contributing on behalf of a company that
-holds rights in the work, contact the maintainers first so a corporate
-agreement can be put in place.
+assignment. Add a sign-off with `git commit -s` so each commit carries a
+`Signed-off-by` trailer using your real name and email in your Git configuration.
+This is a commit sign-off, not a cryptographic signature or a substitute for
+CLA acceptance.
+If you are contributing on behalf of a company that holds rights in the work,
+contact the maintainers first so a corporate
+agreement can be put in place. Start with an
+[issue requesting contributor contact](https://github.com/BlackettApplied/ThermiteSchematics/issues/new)
+to arrange that conversation; do not include confidential agreement details.
+
+## From local fix to pull request
+
+1. Fork [BlackettApplied/ThermiteSchematics](https://github.com/BlackettApplied/ThermiteSchematics)
+   and create a focused branch in your engine checkout. The current upstream
+   default branch is `dev`; target that branch when opening the PR.
+2. Reproduce the issue with shareable input, make the change, and run focused
+   tests. Run `bun run check` before submitting. Rebuild before using the changed
+   engine to generate your project's drawings.
+3. Review the diff, sign off your commits, and push your branch to your fork.
+   Open a PR describing the problem, resulting behavior, validation, and any
+   remaining limitations. Identify agent assistance and third-party sources.
+4. Review and accept the CLA yourself when applicable, then respond to review.
+   If your agent lacks GitHub access, it can leave the patch and PR description
+   ready for you to submit.
+
+Use a small synthetic example instead of customer drawings, credentials, or
+proprietary machine data. Report reproducible issues even if you cannot fix them.
+When an agent finds a related improvement, keep unrelated work in a separate PR.
 
 ## Make a reviewable change
 
@@ -88,13 +126,19 @@ current inventory and the limits of each model.
 
 The normal check is the Apple Silicon source-alpha development check. It
 excludes the frozen private 0.2.0 tarball inventory suite, which remains available
-as `npm run test:legacy-package` on its historical source revision. Source
+as `npm run test:legacy-package` on its historical source revision with its
+original Node/npm toolchain. Source
 archives are verified separately by extracting, installing, building, and running
 the alpha CLI. Some historical
 private-release consumer tests intentionally skip without a downloaded release
 candidate; the test output reports those skips. Protected release-evidence audits
 remain separate and are not asserted by the Mac alpha check.
 
-Keep private release controls intact. Do not publish a package, change repository
+See [Public source release checklist](docs/PUBLIC_RELEASE.md) for the current
+Apache-2.0 source distribution and its third-party notices. Workspace packages
+remain `private: true` to prevent accidental npm publication; that flag does not
+restrict the source license.
+
+Keep historical private release controls intact. Do not publish a package, change repository
 visibility, select a license, or upload machine-project data as part of a routine
 fix. A source release should identify the exact commit and supported runtime.

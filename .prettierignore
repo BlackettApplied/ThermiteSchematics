@@ -21,3 +21,6 @@ packages/cli/test/goldens/
 
 # Local release verification scratch
 .verification-work/
+
+# Bun owns the text lockfile formatting.
+bun.lock

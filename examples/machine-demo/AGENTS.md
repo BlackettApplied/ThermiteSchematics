@@ -5,8 +5,8 @@ This synthetic two-cabinet example uses illustrative equipment and wiring.
 # Thermite Schematics project guide
 
 This project uses the TypeScript + ELK alpha. Run the project's pinned Thermite
-checkout with `node /absolute/path/to/thermite/packages/cli/dist/thermite-bin.js`.
-The source checkout needs the supported Node runtime and `npm ci && npm run build`
+checkout with `bun /absolute/path/to/thermite/thermite.mjs`.
+The source checkout needs the Bun 1.4.2 and `bun install --frozen-lockfile && bun run build`
 once. Use that same checkout for every command; upgrade it deliberately.
 
 ## Authority and workflow

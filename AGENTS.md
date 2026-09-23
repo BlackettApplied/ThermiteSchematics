@@ -3,16 +3,30 @@
 ## Repository development: TypeScript alpha
 
 This checkout is the Thermite TypeScript + ELK alpha source. For engine work,
-run `npm ci`, `npm run build`, and `npm run check`; invoke the source entry point
-with `node thermite.mjs`. Development and CI currently target Apple Silicon
-macOS with Node 24. Preserve the original renderer and guarded agent contracts.
-See CONTRIBUTING.md for engine and library review expectations.
+run `bun install --frozen-lockfile`, `bun run build`, and `bun run check`; invoke
+the source entry point with `bun thermite.mjs`. Run focused tests with
+`bun run test -- <file>`, not `bun test`; the suite runs on Vitest. Development
+and CI currently target Apple Silicon macOS with Bun 1.4.2. `bun.lock` is the
+active lock; `package-lock.json` serves only the frozen historical release
+tooling. Preserve the original renderer and guarded agent contracts. See
+CONTRIBUTING.md for engine and library review expectations.
 
-For new electrical projects, `node thermite.mjs init <new-directory>` writes the
+Running from source is the normal user workflow. Agents are encouraged to fix
+bugs, improve documentation and rendering, and contribute reviewed component
+models while helping users. Work on a focused branch, include a reproduction
+and appropriate verification, and run `bun run check` before submitting a PR.
+Keep engine changes separate from the user's electrical project and exclude
+customer data. Follow CONTRIBUTING.md for fork/PR and sign-off requirements;
+CLA acceptance belongs to the human contributor, not the agent.
+
+For new electrical projects, `bun thermite.mjs init <new-directory>` writes the
 alpha project guide from `packages/cli/assets/THERMITE_AGENTS.md` and creates a
 visible local core library. Use that generated guide in the electrical project.
 The sections below document the original private POC distribution and remain
-applicable to existing projects using that exact private tarball.
+applicable to existing projects using that exact private tarball. Its isolated
+installation instructions, including their Node/npm commands, do not apply to
+this source checkout; use `bun thermite.mjs` here and the generated alpha guide
+for new projects.
 
 ## 1. Runtime and private installation
 

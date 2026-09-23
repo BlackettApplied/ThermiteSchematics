@@ -180,7 +180,7 @@ separate concerns.
 
 The end-user boundary is one self-contained private CLI tarball installed offline
 into an isolated npm prefix. The package contains compiled runtime/declarations,
-shipped schemas/core library, starter templates, the agent guide, proprietary license,
+shipped schemas/core library, starter templates, the agent guide, Apache-2.0 license,
 and positively inventoried third-party runtime/licenses. Authored payloads are
 ordinary files/directories only; npm-owned prefix launchers are separately verified.
 

@@ -22,7 +22,7 @@ it does not replace the original continuous schematic renderer.
 Save this as `loop.request.json` and run:
 
 ```sh
-node /path/to/thermite/thermite.mjs packet --project . --input loop.request.json -o drawings/loop.html
+bun /path/to/thermite/thermite.mjs packet --project . --input loop.request.json -o drawings/loop.html
 ```
 
 Use `.pdf` for a vector PDF. The same view works in a mixed packet with cable,

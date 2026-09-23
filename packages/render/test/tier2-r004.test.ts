@@ -5,7 +5,6 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { evaluateRules, type ElectricalIr } from "@thermite/compiler";
-import Elk from "elkjs/lib/elk.bundled.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
@@ -13,6 +12,7 @@ import {
   buildElkAdapterGraph,
   serializeElkAdapterForTest,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { ELK_OPTIONS } from "../src/layout/options.js";
 import { normalizeAndValidateLayout } from "../src/layout/validate-output.js";
 import { buildPresentationGraph } from "../src/presentation.js";
@@ -377,7 +377,7 @@ async function runTier2(
       value: "2",
     },
   ]);
-  const output = await new Elk().layout(structuredClone(build.graph));
+  const output = await createElkEngine().layout(structuredClone(build.graph));
   const normalized = normalizeAndValidateLayout(
     presented.value.graph,
     build.graph,

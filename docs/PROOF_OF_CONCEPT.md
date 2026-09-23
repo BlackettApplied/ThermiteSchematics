@@ -3,7 +3,11 @@
 Requires Node.js `^22.12.0 || >=24`: use Node 22.12 or a supported later
 release. Node 23 is excluded.
 
-Thermite Schematics is a private, proprietary electrical-systems-as-code toolchain. JSON
+This is the historical private v0.2.0 distribution guide. The current source
+alpha is licensed under [Apache-2.0](../LICENSE); start with the
+[README](../README.md) for the source workflow.
+
+The original POC was a private electrical-systems-as-code toolchain. JSON
 project source is authoritative; the compiler validates and resolves the electrical
 model, and deterministic render code generates SVG views on demand.
 
@@ -35,7 +39,7 @@ connections/control-power.json
 potentials/potentials.json
 ```
 
-The initialized [`AGENTS.md`](AGENTS.md) is the complete executable contract for
+The initialized [`AGENTS.md`](../AGENTS.md) is the complete executable contract for
 the six JSON agent tools, split streams, exit codes, guarded patches, and local
 libraries. Each `thermite agent` call compiles the project fresh; there is no daemon,
 persistent session, registry lookup, or agent-owned geometry.
@@ -92,7 +96,7 @@ thermite render <designation> --family <control|power> [--flow <left-to-right|to
 thermite view <designation> (--power | --actuation | --to <designation> | --conductors | --loads) [--include-power] [--flow <left-to-right|top-to-bottom>] [--project <path>] [-o|--output <file>] [--json]
 ```
 
-See the packaged [`@thermite/cli` README](packages/cli/README.md) for the
+See the packaged [`@thermite/cli` README](../packages/cli/README.md) for the
 direct CLI and JSON-agent stream contracts.
 
 ## Project authority and formats
@@ -125,10 +129,10 @@ npm ci
 npm run check
 ```
 
-The root check verifies generated types, builds all workspaces, runs the audited
-Vitest suite, validates a built-CLI fixture, and checks formatting. The ordinary
-Ubuntu/Windows CI workflow remains the repository check; it does not build or publish
-a release candidate.
+For the current source alpha, the root check verifies generated types, builds
+all workspaces, runs the source-alpha Vitest suite, and checks formatting and
+committed JSON stability. Ordinary CI runs on Apple Silicon macOS; it does not
+build or publish a private release candidate.
 
 ## Private distribution boundary
 
@@ -139,29 +143,29 @@ matrix, and permits only a protected publisher to attach the tarball and its SHA
 to the authorized private GitHub Release.
 
 The exact draft-asset, verification, explicit-publication, retry, and prohibition
-rules are in the [private release checklist](docs/RELEASE_CHECKLIST.md). Local builds,
+rules are in the [private release checklist](RELEASE_CHECKLIST.md). Local builds,
 direct asset uploads, a producer artifact without the successful gate receipt, and a
 public, internal, or fork repository are never publication authority.
 
 ## Architecture and package references
 
-- [Architecture](docs/ARCHITECTURE.md) describes the current compiler, presentation,
+- [Architecture](ARCHITECTURE.md) describes the current compiler, presentation,
   agent, and distribution boundaries.
-- [Data model](docs/DATA_MODEL.md) describes authoritative source entities, derived
+- [Data model](DATA_MODEL.md) describes authoritative source entities, derived
   IR, presentation, and library references.
-- [Schematic rendering](docs/SCHEMATIC_RENDERING.md) explains the query-to-SVG
+- [Schematic rendering](SCHEMATIC_RENDERING.md) explains the query-to-SVG
   rendering architecture.
-- [`@thermite/schema`](packages/schema/README.md) documents canonical source
+- [`@thermite/schema`](../packages/schema/README.md) documents canonical source
   schemas and validation.
-- [`@thermite/core-library`](packages/core-library/README.md) documents the
+- [`@thermite/core-library`](../packages/core-library/README.md) documents the
   shipped `core@0.1.0` library.
-- [`@thermite/compiler`](packages/compiler/README.md) documents compilation,
+- [`@thermite/compiler`](../packages/compiler/README.md) documents compilation,
   presentation context, and library resolution.
-- [`@thermite/query`](packages/query/README.md) documents read-only graph
+- [`@thermite/query`](../packages/query/README.md) documents read-only graph
   queries.
-- [`@thermite/render`](packages/render/README.md) documents deterministic
+- [`@thermite/render`](../packages/render/README.md) documents deterministic
   selection, layout, title identity, and SVG bytes.
-- [`@thermite/agent-tools`](packages/agent-tools/README.md) documents the six
+- [`@thermite/agent-tools`](../packages/agent-tools/README.md) documents the six
   stateless typed tools and guarded patch boundary.
 
 ## Engineering posture

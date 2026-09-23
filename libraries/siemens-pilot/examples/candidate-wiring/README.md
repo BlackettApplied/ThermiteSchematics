@@ -13,10 +13,10 @@ power supplies, protection, bonds, conductor sizes, TC alloy or PLC configuratio
 From the Thermite repository root:
 
 ```sh
-node thermite.mjs lock libraries/siemens-pilot/examples/candidate-wiring
-node thermite.mjs validate libraries/siemens-pilot/examples/candidate-wiring
+bun thermite.mjs lock libraries/siemens-pilot/examples/candidate-wiring
+bun thermite.mjs validate libraries/siemens-pilot/examples/candidate-wiring
 node libraries/siemens-pilot/examples/candidate-wiring/verify.mjs
-node thermite.mjs packet --project libraries/siemens-pilot/examples/candidate-wiring --input libraries/siemens-pilot/examples/candidate-wiring/packet.json --paper tabloid -o alpha-out/siemens-candidate-wiring.html
+bun thermite.mjs packet --project libraries/siemens-pilot/examples/candidate-wiring --input libraries/siemens-pilot/examples/candidate-wiring/packet.json --paper tabloid -o alpha-out/siemens-candidate-wiring.html
 ```
 
 The packet contains two terminal wiring sheets. To export PDF, change the output

@@ -9,12 +9,12 @@ factory conductors. `packet.json` selects all three breaker poles, the connector
 functions and a cap-attachment view. The plug is capped and is not modeled as
 mated to either socket. All identities and limitations remain in the library.
 
-From the Thermite source checkout, after `npm ci` and `npm run build`:
+From the Thermite source checkout, after `bun install --frozen-lockfile` and `bun run build`:
 
 ```sh
-node thermite.mjs validate libraries/stahl-pilot/examples/component-check
+bun thermite.mjs validate libraries/stahl-pilot/examples/component-check
 node libraries/stahl-pilot/examples/component-check/verify.mjs
-node thermite.mjs packet --project libraries/stahl-pilot/examples/component-check --input libraries/stahl-pilot/examples/component-check/packet.json --paper tabloid --index -o alpha-out/component-review/stahl.html
+bun thermite.mjs packet --project libraries/stahl-pilot/examples/component-check --input libraries/stahl-pilot/examples/component-check/packet.json --paper tabloid --index -o alpha-out/component-review/stahl.html
 ```
 
 The indexed HTML contains five component views and two reference sheets. It is
@@ -22,7 +22,7 @@ generated outside the library. Regenerate the lock after intentional library
 changes, then validate again:
 
 ```sh
-node thermite.mjs lock libraries/stahl-pilot/examples/component-check
+bun thermite.mjs lock libraries/stahl-pilot/examples/component-check
 ```
 
 Expected diagnostics are six W904 partial-coverage warnings: four electrical

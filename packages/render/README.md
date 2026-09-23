@@ -7,6 +7,16 @@ or mutate compiler IR. Pass it the `ir` and detached `presentation` from a
 successful `CompileResult` (`ok === true`). Malformed or partial IR is an invariant
 violation, not a supported render input.
 
+## Runtime
+
+The source workflow runs on Bun 1.4.2. The renderer loads the pinned ELK 0.12.0
+worker source in a CommonJS scope with `self` shadowed, then supplies its
+in-process worker through ELK's `workerFactory` option. This avoids mistaking
+Bun's global `self` for a browser worker, without changing that global or the
+upstream library. ELK must be installed on disk; this source workflow does not
+produce a standalone executable. The byte-exact drawing regressions remain the
+rendering authority.
+
 ## Public API
 
 The package root exports only the renderer entry points, version constants, and the
@@ -634,7 +644,7 @@ The source and IR contracts remain `electrical-system/0.1` and
 `ais-symbols/0.3` and `elk-layered/0.4+elkjs-0.12.0`.
 
 For equivalent IR semantics, compiled presentation, normalized view, supported
-Node/ELK runtime, and exported versions, the SVG string is byte-identical. Title
+Bun/ELK runtime, and exported versions, the SVG string is byte-identical. Title
 content uses only project name, declared/default revision, normalized view identity,
 authored lines, and fixed product/renderer versions. Title measurement uses fixed
 code-point arithmetic; no platform font API participates.

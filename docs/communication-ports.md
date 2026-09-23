@@ -56,7 +56,7 @@ nets, infers PoE or shield bonds, or replaces individual conductor modeling.
 
 ## Generate output
 
-`node thermite.mjs report network --project <project> -o network.csv`
+`bun thermite.mjs report network --project <project> -o network.csv`
 
 The schedule lists each link once, including endpoint locations and status, plus
 every unconnected port. Unconnected does not mean spare or available for a given

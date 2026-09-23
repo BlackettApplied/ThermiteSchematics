@@ -1,16 +1,14 @@
 import type { ElectricalIr } from "@thermite/compiler";
-import BundledElk from "elkjs/lib/elk.bundled.js";
 import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { createSchematicRenderer, renderSchematic } from "../src/index.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { createSchematicRendererWithDependencies } from "../src/renderer.js";
 import { SYMBOL_CATALOG } from "../src/symbols/catalog.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
 import type { RenderedSchematic, SchematicViewRequest } from "../src/types.js";
 import { compileCoreFixture, pnpTraceFixture } from "./fixtures.js";
-
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 
 let coreIr: ElectricalIr;
 let pnpIr: ElectricalIr;
@@ -140,7 +138,7 @@ describe("renderer purity and determinism", () => {
   });
 
   it("gives a deliberately mutating ELK engine only a disposable graph", async () => {
-    const delegate = new ElkConstructor();
+    const delegate = createElkEngine();
     let mutations = 0;
     const engine = {
       knownLayoutOptions: () => delegate.knownLayoutOptions(),

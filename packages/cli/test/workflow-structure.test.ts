@@ -220,11 +220,14 @@ describe("frozen release workflow topology", () => {
     expect(workflow.equals(authority)).toBe(true);
     const text = workflow.toString("utf8");
     expect(text).toContain("pull_request:");
+    expect(text).toContain("push:\n    branches: [dev]");
+    expect(text).toContain("permissions:\n  contents: read");
+    expect(text).toContain("persist-credentials: false");
     expect(text).toContain("runs-on: macos-14");
-    expect(text).toContain('node-version: "24"');
-    expect(text).toContain("cache: npm");
-    expect(text).toContain("run: npm ci");
-    expect(text).toContain("run: npm run check");
+    expect(text).toContain("oven-sh/setup-bun@v2");
+    expect(text).toContain("bun-version-file: .bun-version");
+    expect(text).toContain("run: bun install --frozen-lockfile");
+    expect(text).toContain("run: bun run check");
     expect(text).not.toMatch(/artifact|candidate|pull_request_target/u);
   });
 
@@ -240,6 +243,10 @@ describe("frozen release workflow topology", () => {
     const producer = block(text, "release_candidate", 2);
     const acceptance = block(text, "acceptance", 2);
     const gate = block(text, "release_gate", 2);
+    const privateTarget =
+      "github.repository == 'BlackettApplied/ThermiteSchematics' && github.event.repository.private == true && github.event.repository.fork == false && vars.THERMITE_LEGACY_RELEASE == 'true'";
+    expect(producer).toContain(`if: ${privateTarget}`);
+    expect(gate).toContain(`if: always() && ${privateTarget}`);
     expect(producer).toContain("runs-on: ubuntu-24.04");
     expect(producer).toContain("fetch-depth: 0");
     expect(producer).toContain("node-version: 24.11.1");

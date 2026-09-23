@@ -168,3 +168,7 @@ time, locale, timezone, enumeration order, and elapsed time do not enter output.
 
 There is no MCP server, natural-language transport, HTTP service, daemon, plugin
 protocol, cache, or long-lived project session.
+
+Source-patch serialization rejects nesting deeper than 4,096 levels before
+allocating formatted output or staging files. This resource limit makes the
+sanitized serialization failure deterministic across JavaScript runtimes.

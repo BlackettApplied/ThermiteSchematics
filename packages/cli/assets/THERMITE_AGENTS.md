@@ -1,9 +1,15 @@
 # Thermite Schematics project guide
 
 This project uses the TypeScript + ELK alpha. Run the project's pinned Thermite
-checkout with `node /absolute/path/to/thermite/packages/cli/dist/thermite-bin.js`.
-The source checkout needs the supported Node runtime and `npm ci && npm run build`
-once. Use that same checkout for every command; upgrade it deliberately.
+checkout with `bun /absolute/path/to/thermite/thermite.mjs`.
+The source checkout needs Bun 1.4.2 and
+`bun install --frozen-lockfile && bun run build` once. Use that same checkout
+for every command; upgrade it deliberately.
+Rebuild after changing the engine. When you find a bug, missing capability, or
+unclear documentation, make a focused fix in the engine checkout and contribute
+it upstream following that checkout's AGENTS.md and CONTRIBUTING.md. Keep this
+project's machine data out of engine pull requests. The human contributor must
+review and accept any CLA; an agent must not sign it for them.
 
 ## Authority and workflow
 

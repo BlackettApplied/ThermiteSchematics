@@ -20,7 +20,7 @@ one for the socket's partial physical inventory and one for each test boundary.
 After batch integration and intentional lock generation:
 
 ```sh
-node thermite.mjs lock libraries/stahl-pilot/examples/8570-11-407
+bun thermite.mjs lock libraries/stahl-pilot/examples/8570-11-407
 node libraries/stahl-pilot/examples/8570-11-407/verify.mjs
 ```
 

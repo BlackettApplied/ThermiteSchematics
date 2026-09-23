@@ -35,10 +35,14 @@ await writeFile(
       commit,
       archive: filename,
       sha256: digest,
-      verifiedTarget: "darwin-arm64 / Node 24",
-      setup: ["npm ci", "npm run build", "node thermite.mjs --help"],
-      license:
-        "Existing repository license; public open-source license selection pending.",
+      verifiedTarget: "darwin-arm64 / Bun 1.4.2",
+      setup: [
+        "bun install --frozen-lockfile",
+        "bun run build",
+        "bun thermite.mjs --help",
+      ],
+      license: "Apache-2.0",
+      thirdPartyNotices: "THIRD_PARTY_NOTICES.md",
     },
     null,
     2,

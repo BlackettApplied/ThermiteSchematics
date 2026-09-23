@@ -7,8 +7,8 @@ library or runs the whole repository test suite.
 
 ## Capacity and runtime
 
-Use Node 24 on Apple Silicon macOS, with repository dependencies installed and
-`npm run build` completed. Both CLIs need working authentication. The PDF helper
+Use Bun 1.4.2 on Apple Silicon macOS, with `bun install --frozen-lockfile` and
+`bun run build` completed. Both CLIs need working authentication. The PDF helper
 uses a Python installation with PyMuPDF; `--pdf-module-path` can point to an
 existing matching-architecture module installation.
 
@@ -72,7 +72,7 @@ paths). A seed document is evidence to inspect, not permission to copy another
 part's terminals.
 
 ```sh
-node scripts/library-batch/prepare.mjs \
+bun scripts/library-batch/prepare.mjs \
   --inventory /absolute/project/evidence/library-coverage.json \
   --selection /absolute/selection.json \
   --batch /absolute/new-batch \
@@ -117,9 +117,9 @@ Helper updates apply to newly prepared jobs; do not replace active job copies.
 Write `limits.json` containing `{"claude":6,"codex":6}`, then:
 
 ```sh
-node scripts/library-batch/run.mjs --batch /absolute/new-batch \
+bun scripts/library-batch/run.mjs --batch /absolute/new-batch \
   --limits-file /absolute/new-batch/limits.json --dry-run
-node scripts/library-batch/run.mjs --batch /absolute/new-batch \
+bun scripts/library-batch/run.mjs --batch /absolute/new-batch \
   --limits-file /absolute/new-batch/limits.json
 ```
 
@@ -145,7 +145,7 @@ Format final proposal files before verification so later formatting cannot
 invalidate the recorded source hashes. Never edit an active worker's files.
 
 ```sh
-node scripts/library-batch/verify.mjs \
+bun scripts/library-batch/verify.mjs \
   --job /absolute/new-batch/jobs/PART-0063 \
   --output /absolute/new-batch/checks/PART-0063
 ```
@@ -193,7 +193,7 @@ includes these files. Promotion uses the existing manifest version and does not
 create or rewrite the manifest.
 
 ```sh
-node scripts/library-batch/promote.mjs \
+bun scripts/library-batch/promote.mjs \
   --job /absolute/new-batch/jobs/PART-0063 \
   --report /absolute/new-batch/checks/PART-0063/report.json \
   --review /absolute/new-batch/reviews/PART-0063.json \
@@ -215,8 +215,8 @@ example, but adding another type changes the library bytes for every example
 that references it. Refresh and validate each affected project:
 
 ```sh
-node thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
-node thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
 ```
 
 Then regenerate the reference project's coverage inventory and run the shared

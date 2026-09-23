@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 import { describe, expect, it } from "vitest";
+import { readBunLock, lockedPackage } from "../../../scripts/read-bun-lock.mjs";
 
 const execFileAsync = promisify(execFile);
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -98,7 +99,7 @@ describe("M7 Task 9 final inventories", () => {
   });
 
   it("audits the package graph and licenses, including alpha PDF dependencies", async () => {
-    const [agentPackageText, cliPackageText, compilerPackageText, lockText] =
+    const [agentPackageText, cliPackageText, compilerPackageText, lock] =
       await Promise.all([
         readFile(join(packageRoot, "package.json"), "utf8"),
         readFile(
@@ -109,7 +110,7 @@ describe("M7 Task 9 final inventories", () => {
           join(repositoryRoot, "packages", "compiler", "package.json"),
           "utf8",
         ),
-        readFile(join(repositoryRoot, "package-lock.json"), "utf8"),
+        readBunLock(repositoryRoot),
       ]);
     const agentPackage = JSON.parse(agentPackageText) as {
       private: boolean;
@@ -121,9 +122,6 @@ describe("M7 Task 9 final inventories", () => {
     };
     const compilerPackage = JSON.parse(compilerPackageText) as {
       dependencies: Record<string, string>;
-    };
-    const lock = JSON.parse(lockText) as {
-      packages: Record<string, { license?: string; dependencies?: unknown }>;
     };
 
     expect(agentPackage.private).toBe(true);
@@ -151,19 +149,30 @@ describe("M7 Task 9 final inventories", () => {
       "@thermite/schema": "0.2.0",
       "fast-glob": "^3.3.3",
     });
-    expect(lock.packages["packages/agent-tools"]?.dependencies).toEqual(
+    expect(lock.workspaces["packages/agent-tools"]?.dependencies).toEqual(
       agentPackage.dependencies,
     );
-    expect({
-      pdfkit: lock.packages["node_modules/pdfkit"]?.license,
-      fontkit: lock.packages["node_modules/fontkit"]?.license,
-      "svg-to-pdfkit": lock.packages["node_modules/svg-to-pdfkit"]?.license,
-      ajv: lock.packages["node_modules/ajv"]?.license,
-      commander: lock.packages["node_modules/commander"]?.license,
-      elkjs: lock.packages["node_modules/elkjs"]?.license,
-      "fast-glob": lock.packages["node_modules/fast-glob"]?.license,
-      "jsonc-parser": lock.packages["node_modules/jsonc-parser"]?.license,
-    }).toEqual({
+    const licenses: Record<string, string> = {};
+    for (const name of [
+      "pdfkit",
+      "fontkit",
+      "svg-to-pdfkit",
+      "ajv",
+      "commander",
+      "elkjs",
+      "fast-glob",
+      "jsonc-parser",
+    ]) {
+      const manifest = JSON.parse(
+        await readFile(
+          join(repositoryRoot, "node_modules", name, "package.json"),
+          "utf8",
+        ),
+      );
+      expect(manifest.version).toBe(lockedPackage(lock, name).version);
+      licenses[name] = manifest.license;
+    }
+    expect(licenses).toEqual({
       pdfkit: "MIT",
       fontkit: "MIT",
       "svg-to-pdfkit": "MIT",
@@ -185,9 +194,9 @@ describe("M7 Task 9 final inventories", () => {
     ) as { scripts: Record<string, string> };
 
     expect(workflow).toContain("runs-on: macos-14");
-    expect(workflow).toContain("- run: npm run check");
-    expect(rootPackage.scripts.check).toContain("npm run test");
-    expect(rootPackage.scripts.test).toBe("node scripts/test.mjs");
+    expect(workflow).toContain("- run: bun run check");
+    expect(rootPackage.scripts.check).toContain("bun run test");
+    expect(rootPackage.scripts.test).toBe("bun scripts/test.mjs");
   });
 
   it("finds no absolute, staging, ANSI, clock, or process leak in product goldens", async () => {
@@ -222,27 +231,19 @@ describe("M7 Task 9 final inventories", () => {
       { encoding: "utf8", flag: "wx" },
     );
 
-    const command = process.platform === "win32" ? process.execPath : "npx";
-    const prefix =
-      process.platform === "win32"
-        ? [
-            join(
-              dirname(process.execPath),
-              "node_modules",
-              "npm",
-              "bin",
-              "npx-cli.js",
-            ),
-          ]
-        : [];
     let exitCode: unknown;
     let output = "";
     try {
       await execFileAsync(
-        command,
+        process.execPath,
         [
-          ...prefix,
-          "prettier",
+          join(
+            repositoryRoot,
+            "node_modules",
+            "prettier",
+            "bin",
+            "prettier.cjs",
+          ),
           "--check",
           "--ignore-path",
           ".gitignore",

@@ -6,8 +6,10 @@ protected publisher. The three packaged READMEs are final before the Task 6 pack
 records their bytes. This checklist documents the implemented machinery; it does not
 make a local build, current checkout, or documentation-only change release authority.
 
-The product is closed source and proprietary. Public npm publication, a public source
-release, and direct GitHub Release asset upload are prohibited.
+This checklist applies only to the historical private v0.2.0 artifact and its
+protected publisher. It does not describe the current Apache-2.0 source alpha;
+see [Public source release checklist](PUBLIC_RELEASE.md). Public npm publication
+and direct GitHub Release asset uploads remain outside this legacy pipeline.
 
 ## End-user prerequisite and install
 
@@ -218,7 +220,7 @@ Before authorizing the protected publisher, confirm:
   explicit PATCH; and
 - the post-PATCH full re-fetch or exact already-published retry check passed.
 
-The detailed normative design remains
-[Milestone 8 plan v23 (CONVERGED, Amendments C1–C4)](planning/M8_PLAN.md). This
-checklist does not weaken or replace its authority, evidence, isolation, packaging, or
-retry requirements.
+The original detailed design was Milestone 8 plan v23 (CONVERGED, Amendments
+C1–C4), an internal historical document not included in this source release.
+This checklist does not weaken the private publisher's implemented authority,
+evidence, isolation, packaging, or retry requirements.

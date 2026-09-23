@@ -71,7 +71,7 @@ describe("shipped core package files", () => {
     ).resolves.toEqual(SHIPPED_CORE_FILE_INVENTORY);
   });
 
-  it("declares only the shipped runtime, library, README, and Apache-2.0 license", async () => {
+  it("declares only the shipped runtime, library, README, and Apache-2.0 notices", async () => {
     const manifest = JSON.parse(
       await readFile(join(packageRoot, "package.json"), "utf8"),
     ) as {
@@ -89,7 +89,13 @@ describe("shipped core package files", () => {
       license: "Apache-2.0",
     });
     expect(Object.keys(manifest.exports)).toEqual(["."]);
-    expect(manifest.files).toEqual(["dist", "library", "README.md", "LICENSE"]);
+    expect(manifest.files).toEqual([
+      "dist",
+      "library",
+      "README.md",
+      "LICENSE",
+      "NOTICE",
+    ]);
     await expect(readFile(join(packageRoot, "LICENSE"))).resolves.toEqual(
       await readFile(join(repositoryRoot, "LICENSE")),
     );

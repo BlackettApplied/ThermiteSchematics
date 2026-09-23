@@ -9,11 +9,12 @@ describe("component research batch tools", () => {
     const result = spawnSync(
       process.execPath,
       [
-        "--test",
-        "scripts/library-batch/prepare.check.mjs",
-        "scripts/library-batch/run.check.mjs",
-        "scripts/library-batch/verify.check.mjs",
-        "scripts/library-batch/promote.check.mjs",
+        "test",
+        "--timeout=120000",
+        "./scripts/library-batch/prepare.check.mjs",
+        "./scripts/library-batch/run.check.mjs",
+        "./scripts/library-batch/verify.check.mjs",
+        "./scripts/library-batch/promote.check.mjs",
       ],
       { cwd: repository, encoding: "utf8", timeout: 120_000 },
     );

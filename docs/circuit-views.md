@@ -42,7 +42,7 @@ Add a `circuit-view-request/0.1` to a normal packet request:
 This example uses the portable `examples/motor-starter` source. Generate it with:
 
 ```sh
-node thermite.mjs packet --project examples/motor-starter --input circuit.request.json -o output/circuit.html
+bun thermite.mjs packet --project examples/motor-starter --input circuit.request.json -o output/circuit.html
 ```
 
 The same request can produce JSON or PDF through the packet command. It is a packet-view contract, not an extension of the six guarded agent commands or of `schematic-view-request/0.1` and `/0.2`.

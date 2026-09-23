@@ -30,7 +30,9 @@ try {
         new URL("../node_modules/vitest/vitest.mjs", import.meta.url),
       ),
       "run",
-      "--pool=threads",
+      // Keep each test worker in a separate process, using the same Bun runtime
+      // for Vitest and the child CLIs exercised by integration tests.
+      "--pool=forks",
       "--testTimeout=120000",
       "--hookTimeout=120000",
       // Review archives contain independent historical source checkouts. Their
