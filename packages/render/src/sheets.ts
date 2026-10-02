@@ -336,6 +336,45 @@ function wrapReport(value: string, max: number): string[] {
   rows.push(remaining.join(""));
   return rows;
 }
+/** Conservative sans-serif advances at the assembly note's printed 2.5 mm size. */
+function assemblyNoteLines(value: string, maxWidth: number): string[] {
+  const advance = (c: string) =>
+    2.5 *
+    (c.codePointAt(0)! > 127
+      ? 1.2
+      : /[MWmw@%]/u.test(c)
+        ? 1
+        : /[ilI]/u.test(c)
+          ? 0.4
+          : /[ .,:;'|!]/u.test(c)
+            ? 0.5
+            : /[0-9]/u.test(c)
+              ? 0.65
+              : /[a-z]/u.test(c)
+                ? 0.7
+                : 0.8);
+  const remaining = [...value],
+    rows: string[] = [];
+  while (remaining.length) {
+    let count = 0,
+      width = 0;
+    while (
+      count < remaining.length &&
+      width + advance(remaining[count]!) <= maxWidth
+    )
+      width += advance(remaining[count++]!);
+    if (!count)
+      throw new Error("Assembly note character cannot fit the sheet width.");
+    if (count < remaining.length) {
+      let cut = count;
+      while (cut > 0 && !/\s/u.test(remaining[cut]!)) cut--;
+      if (cut) count = cut;
+    }
+    rows.push(remaining.splice(0, count).join(""));
+    if (remaining[0] === " ") remaining.shift();
+  }
+  return rows.length ? rows : [value];
+}
 function titleHeight(title: SchematicTitleContext, page: PaperPage): number {
   const custom = title.lines.filter(
     (entry) => entry.field === "title.authored-line",
@@ -1206,21 +1245,47 @@ async function topologyDrafts(
         ? circuitTextLines(drawing.title, b.w, 4)
         : [drawing.title];
       const headingHeight = 9 + (headingLines.length - 1) * 4.8;
-      const scale = Math.min(
+      const noteLines = drawing.note
+        .split("\n")
+        .flatMap((line) => wrapReport(line, Math.floor(b.w / 1.6)))
+        .flatMap((line) => {
+          if (!assembly) return [line];
+          const measured = assemblyNoteLines(line, b.w);
+          // Preserve existing line breaks where their measured text fits.
+          return measured.length > 1 ? measured : [line];
+        });
+      let scale = Math.min(
         1,
         b.w / drawing.width,
         (b.h - headingHeight - 6) / drawing.height,
       );
+      const reserveNotes =
+        assembly &&
+        headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5 >
+          b.h;
+      if (reserveNotes) {
+        // Reserve notes before fitting; round down to the emitted SVG precision.
+        scale =
+          Math.floor(
+            Math.min(
+              scale,
+              (b.h - headingHeight - 4 - noteLines.length * 3.5) /
+                drawing.height,
+            ) * 1000,
+          ) / 1000;
+      }
       if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
         return failure(
           "unprintable-layout",
-          wiring
-            ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
-            : signalLoop
-              ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
-              : assembly
-                ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
-                : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.",
+          reserveNotes
+            ? "Connector assembly notes and diagram cannot fit at readable size. Shorten notes, select fewer assemblies or use larger paper."
+            : wiring
+              ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
+              : signalLoop
+                ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
+                : assembly
+                  ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
+                  : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.",
         );
       const x = b.x + (b.w - drawing.width * scale) / 2,
         y = b.y + headingHeight;
@@ -1232,9 +1297,6 @@ async function topologyDrafts(
         xMm: x + r.x * scale,
         yMm: y + r.y * scale,
       }));
-      const noteLines = drawing.note
-        .split("\n")
-        .flatMap((line) => wrapReport(line, Math.floor(b.w / 1.6)));
       const height =
         headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5;
       if (height > b.h)
