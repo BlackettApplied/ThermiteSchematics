@@ -1,0 +1,27 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "index": true,
+  "views": [
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet",
+      "devices": ["N01"]
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet"
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "nrg-bus"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "network"
+    }
+  ]
+}

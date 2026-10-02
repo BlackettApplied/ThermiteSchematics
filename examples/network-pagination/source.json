@@ -1,0 +1,595 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000001",
+      "designation": "N01",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000002",
+      "designation": "N02",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000003",
+      "designation": "N03",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000004",
+      "designation": "N04",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000005",
+      "designation": "N05",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000006",
+      "designation": "N06",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000007",
+      "designation": "N07",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000008",
+      "designation": "N08",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000009",
+      "designation": "N09",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000010",
+      "designation": "N10",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000011",
+      "designation": "B1",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000012",
+      "designation": "B2",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000013",
+      "designation": "B3",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000014",
+      "designation": "ISO1",
+      "type": "network-page-fixture:node",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000015",
+      "designation": "H1",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000016",
+      "designation": "H2",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000017",
+      "designation": "H3",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000018",
+      "designation": "H4",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000019",
+      "designation": "H5",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000020",
+      "designation": "H6",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000021",
+      "designation": "H7",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "device",
+      "uid": "76000000-0000-4000-8000-000000000022",
+      "designation": "H8",
+      "type": "network-page-fixture:heater",
+      "location": "Synthetic cabinet"
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000023",
+      "designation": "NET01",
+      "relation": "associated_with",
+      "from": {
+        "device": "N01"
+      },
+      "to": {
+        "device": "N02"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000024",
+      "designation": "NET02",
+      "relation": "associated_with",
+      "from": {
+        "device": "N02"
+      },
+      "to": {
+        "device": "N03"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000025",
+      "designation": "NET03",
+      "relation": "associated_with",
+      "from": {
+        "device": "N03"
+      },
+      "to": {
+        "device": "N04"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000026",
+      "designation": "NET04",
+      "relation": "associated_with",
+      "from": {
+        "device": "N04"
+      },
+      "to": {
+        "device": "N05"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000027",
+      "designation": "NET05",
+      "relation": "associated_with",
+      "from": {
+        "device": "N05"
+      },
+      "to": {
+        "device": "N06"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000028",
+      "designation": "NET06",
+      "relation": "associated_with",
+      "from": {
+        "device": "N06"
+      },
+      "to": {
+        "device": "N07"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000029",
+      "designation": "NET07",
+      "relation": "associated_with",
+      "from": {
+        "device": "N07"
+      },
+      "to": {
+        "device": "N08"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000030",
+      "designation": "NET08",
+      "relation": "associated_with",
+      "from": {
+        "device": "N08"
+      },
+      "to": {
+        "device": "N09"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000031",
+      "designation": "NET09",
+      "relation": "associated_with",
+      "from": {
+        "device": "N09"
+      },
+      "to": {
+        "device": "N10"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000032",
+      "designation": "BR1",
+      "relation": "associated_with",
+      "from": {
+        "device": "N05"
+      },
+      "to": {
+        "device": "B1"
+      },
+      "connection": {
+        "fromPort": "B1",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000033",
+      "designation": "BR2",
+      "relation": "associated_with",
+      "from": {
+        "device": "N05"
+      },
+      "to": {
+        "device": "B2"
+      },
+      "connection": {
+        "fromPort": "B2",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000034",
+      "designation": "BR3",
+      "relation": "associated_with",
+      "from": {
+        "device": "N05"
+      },
+      "to": {
+        "device": "B3"
+      },
+      "connection": {
+        "fromPort": "B3",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "protocol": "Synthetic Ethernet intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000035",
+      "designation": "BUS1",
+      "relation": "associated_with",
+      "from": {
+        "device": "H1"
+      },
+      "to": {
+        "device": "H2"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000036",
+      "designation": "BUS2",
+      "relation": "associated_with",
+      "from": {
+        "device": "H2"
+      },
+      "to": {
+        "device": "H3"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000037",
+      "designation": "BUS3",
+      "relation": "associated_with",
+      "from": {
+        "device": "H3"
+      },
+      "to": {
+        "device": "H4"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000038",
+      "designation": "BUS4",
+      "relation": "associated_with",
+      "from": {
+        "device": "H4"
+      },
+      "to": {
+        "device": "H5"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000039",
+      "designation": "BUS5",
+      "relation": "associated_with",
+      "from": {
+        "device": "H5"
+      },
+      "to": {
+        "device": "H6"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000040",
+      "designation": "BUS6",
+      "relation": "associated_with",
+      "from": {
+        "device": "H6"
+      },
+      "to": {
+        "device": "H7"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "76000000-0000-4000-8000-000000000041",
+      "designation": "BUS7",
+      "relation": "associated_with",
+      "from": {
+        "device": "H7"
+      },
+      "to": {
+        "device": "H8"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "nrg-bus",
+        "protocol": "Synthetic NRG intent",
+        "status": "planned",
+        "cable": {
+          "specification": "Original generic test link",
+          "lengthM": 2
+        }
+      }
+    }
+  ]
+}
