@@ -32,6 +32,7 @@ export interface ConnectorAssemblyDrawing {
   }[];
   note: string;
   topologyCoverage?: TopologyDrawingCoverage;
+  paginated?: boolean;
 }
 const n = (x: number) => String(Number(x.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
@@ -90,6 +91,13 @@ export async function prepareConnectorAssemblyDrawing(
   ir: Readonly<ElectricalIr>,
   request: ConnectorAssemblyViewRequest,
 ): Promise<ConnectorAssemblyDrawing> {
+  return layoutAssemblyDrawing(request, selectAssemblyView(ir, request));
+}
+
+function selectAssemblyView(
+  ir: Readonly<ElectricalIr>,
+  request: ConnectorAssemblyViewRequest,
+) {
   if (
     !request ||
     request.format !== "connector-assembly-view-request/0.1" ||
@@ -147,6 +155,27 @@ export async function prepareConnectorAssemblyDrawing(
     throw new Error(
       "Connector assembly view requires 1–80 devices; select a smaller assembly subset.",
     );
+  return { inventory, devices, types, selected, exact, links, included };
+}
+
+interface AssemblyProjection {
+  relations: ReadonlySet<string>;
+  devices: ReadonlySet<string>;
+  ports: ReadonlySet<string>;
+  part: number;
+  total: number;
+  authoredNotes: boolean;
+}
+async function layoutAssemblyDrawing(
+  request: ConnectorAssemblyViewRequest,
+  selection: ReturnType<typeof selectAssemblyView>,
+  projection?: AssemblyProjection,
+): Promise<ConnectorAssemblyDrawing> {
+  const { inventory, devices, types, selected, exact } = selection;
+  const links = projection
+    ? selection.links.filter((r) => projection.relations.has(r.uid))
+    : selection.links;
+  const included = projection?.devices ?? selection.included;
   const ordered = [...included].sort((a, b) =>
     compare(devices.get(a)!.designation, devices.get(b)!.designation),
   );
@@ -201,20 +230,32 @@ export async function prepareConnectorAssemblyDrawing(
       );
     captions.set(uid, caption);
     const available = inventory.ports.filter((p) => p.deviceUid === uid);
-    const ports = available.filter(
+    const originalPorts = available.filter(
       (p) =>
         !exact.size ||
         selected.has(uid) ||
-        links.some(
+        selection.links.some(
           (a) =>
             (a.fromDeviceUid === uid && a.assembly.fromPort === p.key) ||
             (a.toDeviceUid === uid && a.assembly.toPort === p.key),
         ),
     );
-    if (ports.length < available.length)
+    const ports = projection
+      ? originalPorts.filter((p) =>
+          projection.ports.has(JSON.stringify([uid, p.key])),
+        )
+      : originalPorts;
+    if (ports.length < originalPorts.length)
       caption.push(
         ...wrap(
-          `${available.length - ports.length} other ports: schedule`,
+          `${originalPorts.length - ports.length} ports on other parts`,
+          nodeWidth - 6,
+        ),
+      );
+    if (originalPorts.length < available.length)
+      caption.push(
+        ...wrap(
+          `${available.length - originalPorts.length} other ports: schedule`,
           nodeWidth - 6,
         ),
       );
@@ -472,16 +513,124 @@ export async function prepareConnectorAssemblyDrawing(
         (rows.get(deviceUid) ?? []).map((p) => ({ deviceUid, portKey: p.key })),
       ),
     },
-    title: request.title ?? "Connector and cable assemblies",
+    title: `${request.title ?? "Connector and cable assemblies"}${projection ? ` - Part ${projection.part}/${projection.total}` : ""}`,
+    ...(projection ? { paginated: true } : {}),
     content: out.join("\n"),
     width: graph.width!,
     height: graph.height!,
     references,
     note: [
-      `${links.length} authored assemblies. Lines connect named connectors, not electrical pins; cable pin mapping is unresolved. See assembly schedule for specifications and mapping reasons.`,
-      ...(request.notes ?? []),
+      projection
+        ? `${links.length} of ${selection.links.length} authored cap assemblies in this part. Complete named connector reservations; pin mapping not applicable. Repeated device bodies show different ports. See other parts and assembly schedule.`
+        : `${links.length} authored assemblies. Lines connect named connectors, not electrical pins; cable pin mapping is unresolved. See assembly schedule for specifications and mapping reasons.`,
+      ...(!projection || projection.authoredNotes ? (request.notes ?? []) : []),
     ].join("\n"),
   };
+}
+
+/** Keep fitting views intact; paginate only complete protective-cap assemblies. */
+export async function prepareConnectorAssemblyPages(
+  ir: Readonly<ElectricalIr>,
+  request: ConnectorAssemblyViewRequest,
+  fits: (drawing: ConnectorAssemblyDrawing) => boolean,
+): Promise<ConnectorAssemblyDrawing[]> {
+  const selection = selectAssemblyView(ir, request);
+  const full = await layoutAssemblyDrawing(request, selection);
+  if (fits(full)) return [full];
+  if (
+    selection.links.length < 2 ||
+    selection.links.some((r) => r.assembly.kind !== "cap")
+  )
+    return [full];
+
+  const identity = (deviceUid: string, portKey: string) =>
+    JSON.stringify([deviceUid, portKey]);
+  type Unit = { relations: string[]; devices: string[]; ports: string[] };
+  const usedPorts = new Set<string>();
+  const units: Unit[] = selection.links.map((r) => {
+    const ports = [
+      identity(r.fromDeviceUid, r.assembly.fromPort),
+      identity(r.toDeviceUid, r.assembly.toPort),
+    ];
+    ports.forEach((p) => usedPorts.add(p));
+    return {
+      relations: [r.uid],
+      devices: [r.fromDeviceUid, r.toDeviceUid],
+      ports,
+    };
+  });
+  for (const p of full.topologyCoverage!.ports) {
+    const id = identity(p.deviceUid, p.portKey);
+    if (!usedPorts.has(id))
+      units.push({ relations: [], devices: [p.deviceUid], ports: [id] });
+  }
+  // Trial headings reserve the widest possible part numbers; final headings
+  // can only get narrower. Reserve authored notes in trials, emit them once.
+  const widestPart = Number("8".repeat(String(units.length).length));
+  const draw = (items: Unit[], part: number, total: number, notes: boolean) =>
+    layoutAssemblyDrawing(request, selection, {
+      relations: new Set(items.flatMap((u) => u.relations)),
+      devices: new Set(items.flatMap((u) => u.devices)),
+      ports: new Set(items.flatMap((u) => u.ports)),
+      part,
+      total,
+      authoredNotes: notes,
+    });
+  const parts: Unit[][] = [];
+  let current: Unit[] = [];
+  for (const unit of units) {
+    const candidate = [...current, unit];
+    if (fits(await draw(candidate, widestPart, widestPart, true))) {
+      current = candidate;
+      continue;
+    }
+    if (!current.length)
+      throw new Error(
+        "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
+      );
+    parts.push(current);
+    current = [unit];
+    if (!fits(await draw(current, widestPart, widestPart, true)))
+      throw new Error(
+        "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
+      );
+  }
+  parts.push(current);
+  const drawings: ConnectorAssemblyDrawing[] = [];
+  for (const [i, part] of parts.entries()) {
+    const drawing = await draw(
+      part,
+      i + 1,
+      parts.length,
+      i === parts.length - 1,
+    );
+    if (!fits(drawing))
+      throw new Error(
+        "A cap pagination part exceeds the readable sheet bounds.",
+      );
+    drawings.push(drawing);
+  }
+  const coverage = drawings.map((d) => d.topologyCoverage!);
+  const equal = (a: string[], b: readonly string[]) =>
+    JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  if (
+    !equal(
+      coverage.flatMap((c) => c.relationIds),
+      full.topologyCoverage!.relationIds,
+    ) ||
+    !equal(
+      coverage.flatMap((c) =>
+        c.ports.map((p) => identity(p.deviceUid, p.portKey)),
+      ),
+      full.topologyCoverage!.ports.map((p) => identity(p.deviceUid, p.portKey)),
+    ) ||
+    !equal(
+      [...new Set(coverage.flatMap((c) => c.deviceUids))],
+      full.topologyCoverage!.deviceUids,
+    )
+  )
+    throw new Error("Cap pagination did not conserve the original selection.");
+  return drawings;
 }
 
 /** Separate point-to-point assemblies may cross, but may not share a drawn segment. */

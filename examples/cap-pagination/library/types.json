@@ -1,0 +1,112 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "cap-pagination-fixture:rack",
+      "description": "Synthetic socket rack",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "X01": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X02": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X03": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X04": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X05": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X06": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X07": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X08": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X09": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X10": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X11": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        },
+        "X12": {
+          "connector": "Synthetic socket",
+          "description": "Named socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic connector-only rack; no supply or terminal pinout modeled."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "cap-pagination-fixture:cap",
+      "description": "Protective cap",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "Synthetic cover"
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "cap-pagination-fixture:field",
+      "description": "Synthetic field interface",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "Synthetic socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic connector-only interface; cable pin wiring unresolved."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "cap-pagination-fixture:disconnected",
+      "description": "Disconnected connector interface",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "A": {
+          "connector": "Synthetic socket"
+        },
+        "B": {
+          "connector": "Synthetic socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic disconnected interface; no power or signal terminals modeled."
+      }
+    }
+  ]
+}

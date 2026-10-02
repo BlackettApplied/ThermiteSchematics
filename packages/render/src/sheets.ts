@@ -12,7 +12,7 @@ import {
   type CommunicationDrawing,
 } from "./communication.js";
 import {
-  prepareConnectorAssemblyDrawing,
+  prepareConnectorAssemblyPages,
   type ConnectorAssemblyViewRequest,
 } from "./connector-assembly.js";
 import {
@@ -1093,89 +1093,84 @@ async function topologyDrafts(
     const wiring = request.format === "wiring-view-request/0.1";
     const signalLoop = request.format === "signal-loop-view-request/0.1";
     const assembly = request.format === "connector-assembly-view-request/0.1";
-    const drawing: CommunicationDrawing = wiring
-      ? await prepareWiringDrawing(ir, request)
-      : signalLoop
-        ? await prepareSignalLoopDrawing(ir, request)
-        : assembly
-          ? await prepareConnectorAssemblyDrawing(ir, request)
-          : await prepareCommunicationDrawing(ir, request);
-    const title: SchematicTitleContext = {
-      projectName: ir.project.name,
-      revision: presentation?.revision ?? "UNSPECIFIED",
-      backgroundColor: "#ffffff",
-      toolVersion: "0.3.0-alpha.2",
-      lines: [
-        {
-          ownerKind: "view",
-          ownerId: wiring
-            ? "wiring"
+    const compose = (
+      drawing: CommunicationDrawing & { paginated?: boolean },
+    ): RenderOutcome<Draft> => {
+      const title: SchematicTitleContext = {
+        projectName: ir.project.name,
+        revision: presentation?.revision ?? "UNSPECIFIED",
+        backgroundColor: "#ffffff",
+        toolVersion: "0.3.0-alpha.2",
+        lines: [
+          {
+            ownerKind: "view",
+            ownerId: wiring
+              ? "wiring"
+              : signalLoop
+                ? "signal-loop"
+                : assembly
+                  ? "connector-assembly"
+                  : "communication",
+            field: "title.view-line",
+            value: drawing.title,
+          },
+          ...(presentation?.titleBlockLines ?? []).map((value) => ({
+            ownerKind: "presentation" as const,
+            ownerId: "presentation",
+            field: "title.authored-line" as const,
+            value,
+          })),
+        ],
+      };
+      const b = bounds(title, page);
+      const headingLines = assembly
+        ? circuitTextLines(drawing.title, b.w, 4)
+        : [drawing.title];
+      const headingHeight = 9 + (headingLines.length - 1) * 4.8;
+      const scale = Math.min(
+        1,
+        b.w / drawing.width,
+        (b.h - headingHeight - 6) / drawing.height,
+      );
+      if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
+        return failure(
+          "unprintable-layout",
+          wiring
+            ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
             : signalLoop
-              ? "signal-loop"
+              ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
               : assembly
-                ? "connector-assembly"
-                : "communication",
-          field: "title.view-line",
-          value: drawing.title,
-        },
-        ...(presentation?.titleBlockLines ?? []).map((value) => ({
-          ownerKind: "presentation" as const,
-          ownerId: "presentation",
-          field: "title.authored-line" as const,
-          value,
-        })),
-      ],
-    };
-    const b = bounds(title, page);
-    const headingLines = assembly
-      ? circuitTextLines(drawing.title, b.w, 4)
-      : [drawing.title];
-    const headingHeight = 9 + (headingLines.length - 1) * 4.8;
-    const scale = Math.min(
-      1,
-      b.w / drawing.width,
-      (b.h - headingHeight - 6) / drawing.height,
-    );
-    if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
-      return failure(
-        "unprintable-layout",
-        wiring
-          ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
-          : signalLoop
-            ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
-            : assembly
-              ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
-              : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.",
-      );
-    const x = b.x + (b.w - drawing.width * scale) / 2,
-      y = b.y + headingHeight;
-    const references = drawing.references.map((r) => ({
-      deviceUid: r.deviceUid,
-      designation: r.designation,
-      functions: "functions" in r ? (r.functions as string[]) : [],
-      zone: zone(x + r.x * scale, y + r.y * scale, b),
-      xMm: x + r.x * scale,
-      yMm: y + r.y * scale,
-    }));
-    const noteLines = drawing.note
-      .split("\n")
-      .flatMap((line) => wrapReport(line, Math.floor(b.w / 1.6)));
-    const height =
-      headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5;
-    if (height > b.h)
-      return failure(
-        "unprintable-layout",
-        "Diagram notes exceed the sheet bounds.",
-      );
-    const note = noteLines
-      .map((v, i) =>
-        text(b.x, b.y + height - (noteLines.length - 1 - i) * 3.5, v, 2.5),
-      )
-      .join("\n");
-    return {
-      ok: true,
-      value: [
-        {
+                ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
+                : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.",
+        );
+      const x = b.x + (b.w - drawing.width * scale) / 2,
+        y = b.y + headingHeight;
+      const references = drawing.references.map((r) => ({
+        deviceUid: r.deviceUid,
+        designation: r.designation,
+        functions: "functions" in r ? (r.functions as string[]) : [],
+        zone: zone(x + r.x * scale, y + r.y * scale, b),
+        xMm: x + r.x * scale,
+        yMm: y + r.y * scale,
+      }));
+      const noteLines = drawing.note
+        .split("\n")
+        .flatMap((line) => wrapReport(line, Math.floor(b.w / 1.6)));
+      const height =
+        headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5;
+      if (height > b.h)
+        return failure(
+          "unprintable-layout",
+          "Diagram notes exceed the sheet bounds.",
+        );
+      const note = noteLines
+        .map((v, i) =>
+          text(b.x, b.y + height - (noteLines.length - 1 - i) * 3.5, v, 2.5),
+        )
+        .join("\n");
+      return {
+        ok: true,
+        value: {
           view: {
             format: "documentation-view/0.1",
             kind: wiring
@@ -1197,7 +1192,9 @@ async function topologyDrafts(
             : signalLoop
               ? "Field-device hookup - verify selected connector pinout before construction"
               : assembly
-                ? "Connector assemblies only - unresolved pin mapping; no inferred electrical continuity"
+                ? drawing.paginated
+                  ? "Protective caps - pin mapping not applicable; no inferred electrical continuity"
+                  : "Connector assemblies only - unresolved pin mapping; no inferred electrical continuity"
                 : "Port connections - see link schedule for protocol and status",
           coverage:
             "coverage" in drawing && drawing.coverage ? [drawing.coverage] : [],
@@ -1213,8 +1210,26 @@ async function topologyDrafts(
             `<g transform="translate(${n(x)} ${n(y)}) scale(${n(scale)})">${drawing.content}</g>` +
             note,
         },
-      ],
+      };
     };
+    const drawings = wiring
+      ? [await prepareWiringDrawing(ir, request)]
+      : signalLoop
+        ? [await prepareSignalLoopDrawing(ir, request)]
+        : assembly
+          ? await prepareConnectorAssemblyPages(
+              ir,
+              request,
+              (d) => compose(d).ok,
+            )
+          : [await prepareCommunicationDrawing(ir, request)];
+    const drafts: Draft[] = [];
+    for (const drawing of drawings) {
+      const result = compose(drawing);
+      if (!result.ok) return result;
+      drafts.push(result.value);
+    }
+    return { ok: true, value: drafts };
   } catch (e) {
     return failure(
       "unprintable-layout",

@@ -1,0 +1,270 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000001",
+      "designation": "R1",
+      "type": "cap-pagination-fixture:rack"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000002",
+      "designation": "CAP1",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000003",
+      "designation": "CAP2",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000004",
+      "designation": "CAP3",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000005",
+      "designation": "CAP4",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000006",
+      "designation": "CAP5",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000007",
+      "designation": "CAP6",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000008",
+      "designation": "CAP7",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000009",
+      "designation": "CAP8",
+      "type": "cap-pagination-fixture:cap"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000010",
+      "designation": "S1",
+      "type": "cap-pagination-fixture:field"
+    },
+    {
+      "kind": "device",
+      "uid": "72000000-0000-4000-8000-000000000011",
+      "designation": "D1",
+      "type": "cap-pagination-fixture:disconnected"
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000021",
+      "designation": "CAP-X01",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP1"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X01",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000022",
+      "designation": "CAP-X02",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP2"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X02",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000023",
+      "designation": "CAP-X03",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP3"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X03",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000024",
+      "designation": "CAP-X04",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP4"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X04",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000025",
+      "designation": "CAP-X05",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP5"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X05",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000026",
+      "designation": "CAP-X06",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP6"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X06",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000027",
+      "designation": "CAP-X07",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP7"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X07",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000028",
+      "designation": "CAP-X08",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP8"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X08",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cover reserves a named connector; no electrical pin mapping applies."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "72000000-0000-4000-8000-000000000029",
+      "designation": "CBL1",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "S1"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X09",
+        "toPort": "P",
+        "cable": {
+          "specification": "Synthetic cordset"
+        },
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "This synthetic example does not declare individual conductor wiring."
+        }
+      }
+    }
+  ]
+}
