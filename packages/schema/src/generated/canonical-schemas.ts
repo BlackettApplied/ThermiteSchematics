@@ -871,6 +871,43 @@ export const IN_MEMORY_CANONICAL_SCHEMAS: readonly LoadedSchema[] = [
             },
           },
         },
+        connectorIo: {
+          type: "object",
+          additionalProperties: false,
+          required: ["ports"],
+          properties: {
+            addressSpace: {
+              $ref: "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation",
+            },
+            ports: {
+              type: "object",
+              propertyNames: {
+                $ref: "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation",
+              },
+              additionalProperties: false,
+              patternProperties: {
+                "^.+$": {
+                  type: "object",
+                  additionalProperties: false,
+                  properties: {
+                    direction: {
+                      enum: ["input", "output", "bidirectional"],
+                    },
+                    address: {
+                      $ref: "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation",
+                    },
+                    signal: {
+                      $ref: "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation",
+                    },
+                    usage: {
+                      enum: ["in-use", "spare"],
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       },
       $defs: {
         connectionReviewEntry: {

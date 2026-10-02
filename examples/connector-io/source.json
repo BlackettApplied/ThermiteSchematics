@@ -1,0 +1,187 @@
+{
+  "objects": [
+    {
+      "uid": "42000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "R1",
+      "description": "Remote I/O rack",
+      "type": "connector-fixture:rack",
+      "location": "Main machine",
+      "connectorIo": {
+        "addressSpace": "PLC1",
+        "ports": {
+          "X1": {
+            "direction": "input",
+            "address": "%IW64",
+            "signal": "Pressure",
+            "usage": "in-use"
+          },
+          "X3": {
+            "usage": "spare"
+          },
+          "X4": {
+            "direction": "bidirectional",
+            "signal": "Position assembly"
+          }
+        }
+      },
+      "connectionReview": {
+        "connectorPorts": {
+          "X3": {
+            "status": "intentionally-unused",
+            "reason": "Reserved socket."
+          }
+        }
+      }
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "S1",
+      "description": "Main hydraulic pressure sensor",
+      "type": "connector-fixture:sensor",
+      "location": "Field"
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "CAP1",
+      "type": "connector-fixture:cap"
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "Y1",
+      "type": "connector-fixture:splitter"
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000005",
+      "kind": "device",
+      "designation": "S2",
+      "description": "Platen position switch",
+      "type": "connector-fixture:sensor",
+      "location": "Field"
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000011",
+      "kind": "relation",
+      "designation": "W1",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "S1"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X1",
+        "toPort": "M12",
+        "status": "documented",
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "Reference drawing identifies the cordset but omits conductor mapping."
+        },
+        "cable": {
+          "specification": "M12 molded cordset",
+          "manufacturer": "Fixture vendor",
+          "orderNumber": "CBL-5",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000012",
+      "kind": "relation",
+      "designation": "CAP-X2",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "CAP1"
+      },
+      "assembly": {
+        "kind": "cap",
+        "fromPort": "X2",
+        "toPort": "P",
+        "status": "documented",
+        "pinMapping": {
+          "status": "not-applicable",
+          "reason": "Protective cap, no electrical pins."
+        }
+      }
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000013",
+      "kind": "relation",
+      "designation": "W2",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "Y1"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X4",
+        "toPort": "IN",
+        "status": "documented",
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "Reference drawing identifies the cordset but omits conductor mapping."
+        },
+        "cable": {
+          "specification": "M12 molded cordset",
+          "manufacturer": "Fixture vendor",
+          "orderNumber": "CBL-5",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000014",
+      "kind": "relation",
+      "designation": "W3",
+      "relation": "associated_with",
+      "from": {
+        "device": "Y1"
+      },
+      "to": {
+        "device": "S2"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "A",
+        "toPort": "M12",
+        "status": "documented",
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "Reference drawing identifies the cordset but omits conductor mapping."
+        },
+        "cable": {
+          "specification": "M12 molded cordset",
+          "manufacturer": "Fixture vendor",
+          "orderNumber": "CBL-5",
+          "lengthM": 2
+        }
+      }
+    },
+    {
+      "uid": "42000000-0000-4000-8000-000000000021",
+      "kind": "device",
+      "designation": "PLC1",
+      "type": "connector-fixture:cpu",
+      "io": {
+        "addressSpace": "PLC1",
+        "channels": {
+          "di1": {
+            "address": "%I0.0",
+            "signal": "Start"
+          }
+        }
+      }
+    }
+  ]
+}

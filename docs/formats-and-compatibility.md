@@ -94,7 +94,8 @@ from the electrical project; see [runtime packaging](runtime-package.md).
 ## Documentation and library metadata
 
 A packet may include `{ "format": "documentation-view-request/0.1", "kind": "io" }`.
-Kinds are `bom`, `wires`, `cables`, `terminals`, and `io`. Only terminal and I/O
+Kinds are `bom`, `wires`, `cables`, `terminals`, `io`, `io-ports`, `network`, and
+`assemblies`. Only terminal and I/O
 requests accept `device`, resolving a unique UID or designation. CLI `report`
 exports the same tables as CSV or printable packets. `--json` / `.json` returns
 packet data, including SVGs; the query package's `buildDocumentation` API returns
@@ -109,6 +110,12 @@ signal and usage (`in-use` or `spare`). E202 rejects unknown channels and exact
 case-insensitive duplicate addresses within one authored address space. Address
 spaces are case-sensitive identifiers. Addresses are opaque documentation
 labels: byte/word overlap, PLC configuration and online state are not validated.
+
+Instances may additionally declare `connectorIo: { addressSpace?, ports }`.
+This identifies a connector I/O module and provides socket assignments separately
+from terminal channels. The `io-ports` schedule lists every declared connector
+on these modules, including ports absent from the assignment dictionary.
+See [connector I/O](connector-io.md) for unknown addresses, caps and mapping limits.
 
 Circuit drawings also accept explicit per-function `circuitSymbols` in device
 types. E206 rejects unknown function keys and marks incompatible with declared

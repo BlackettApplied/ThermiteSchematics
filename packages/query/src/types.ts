@@ -53,6 +53,7 @@ export type ProjectObjectKind = ProjectObjectView["kind"];
 export interface DeviceView extends ProjectObjectView {
   readonly connectionReview?: import("@thermite/compiler").IrDevice["connectionReview"];
   readonly io?: import("@thermite/compiler").IrDevice["io"];
+  readonly connectorIo?: import("@thermite/compiler").IrDevice["connectorIo"];
   readonly kind: "device";
   readonly designation: string;
   readonly typeId: string;

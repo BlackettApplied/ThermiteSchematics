@@ -513,7 +513,7 @@ export async function runThermite(argv = process.argv): Promise<number> {
     command
       .command("report <kind>")
       .description(
-        "generate BOM, wire/cable/network schedules, terminal and I/O plans",
+        "generate BOM, wire/cable/network schedules, terminal and channel/connector I/O plans",
       ),
   )
     .option(

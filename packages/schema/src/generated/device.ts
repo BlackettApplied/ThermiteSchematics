@@ -59,6 +59,30 @@ export interface Device {
       [k: string]: ConnectionReviewEntry;
     };
   };
+  connectorIo?: {
+    /**
+     * Opaque non-empty identifier with no control characters or surrounding whitespace.
+     */
+    addressSpace?: string;
+    ports: {
+      /**
+       * This interface was referenced by `undefined`'s JSON-Schema definition
+       * via the `patternProperty` "^.+$".
+       */
+      [k: string]: {
+        direction?: "input" | "output" | "bidirectional";
+        /**
+         * Opaque non-empty identifier with no control characters or surrounding whitespace.
+         */
+        address?: string;
+        /**
+         * Opaque non-empty identifier with no control characters or surrounding whitespace.
+         */
+        signal?: string;
+        usage?: "in-use" | "spare";
+      };
+    };
+  };
 }
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition

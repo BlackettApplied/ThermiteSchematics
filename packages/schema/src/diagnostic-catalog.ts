@@ -199,7 +199,7 @@ export const DIAGNOSTIC_CATALOG = {
     severity: "error",
     producer: "code",
     meaning:
-      "Invalid channel assignment or duplicate address within an address space.",
+      "Invalid channel or connector I/O assignment, missing connector I/O address space, or duplicate address within an address space.",
   },
   E203: {
     severity: "error",

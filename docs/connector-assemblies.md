@@ -94,6 +94,10 @@ Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and
 
 Run `bun thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
 
+For I/O modules described by sockets rather than terminal channels, see the
+[connector I/O schedule](connector-io.md). It combines socket assignments with
+these assembly records while preserving unresolved mappings.
+
 The query API `buildConnectorAssemblyInventory(ir)` returns `connector-assembly-inventory/0.1` with `assemblies` and `ports`. Device inspection includes `connectorPorts`; relation and incident-relation inspection includes `assembly`.
 
 SVG audit attributes are `data-connector-assembly` (relation UID), `data-assembly-designation`, `data-assembly-endpoints` (`[{deviceUid,portKey}, ...]`), `data-pin-mapping`, `data-device-uid`, `data-connector-port` and `data-port-occupancy`. Generated SVG remains an artifact, never electrical source.

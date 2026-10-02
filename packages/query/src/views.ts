@@ -64,6 +64,9 @@ export function buildDeviceView(device: IrDevice): DeviceView {
       ? {}
       : { connectionReview: structuredClone(device.connectionReview) }),
     ...(device.io === undefined ? {} : { io: structuredClone(device.io) }),
+    ...(device.connectorIo === undefined
+      ? {}
+      : { connectorIo: structuredClone(device.connectorIo) }),
     ...(device.location === undefined ? {} : { location: device.location }),
   };
 }
