@@ -174,3 +174,12 @@ outside semantic review; retain normal Git and lock-file review for those.
 Snapshots are change-review data, not backups or cryptographic approval records.
 Affected devices are directly referenced objects, not a functional impact or
 machine-safety analysis.
+
+## Declared physical continuity review
+
+`continuity-check-request/0.1` is a standalone saved review request, not a project
+source extension. `physical-continuity-report/0.1` returns explicit obligations,
+resolved endpoint net IDs and model coverage, and satisfied/missing-modeled-path/
+indeterminate outcomes. The query API and source-alpha `continuity` command use
+only the existing physical net semantics. See [request, exits and limits](continuity-checks.md).
+No library or project schema, net derivation or guarded agent contract is changed.

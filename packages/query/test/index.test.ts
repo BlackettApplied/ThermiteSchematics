@@ -7,6 +7,7 @@ describe("query public API", () => {
     expect(Object.keys(query).sort()).toEqual([
       "InvalidElectricalIrError",
       "REPORT_KINDS",
+      "auditContinuity",
       "buildCableSchedule",
       "buildCommunicationInventory",
       "buildConnectorAssemblyInventory",
