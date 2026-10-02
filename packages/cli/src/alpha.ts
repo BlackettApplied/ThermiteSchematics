@@ -12,6 +12,7 @@ import {
   type ReportKind,
   buildCableSchedule,
   createQueryEngine,
+  auditContinuity,
 } from "@thermite/query";
 import {
   renderSchematicPacket,
@@ -264,6 +265,71 @@ export async function runThermite(argv = process.argv): Promise<number> {
       process.stderr.write(
         JSON.stringify({ diagnostics: c.diagnostics, error: null }) + "\n",
       );
+    });
+  command
+    .command("continuity")
+    .description(
+      "check declared physical continuity obligations without inferring device behavior",
+    )
+    .option("--project <directory>", "project directory", ".")
+    .requiredOption(
+      "--input <file>",
+      "continuity-check-request/0.1 JSON file, or - for stdin",
+    )
+    .option("--json", "structured physical continuity report")
+    .option("-o, --output <file>", "write .txt or .json")
+    .action(async (flags: Flags) => {
+      const extension = flags.output ? extname(flags.output).toLowerCase() : "";
+      if (flags.output && ![".txt", ".json"].includes(extension))
+        throw new Error("Continuity output must use .txt or .json.");
+      if (flags.json && flags.output && extension !== ".json")
+        throw new Error("--json output must use a .json filename.");
+      const compiled = await compileProject(flags.project);
+      if (!compiled.ok) {
+        process.stderr.write(
+          JSON.stringify({ diagnostics: compiled.diagnostics }) + "\n",
+        );
+        exitCode = compiled.toolFailure ? 2 : 1;
+        return;
+      }
+      let report;
+      try {
+        report = auditContinuity(compiled.ir, await requestJson(flags.input!));
+      } catch (error) {
+        process.stderr.write(
+          JSON.stringify({
+            diagnostics: compiled.diagnostics,
+            error: {
+              code: "Q001",
+              message:
+                error instanceof Error
+                  ? error.message
+                  : "Invalid continuity request.",
+            },
+          }) + "\n",
+        );
+        exitCode = 1;
+        return;
+      }
+      const content =
+        flags.json || extension === ".json"
+          ? JSON.stringify(report, null, 2) + "\n"
+          : `${report.counts.satisfied}/${report.counts.total} physical continuity obligations satisfied; ${report.counts.missingModeledPath} missing modeled paths; ${report.counts.indeterminate} indeterminate\n${report.checks.map((check) => `${check.status.toUpperCase()} ${check.id}: ${check.reason}${check.errors.length ? " - " + check.errors.map((e) => e.error.message).join("; ") : ""}`).join("\n")}\n${report.limitations.join("\n")}\n`;
+      if (flags.output) {
+        await writeAlphaOutput(
+          flags.project,
+          flags.output,
+          content,
+          flags.input === "-" ? [] : [flags.input!],
+          { allowText: true },
+        );
+        process.stdout.write(`Wrote ${resolve(flags.output)}\n`);
+      } else process.stdout.write(content);
+      process.stderr.write(
+        JSON.stringify({ diagnostics: compiled.diagnostics, error: null }) +
+          "\n",
+      );
+      if (!report.passed) exitCode = 1;
     });
   command
     .command("cable <designation>")

@@ -65,3 +65,10 @@ export {
   buildConnectorAssemblyInventory,
   type ConnectorAssemblyInventory,
 } from "./connector-assemblies.js";
+
+export {
+  auditContinuity,
+  type ContinuityRequest,
+  type ContinuityEndpoint,
+  type ContinuityReport,
+} from "./continuity.js";

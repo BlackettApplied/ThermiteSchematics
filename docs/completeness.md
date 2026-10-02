@@ -131,6 +131,9 @@ physical network cable has been scheduled.
 This analysis does not yet prove an upstream supply path, adequate power,
 protective bonding, conductor ampacity, fuse/breaker coordination, or machine
 safety. A device can have every pin connected and still need an upstream feed.
+The separate [declared continuity audit](continuity-checks.md) checks explicit
+commoning, bond and direct-feed obligations against physical nets; it does not
+traverse device functions or infer requirements.
 Coverage declarations and review notes make those limits visible in the source.
 
 The executable [completeness fixture](../packages/cli/fixtures/completeness/source.json)

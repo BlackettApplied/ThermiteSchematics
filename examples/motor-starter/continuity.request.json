@@ -1,0 +1,47 @@
+{
+  "format": "continuity-check-request/0.1",
+  "checks": [
+    {
+      "id": "terminal-common",
+      "reason": "The authored JP1 jumper must join the two field-terminal points.",
+      "from": {
+        "by": "parts",
+        "deviceDesignation": "TB1",
+        "terminalKey": "1"
+      },
+      "to": {
+        "by": "parts",
+        "deviceDesignation": "TB1",
+        "terminalKey": "2"
+      }
+    },
+    {
+      "id": "plc-positive-feed",
+      "reason": "The PLC supply terminal must share the modeled DC positive feed.",
+      "from": {
+        "by": "parts",
+        "deviceDesignation": "PS1",
+        "terminalKey": "+"
+      },
+      "to": {
+        "by": "parts",
+        "deviceDesignation": "PLC1",
+        "terminalKey": "L+"
+      }
+    },
+    {
+      "id": "plc-return",
+      "reason": "The PLC return must share the modeled DC return feed.",
+      "from": {
+        "by": "parts",
+        "deviceDesignation": "PS1",
+        "terminalKey": "-"
+      },
+      "to": {
+        "by": "parts",
+        "deviceDesignation": "PLC1",
+        "terminalKey": "M"
+      }
+    }
+  ]
+}

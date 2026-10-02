@@ -36,6 +36,7 @@ describe("render public package boundaries", () => {
     expect(Object.keys(query).sort()).toEqual([
       "InvalidElectricalIrError",
       "REPORT_KINDS",
+      "auditContinuity",
       "buildCableSchedule",
       "buildCommunicationInventory",
       "buildConnectorAssemblyInventory",
