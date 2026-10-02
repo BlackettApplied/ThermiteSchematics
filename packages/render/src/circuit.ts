@@ -1160,6 +1160,25 @@ async function layoutGroup(
       "elk.layered.spacing.edgeEdgeBetweenLayers": "3",
       "elk.layered.spacing.edgeNodeBetweenLayers": "3",
       "elk.spacing.edgeLabel": "1",
+      // A nested fixed-port loop can obstruct an outer-side label. Reserve
+      // enough room for its measured label inside the loop, with 1 mm on
+      // each side; ELK still owns the complete route and node placement.
+      ...(selfLoops.size
+        ? {
+            "elk.spacing.nodeSelfLoop": String(
+              Math.max(
+                10,
+                ...edges
+                  .filter((_, i) => selfLoops.has(i))
+                  .flatMap((edge) =>
+                    edge.labels!.map(
+                      (label) => Math.max(label.width!, label.height!) + 2,
+                    ),
+                  ),
+              ),
+            ),
+          }
+        : {}),
       "elk.padding": "[top=2,left=2,bottom=2,right=2]",
       "elk.randomSeed": "1",
       "elk.layered.considerModelOrder.strategy": "NODES_AND_EDGES",
@@ -1364,19 +1383,23 @@ async function layoutGroup(
     if (!labelObstructed(label)) continue;
     const candidates = own.flatMap((s) => {
       const box = segmentBox(s);
-      if (box.height >= label.height + 1)
+      // Centered labels may overhang a short segment. The full measured box
+      // still has to clear every other route, label and device below.
+      if (box.height > 0)
         return [
           box.y + (box.height - label.height) / 2,
-          box.y + box.height - label.height - 0.5,
-          box.y + 0.5,
+          ...(box.height >= label.height + 1
+            ? [box.y + box.height - label.height - 0.5, box.y + 0.5]
+            : []),
         ].flatMap((y) =>
           [box.x - label.width - 1, box.x + 1].map((x) => ({ ...label, x, y })),
         );
-      if (box.width >= label.width + 1)
+      if (box.width > 0)
         return [
           box.x + (box.width - label.width) / 2,
-          box.x + box.width - label.width - 0.5,
-          box.x + 0.5,
+          ...(box.width >= label.width + 1
+            ? [box.x + box.width - label.width - 0.5, box.x + 0.5]
+            : []),
         ].flatMap((x) =>
           [box.y - label.height - 1, box.y + 1].map((y) => ({
             ...label,
