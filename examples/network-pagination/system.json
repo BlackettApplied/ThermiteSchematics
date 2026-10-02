@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic bounded communication networks"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "network-page-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

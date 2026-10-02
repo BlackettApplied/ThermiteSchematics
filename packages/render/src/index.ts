@@ -14,6 +14,7 @@ export {
   type RenderedPacket,
   type RenderedSheet,
   type CircuitContinuation,
+  type CommunicationContinuation,
   type SchematicPacketRequest,
 } from "./sheets.js";
 export type {

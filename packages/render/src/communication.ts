@@ -32,6 +32,11 @@ export interface CommunicationDrawing {
   note: string;
   topologyCoverage?: TopologyDrawingCoverage;
   coverage?: DrawingCoverage;
+  pagination?: {
+    part: number;
+    total: number;
+    devices: { deviceUid: string; designation: string; parts: number[] }[];
+  };
 }
 const n = (v: number) => String(Number(v.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
@@ -87,6 +92,20 @@ export async function prepareCommunicationDrawing(
   ir: Readonly<ElectricalIr>,
   request: CommunicationViewRequest,
 ): Promise<CommunicationDrawing> {
+  return layoutCommunicationDrawing(ir, request);
+}
+interface CommunicationProjection {
+  relations: Set<string>;
+  devices: Set<string>;
+  part: number;
+  total: number;
+  appearances: Map<string, number[]>;
+}
+async function layoutCommunicationDrawing(
+  ir: Readonly<ElectricalIr>,
+  request: CommunicationViewRequest,
+  projection?: CommunicationProjection,
+): Promise<CommunicationDrawing> {
   if (
     !request ||
     request.format !== "communication-view-request/0.1" ||
@@ -124,7 +143,7 @@ export async function prepareCommunicationDrawing(
       throw new Error(`${name} has no ${request.medium} ports.`);
     selected.add(matches[0]!.uid);
   }
-  const links = inventory.links.filter(
+  const selectedLinks = inventory.links.filter(
     (r) =>
       r.connection.medium === request.medium &&
       (!selected.size ||
@@ -133,7 +152,7 @@ export async function prepareCommunicationDrawing(
   );
   const included = new Set([
     ...selected,
-    ...links.flatMap((l) => [l.fromDeviceUid, l.toDeviceUid]),
+    ...selectedLinks.flatMap((l) => [l.fromDeviceUid, l.toDeviceUid]),
   ]);
   if (!selected.size)
     for (const p of inventory.ports.filter(
@@ -146,9 +165,14 @@ export async function prepareCommunicationDrawing(
     throw new Error(
       "Communication view exceeds 80 devices; select a smaller view.",
     );
-  const ordered = [...included].sort((a, b) =>
-    compare(devices.get(a)!.designation, devices.get(b)!.designation),
-  );
+  const links = projection
+    ? selectedLinks.filter((l) => projection.relations.has(l.uid))
+    : selectedLinks;
+  const ordered = [...included]
+    .filter((uid) => !projection || projection.devices.has(uid))
+    .sort((a, b) =>
+      compare(devices.get(a)!.designation, devices.get(b)!.designation),
+    );
   const nodeIds = new Map(ordered.map((uid, i) => [uid, `d${i}`]));
   const portIds = new Map<string, string>();
   const rows = new Map<
@@ -174,6 +198,18 @@ export async function prepareCommunicationDrawing(
         nodeWidth - 6,
       ),
       ...(boundary ? ["Boundary (schedule)"] : []),
+      ...(projection &&
+      selectedLinks.some(
+        (l) =>
+          !projection.relations.has(l.uid) &&
+          (l.fromDeviceUid === uid || l.toDeviceUid === uid),
+      )
+        ? wrap(
+            "Other ports on other parts",
+            request.medium === "nrg-bus" ? 24 : 35,
+            nodeWidth - 6,
+          )
+        : []),
     ];
     if (caption.some((line) => textWidth(line) > nodeWidth - 6))
       throw new Error(
@@ -377,13 +413,149 @@ export async function prepareCommunicationDrawing(
       ),
     },
     title:
-      request.medium === "ethernet"
+      (request.medium === "ethernet"
         ? "Ethernet connections"
-        : "NRG heater bus connections",
+        : "NRG heater bus connections") +
+      (projection ? ` - Part ${projection.part}/${projection.total}` : ""),
+    ...(projection
+      ? {
+          pagination: {
+            part: projection.part,
+            total: projection.total,
+            devices: ordered.flatMap((deviceUid) => {
+              const parts = (
+                projection.appearances.get(deviceUid) ?? []
+              ).filter((p) => p !== projection.part);
+              return parts.length
+                ? [
+                    {
+                      deviceUid,
+                      designation: devices.get(deviceUid)!.designation,
+                      parts,
+                    },
+                  ]
+                : [];
+            }),
+          },
+        }
+      : {}),
     content: out.join("\n"),
     width: graph.width!,
     height: graph.height!,
     references,
-    note: `${links.length} authored links; ${selected.size ? "boundary devices included; " : ""}see communication schedule for status and unconnected ports.`,
+    note: projection
+      ? `${links.length} of ${selectedLinks.length} authored links in this part; ${selected.size ? "boundary devices included; " : ""}see communication schedule for status and unconnected ports.`
+      : `${links.length} authored links; ${selected.size ? "boundary devices included; " : ""}see communication schedule for status and unconnected ports.`,
   };
+}
+
+/** Packet-only partitioning: preserve complete physical port links, never cut a route. */
+export async function prepareCommunicationPages(
+  ir: Readonly<ElectricalIr>,
+  request: CommunicationViewRequest,
+  fits: (drawing: CommunicationDrawing) => boolean,
+): Promise<CommunicationDrawing[]> {
+  // A malformed original layout must fail before attempting smaller parts.
+  const full = await prepareCommunicationDrawing(ir, request);
+  if (fits(full)) return [full];
+  const original = full.topologyCoverage!;
+  const chosen = new Set(original.relationIds);
+  type Unit = { relations: string[]; devices: string[] };
+  const units: Unit[] = buildCommunicationInventory(ir)
+    .links.filter((l) => chosen.has(l.uid))
+    .map((l) => ({
+      relations: [l.uid],
+      devices: [l.fromDeviceUid, l.toDeviceUid],
+    }));
+  const linked = new Set(units.flatMap((u) => u.devices));
+  for (const uid of original.deviceUids)
+    if (!linked.has(uid)) units.push({ relations: [], devices: [uid] });
+  if (units.length < 2) return [full];
+  const widestPart = Number("8".repeat(String(units.length).length));
+  // Reserve a device reference for every other possible part in trials.
+  // Actual partitions can only require fewer references.
+  const trialAppearances = new Map(
+    original.deviceUids.map((uid) => [
+      uid,
+      Array.from(
+        {
+          length: Math.max(
+            0,
+            units.filter((u) => u.devices.includes(uid)).length - 1,
+          ),
+        },
+        () => widestPart - 1,
+      ),
+    ]),
+  );
+  const draw = (
+    items: Unit[],
+    part: number,
+    total: number,
+    appearances: Map<string, number[]>,
+  ) =>
+    layoutCommunicationDrawing(ir, request, {
+      relations: new Set(items.flatMap((u) => u.relations)),
+      devices: new Set(items.flatMap((u) => u.devices)),
+      part,
+      total,
+      appearances,
+    });
+  const parts: Unit[][] = [];
+  let current: Unit[] = [];
+  for (const unit of units) {
+    const candidate = [...current, unit];
+    if (fits(await draw(candidate, widestPart, widestPart, trialAppearances))) {
+      current = candidate;
+      continue;
+    }
+    if (!current.length)
+      throw new Error(
+        "A complete communication link or device and its references cannot fit at readable size; use larger paper or shorter labels.",
+      );
+    parts.push(current);
+    current = [unit];
+    if (!fits(await draw(current, widestPart, widestPart, trialAppearances)))
+      throw new Error(
+        "A complete communication link or device and its references cannot fit at readable size; use larger paper or shorter labels.",
+      );
+  }
+  parts.push(current);
+  const appearances = new Map<string, number[]>();
+  parts.forEach((items, i) => {
+    for (const uid of new Set(items.flatMap((u) => u.devices)))
+      appearances.set(uid, [...(appearances.get(uid) ?? []), i + 1]);
+  });
+  const drawings: CommunicationDrawing[] = [];
+  for (const [i, items] of parts.entries()) {
+    const drawing = await draw(items, i + 1, parts.length, appearances);
+    if (!fits(drawing))
+      throw new Error(
+        "A communication pagination part exceeds the readable sheet bounds.",
+      );
+    drawings.push(drawing);
+  }
+  const equal = (a: readonly string[], b: readonly string[]) =>
+    JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  const coverage = drawings.map((d) => d.topologyCoverage!);
+  const portId = (p: { deviceUid: string; portKey: string }) =>
+    JSON.stringify([p.deviceUid, p.portKey]);
+  if (
+    !equal(
+      coverage.flatMap((c) => c.relationIds),
+      original.relationIds,
+    ) ||
+    !equal(
+      coverage.flatMap((c) => c.ports.map(portId)),
+      original.ports.map(portId),
+    ) ||
+    !equal(
+      [...new Set(coverage.flatMap((c) => c.deviceUids))],
+      original.deviceUids,
+    )
+  )
+    throw new Error(
+      "Communication pagination did not conserve the original selection.",
+    );
+  return drawings;
 }

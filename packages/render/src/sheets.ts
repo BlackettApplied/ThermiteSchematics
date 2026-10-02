@@ -9,7 +9,7 @@ import {
   type CircuitViewRequest,
 } from "./circuit.js";
 import {
-  prepareCommunicationDrawing,
+  prepareCommunicationPages,
   type CommunicationViewRequest,
   type CommunicationDrawing,
 } from "./communication.js";
@@ -117,6 +117,15 @@ export interface RenderedSheet {
     readonly netId: string;
   }[];
   readonly circuitContinuations?: readonly CircuitContinuation[];
+  readonly communicationContinuations?: readonly CommunicationContinuation[];
+}
+export interface CommunicationContinuation {
+  /** One-based authored packet view; independent repeated views stay separate. */
+  readonly view: number;
+  readonly fromPart: number;
+  readonly toPart: number;
+  readonly toSheet: number;
+  readonly deviceUid: string;
 }
 export interface CircuitContinuation {
   readonly group: string;
@@ -161,6 +170,74 @@ interface Draft {
     width: number;
   }[];
   circuitBlocks?: CircuitContinuationBlock[];
+  communicationBlock?: CommunicationContinuationBlock;
+}
+interface CommunicationContinuationBlock {
+  view: number;
+  part: number;
+  x: number;
+  y: number;
+  width: number;
+  rows: {
+    deviceUid: string;
+    label: string;
+    targets: { part: number; sheet: number }[];
+  }[];
+}
+const communicationPartNotice =
+  "Whole port links; repeated bodies describe the same device with other ports. P = view part, S = packet sheet.";
+function communicationReferenceLines(
+  label: string,
+  targets: readonly { part: number; sheet: number }[],
+  width: number,
+): string[] {
+  return assemblyNoteLines(
+    `${label} -> ${targets.map((t) => `P${t.part}/S${String(t.sheet).padStart(2, "0")}`).join(", ")}`,
+    width,
+  );
+}
+function communicationPartLines(
+  drawing: CommunicationDrawing,
+  width: number,
+): string[] {
+  if (!drawing.pagination) return [];
+  return [
+    ...assemblyNoteLines(communicationPartNotice, width),
+    ...drawing.pagination.devices.flatMap((d) =>
+      communicationReferenceLines(
+        d.designation,
+        d.parts.map((part) => ({ part, sheet: 100 })),
+        width,
+      ),
+    ),
+  ];
+}
+function emitCommunicationContinuationBlock(
+  block: CommunicationContinuationBlock,
+): string {
+  let y = block.y;
+  const out = assemblyNoteLines(communicationPartNotice, block.width).map(
+    (s) => {
+      const row = text(block.x, y, s, 2.5);
+      y += 3.5;
+      return row;
+    },
+  );
+  for (const row of block.rows) {
+    out.push(
+      `<g data-communication-continuation-device="${attr(row.deviceUid)}" data-communication-view="${block.view}" data-from-part="${block.part}" data-destination-parts="${attr(JSON.stringify(row.targets.map((t) => t.part)))}" data-destination-sheets="${attr(JSON.stringify(row.targets.map((t) => t.sheet)))}">`,
+    );
+    for (const s of communicationReferenceLines(
+      row.label,
+      row.targets,
+      block.width,
+    )) {
+      out.push(text(block.x, y, s, 2.5));
+      y += 3.5;
+    }
+    out.push("</g>");
+  }
+  return out.join("");
 }
 interface CircuitContinuationBlock {
   group: string;
@@ -1245,39 +1322,39 @@ async function topologyDrafts(
         ? circuitTextLines(drawing.title, b.w, 4)
         : [drawing.title];
       const headingHeight = 9 + (headingLines.length - 1) * 4.8;
+      const partLines = communicationPartLines(drawing, b.w);
       const noteLines = drawing.note
         .split("\n")
         .flatMap((line) => wrapReport(line, Math.floor(b.w / 1.6)))
         .flatMap((line) => {
-          if (!assembly) return [line];
+          if (!assembly && !drawing.pagination) return [line];
           const measured = assemblyNoteLines(line, b.w);
           // Preserve existing line breaks where their measured text fits.
           return measured.length > 1 ? measured : [line];
         });
+      const noteHeight = (noteLines.length + partLines.length) * 3.5;
       let scale = Math.min(
         1,
         b.w / drawing.width,
         (b.h - headingHeight - 6) / drawing.height,
       );
       const reserveNotes =
-        assembly &&
-        headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5 >
-          b.h;
+        (assembly || !!drawing.pagination) &&
+        headingHeight + drawing.height * scale + 4 + noteHeight > b.h;
       if (reserveNotes) {
         // Reserve notes before fitting; round down to the emitted SVG precision.
         scale =
           Math.floor(
             Math.min(
               scale,
-              (b.h - headingHeight - 4 - noteLines.length * 3.5) /
-                drawing.height,
+              (b.h - headingHeight - 4 - noteHeight) / drawing.height,
             ) * 1000,
           ) / 1000;
       }
       if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
         return failure(
           "unprintable-layout",
-          reserveNotes
+          reserveNotes && assembly
             ? "Connector assembly notes and diagram cannot fit at readable size. Shorten notes, select fewer assemblies or use larger paper."
             : wiring
               ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
@@ -1297,8 +1374,7 @@ async function topologyDrafts(
         xMm: x + r.x * scale,
         yMm: y + r.y * scale,
       }));
-      const height =
-        headingHeight + drawing.height * scale + 4 + noteLines.length * 3.5;
+      const height = headingHeight + drawing.height * scale + 4 + noteHeight;
       if (height > b.h)
         return failure(
           "unprintable-layout",
@@ -1306,7 +1382,12 @@ async function topologyDrafts(
         );
       const note = noteLines
         .map((v, i) =>
-          text(b.x, b.y + height - (noteLines.length - 1 - i) * 3.5, v, 2.5),
+          text(
+            b.x,
+            b.y + height - (partLines.length + noteLines.length - 1 - i) * 3.5,
+            v,
+            2.5,
+          ),
         )
         .join("\n");
       return {
@@ -1326,6 +1407,22 @@ async function topologyDrafts(
           title,
           drawingBounds: b,
           communicationHeight: height,
+          ...(drawing.pagination
+            ? {
+                communicationBlock: {
+                  view: 0,
+                  part: drawing.pagination.part,
+                  x: b.x,
+                  y: b.y + height - (partLines.length - 1) * 3.5,
+                  width: b.w,
+                  rows: drawing.pagination.devices.map((d) => ({
+                    deviceUid: d.deviceUid,
+                    label: d.designation,
+                    targets: d.parts.map((part) => ({ part, sheet: part })),
+                  })),
+                },
+              }
+            : {}),
           references,
           links: [],
           note: wiring
@@ -1363,7 +1460,7 @@ async function topologyDrafts(
               request,
               (d) => compose(d).ok,
             )
-          : [await prepareCommunicationDrawing(ir, request)];
+          : await prepareCommunicationPages(ir, request, (d) => compose(d).ok);
     const drafts: Draft[] = [];
     for (const drawing of drawings) {
       const result = compose(drawing);
@@ -1830,7 +1927,7 @@ export async function renderSchematicPacket(
       error instanceof Error ? error.message : "Invalid circuit view.",
     );
   }
-  for (const view of request.views) {
+  for (const [viewIndex, view] of request.views.entries()) {
     if (record(view) && Object.hasOwn(view, "page"))
       return failure(
         "invalid-packet",
@@ -1884,6 +1981,13 @@ export async function renderSchematicPacket(
                   request.layout,
                 );
     if (!result.ok) return result;
+    for (const draft of result.value) {
+      const block = draft.communicationBlock;
+      if (!block) continue;
+      block.view = viewIndex + 1;
+      for (const row of block.rows)
+        for (const target of row.targets) target.sheet += drafts.length;
+    }
     for (const draft of result.value)
       for (const block of draft.circuitBlocks ?? [])
         for (const row of block.rows)
@@ -1905,6 +2009,8 @@ export async function renderSchematicPacket(
         request.layout === "compact" &&
         previous?.communicationHeight !== undefined &&
         draft.communicationHeight !== undefined &&
+        !previous.communicationBlock &&
+        !draft.communicationBlock &&
         previous.title.lines[0]?.value === draft.title.lines[0]?.value &&
         previous.communicationHeight + 10 + draft.communicationHeight <=
           previous.drawingBounds!.h
@@ -2025,6 +2131,11 @@ export async function renderSchematicPacket(
     for (const draft of drafts)
       for (const block of draft.circuitBlocks ?? [])
         draft.content += emitCircuitContinuationBlock(block);
+    for (const draft of drafts)
+      if (draft.communicationBlock)
+        draft.content += emitCommunicationContinuationBlock(
+          draft.communicationBlock,
+        );
     const sheets = drafts.map((draft, index) => ({
       number: index + 1,
       view: draft.view,
@@ -2052,6 +2163,20 @@ export async function renderSchematicPacket(
         conductor: link.conductor,
         netId: link.netId,
       })),
+      ...(draft.communicationBlock
+        ? {
+            communicationContinuations: draft.communicationBlock.rows.flatMap(
+              (row) =>
+                row.targets.map((target) => ({
+                  view: draft.communicationBlock!.view,
+                  fromPart: draft.communicationBlock!.part,
+                  toPart: target.part,
+                  toSheet: target.sheet,
+                  deviceUid: row.deviceUid,
+                })),
+            ),
+          }
+        : {}),
     }));
     return {
       ok: true,
