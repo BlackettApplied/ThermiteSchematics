@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Original report and reference filtering example"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "filter-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

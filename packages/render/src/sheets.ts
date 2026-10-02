@@ -35,6 +35,9 @@ import {
   buildDocumentation,
   type DocumentationRequest,
   type DocumentationTable,
+  type DocumentationSelection,
+  type DeviceFilter,
+  resolveDeviceFilter,
   buildCableSchedule,
   createQueryEngine,
 } from "@thermite/query";
@@ -85,6 +88,12 @@ export interface SchematicPacketRequest {
   )[];
   readonly index?: boolean;
   readonly layout?: "standard" | "compact";
+  readonly references?:
+    | false
+    | {
+        readonly filter?: DeviceFilter;
+        readonly appearances?: "all" | "drawings";
+      };
 }
 export interface SheetReference {
   readonly deviceUid: string;
@@ -142,6 +151,21 @@ export interface RenderedPacket {
   readonly sheets: readonly RenderedSheet[];
   readonly html: string;
   readonly coverage: PacketCoverage;
+  readonly documentationSelections?: readonly (DocumentationSelection & {
+    readonly view: number;
+  })[];
+  readonly referenceSelection?: ReferenceSelection;
+}
+export interface ReferenceSelection {
+  readonly format: "reference-selection/0.1";
+  readonly enabled: boolean;
+  readonly appearances: "all" | "drawings";
+  readonly filter?: DeviceFilter;
+  readonly deviceUids: readonly string[];
+  readonly outsideDeviceUids: readonly string[];
+  readonly totalGroups: number;
+  readonly retainedGroups: number;
+  readonly omittedGroupKeys: readonly string[];
 }
 interface Link {
   id: string;
@@ -171,6 +195,8 @@ interface Draft {
   }[];
   circuitBlocks?: CircuitContinuationBlock[];
   communicationBlock?: CommunicationContinuationBlock;
+  documentationTable?: boolean;
+  documentationSelection?: DocumentationSelection;
 }
 interface CommunicationContinuationBlock {
   view: number;
@@ -1831,6 +1857,8 @@ function tableDrafts(
       note: table.rows.length
         ? `Rows ${first + 1}-${end} of ${table.rows.length}`
         : "No matching records",
+      documentationTable: true,
+      ...(table.selection ? { documentationSelection: table.selection } : {}),
     });
   }
   start();
@@ -1890,7 +1918,10 @@ export async function renderSchematicPacket(
     !record(request) ||
     request.format !== "schematic-packet-request/0.1" ||
     Object.keys(request).some(
-      (key) => !["format", "page", "views", "layout", "index"].includes(key),
+      (key) =>
+        !["format", "page", "views", "layout", "index", "references"].includes(
+          key,
+        ),
     ) ||
     (request.index !== undefined && typeof request.index !== "boolean") ||
     (request.layout !== undefined &&
@@ -1903,6 +1934,34 @@ export async function renderSchematicPacket(
       "invalid-packet",
       "A packet requires format schematic-packet-request/0.1 and 1–40 views, with an optional shared page.",
     );
+  if (
+    request.references !== undefined &&
+    (request.index !== true ||
+      (request.references !== false &&
+        (!record(request.references) ||
+          !Object.keys(request.references).length ||
+          Object.keys(request.references).some(
+            (k) => !["filter", "appearances"].includes(k),
+          ) ||
+          (Object.hasOwn(request.references, "appearances") &&
+            !["all", "drawings"].includes(request.references.appearances!)) ||
+          (Object.hasOwn(request.references, "filter") &&
+            request.references.filter === undefined))))
+  )
+    return failure(
+      "invalid-packet",
+      "Reference options require index: true and either false or filter/appearances settings.",
+    );
+  let referenceDevices: ReturnType<typeof resolveDeviceFilter> | undefined;
+  try {
+    if (request.references && request.references.filter !== undefined)
+      referenceDevices = resolveDeviceFilter(ir, request.references.filter);
+  } catch (e) {
+    return failure(
+      "invalid-packet",
+      e instanceof Error ? e.message : "Invalid reference filter.",
+    );
+  }
   const paper = normalizePaperPage(
     Object.hasOwn(request, "page")
       ? record(request.page)
@@ -1912,6 +1971,9 @@ export async function renderSchematicPacket(
   );
   if (!paper.ok) return paper;
   const drafts: Draft[] = [];
+  const documentationSelections: (DocumentationSelection & { view: number })[] =
+    [];
+  let referenceSelection: ReferenceSelection | undefined;
   let referenceNumber = 0;
   let circuitAppearances: Map<string, string[]>;
   try {
@@ -1981,6 +2043,9 @@ export async function renderSchematicPacket(
                   request.layout,
                 );
     if (!result.ok) return result;
+    const reportSelection = result.value[0]?.documentationSelection;
+    if (reportSelection)
+      documentationSelections.push({ ...reportSelection, view: viewIndex + 1 });
     for (const draft of result.value) {
       const block = draft.communicationBlock;
       if (!block) continue;
@@ -2049,6 +2114,11 @@ export async function renderSchematicPacket(
       widths: [0.08, 0.42, 0.5],
       notes: [
         "Index covers the generated content sheets. References point to this packet revision.",
+        ...(request.references === false
+          ? [
+              "Device/function reference index omitted by request; content sheets remain indexed.",
+            ]
+          : []),
       ],
       rows: drafts.map((d, i) => ({
         key: String(i + 1),
@@ -2071,6 +2141,10 @@ export async function renderSchematicPacket(
         uid: string;
       }
     >();
+    const retainedGroups: typeof groups = new Map();
+    const selectedReferenceDevices = new Set(
+      referenceDevices?.deviceUids ?? ir.devices.map((d) => d.uid),
+    );
     drafts.forEach((d, i) =>
       d.references?.forEach((r) => {
         const key = JSON.stringify([r.deviceUid, r.functions]);
@@ -2082,17 +2156,62 @@ export async function renderSchematicPacket(
         };
         g.locations.push(`${i + 1} / ${r.zone}`);
         groups.set(key, g);
+        if (
+          request.references !== false &&
+          selectedReferenceDevices.has(r.deviceUid) &&
+          !(
+            request.references?.appearances === "drawings" &&
+            d.documentationTable
+          )
+        ) {
+          const retained = retainedGroups.get(key) ?? {
+            ...g,
+            functions:
+              request.references?.appearances === "drawings" &&
+              !r.functions.length
+                ? "Device / terminal / port"
+                : g.functions,
+            locations: [],
+          };
+          retained.locations.push(`${i + 1} / ${r.zone}`);
+          retainedGroups.set(key, retained);
+        }
       }),
     );
+    if (request.references !== undefined)
+      referenceSelection = {
+        format: "reference-selection/0.1",
+        enabled: request.references !== false,
+        appearances:
+          request.references === false
+            ? "all"
+            : (request.references.appearances ?? "all"),
+        ...(referenceDevices ? { filter: referenceDevices.filter } : {}),
+        deviceUids:
+          referenceDevices?.deviceUids ?? ir.devices.map((d) => d.uid).sort(),
+        outsideDeviceUids: referenceDevices?.outsideDeviceUids ?? [],
+        totalGroups: groups.size,
+        retainedGroups: retainedGroups.size,
+        omittedGroupKeys: [...groups.keys()].filter(
+          (k) => !retainedGroups.has(k),
+        ),
+      };
     const refTable: DocumentationTable = {
       kind: "references",
       title: "Device and function references",
       columns: ["Device", "Function / representation", "Sheet / zone"],
       widths: [0.2, 0.35, 0.45],
       notes: [
-        "Repeated functions represent the same physical device. References include schedule appearances.",
+        request.references && request.references.appearances === "drawings"
+          ? "Repeated functions represent the same physical device. References include diagram appearances only."
+          : "Repeated functions represent the same physical device. References include schedule appearances.",
+        ...(referenceSelection
+          ? [
+              `Filtered reference index: ${retainedGroups.size} of ${groups.size} device/function groups retained. Content sheets and continuation references are unchanged.`,
+            ]
+          : []),
       ],
-      rows: [...groups]
+      rows: [...retainedGroups]
         .sort(([, a], [, b]) =>
           a.designation < b.designation
             ? -1
@@ -2110,7 +2229,9 @@ export async function renderSchematicPacket(
           deviceUids: [g.uid],
         })),
     };
-    for (const table of [indexTable, refTable]) {
+    for (const table of request.references === false
+      ? [indexTable]
+      : [indexTable, refTable]) {
       const extra = tableDrafts(ir, table, presentation, paper.value);
       if (!extra.ok) return extra;
       drafts.push(...extra.value);
@@ -2194,6 +2315,8 @@ export async function renderSchematicPacket(
             topologyDrawings: draft.topologyCoverage ?? [],
           })),
         ),
+        ...(documentationSelections.length ? { documentationSelections } : {}),
+        ...(referenceSelection ? { referenceSelection } : {}),
       },
     };
   } catch (error) {

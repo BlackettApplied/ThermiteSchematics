@@ -1,0 +1,352 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000001",
+      "designation": "PLC1",
+      "type": "filter-fixture:controller",
+      "location": "Main",
+      "io": {
+        "addressSpace": "PLC1",
+        "channels": {
+          "di1": {
+            "address": "I0.0",
+            "signal": "Start",
+            "usage": "in-use"
+          }
+        }
+      },
+      "connectorIo": {
+        "addressSpace": "PLC1",
+        "ports": {
+          "X1": {
+            "signal": "Interface input",
+            "direction": "input"
+          }
+        }
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000002",
+      "designation": "PLC2",
+      "type": "filter-fixture:controller",
+      "location": "Remote",
+      "io": {
+        "addressSpace": "PLC2",
+        "channels": {
+          "di1": {
+            "address": "I0.0",
+            "signal": "Remote start"
+          }
+        }
+      },
+      "connectorIo": {
+        "addressSpace": "PLC2",
+        "ports": {}
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000003",
+      "designation": "S1",
+      "type": "filter-fixture:field",
+      "location": "Field"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000004",
+      "designation": "S2",
+      "type": "filter-fixture:field",
+      "location": "Field"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000005",
+      "designation": "DOC1",
+      "type": "filter-fixture:documentary",
+      "location": "Main"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000006",
+      "designation": "DOC2",
+      "type": "filter-fixture:documentary",
+      "location": "Remote"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000007",
+      "designation": "TB1",
+      "type": "filter-fixture:strip",
+      "location": "Main"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000008",
+      "designation": "TB2",
+      "type": "filter-fixture:strip",
+      "location": "Remote"
+    },
+    {
+      "kind": "device",
+      "uid": "79000000-0000-4000-8000-000000000009",
+      "designation": "UNLOC",
+      "type": "filter-fixture:field"
+    },
+    {
+      "kind": "wire",
+      "uid": "79000000-0000-4000-8000-000000000010",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "I0"
+        },
+        {
+          "device": "TB1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "79000000-0000-4000-8000-000000000011",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "2"
+        },
+        {
+          "device": "S1",
+          "terminal": "P"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "79000000-0000-4000-8000-000000000012",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "PLC2",
+          "terminal": "I0"
+        },
+        {
+          "device": "S2",
+          "terminal": "P"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "79000000-0000-4000-8000-000000000013",
+      "designation": "J1",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "1"
+        },
+        {
+          "device": "TB1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "79000000-0000-4000-8000-000000000014",
+      "designation": "WD1",
+      "endpoints": [
+        {
+          "device": "DOC1",
+          "terminal": "N"
+        },
+        {
+          "device": "DOC2",
+          "terminal": "N"
+        }
+      ]
+    },
+    {
+      "kind": "relation",
+      "uid": "79000000-0000-4000-8000-000000000015",
+      "designation": "NET1",
+      "relation": "associated_with",
+      "from": {
+        "device": "PLC1"
+      },
+      "to": {
+        "device": "DOC1"
+      },
+      "connection": {
+        "fromPort": "ETH",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "status": "planned",
+        "protocol": "Original test intent"
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "79000000-0000-4000-8000-000000000016",
+      "designation": "NET2",
+      "relation": "associated_with",
+      "from": {
+        "device": "DOC1"
+      },
+      "to": {
+        "device": "DOC2"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "IN",
+        "medium": "ethernet",
+        "status": "planned",
+        "protocol": "Original test intent"
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "79000000-0000-4000-8000-000000000017",
+      "designation": "NET3",
+      "relation": "associated_with",
+      "from": {
+        "device": "DOC2"
+      },
+      "to": {
+        "device": "PLC2"
+      },
+      "connection": {
+        "fromPort": "OUT",
+        "toPort": "ETH",
+        "medium": "ethernet",
+        "status": "planned",
+        "protocol": "Original test intent"
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "79000000-0000-4000-8000-000000000018",
+      "designation": "ASM1",
+      "relation": "associated_with",
+      "from": {
+        "device": "PLC1"
+      },
+      "to": {
+        "device": "S1"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X1",
+        "toPort": "P",
+        "status": "documented",
+        "cable": {
+          "specification": "Generic test cordset"
+        },
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "No conductor pin mapping is supplied by this test."
+        }
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "79000000-0000-4000-8000-000000000019",
+      "designation": "ASM2",
+      "relation": "associated_with",
+      "from": {
+        "device": "PLC2"
+      },
+      "to": {
+        "device": "S2"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X1",
+        "toPort": "P",
+        "status": "documented",
+        "cable": {
+          "specification": "Generic test cordset"
+        },
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "No conductor pin mapping is supplied by this test."
+        }
+      }
+    },
+    {
+      "kind": "cable",
+      "uid": "79000000-0000-4000-8000-000000000020",
+      "designation": "CBL1",
+      "type": "filter-fixture:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            {
+              "device": "PLC1",
+              "terminal": "M"
+            },
+            {
+              "device": "S1",
+              "terminal": "M"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "2",
+          "endpoints": [null, null],
+          "usage": "spare"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "79000000-0000-4000-8000-000000000021",
+      "designation": "CBL2",
+      "type": "filter-fixture:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            {
+              "device": "PLC2",
+              "terminal": "M"
+            },
+            {
+              "device": "S2",
+              "terminal": "M"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "2",
+          "endpoints": [null, null],
+          "usage": "spare"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "79000000-0000-4000-8000-000000000022",
+      "designation": "LOOSE",
+      "type": "filter-fixture:cable",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [null, null],
+          "usage": "spare"
+        },
+        {
+          "id": "2",
+          "endpoints": [null, null],
+          "usage": "spare"
+        }
+      ]
+    }
+  ]
+}

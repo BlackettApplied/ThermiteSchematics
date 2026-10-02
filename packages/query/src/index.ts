@@ -47,8 +47,14 @@ export {
   REPORT_KINDS,
   type DocumentationRequest,
   type DocumentationTable,
+  type DocumentationSelection,
   type ReportKind,
 } from "./documentation.js";
+export {
+  resolveDeviceFilter,
+  type DeviceFilter,
+  type DeviceFilterSelection,
+} from "./device-filter.js";
 export {
   createProjectSnapshot,
   parseProjectSnapshot,

@@ -45,6 +45,7 @@ describe("render public package boundaries", () => {
       "createQueryEngine",
       "documentationCsv",
       "parseProjectSnapshot",
+      "resolveDeviceFilter",
       "reviewProject",
       "serializeQueryResult",
     ]);
