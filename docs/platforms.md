@@ -14,20 +14,24 @@ for the commit, test counts, skips and downloaded-asset evidence.
 
 | Platform | Environment | Source check | Runtime package |
 | --- | --- | --- | --- |
-| macOS ARM64 | Apple Silicon Mac and macos-14 CI | Verified | Verified with network disabled |
+| macOS ARM64 | Apple Silicon Mac and prior CI | Verified | Verified with network disabled |
 | Windows x64 | Native windows-2022 CI | Verified | Verified; network isolation not enforced |
 | Linux ARM64 | Debian container in Docker Desktop | Verified | Verified with network disabled |
 | Linux x64 | Native ubuntu-24.04 CI | Verified | Verified with network disabled |
 | macOS x64 | No local test host | Not verified | Not verified |
 
 The [ordinary CI workflow](../.github/workflows/ci.yml) runs the complete check
-and runtime packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022` for
+and runtime packaging on `macos-15`, `ubuntu-24.04`, and `windows-2022` for
 pull requests targeting `release` and pushes to `release`. Manual runs also
 require the `release` branch. Pull requests and merges into `dev` skip this
 workflow; contributors still run the local checks before submitting changes.
 Linux network-disabled acceptance uses a matching-architecture container;
 Windows ARM64 and non-glibc Linux systems have not been validated. The packer
 builds for its current OS and architecture; it does not cross-compile.
+
+Historical macOS CI evidence used `macos-14`. The pinned `macos-15` ARM64
+runner needs fresh source and runtime-package verification from the exact
+release commit; a skipped `dev` workflow does not provide that evidence.
 
 Package acceptance exercises both project templates, validation, all six agent
 commands, guarded patch dry-run/apply/stale rejection, deterministic SVG/HTML/PDF,

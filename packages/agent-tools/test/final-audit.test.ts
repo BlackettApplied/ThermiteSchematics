@@ -193,7 +193,7 @@ describe("M7 Task 9 final inventories", () => {
       await readFile(join(repositoryRoot, "package.json"), "utf8"),
     ) as { scripts: Record<string, string> };
 
-    expect(workflow).toContain("os: [macos-14, ubuntu-24.04, windows-2022]");
+    expect(workflow).toContain("os: [macos-15, ubuntu-24.04, windows-2022]");
     expect(workflow).toContain("runs-on: ${{ matrix.os }}");
     expect(workflow).toContain("- run: bun run check");
     expect(rootPackage.scripts.check).toContain("bun run test");
