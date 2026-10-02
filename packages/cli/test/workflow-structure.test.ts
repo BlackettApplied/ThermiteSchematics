@@ -219,8 +219,12 @@ describe("frozen release workflow topology", () => {
     ]);
     expect(workflow.equals(authority)).toBe(true);
     const text = workflow.toString("utf8");
-    expect(text).toContain("pull_request:");
-    expect(text).toContain("push:\n    branches: [dev]");
+    expect(text).toContain("pull_request:\n    branches: [release]");
+    expect(text).toContain("push:\n    branches: [release]");
+    expect(text).not.toContain("branches: [dev]");
+    expect(text).toContain(
+      "if: github.ref == 'refs/heads/release' || github.base_ref == 'release'",
+    );
     expect(text).toContain("permissions:\n  contents: read");
     expect(text).toContain("persist-credentials: false");
     expect(text).toContain("runs-on: ${{ matrix.os }}");
