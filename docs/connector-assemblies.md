@@ -90,7 +90,11 @@ An occupied port whose assembly is omitted is labeled `outside view`; a port wit
 
 ELK places blocks, ports and paths. Visible labels preserve device names/descriptions, connector names, cable specifications, authored assembly lifecycle status and mapping status. Notes and the assembly schedule retain mapping explanations. Paths represent complete assemblies and have no electrical junction dots. Independent assemblies may cross with a visual gap, but coincident segments are rejected because they could imply a false cable branch.
 
-Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and overlaps are checked. Oversized views fail explicitly; select fewer assemblies or larger paper. Page count is secondary to readable source coverage.
+Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and overlaps are checked. Page count is secondary to readable source coverage.
+
+Packets automatically split an oversized view containing at least two assemblies when every selected assembly is a protective cap. Each part keeps complete assemblies with both named endpoints. Every originally visible port appears exactly once, including unoccupied ports, ports whose assemblies are outside the view, and ports on disconnected selected devices. Device bodies may repeat with different ports: captions distinguish ports on other parts from ports omitted by the original selector and listed in the schedule. Part headings and topology coverage retain the original source identities. Authored notes print once, on the final part.
+
+Views that fit keep their existing layout. Pagination checks actual sheet bounds and readable text sizes, including headings and notes. A complete assembly or the notes must fit a part; otherwise rendering fails with R006. Invalid layouts also fail, without retrying through pagination. Oversized cable, direct-mating or mixed assembly views still require narrower selectors or larger paper. The single-drawing `prepareConnectorAssemblyDrawing` API remains unpaginated; packet rendering performs this split. See the [cap pagination example](../examples/cap-pagination/README.md).
 
 Run `bun thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
 
