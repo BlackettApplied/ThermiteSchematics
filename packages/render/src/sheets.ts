@@ -4,6 +4,8 @@ import {
   circuitFunctionAppearances,
   circuitTextLines,
   prepareCircuitView,
+  paginateCircuitGroup,
+  type CircuitDrawing,
   type CircuitViewRequest,
 } from "./circuit.js";
 import {
@@ -114,6 +116,16 @@ export interface RenderedSheet {
     readonly conductor: string;
     readonly netId: string;
   }[];
+  readonly circuitContinuations?: readonly CircuitContinuation[];
+}
+export interface CircuitContinuation {
+  readonly group: string;
+  readonly fromPart: number;
+  readonly toPart: number;
+  readonly toSheet: number;
+  /** JSON-encoded [deviceUid, terminalKey], retaining the physical terminal. */
+  readonly terminalId: string;
+  readonly netId: string | null;
 }
 export interface RenderedPacket {
   readonly format: "schematic-packet/0.1";
@@ -142,6 +154,73 @@ interface Draft {
   communicationHeight?: number;
   coverage?: DrawingCoverage[];
   topologyCoverage?: TopologyDrawingCoverage[];
+  circuitParts?: {
+    drawing: CircuitDrawing;
+    x: number;
+    y: number;
+    width: number;
+  }[];
+  circuitBlocks?: CircuitContinuationBlock[];
+}
+interface CircuitContinuationBlock {
+  group: string;
+  part: number;
+  x: number;
+  y: number;
+  width: number;
+  rows: {
+    id: string;
+    label: string;
+    targets: { part: number; sheet: number }[];
+  }[];
+}
+const circuitPartNotice =
+  "Whole wires; repeated symbols and terminal IDs describe the same physical equipment. P = group part, S = packet sheet.";
+function circuitContinuationLines(
+  label: string,
+  parts: readonly number[],
+  sheets: readonly number[],
+  width: number,
+): string[] {
+  return circuitTextLines(
+    `${label} -> ${parts.map((part, i) => `P${part}/S${String(sheets[i] ?? 100).padStart(2, "0")}`).join(", ")}`,
+    width,
+  );
+}
+function circuitPartHeight(group: CircuitDrawing, width: number): number {
+  if (!group.pagination) return 0;
+  const lines =
+    circuitTextLines(circuitPartNotice, width).length +
+    group.pagination.terminals.reduce(
+      (count, t) =>
+        count + circuitContinuationLines(t.label, t.parts, [], width).length,
+      0,
+    );
+  return 4 + lines * 3.5;
+}
+function emitCircuitContinuationBlock(block: CircuitContinuationBlock): string {
+  let y = block.y;
+  const out = circuitTextLines(circuitPartNotice, block.width).map((s) => {
+    const row = text(block.x, y, s, 2.5);
+    y += 3.5;
+    return row;
+  });
+  for (const row of block.rows) {
+    out.push(
+      `<g data-circuit-continuation="${attr(block.group)}" data-from-part="${block.part}" data-continuation-terminal="${attr(row.id)}" data-destination-parts="${attr(JSON.stringify(row.targets.map((t) => t.part)))}" data-destination-sheets="${attr(JSON.stringify(row.targets.map((t) => t.sheet)))}">`,
+    );
+    for (const s of circuitContinuationLines(
+      row.label,
+      row.targets.map((t) => t.part),
+      row.targets.map((t) => t.sheet),
+      block.width,
+    )) {
+      out.push(text(block.x, y, s, 2.5));
+      y += 3.5;
+    }
+    out.push("</g>");
+  }
+  return out.join("");
 }
 const PAPERS = {
   letter: [215.9, 279.4],
@@ -1299,7 +1378,37 @@ async function circuitDrafts(
         .join(""),
     });
     drafts.push(newDraft());
-    for (const group of prepared.groups) {
+    const fits = (group: CircuitDrawing) => {
+      const width = group.width > columnWidth + 0.001 ? b.w : columnWidth;
+      const heading = [
+        group.lineReference ? `Ref. ${group.lineReference}` : undefined,
+        group.label,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+      return (
+        group.width <= width + 0.001 &&
+        circuitTextLines(heading, width, 2.7).length * 3.5 +
+          1 +
+          group.height +
+          circuitPartHeight(group, width) +
+          3 <=
+          available
+      );
+    };
+    const groups: CircuitDrawing[] = [];
+    for (const [index, group] of prepared.groups.entries())
+      groups.push(
+        ...(await paginateCircuitGroup(
+          ir,
+          request,
+          index,
+          group,
+          fits,
+          appearances,
+        )),
+      );
+    for (const group of groups) {
       const spanning = group.width > columnWidth + 0.001;
       const width = spanning ? b.w : columnWidth;
       if (group.width > width + 0.001)
@@ -1315,7 +1424,8 @@ async function circuitDrafts(
         .join(" · ");
       const headings = circuitTextLines(heading, width, 2.7);
       const headHeight = headings.length * 3.5 + 1;
-      const height = headHeight + group.height + 3;
+      const height =
+        headHeight + group.height + circuitPartHeight(group, width) + 3;
       if (height > available)
         return failure(
           "unprintable-layout",
@@ -1350,6 +1460,16 @@ async function circuitDrafts(
           .map((s, i) => text(x, y + 2.7 + i * 3.5, s, 2.7, "start", 700))
           .join("") +
         `<g transform="translate(${n(x)} ${n(y + headHeight)})">${group.content}</g>`;
+      if (group.pagination) {
+        draft.note =
+          "Circuit parts · [+N]: outside part · P/S: repeated physical terminal · full wires retained";
+        (draft.circuitParts ??= []).push({
+          drawing: group,
+          x,
+          y: y + headHeight + group.height + 4,
+          width,
+        });
+      }
       draft.references!.push(
         ...group.references.map((r) => ({
           deviceUid: r.deviceUid,
@@ -1397,6 +1517,32 @@ async function circuitDrafts(
         text(x, y + 3, "View notes", 2.7, "start", 700) +
         printedNotes.map((s, i) => text(x, y + 7 + i * 3.5, s, 2.5)).join("");
     }
+    for (const draft of drafts)
+      draft.circuitBlocks = (draft.circuitParts ?? []).map(
+        ({ drawing, x, y, width }) => ({
+          group: drawing.id,
+          part: drawing.pagination!.part,
+          x,
+          y,
+          width,
+          rows: drawing.pagination!.terminals.map((t) => ({
+            id: t.id,
+            label: t.label,
+            targets: t.parts.map((part) => {
+              const sheet = drafts.findIndex((d) =>
+                d.circuitParts?.some(
+                  (p) =>
+                    p.drawing.id === drawing.id &&
+                    p.drawing.pagination!.part === part,
+                ),
+              );
+              if (sheet < 0)
+                throw new Error("Circuit continuation destination is missing.");
+              return { part, sheet: sheet + 1 };
+            }),
+          })),
+        }),
+      );
     return { ok: true, value: drafts };
   } catch (error) {
     return failure(
@@ -1676,6 +1822,10 @@ export async function renderSchematicPacket(
                   request.layout,
                 );
     if (!result.ok) return result;
+    for (const draft of result.value)
+      for (const block of draft.circuitBlocks ?? [])
+        for (const row of block.rows)
+          for (const target of row.targets) target.sheet += drafts.length;
     const references = new Map<string, string>();
     for (const draft of result.value)
       for (const link of draft.links) {
@@ -1804,11 +1954,36 @@ export async function renderSchematicPacket(
       "Packet exceeds the 100-sheet limit including indexes.",
     );
   try {
+    const netIds = new Map(
+      ir.indexes.netIdByTerminal.map((e) => [
+        JSON.stringify([e.key.deviceUid, e.key.terminalKey]),
+        e.value,
+      ]),
+    );
+    for (const draft of drafts)
+      for (const block of draft.circuitBlocks ?? [])
+        draft.content += emitCircuitContinuationBlock(block);
     const sheets = drafts.map((draft, index) => ({
       number: index + 1,
       view: draft.view,
       references: draft.references ?? [],
       svg: frame(draft, paper.value, index + 1, drafts.length),
+      ...(draft.circuitBlocks?.length
+        ? {
+            circuitContinuations: draft.circuitBlocks.flatMap((block) =>
+              block.rows.flatMap((row) =>
+                row.targets.map((target) => ({
+                  group: block.group,
+                  fromPart: block.part,
+                  toPart: target.part,
+                  toSheet: target.sheet,
+                  terminalId: row.id,
+                  netId: netIds.get(row.id) ?? null,
+                })),
+              ),
+            ),
+          }
+        : {}),
       continuations: draft.links.map((link) => ({
         id: link.id,
         toSheet: link.to,

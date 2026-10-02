@@ -13,6 +13,7 @@ export {
   type PaperPage,
   type RenderedPacket,
   type RenderedSheet,
+  type CircuitContinuation,
   type SchematicPacketRequest,
 } from "./sheets.js";
 export type {

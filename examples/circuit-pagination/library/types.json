@@ -1,0 +1,70 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "circuit-pagination-fixture:contact",
+      "symbol": "thermite:switch",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "contact": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1", "2"]
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "circuit-pagination-fixture:terminal",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "terminal": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "circuit-pagination-fixture:lamp",
+      "symbol": "thermite:lamp",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "lamp": {
+          "kind": "load",
+          "terminals": ["1", "2"]
+        }
+      }
+    },
+    {
+      "kind": "cable_type",
+      "id": "circuit-pagination-fixture:cord",
+      "conductors": [
+        {
+          "id": "1",
+          "color": "Black",
+          "size": "18 AWG"
+        }
+      ]
+    }
+  ]
+}

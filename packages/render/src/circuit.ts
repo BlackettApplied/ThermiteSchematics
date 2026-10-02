@@ -69,6 +69,11 @@ export interface CircuitDrawing {
     terminalIds: string[];
     boundaryTerminalIds: string[];
   };
+  pagination?: {
+    part: number;
+    total: number;
+    terminals: { id: string; label: string; parts: number[] }[];
+  };
 }
 export interface PreparedCircuitView {
   title: string;
@@ -1555,4 +1560,173 @@ export async function prepareCircuitView(
     notes: request.notes ?? [],
     groups,
   };
+}
+
+/** Packet-only projection: whole conductors and complete selected symbols. */
+export async function paginateCircuitGroup(
+  ir: Readonly<ElectricalIr>,
+  request: CircuitViewRequest,
+  index: number,
+  original: CircuitDrawing,
+  fits: (drawing: CircuitDrawing) => boolean,
+  appearances?: Map<string, string[]>,
+): Promise<CircuitDrawing[]> {
+  if (fits(original)) return [original];
+  const group = request.groups[index]!;
+  const all = physicalConductors(ir);
+  const fs = selectedFunctions(ir, group),
+    cs = selectConductors(all, group);
+  // Keep selected mechanical gangs and a transformer's shared core together.
+  const clusters = fs.map((f) => new Set([fkey(f)]));
+  const merge = (ids: string[]) => {
+    const matches = clusters.filter((c) => ids.some((id) => c.has(id)));
+    if (matches.length < 2) return;
+    const combined = new Set(matches.flatMap((c) => [...c]));
+    for (const c of matches) clusters.splice(clusters.indexOf(c), 1);
+    clusters.push(combined);
+  };
+  for (const gang of ir.gangedGroups)
+    merge(
+      gang.functionIds.map((f) => JSON.stringify([f.deviceUid, f.functionKey])),
+    );
+  for (const device of ir.devices) {
+    const type = ir.deviceTypes.find((t) => t.id === device.typeId)!;
+    if (type.symbol === "thermite:transformer")
+      merge(fs.filter((f) => f.id.deviceUid === device.uid).map(fkey));
+  }
+  type Unit = {
+    cs: PhysicalConductor[];
+    fs: IrFunction[];
+    terminals: Set<string>;
+  };
+  const unit = (
+    conductors: PhysicalConductor[],
+    functions: IrFunction[],
+  ): Unit => ({
+    cs: conductors,
+    fs: functions,
+    terminals: new Set([
+      ...conductors.flatMap((c) => c.ends.map(key)),
+      ...functions.flatMap((f) => f.terminals.map(key)),
+    ]),
+  });
+  const units = cs.map((c) => {
+    const touching = fs.filter((f) =>
+      f.terminals.some((t) => c.ends.some((e) => key(t) === key(e))),
+    );
+    const members = new Set(
+      clusters
+        .filter((cluster) => touching.some((f) => cluster.has(fkey(f))))
+        .flatMap((cluster) => [...cluster]),
+    );
+    return unit(
+      [c],
+      fs.filter((f) => members.has(fkey(f))),
+    );
+  });
+  const used = new Set(units.flatMap((u) => u.fs.map(fkey)));
+  for (const cluster of clusters)
+    if (![...cluster].some((id) => used.has(id)))
+      units.push(
+        unit(
+          [],
+          fs.filter((f) => cluster.has(fkey(f))),
+        ),
+      );
+  const label = (id: string) => {
+    const [uid, terminal] = JSON.parse(id) as [string, string];
+    return `${ir.devices.find((d) => d.uid === uid)!.designation}.${terminal}`;
+  };
+  const widest = Number("8".repeat(String(units.length).length));
+  const draw = async (items: Unit[], part: number, total: number) => {
+    const chosen = new Set(items.flatMap((u) => u.fs.map(fkey)));
+    const drawing = await layoutGroup(
+      ir,
+      group,
+      fs.filter((f) => chosen.has(fkey(f))),
+      items.flatMap((u) => u.cs),
+      all,
+      request.flow === "top-to-bottom",
+      appearances ?? circuitFunctionAppearances(ir, [request]),
+      request.terminalLayout === "distributed",
+    );
+    drawing.label = `${original.label} - Part ${part}/${total}`;
+    drawing.pagination = {
+      part,
+      total,
+      terminals: drawing.coverage.terminalIds.flatMap((id) => {
+        const count = units.filter(
+          (u) => !items.includes(u) && u.terminals.has(id),
+        ).length;
+        return count
+          ? [
+              {
+                id,
+                label: label(id),
+                parts: Array.from({ length: count }, () => widest),
+              },
+            ]
+          : [];
+      }),
+    };
+    return drawing;
+  };
+  const parts: Unit[][] = [];
+  let current: Unit[] = [];
+  for (const u of units) {
+    const candidate = [...current, u];
+    if (fits(await draw(candidate, widest, widest))) {
+      current = candidate;
+      continue;
+    }
+    if (!current.length)
+      throw new Error(
+        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
+      );
+    parts.push(current);
+    current = [u];
+    if (!fits(await draw(current, widest, widest)))
+      throw new Error(
+        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
+      );
+  }
+  parts.push(current);
+  const drawings: CircuitDrawing[] = [];
+  for (const [i, items] of parts.entries())
+    drawings.push(await draw(items, i + 1, parts.length));
+  for (const drawing of drawings) {
+    drawing.pagination!.terminals = drawing.coverage.terminalIds.flatMap(
+      (id) => {
+        const targets = drawings
+          .filter((d) => d !== drawing && d.coverage.terminalIds.includes(id))
+          .map((d) => d.pagination!.part);
+        return targets.length ? [{ id, label: label(id), parts: targets }] : [];
+      },
+    );
+    drawing.content = `<g data-circuit-part="${drawing.pagination!.part}" data-circuit-parts="${parts.length}">${drawing.content}</g>`;
+    if (!fits(drawing))
+      throw new Error(
+        `Circuit ${group.id}: pagination part exceeds readable sheet bounds.`,
+      );
+  }
+  const equal = (a: string[], b: string[]) =>
+    JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  if (
+    !equal(
+      drawings.flatMap((d) => d.coverage.conductorIds),
+      original.coverage.conductorIds,
+    ) ||
+    !equal(
+      [...new Set(drawings.flatMap((d) => d.coverage.functionIds))],
+      original.coverage.functionIds,
+    ) ||
+    !equal(
+      [...new Set(drawings.flatMap((d) => d.coverage.terminalIds))],
+      original.coverage.terminalIds,
+    )
+  )
+    throw new Error(
+      `Circuit ${group.id}: pagination did not conserve the original source selection.`,
+    );
+  return drawings;
 }
