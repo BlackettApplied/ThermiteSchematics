@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic nested external bridges"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "self-loop-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "self-loop-fixture:outputs",
+      "symbol": "thermite:io-module",
+      "terminals": {
+        "O1": {
+          "connection_policy": "shared"
+        },
+        "O2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "out1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["O1"]
+        },
+        "out2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["O2"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic signal-only block; no supply or installed-device model."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "self-loop-fixture:inputs",
+      "symbol": "thermite:io-module",
+      "terminals": {
+        "I1": {
+          "connection_policy": "shared"
+        },
+        "I2": {
+          "connection_policy": "shared"
+        },
+        "I3": {
+          "connection_policy": "shared"
+        },
+        "I4": {
+          "connection_policy": "shared"
+        },
+        "I5": {
+          "connection_policy": "shared"
+        },
+        "I6": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "inputs": {
+          "kind": "other",
+          "terminals": ["I1", "I2", "I3", "I4", "I5", "I6"]
+        }
+      },
+      "circuitSymbols": {
+        "inputs": "interface"
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Synthetic interface; external bridges are explicit wires, not internal commoning."
+      }
+    }
+  ]
+}

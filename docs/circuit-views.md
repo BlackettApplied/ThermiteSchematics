@@ -115,6 +115,13 @@ ELK places device/function blocks and routes all selected physical conductors. T
 
 Wire labels, conductor details, terminal labels and PLC channel addresses use at least 2.5 mm text at printed scale. Secondary cross-reference and boundary captions use 2.3 mm text. Long labels are measured before routing and pagination; an unreadable block or group is rejected rather than clipped.
 
+Self loops reserve space around the device for measured conductor labels.
+An obstructed self-loop caption can move beside its own ELK route, including
+centered overhang on a short segment, only when its complete measured box
+clears other wires, labels and device bodies and stays inside the drawing.
+Caption recovery keeps the ELK route and source endpoints intact. See the
+[synthetic nested bridge example](../examples/self-loop-labels/README.md).
+
 Overlapping unrelated wires, a route through a device body, an obscured wire label, an unsupported mapping, or a group that cannot fit causes an explicit R006 failure. Some complex same-net routing still needs smaller groups: equal net IDs alone do not authorize merging independent physical conductor paths or adding junction dots. A bus with multiple distinct declared terminals is not automatically shorted or treated as a one-terminal pass-through; model actual jumpers/wires and select supported functions.
 
 This first circuit renderer prioritizes complete source coverage and clear printed circuits. It does not reproduce arbitrary ECAD page coordinates or match the reference drawing's page count. Distributed rails, denser PLC/terminal layouts and richer continuation presentation can be improved without changing the authoritative electrical source.
