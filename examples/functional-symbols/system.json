@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Functional symbol demonstration"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "functional-symbols",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

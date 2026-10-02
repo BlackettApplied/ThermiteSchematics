@@ -56,7 +56,16 @@ export interface DeviceType {
       | "pushbutton-no"
       | "pushbutton-nc"
       | "thermocouple"
-      | "interface";
+      | "interface"
+      | "pressure-no"
+      | "pressure-nc"
+      | "level-no"
+      | "level-nc"
+      | "level-sensor"
+      | "conductivity-probe"
+      | "receptacle"
+      | "ac-input"
+      | "dc-output";
   };
   category?:
     | "terminal-strip"

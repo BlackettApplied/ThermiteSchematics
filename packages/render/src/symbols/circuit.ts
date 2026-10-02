@@ -23,7 +23,16 @@ export type CircuitMark =
   | "pushbutton-no"
   | "pushbutton-nc"
   | "thermocouple"
-  | "interface";
+  | "interface"
+  | "pressure-no"
+  | "pressure-nc"
+  | "level-no"
+  | "level-nc"
+  | "level-sensor"
+  | "conductivity-probe"
+  | "receptacle"
+  | "ac-input"
+  | "dc-output";
 
 const CORE_PROFILES: Readonly<Record<string, string>> = Object.freeze({
   "core:supply-480v-3ph": "thermite:power-source",
@@ -57,6 +66,11 @@ export const CIRCUIT_PROFILES = Object.freeze([
   "thermite:switch",
   "thermite:pushbutton",
   "thermite:thermocouple",
+  "thermite:pressure-switch",
+  "thermite:level-switch",
+  "thermite:level-sensor",
+  "thermite:conductivity-probe",
+  "thermite:receptacle",
 ] as const);
 
 export function circuitProfile(type: IrDeviceType): string {
@@ -101,26 +115,34 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
           "switch-nc",
           "pushbutton-no",
           "pushbutton-nc",
+          "pressure-no",
+          "pressure-nc",
+          "level-no",
+          "level-nc",
         ].includes(explicit)) ||
       (f.kind === "coil" &&
         count === 2 &&
         ["coil", "solenoid"].includes(explicit)) ||
       (f.kind === "load" &&
         (([2, 3].includes(count) &&
-          ["motor", "heater", "load"].includes(explicit)) ||
+          ["motor", "heater", "load", "receptacle", "ac-input"].includes(
+            explicit,
+          )) ||
           (count === 2 && ["lamp", "winding"].includes(explicit)))) ||
       (f.kind === "source" &&
         ((count >= 1 && count <= 4 && explicit === "source") ||
-          (count === 2 && explicit === "winding"))) ||
+          (count === 2 && ["winding", "dc-output"].includes(explicit)))) ||
       (f.kind === "bus" &&
         count === 1 &&
         ["terminal", "earth"].includes(explicit)) ||
       (f.kind === "channel" &&
         [1, 2].includes(count) &&
-        explicit === "interface") ||
+        ["interface", "level-sensor"].includes(explicit)) ||
       (f.kind === "other" &&
-        ((count >= 1 && count <= 8 && explicit === "interface") ||
-          (count === 2 && ["thermocouple", "fuse"].includes(explicit))));
+        ((count >= 1 && count <= 32 && explicit === "interface") ||
+          (count === 2 && ["thermocouple", "fuse"].includes(explicit)) ||
+          ([2, 3].includes(count) && explicit === "level-sensor") ||
+          (count >= 2 && count <= 8 && explicit === "conductivity-probe")));
     if (
       !valid ||
       (f.kind === "contact" &&
@@ -151,6 +173,10 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
     if (profile === "thermite:fuse") return "fuse";
     if (profile === "thermite:switch")
       return f.normal_state === "open" ? "switch-no" : "switch-nc";
+    if (profile === "thermite:pressure-switch")
+      return f.normal_state === "open" ? "pressure-no" : "pressure-nc";
+    if (profile === "thermite:level-switch")
+      return f.normal_state === "open" ? "level-no" : "level-nc";
     if (profile === "thermite:pushbutton")
       return f.normal_state === "open" ? "pushbutton-no" : "pushbutton-nc";
   }
@@ -165,7 +191,10 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
     if (profile === "thermite:heater" && [2, 3].includes(count))
       return "heater";
     if (profile === "thermite:lamp" && count === 2) return "lamp";
+    if (profile === "thermite:receptacle" && [2, 3].includes(count))
+      return "receptacle";
     if (profile === "thermite:transformer" && count === 2) return "winding";
+    if (profile === "thermite:dc-supply" && count === 2) return "dc-output";
     if (
       ["thermite:dc-supply", "thermite:relay", "thermite:io-module"].includes(
         profile,
@@ -176,6 +205,7 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
   }
   if (f.kind === "source") {
     if (profile === "thermite:transformer" && count === 2) return "winding";
+    if (profile === "thermite:dc-supply" && count === 2) return "dc-output";
     if (
       [
         "thermite:dc-supply",
@@ -197,9 +227,22 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
     profile === "thermite:io-module" &&
     f.kind === "other" &&
     count >= 1 &&
-    count <= 8
+    count <= 32
   )
     return "interface";
+  if (
+    profile === "thermite:level-sensor" &&
+    ((f.kind === "other" && [2, 3].includes(count)) ||
+      (f.kind === "channel" && [1, 2].includes(count)))
+  )
+    return "level-sensor";
+  if (
+    profile === "thermite:conductivity-probe" &&
+    f.kind === "other" &&
+    count >= 2 &&
+    count <= 8
+  )
+    return "conductivity-probe";
   if (profile === "thermite:fuse" && f.kind === "other" && count === 2)
     return "fuse";
   if (profile === "thermite:thermocouple" && f.kind === "other" && count === 2)
@@ -252,6 +295,36 @@ const CONTACT = [
   line(8, 6, 12, 6),
   line(4, 3, 4, 9),
   line(8, 3, 8, 9),
+];
+const pressure: Primitive[] = [
+  line(6, 0, 6, 2),
+  {
+    kind: "polyline",
+    points: [
+      [2, 0],
+      [3, 1],
+      [4, 0],
+      [5, 1],
+      [6, 0],
+      [7, 1],
+      [8, 0],
+      [9, 1],
+      [10, 0],
+    ],
+  },
+];
+const level: Primitive[] = [
+  line(6, 0, 6, 2),
+  {
+    kind: "polyline",
+    points: [
+      [6, 0],
+      [4, 1],
+      [6, 2],
+      [8, 1],
+      [6, 0],
+    ],
+  },
 ];
 const MARKS: Readonly<Record<CircuitMark, readonly Primitive[]>> =
   Object.freeze({
@@ -344,6 +417,61 @@ const MARKS: Readonly<Record<CircuitMark, readonly Primitive[]>> =
       circle(10, 6, 0.7),
     ],
     interface: [rect(1, 1, 10, 10)],
+    "pressure-no": [...CONTACT, ...pressure],
+    "pressure-nc": [...CONTACT, ...pressure, line(2, 10, 10, 2)],
+    "level-no": [...CONTACT, ...level],
+    "level-nc": [...CONTACT, ...level, line(2, 10, 10, 2)],
+    "level-sensor": [
+      rect(1, 1, 10, 10),
+      {
+        kind: "polyline",
+        points: [
+          [6, 3],
+          [3, 6],
+          [6, 9],
+          [9, 6],
+          [6, 3],
+        ],
+      },
+    ],
+    "conductivity-probe": [circle(6, 6, 5), line(4, 3, 4, 9), line(8, 3, 8, 9)],
+    receptacle: [
+      circle(6, 6, 5),
+      line(4, 3, 4, 7),
+      line(8, 3, 8, 7),
+      {
+        kind: "polyline",
+        points: [
+          [5, 9],
+          [5, 8],
+          [7, 8],
+          [7, 9],
+        ],
+      },
+    ],
+    "ac-input": [
+      rect(1, 1, 10, 10),
+      {
+        kind: "polyline",
+        points: [
+          [2, 6],
+          [3, 4],
+          [4, 3],
+          [5, 4],
+          [7, 8],
+          [8, 9],
+          [9, 8],
+          [10, 6],
+        ],
+      },
+    ],
+    "dc-output": [
+      rect(1, 1, 10, 10),
+      line(3, 4, 9, 4),
+      line(3, 7, 4, 7),
+      line(5, 7, 7, 7),
+      line(8, 7, 9, 7),
+    ],
   });
 const n = (v: number) => String(Number(v.toFixed(3)));
 
@@ -426,21 +554,23 @@ export function circuitWinding(
   y1: number,
   y2: number,
   source: boolean,
+  coupled = false,
+  terminalXs?: readonly [number, number],
 ): string {
-  const x = width / 2,
+  const x = width / 2 + (coupled ? (source ? 3 : -3) : 0),
     edge = source ? width : 0,
     span = y2 - y1;
   const points: Point[] = [
-    [edge, y1],
+    [terminalXs?.[0] ?? edge, y1],
     [x, y1],
     ...[1, 2, 3, 4, 5, 6, 7].map((i): Point => [
-      x + (i % 2 ? 2 : 0),
+      x + (i % 2 ? (coupled && source ? -2 : 2) : 0),
       y1 + (span * i) / 8,
     ]),
     [x, y2],
-    [edge, y2],
+    [terminalXs?.[1] ?? edge, y2],
   ];
-  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/><line x1="${n(x + 4)}" x2="${n(x + 4)}" y1="${n(y1 - 1)}" y2="${n(y2 + 1)}"/></g>`;
+  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/>${coupled ? "" : `<line x1="${n(x + 4)}" x2="${n(x + 4)}" y1="${n(y1 - 1)}" y2="${n(y2 + 1)}"/>`}</g>`;
 }
 
 export function circuitWindingVertical(
@@ -448,21 +578,24 @@ export function circuitWindingVertical(
   x1: number,
   x2: number,
   source: boolean,
+  coupled = false,
+  center = height / 2,
+  terminalYs?: readonly [number, number],
 ): string {
-  const y = height / 2,
+  const y = center + (coupled ? (source ? 3 : -3) : 0),
     edge = source ? height : 0,
     span = x2 - x1;
   const points: Point[] = [
-    [x1, edge],
+    [x1, terminalYs?.[0] ?? edge],
     [x1, y],
     ...[1, 2, 3, 4, 5, 6, 7].map((i): Point => [
       x1 + (span * i) / 8,
-      y + (i % 2 ? 2 : 0),
+      y + (i % 2 ? (coupled && source ? -2 : 2) : 0),
     ]),
     [x2, y],
-    [x2, edge],
+    [x2, terminalYs?.[1] ?? edge],
   ];
-  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/><line x1="${n(Math.min(x1, x2) - 1)}" x2="${n(Math.max(x1, x2) + 1)}" y1="${n(y + 4)}" y2="${n(y + 4)}"/></g>`;
+  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/>${coupled ? "" : `<line x1="${n(Math.min(x1, x2) - 1)}" x2="${n(Math.max(x1, x2) + 1)}" y1="${n(y + 4)}" y2="${n(y + 4)}"/>`}</g>`;
 }
 
 /** Local catalog attachment for a function terminal, including a reused physical common. */
@@ -517,4 +650,45 @@ export function circuitAttachment(
     .map((p, i) => `${i ? "L" : "M"} ${n(p[0])} ${n(p[1])}`)
     .join(" ");
   return `<path d="${path}" fill="none" stroke="white" stroke-width=".8"/><path d="${path}" fill="none" stroke="#17212b" stroke-width=".35"/>`;
+}
+
+/** A shared magnetic core is a presentation association, never a conductor. */
+export function circuitTransformerCore(
+  center: number,
+  from: number,
+  to: number,
+  vertical: boolean,
+): string {
+  const lines = [-0.5, 0.5]
+    .map((offset) =>
+      vertical
+        ? `<line x1="${n(from)}" x2="${n(to)}" y1="${n(center + offset)}" y2="${n(center + offset)}"/>`
+        : `<line y1="${n(from)}" y2="${n(to)}" x1="${n(center + offset)}" x2="${n(center + offset)}"/>`,
+    )
+    .join("");
+  return `<g data-magnetic-association="shared-core" data-presentation-only="true" stroke="#17212b" stroke-width=".35">${lines}</g>`;
+}
+
+/** Each interface lead ends separately on its function enclosure; no common node is drawn. */
+export function circuitInterfaceMark(
+  mark: CircuitMark,
+  cx: number,
+  cy: number,
+  pins: readonly { x: number; y: number; side: string }[],
+  vertical: boolean,
+): string {
+  const coordinates = pins.map((p) => (vertical ? p.x : p.y));
+  const low = Math.min(...coordinates) - 2,
+    high = Math.max(...coordinates) + 2;
+  const outline = vertical
+    ? `<rect x="${n(low)}" y="${n(cy - 5)}" width="${n(high - low)}" height="10"/>`
+    : `<rect x="${n(cx - 5)}" y="${n(low)}" width="10" height="${n(high - low)}"/>`;
+  const leads = pins
+    .map((p) =>
+      vertical
+        ? `<line x1="${n(p.x)}" x2="${n(p.x)}" y1="${n(p.y)}" y2="${n(cy + (p.side === "NORTH" ? -5 : 5))}"/>`
+        : `<line y1="${n(p.y)}" y2="${n(p.y)}" x1="${n(p.x)}" x2="${n(cx + (p.side === "WEST" ? -5 : 5))}"/>`,
+    )
+    .join("");
+  return `<g data-function-interface="${mark}" fill="none" stroke="#17212b" stroke-width=".35">${outline}${leads}</g><g transform="translate(${n(cx - 4)} ${n(cy - 4)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`;
 }

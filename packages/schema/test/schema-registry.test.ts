@@ -920,6 +920,25 @@ describe("circuit symbol schema", () => {
     ).toEqual([]);
   });
 
+  it.each([
+    "pressure-no",
+    "pressure-nc",
+    "level-no",
+    "level-nc",
+    "level-sensor",
+    "conductivity-probe",
+    "receptacle",
+    "ac-input",
+    "dc-output",
+  ])("accepts catalog mark %s structurally", (mark) => {
+    expect(
+      validate(registry, "device-type", {
+        ...type,
+        circuitSymbols: { "aux/~": mark },
+      }),
+    ).toEqual([]);
+  });
+
   it.each(["arbitrary-svg", "protective-earth", "CONTACT-NC"])(
     "rejects unrecognized mark %s",
     (mark) => {

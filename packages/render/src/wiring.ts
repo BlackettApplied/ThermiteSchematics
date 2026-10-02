@@ -269,7 +269,7 @@ export async function prepareWiringDrawing(
   for (const [i, edge] of (graph.edges ?? []).entries()) {
     if (!edge.sections?.length) throw new Error("Incomplete wiring route.");
     out.push(
-      `<g data-wiring-conductor="${attr(selected[i]!.id)}"><title>${xml(selected[i]!.name + (selected[i]!.detail ? " / " + selected[i]!.detail : ""))}</title>`,
+      `<g data-wiring-conductor="${attr(selected[i]!.id)}" data-endpoints="${attr(JSON.stringify(selected[i]!.ends))}"><title>${xml(selected[i]!.name + (selected[i]!.detail ? " / " + selected[i]!.detail : ""))}</title>`,
     );
     for (const section of edge.sections) {
       const points = [
@@ -491,6 +491,11 @@ export async function prepareWiringDrawing(
     width: graph.width!,
     height: graph.height!,
     references,
+    coverage: {
+      kind: "wiring",
+      conductorIds: selected.map((c) => c.id),
+      functionIds: [],
+    },
     note: [
       "Terminal wiring: device internals are not shown. [ +N ] = other physical connections at that terminal; see wire schedule.",
       ...(request.notes ?? []),
