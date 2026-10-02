@@ -30,6 +30,11 @@ not an extra purchase quantity. The bus requires proprietary RCRGN assemblies;
 the connector shape does not make them ordinary USB cables. Bus drawings do not
 model cable length, shielding, individual pins, or internally distributed power.
 
+Both inventory-only BaseUnits and the logical-port RGN-TERMRES accessory
+explicitly declare `partial` connection coverage. Their physical mating contacts
+or connector pins remain outside these models. Instantiating them produces
+W904; inventory or a bus relation cannot establish assembly completeness.
+
 Import this directory with an explicit relative `path`, run `thermite lock`, and
 validate. Library changes require a deliberate lock update. See
 `docs/communication-ports.md` in the engine for a minimal port-link example and
