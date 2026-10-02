@@ -1,3 +1,8 @@
+import {
+  assertTopologyIdentities,
+  assertTopologyRouteEndpoints,
+} from "./layout/topology-conservation.js";
+import type { TopologyDrawingCoverage } from "./topology-coverage.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { buildConnectorAssemblyInventory } from "@thermite/query";
@@ -26,6 +31,7 @@ export interface ConnectorAssemblyDrawing {
     y: number;
   }[];
   note: string;
+  topologyCoverage?: TopologyDrawingCoverage;
 }
 const n = (x: number) => String(Number(x.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
@@ -263,7 +269,7 @@ export async function prepareConnectorAssemblyDrawing(
       })),
     };
   });
-  const graph: ElkNode = await createElkEngine().layout({
+  const input: ElkNode = {
     id: "connector-assembly",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -296,7 +302,10 @@ export async function prepareConnectorAssemblyDrawing(
         },
       ],
     })),
-  });
+  };
+  const expected = structuredClone(input);
+  const graph = await createElkEngine().layout(input);
+  assertTopologyIdentities(graph, expected);
   if (![graph.width, graph.height].every(Number.isFinite))
     throw new Error("Invalid assembly layout bounds.");
   const nodes = graph.children ?? [],
@@ -453,7 +462,16 @@ export async function prepareConnectorAssemblyDrawing(
       y: node.y! + node.height! / 2,
     });
   }
+  assertTopologyRouteEndpoints(graph);
   return {
+    topologyCoverage: {
+      kind: "connector-assembly",
+      relationIds: links.map((l) => l.uid),
+      deviceUids: ordered,
+      ports: ordered.flatMap((deviceUid) =>
+        (rows.get(deviceUid) ?? []).map((p) => ({ deviceUid, portKey: p.key })),
+      ),
+    },
     title: request.title ?? "Connector and cable assemblies",
     content: out.join("\n"),
     width: graph.width!,

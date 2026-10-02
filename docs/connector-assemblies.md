@@ -103,3 +103,8 @@ The query API `buildConnectorAssemblyInventory(ir)` returns `connector-assembly-
 SVG audit attributes are `data-connector-assembly` (relation UID), `data-assembly-designation`, `data-assembly-endpoints` (`[{deviceUid,portKey}, ...]`), `data-pin-mapping`, `data-device-uid`, `data-connector-port` and `data-port-occupancy`. Generated SVG remains an artifact, never electrical source.
 
 This version has no resolved assembly-to-conductor mapping. Manufacturer pin tables cannot supply an installed cordset's missing wiring. Explicit electrical wire/cable-core source remains necessary where verified evidence exists. Connector compatibility, safety suitability, ratings, shielding and installation correctness are not inferred.
+
+Packet JSON also includes [`coverage.topology`](topology-coverage.md), retaining
+assembly identity, named connector endpoints, mapping status/reason and
+individually drawn port appearances. Summary counts do not claim coverage of
+individual omitted ports.

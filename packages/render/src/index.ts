@@ -65,3 +65,11 @@ export type {
 } from "./circuit.js";
 
 export type { PacketCoverage, CoverageEntry } from "./coverage.js";
+
+export type {
+  TopologyCoverage,
+  TopologyRelationEntry,
+  TopologyPortEntry,
+  TopologyAppearance,
+  PortIdentity,
+} from "./topology-coverage.js";

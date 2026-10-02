@@ -1,3 +1,4 @@
+import type { TopologyDrawingCoverage } from "./topology-coverage.js";
 import { prepareWiringDrawing, type WiringViewRequest } from "./wiring.js";
 import {
   circuitFunctionAppearances,
@@ -140,6 +141,7 @@ interface Draft {
   note: string;
   communicationHeight?: number;
   coverage?: DrawingCoverage[];
+  topologyCoverage?: TopologyDrawingCoverage[];
 }
 const PAPERS = {
   letter: [215.9, 279.4],
@@ -1197,7 +1199,11 @@ async function topologyDrafts(
               : assembly
                 ? "Connector assemblies only - unresolved pin mapping; no inferred electrical continuity"
                 : "Port connections - see link schedule for protocol and status",
-          coverage: drawing.coverage ? [drawing.coverage] : [],
+          coverage:
+            "coverage" in drawing && drawing.coverage ? [drawing.coverage] : [],
+          topologyCoverage: drawing.topologyCoverage
+            ? [drawing.topologyCoverage]
+            : [],
           content:
             headingLines
               .map((line, i) =>
@@ -1682,6 +1688,10 @@ export async function renderSchematicPacket(
           ...(previous.coverage ?? []),
           ...(draft.coverage ?? []),
         ];
+        previous.topologyCoverage = [
+          ...(previous.topologyCoverage ?? []),
+          ...(draft.topologyCoverage ?? []),
+        ];
         previous.references!.push(
           ...draft.references!.map((r) => ({
             ...r,
@@ -1804,6 +1814,7 @@ export async function renderSchematicPacket(
             sheet: i + 1,
             view: sheetLabel(draft.view),
             drawings: draft.coverage ?? [],
+            topologyDrawings: draft.topologyCoverage ?? [],
           })),
         ),
       },
