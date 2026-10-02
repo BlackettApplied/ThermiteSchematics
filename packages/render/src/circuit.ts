@@ -14,6 +14,8 @@ import {
 import { createElkEngine } from "./layout/elk-runtime.js";
 import {
   circuitAttachment,
+  circuitTransformerCore,
+  circuitInterfaceMark,
   circuitBlock,
   circuitMark,
   isCircuitTerminalStrip,
@@ -500,7 +502,15 @@ function makeNodes(
     const pins: Pin[] = [],
       rows: FunctionRow[] = [];
     let slot = 0;
-    for (const f of functions) {
+    const coupled = type.symbol === "thermite:transformer";
+    const windingSlots = { load: 0, source: 0 };
+    const drawingFunctions = coupled
+      ? [
+          ...functions.filter((f) => circuitMark(type, f) === "winding"),
+          ...functions.filter((f) => circuitMark(type, f) !== "winding"),
+        ]
+      : functions;
+    for (const f of drawingFunctions) {
       const mark = circuitMark(type, f);
       const oneSided = oneSidedFunction(f, mark);
       const channelLines =
@@ -515,15 +525,22 @@ function makeNodes(
                       measure(line, TERMINAL_TEXT_SIZE),
                     ),
                   ) + 4
-                : channelLines.length * 3.1 + 0.8) / PITCH,
+                : channelLines.length * 3.1 +
+                  0.8 +
+                  (mark === "level-sensor" ? 9 : 0)) / PITCH,
             )
           : 1,
       );
-      const center = 6 + (slot + slots / 2) * PITCH;
+      const winding =
+        coupled &&
+        mark === "winding" &&
+        (f.kind === "load" || f.kind === "source");
+      const start = winding ? windingSlots[f.kind as "load" | "source"] : slot;
+      const center = 6 + (start + slots / 2) * PITCH;
       rows.push({
         f,
         mark,
-        start: slot,
+        start,
         slots,
         center,
         ...(channelLines ? { channelLines } : {}),
@@ -578,7 +595,10 @@ function makeNodes(
             outside,
           });
       });
-      slot += slots;
+      if (winding) {
+        windingSlots[f.kind as "load" | "source"] += slots;
+        slot = Math.max(slot, ...Object.values(windingSlots));
+      } else slot += slots;
     }
     const extras = [...terminalSet.values()]
       .filter(
@@ -740,12 +760,18 @@ function makeNodes(
       height =
         Math.max(
           priorWidth + 6,
-          ...rows.map((row) => (row.channelLines?.length ?? 0) * 3.1 + 12),
+          ...rows.map(
+            (row) =>
+              (row.channelLines?.length ?? 0) * 3.1 +
+              12 +
+              (row.mark === "level-sensor" ? 9 : 0),
+          ),
           ...rows
             .filter((row) => row.mark === "motor")
             .map((row) => row.slots * PITCH * verticalScaleX + 12),
         ) +
-        related.length * 3.1;
+        related.length * 3.1 +
+        (boundary || related.length ? 5 : 0);
       for (const p of pins) {
         const oldY = p.y;
         p.x = (bodyHeight - oldY) * verticalScaleX + verticalOffsetX;
@@ -827,22 +853,59 @@ function emitNode(
     text(node.width / 2, 3.3, node.device.designation, 2.7, "middle", true),
   );
   if (node.boundary)
-    out.push(text(node.width / 2, node.height - 1, "BOUNDARY", 2.3, "middle"));
+    out.push(
+      text(
+        node.width / 2,
+        node.height - (vertical ? 7 : 1),
+        "BOUNDARY",
+        2.3,
+        "middle",
+      ),
+    );
+  const verticalFooter =
+    node.relationLabels.length * 3.1 +
+    (node.boundary || node.relationLabels.length ? 5 : 0);
+  const diagramCenterY = (node.height - verticalFooter) / 2;
+  const coupled = node.type.symbol === "thermite:transformer";
+  const windingPins = node.rows
+    .filter((row) => row.mark === "winding")
+    .flatMap((row) =>
+      row.f.terminals.map((t) =>
+        node.pins.find((p) => key(p.terminal) === key(t))!,
+      ),
+    );
+  if (coupled && windingPins.length) {
+    const coordinates = windingPins.map((p) => (vertical ? p.x : p.y));
+    out.push(
+      circuitTransformerCore(
+        vertical ? diagramCenterY : node.width / 2,
+        Math.min(...coordinates) - 1,
+        Math.max(...coordinates) + 1,
+        vertical,
+      ),
+    );
+  }
   for (const row of node.rows) {
     const { f, mark } = row;
     const cx = vertical
       ? (node.bodyHeight - row.center) * node.verticalScaleX +
         node.verticalOffsetX
       : node.width / 2;
-    const cy = vertical ? node.height / 2 : row.center;
+    const cy = vertical ? diagramCenterY : row.center;
     out.push(
       `<g data-function-key="${attr(f.id.functionKey)}" data-function-id="${attr(fkey(f))}"><title>${xml(`${node.device.designation}/${f.id.functionKey}`)}</title>`,
     );
     if (f.kind === "channel") {
       const lines = row.channelLines!;
+      const specialized = mark === "level-sensor";
+      const annotationTop = cy - (9 + lines.length * 3.1) / 2;
+      if (specialized)
+        out.push(
+          `<g transform="translate(${n(cx - 4)} ${n(annotationTop)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`,
+        );
       for (const [i, line] of lines.entries())
         out.push(
-          `<g data-channel-line="${i === 0 ? "address" : "signal"}">${text(cx, cy + 0.8 + (i - (lines.length - 1) / 2) * 3.1, line, TERMINAL_TEXT_SIZE, "middle")}</g>`,
+          `<g data-channel-line="${i === 0 ? "address" : "signal"}">${text(cx, specialized ? annotationTop + 11.5 + i * 3.1 : cy + 0.8 + (i - (lines.length - 1) / 2) * 3.1, line, TERMINAL_TEXT_SIZE, "middle")}</g>`,
         );
     } else {
       if (mark === "motor")
@@ -879,8 +942,38 @@ function emitNode(
                 first.x,
                 last.x,
                 f.kind === "source",
+                coupled,
+                cy,
+                [first.y, last.y],
               )
-            : circuitWinding(node.width, first.y, last.y, f.kind === "source"),
+            : circuitWinding(
+                node.width,
+                first.y,
+                last.y,
+                f.kind === "source",
+                coupled,
+                [first.x, last.x],
+              ),
+        );
+      } else if (
+        [
+          "level-sensor",
+          "conductivity-probe",
+          "receptacle",
+          "ac-input",
+          "dc-output",
+        ].includes(mark)
+      ) {
+        out.push(
+          circuitInterfaceMark(
+            mark,
+            cx,
+            cy,
+            f.terminals.map((t) =>
+              node.pins.find((p) => key(p.terminal) === key(t))!,
+            ),
+            vertical,
+          ),
         );
       } else {
         if (mark === "heater" && f.terminals.length === 3 && !vertical)
@@ -936,7 +1029,7 @@ function emitNode(
       const data = `data-mechanical-association="ganged" data-ganged-functions="${attr(JSON.stringify([first.f.id, last.f.id]))}"`;
       if (vertical)
         out.push(
-          `<line ${data} x1="${n((node.bodyHeight - first.center) * node.verticalScaleX + node.verticalOffsetX)}" x2="${n((node.bodyHeight - last.center) * node.verticalScaleX + node.verticalOffsetX)}" y1="${n(node.height / 2)}" y2="${n(node.height / 2)}" stroke="#17212b" stroke-width=".25" stroke-dasharray="1.5 1"/>`,
+          `<line ${data} x1="${n((node.bodyHeight - first.center) * node.verticalScaleX + node.verticalOffsetX)}" x2="${n((node.bodyHeight - last.center) * node.verticalScaleX + node.verticalOffsetX)}" y1="${n(diagramCenterY)}" y2="${n(diagramCenterY)}" stroke="#17212b" stroke-width=".25" stroke-dasharray="1.5 1"/>`,
         );
       else
         out.push(
@@ -972,7 +1065,9 @@ function emitNode(
     out.push(
       text(
         node.width / 2,
-        node.height - 1 - (node.relationLabels.length - 1 - i) * 3.1,
+        node.height -
+          (vertical ? 7 : 1) -
+          (node.relationLabels.length - 1 - i) * 3.1,
         s,
         2.3,
         "middle",

@@ -113,7 +113,11 @@ labels: byte/word overlap, PLC configuration and online state are not validated.
 Circuit drawings also accept explicit per-function `circuitSymbols` in device
 types. E206 rejects unknown function keys and marks incompatible with declared
 function kind, terminal count or contact state. See the [closed mark catalog and
-diagnostic contract](circuit-symbols.md).
+diagnostic contract](circuit-symbols.md). The additive specialized marks preserve
+existing source formats and the original continuous renderer. Successful packet
+results now include an additive `coverage` inventory with explicit circuit/wiring
+scope; see [packet coverage](circuit-views.md#packet-coverage-inventory). The six
+guarded agent tool contracts are unchanged.
 
 Symbol profiles are explicit: `thermite:io-module`, `thermite:terminal-strip`,
 and `thermite:dc-supply`. Supported shapes are single-terminal channels and bus

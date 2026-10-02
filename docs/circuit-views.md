@@ -93,17 +93,21 @@ This distinguishes main protection poles from auxiliary contacts without guessin
 | `thermite:breaker`, `thermite:overload`, `thermite:fuse` | Protection contacts; explicit function marks distinguish main and auxiliary functions; fuse also supports a two-terminal `other` function |
 | `thermite:motor-3ph`, `thermite:motor` | Three- or two-terminal motor loads, respectively |
 | `thermite:heater` | Two- or three-terminal resistive loads; no star/delta connection is inferred |
-| `thermite:transformer` | Separate two-terminal primary load and secondary source windings |
+| `thermite:transformer` | Two-terminal primary load and secondary source windings opposite a shared magnetic core |
 | `thermite:power-source`, `thermite:dc-supply` | Supply boundaries; DC supply input and output are separate functions |
 | `thermite:io-module` | One/two-terminal channels, supply functions, contacts and explicit generic interfaces |
 | `thermite:terminal-strip` | One-terminal buses with pass-through display ports |
 | `thermite:solenoid`, `thermite:lamp` | Two-terminal coil or lamp load |
 | `thermite:switch`, `thermite:pushbutton` | Two-terminal contacts using authored normal state |
 | `thermite:thermocouple` | Two-terminal `other` function representing the sensor interface |
+| `thermite:pressure-switch`, `thermite:level-switch` | Two-terminal contacts with pressure/float actuation and declared normal state |
+| `thermite:level-sensor` | Two/three-terminal `other` interfaces or one/two-terminal channels with their address and signal meaning |
+| `thermite:conductivity-probe` | Two–eight-terminal `other` interfaces; no internal commoning inferred |
+| `thermite:receptacle` | Two/three-terminal loads; protective earth can be a separate one-terminal bus |
 
 Supported profiles also allow a one-terminal bus. An explicit protective-earth role selects the earth mark; no bonding wire is added. Existing POC core types have explicit compatibility mappings. Unrecognized profiles and incompatible function shapes fail instead of acquiring behavior from their names.
 
-Explicit `circuitSymbols` marks are `contact-no`, `contact-nc`, `breaker`, `overload`, `fuse`, `coil`, `motor`, `heater`, `winding`, `source`, `load`, `terminal`, `earth`, `solenoid`, `lamp`, `switch-no`, `switch-nc`, `pushbutton-no`, `pushbutton-nc`, `thermocouple`, and `interface`. Mark choice is presentation metadata; it never changes physical net derivation or rooted-view traversal.
+Explicit `circuitSymbols` marks include `contact-no`, `contact-nc`, `breaker`, `overload`, `fuse`, `coil`, `motor`, `heater`, `winding`, `source`, `load`, `terminal`, `earth`, `solenoid`, `lamp`, `switch-no`, `switch-nc`, `pushbutton-no`, `pushbutton-nc`, `thermocouple`, `interface`, `pressure-no`, `pressure-nc`, `level-no`, `level-nc`, `level-sensor`, `conductivity-probe`, `receptacle`, `ac-input`, and `dc-output`. Mark choice is presentation metadata; it never changes physical net derivation or rooted-view traversal.
 
 ## Layout and current limits
 
@@ -114,3 +118,24 @@ Wire labels, conductor details, terminal labels and PLC channel addresses use at
 Overlapping unrelated wires, a route through a device body, an obscured wire label, an unsupported mapping, or a group that cannot fit causes an explicit R006 failure. Some complex same-net routing still needs smaller groups: equal net IDs alone do not authorize merging independent physical conductor paths or adding junction dots. A bus with multiple distinct declared terminals is not automatically shorted or treated as a one-terminal pass-through; model actual jumpers/wires and select supported functions.
 
 This first circuit renderer prioritizes complete source coverage and clear printed circuits. It does not reproduce arbitrary ECAD page coordinates or match the reference drawing's page count. Distributed rails, denser PLC/terminal layouts and richer continuation presentation can be improved without changing the authoritative electrical source.
+
+## Packet coverage inventory
+
+Every successful packet JSON result includes `coverage` with format
+`schematic-coverage/0.1` and scope `circuit-and-wiring`. It inventories every
+compiled wire, jumper and fully terminated cable core, and every declared
+function. Each entry records its stable ID, designation, exact terminal IDs and
+circuit/wiring appearances (sheet, view and optional circuit group). Repeated
+appearances count once in `represented`, but all appearances remain available.
+Entries without an appearance contribute to `outsideAuditedViews`; an empty
+selection cannot appear to cover the whole project.
+
+This inventory audits successful source-selected circuit and wiring projections.
+Wiring boxes do not count as function drawings. Other view families, schedules,
+indexes and communication links are explicitly outside this audit, and their
+sheets appear in `unauditedSheets`. An outside-audited-views entry may be shown in
+another family; this does not prove omission from the entire packet. The report
+excludes unterminated/unassigned cable cores from its conductor inventory and
+includes terminal-free mechanisms in its function inventory. It proves neither
+printed readability nor an upstream supply path; use visual review and electrical
+checks separately. Unknown selectors still fail before any packet is returned.

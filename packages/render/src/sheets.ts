@@ -8,6 +8,7 @@ import {
 import {
   prepareCommunicationDrawing,
   type CommunicationViewRequest,
+  type CommunicationDrawing,
 } from "./communication.js";
 import {
   prepareConnectorAssemblyDrawing,
@@ -17,6 +18,11 @@ import {
   prepareSignalLoopDrawing,
   type SignalLoopViewRequest,
 } from "./signal-loop.js";
+import {
+  buildPacketCoverage,
+  type PacketCoverage,
+  type DrawingCoverage,
+} from "./coverage.js";
 import { PACKET_VIEWER_SCRIPT } from "./packet-viewer.js";
 import type {
   CompiledProjectPresentation,
@@ -113,6 +119,7 @@ export interface RenderedPacket {
   readonly page: PaperPage;
   readonly sheets: readonly RenderedSheet[];
   readonly html: string;
+  readonly coverage: PacketCoverage;
 }
 interface Link {
   id: string;
@@ -132,6 +139,7 @@ interface Draft {
   links: Link[];
   note: string;
   communicationHeight?: number;
+  coverage?: DrawingCoverage[];
 }
 const PAPERS = {
   letter: [215.9, 279.4],
@@ -1083,7 +1091,7 @@ async function topologyDrafts(
     const wiring = request.format === "wiring-view-request/0.1";
     const signalLoop = request.format === "signal-loop-view-request/0.1";
     const assembly = request.format === "connector-assembly-view-request/0.1";
-    const drawing = wiring
+    const drawing: CommunicationDrawing = wiring
       ? await prepareWiringDrawing(ir, request)
       : signalLoop
         ? await prepareSignalLoopDrawing(ir, request)
@@ -1189,6 +1197,7 @@ async function topologyDrafts(
               : assembly
                 ? "Connector assemblies only - unresolved pin mapping; no inferred electrical continuity"
                 : "Port connections - see link schedule for protocol and status",
+          coverage: drawing.coverage ? [drawing.coverage] : [],
           content:
             headingLines
               .map((line, i) =>
@@ -1263,6 +1272,7 @@ async function circuitDrafts(
       references: [],
       links: [],
       note: "Source-selected circuits · [+N]: connections outside group · device/function references in index",
+      coverage: [],
       content: headingLines
         .map((s, i) => text(b.x, b.y + 3.5 + i * 4.5, s, 3.5, "start", 700))
         .join(""),
@@ -1306,6 +1316,12 @@ async function circuitDrafts(
         offset = spanning ? Math.max(...cursors) : cursors[column]!;
       }
       const draft = drafts.at(-1)!;
+      draft.coverage!.push({
+        kind: "circuit",
+        group: group.id,
+        conductorIds: [...group.coverage.conductorIds],
+        functionIds: [...group.coverage.functionIds],
+      });
       const x = b.x + (spanning ? 0 : column * (columnWidth + gap)),
         y = b.y + headerHeight + offset;
       draft.content +=
@@ -1662,6 +1678,10 @@ export async function renderSchematicPacket(
       ) {
         const offset = previous.communicationHeight + 10;
         previous.content += `<g transform="translate(0 ${n(offset)})">${draft.content}</g>`;
+        previous.coverage = [
+          ...(previous.coverage ?? []),
+          ...(draft.coverage ?? []),
+        ];
         previous.references!.push(
           ...draft.references!.map((r) => ({
             ...r,
@@ -1778,6 +1798,14 @@ export async function renderSchematicPacket(
         page: paper.value,
         sheets,
         html: printPacketHtml(sheets, paper.value, ir.project.name),
+        coverage: buildPacketCoverage(
+          ir,
+          drafts.map((draft, i) => ({
+            sheet: i + 1,
+            view: sheetLabel(draft.view),
+            drawings: draft.coverage ?? [],
+          })),
+        ),
       },
     };
   } catch (error) {

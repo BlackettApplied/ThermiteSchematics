@@ -1,4 +1,5 @@
 import type { ElkNode } from "elkjs/lib/elk-api.js";
+import type { DrawingCoverage } from "./coverage.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { buildCommunicationInventory } from "@thermite/query";
 import {
@@ -24,6 +25,7 @@ export interface CommunicationDrawing {
     y: number;
   }[];
   note: string;
+  coverage?: DrawingCoverage;
 }
 const n = (v: number) => String(Number(v.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);

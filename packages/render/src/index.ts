@@ -63,3 +63,5 @@ export type {
   CircuitGroupRequest,
   CircuitFunctionSelector,
 } from "./circuit.js";
+
+export type { PacketCoverage, CoverageEntry } from "./coverage.js";
