@@ -1,0 +1,185 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "index": true,
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Complete contact chain with explicit continuations",
+      "groups": [
+        {
+          "id": "chain",
+          "label": "Series contact chain",
+          "lineReference": "200",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "T1"
+              },
+              "key": "terminal"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C1"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C2"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C3"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C4"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C6"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C7"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C8"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C9"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C10"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C11"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C12"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C13"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C14"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C15"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C16"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C17"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "C18"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "T2"
+              },
+              "key": "terminal"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "L1"
+              },
+              "key": "lamp"
+            }
+          ],
+          "conductors": [
+            "W1",
+            "W2",
+            "W3",
+            "W4",
+            "CBL1/1",
+            "W6",
+            "W7",
+            "W8",
+            "W9",
+            "W10",
+            "W11",
+            "W12",
+            "W13",
+            "W14",
+            "W15",
+            "W16",
+            "W17",
+            "W18",
+            "JP1"
+          ]
+        }
+      ],
+      "notes": ["Synthetic review note: no switch contact joins physical nets."]
+    }
+  ]
+}
