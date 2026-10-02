@@ -1,3 +1,8 @@
+import {
+  assertTopologyIdentities,
+  assertTopologyRouteEndpoints,
+} from "./layout/topology-conservation.js";
+import type { TopologyDrawingCoverage } from "./topology-coverage.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { DrawingCoverage } from "./coverage.js";
 import type { ElectricalIr } from "@thermite/compiler";
@@ -25,6 +30,7 @@ export interface CommunicationDrawing {
     y: number;
   }[];
   note: string;
+  topologyCoverage?: TopologyDrawingCoverage;
   coverage?: DrawingCoverage;
 }
 const n = (v: number) => String(Number(v.toFixed(3)));
@@ -218,7 +224,7 @@ export async function prepareCommunicationDrawing(
     };
   });
   const elk = createElkEngine();
-  const graph: ElkNode = await elk.layout({
+  const input: ElkNode = {
     id: "communication",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -252,7 +258,10 @@ export async function prepareCommunicationDrawing(
         },
       ],
     })),
-  });
+  };
+  const expected = structuredClone(input);
+  const graph = await elk.layout(input);
+  assertTopologyIdentities(graph, expected);
   if (!Number.isFinite(graph.width) || !Number.isFinite(graph.height))
     throw new Error("Invalid communication layout bounds.");
   const out: string[] = [];
@@ -262,10 +271,18 @@ export async function prepareCommunicationDrawing(
     x < node.x! + node.width! - 0.01 &&
     y > node.y! + 0.01 &&
     y < node.y! + node.height! - 0.01;
-  for (const [i, edge] of (graph.edges ?? []).entries()) {
+  for (const edge of graph.edges ?? []) {
+    const i = Number(edge.id.slice(1));
     if (!edge.sections?.length)
       throw new Error("Communication route is incomplete.");
-    out.push(`<g data-communication-link="${attr(links[i]!.uid)}">`);
+    const link = links[i]!;
+    const endpoints = [
+      { deviceUid: link.fromDeviceUid, portKey: link.connection.fromPort },
+      { deviceUid: link.toDeviceUid, portKey: link.connection.toPort },
+    ];
+    out.push(
+      `<g data-communication-link="${attr(link.uid)}" data-communication-endpoints="${attr(JSON.stringify(endpoints))}">`,
+    );
     for (const section of edge.sections) {
       const points = [
         section.startPoint,
@@ -332,12 +349,13 @@ export async function prepareCommunicationDrawing(
     for (const port of rows.get(uid)!) {
       const px = port.side === "WEST" ? 0 : node.width!;
       out.push(
-        `<circle cx="${n(px)}" cy="${n(port.y)}" r="0.7" fill="white" stroke="#344054" stroke-width="0.3"/>`,
+        `<g data-communication-port="${attr(port.key)}"><circle cx="${n(px)}" cy="${n(port.y)}" r="0.7" fill="white" stroke="#344054" stroke-width="0.3"/>`,
         text(
           port.side === "WEST" ? 2 : node.width! - 2 - textWidth(port.key),
           port.y + 1,
           port.key,
         ),
+        "</g>",
       );
     }
     out.push("</g>");
@@ -348,7 +366,16 @@ export async function prepareCommunicationDrawing(
       y: node.y! + node.height! / 2,
     });
   }
+  assertTopologyRouteEndpoints(graph);
   return {
+    topologyCoverage: {
+      kind: "communication",
+      relationIds: links.map((l) => l.uid),
+      deviceUids: ordered,
+      ports: ordered.flatMap((deviceUid) =>
+        (rows.get(deviceUid) ?? []).map((p) => ({ deviceUid, portKey: p.key })),
+      ),
+    },
     title:
       request.medium === "ethernet"
         ? "Ethernet connections"

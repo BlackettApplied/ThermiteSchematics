@@ -1,3 +1,8 @@
+import {
+  buildTopologyCoverage,
+  type TopologyCoverage,
+  type TopologyDrawingCoverage,
+} from "./topology-coverage.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 
 export interface DrawingCoverage {
@@ -36,6 +41,7 @@ export interface PacketCoverage {
   readonly functions: readonly CoverageEntry[];
   readonly unauditedSheets: readonly number[];
   readonly limitations: readonly string[];
+  readonly topology: TopologyCoverage;
 }
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 
@@ -46,6 +52,7 @@ export function buildPacketCoverage(
     sheet: number;
     view: string;
     drawings: readonly DrawingCoverage[];
+    topologyDrawings?: readonly TopologyDrawingCoverage[];
   }[],
 ): PacketCoverage {
   const names = new Map(ir.devices.map((d) => [d.uid, d.designation]));
@@ -122,6 +129,7 @@ export function buildPacketCoverage(
   return {
     format: "schematic-coverage/0.1",
     scope: "circuit-and-wiring",
+    topology: buildTopologyCoverage(ir, sheets),
     counts: {
       conductors: counts(representedConductors),
       functions: counts(representedFunctions),

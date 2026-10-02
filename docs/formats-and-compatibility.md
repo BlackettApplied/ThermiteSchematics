@@ -123,7 +123,9 @@ function kind, terminal count or contact state. See the [closed mark catalog and
 diagnostic contract](circuit-symbols.md). The additive specialized marks preserve
 existing source formats and the original continuous renderer. Successful packet
 results now include an additive `coverage` inventory with explicit circuit/wiring
-scope; see [packet coverage](circuit-views.md#packet-coverage-inventory). The six
+scope and a separate assembly/communication `coverage.topology` inventory; see
+[packet coverage](circuit-views.md#packet-coverage-inventory) and
+[topology coverage](topology-coverage.md). The six
 guarded agent tool contracts are unchanged.
 
 Symbol profiles are explicit: `thermite:io-module`, `thermite:terminal-strip`,

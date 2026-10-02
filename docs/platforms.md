@@ -21,7 +21,10 @@ for the commit, test counts, skips and downloaded-asset evidence.
 | macOS x64 | No local test host | Not verified | Not verified |
 
 The [ordinary CI workflow](../.github/workflows/ci.yml) runs the complete check
-and runtime packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022`.
+and runtime packaging on `macos-14`, `ubuntu-24.04`, and `windows-2022` for
+pull requests targeting `release` and pushes to `release`. Manual runs also
+require the `release` branch. Pull requests and merges into `dev` skip this
+workflow; contributors still run the local checks before submitting changes.
 Linux network-disabled acceptance uses a matching-architecture container;
 Windows ARM64 and non-glibc Linux systems have not been validated. The packer
 builds for its current OS and architecture; it does not cross-compile.

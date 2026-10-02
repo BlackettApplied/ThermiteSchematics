@@ -2,8 +2,9 @@ name: TypeScript alpha
 
 on:
   push:
-    branches: [dev]
+    branches: [release]
   pull_request:
+    branches: [release]
   workflow_dispatch:
 
 permissions:
@@ -11,6 +12,7 @@ permissions:
 
 jobs:
   check:
+    if: github.ref == 'refs/heads/release' || github.base_ref == 'release'
     strategy:
       fail-fast: false
       matrix:
