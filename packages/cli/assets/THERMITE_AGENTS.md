@@ -104,6 +104,17 @@ usage remain unspecified. Shield construction never implies a shield bond.
 `thermite report io --project . -o drawings/io.csv` exports every declared channel.
 Other kinds: `terminals`, `bom`, `wires`, `cables`, `network`; `--device PLC1` limits terminal
 or I/O reports. For packets use `{ "format": "documentation-view-request/0.1",
+"kind": "network", "filter": { "devices": ["PLC1"] } }` to select complete
+incident rows. Every report accepts an explicit device/type/location `filter`;
+`thermite report <kind> --filter <file>` reads the filter object, or `-` for stdin.
+Do not combine `device` and `filter`. Retained rows keep peer details and whole
+cable inventories; endpoint-free records remain included. Filtered CSV selection
+metadata is on stderr; packets expose `documentationSelections`. With `index:
+true`, `references: { "appearances": "drawings", "filter": { "devices":
+["PLC1"] } }` scopes only the reference index; `references: false` retains the
+sheet index and omits reference pages. Preserve omitted-row/group metadata.
+See `docs/report-filtering.md` in the source checkout. An unfiltered report uses
+`{ "format": "documentation-view-request/0.1",
 "kind": "io" }`. Address and usage assignments live in the device's `io` object;
 never infer spare status from missing connections. E202 checks channel keys and
 exact duplicate addresses, not PLC byte/word overlap or programming validity.

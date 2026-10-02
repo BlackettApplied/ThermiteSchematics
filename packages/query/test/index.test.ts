@@ -16,6 +16,7 @@ describe("query public API", () => {
       "createQueryEngine",
       "documentationCsv",
       "parseProjectSnapshot",
+      "resolveDeviceFilter",
       "reviewProject",
       "serializeQueryResult",
     ]);

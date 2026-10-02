@@ -10,6 +10,7 @@ import {
   reviewProject,
   type DocumentationRequest,
   type ReportKind,
+  type DeviceFilter,
   buildCableSchedule,
   createQueryEngine,
   auditContinuity,
@@ -51,6 +52,7 @@ interface Flags {
   device?: string;
   before?: string;
   location?: string;
+  filter?: string;
 }
 async function requestJson(path: string): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -520,6 +522,10 @@ export async function runThermite(argv = process.argv): Promise<number> {
       "--device <designation>",
       "limit terminal or I/O report to one device",
     )
+    .option(
+      "--filter <file>",
+      "device/type/location filter JSON file, or - for stdin",
+    )
     .action(async (kind: string, flags: Flags) => {
       if (!REPORT_KINDS.includes(kind as ReportKind))
         throw new Error(`Report kind must be ${REPORT_KINDS.join(", ")}.`);
@@ -527,6 +533,9 @@ export async function runThermite(argv = process.argv): Promise<number> {
         format: "documentation-view-request/0.1",
         kind: kind as ReportKind,
         ...(flags.device ? { device: flags.device } : {}),
+        ...(flags.filter
+          ? { filter: (await requestJson(flags.filter)) as DeviceFilter }
+          : {}),
       };
       if (flags.output?.toLowerCase().endsWith(".csv")) {
         if (flags.json)
@@ -539,14 +548,19 @@ export async function runThermite(argv = process.argv): Promise<number> {
           exitCode = c.toolFailure ? 2 : 1;
           return;
         }
+        const table = buildDocumentation(c.ir, request);
         await writeAlphaOutput(
           flags.project,
           flags.output,
-          documentationCsv(buildDocumentation(c.ir, request)),
+          documentationCsv(table),
         );
         process.stdout.write(`Wrote ${resolve(flags.output)}\n`);
         process.stderr.write(
-          JSON.stringify({ diagnostics: c.diagnostics, error: null }) + "\n",
+          JSON.stringify({
+            diagnostics: c.diagnostics,
+            error: null,
+            ...(table.selection ? { selection: table.selection } : {}),
+          }) + "\n",
         );
       } else await produce(flags, request);
     });

@@ -217,6 +217,10 @@ Beyond the standard circuit drawing, each view type has its own reference:
   [field interfaces](libraries/field-interfaces/README.md) library. Generic
   connector pin maps are proposals until the actual hardware is selected.
 
+[Report and reference filters](docs/report-filtering.md) select source devices,
+types or locations while preserving complete connection rows and recording
+omitted source identities. Reference indexes can use diagram appearances only.
+
 The [reference comparison protocol](docs/reference-parity.md) describes how
 synthetic electrical projects exercise rendering, conductor coverage and
 manufacturer-model boundaries.
