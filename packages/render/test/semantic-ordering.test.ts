@@ -13,7 +13,7 @@ import { b4Round9Fixture } from "./b4-fixtures.js";
 import { afterAll, beforeAll, expect, it } from "vitest";
 import { compileProject, type ElectricalIr } from "@thermite/compiler";
 import { readdir } from "node:fs/promises";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import {
   reidentify,
   rootedRequests,
@@ -160,10 +160,13 @@ it.each([
 const exampleProjects = [
   ...new Set(
     (await readdir("examples", { recursive: true }))
-      .filter((f) => f.endsWith("/system.json"))
+      .filter((f) => basename(f) === "system.json")
       .map(dirname),
   ),
 ].sort();
+it("discovers all 13 shipped example projects", () => {
+  expect(exampleProjects).toHaveLength(13);
+});
 it.each(exampleProjects)(
   "shipped %s rooted views have one ELK input sequence and SVG over 30 UID assignments",
   async (project) => {

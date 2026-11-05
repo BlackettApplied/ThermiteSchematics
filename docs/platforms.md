@@ -110,4 +110,8 @@ Set `THERMITE_REQUIRE_BROWSER=1` to fail when no browser is available; ordinary
 CI sets this on all three Chrome-equipped runners. An explicitly invalid
 `THERMITE_TEST_BROWSER` disables automatic discovery for policy verification.
 PDF raster checks, including all four signal-loop variants, always run.
+The synthetic browser monospace specimen loads the shipped Noto Sans Mono face
+and waits for font loading before capture, so its advance checks do not depend
+on the host's generic monospace font. This is test setup; generated SVG and
+runtime font selection retain their existing contracts.
 No browser or raster dependency is included in the runtime package.

@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { inflateSync } from "node:zlib";
+import { readFile } from "node:fs/promises";
 import { compileProject, type ElectricalIr } from "@thermite/compiler";
 import { renderSchematicPacket } from "@thermite/render";
 import { packetPdf } from "../src/alpha-pdf.js";
@@ -564,8 +565,13 @@ describe("PDF painted typography parity", () => {
   it.skipIf(!rasterBrowser.browserPath)(
     "paints the complete report and monospace specimens in a real browser",
     async () => {
-      const { launchBrowser, browserCrop, pixelDifference, inkBounds } =
-        await import("./helpers/pdf-raster.js");
+      const {
+        launchBrowser,
+        browserCrop,
+        browserFonts,
+        pixelDifference,
+        inkBounds,
+      } = await import("./helpers/pdf-raster.js");
       const browser = await launchBrowser();
       try {
         const { full, reference, crop } = await reportSpecimen(),
@@ -573,9 +579,26 @@ describe("PDF painted typography parity", () => {
           expected = await browserCrop(browser, reference, crop);
         expect(inkBounds(actual).count).toBeGreaterThan(3000);
         expect(pixelDifference(actual, expected)).toBe(0);
+        // This synthetic specimen declares a generic family; without a test
+        // font matrix 42038869517 painted Courier (macOS), Consolas (Windows)
+        // and DejaVu Sans Mono (Linux). Use the same shipped face as the direct PDF and wait
+        // for its load in browserCrop. Keep both width assertions unchanged.
         const input = await monoSpecimen(),
+          font = await readFile(
+            new URL(
+              "../assets/fonts/NotoSansMono-Regular.ttf",
+              import.meta.url,
+            ),
+          ),
+          svg = input.sheets[0]!.svg.replaceAll(
+            'font-family="monospace"',
+            'font-family="ThermiteTestMono"',
+          ).replace(
+            /(<svg\b[^>]*>)/u,
+            `$1<style>@font-face{font-family:ThermiteTestMono;src:url(data:font/ttf;base64,${font.toString("base64")})}</style>`,
+          ),
           narrow = inkBounds(
-            await browserCrop(browser, input.sheets[0]!.svg, {
+            await browserCrop(browser, svg, {
               x: 29,
               y: 25,
               width: 35,
@@ -583,13 +606,22 @@ describe("PDF painted typography parity", () => {
             }),
           ),
           wide = inkBounds(
-            await browserCrop(browser, input.sheets[0]!.svg, {
+            await browserCrop(browser, svg, {
               x: 29,
               y: 35,
               width: 35,
               height: 7,
             }),
           );
+        const loadedFonts = await browserFonts(browser, svg);
+        expect(loadedFonts).toHaveLength(2);
+        for (const faces of loadedFonts)
+          expect(faces).toEqual([
+            expect.objectContaining({
+              familyName: "Noto Sans Mono",
+              isCustomFont: true,
+            }),
+          ]);
         expect(narrow.width).toBeGreaterThan(210);
         expect(Math.abs(narrow.width - wide.width)).toBeLessThanOrEqual(6);
       } finally {

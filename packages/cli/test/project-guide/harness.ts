@@ -271,7 +271,9 @@ export const ctx = {
  * checkout, and parses the CLI tree.
  */
 export async function setUpSuite() {
-  ctx.work = await mkdtemp(join(realpathSync(tmpdir()), "thermite-guide-"));
+  ctx.work = await mkdtemp(
+    join(realpathSync.native(tmpdir()), "thermite-guide-"),
+  );
   await mkdir(join(ctx.work, "pristine"));
   for (const template of TEMPLATES) {
     const args = ["init", template, ...TEMPLATE_FLAGS[template]];
@@ -309,7 +311,10 @@ export async function tearDownSuite() {
 let directories = 0;
 /** A new empty directory under the suite's temporary root. */
 export async function scratch(name = "scratch"): Promise<string> {
-  const directory = join(ctx.work, `${name}-${(directories += 1)}`);
+  // Shared fixture keys contain ':'; Windows directory names cannot. The
+  // counter preserves uniqueness even when readable labels sanitize alike.
+  const label = name.replace(/[^a-zA-Z0-9_-]/gu, "-");
+  const directory = join(ctx.work, `${label}-${(directories += 1)}`);
   await mkdir(directory, { recursive: true });
   return directory;
 }

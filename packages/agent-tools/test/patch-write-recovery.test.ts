@@ -47,7 +47,7 @@ describe("patch write recovery outcomes", () => {
         "changes were committed",
       );
       expect(outcome.diagnostics[0]?.message).toContain(
-        join(fixture.projectRoot, PROJECT_WRITE_LOCK_FILE_NAME),
+        JSON.stringify(join(fixture.projectRoot, PROJECT_WRITE_LOCK_FILE_NAME)),
       );
       expect(
         JSON.parse(

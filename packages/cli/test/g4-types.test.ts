@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
 import ts from "typescript";
 import { DIAGNOSTIC_CATALOG } from "../../schema/src/diagnostic-catalog.js";
 import { expect, it } from "vitest";
@@ -21,12 +21,18 @@ function diagnostics(overrides: Map<string, string>) {
     types: ["node"],
   };
   const host = ts.createCompilerHost(options);
+  // TypeScript supplies slash-normalized paths, including on Windows. Match
+  // the host's path/case rules before looking up in-memory source overrides.
+  const key = (file: string) => host.getCanonicalFileName(resolve(file));
+  const sources = new Map(
+    [...overrides].map(([file, source]) => [key(file), source]),
+  );
   const original = host.getSourceFile.bind(host);
   host.getSourceFile = (file, version, onError, fresh) =>
-    overrides.has(file)
+    sources.has(key(file))
       ? ts.createSourceFile(
           file,
-          overrides.get(file)!,
+          sources.get(key(file))!,
           ts.ScriptTarget.Latest,
           true,
         )
