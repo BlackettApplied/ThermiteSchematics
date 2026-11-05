@@ -115,8 +115,13 @@ it("unwritable audit paths never alter the real CLI streams or status", () => {
     const blocked = join(w.root, "blocked");
     mkdirSync(blocked);
     chmodSync(blocked, 0o500);
+    // Windows chmod does not deny directory writes, and root bypasses POSIX
+    // write bits. A directory as the append target guarantees a real audit
+    // write failure there; unprivileged POSIX still exercises EACCES.
     w.env.THERMITE_EVAL_LOG =
-      process.getuid?.() === 0 ? blocked : join(blocked, "log");
+      process.platform === "win32" || process.getuid?.() === 0
+        ? blocked
+        : join(blocked, "log");
     w.env.THERMITE_EVAL_SCHEMA_VALIDATE = "0";
     const args = ["validate", "."];
     const direct = spawnSync("bun", [w.real, ...args], {
@@ -128,6 +133,7 @@ it("unwritable audit paths never alter the real CLI streams or status", () => {
         env: w.env,
       });
     expect(shim.status).toBe(direct.status);
+    expect(shim.status).toBe(17);
     expect(shim.stdout).toEqual(direct.stdout);
     expect(shim.stderr).toEqual(direct.stderr);
     expect(lines(w.marker).some((e) => e.kind === "shim-error")).toBe(true);
