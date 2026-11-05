@@ -71,7 +71,7 @@ async function cleanup(
 // tests exercise busy handles and cleanup failures without changing a checkout.
 export async function checkWorktree({
   makeTemporary = () =>
-    mkdtempSync(join(realpathSync(tmpdir()), "thermite-worktree-")),
+    mkdtempSync(join(realpathSync.native(tmpdir()), "thermite-worktree-")),
   run = runCommand,
   remove = rmSync,
   pause = delay,
