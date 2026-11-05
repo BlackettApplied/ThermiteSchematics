@@ -15,7 +15,7 @@ if (timings) mkdirSync("coverage", { recursive: true });
 // This suite builds the frozen private 0.2.0 tarball against its historical
 // byte inventory. The public alpha has separate source and runtime archive acceptance.
 const selection = selected.some((argument) =>
-  argument.endsWith("/release-package.test.ts"),
+  argument.replaceAll("\\", "/").endsWith("/release-package.test.ts"),
 )
   ? selected
   : ["--exclude=packages/cli/test/release-package.test.ts", ...selected];

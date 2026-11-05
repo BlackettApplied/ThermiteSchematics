@@ -9,7 +9,7 @@ import {
   existsSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { delimiter, join } from "node:path";
 import { freshEnvironment, assertIsolation } from "./launch.mjs";
 import {
   seedCodexAuth,
@@ -38,12 +38,17 @@ it("auth allowlist preserves CODEX_API_KEY, excludes config, and removes checkou
   try {
     expect(w.env.CODEX_API_KEY).toBe(secret);
     expect(w.env.UNWANTED_MEMORY).toBeUndefined();
+    const engine = join(w.root, "engine"),
+      checkoutBin = join(engine, "node_modules", ".bin"),
+      externalBin = join(w.root, "external-bin");
+    mkdirSync(checkoutBin, { recursive: true });
+    mkdirSync(externalBin);
     const env = freshEnvironment(
       join(w.root, "fresh"),
-      { PATH: "/engine/node_modules/.bin:/usr/bin" },
-      { engineRoots: ["/engine"] },
+      { PATH: [checkoutBin, externalBin].join(delimiter) },
+      { engineRoots: [engine] },
     );
-    expect(env.PATH).toBe("/usr/bin");
+    expect(env.PATH).toBe(externalBin);
   } finally {
     rmSync(w.root, { recursive: true, force: true });
   }
