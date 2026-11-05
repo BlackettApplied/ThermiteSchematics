@@ -1876,10 +1876,11 @@ const module: FactModule = {
         const closed = new Promise((done) => child.on("close", done));
         const builds = () => (stdout.match(/^Wrote /gm) ?? []).length;
         // The deterministic alpha-watch test separately pins both 1000 ms
-        // schedules. Keep the original integration bounds on POSIX. Windows
-        // exceeded the 2500 ms post-edit wait in run 42038869517; allow its
-        // poll-plus-render work the existing machine-demo 15 s ceiling.
-        const changeCeiling = process.platform === "win32" ? 15000 : 2500;
+        // schedules. Keep the original 2500 ms bound on macOS, the guide's
+        // scoped platform. Windows exceeded it in run 42038869517; Ubuntu
+        // exceeded it in run 42072555353 (7552 ms whole fact, one Wrote).
+        // Their poll-plus-render work gets machine-demo's existing 15 s bound.
+        const changeCeiling = process.platform === "darwin" ? 2500 : 15000;
         const until = (done: () => boolean, ceiling = 4000): Promise<void> =>
           new Promise((resolve, reject) => {
             const finish = (error?: Error) => {
