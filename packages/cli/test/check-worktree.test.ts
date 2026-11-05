@@ -1,6 +1,26 @@
 import { join, resolve } from "node:path";
-import { expect, it } from "vitest";
+import { mkdtempSync } from "node:fs";
+import { expect, it, vi } from "vitest";
 import { checkWorktree } from "../../../scripts/check-worktree.mjs";
+
+vi.mock("node:fs", async (importOriginal) => {
+  const fs = await importOriginal<typeof import("node:fs")>();
+  const { resolve } = await import("node:path");
+  return {
+    ...fs,
+    realpathSync: Object.assign(() => resolve("legacy temporary alias"), {
+      native: () => resolve("native temporary root"),
+    }),
+    mkdtempSync: vi.fn(() => resolve("synthetic default temporary directory")),
+  };
+});
+
+it("creates the installation checkout under the native temporary root", async () => {
+  await checkWorktree({ run: () => {}, remove: () => {} });
+  expect(mkdtempSync).toHaveBeenLastCalledWith(
+    join(resolve("native temporary root"), "thermite-worktree-"),
+  );
+});
 
 const scratch = resolve("synthetic temporary directory");
 function harness({
