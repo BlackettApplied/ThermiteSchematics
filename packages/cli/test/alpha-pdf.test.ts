@@ -580,8 +580,8 @@ describe("PDF painted typography parity", () => {
         expect(inkBounds(actual).count).toBeGreaterThan(3000);
         expect(pixelDifference(actual, expected)).toBe(0);
         // This synthetic specimen declares a generic family; without a test
-        // font the browser uses Courier/Courier New/Liberation Mono depending
-        // on the host. Use the same shipped face as the direct PDF and wait
+        // font matrix 42038869517 painted Courier (macOS), Consolas (Windows)
+        // and DejaVu Sans Mono (Linux). Use the same shipped face as the direct PDF and wait
         // for its load in browserCrop. Keep both width assertions unchanged.
         const input = await monoSpecimen(),
           font = await readFile(
