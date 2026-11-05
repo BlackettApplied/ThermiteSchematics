@@ -132,6 +132,30 @@ if (process.env.THERMITE_REQUIRE_BROWSER === "1" && !browserPath)
   );
 export const launchBrowser = (): Promise<Browser> =>
   chromium.launch({ executablePath: browserPath!, headless: true });
+/** Actual painted faces, rather than CSS family names that may fall back. */
+export async function browserFonts(browser: Browser, svg: string) {
+  const page = await browser.newPage();
+  try {
+    await page.setContent(svg);
+    await page.evaluate(() => document.fonts.ready);
+    const session = await page.context().newCDPSession(page);
+    await session.send("DOM.enable");
+    await session.send("CSS.enable");
+    const { root } = await session.send("DOM.getDocument");
+    const { nodeIds } = await session.send("DOM.querySelectorAll", {
+      nodeId: root.nodeId,
+      selector: "text",
+    });
+    return await Promise.all(
+      nodeIds.map(
+        async (nodeId) =>
+          (await session.send("CSS.getPlatformFontsForNode", { nodeId })).fonts,
+      ),
+    );
+  } finally {
+    await page.close();
+  }
+}
 export async function browserCrop(
   browser: Browser,
   svg: string,
@@ -145,6 +169,7 @@ export async function browserCrop(
     await page.setContent(
       `<style>body{margin:0;background:white}svg{display:block}</style>${svg}`,
     );
+    await page.evaluate(() => document.fonts.ready);
     const data = await page.screenshot({
         clip: {
           x: (crop.x * 96) / 25.4,

@@ -10,7 +10,7 @@ import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { afterEach, describe, expect, it } from "vitest";
@@ -469,12 +469,7 @@ describe("profile clone conformance", () => {
 
 async function projectsBelow(relative: string) {
   return (await readdir(join(repo, relative), { recursive: true }))
-    .filter(
-      (p) =>
-        p === "system.json" ||
-        p.endsWith("/system.json") ||
-        p.endsWith("\\system.json"),
-    )
+    .filter((p) => basename(p) === "system.json")
     .sort()
     .map((p) => join(repo, relative, p));
 }

@@ -331,7 +331,7 @@ const module: FactModule = {
           lockPath,
           owner: { hostname: hostname() },
         });
-        expect(apply.report.error.message).toContain(lockPath);
+        expect(apply.report.error.message).toContain(JSON.stringify(lockPath));
         // So does W801, from a commit whose release fails.
         const { run, lockPath: released } = await (
           await engine()

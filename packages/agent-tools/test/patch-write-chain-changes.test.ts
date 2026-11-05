@@ -204,7 +204,7 @@ describe("patch write chain changes and leftover reservations", () => {
         diagnostic.message.includes("write-release/EACCES"),
       )?.message;
       expect(message).toContain(
-        join(fixture.projectRoot, PROJECT_WRITE_LOCK_FILE_NAME),
+        JSON.stringify(join(fixture.projectRoot, PROJECT_WRITE_LOCK_FILE_NAME)),
       );
       expect(message).toContain("once this command has exited");
       expect(message).toContain("no other writer is running");

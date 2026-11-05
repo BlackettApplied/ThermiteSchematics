@@ -30,7 +30,9 @@ export const defaultProjectWriteLockOperations = Object.freeze({
   lstatSync,
   openSync,
   readFileSync,
-  realpathSync,
+  // Match fs/promises.realpath in the loader and source-chain guards. The
+  // legacy synchronous component walk can preserve Windows 8.3 aliases.
+  realpathSync: realpathSync.native,
   unlinkSync,
   writeFileSync,
 });
