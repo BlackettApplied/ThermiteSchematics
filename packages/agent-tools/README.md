@@ -246,6 +246,9 @@ replacements, and rollback. Contention returns **A005/exit 1**, with `lockPath`,
 that of the installed engine package. A004 remains reserved for integrity drift.
 After a competing edit, re-inspect the project and rebuild the patch, including
 its operations and guards; copying a new integrity alone is insufficient.
+The loader and reservation use native filesystem canonicalization, including
+Windows short-name expansion; directory and lock identity checks still refuse
+replaced roots or reservations.
 
 There is no automatic reclamation. A same-host PID that is no longer running
 indicates an apparently abandoned reservation. Confirm all project writers have
