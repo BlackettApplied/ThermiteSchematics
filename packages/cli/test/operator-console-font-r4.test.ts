@@ -2,20 +2,46 @@ import { readFile } from "node:fs/promises";
 import { expect, it } from "vitest";
 import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../../render/src/sheets.js";
-import { embedPrintableFont } from "../src/printable-font.js";
 import { launchBrowser, browserPath } from "./helpers/pdf-raster.js";
-import { openSheet } from "../../../evals/draw/browser.mjs";
-import { inside, throughBox } from "../../../evals/draw/checks.mjs";
+import { wiringOutlineDistances } from "./helpers/svg-outline-geometry.js";
+
+type Row = { file: string; text: string; dev: number };
+type Actual = { file: string; text: string; distance: number };
+function assertBaseline(rows: Row[], actual: Actual[]) {
+  let count = 0;
+  for (const flow of ["left-to-right", "top-to-bottom"]) {
+    const used = new Map<string, number>();
+    for (const row of rows.filter((r) =>
+      r.file.startsWith(`operator-console-${flow}/`),
+    )) {
+      const file = row.file.split("/").at(-1)!,
+        key = file + "|" + row.text,
+        n = used.get(key) ?? 0;
+      used.set(key, n + 1);
+      const a = actual.filter((a) => a.file === file && a.text === row.text)[n];
+      expect(a, key).toBeDefined();
+      expect(
+        Number((a!.distance - row.dev).toFixed(4)),
+        key,
+      ).toBeLessThanOrEqual(0.0128);
+      count++;
+    }
+  }
+  expect(count).toBe(132);
+}
+
 it.skipIf(!browserPath)(
-  "bounds the distinct operator-console wiring path against all 132 frozen dev label instances",
+  "compares pinned wiring ink with the frozen dev drawing and rejects a displaced W-C01 mutation",
   async () => {
     const baseline = JSON.parse(
-        await readFile(
-          new URL("./operator-console-label-baseline.json", import.meta.url),
-          "utf8",
-        ),
+      await readFile(
+        new URL("./operator-console-label-baseline.json", import.meta.url),
+        "utf8",
       ),
-      c = await compileProject("examples/operator-console");
+    );
+    expect(baseline.format).toBe("operator-console-label-baseline/2.0");
+    expect(baseline.base).toBe("d7f10b3439540b88a4546b1f754c44b763029b44");
+    const c = await compileProject("examples/operator-console");
     if (!c.ok) throw Error(JSON.stringify(c));
     const request = JSON.parse(
         await readFile("examples/operator-console/packet.request.json", "utf8"),
@@ -23,88 +49,52 @@ it.skipIf(!browserPath)(
       r = await renderSchematicPacket(c.ir, request, c.presentation);
     if (!r.ok) throw Error(JSON.stringify(r));
     const browser = await launchBrowser(),
-      actual: { file: string; text: string; distance: number }[] = [];
+      page = await browser.newPage(),
+      actual: Actual[] = [];
     try {
       for (const s of r.value.sheets) {
-        const page = await browser.newPage();
-        try {
-          const g: any = await openSheet(page, embedPrintableFont(s.svg)),
-            routes = g.shapes.filter((s: any) => s.conductor && s.wire);
-          for (const t of g.texts.filter((t: any) => t.wire)) {
-            const own = routes.filter((s: any) => s.wire === t.wire);
-            if (!own.length) continue;
-            const b = t.bbox,
-              dist = (s: any) =>
-                s.points.slice(1).reduce((best: number, p: any, i: number) => {
-                  const a = s.points[i];
-                  return Math.min(
-                    best,
-                    Math.hypot(
-                      Math.max(
-                        Math.min(p.x, a.x) - b.x - b.w,
-                        b.x - Math.max(p.x, a.x),
-                        0,
-                      ),
-                      Math.max(
-                        Math.min(p.y, a.y) - b.y - b.h,
-                        b.y - Math.max(p.y, a.y),
-                        0,
-                      ),
-                    ),
-                  );
-                }, Infinity),
-              inline =
-                t.plate &&
-                inside(t.bbox, t.plate.bbox) &&
-                own.some((s: any) =>
-                  s.points
-                    .slice(1)
-                    .some((p: any, i: number) =>
-                      throughBox(s.points[i], p, t.plate.bbox, 0),
-                    ),
-                );
-            actual.push({
-              file: `sheet-${String(s.number).padStart(3, "0")}.svg`,
-              text: t.text,
-              distance: inline
-                ? 0
-                : Math.min(
-                    ...own.map((s: any) =>
-                      Math.max(0, dist(s) - (s.stroke ?? 0) / 2),
-                    ),
-                  ),
-            });
-          }
-        } finally {
-          await page.close();
-        }
+        const rows = await wiringOutlineDistances(page, s.svg);
+        actual.push(
+          ...rows.map((row) => ({
+            ...row,
+            file: `sheet-${String(s.number).padStart(3, "0")}.svg`,
+          })),
+        );
       }
+      expect(actual).toHaveLength(66); // Wiring has no flow; both legacy flow captures cover these same instances.
+      assertBaseline(baseline.rows, actual);
+      await wiringOutlineDistances(page, r.value.sheets[0]!.svg);
+      const mutated = await page.evaluate(() => {
+        const t = [
+          ...document.querySelectorAll<SVGTextElement>(
+            "[data-wiring-conductor] text",
+          ),
+        ].find((t) => t.textContent === "W-C01")!;
+        // This label sits above a horizontal route: move 0.1 mm away from it.
+        t.setAttribute("y", String(Number(t.getAttribute("y")) - 0.1));
+        return document.querySelector("svg")!.outerHTML;
+      });
+      const changed = await wiringOutlineDistances(page, mutated),
+        bad = actual.map((row) =>
+          row.file === "sheet-001.svg" && row.text === "W-C01"
+            ? {
+                ...row,
+                distance: changed.find((t) => t.text === "W-C01")!.distance,
+              }
+            : row,
+        );
+      const target = (rows: Actual[]) =>
+        rows.find(
+          (row) => row.file === "sheet-001.svg" && row.text === "W-C01",
+        )!;
+      expect(target(bad).distance - target(actual).distance).toBeCloseTo(
+        0.1,
+        5,
+      );
+      expect(() => assertBaseline(baseline.rows, bad)).toThrow();
     } finally {
+      await page.close();
       await browser.close();
     }
-    let count = 0;
-    for (const flow of ["left-to-right", "top-to-bottom"]) {
-      const rows = baseline.rows.filter((r: any) =>
-          r.file.startsWith(`operator-console-${flow}/`),
-        ),
-        used = new Map<string, number>();
-      for (const row of rows) {
-        const file = row.file.split("/").at(-1),
-          key = file + "|" + row.text,
-          n = used.get(key) ?? 0;
-        used.set(key, n + 1);
-        const a = actual.filter((a) => a.file === file && a.text === row.text)[
-          n
-        ];
-        expect(a, key).toBeDefined();
-        // Helm R4-16 accepts this separate path's sub-pixel bearing delta; no tolerance was enlarged.
-        expect(
-          Number((a!.distance - row.dev).toFixed(4)),
-          key,
-        ).toBeLessThanOrEqual(0.0128);
-        count++;
-      }
-    }
-    expect(count).toBe(132);
   },
 );

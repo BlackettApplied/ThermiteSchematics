@@ -3,9 +3,60 @@ import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../../render/src/sheets.js";
 import { breakerAuxiliaryFixture } from "../../render/test/breaker-auxiliary-fixture.js";
 import { embedPrintableFont } from "../src/printable-font.js";
+import { printableTextMetrics } from "../../render/src/symbols/printable-font.js";
 import { launchBrowser, browserPath } from "./helpers/pdf-raster.js";
+import {
+  bounds,
+  distance,
+  primitiveDistance,
+  svgOutlineGeometry,
+} from "./helpers/svg-outline-geometry.js";
+import type { Page } from "playwright-core";
+
+async function captionClearances(page: Page, svg: string) {
+  const g = await svgOutlineGeometry(page, svg);
+  return g.texts
+    .filter((t) => t.caption)
+    .map((t) => {
+      const markBox = (index: number) =>
+        bounds(
+          g.shapes.filter((s) => s.mark === index).flatMap((s) => s.points),
+        );
+      return {
+        text: t.text,
+        own: distance(t.box, markBox(t.owner)),
+        other: Math.min(
+          ...g.marks
+            .map((m, i) => ({ ...m, i }))
+            .filter((m) => m.device === t.device && m.i !== t.owner)
+            .map((m) => distance(t.box, markBox(m.i))),
+        ),
+        nearestText: Math.min(
+          ...g.texts
+            .filter((other) => other !== t && other.painted)
+            .map((other) => distance(t.box, other.box)),
+        ),
+        nearest: Math.min(
+          ...g.shapes.map((s) =>
+            Math.max(0, primitiveDistance(t.box, s.points) - s.stroke / 2),
+          ),
+        ),
+      };
+    });
+}
+function assertCaptionClearances(
+  results: Awaited<ReturnType<typeof captionClearances>>,
+) {
+  expect(results).toHaveLength(2);
+  for (const r of results) {
+    expect(r.own, r.text).toBeLessThan(r.other);
+    expect(r.nearestText, r.text).toBeGreaterThan(0);
+    expect(r.nearest, r.text).toBeGreaterThan(0.1); // sheet mm, same 0.1 mm requirement
+  }
+}
+
 it.skipIf(!browserPath)(
-  "keeps adjacent breaker NO/NC caption ink nearest its owner and clear of every primitive",
+  "keeps pinned NO/NC ink nearest its owner and clear of primitives, and rejects an overlap mutation",
   async () => {
     const f = await breakerAuxiliaryFixture(),
       browser = await launchBrowser();
@@ -16,130 +67,43 @@ it.skipIf(!browserPath)(
           views: f.request.views.map((v) => ({ ...v, flow })),
         });
         if (!r.ok) throw Error(JSON.stringify(r));
-        const page = await browser.newPage({ deviceScaleFactor: 300 / 96 });
+        const page = await browser.newPage();
         try {
-          await page.setContent(embedPrintableFont(r.value.sheets[0]!.svg));
-          await page.evaluate(() => document.fonts.ready);
-          const results = await page.evaluate(() => {
-            const distance = (
-                a: { left: number; right: number; top: number; bottom: number },
-                b: { left: number; right: number; top: number; bottom: number },
-              ) =>
-                Math.hypot(
-                  Math.max(a.left - b.right, b.left - a.right, 0),
-                  Math.max(a.top - b.bottom, b.top - a.bottom, 0),
-                ),
-              out = [];
-            for (const g of document.querySelectorAll(
-              "[data-contact-caption]",
-            )) {
-              const t = g.querySelector("text")!,
-                cs = getComputedStyle(t),
-                c = document.createElement("canvas").getContext("2d")!;
-              c.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
-              const m = c.measureText(t.textContent!),
-                matrix = t.getScreenCTM()!,
-                x = Number(t.getAttribute("x")),
-                y = Number(t.getAttribute("y")),
-                p = (x: number, y: number) =>
-                  new DOMPoint(x, y).matrixTransform(matrix),
-                a = p(
-                  x - m.actualBoundingBoxLeft,
-                  y - m.actualBoundingBoxAscent,
-                ),
-                b = p(
-                  x + m.actualBoundingBoxRight,
-                  y + m.actualBoundingBoxDescent,
-                ),
-                box = { left: a.x, right: b.x, top: a.y, bottom: b.y };
-              const own = g
-                  .parentElement!.querySelector("[data-circuit-mark]")!
-                  .getBoundingClientRect(),
-                others = [
-                  ...g
-                    .closest("[data-device-uid]")!
-                    .querySelectorAll("[data-circuit-mark]"),
-                ]
-                  .filter(
-                    (e) =>
-                      e !==
-                      g.parentElement!.querySelector("[data-circuit-mark]"),
-                  )
-                  .map((e) => e.getBoundingClientRect());
-              let nearest = Infinity;
-              for (const shape of document.querySelectorAll(
-                "line,path,polyline,rect,circle",
-              )) {
-                if (shape.closest("defs") || !("getTotalLength" in shape))
-                  continue;
-                const e = shape as SVGGeometryElement,
-                  sm = e.getScreenCTM()!,
-                  length = e.getTotalLength();
-                for (
-                  let at = 0;
-                  at <= length;
-                  at += Math.max(0.05, length / 500)
-                ) {
-                  const q = e.getPointAtLength(at),
-                    v = new DOMPoint(q.x, q.y).matrixTransform(sm);
-                  nearest = Math.min(
-                    nearest,
-                    distance(box, {
-                      left: v.x,
-                      right: v.x,
-                      top: v.y,
-                      bottom: v.y,
-                    }),
-                  );
-                }
-              }
-              let nearestText = Infinity;
-              for (const other of document.querySelectorAll("text")) {
-                if (
-                  other === t ||
-                  !other.textContent?.trim() ||
-                  !other.getNumberOfChars()
-                )
-                  continue;
-                const style = getComputedStyle(other);
-                c.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-                const tm = c.measureText(other.textContent),
-                  start = other.getStartPositionOfChar(0),
-                  ctm = other.getScreenCTM()!,
-                  p1 = new DOMPoint(
-                    start.x - tm.actualBoundingBoxLeft,
-                    start.y - tm.actualBoundingBoxAscent,
-                  ).matrixTransform(ctm),
-                  p2 = new DOMPoint(
-                    start.x + tm.actualBoundingBoxRight,
-                    start.y + tm.actualBoundingBoxDescent,
-                  ).matrixTransform(ctm);
-                nearestText = Math.min(
-                  nearestText,
-                  distance(box, {
-                    left: p1.x,
-                    right: p2.x,
-                    top: p1.y,
-                    bottom: p2.y,
-                  }),
-                );
-              }
-              out.push({
-                text: t.textContent,
-                own: distance(box, own),
-                other: Math.min(...others.map((b) => distance(box, b))),
-                nearest,
-                nearestText,
-              });
-            }
-            return out;
-          });
-          expect(results).toHaveLength(2);
-          for (const r of results) {
-            expect(r.own, r.text!).toBeLessThan(r.other);
-            expect(r.nearestText, r.text!).toBeGreaterThan(0);
-            expect(r.nearest, r.text!).toBeGreaterThan((0.1 * 96) / 25.4);
-          }
+          const svg = r.value.sheets[0]!.svg;
+          assertCaptionClearances(await captionClearances(page, svg));
+          // Move the baseline so the pinned ink's center lies on an actual mark.
+          // The inverse SVG transform maps that primitive into the text's frame.
+          const m = printableTextMetrics("NO", 2.3);
+          const mutated = await page.evaluate((metrics) => {
+            const t = [
+              ...document.querySelectorAll<SVGTextElement>(
+                "[data-contact-caption] text",
+              ),
+            ].find((e) => e.textContent === "NO")!;
+            const primitive = t
+              .closest("[data-contact-caption]")!
+              .parentElement!.querySelector<SVGGeometryElement>(
+                "[data-circuit-mark] line,[data-circuit-mark] path",
+              )!;
+            const q = primitive.getPointAtLength(
+                primitive.getTotalLength() / 2,
+              ),
+              p = new DOMPoint(q.x, q.y)
+                .matrixTransform(primitive.getScreenCTM()!)
+                .matrixTransform(t.getScreenCTM()!.inverse());
+            t.setAttribute(
+              "x",
+              String(p.x - (metrics.left + metrics.right) / 2),
+            );
+            t.setAttribute(
+              "y",
+              String(p.y + (metrics.top + metrics.bottom) / 2),
+            );
+            return document.querySelector("svg")!.outerHTML;
+          }, m);
+          const bad = await captionClearances(page, mutated);
+          expect(bad.find((r) => r.text === "NO")!.nearest).toBe(0);
+          expect(() => assertCaptionClearances(bad)).toThrow();
         } finally {
           await page.close();
         }
