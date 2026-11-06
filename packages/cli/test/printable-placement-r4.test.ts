@@ -4,6 +4,7 @@ import { renderSchematicPacket } from "../../render/src/sheets.js";
 import { breakerAuxiliaryFixture } from "../../render/test/breaker-auxiliary-fixture.js";
 import { embedPrintableFont } from "../src/printable-font.js";
 import { launchBrowser, browserPath } from "./helpers/pdf-raster.js";
+import { printDiagnostics } from "./helpers/print-diagnostics.js";
 it.skipIf(!browserPath)(
   "keeps adjacent breaker NO/NC caption ink nearest its owner and clear of every primitive",
   async () => {
@@ -66,7 +67,8 @@ it.skipIf(!browserPath)(
                       g.parentElement!.querySelector("[data-circuit-mark]"),
                   )
                   .map((e) => e.getBoundingClientRect());
-              let nearest = Infinity;
+              let nearest = Infinity,
+                nearestPrimitive;
               for (const shape of document.querySelectorAll(
                 "line,path,polyline,rect,circle",
               )) {
@@ -82,15 +84,25 @@ it.skipIf(!browserPath)(
                 ) {
                   const q = e.getPointAtLength(at),
                     v = new DOMPoint(q.x, q.y).matrixTransform(sm);
-                  nearest = Math.min(
-                    nearest,
-                    distance(box, {
-                      left: v.x,
-                      right: v.x,
-                      top: v.y,
-                      bottom: v.y,
-                    }),
-                  );
+                  const gap = distance(box, {
+                    left: v.x,
+                    right: v.x,
+                    top: v.y,
+                    bottom: v.y,
+                  });
+                  if (gap < nearest) {
+                    nearestPrimitive = {
+                      element: e.outerHTML,
+                      length,
+                      at,
+                      localPoint: { x: q.x, y: q.y },
+                      screenPoint: { x: v.x, y: v.y },
+                      stroke: getComputedStyle(e).stroke,
+                      fill: getComputedStyle(e).fill,
+                      matrix: [sm.a, sm.b, sm.c, sm.d, sm.e, sm.f],
+                    };
+                  }
+                  nearest = Math.min(nearest, gap);
                 }
               }
               let nearestText = Infinity;
@@ -130,10 +142,20 @@ it.skipIf(!browserPath)(
                 other: Math.min(...others.map((b) => distance(box, b))),
                 nearest,
                 nearestText,
+                box,
+                nearestPrimitive,
               });
             }
             return out;
           });
+          await printDiagnostics(
+            browser,
+            page,
+            r.value.sheets[0]!.svg,
+            `breaker-${flow}`,
+            ["NO", "NC"],
+            results,
+          );
           expect(results).toHaveLength(2);
           for (const r of results) {
             expect(r.own, r.text!).toBeLessThan(r.other);

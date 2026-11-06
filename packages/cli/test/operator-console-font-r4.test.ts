@@ -6,6 +6,7 @@ import { embedPrintableFont } from "../src/printable-font.js";
 import { launchBrowser, browserPath } from "./helpers/pdf-raster.js";
 import { openSheet } from "../../../evals/draw/browser.mjs";
 import { inside, throughBox } from "../../../evals/draw/checks.mjs";
+import { printDiagnostics } from "./helpers/print-diagnostics.js";
 it.skipIf(!browserPath)(
   "bounds the distinct operator-console wiring path against all 132 frozen dev label instances",
   async () => {
@@ -75,6 +76,43 @@ it.skipIf(!browserPath)(
                   ),
             });
           }
+          const diagnosticWire = g.texts.find(
+            (t: any) => t.text === "W-C01",
+          )?.wire;
+          await printDiagnostics(
+            browser,
+            page,
+            s.svg,
+            `operator-console-sheet-${s.number}`,
+            ["W-C01", "16 AWG / Blue"],
+            {
+              labels: actual.filter(
+                (row) =>
+                  row.file === `sheet-${String(s.number).padStart(3, "0")}.svg`,
+              ),
+              wireTexts: g.texts
+                .filter((t: any) => diagnosticWire && t.wire === diagnosticWire)
+                .map((t: any) => ({
+                  text: t.text,
+                  bbox: t.bbox,
+                  baselineShiftMm: t.baselineShiftMm,
+                  advanceRatio: t.advanceRatio,
+                  plate: t.plate,
+                })),
+              routes: routes
+                .filter(
+                  (route: any) =>
+                    diagnosticWire && route.wire === diagnosticWire,
+                )
+                .map((route: any) => ({
+                  wire: route.wire,
+                  bbox: route.bbox,
+                  stroke: route.stroke,
+                  routePath: route.routePath,
+                  routeMatrix: route.routeMatrix,
+                })),
+            },
+          );
         } finally {
           await page.close();
         }
