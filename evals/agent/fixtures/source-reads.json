@@ -1,0 +1,622 @@
+[
+  {
+    "form": "Claude Grep",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Grep",
+              "id": "t",
+              "input": {
+                "path": "/private/tmp/engine-checkout/packages",
+                "pattern": "uid"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude Glob",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Glob",
+              "id": "t",
+              "input": {
+                "path": "/private/tmp/engine-checkout",
+                "pattern": "**/*.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude LS",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "LS",
+              "id": "t",
+              "input": {
+                "path": "/private/tmp/engine-checkout"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude WebFetch",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "WebFetch",
+              "id": "t",
+              "input": {
+                "url": "https://github.com/BlackettApplied/ThermiteSchematics/blob/dev/docs/agent-requests.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude Task",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Task",
+              "id": "t",
+              "input": {
+                "prompt": "Read /private/tmp/engine-checkout/docs"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude Agent",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Agent",
+              "id": "t",
+              "input": {
+                "prompt": "Read /private/tmp/engine-checkout/packages"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude cd and rg",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "cd /private/tmp/engine-checkout && rg uid packages"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex cd and rg",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "cd /private/tmp/engine-checkout && rg uid packages",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude ls",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "ls /private/tmp/engine-checkout"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex ls",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "ls /private/tmp/engine-checkout",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude git -C",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "git -C /private/tmp/engine-checkout show HEAD:docs/agent-requests.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex git -C",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "git -C /private/tmp/engine-checkout show HEAD:docs/agent-requests.md",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude find",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "find /private/tmp/engine-checkout -name \"*.md\""
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex find",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "find /private/tmp/engine-checkout -name \"*.md\"",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude cat",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "cat /private/tmp/engine-checkout/docs/foo.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex cat",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "cat /private/tmp/engine-checkout/docs/foo.md",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Claude realpath alias",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "name": "Bash",
+              "id": "t",
+              "input": {
+                "command": "cat /tmp/engine-checkout/docs/foo.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "Codex realpath alias",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "t",
+          "type": "command_execution",
+          "command": "cat /tmp/engine-checkout/docs/foo.md",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "runtime file allowed",
+    "engineRoots": ["/private/tmp/engine-checkout"],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "t",
+              "name": "Read",
+              "input": {
+                "file_path": "/tmp/run/runtime/README.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 0
+  },
+  {
+    "form": "repository root",
+    "engineRoots": [],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "t",
+              "name": "WebFetch",
+              "input": {
+                "url": "https://github.com/BlackettApplied/ThermiteSchematics/"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "source clone",
+    "engineRoots": [],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "t",
+              "name": "WebFetch",
+              "input": {
+                "url": "https://github.com/BlackettApplied/ThermiteSchematics.git"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "raw source",
+    "engineRoots": [],
+    "events": [
+      {
+        "type": "assistant",
+        "message": {
+          "content": [
+            {
+              "type": "tool_use",
+              "id": "t",
+              "name": "WebFetch",
+              "input": {
+                "url": "https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/docs/agent-requests.md"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "gh GraphQL inline repository",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh GraphQL inline repository",
+          "type": "command_execution",
+          "command": "gh api graphql -f query='{repository(owner:\"3MUl0R\",name:\"ThermiteSchematics\"){url}}'",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "gh search repo qualifier",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh search repo qualifier",
+          "type": "command_execution",
+          "command": "gh search code dryRun repo:fork/ThermiteSchematics",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "gh search repo option",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh search repo option",
+          "type": "command_execution",
+          "command": "gh search code dryRun --repo fork/ThermiteSchematics",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "gh browse repo option",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh browse repo option",
+          "type": "command_execution",
+          "command": "gh browse -R fork/ThermiteSchematics docs",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 1
+  },
+  {
+    "form": "gh browse unrelated",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh browse unrelated",
+          "type": "command_execution",
+          "command": "gh browse -R fork/OtherSchematics docs",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 0
+  },
+  {
+    "form": "gh GraphQL unrelated",
+    "engineRoots": ["/engine"],
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh GraphQL unrelated",
+          "type": "command_execution",
+          "command": "gh api graphql -f query='{repository(owner:\"fork\",name:\"ThermiteSchematicsExtras\"){url}}'",
+          "aggregated_output": "",
+          "exit_code": 0
+        }
+      }
+    ],
+    "expected": 0
+  },
+  {
+    "form": "gh GraphQL variables",
+    "engineRoots": ["/engine"],
+    "expected": 1,
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh GraphQL variables",
+          "type": "command_execution",
+          "command": "gh api graphql -f query='query($name:String!){repository(owner:\"fork\",name:$name){url}}' -F name=ThermiteSchematics",
+          "exit_code": 0,
+          "aggregated_output": ""
+        }
+      }
+    ]
+  },
+  {
+    "form": "gh unscoped code search",
+    "engineRoots": ["/engine"],
+    "expected": 1,
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh unscoped code search",
+          "type": "command_execution",
+          "command": "gh search code ThermiteSchematics --limit 20",
+          "exit_code": 0,
+          "aggregated_output": ""
+        }
+      }
+    ]
+  },
+  {
+    "form": "gh scoped unrelated code search",
+    "engineRoots": ["/engine"],
+    "expected": 0,
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh scoped unrelated code search",
+          "type": "command_execution",
+          "command": "gh search code ThermiteSchematics --repo fork/OtherProject",
+          "exit_code": 0,
+          "aggregated_output": ""
+        }
+      }
+    ]
+  },
+  {
+    "form": "gh GraphQL unrelated variables",
+    "engineRoots": ["/engine"],
+    "expected": 0,
+    "events": [
+      {
+        "type": "item.completed",
+        "item": {
+          "id": "gh GraphQL unrelated variables",
+          "type": "command_execution",
+          "command": "gh api graphql -f query='query($name:String!){repository(owner:\"fork\",name:$name){url}}' -F name=OtherProject",
+          "exit_code": 0,
+          "aggregated_output": ""
+        }
+      }
+    ]
+  }
+]

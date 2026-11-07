@@ -1,3 +1,4 @@
+import { embedPrintableFont } from "../src/printable-font.js";
 import { spawn } from "node:child_process";
 import { mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -40,6 +41,18 @@ const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
 const motorProject = join(repositoryRoot, "examples", "motor-starter");
 const motorManifest = join(motorProject, "system.json");
+// Reviewed compiler diagnostics; orchestration must preserve the complete report.
+const motorDiagnostics: Diagnostic[] = JSON.parse(
+  await readFile(
+    join(
+      packageRoot,
+      "test/goldens/motor-starter/render-k1-control-left-to-right.stderr.json",
+    ),
+    "utf8",
+  ),
+).diagnostics;
+const motorHuman = `${formatHumanDiagnostics(motorDiagnostics)}\n`;
+
 const rendererGoldenRoot = join(
   repositoryRoot,
   "packages",
@@ -443,7 +456,7 @@ describe("M5 Task 8 render orchestration and command surface", () => {
       );
       expect(result.exitCode).toBe(0);
       expect(JSON.parse(result.stdout)).toMatchObject({ view: { flow } });
-      expect(result.stderr).toBe(report([], null));
+      expect(result.stderr).toBe(report(motorDiagnostics, null));
     },
   );
 });
@@ -644,7 +657,7 @@ describe("M6 Task 6 thin view request mapping", () => {
 });
 
 describe("M5 Task 8 atomic render output", () => {
-  it("writes exact renderer bytes, replaces successfully, and leaves no temp file", async () => {
+  it("writes renderer bytes with one delivery font subset, replaces successfully, and leaves no temp file", async () => {
     const root = await temporaryRoot();
     const output = join(root, "diagram.svg");
     const expected = await readFile(
@@ -663,8 +676,10 @@ describe("M5 Task 8 atomic render output", () => {
       output,
     ]);
 
-    expect(result).toEqual({ exitCode: 0, stdout: "", stderr: "" });
-    expect(await readFile(output)).toEqual(expected);
+    expect(result).toEqual({ exitCode: 0, stdout: "", stderr: motorHuman });
+    expect(await readFile(output, "utf8")).toEqual(
+      embedPrintableFont(expected.toString("utf8")),
+    );
     expect(await readdir(root)).toEqual(["diagram.svg"]);
   });
 
@@ -757,15 +772,22 @@ describe("M5 Task 8 atomic render output", () => {
       written: true,
     });
     expect(parsed.artifact).not.toHaveProperty("svg");
-    expect(result.stderr).toBe(report([], null));
+    expect(result.stderr).toBe(report(motorDiagnostics, null));
     expect(await readFile(join(root, outputOption))).toEqual(
-      await readFile(join(rendererGoldenRoot, "k1-control-left-to-right.svg")),
+      Buffer.from(
+        embedPrintableFont(
+          await readFile(
+            join(rendererGoldenRoot, "k1-control-left-to-right.svg"),
+            "utf8",
+          ),
+        ),
+      ),
     );
   });
 });
 
 describe("M6 Task 6 atomic view output", () => {
-  it("writes exact renderer bytes and emits view file JSON", async () => {
+  it("writes renderer bytes with a delivery font subset and emits view file JSON", async () => {
     const root = await temporaryRoot();
     const outputOption = "ps1 loads.svg";
     const result = await invoke(
@@ -793,9 +815,16 @@ describe("M6 Task 6 atomic view output", () => {
       },
     });
     expect(result.stdout).not.toContain("<svg");
-    expect(result.stderr).toBe(report([], null));
+    expect(result.stderr).toBe(report(motorDiagnostics, null));
     expect(await readFile(join(root, outputOption))).toEqual(
-      await readFile(join(rendererGoldenRoot, "ps1-loads-left-to-right.svg")),
+      Buffer.from(
+        embedPrintableFont(
+          await readFile(
+            join(rendererGoldenRoot, "ps1-loads-left-to-right.svg"),
+            "utf8",
+          ),
+        ),
+      ),
     );
     expect(await readdir(root)).toEqual([outputOption]);
   });
@@ -1018,18 +1047,52 @@ describe("M5 Task 8 render warnings, expected failures, and tool boundaries", ()
     { timeout: 120_000 },
     async ({ skip }) => {
       const cases = [
-        ["right-deep", "left-to-right", "right-deep-right", 351, 599],
-        ["right-deep", "top-to-bottom", "right-deep-down", 351, 599],
-        ["bridge", "left-to-right", "bridge-right", 340, 588],
-        ["bridge", "top-to-bottom", "bridge-down", 340, 588],
+        [
+          "right-deep",
+          "left-to-right",
+          "right-deep-right",
+          175,
+          2380,
+          "injected",
+        ],
+        [
+          "right-deep",
+          "top-to-bottom",
+          "right-deep-down",
+          178,
+          2386,
+          "injected",
+        ],
+        ["bridge", "left-to-right", "bridge-right", 169, 2368, "injected"],
+        ["bridge", "top-to-bottom", "bridge-down", 169, 2368, "injected"],
+        [
+          "right-deep",
+          "left-to-right",
+          "right-deep-semantic-right",
+          175,
+          1318,
+          "live",
+        ],
+        [
+          "right-deep",
+          "top-to-bottom",
+          "right-deep-semantic-down",
+          175,
+          1318,
+          "live",
+        ],
+        ["bridge", "left-to-right", "bridge-right", 169, 2368, "live"],
+        ["bridge", "top-to-bottom", "bridge-down", 169, 2368, "live"],
       ] as const satisfies readonly (readonly [
         Tier2FixtureName,
         "left-to-right" | "top-to-bottom",
         string,
         number,
         number,
+        "injected" | "live",
       ])[];
       const projects = {} as Record<Tier2FixtureName, string>;
+      const projectDiagnostics = {} as Record<Tier2FixtureName, Diagnostic[]>;
       for (const fixture of ["right-deep", "bridge"] as const) {
         const fixtureRoot = await temporaryRoot();
         const project = await materializeTier2Project(fixtureRoot, fixture);
@@ -1041,22 +1104,68 @@ describe("M5 Task 8 render warnings, expected failures, and tool boundaries", ()
         if (!compiled.ok) {
           throw new Error(JSON.stringify(compiled.diagnostics));
         }
-        expect(compiled.diagnostics).toEqual([]);
+        expect(compiled.diagnostics.map((d) => [d.code, d.severity])).toEqual([
+          ["I305", "info"],
+        ]);
+        projectDiagnostics[fixture] = compiled.diagnostics;
         projects[fixture] = project;
       }
 
-      for (const [fixture, flow, goldenName, humanBytes, jsonBytes] of cases) {
+      for (const [
+        fixture,
+        flow,
+        goldenName,
+        humanBytes,
+        jsonBytes,
+        mode,
+      ] of cases) {
         const project = projects[fixture];
         const outputRoot = await temporaryRoot();
-        const golden = await readFile(
-          join(tier2GoldenRoot, `${goldenName}.r004.json`),
-          "utf8",
-        );
-        const parsed = JSON.parse(golden) as {
-          diagnostics: [];
+        // Fixtures follow repository formatting; product bytes retain JSON.stringify's exact layout.
+        const errorGolden =
+          JSON.stringify(
+            JSON.parse(
+              await readFile(
+                join(
+                  goldenName.includes("semantic")
+                    ? join(
+                        repositoryRoot,
+                        "packages/render/test/snapshots/semantic-ordering",
+                      )
+                    : tier2GoldenRoot,
+                  `${goldenName}.r004.json`,
+                ),
+                "utf8",
+              ),
+            ),
+            undefined,
+            2,
+          ) + "\n";
+        const parsed = JSON.parse(errorGolden) as {
+          diagnostics: Diagnostic[];
           error: RenderFailure;
         };
-        const humanGolden = `R004 ${parsed.error.message}\n`;
+        const errorHuman = `R004 ${parsed.error.message}\n`;
+        expect(Buffer.byteLength(errorHuman, "utf8")).toBe(humanBytes);
+        expect(Buffer.byteLength(errorGolden, "utf8")).toBe(jsonBytes);
+        parsed.diagnostics = projectDiagnostics[fixture];
+        const golden = JSON.stringify(parsed, null, 2) + "\n";
+        const humanGolden = `${formatHumanDiagnostics(parsed.diagnostics)}\n\n${errorHuman}`;
+        // The historical controls execute the built CLI in a fresh process,
+        // with only the renderer's failure injected. Compilation, formatting,
+        // stderr/stdout, exit status and artifact handling are production code.
+        const invokeCase =
+          mode === "live"
+            ? invokeCliSubprocess
+            : (args: readonly string[]) =>
+                invokeEvalSubprocess(`
+          import { runCli } from ${JSON.stringify(cliModuleUrl)};
+          process.exitCode = await runCli(${JSON.stringify(["node", "thermite", ...args])}, {
+            renderCreateRenderer: () => ({
+              render: async () => ({ ok: false, error: ${JSON.stringify(parsed.error)} })
+            })
+          });
+        `);
         let first:
           { readonly human: Invocation; readonly json: Invocation } | undefined;
         for (const repeat of [1, 2] as const) {
@@ -1072,7 +1181,7 @@ describe("M5 Task 8 render warnings, expected failures, and tool boundaries", ()
           let json: Invocation;
           try {
             [human, json] = await Promise.all([
-              invokeCliSubprocess([
+              invokeCase([
                 "view",
                 "LS1",
                 "--to",
@@ -1084,7 +1193,7 @@ describe("M5 Task 8 render warnings, expected failures, and tool boundaries", ()
                 "--output",
                 humanOutput,
               ]),
-              invokeCliSubprocess([
+              invokeCase([
                 "view",
                 "LS1",
                 "--to",
@@ -1118,8 +1227,12 @@ describe("M5 Task 8 render warnings, expected failures, and tool boundaries", ()
           expect(Buffer.from(json.stderr, "utf8")).toEqual(
             Buffer.from(golden, "utf8"),
           );
-          expect(Buffer.byteLength(human.stderr, "utf8")).toBe(humanBytes);
-          expect(Buffer.byteLength(json.stderr, "utf8")).toBe(jsonBytes);
+          expect(Buffer.byteLength(human.stderr, "utf8")).toBe(
+            Buffer.byteLength(humanGolden, "utf8"),
+          );
+          expect(Buffer.byteLength(json.stderr, "utf8")).toBe(
+            Buffer.byteLength(golden, "utf8"),
+          );
           await expect(readFile(humanOutput)).rejects.toThrow();
           await expect(readFile(jsonOutput)).rejects.toThrow();
           if (first === undefined) {
@@ -1348,7 +1461,7 @@ describe("M6 Task 6 view streams, failures, and exit codes", () => {
       expect(result.exitCode).toBe(1);
       expect(result.stdout).toBe("");
       expect(JSON.parse(result.stderr)).toMatchObject({
-        diagnostics: [],
+        diagnostics: motorDiagnostics,
         error: { code: "Q001", input: "UNKNOWN" },
       });
     }
@@ -1928,10 +2041,10 @@ describe("M6 Task 6 view subprocess stream and exit matrix", () => {
       expect(results.rawFile).toEqual({
         exitCode: 0,
         stdout: "",
-        stderr: "",
+        stderr: motorHuman,
       });
       expect(await readFile(rawOutput, "utf8")).toBe(
-        '<svg data-subprocess-view="true"></svg>\n',
+        embedPrintableFont('<svg data-subprocess-view="true"></svg>\n'),
       );
       expect(results.jsonInline!.exitCode).toBe(0);
       expect(JSON.parse(results.jsonInline!.stdout)).toMatchObject({
@@ -1955,9 +2068,9 @@ describe("M6 Task 6 view subprocess stream and exit matrix", () => {
           written: true,
         },
       });
-      expect(results.jsonFile!.stderr).toBe(report([], null));
+      expect(results.jsonFile!.stderr).toBe(report(motorDiagnostics, null));
       expect(await readFile(jsonOutput, "utf8")).toBe(
-        '<svg data-subprocess-view="true"></svg>\n',
+        embedPrintableFont('<svg data-subprocess-view="true"></svg>\n'),
       );
       expect(results.compilerDiagnostic).toEqual({
         exitCode: 1,
@@ -1967,12 +2080,12 @@ describe("M6 Task 6 view subprocess stream and exit matrix", () => {
       expect(results.renderFailure).toEqual({
         exitCode: 1,
         stdout: "",
-        stderr: report([], viewRenderFailure),
+        stderr: report(motorDiagnostics, viewRenderFailure),
       });
       expect(results.queryFailure!.exitCode).toBe(1);
       expect(results.queryFailure!.stdout).toBe("");
       expect(JSON.parse(results.queryFailure!.stderr)).toMatchObject({
-        diagnostics: [],
+        diagnostics: motorDiagnostics,
         error: { code: "Q001", input: "UNKNOWN" },
       });
       expect(results.compilerToolFailure).toEqual({
@@ -1991,12 +2104,12 @@ describe("M6 Task 6 view subprocess stream and exit matrix", () => {
         expect(results[name]!.exitCode).toBe(2);
         expect(results[name]!.stdout).toBe("");
         expect(JSON.parse(results[name]!.stderr)).toMatchObject({
-          diagnostics: [{ code: "E001" }],
+          diagnostics: [{ code: "E001" }, ...motorDiagnostics],
           error: null,
         });
       }
       expect(await readFile(sentinelOutput, "utf8")).toBe(sentinel);
-      expect(await readdir(root)).toEqual([
+      expect((await readdir(root)).sort()).toEqual([
         "json-view.svg",
         "raw-view.svg",
         "sentinel.svg",
@@ -2129,11 +2242,11 @@ describe("M5 Task 8 subprocess boundaries", () => {
         expect(result.stdout).toBe("");
         if (result.json) {
           expect(JSON.parse(result.stderr)).toMatchObject({
-            diagnostics: [],
+            diagnostics: motorDiagnostics,
             error: { code: result.code },
           });
         } else {
-          expect(result.stderr).toMatch(new RegExp(`^${result.code} `));
+          expect(result.stderr).toMatch(new RegExp(`\\n${result.code} `));
           expect(result.stderr.endsWith("\n")).toBe(true);
         }
       }
@@ -2212,13 +2325,13 @@ describe("M5 Task 8 subprocess boundaries", () => {
       expect(compilerFailure.exitCode).toBe(1);
       expect(compilerFailure.stdout).toBe("");
       expect(JSON.parse(compilerFailure.stderr)).toMatchObject({
-        diagnostics: [{ code: "E200" }],
+        diagnostics: [{ code: "E200" }, { code: "I208" }],
         error: null,
       });
       expect(endOfOptions.exitCode).toBe(1);
       expect(endOfOptions.stdout).toBe("");
       expect(JSON.parse(endOfOptions.stderr)).toMatchObject({
-        diagnostics: [],
+        diagnostics: motorDiagnostics,
         error: { code: "Q001", input: "-K1" },
       });
     },
@@ -2238,11 +2351,12 @@ describe("M8 Task 4 agent create-view R005 split-stream goldens", () => {
     const expectedStderr = await readFile(join(root, `${slug}.stderr.json`));
     const report = JSON.parse(expectedStderr.toString("utf8")) as {
       error: RenderFailure;
+      diagnostics: Diagnostic[];
     };
     const tools = {
       createView: async () => ({
         ok: false as const,
-        diagnostics: [],
+        diagnostics: report.diagnostics,
         error: report.error,
         failureClass: "expected" as const,
       }),

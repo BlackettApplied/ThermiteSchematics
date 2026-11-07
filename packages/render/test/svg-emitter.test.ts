@@ -1,3 +1,4 @@
+import { printableTextMetrics } from "../src/symbols/printable-font.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { beforeAll, describe, expect, it } from "vitest";
 
@@ -201,9 +202,25 @@ describe("canonical semantic SVG emitter", () => {
           [edge.label, edge.netLabel].filter((value) => value !== undefined),
         ),
       ].find(({ id }) => id === label.id)!;
-      expect(svg).toContain(
-        `textLength="${formatSvgNumber(semantic.textLength)}" lengthAdjust="spacingAndGlyphs"`,
-      );
+      const printed = semantic.printableText ?? semantic.text;
+      if (!printed) {
+        expect(svg).toContain(`<text clip-path="url(#${clip})"></text>`);
+      } else {
+        expect(svg).toContain(`>${escapeXmlText(printed)}</text>`);
+        const line = svg
+          .split("\n")
+          .find(
+            (l) =>
+              l.includes(`clip-path="url(#${clip})"`) && l.includes("class="),
+          )!;
+        const natural = printableTextMetrics(printed).advance;
+        const forced = /textLength="([^"]+)"/u.exec(line);
+        if (natural <= semantic.textLength) expect(forced).toBeNull();
+        else {
+          expect(Number(forced![1]) / natural).toBeGreaterThanOrEqual(0.91);
+          expect(Number(forced![1]) / natural).toBeLessThan(1);
+        }
+      }
     }
   });
 
@@ -502,9 +519,10 @@ describe("canonical semantic SVG emitter", () => {
     const output = emitted(changedGraph, changedLayout);
     const clip = svgSemanticId("clip", [label.id]);
     expect(output).toContain(`id="${clip}" clipPathUnits="userSpaceOnUse"`);
-    expect(output).toContain(
-      'textLength="24.8" lengthAdjust="spacingAndGlyphs">中😀é</text>',
-    );
+    expect(output).toContain(">中😀é</text>");
+    expect(
+      output.split("\n").find((line) => line.endsWith(">中😀é</text>")),
+    ).not.toContain('textLength="24.8"');
     expect(output).toContain(`clip-path="url(#${clip})"`);
     checkRestrictedSvgXml(output);
   });
@@ -645,6 +663,7 @@ describe("canonical semantic SVG emitter", () => {
     ];
     const crossingGraph: PresentationGraph = {
       format: "schematic-presentation/0.1",
+      directLoadPair: false,
       view: graph.view,
       locationGroups: [],
       deviceGroups: [],

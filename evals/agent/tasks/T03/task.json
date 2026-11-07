@@ -1,0 +1,15 @@
+{
+  "id": "T03",
+  "version": "1.1.0",
+  "template": "cabinets",
+  "setup": "setup.mjs",
+  "prompt": "Core 1- of CBL1 is freed at BOTH ends. Record it as spare without deleting it. Produce drawings/cable.pdf and drawings/cable.json from the cable command.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

@@ -166,6 +166,21 @@ function symbol(
 }
 
 describe("presentation transform", () => {
+  it("reserves space for a printed fact longer than its aggregate key", () => {
+    const fixture = pnpAggregateFixture(coreIr),
+      mappings = mutableCoreMappings();
+    const mapping = mappings.find((m) => m.typeId === "core:prox-pnp-3wire")!;
+    mapping.aggregates![0]!.key = "p";
+    const { graph } = presentation(fixture.ir, fixture.selected, mappings);
+    const node = graph.nodes.find(
+      (n) => n.kind === "symbol" && n.symbolId === "ais:switch-sensor-pnp",
+    )!;
+    if (node.kind !== "symbol") throw new Error("PNP symbol missing");
+    const caption = node.labels.find((l) => l.role === "aggregate")!;
+    expect(caption.printableText).toBe("PNP");
+    expect(caption.width).toBeGreaterThanOrEqual(6 + 3 * 6.2);
+    validatePresentationGraph(fixture.ir, fixture.selected, graph, mappings);
+  });
   it("presents all four cable lanes with exact canonical text provenance", () => {
     const selected = intentSelection(coreIr, {
       format: "schematic-view-request/0.2",
@@ -455,12 +470,12 @@ describe("presentation transform", () => {
       ),
     ).toEqual([
       [
-        ["PS1", "+"],
         ["PLC1", "L+"],
+        ["PS1", "+"],
       ],
       [
-        ["PS1", "-"],
         ["PLC1", "M"],
+        ["PS1", "-"],
       ],
     ]);
     expect(summary).toMatchObject({
@@ -552,7 +567,7 @@ describe("presentation transform", () => {
     );
     expect(
       firstSignalConductors.map(({ conductor }) => conductor?.designation),
-    ).toEqual(["W-FLD-003", "EQ-1"]);
+    ).toEqual(["EQ-1", "W-FLD-003"]);
     expect(
       firstSignalConductors
         .map((edge) => {
@@ -656,7 +671,8 @@ describe("presentation transform", () => {
       const root = required(copy.nodes.find(({ id }) => id === closedRoot.id));
       (root.ports as Array<{ id: string; order: number }>).sort(
         (left, right) =>
-          left.order - right.order || left.id.localeCompare(right.id),
+          left.order - right.order ||
+          left.symbolPortId.localeCompare(right.symbolPortId),
       );
       expect(() => validatePresentationGraph(ir, selected, copy)).toThrow(
         "dense junction port order",
@@ -789,7 +805,7 @@ describe("presentation transform", () => {
       );
       expect(() =>
         validatePresentationGraph(ir, selected, missingLink),
-      ).toThrow("complete closed trace component");
+      ).toThrow(/complete closed trace component|visible-endpoint LCA parent/u);
     } finally {
       await rm(temporaryRoot, { recursive: true, force: true });
     }

@@ -1,0 +1,77 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Nested external bridges",
+      "groups": [
+        {
+          "id": "nested-bridges",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "S1"
+              },
+              "key": "out1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "S1"
+              },
+              "key": "out2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "inputs"
+            }
+          ],
+          "conductors": ["W1", "W2", "W3", "W4"]
+        }
+      ],
+      "flow": "left-to-right"
+    },
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Nested external bridges",
+      "groups": [
+        {
+          "id": "nested-bridges",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "S1"
+              },
+              "key": "out1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "S1"
+              },
+              "key": "out2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "D1"
+              },
+              "key": "inputs"
+            }
+          ],
+          "conductors": ["W1", "W2", "W3", "W4"]
+        }
+      ],
+      "flow": "top-to-bottom"
+    }
+  ]
+}

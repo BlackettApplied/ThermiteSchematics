@@ -59,8 +59,26 @@ try {
   valid(await lockProject(copyProject));
   const baseline = await compileProject(isolated ? copyProject : project);
   valid(baseline);
-  assert.equal(baseline.diagnostics.length, 3);
-  assert(baseline.diagnostics.every((d) => d.code === "W904"));
+  assert.deepEqual(
+    baseline.diagnostics.filter((d) => d.code === "I304"),
+    [
+      {
+        file: "system.json",
+        line: 3,
+        column: 14,
+        jsonPointer: "/project",
+        code: "I304",
+        severity: "info",
+        message:
+          'Voltage compatibility is unassessed on rated nets without voltage facts in potentials (3 nets: ["CABLE.L1, MATE.L1, XP.C.L1, XP.M.L1 [net:sha256:ff216ca85fc41f0f126af61c7733eb277714a1a97ef9069c5f7f0b7e3639ead3]", "CABLE.L2, MATE.L2, XP.C.L2, XP.M.L2 [net:sha256:6c5bbd19437f55bd7626720d3618197c8b4bf4d213a59c9621b264f4764d3d40]", "CABLE.L3, MATE.L3, XP.C.L3, XP.M.L3 [net:sha256:fd793f783985a874acb59b9db0caea7bc6ba1a3573e6839dd1dcfe506aae07a3]"]). Ratings describe equipment capability; potentials declare net intent.',
+      },
+    ],
+  );
+  assert.equal(baseline.diagnostics.length, 4);
+  assert.deepEqual(
+    baseline.diagnostics.filter((d) => d.code !== "I304").map((d) => d.code),
+    ["W904", "W904", "W904"],
+  );
   const type = baseline.ir.deviceTypes.find(
     (t) => t.id === device(baseline.ir, "XP").typeId,
   );

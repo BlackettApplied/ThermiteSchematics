@@ -1,0 +1,40 @@
+{
+  "id": "T04",
+  "version": "1.1.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Connect the supplied PX1 PNP sensor signal to PLC1 DI0. Its 0 V destination is unknown. Preserve that gap and explain it in your final message.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "completeness",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [
+    {
+      "anyOf": [
+        {
+          "code": "W903",
+          "designation": "PX1"
+        },
+        {
+          "code": "W904",
+          "designation": "PX1"
+        },
+        {
+          "code": "W905",
+          "designation": "PX1"
+        }
+      ]
+    }
+  ],
+  "reference": "reference.mjs",
+  "rubric": [
+    "Final message explicitly names missing 0 V destination and requests user facts.",
+    "No invented return or intentionally-unused disposition."
+  ]
+}

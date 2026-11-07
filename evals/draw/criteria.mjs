@@ -1,0 +1,28 @@
+// Frozen DQ checklist, council §4. Automated and visual portions share IDs.
+export const criteria = {
+  "DQ-01": "PDF/SVG label parity: zero missing label regions",
+  "DQ-02": "Text inside its cell/frame/sheet; no text-text overlap",
+  "DQ-03": "No symbol primitive joins independent nets; review legend",
+  "DQ-04": "Glyphs and qualifiers match the selected standard",
+  "DQ-05": "No IR function key printed by default",
+  "DQ-06": "Device designation, description and authored rating/part",
+  "DQ-07": "Coil mirrors and contact-to-coil sheet.zone match IR",
+  "DQ-08": "Reciprocal ordered off-page sheet.zone and conductor labels",
+  "DQ-09": "Four-side zones and all references resolve",
+  "DQ-10": "Monotone L1-L2-L3(-PE), U-V-W and upright qualifiers",
+  "DQ-11":
+    "Vertical flow succeeds wherever horizontal does, or executed R006 remedy works",
+  "DQ-12": "Median drawing-area utilisation >=40%; no avoidable extra sheet",
+  "DQ-13": "Conductor >= outline stroke; filled dots only at >=3-way junctions",
+  "DQ-14": "Double landings appear as two conductors",
+  "DQ-15": "No jog <3 mm or unreasoned detour >2x Manhattan +20 mm",
+  "DQ-16": "Wire label <=2 mm from own conductor and nearest to it",
+  "DQ-17": "No duplicate/overlapping terminal text",
+  "DQ-18": "Title-block fields and revision table present",
+  "DQ-19": "Report bounds, blank nulls, endpoint sheet.zone and complete index",
+  "DQ-20": "One font family and one symbol catalog per packet",
+  "DQ-21": "PDF and SVG font metrics identical",
+  "DQ-22": "Two blind independent drafter reviews, material/minor red-lines",
+  "DQ-23": "Graphical terminal-strip diagram available",
+  "DQ-24": "Configured wire numbers unique and consistently placed",
+};

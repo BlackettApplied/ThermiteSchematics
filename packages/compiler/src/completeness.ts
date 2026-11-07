@@ -18,7 +18,7 @@ export interface ConnectionInventoryEntry {
   source: SourceRef;
 }
 export interface CompletenessFinding {
-  code: "W903" | "W904" | "W905" | "I001" | "I002" | "I003";
+  code: "W903" | "W904" | "W905" | "I001" | "I002" | "I003" | "I005";
   severity: "warning" | "info";
   deviceUid: string;
   designation: string;
@@ -173,6 +173,11 @@ export function analyzeCompleteness(
     if (coverage.status === "partial")
       add("W904", `Incomplete connection model: ${coverage.notes}`);
     if (coverage.status === "unreviewed") add("I003", coverage.notes);
+    if (coverage.status === "generic")
+      add(
+        "I005",
+        `Generic connection interface: terminals of an actual part beyond this abstract interface cannot be checked. ${coverage.notes}`,
+      );
     const entries: ConnectionInventoryEntry[] = ir.terminals
       .filter((t) => t.id.deviceUid === device.uid)
       .sort((a, b) => compare(a.id.terminalKey, b.id.terminalKey))
@@ -248,16 +253,32 @@ export function analyzeCompleteness(
       });
     }
     for (const entry of entries) {
+      const channels =
+        entry.kind === "terminal"
+          ? type.functions.filter(
+              (fn) =>
+                fn.kind === "channel" && fn.terminalKeys.includes(entry.key),
+            )
+          : [];
       const name = `${device.designation}.${entry.key}`,
         review = entry.review;
-      if (entry.required && entry.connection !== "connected")
+      const requiredGap = entry.required && entry.connection !== "connected";
+      // Deferral is the authored explanation for this gap. Keep one finding,
+      // retaining the requirement and connection state in the more specific code.
+      if (requiredGap && review?.status !== "deferred")
         add(
           "W903",
           `Required ${entry.kind} ${name} ${entry.connection === "dangling" ? "has only a cable core with an unfinished far end" : "has no connection"}.${review ? ` Review: ${review.status}: ${review.reason}` : ""}`,
           entry,
         );
       if (review?.status === "deferred")
-        add("W905", `${name} has deferred work: ${review.reason}`, entry);
+        add(
+          "W905",
+          requiredGap
+            ? `Required ${entry.kind} ${name} is ${entry.connection} (${entry.connection === "dangling" ? "has only a cable core with an unfinished far end" : "has no connection"}). Deferred work: ${review.reason}`
+            : `${name} has deferred work: ${review.reason}`,
+          entry,
+        );
       else if (review?.status === "intentionally-unused") {
         if (entry.required || entry.connection !== "unconnected")
           add(
@@ -271,7 +292,20 @@ export function analyzeCompleteness(
             `${name} is intentionally unused: ${review.reason}`,
             entry,
           );
-      } else if (!entry.required && entry.connection !== "connected")
+      } else if (
+        !entry.required &&
+        entry.connection !== "connected" &&
+        !(
+          // An unused disposition applies only when every channel using the
+          // terminal is explicitly spare; required connections and explicit
+          // reviews retain their findings. A spare may have an unfinished core;
+          // its dangling state remains in the inventory, not a false claim that
+          // the author supplied no unused disposition.
+          entry.kind === "terminal" &&
+          channels.length > 0 &&
+          channels.every((fn) => device.io?.channels[fn.key]?.usage === "spare")
+        )
+      )
         add(
           "I001",
           `${name} ${entry.connection === "dangling" ? "has an unfinished cable core" : "has no connection"}; no requirement or unused disposition is declared.`,

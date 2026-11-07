@@ -1,0 +1,15 @@
+{
+  "id": "T09a",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Validation fails. Fix the wrong terminal key in W-CTL-001, making only the single endpoint correction supported by diagnostics.",
+  "requiredTopics": [
+    {
+      "topic": "agent-requests",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

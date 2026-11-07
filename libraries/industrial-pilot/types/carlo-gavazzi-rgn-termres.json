@@ -12,6 +12,10 @@
           "connector": "Proprietary NRG termination plug"
         }
       },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Logical NRG BUS port and accessory inventory only. Physical connector pins and termination resistor connections are omitted. A drawn communication relation does not establish physical termination or electrical connection completeness."
+      },
       "catalog": {
         "manufacturer": "Carlo Gavazzi",
         "orderNumber": "RGN-TERMRES",

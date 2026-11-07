@@ -1,7 +1,7 @@
 export type SymbolSide = "west" | "north" | "east" | "south";
 
 export type SymbolStyle =
-  "body" | "operator" | "actuator" | "terminal" | "annotation";
+  "body" | "operator" | "actuator" | "terminal" | "annotation" | "enclosure";
 
 export interface SymbolPoint {
   readonly x: number;
@@ -80,4 +80,5 @@ export const SYMBOL_STYLES = Object.freeze([
   "actuator",
   "terminal",
   "annotation",
+  "enclosure",
 ] as const satisfies readonly SymbolStyle[]);

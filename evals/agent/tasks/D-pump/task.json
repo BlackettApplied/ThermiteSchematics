@@ -1,0 +1,174 @@
+{
+  "id": "D-pump",
+  "version": "1.4.0",
+  "template": "starter",
+  "prompt": "You are a fresh runtime-package user. Use the supplied launcher and project guide. The frozen brief follows verbatim.\n\n## Frozen brief\n\n```text\nSteps:\n1. `bun /Users/claude/LocalDev/ThermiteSchematics/thermite.mjs init <scratch>/pump-skid --name \"Pump skid\"`.\n   Read its AGENTS.md. Record its size and how much you actually needed.\n2. Model this pump skid: 480 VAC 3-phase supply; main breaker; motor starter\n   (contactor + overload) for a 5 HP pump motor; 24 VDC power supply; a compact\n   PLC; a terminal strip in the cabinet; a 4-20 mA two-wire pressure\n   transmitter in the field wired through a multi-core field cable (with at least\n   one explicit spare core) to the terminal strip and into a PLC analog input; a\n   start pushbutton, a stop (NC) pushbutton, a level switch; the PLC output drives\n   the contactor coil; an Ethernet link from the PLC to an HMI. Use whatever the\n   libraries provide; where a part is missing, decide whether to author a local\n   library type (and log how hard that was) or substitute and explain.\n3. Produce: a validated project with zero errors; a power view of the motor; a\n   control/actuation view of the contactor; a packet (HTML and PDF) with an index,\n   I/O report, BOM, cable schedule, network report; the connection-completeness\n   diagnostics. Make one guarded patch change with dry-run then apply, plus\n   snapshot/review.\n4. Keep a running friction log: every error you hit (exact message), every point\n   where you guessed a request shape, every doc gap, every place output surprised\n   you. Count your total tool calls and how many were spent recovering from\n   errors.\n```\n\n## Deliverable format\n\nUse the already initialized project and supplied launcher; the historical path is provenance only. Save views in drawings/ (motor-power.pdf, contactor-actuation.pdf); packet.request.json and generated drawings/packet.{json,html,pdf}; drawings/<kind>.csv reports; drawings/{diagnostics,cable,before,review}.json; friction.md. Final deliverables must reflect the final sources: after the guarded change, regenerate every final output. Pre-change outputs may be kept elsewhere.\n\nWrite requirement-matrix.json as an array with each ID exactly once, case-insensitive. Fixed statuses: satisfied, substituted, deferred. Shape:\n\n```json\n{\n  \"id\": \"P-MOTOR\",\n  \"status\": \"satisfied\",\n  \"designations\": [\"M1\"],\n  \"evidence\": { \"summary\": \"Source and schematic evidence\" }\n}\n```\n\nSatisfied/substituted names must resolve in manifest-listed validated sources and appear on a non-report drawing. Start/stop require the pushbutton profile with NO/NC sense respectively; level requires a level-family profile; indicator requires a lamp profile. The plc and analog-input roles may share a designation when the PLC has its own analog-input function. Every other pair of different roles needs distinct designations; the same role may be shared by rows such as PLC and coil drive. Explain substitutions. A deferred must row needs its own non-empty designations, a substantive summary, and a final diagnostic on its own appropriate modeled device. Core 0.2.0 supplies the capabilities required by these rows; no library-capability gaps are declared in this task. Existing unrelated objects cannot stand in for a missing component (PS1 is not a missing pressure transmitter). A deferred may row needs a reason. Draw all modeled non-terminal devices and any designed PSU feed; defer the undesigned feed on the PSU's own diagnostic. Judges assess adequacy, not electrical approval.\n\n- **P-GUIDE (must)**: “Read its AGENTS.md. Record its size and how much you actually needed.”. Roles/gap: deliverable observation.\n- **P-SUPPLY (must)**: “480 VAC 3-phase supply”. Roles/gap: supply.\n- **P-BREAKER (must)**: “main breaker”. Roles/gap: breaker.\n- **P-STARTER (must)**: “motor starter (contactor + overload)”. Roles/gap: contactor, overload.\n- **P-MOTOR (must)**: “for a 5 HP pump motor”. Roles/gap: motor.\n- **P-PSU (must)**: “24 VDC power supply”. Roles/gap: psu.\n- **P-PLC (must)**: “a compact PLC”. Roles/gap: plc.\n- **P-TERMINALS (must)**: “a terminal strip in the cabinet”. Roles/gap: terminal.\n- **P-CABLE (must)**: “through a multi-core field cable (with at least one explicit spare core)”. Roles/gap: cable.\n- **P-START (must)**: “a start pushbutton”. Roles/gap: start-button.\n- **P-STOP (must)**: “a stop (NC) pushbutton”. Roles/gap: stop-button.\n- **P-COIL (must)**: “the PLC output drives the contactor coil”. Roles/gap: plc, contactor.\n- **P-TRANSMITTER (must)**: “a 4-20 mA two-wire pressure transmitter”. Roles/gap: pressure-transmitter.\n- **P-ANALOG (must)**: “into a PLC analog input”. Roles/gap: analog-input.\n- **P-LEVEL (must)**: “a level switch”. Roles/gap: level-switch.\n- **P-NETWORK (must)**: “an Ethernet link from the PLC to an HMI”. Roles/gap: plc, hmi.\n- **P-OUTPUTS (must)**: “a validated project with zero errors; a power view of the motor; a control/actuation view of the contactor; a packet (HTML and PDF) with an index, I/O report, BOM, cable schedule, network report; the connection-completeness diagnostics.”. Roles/gap: deliverable observation.\n- **P-CHANGE (must)**: “Make one guarded patch change with dry-run then apply, plus snapshot/review.”. Roles/gap: deliverable observation.\n- **P-FRICTION (must)**: “Keep a running friction log”. Roles/gap: deliverable observation.\n\nP-GUIDE: record guide bytes and how much you needed in guide-observation.json or friction.md. PDF V1/V5 are additional scorecard judge items; visual inspection is not requested by this pump brief.\n",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "libraries",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "views",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "review",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "completeness",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "rubric": [
+    "All brief requirements are satisfied or explicitly identified as gaps; no invented engineering facts.",
+    "Assess substitutions, provenance, completeness, requirement matrix, and friction log.",
+    "Inspect PDF V1/V5 and at least two outputs at print size. Missing E3 evidence remains pending."
+  ],
+  "deliverables": {
+    "views": ["motor-power.pdf", "contactor-actuation.pdf"],
+    "reports": ["io", "bom", "cables", "network"],
+    "requirements": [
+      {
+        "id": "P-GUIDE",
+        "obligation": "must",
+        "roles": [],
+        "quote": "Read its AGENTS.md. Record its size and how much you actually needed."
+      },
+      {
+        "id": "P-SUPPLY",
+        "obligation": "must",
+        "quote": "480 VAC 3-phase supply",
+        "roles": ["supply"]
+      },
+      {
+        "id": "P-BREAKER",
+        "obligation": "must",
+        "quote": "main breaker",
+        "roles": ["breaker"]
+      },
+      {
+        "id": "P-STARTER",
+        "obligation": "must",
+        "quote": "motor starter\n   (contactor + overload)",
+        "roles": ["contactor", "overload"]
+      },
+      {
+        "id": "P-MOTOR",
+        "obligation": "must",
+        "quote": "for a 5 HP pump motor",
+        "roles": ["motor"]
+      },
+      {
+        "id": "P-PSU",
+        "obligation": "must",
+        "quote": "24 VDC power supply",
+        "roles": ["psu"]
+      },
+      {
+        "id": "P-PLC",
+        "obligation": "must",
+        "quote": "a compact\n   PLC",
+        "roles": ["plc"]
+      },
+      {
+        "id": "P-TERMINALS",
+        "obligation": "must",
+        "quote": "a terminal strip in the cabinet",
+        "roles": ["terminal"]
+      },
+      {
+        "id": "P-CABLE",
+        "obligation": "must",
+        "quote": "through a multi-core field cable (with at least\n   one explicit spare core)",
+        "roles": ["cable"]
+      },
+      {
+        "id": "P-START",
+        "obligation": "must",
+        "quote": "a\n   start pushbutton",
+        "roles": ["start-button"]
+      },
+      {
+        "id": "P-STOP",
+        "obligation": "must",
+        "quote": "a stop (NC) pushbutton",
+        "roles": ["stop-button"]
+      },
+      {
+        "id": "P-COIL",
+        "obligation": "must",
+        "quote": "the PLC output drives\n   the contactor coil",
+        "roles": ["plc", "contactor"]
+      },
+      {
+        "id": "P-TRANSMITTER",
+        "obligation": "must",
+        "quote": "a 4-20 mA two-wire pressure\n   transmitter",
+        "roles": ["pressure-transmitter"]
+      },
+      {
+        "id": "P-ANALOG",
+        "obligation": "must",
+        "quote": "into a PLC analog input",
+        "roles": ["analog-input"]
+      },
+      {
+        "id": "P-LEVEL",
+        "obligation": "must",
+        "quote": "a level switch",
+        "roles": ["level-switch"]
+      },
+      {
+        "id": "P-NETWORK",
+        "obligation": "must",
+        "quote": "an Ethernet link from the PLC to an HMI",
+        "roles": ["plc", "hmi"]
+      },
+      {
+        "id": "P-OUTPUTS",
+        "obligation": "must",
+        "quote": "a validated project with zero errors; a power view of the motor; a\n   control/actuation view of the contactor; a packet (HTML and PDF) with an index,\n   I/O report, BOM, cable schedule, network report; the connection-completeness\n   diagnostics.",
+        "roles": []
+      },
+      {
+        "id": "P-CHANGE",
+        "obligation": "must",
+        "quote": "Make one guarded patch change with dry-run then apply, plus\n   snapshot/review.",
+        "roles": []
+      },
+      {
+        "id": "P-FRICTION",
+        "obligation": "must",
+        "quote": "Keep a running friction log",
+        "roles": []
+      }
+    ]
+  },
+  "undocumentedShapes": [
+    {
+      "code": "E010",
+      "pointer": "/io"
+    },
+    {
+      "code": "E012",
+      "pointer": "/io"
+    },
+    {
+      "code": "E014",
+      "pointer": "/io/channels"
+    },
+    {
+      "code": "E014",
+      "pointer": "/circuitSymbols"
+    }
+  ],
+  "briefSha256": "585e1e565b5760b6f1f0aac64064ce81c4fd76a9772c5bab7fa0be213ecc9739"
+}

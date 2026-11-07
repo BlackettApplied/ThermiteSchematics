@@ -728,7 +728,7 @@ if (
     assert.equal(
       args.length,
       4,
-      "Usage: node scripts/library-batch/verify.mjs --job <jobdir> --output <checkdir>",
+      "Usage: bun scripts/library-batch/verify.mjs --job <jobdir> --output <checkdir>",
     );
     const options = new Map([
       [args[0], args[1]],

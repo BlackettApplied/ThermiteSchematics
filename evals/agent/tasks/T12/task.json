@@ -1,0 +1,19 @@
+{
+  "id": "T12",
+  "version": "1.1.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Model this excerpt: p2 line7: S1 is a normally open limit-switch contact. p2 line8: the same contact is labelled S2. No destinations or pin aliases are specified. Keep provenance in descriptions, preserve the conflict in review-notes.md, and ask for resolution.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "rubric": [
+    "Retain p2 line7 and line8 provenance and the S1/S2 conflict as an open review issue.",
+    "No invented pins, wiring, aliases or manufacturer facts."
+  ]
+}

@@ -1,0 +1,561 @@
+{
+  "objects": [
+    {
+      "uid": "10000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "SRC1",
+      "type": "core:supply-480v-3ph"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "Q1",
+      "type": "core:breaker-3p"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "K1",
+      "type": "core:contactor-3p-1no"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "OL1",
+      "type": "core:overload-3p-1nc"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000005",
+      "kind": "device",
+      "designation": "M1",
+      "type": "core:motor-3ph"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000006",
+      "kind": "device",
+      "designation": "T1",
+      "type": "core:control-transformer"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000007",
+      "kind": "device",
+      "designation": "F1",
+      "type": "core:fuse-1p"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000008",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000009",
+      "kind": "device",
+      "designation": "S0",
+      "type": "core:estop-nc"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000010",
+      "kind": "device",
+      "designation": "S1",
+      "type": "core:pushbutton-nc"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000011",
+      "kind": "device",
+      "designation": "S2",
+      "type": "core:pushbutton-no"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000012",
+      "kind": "device",
+      "designation": "R1",
+      "type": "core:relay-1co",
+      "connectionReview": {
+        "terminals": {
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "NC throw is not used by this synthetic holding circuit."
+          }
+        }
+      }
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000013",
+      "kind": "device",
+      "designation": "H1",
+      "type": "core:pilot-light"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000014",
+      "kind": "device",
+      "designation": "PE1",
+      "type": "core:terminal-pe"
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000015",
+      "kind": "wire",
+      "designation": "W15",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L1"
+        },
+        {
+          "device": "Q1",
+          "terminal": "1/L1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000016",
+      "kind": "wire",
+      "designation": "W16",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "K1",
+          "terminal": "1/L1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000017",
+      "kind": "wire",
+      "designation": "W17",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "OL1",
+          "terminal": "1/L1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000018",
+      "kind": "wire",
+      "designation": "W18",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L2"
+        },
+        {
+          "device": "Q1",
+          "terminal": "3/L2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000019",
+      "kind": "wire",
+      "designation": "W19",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "K1",
+          "terminal": "3/L2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000020",
+      "kind": "wire",
+      "designation": "W20",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "OL1",
+          "terminal": "3/L2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000021",
+      "kind": "wire",
+      "designation": "W21",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "L3"
+        },
+        {
+          "device": "Q1",
+          "terminal": "5/L3"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000022",
+      "kind": "wire",
+      "designation": "W22",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "K1",
+          "terminal": "5/L3"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000023",
+      "kind": "wire",
+      "designation": "W23",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "OL1",
+          "terminal": "5/L3"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000024",
+      "kind": "wire",
+      "designation": "W24",
+      "endpoints": [
+        {
+          "device": "SRC1",
+          "terminal": "PE"
+        },
+        {
+          "device": "PE1",
+          "terminal": "PE"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000025",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cable-power-4core",
+      "conductors": [
+        {
+          "id": "L1",
+          "endpoints": [
+            {
+              "device": "OL1",
+              "terminal": "2/T1"
+            },
+            {
+              "device": "M1",
+              "terminal": "U"
+            }
+          ]
+        },
+        {
+          "id": "L2",
+          "endpoints": [
+            {
+              "device": "OL1",
+              "terminal": "4/T2"
+            },
+            {
+              "device": "M1",
+              "terminal": "V"
+            }
+          ]
+        },
+        {
+          "id": "L3",
+          "endpoints": [
+            {
+              "device": "OL1",
+              "terminal": "6/T3"
+            },
+            {
+              "device": "M1",
+              "terminal": "W"
+            }
+          ]
+        },
+        {
+          "id": "PE",
+          "endpoints": [
+            {
+              "device": "PE1",
+              "terminal": "PE"
+            },
+            {
+              "device": "M1",
+              "terminal": "PE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000026",
+      "kind": "wire",
+      "designation": "W26",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "T1",
+          "terminal": "H1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000027",
+      "kind": "wire",
+      "designation": "W27",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "T1",
+          "terminal": "H2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000028",
+      "kind": "wire",
+      "designation": "W28",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X1"
+        },
+        {
+          "device": "PS1",
+          "terminal": "L"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000029",
+      "kind": "wire",
+      "designation": "W29",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "N"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000030",
+      "kind": "wire",
+      "designation": "W30",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "F1",
+          "terminal": "1/L1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000031",
+      "kind": "wire",
+      "designation": "W31",
+      "endpoints": [
+        {
+          "device": "F1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "S0",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000032",
+      "kind": "wire",
+      "designation": "W32",
+      "endpoints": [
+        {
+          "device": "S0",
+          "terminal": "12"
+        },
+        {
+          "device": "S1",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000033",
+      "kind": "wire",
+      "designation": "W33",
+      "endpoints": [
+        {
+          "device": "S1",
+          "terminal": "12"
+        },
+        {
+          "device": "OL1",
+          "terminal": "95"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000034",
+      "kind": "wire",
+      "designation": "W34",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "96"
+        },
+        {
+          "device": "S2",
+          "terminal": "13"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000035",
+      "kind": "wire",
+      "designation": "W35",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "96"
+        },
+        {
+          "device": "R1",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000036",
+      "kind": "wire",
+      "designation": "W36",
+      "endpoints": [
+        {
+          "device": "S2",
+          "terminal": "14"
+        },
+        {
+          "device": "R1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000037",
+      "kind": "wire",
+      "designation": "W37",
+      "endpoints": [
+        {
+          "device": "R1",
+          "terminal": "14"
+        },
+        {
+          "device": "R1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000038",
+      "kind": "wire",
+      "designation": "W38",
+      "endpoints": [
+        {
+          "device": "R1",
+          "terminal": "A1"
+        },
+        {
+          "device": "K1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000039",
+      "kind": "wire",
+      "designation": "W39",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "A1"
+        },
+        {
+          "device": "H1",
+          "terminal": "X1"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000040",
+      "kind": "wire",
+      "designation": "W40",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "R1",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000041",
+      "kind": "wire",
+      "designation": "W41",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "K1",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "uid": "10000000-0000-4000-8000-000000000042",
+      "kind": "wire",
+      "designation": "W42",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "H1",
+          "terminal": "X2"
+        }
+      ]
+    }
+  ]
+}

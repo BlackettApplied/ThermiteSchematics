@@ -1,3 +1,7 @@
+import {
+  motorDiagnostics,
+  pnpMotorDiagnostics,
+} from "./motor-starter-diagnostics.js";
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -10,7 +14,11 @@ import {
   createMotorStarterPnpExperiment,
   type MotorStarterPnpExperiment,
 } from "../../render/test/motor-starter-pnp-fixture.js";
-import { runCli, type RunCliOptions } from "../src/index.js";
+import {
+  formatHumanDiagnostics,
+  runCli,
+  type RunCliOptions,
+} from "../src/index.js";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
@@ -192,10 +200,46 @@ function expectPortableStream(
   ].flatMap((path) => [path, path.replaceAll(String.fromCharCode(92), "/")])) {
     expect(text).not.toContain(path);
   }
-  expect(text).not.toMatch(
-    /(?:^|[^A-Za-z])[A-Za-z]:[\\/]|\\\\[^\\]|\/(?:home|tmp|Users)\//u,
-  );
+  // Inspect decoded JSON strings: nested rating quotes are serialization
+  // escapes, while real Windows drive/UNC and POSIX paths still fail.
+  const checkPaths = (value: unknown): void => {
+    if (typeof value === "string")
+      expect(value).not.toMatch(
+        /(?:^|[^A-Za-z])[A-Za-z]:[\\/]|\\\\[^\\]|\/(?:home|tmp|Users)\//u,
+      );
+    else if (value && typeof value === "object")
+      Object.values(value).forEach(checkPaths);
+  };
+  let decoded: unknown = text;
+  try {
+    decoded = JSON.parse(text);
+  } catch {
+    /* Raw SVG/text is already decoded. */
+  }
+  checkPaths(decoded);
 }
+
+it("distinguishes JSON rating escapes from actual host paths", () => {
+  const bytes = (message: string) =>
+    Buffer.from(JSON.stringify({ message }) + "\n");
+  expect(() =>
+    expectPortableStream(
+      bytes(
+        JSON.stringify([
+          'K1.A1 rating {"nominal_voltage":24,"voltage_type":"DC"}',
+        ]),
+      ),
+      false,
+    ),
+  ).not.toThrow();
+  for (const path of [
+    "C:\\Users\\private",
+    "\\\\server\\share",
+    "/tmp/private",
+  ]) {
+    expect(() => expectPortableStream(bytes(path), false)).toThrow();
+  }
+});
 
 async function golden(
   slug: string,
@@ -246,14 +290,16 @@ describe("M5 Task 8 and M6 Task 6 reviewed schematic CLI goldens", () => {
             await readFile(join(rendererGoldenRoot, rendererGolden)),
           );
           expect(JSON.parse(expectedStderr.toString("utf8"))).toEqual({
-            diagnostics: [],
+            diagnostics: motorDiagnostics,
             error: null,
           });
         } else {
           expect(expectedStdout).toEqual(
             await readFile(join(rendererGoldenRoot, rendererGolden)),
           );
-          expect(expectedStderr.byteLength).toBe(0);
+          expect(expectedStderr.toString("utf8")).toBe(
+            `${formatHumanDiagnostics(motorDiagnostics)}\n`,
+          );
         }
       }
     },
@@ -400,14 +446,16 @@ describe("M6 amended Task 7 reviewed PNP schematic CLI goldens", () => {
             await readFile(join(pnpRendererGoldenRoot, rendererGolden)),
           );
           expect(JSON.parse(expectedStderr.toString("utf8"))).toEqual({
-            diagnostics: [],
+            diagnostics: pnpMotorDiagnostics,
             error: null,
           });
         } else {
           expect(expectedStdout).toEqual(
             await readFile(join(pnpRendererGoldenRoot, rendererGolden)),
           );
-          expect(expectedStderr.byteLength).toBe(0);
+          expect(expectedStderr.toString("utf8")).toBe(
+            `${formatHumanDiagnostics(pnpMotorDiagnostics)}\n`,
+          );
         }
       }
     },

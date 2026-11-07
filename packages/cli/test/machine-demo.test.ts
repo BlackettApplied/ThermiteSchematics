@@ -1,11 +1,19 @@
 import { spawn, execFile as execCallback } from "node:child_process";
 import { promisify } from "node:util";
+import { readFileSync } from "node:fs";
 import { mkdtemp, cp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import vm from "node:vm";
 import { parseHTML } from "linkedom";
-import { afterEach, describe, expect, it } from "vitest";
+import {
+  afterEach,
+  describe,
+  expect,
+  it,
+  onTestFailed,
+  onTestFinished,
+} from "vitest";
 import { compileProject, lockProject } from "@thermite/compiler";
 import {
   buildDocumentation,
@@ -347,7 +355,10 @@ describe("Machine documentation pilot", () => {
       "-o",
       csv,
     ]);
-    expect(JSON.parse(out.stderr).diagnostics).toEqual([]);
+    expect(JSON.parse(out.stderr).diagnostics).toMatchObject([
+      { code: "I304", severity: "info" },
+      { code: "I305", severity: "info" },
+    ]);
     expect(await readFile(csv, "utf8")).toContain("I0.0");
     await exec(process.execPath, [
       cli,
@@ -395,21 +406,60 @@ describe("Machine documentation pilot", () => {
       ],
       { stdio: ["ignore", "pipe", "pipe"] },
     );
+    const stop = async () => {
+      if (
+        child.exitCode !== null ||
+        child.signalCode !== null ||
+        child.pid === undefined
+      )
+        return;
+      const exited = new Promise<void>((resolveExit) =>
+        child.once("exit", () => resolveExit()),
+      );
+      child.kill("SIGTERM");
+      await exited;
+    };
+    // The test body's finally does not run when Vitest times out a pending wait.
+    onTestFinished(stop);
     let log = "";
+    onTestFailed(() => console.error(`Watch child stdout/stderr:\n${log}`));
     child.stdout.on("data", (c) => {
       log += c;
     });
     child.stderr.on("data", (c) => {
       log += c;
     });
-    const waitFor = async (predicate: () => boolean) => {
-      const deadline = Date.now() + 15000;
-      while (!predicate()) {
-        if (child.exitCode !== null || Date.now() > deadline)
-          throw new Error(log);
-        await new Promise((r) => setTimeout(r, 30));
-      }
-    };
+    // Output events acknowledge completed render/validation work. The outer
+    // Vitest timeout is the sole watchdog, shared with other integration tests.
+    const waitFor = (predicate: () => boolean) =>
+      new Promise<void>((resolveWait, reject) => {
+        const cleanup = () => {
+          child.stdout.off("data", check);
+          child.stderr.off("data", check);
+          child.off("close", closed);
+          child.off("error", failed);
+        };
+        const check = () => {
+          if (predicate()) {
+            cleanup();
+            resolveWait();
+          }
+        };
+        const closed = () => {
+          cleanup();
+          reject(new Error(`Watch exited before acknowledgement:\n${log}`));
+        };
+        const failed = (error: Error) => {
+          cleanup();
+          reject(error);
+        };
+        child.stdout.on("data", check);
+        child.stderr.on("data", check);
+        child.once("close", closed);
+        child.once("error", failed);
+        check();
+        if (child.exitCode !== null || child.signalCode !== null) closed();
+      });
     try {
       await waitFor(() => log.includes("Wrote"));
       const first = await readFile(output),
@@ -417,20 +467,23 @@ describe("Machine documentation pilot", () => {
         original = await readFile(source, "utf8");
       await writeFile(source, "{");
       await waitFor(() => log.includes('"E002"'));
-      expect(await readFile(output)).toEqual(first);
+      expect(Buffer.compare(await readFile(output), first)).toBe(0);
       const data = JSON.parse(original);
       data.objects.find(
         (o: any) => o.designation === "PLC1",
       ).io.channels.di0.signal = "Updated watch signal";
       await writeFile(source, JSON.stringify(data));
-      await waitFor(() => (log.match(/Wrote/g) ?? []).length >= 2);
-      expect(await readFile(output, "utf8")).toContain("Updated watch signal");
+      // Watch can report another successful render before observing this edit.
+      // Wait for the actual edited content, not an incidental write count.
+      await waitFor(() =>
+        readFileSync(output, "utf8").includes("Updated watch signal"),
+      );
+      expect(
+        (await readFile(output, "utf8")).includes("Updated watch signal"),
+        log,
+      ).toBe(true);
     } finally {
-      child.kill("SIGTERM");
-      await new Promise<void>((r) => {
-        if (child.exitCode !== null) r();
-        else child.once("exit", () => r());
-      });
+      await stop();
     }
   });
 });

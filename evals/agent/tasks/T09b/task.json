@@ -1,0 +1,20 @@
+{
+  "id": "T09b",
+  "version": "1.1.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Validation fails. Fix it. No additional wiring intent or destinations have been supplied.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "preserveSource": true,
+  "rubric": [
+    "Explain E201 and the exclusive terminal with both conductors.",
+    "Ask for missing intent, preserve source pending user facts, and propose no guessed destination."
+  ]
+}

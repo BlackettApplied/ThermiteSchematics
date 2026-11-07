@@ -15,10 +15,14 @@ function acceptsMark(f: IrDeviceTypeFunction, mark: CircuitSymbol): boolean {
         case "contact-no":
         case "switch-no":
         case "pushbutton-no":
+        case "pressure-no":
+        case "level-no":
           return f.normal_state === "open";
         case "contact-nc":
         case "switch-nc":
         case "pushbutton-nc":
+        case "pressure-nc":
+        case "level-nc":
           return f.normal_state === "closed";
         case "breaker":
         case "overload":
@@ -32,22 +36,31 @@ function acceptsMark(f: IrDeviceTypeFunction, mark: CircuitSymbol): boolean {
     case "load":
       return (
         ((count === 2 || count === 3) &&
-          (mark === "motor" || mark === "heater" || mark === "load")) ||
+          (mark === "motor" ||
+            mark === "heater" ||
+            mark === "load" ||
+            mark === "receptacle" ||
+            mark === "ac-input")) ||
         (count === 2 && (mark === "lamp" || mark === "winding"))
       );
     case "source":
       return (
         (count >= 1 && count <= 4 && mark === "source") ||
-        (count === 2 && mark === "winding")
+        (count === 2 && (mark === "winding" || mark === "dc-output"))
       );
     case "bus":
       return count === 1 && (mark === "terminal" || mark === "earth");
     case "channel":
-      return (count === 1 || count === 2) && mark === "interface";
+      return (
+        (count === 1 || count === 2) &&
+        (mark === "interface" || mark === "level-sensor")
+      );
     case "other":
       return (
-        (count >= 1 && count <= 8 && mark === "interface") ||
-        (count === 2 && (mark === "thermocouple" || mark === "fuse"))
+        (count >= 1 && count <= 32 && mark === "interface") ||
+        (count === 2 && (mark === "thermocouple" || mark === "fuse")) ||
+        ((count === 2 || count === 3) && mark === "level-sensor") ||
+        (count >= 2 && count <= 8 && mark === "conductivity-probe")
       );
     case "mechanism":
       return false;

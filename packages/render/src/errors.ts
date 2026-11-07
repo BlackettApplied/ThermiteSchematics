@@ -9,7 +9,7 @@ export class InvalidSymbolMappingError extends Error {
 }
 
 export type RenderErrorCode =
-  "R001" | "R002" | "R003" | "R004" | "R005" | "R006";
+  "R001" | "R002" | "R003" | "R004" | "R005" | "R006" | "R007";
 
 export type RuntimeInputType =
   | "null"
@@ -123,13 +123,31 @@ export type RenderTextReason =
   | "unpaired-surrogate"
   | "xml-illegal-code-point";
 
+/** Identity of the unsupported device; never combine it with the root's UID. */
+export interface UnsupportedSymbolProfile {
+  readonly deviceUid: string;
+  readonly designation: string;
+  readonly typeId: string;
+  readonly profile: string;
+  readonly functionKey?: string;
+  readonly family: "power" | "control" | "circuit";
+}
+
 export interface RenderErrorBase {
+  readonly unsupported?: UnsupportedSymbolProfile;
   readonly message: string;
   readonly root: string;
+  readonly details?: Readonly<Record<string, unknown>>;
 }
 
 export interface InvalidViewRequestError extends RenderErrorBase {
   readonly code: "R001";
+  readonly reason?:
+    "unsupported-symbol-profile" | "root-not-accepted" | "target-not-accepted";
+  readonly functionKey?: string;
+  readonly targetDeviceUid?: string;
+  readonly targetDesignation?: string;
+  readonly typeId?: string;
   readonly requestedFormat: RequestedFormatInput;
   readonly requestedRoot: RequestedRootInput;
   readonly requestedFamily: RequestedFamilyInput;
@@ -141,20 +159,23 @@ export interface InvalidViewRequestError extends RenderErrorBase {
   readonly deviceUid?: string;
 }
 
-export type IncompletePathError =
+export type IncompletePathError = (
   | (RenderErrorBase & {
+      readonly details?: Readonly<Record<string, unknown>>;
       readonly code: "R002";
       readonly family: "control";
       readonly deviceUid: string;
       readonly pathSide: "input" | "return";
     })
   | (RenderErrorBase & {
+      readonly details?: Readonly<Record<string, unknown>>;
       readonly code: "R002";
       readonly family: "power";
       readonly deviceUid: string;
       readonly lane: string;
     })
   | {
+      readonly details?: Readonly<Record<string, unknown>>;
       readonly code: "R002";
       readonly family: "control";
       readonly intent: "trace";
@@ -165,6 +186,7 @@ export type IncompletePathError =
       readonly root: string;
     }
   | {
+      readonly details?: Readonly<Record<string, unknown>>;
       readonly code: "R002";
       readonly family: "control";
       readonly intent: "conductors";
@@ -174,6 +196,7 @@ export type IncompletePathError =
       readonly root: string;
     }
   | {
+      readonly details?: Readonly<Record<string, unknown>>;
       readonly code: "R002";
       readonly family: "control";
       readonly intent: "loads";
@@ -181,10 +204,15 @@ export type IncompletePathError =
       readonly segment: "complete-load";
       readonly message: string;
       readonly root: string;
-    };
+    }
+) & {
+  readonly reason?: "unsupported-symbol-profile";
+  readonly unsupported?: UnsupportedSymbolProfile;
+};
 
 export interface UnsupportedSymbolMappingError extends RenderErrorBase {
   readonly code: "R003";
+  readonly reason?: "unsupported-symbol-profile";
   readonly family: SchematicViewFamily;
   readonly deviceUid: string;
   readonly typeId: string;
@@ -212,11 +240,16 @@ export type RenderError =
   | UnsupportedSymbolMappingError
   | InvalidLayoutError
   | InvalidRenderTextError
-  | InvalidSheetError;
+  | InvalidSheetError
+  // CLI font delivery can refuse an otherwise valid render without changing it.
+  | (RenderErrorBase & { readonly code: "R007" });
 
 export interface InvalidSheetError extends RenderErrorBase {
   readonly code: "R006";
   readonly reason: "invalid-page" | "invalid-packet" | "unprintable-layout";
+  readonly deviceUid?: string;
+  readonly typeId?: string;
+  readonly functionKey?: string;
 }
 
 export interface InvalidViewRequestContext {
@@ -279,10 +312,13 @@ export function incompletePowerPathError(
   deviceUid: string,
   lane: string,
   root: string,
+  acInput?: { readonly terminalKey: string; readonly unfed: boolean },
 ): IncompletePathError {
   return Object.freeze({
     code: "R002",
-    message: `Incomplete power view: lane ${JSON.stringify(lane)} does not reach a required boundary.`,
+    message: acInput
+      ? `Incomplete power view: AC input ${root}.${acInput.terminalKey} (${lane}) ${acInput.unfed ? "is unfed: no authored conductor connects this terminal to a power source." : "does not reach a required power-source boundary."}`
+      : `Incomplete power view: lane ${JSON.stringify(lane)} does not reach a required boundary.`,
     family: "power",
     deviceUid,
     lane,

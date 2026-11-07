@@ -1,0 +1,4 @@
+{
+  "locations": ["Main"],
+  "excludeTypes": ["filter-fixture:documentary"]
+}

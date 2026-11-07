@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "unassessed-rated-nets"
+  },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "assessment",
+      "version": "1.0.0",
+      "path": "../validation-library"
+    }
+  ]
+}

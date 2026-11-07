@@ -18,6 +18,20 @@ function TypeScriptSources(directory: string): string[] {
 }
 
 describe("render public package boundaries", () => {
+  it("emits packet modules without empty runtime imports", () => {
+    const directory = join(packageRoot, "dist", "packet");
+    const files = readdirSync(directory).filter((name) => name.endsWith(".js"));
+    expect(files.length).toBeGreaterThan(0);
+    const emptyImports = files
+      .sort()
+      .filter((name) =>
+        /\bimport\s*\{\s*\}\s*from\s*["']/u.test(
+          readFileSync(join(directory, name), "utf8"),
+        ),
+      );
+    expect(emptyImports).toEqual([]);
+  });
+
   it("uses the compiler comparator through its public export and no query deep import", () => {
     expect(compiler.compareConductiveElementId).toBeTypeOf("function");
     const sourceFiles = TypeScriptSources(join(packageRoot, "src"));
@@ -36,6 +50,7 @@ describe("render public package boundaries", () => {
     expect(Object.keys(query).sort()).toEqual([
       "InvalidElectricalIrError",
       "REPORT_KINDS",
+      "auditContinuity",
       "buildCableSchedule",
       "buildCommunicationInventory",
       "buildConnectorAssemblyInventory",
@@ -44,6 +59,7 @@ describe("render public package boundaries", () => {
       "createQueryEngine",
       "documentationCsv",
       "parseProjectSnapshot",
+      "resolveDeviceFilter",
       "reviewProject",
       "serializeQueryResult",
     ]);

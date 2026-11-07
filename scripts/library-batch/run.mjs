@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 import {
   closeSync,
   existsSync,
@@ -761,7 +761,7 @@ if (
     const options = parseArgs(process.argv.slice(2));
     if (options.help)
       process.stdout.write(
-        "Usage: node scripts/library-batch/run.mjs --batch <absolute directory> [--claude <count>] [--codex <count>] [--limits-file <absolute JSON path>] [--timeout-minutes <minutes>] [--dry-run] [--resume]\nDefaults: one process per backend, 25 minutes per job, no automatic retries.\nA limits file overrides process counts and reloads every 500ms; decreases drain existing workers. Invalid edits retain the last valid limits. Backend rate-limit pauses still require an explicit resume.\nCompleted means candidate output is ready for review; it never means accepted or integrated.\n",
+        "Usage: bun scripts/library-batch/run.mjs --batch <absolute directory> [--claude <count>] [--codex <count>] [--limits-file <absolute JSON path>] [--timeout-minutes <minutes>] [--dry-run] [--resume]\nDefaults: one process per backend, 25 minutes per job, no automatic retries.\nA limits file overrides process counts and reloads every 500ms; decreases drain existing workers. Invalid edits retain the last valid limits. Backend rate-limit pauses still require an explicit resume.\nCompleted means candidate output is ready for review; it never means accepted or integrated.\n",
       );
     else process.exitCode = await runBatch(options);
   } catch (error) {

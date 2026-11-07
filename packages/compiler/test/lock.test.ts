@@ -20,6 +20,7 @@ import {
   LIBRARY_LOCK_FILE_NAME,
   computeFileIntegrity,
   computeLibraryIntegrity,
+  analyzeCompleteness,
   compileProject,
   generateLibraryLock,
   loadProject,
@@ -1030,6 +1031,31 @@ describe("D6 atomic writes and explicit repair", () => {
     });
   });
 
+  it.each([1, 2])(
+    "preserves the destination when its guard fails at check %i",
+    async (failureCheck) => {
+      const fixture = await createFixture([]);
+      const destination = join(fixture.root, "output.json");
+      const temporary = join(fixture.root, ".guarded.tmp");
+      await writeFile(destination, "old");
+      let checks = 0;
+      await expect(
+        writeFileAtomically(destination, "new", {
+          temporaryPath: () => temporary,
+          async validateDestination() {
+            checks++;
+            if (checks === failureCheck) throw new Error("guard changed");
+          },
+        }),
+      ).rejects.toThrow("guard changed");
+      expect(checks).toBe(failureCheck);
+      expect(await readFile(destination, "utf8")).toBe("old");
+      await expect(readFile(temporary)).rejects.toMatchObject({
+        code: "ENOENT",
+      });
+    },
+  );
+
   it("repairs malformed and stale locks but never writes after structural failure", async () => {
     const malformedFixture = await createFixture();
     await writeFile(malformedFixture.lock, "{\n", "utf8");
@@ -1097,4 +1123,120 @@ describe("D6 atomic writes and explicit repair", () => {
       code: "ENOENT",
     });
   });
+});
+
+describe("side-by-side shipped core locks", () => {
+  it.each(["0.1.0", "0.2.0"])(
+    "locks and validates exact core %s",
+    async (version) => {
+      const fixture = await createFixture([]);
+      await writeJson(fixture.manifest, {
+        format: "electrical-system/0.1",
+        project: { name: "core versions" },
+        sources: ["sources/*.json"],
+        libraries: [{ name: "core", version }],
+      });
+      const result = await lockProject(fixture.root);
+      expect(result.ok, JSON.stringify(result.diagnostics)).toBe(true);
+      const lock = JSON.parse(await readFile(fixture.lock, "utf8"));
+      expect(lock.libraries.core).toMatchObject({
+        version,
+        path: `ais-shipped:core@${version}`,
+        resolutionKind: "shipped",
+      });
+      expect((await compileProject(fixture.root)).ok).toBe(true);
+      expect(
+        (
+          await verifyLibraryLock(await loadClean(fixture.root), {
+            checkCanonical: true,
+          })
+        ).ok,
+      ).toBe(true);
+    },
+  );
+  it("retains E032 and the exact version pointer for an unknown version", async () => {
+    const fixture = await createFixture([]);
+    await writeJson(fixture.manifest, {
+      format: "electrical-system/0.1",
+      project: { name: "unavailable core" },
+      sources: ["sources/*.json"],
+      libraries: [{ name: "core", version: "9.9.9" }],
+    });
+    const result = await loadProject(fixture.root);
+    expect(result.ok).toBe(false);
+    expect(result.diagnostics).toMatchObject([
+      {
+        code: "E032",
+        jsonPointer: "/libraries/0/version",
+        message:
+          'Shipped library "core" does not provide version "9.9.9"; available versions are "0.1.0", "0.2.0".',
+      },
+    ]);
+  });
+});
+
+it("validates an existing 0.1.0 lock without rewriting any bytes", async () => {
+  const root = join(repositoryRoot, "examples/motor-starter");
+  const path = join(root, LIBRARY_LOCK_FILE_NAME);
+  const before = await readFile(path);
+  expect((await compileProject(root)).ok).toBe(true);
+  expect(
+    (await verifyLibraryLock(await loadClean(root), { checkCanonical: true }))
+      .ok,
+  ).toBe(true);
+  expect(await readFile(path)).toEqual(before);
+});
+
+it("keeps 0.2.0 PLC supply requirements and coverage when every I/O channel is spare", async () => {
+  const fixture = await createFixture([]);
+  await writeJson(fixture.manifest, {
+    format: "electrical-system/0.1",
+    project: { name: "Spare PLC" },
+    sources: ["sources/*.json"],
+    libraries: [{ name: "core", version: "0.2.0" }],
+  });
+  await writeJson(join(fixture.root, "sources/empty.json"), {
+    objects: [
+      {
+        kind: "device",
+        uid: "00000000-0000-4000-8000-000000000001",
+        designation: "PLC",
+        type: "core:plc-compact",
+        io: {
+          addressSpace: "iec",
+          channels: Object.fromEntries(
+            ["di0", "di1", "do0", "do1"].map((key) => [
+              key,
+              { usage: "spare" },
+            ]),
+          ),
+        },
+        connectionReview: {
+          terminals: {
+            "L+": {
+              status: "intentionally-unused",
+              reason:
+                "Synthetic negative control: spare PLC supply cannot be waived.",
+            },
+          },
+        },
+      },
+    ],
+  });
+  expect((await lockProject(fixture.root)).ok).toBe(true);
+  const result = await compileProject(fixture.root);
+  expect(result.ok).toBe(true);
+  if (!result.ok) throw new Error(JSON.stringify(result.diagnostics));
+  const report = analyzeCompleteness(result.ir);
+  expect(
+    report.findings.filter((f) => f.code === "I003" || f.code === "I001"),
+  ).toEqual([]);
+  expect(
+    report.findings.filter((f) => f.code === "W903").map((f) => f.key),
+  ).toEqual(["L+", "M"]);
+  expect(
+    report.findings.filter((f) => f.code === "W905").map((f) => f.key),
+  ).toEqual(["L+"]);
+  expect(report.findings.filter((f) => f.code === "W904")).toEqual([]);
+  expect(report.findings.filter((f) => f.code === "I005")).toHaveLength(1);
 });

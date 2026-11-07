@@ -60,10 +60,16 @@ export function buildDeviceView(device: IrDevice): DeviceView {
     kind: "device",
     designation: device.designation,
     typeId: device.typeId,
+    ...(device.nonProcurement === undefined
+      ? {}
+      : { nonProcurement: structuredClone(device.nonProcurement) }),
     ...(device.connectionReview === undefined
       ? {}
       : { connectionReview: structuredClone(device.connectionReview) }),
     ...(device.io === undefined ? {} : { io: structuredClone(device.io) }),
+    ...(device.connectorIo === undefined
+      ? {}
+      : { connectorIo: structuredClone(device.connectorIo) }),
     ...(device.location === undefined ? {} : { location: device.location }),
   };
 }

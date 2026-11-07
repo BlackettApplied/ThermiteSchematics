@@ -1,0 +1,64 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:disconnect-3p",
+      "description": "Provisional generic three-pole disconnect switch.",
+      "terminals": {
+        "1/L1": {
+          "role": "power_input"
+        },
+        "2/T1": {
+          "role": "power_output"
+        },
+        "3/L2": {
+          "role": "power_input"
+        },
+        "4/T2": {
+          "role": "power_output"
+        },
+        "5/L3": {
+          "role": "power_input"
+        },
+        "6/T3": {
+          "role": "power_output"
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "pole3": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["5/L3", "6/T3"]
+        }
+      },
+      "symbol": "thermite:disconnector",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Three ganged, normally open disconnector contact pairs. Opting in asserts author-selected disconnector-function identity. Isolation suitability (impulse withstand, contact gap, position indication, lockability), load-break and ratings are not asserted. Optional: pole use by application; require both ends of each used pole. No universal required points. Unmodeled: neutral, bonding, auxiliary contacts, operation means, handle/lock and isolation indication. Safety performance must be selected/reviewed by the author. Pole markings follow the existing core line/load convention; L/T mean line/load side, not phase or polarity. No manufacturer pinout or protective trip is asserted."
+      },
+      "internal_relations": [
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole3"
+        }
+      ]
+    }
+  ]
+}

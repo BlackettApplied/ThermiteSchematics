@@ -5,6 +5,8 @@ import * as compiler from "../src/index.js";
 describe("compiler public API", () => {
   it("exports the compiler, serializer, stage, loader, and lock APIs", () => {
     expect(Object.keys(compiler)).toEqual([
+      "SHIPPED_CORE_VERSIONS",
+      "resolveShippedCoreLibraryVersion",
       "SHIPPED_CORE_DISPLAY_ROOT",
       "SHIPPED_CORE_FILE_INVENTORY",
       "SHIPPED_CORE_LIBRARY_LOCATOR",
@@ -14,6 +16,8 @@ describe("compiler public API", () => {
       "resolveShippedCoreLibrary",
       "compileLoadedProject",
       "compileProject",
+      "symbolFunctionMatchesShape",
+      "formatSymbolFunctionShape",
       "expandResolvedProject",
       "normalizeProjectGraph",
       "assembleElectricalIr",
@@ -23,6 +27,7 @@ describe("compiler public API", () => {
       "deriveProjectNets",
       "evaluateRules",
       "loadProject",
+      "loadProjectForSourcePatch",
       "writeFileAtomically",
       "LIBRARY_LOCK_FILE_NAME",
       "LIBRARY_LOCK_SCHEMA_ID",
@@ -36,10 +41,13 @@ describe("compiler public API", () => {
       "buildProjectCatalogs",
       "resolveLoadedProject",
       "analyzeCompleteness",
+      "PROJECT_WRITE_LOCK_FILE_NAME",
     ]);
     expect(compiler.loadProject).toBeTypeOf("function");
     expect(compiler.compileLoadedProject).toBeTypeOf("function");
     expect(compiler.compileProject).toBeTypeOf("function");
+    expect(compiler.symbolFunctionMatchesShape).toBeTypeOf("function");
+    expect(compiler.formatSymbolFunctionShape).toBeTypeOf("function");
     expect(compiler.serializeIr).toBeTypeOf("function");
     expect(compiler.expandResolvedProject).toBeTypeOf("function");
     expect(compiler.normalizeProjectGraph).toBeTypeOf("function");

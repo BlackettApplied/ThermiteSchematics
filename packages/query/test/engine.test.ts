@@ -909,10 +909,12 @@ describe("object and terminal resolution", () => {
       ok: false,
       error: {
         code: "Q004",
-        message: `Device ${JSON.stringify(device.designation)} has no terminal "missing".`,
+        message: `Device ${JSON.stringify(device.designation)} has no terminal "missing". Declared terminal keys: ["11", "12"].`,
         input: "missing",
         deviceDesignation: device.designation,
         terminalKey: "missing",
+        allowed: ["11", "12"],
+        allowedCount: 2,
       },
     });
   });
@@ -992,10 +994,13 @@ describe("dotted terminal parsing", () => {
       ok: false,
       error: {
         code: "Q004",
-        message: 'Device "A.B" has no terminal "C.D".',
+        message:
+          'Device "A.B" has no terminal "C.D". Declared terminal keys: ["X"].',
         input: "C.D",
         deviceDesignation: "A.B",
         terminalKey: "C.D",
+        allowed: ["X"],
+        allowedCount: 1,
       },
     });
   });
@@ -1027,10 +1032,98 @@ describe("dotted terminal parsing", () => {
       ok: false,
       error: {
         code: "Q004",
-        message: 'Device "A" has no terminal "missing".',
+        message:
+          'Device "A" has no terminal "missing". Declared terminal keys: ["B.C"].',
         input: "missing",
         deviceDesignation: "A",
         terminalKey: "missing",
+        allowed: ["B.C"],
+        allowedCount: 1,
+      },
+    });
+  });
+
+  it("lists declared terminal keys on Q004 in code-unit order", () => {
+    expect(
+      createQueryEngine(
+        createTerminalIr([
+          {
+            uid: "k",
+            designation: "K1",
+            terminalKeys: ["A2", "13", "A1", "14"],
+          },
+        ]),
+      ).resolveTerminal({
+        by: "parts",
+        deviceDesignation: "K1",
+        terminalKey: "A3",
+      }),
+    ).toEqual({
+      ok: false,
+      error: {
+        code: "Q004",
+        message:
+          'Device "K1" has no terminal "A3". Declared terminal keys: ["13", "14", "A1", "A2"].',
+        input: "A3",
+        deviceDesignation: "K1",
+        terminalKey: "A3",
+        allowed: ["13", "14", "A1", "A2"],
+        allowedCount: 4,
+      },
+    });
+  });
+
+  it("bounds Q004 terminal alternatives and names the full lookup", () => {
+    const keys = Array.from(
+      { length: 60 },
+      (_, index) => `T${String(59 - index).padStart(2, "0")}`,
+    );
+    const sorted = [...keys].reverse();
+    const result = createQueryEngine(
+      createTerminalIr([{ uid: "x", designation: "X1", terminalKeys: keys }]),
+    ).resolveTerminal({
+      by: "parts",
+      deviceDesignation: "X1",
+      terminalKey: "missing",
+    });
+    const lookup = 'the "terminals" of the inspect result for device "X1"';
+    expect(result).toEqual({
+      ok: false,
+      error: {
+        code: "Q004",
+        message: `Device "X1" has no terminal "missing". Declared terminal keys: [${sorted
+          .slice(0, 10)
+          .map((key) => JSON.stringify(key))
+          .join(", ")}] and 50 more; full list: ${lookup}.`,
+        input: "missing",
+        deviceDesignation: "X1",
+        terminalKey: "missing",
+        allowed: sorted.slice(0, 50),
+        allowedCount: 60,
+        allowedLookup: lookup,
+      },
+    });
+  });
+
+  it("reports an empty declared terminal set on Q004", () => {
+    expect(
+      createQueryEngine(
+        createTerminalIr([{ uid: "e", designation: "E1", terminalKeys: [] }]),
+      ).resolveTerminal({
+        by: "parts",
+        deviceDesignation: "E1",
+        terminalKey: "1",
+      }),
+    ).toEqual({
+      ok: false,
+      error: {
+        code: "Q004",
+        message: 'Device "E1" has no terminal "1". Declared terminal keys: [].',
+        input: "1",
+        deviceDesignation: "E1",
+        terminalKey: "1",
+        allowed: [],
+        allowedCount: 0,
       },
     });
   });

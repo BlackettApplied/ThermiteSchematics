@@ -1,0 +1,60 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:psu-24vdc",
+      "description": "AC-input power supply with a regulated 24 VDC output",
+      "terminals": {
+        "L": {
+          "role": "ac_line_input",
+          "required": true
+        },
+        "N": {
+          "role": "ac_input_return",
+          "required": true
+        },
+        "+": {
+          "role": "dc_positive_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 2.5,
+            "power": 60
+          }
+        },
+        "-": {
+          "role": "dc_return_output",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC",
+            "current": 2.5,
+            "power": 60
+          }
+        }
+      },
+      "functions": {
+        "ac_input": {
+          "kind": "load",
+          "terminals": ["L", "N"]
+        },
+        "dc_output": {
+          "kind": "source",
+          "terminals": ["+", "-"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "ac_input",
+          "to": "dc_output"
+        }
+      ],
+      "symbol": "thermite:dc-supply",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: AC input L and N are required for the modeled supply. DC output + and - are modeled; load use is application-dependent, so project review must require both for each used output circuit. Unmodeled: protective bonding, shields, remote sense, alarm and control interfaces of actual supplies; AC input rating and manufacturer pinout are not established."
+      }
+    }
+  ]
+}

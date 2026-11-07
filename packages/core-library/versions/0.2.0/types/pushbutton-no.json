@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:pushbutton-no",
+      "description": "Provisional generic normally open momentary pushbutton; no selected hardware or ratings.",
+      "terminals": {
+        "13": {
+          "role": "no_contact",
+          "required": true
+        },
+        "14": {
+          "role": "no_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact13": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:pushbutton",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Single momentary NO pair 13/14; both ends are required for the sole contact circuit. Optional: none in this interface. Unmodeled: illumination, extra contacts and bonding of actual buttons. Select hardware and add applicable ratings; markings are a generic convention, not a manufacturer pinout."
+      }
+    }
+  ]
+}

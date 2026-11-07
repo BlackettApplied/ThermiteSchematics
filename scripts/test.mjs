@@ -1,4 +1,4 @@
-import { mkdtempSync, realpathSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, realpathSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -9,10 +9,13 @@ import { fileURLToPath } from "node:url";
 const temporary = realpathSync(tmpdir());
 const sidecars = mkdtempSync(join(temporary, "thermite-test-sidecars-"));
 const selected = process.argv.slice(2);
+// Opt in for focused runs or the full check. coverage/ is already ignored.
+const timings = process.env.THERMITE_TEST_TIMINGS === "1";
+if (timings) mkdirSync("coverage", { recursive: true });
 // This suite builds the frozen private 0.2.0 tarball against its historical
-// byte inventory. The alpha ships source and has its own archive acceptance.
+// byte inventory. The public alpha has separate source and runtime archive acceptance.
 const selection = selected.some((argument) =>
-  argument.endsWith("/release-package.test.ts"),
+  argument.replaceAll("\\", "/").endsWith("/release-package.test.ts"),
 )
   ? selected
   : ["--exclude=packages/cli/test/release-package.test.ts", ...selected];
@@ -30,12 +33,22 @@ try {
         new URL("../node_modules/vitest/vitest.mjs", import.meta.url),
       ),
       "run",
-      "--pool=threads",
+      // Keep each test worker in a separate process, using the same Bun runtime
+      // for Vitest and the child CLIs exercised by integration tests.
+      "--pool=forks",
       "--testTimeout=120000",
       "--hookTimeout=120000",
-      // Review archives contain independent historical source checkouts. Their
+      // Release and review archives contain independent source checkouts. Their
       // copied tests are not tests of the active checkout.
       "--exclude=alpha-out/**",
+      "--exclude=release-out/**",
+      ...(timings
+        ? [
+            "--reporter=default",
+            "--reporter=json",
+            "--outputFile.json=coverage/test-timings.json",
+          ]
+        : []),
       ...selection,
     ],
     {

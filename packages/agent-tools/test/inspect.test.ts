@@ -1,3 +1,4 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import { dirname, resolve as resolvePath } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -295,7 +296,7 @@ describe("D5/D11 inspect failures", () => {
       ),
     ).toEqual({
       ok: false,
-      diagnostics: [],
+      diagnostics: motorDiagnostics,
       error: {
         code: "Q001",
         message: 'No project object has designation "MISSING-OBJECT".',
@@ -323,9 +324,11 @@ describe("D5/D11 inspect failures", () => {
       error: {
         code: "A001",
         message:
-          'A001 Invalid inspect request at "/selector/by": unsupported value.',
+          'A001 Invalid inspect request at "/selector/by": unsupported value; allowed values: ["uid", "designation"].',
         field: "/selector/by",
         reason: "unsupported-value",
+        allowed: ["uid", "designation"],
+        allowedCount: 2,
       },
       failureClass: "expected",
     });

@@ -1,0 +1,31 @@
+[
+  {
+    "code": "E102",
+    "severity": "error",
+    "message": "Device \"N1\" of type \"assessment:node\" has no terminal \"missing\". Declared terminal keys: [\"ac\", \"ac2\", \"dc\"].",
+    "file": "sources/objects.json",
+    "line": 20,
+    "column": 23,
+    "jsonPointer": "/objects/1/endpoints/1/terminal",
+    "uid": "8f000000-0000-4000-8000-000000000002",
+    "related": [
+      {
+        "file": "../validation-library/types.json",
+        "line": 5,
+        "column": 13,
+        "note": "Resolved device type \"assessment:node\" is declared here."
+      }
+    ],
+    "allowed": ["ac", "ac2", "dc"],
+    "allowedCount": 3
+  },
+  {
+    "file": "sources/objects.json",
+    "line": 20,
+    "column": 23,
+    "jsonPointer": "/objects/1/endpoints/1/terminal",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: resolution gate (E102); skipped W111 and rules E200, E201, E300, E301, E302, W902, E202, E203, E204, E207, E205, E206, W903, W904, W905, W303, I304, I305 for the whole project. Blocking objects/locations (1 item: [\"uid 8f000000-0000-4000-8000-000000000002 at sources/objects.json:20:23 /objects/1/endpoints/1/terminal\"]); net IDs are unavailable before trustworthy IR exists."
+  }
+]

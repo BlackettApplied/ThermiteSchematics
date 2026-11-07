@@ -33,6 +33,9 @@ if (config.mode === 'descendant') {
   writeFileSync('descendant.pid', String(child.pid));
 }
 await new Promise(resolve => setTimeout(resolve, config.delay ?? 60));
+while (config.waitForRelease && !existsSync('release-worker')) {
+  await new Promise(resolve => setTimeout(resolve, 20));
+}
 if (config.mode === 'rate') {
   console.log(JSON.stringify({type:'turn.failed', error:{message:'HTTP 429 rate limit exceeded'}}));
   trace('end');
@@ -646,7 +649,7 @@ test("raising live limits cannot clear a backend rate-limit pause", async (t) =>
   const f = fixture(t, [
     { mode: "rate" },
     {},
-    { backend: "codex", delay: 1200 },
+    { backend: "codex", waitForRelease: true },
   ]);
   const limitsFile = join(f.batch, "limits.json");
   writeFileSync(limitsFile, JSON.stringify({ claude: 1, codex: 1 }));
@@ -662,6 +665,7 @@ test("raising live limits cannot clear a backend rate-limit pause", async (t) =>
   writeFileSync(limitsFile, JSON.stringify({ claude: 6, codex: 6 }));
   await until(() => f.status().concurrency.claude === 6);
   assert.equal(f.status().jobs[1].state, "queued");
+  writeFileSync(join(f.jobs[2].directory, "release-worker"), "release");
   const outcome = await running.done;
   assert.equal(outcome.code, 1, outcome.stderr);
   assert.equal(f.status().jobs[1].attempts.length, 0);

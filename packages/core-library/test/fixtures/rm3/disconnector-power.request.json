@@ -1,0 +1,5 @@
+{
+  "format": "schematic-view-request/0.1",
+  "root": { "by": "designation", "value": "M1" },
+  "family": "power"
+}

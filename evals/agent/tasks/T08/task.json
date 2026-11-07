@@ -1,0 +1,15 @@
+{
+  "id": "T08",
+  "version": "1.1.0",
+  "template": "motor-starter",
+  "setup": "setup.mjs",
+  "prompt": "Draw a function-based circuit of the K1 coil from PLC output via stop PB1 and overload OL1, using the real function keys. Save drawings/packet.json, packet.html, packet.pdf and the packet request.",
+  "requiredTopics": [
+    {
+      "topic": "views",
+      "beforeCommand": "packet"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

@@ -33,6 +33,26 @@ function inspect(
 }
 
 describe("D6 inspection primitive", () => {
+  it("exposes authored non-procurement metadata without sharing it or inventing it on unflagged devices", () => {
+    const input = createSelfLoopIr("shared");
+    const selector = { by: "designation" as const, value: "DEV.1" };
+    expect(inspect(input, selector).object).not.toHaveProperty(
+      "nonProcurement",
+    );
+    input.devices[0]!.nonProcurement = { reason: "Existing equipment" };
+    const result = inspect(input, selector);
+    expect(result.object).toHaveProperty(
+      "nonProcurement.reason",
+      "Existing equipment",
+    );
+    expect(JSON.parse(serializeQueryResult(result)).object).toHaveProperty(
+      "nonProcurement.reason",
+      "Existing equipment",
+    );
+    if (result.object.kind !== "device") throw Error("Expected device");
+    result.object.nonProcurement!.reason = "Changed result";
+    expect(input.devices[0]!.nonProcurement.reason).toBe("Existing equipment");
+  });
   it("returns an exact singleton device projection and deduplicates self-loop incidence", () => {
     expect(
       inspect(createSelfLoopIr("shared"), {

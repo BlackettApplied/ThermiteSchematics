@@ -221,6 +221,8 @@ export interface PresentationLabel {
   readonly role: PresentationLabelRole;
   readonly text: string;
   readonly textSources: readonly RenderTextSource[];
+  /** Printable facts may differ from the original caption reserved for layout. */
+  readonly printableText?: string;
   readonly width: number;
   readonly height: number;
   readonly textLength: number;
@@ -325,6 +327,8 @@ export type PresentationNode =
   SymbolPresentationNode | RailPresentationNode | JunctionPresentationNode;
 
 export interface PresentationEdge {
+  /** Authored source tie-break for an unnamed physical element. */
+  readonly authoredOrderKey?: string;
   readonly id: string;
   readonly parentId: "root";
   readonly kind: "conductor" | "boundary-segment";
@@ -357,6 +361,8 @@ export interface PresentationEdge {
 
 export interface PresentationGraph {
   readonly format: "schematic-presentation/0.1";
+  /** Computed once from the selected paths; shared by ordering and recovery. */
+  readonly directLoadPair: boolean;
   readonly view: NormalizedSchematicView;
   readonly locationGroups: readonly LocationGroup[];
   readonly deviceGroups: readonly DeviceGroup[];

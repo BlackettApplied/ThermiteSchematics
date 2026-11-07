@@ -1,8 +1,7 @@
 import { TextDecoder } from "node:util";
 
 import {
-  SHIPPED_CORE_DISPLAY_ROOT,
-  SHIPPED_CORE_FILE_INVENTORY,
+  SHIPPED_CORE_VERSIONS,
   generateLibraryLock,
   serializeLibraryLock,
   type LoadedDocument,
@@ -11,6 +10,7 @@ import {
   type LoadedProject,
   type LoadedProjectSourceFile,
 } from "@thermite/compiler";
+
 import {
   createInMemoryCanonicalSchemaRegistry,
   parseJson,
@@ -23,6 +23,10 @@ import {
   type ProjectPresentationFile,
   type SchemaRegistry,
 } from "@thermite/schema";
+
+const STARTER_CORE = SHIPPED_CORE_VERSIONS["0.2.0"]!;
+const SHIPPED_CORE_FILE_INVENTORY = STARTER_CORE.fileInventory;
+const SHIPPED_CORE_DISPLAY_ROOT = STARTER_CORE.displayRoot;
 
 export const DEFAULT_STARTER_PROJECT_NAME =
   "Thermite Schematics Starter Project";
@@ -180,6 +184,20 @@ export function buildStarterScaffold(
         type: "core:psu-24vdc",
         description: "480 VAC line-to-line to 24 VDC control power supply",
         location: "MAIN-PANEL",
+        connectionReview: {
+          terminals: {
+            L: {
+              status: "deferred",
+              reason:
+                "Starter AC feed is not designed; select and wire the upstream supply and protection before use.",
+            },
+            N: {
+              status: "deferred",
+              reason:
+                "Starter AC return/feed is not designed; review the supply topology and wire it before use.",
+            },
+          },
+        },
       },
       {
         uid: identities.plc1,
@@ -231,7 +249,7 @@ export function buildStarterScaffold(
         "potentials/potentials.json",
       ],
       presentation: "presentation.json",
-      libraries: [{ name: "core", version: "0.1.0" }],
+      libraries: [{ name: "core", version: "0.2.0" }],
     },
   };
 }
@@ -303,7 +321,7 @@ function loadedDocument<T>(
 function assertCoreManifestInventory(manifest: LibraryManifest): void {
   if (
     manifest.name !== "core" ||
-    manifest.version !== "0.1.0" ||
+    manifest.version !== "0.2.0" ||
     manifest.sources.length !== 1 ||
     manifest.sources[0] !== "types/**/*.json"
   ) {
@@ -311,13 +329,12 @@ function assertCoreManifestInventory(manifest: LibraryManifest): void {
   }
 
   const expanded = SHIPPED_CORE_FILE_INVENTORY.filter(
-    (path) => path.startsWith("library/types/") && path.endsWith(".json"),
+    (path) =>
+      path.startsWith(`${STARTER_CORE.directory}/types/`) &&
+      path.endsWith(".json"),
   );
   const expected = SHIPPED_CORE_FILE_INVENTORY.slice(1);
-  if (
-    expanded.length !== 13 ||
-    JSON.stringify(expanded) !== JSON.stringify(expected)
-  ) {
+  if (JSON.stringify(expanded) !== JSON.stringify(expected)) {
     throw new Error(
       "The shipped core manifest does not expand to the static inventory.",
     );
@@ -413,7 +430,7 @@ export function createStarterLoadedProject(
     "starter project sources",
   );
 
-  const coreManifestPath = SHIPPED_CORE_FILE_INVENTORY[0];
+  const coreManifestPath = SHIPPED_CORE_FILE_INVENTORY[0]!;
   const coreManifestBytes = shippedCore.get(coreManifestPath)!;
   const coreManifestParsed = parseDocument(
     coreManifestBytes,
@@ -440,7 +457,9 @@ export function createStarterLoadedProject(
   const librarySources = SHIPPED_CORE_FILE_INVENTORY.slice(1).map((path) => {
     const bytes = shippedCore.get(path)!;
     const displayFile =
-      SHIPPED_CORE_DISPLAY_ROOT + "/" + path.slice("library/".length);
+      SHIPPED_CORE_DISPLAY_ROOT +
+      "/" +
+      path.slice(STARTER_CORE.directory.length + 1);
     const parsed = parseDocument(bytes, displayFile);
     requireNoDiagnostics(
       registry.validateEntity("library-file", parsed.value, {
@@ -462,7 +481,7 @@ export function createStarterLoadedProject(
   if (
     manifest.value.libraries?.length !== 1 ||
     dependency?.name !== "core" ||
-    dependency.version !== "0.1.0" ||
+    dependency.version !== "0.2.0" ||
     dependency.path !== undefined
   ) {
     throw new Error("The starter shipped-library authority is unexpected.");

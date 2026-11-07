@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/agent-tool-result.schema.json",
+  "title": "AgentToolJsonResult",
+  "description": "Successful agent transport envelope. Tool-specific value contracts remain defined by the public typed API; diagnostics belong in the separate report.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "tool", "value"],
+  "properties": {
+    "format": {
+      "const": "agent-tool-result/0.1"
+    },
+    "tool": {
+      "type": "string",
+      "enum": [
+        "resolve",
+        "inspect",
+        "query",
+        "validate",
+        "create-view",
+        "apply-source-patch"
+      ]
+    },
+    "value": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

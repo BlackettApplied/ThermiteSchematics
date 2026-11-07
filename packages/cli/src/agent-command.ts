@@ -1,5 +1,13 @@
 import { readFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import {
+  basename,
+  isAbsolute,
+  posix,
+  relative,
+  resolve,
+  sep,
+  win32,
+} from "node:path";
 import { TextDecoder, types } from "node:util";
 
 import {
@@ -53,6 +61,7 @@ type AnyAgentOutcome = AgentToolOutcome<
 
 const REQUEST_FILE = "<request>";
 const SAFE_CODE_PATTERN = /^[A-Z][A-Z0-9_]{0,31}$/u;
+const CONTROL_CHARACTER_PATTERN = /[\u0000-\u001f\u007f-\u009f]/u;
 
 interface JsonTextPath {
   readonly parent: JsonTextPath | undefined;
@@ -262,12 +271,78 @@ function sanitizedErrorCode(error: unknown): string {
     : "UNKNOWN";
 }
 
-function requestReadDiagnostic(error: unknown): Diagnostic {
+/** Spell a native path with "/" separators; POSIX backslashes stay literal. */
+function portablePath(path: string): string {
+  return sep === "/" ? path : path.replaceAll(sep, "/");
+}
+
+/** Native separators: "/" on POSIX, "\\" and "/" on Windows. */
+const NATIVE_SEPARATOR_PATTERN = sep === "/" ? /\//u : /[\\/]/u;
+
+/**
+ * Whether a displayed path could spell an absolute path under any host's rules.
+ * Every native component is checked, because on POSIX a single file or
+ * directory name such as `C:\Users\x.json` or `\\server\share\x.json` is
+ * a Windows absolute path. Such names are withheld. Ordinary backslash names
+ * such as `requests\present.json` remain displayable.
+ */
+function spellsAbsolutePath(path: string): boolean {
+  return (
+    isAbsolute(path) ||
+    path
+      .split(NATIVE_SEPARATOR_PATTERN)
+      .some(
+        (component) =>
+          posix.isAbsolute(component) ||
+          win32.isAbsolute(component) ||
+          /^[A-Za-z]:/u.test(component),
+      )
+  );
+}
+
+/**
+ * Name the unreadable request without disclosing host directories: a relative
+ * `--input` path as given, an absolute path below cwd relative to cwd, and
+ * otherwise only the file name. Native path rules decide every case, so the
+ * subject names the file that was actually read. Each candidate is shown only
+ * if it spells no absolute path under any host's rules.
+ */
+function requestReadSubject(input: string, cwd: string): string {
+  const withheld = JSON.stringify(REQUEST_FILE);
+  if (input === "-") return "from standard input";
+  if (input.length === 0 || CONTROL_CHARACTER_PATTERN.test(input)) {
+    return withheld;
+  }
+  if (!isAbsolute(input)) {
+    return spellsAbsolutePath(input)
+      ? withheld
+      : JSON.stringify(portablePath(input));
+  }
+  const below = relative(cwd, input);
+  if (
+    below !== "" &&
+    below !== ".." &&
+    !below.startsWith(`..${sep}`) &&
+    !spellsAbsolutePath(below)
+  ) {
+    return JSON.stringify(portablePath(below));
+  }
+  const name = basename(input);
+  return name === "" || spellsAbsolutePath(name)
+    ? withheld
+    : `${withheld} (file name ${JSON.stringify(name)}; absolute directory withheld)`;
+}
+
+function requestReadDiagnostic(
+  input: string,
+  cwd: string,
+  error: unknown,
+): Diagnostic {
   const detail = `request-read/${sanitizedErrorCode(error)}`;
   return {
     code: "E001",
     severity: DIAGNOSTIC_CATALOG.E001.severity,
-    message: `Unable to read agent request "<request>" (${detail}).`,
+    message: `Unable to read agent request ${requestReadSubject(input, cwd)} (${detail}).`,
     file: REQUEST_FILE,
     line: 1,
     column: 1,
@@ -462,7 +537,7 @@ export async function runAgentCommand(
   try {
     bytes = await readRequestBytes(input, cwd, options.stdin ?? process.stdin);
   } catch (error) {
-    return toolFailure(tool, [requestReadDiagnostic(error)]);
+    return toolFailure(tool, [requestReadDiagnostic(input, cwd, error)]);
   }
 
   try {

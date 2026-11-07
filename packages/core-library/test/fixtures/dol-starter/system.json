@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Generic DOL starter",
+    "description": "Synthetic connection and rendering fixture, not a selected or rated machine design."
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

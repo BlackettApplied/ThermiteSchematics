@@ -4,6 +4,7 @@ export {
   type CableSchedule,
   type CableScheduleCore,
   type CableScheduleEndpoint,
+  type EndpointSheetZones,
 } from "./cable-schedule.js";
 export { InvalidElectricalIrError } from "./errors.js";
 export { serializeQueryResult } from "./serializer.js";
@@ -47,8 +48,16 @@ export {
   REPORT_KINDS,
   type DocumentationRequest,
   type DocumentationTable,
+  type DocumentationOptions,
+  type DocumentationSelection,
+  type ScheduleReferences,
   type ReportKind,
 } from "./documentation.js";
+export {
+  resolveDeviceFilter,
+  type DeviceFilter,
+  type DeviceFilterSelection,
+} from "./device-filter.js";
 export {
   createProjectSnapshot,
   parseProjectSnapshot,
@@ -65,3 +74,10 @@ export {
   buildConnectorAssemblyInventory,
   type ConnectorAssemblyInventory,
 } from "./connector-assemblies.js";
+
+export {
+  auditContinuity,
+  type ContinuityRequest,
+  type ContinuityEndpoint,
+  type ContinuityReport,
+} from "./continuity.js";

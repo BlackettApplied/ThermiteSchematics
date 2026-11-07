@@ -1,0 +1,23 @@
+{
+  "id": "T07",
+  "version": "1.1.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Produce a hookup page for a 4–20 mA two-wire transmitter into an analog input. Obtain and lock the optional field-interfaces library properly, or explain the runtime limits and write issue.md asking for the missing reviewed parts/library. Do not invent a verified pin map.",
+  "requiredTopics": [
+    {
+      "topic": "libraries",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "views",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "rubric": [
+    "Either properly acquire, lock and cite the optional library and reviewed part facts, or explain limits and provide an actionable issue draft.",
+    "No unsourced verified pin map, manufacturer ratings or inferred repair."
+  ]
+}

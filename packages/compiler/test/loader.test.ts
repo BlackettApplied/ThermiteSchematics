@@ -20,6 +20,7 @@ import {
   compileProject,
   loadProject,
   resolveShippedCoreLibrary,
+  resolveShippedCoreLibraryVersion,
 } from "../src/index.js";
 import {
   canonicalizeMatchedFile,
@@ -896,7 +897,11 @@ describe("project loader", () => {
     );
     const result = await compileProject(root);
 
-    expect(result).toEqual({
+    expect(result.diagnostics.filter((d) => d.code === "I208")).toHaveLength(1);
+    expect({
+      ...result,
+      diagnostics: result.diagnostics.filter((d) => d.code !== "I208"),
+    }).toEqual({
       ok: false,
       diagnostics: [
         {
@@ -913,7 +918,7 @@ describe("project loader", () => {
           code: "E032",
           severity: "error",
           message:
-            'Shipped library "core" does not provide version "9.9.9"; available version is "0.1.0".',
+            'Shipped library "core" does not provide version "9.9.9"; available versions are "0.1.0", "0.2.0".',
           file: "system.json",
           line: 1,
           column: 162,
@@ -1045,3 +1050,30 @@ describe("project loader", () => {
     }
   });
 });
+
+it.each(["0.1.0", "0.2.0"])(
+  "applies the shipped resolver override to version %s",
+  async (version) => {
+    const root = await mkdtemp(join(tmpdir(), "thermite-resolver-override-"));
+    try {
+      await writeJson(join(root, "system.json"), {
+        format: "electrical-system/0.1",
+        project: { name: "Override" },
+        sources: ["source.json"],
+        libraries: [{ name: "core", version }],
+      });
+      await writeJson(join(root, "source.json"), { objects: [] });
+      const calls: string[] = [];
+      const result = await loadProject(root, process.cwd(), {
+        resolveShippedCoreLibrary: (selected) => {
+          calls.push(selected);
+          return resolveShippedCoreLibraryVersion(selected)!;
+        },
+      });
+      expect(result.ok, JSON.stringify(result.diagnostics)).toBe(true);
+      expect(calls).toEqual([version]);
+    } finally {
+      await removeTemporaryDirectory(root);
+    }
+  },
+);

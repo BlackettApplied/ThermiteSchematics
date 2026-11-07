@@ -1,15 +1,9 @@
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { afterEach, expect, it } from "vitest";
-import {
-  analyzeCompleteness,
-  compileProject,
-  lockProject,
-  serializeIr,
-} from "@thermite/compiler";
+import { analyzeCompleteness, serializeIr } from "@thermite/compiler";
 import {
   createProjectSnapshot,
   createQueryEngine,
@@ -17,42 +11,16 @@ import {
   serializeQueryResult,
 } from "@thermite/query";
 import { completenessCsv } from "../src/alpha-diagnostics.js";
+import {
+  compileMetadataRejection,
+  fixture,
+  METADATA_REJECTIONS,
+  removeFixtures,
+} from "./completeness.cases.js";
 
-const execFile = promisify(execFileCallback),
-  temporary: string[] = [];
+const execFile = promisify(execFileCallback);
 const cli = resolve("packages/cli/dist/thermite-bin.js");
-afterEach(async () => {
-  for (const path of temporary.splice(0))
-    await rm(path, { recursive: true, force: true });
-});
-async function fixture() {
-  const p = await mkdtemp(join(tmpdir(), "thermite-completeness-"));
-  temporary.push(p);
-  await cp("packages/cli/fixtures/completeness", p, { recursive: true });
-  const source = JSON.parse(await readFile(join(p, "source.json"), "utf8"));
-  const library = JSON.parse(
-    await readFile(join(p, "library/types.json"), "utf8"),
-  );
-  async function compile() {
-    await writeFile(
-      join(p, "source.json"),
-      JSON.stringify(source, null, 2) + "\n",
-    );
-    await writeFile(
-      join(p, "library/types.json"),
-      JSON.stringify(library, null, 2) + "\n",
-    );
-    const locked = await lockProject(p);
-    if (!locked.ok) return locked;
-    return compileProject(p);
-  }
-  async function valid() {
-    const c = await compile();
-    if (!c.ok) throw new Error(JSON.stringify(c));
-    return c;
-  }
-  return { p, source, library, compile, valid };
-}
+afterEach(removeFixtures);
 
 it("inventories all points, distinguishes dangling cores, and never clears required warnings with an unused note", async () => {
   const f = await fixture(),
@@ -173,39 +141,16 @@ it("counts wires, jumpers, complete spare cores and communication links without 
   expect(net.terminalIds.map((t) => t.terminalKey).sort()).toEqual(["N", "S"]);
 });
 
-it.each([
-  "unknown-terminal",
-  "unknown-port",
-  "required-string",
-  "missing-reason",
-  "blank-reason",
-  "unknown-status",
-  "coverage-notes",
-  "coverage-status",
-])("rejects invalid metadata: %s", async (problem) => {
-  const f = await fixture(),
-    d = f.source.objects[1],
-    t = f.library.types[0];
-  if (problem === "unknown-terminal")
-    d.connectionReview.terminals.TYPO = { status: "required", reason: "Typo." };
-  if (problem === "unknown-port")
-    d.connectionReview.ports = {
-      TYPO: { status: "required", reason: "Typo." },
-    };
-  if (problem === "required-string") t.terminals.P.required = "yes";
-  if (problem === "missing-reason")
-    delete d.connectionReview.terminals.P.reason;
-  if (problem === "blank-reason") d.connectionReview.terminals.P.reason = "  ";
-  if (problem === "unknown-status")
-    d.connectionReview.terminals.P.status = "ignored";
-  if (problem === "coverage-notes") delete t.connectionCoverage.notes;
-  if (problem === "coverage-status") t.connectionCoverage.status = "probably";
-  const c = await f.compile();
-  expect(c.ok).toBe(false);
-  expect(c.diagnostics.some((d) => d.severity === "error")).toBe(true);
-  if (problem.startsWith("unknown-") && problem !== "unknown-status")
-    expect(c.diagnostics.some((d) => d.code === "E205")).toBe(true);
-});
+it.each(METADATA_REJECTIONS)(
+  "rejects invalid metadata: %s",
+  async (problem) => {
+    const c = await compileMetadataRejection(problem);
+    expect(c.ok).toBe(false);
+    expect(c.diagnostics.some((d) => d.severity === "error")).toBe(true);
+    if (problem.startsWith("unknown-") && problem !== "unknown-status")
+      expect(c.diagnostics.some((d) => d.code === "E205")).toBe(true);
+  },
+);
 
 it("preserves optional legacy fields, exposes metadata through inspection and includes it in semantic review", async () => {
   const f = await fixture(),

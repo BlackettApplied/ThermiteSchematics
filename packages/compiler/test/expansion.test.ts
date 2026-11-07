@@ -62,6 +62,33 @@ function functionFact(
 }
 
 describe("D7 device/type expansion", () => {
+  it("copies authored non-procurement metadata without inferring it or sharing source objects", () => {
+    const authored = structuredClone(project);
+    const device = authored.sources
+      .flatMap(({ value }) => value.objects)
+      .find(({ uid }) => uid === BREAKER_UID);
+    if (device?.kind !== "device") throw Error("Fixture breaker not found.");
+    device.nonProcurement = {
+      reason: "Existing equipment; outside purchasing scope",
+    };
+    const result = expandResolvedProject(resolveLoadedProject(authored));
+    const retained = result.devices.find(({ uid }) => uid === BREAKER_UID)!;
+    expect(retained).toHaveProperty("nonProcurement", device.nonProcurement);
+    expect(
+      result.devices
+        .filter(({ uid }) => uid !== BREAKER_UID)
+        .every((d) => !Object.hasOwn(d, "nonProcurement")),
+    ).toBe(true);
+    device.nonProcurement.reason = "Changed source reason";
+    expect(retained).toHaveProperty(
+      "nonProcurement.reason",
+      "Existing equipment; outside purchasing scope",
+    );
+    expect(result.terminals).toEqual(expansion.terminals);
+    expect(result.functions).toEqual(expansion.functions);
+    expect(result.internalRelations).toEqual(expansion.internalRelations);
+  });
+
   it("materializes reviewed exact breaker, contactor, overload, and PNP terminal records", () => {
     const facts = expansion.terminals
       .filter(({ id }) => CORE_FIXTURE_UIDS.has(id.deviceUid))

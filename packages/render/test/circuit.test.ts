@@ -225,7 +225,10 @@ describe("source-selected circuit views", () => {
     expect(result.ok).toBe(true);
     if (!result.ok) throw new Error(result.error.message);
     expect(result.value.sheets[0]!.svg).toContain("coil: 200");
-    expect(result.value.sheets[1]!.svg).toContain("3 functions: 100");
+    expect(result.value.sheets[0]!.svg).not.toContain("aux13:");
+    expect(result.value.sheets.map((s) => s.svg).join("")).toContain(
+      "1/L1-2/T1, 3/L2-4/T2, 5/L3-6/T3: 100",
+    );
     expect(
       result.value.sheets
         .flatMap((s) => s.references)

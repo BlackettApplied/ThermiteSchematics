@@ -1,9 +1,16 @@
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 
+/** From/to references follow the schedule's endpoint order, never electrical direction. */
+export type EndpointSheetZones = readonly [
+  string | null | undefined,
+  string | null | undefined,
+];
+
 export interface CableScheduleEndpoint {
   readonly terminal: TerminalId;
   readonly display: string;
   readonly location: string | null;
+  readonly sheetZone?: string;
 }
 export interface CableScheduleCore {
   readonly id: string;
@@ -23,6 +30,7 @@ export interface CableSchedule {
   readonly cableUid: string;
   readonly designation: string;
   readonly typeId: string;
+  readonly description?: string;
   readonly fromLocation: string | null;
   readonly toLocation: string | null;
   readonly endOrder: "authored" | "canonical";
@@ -40,6 +48,7 @@ export interface CableSchedule {
 export function buildCableSchedule(
   ir: Readonly<ElectricalIr>,
   cableUid: string,
+  sheetZones?: ReadonlyMap<string, EndpointSheetZones>,
 ): CableSchedule {
   const cable = ir.cables.find(({ uid }) => uid === cableUid);
   if (cable === undefined) throw new Error(`Missing cable ${cableUid}.`);
@@ -53,7 +62,10 @@ export function buildCableSchedule(
       .map((core) => [core.id.conductorId, core]),
   );
   const authored = new Map(cable.assignments?.map((core) => [core.id, core]));
-  function endpoint(terminal: TerminalId): CableScheduleEndpoint {
+  function endpoint(
+    terminal: TerminalId,
+    sheetZone?: string | null,
+  ): CableScheduleEndpoint {
     const device = devices.get(terminal.deviceUid);
     if (device === undefined)
       throw new Error(`Missing cable endpoint device ${terminal.deviceUid}.`);
@@ -61,6 +73,7 @@ export function buildCableSchedule(
       terminal: { ...terminal },
       display: `${device.designation}.${terminal.terminalKey}`,
       location: device.location ?? null,
+      ...(sheetZone ? { sheetZone } : {}),
     };
   }
   const cores: CableScheduleCore[] = [...type.conductors]
@@ -70,8 +83,12 @@ export function buildCableSchedule(
       const physical = connected.get(definition.id);
       const ends = assignment?.endpoints ?? physical?.endpoints;
       const endpoints: CableScheduleCore["endpoints"] = [
-        ends?.[0] == null ? null : endpoint(ends[0].terminal),
-        ends?.[1] == null ? null : endpoint(ends[1].terminal),
+        ends?.[0] == null
+          ? null
+          : endpoint(ends[0].terminal, sheetZones?.get(definition.id)?.[0]),
+        ends?.[1] == null
+          ? null
+          : endpoint(ends[1].terminal, sheetZones?.get(definition.id)?.[1]),
       ];
       const count = endpoints.filter((end) => end !== null).length;
       const netId =
@@ -108,6 +125,9 @@ export function buildCableSchedule(
     cableUid,
     designation: cable.designation,
     typeId: cable.typeId,
+    ...(type.description === undefined
+      ? {}
+      : { description: type.description }),
     fromLocation: cable.fromLocation ?? null,
     toLocation: cable.toLocation ?? null,
     endOrder: cable.assignments === undefined ? "canonical" : "authored",

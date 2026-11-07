@@ -125,7 +125,10 @@ export async function writeAlphaOutput(
   }
   const normalized = target.toLocaleLowerCase("en-US");
   for (const input of protectedInputs) {
-    if (resolve(input).toLocaleLowerCase("en-US") === normalized)
+    // Compare canonical paths on both sides: a request can be supplied
+    // through a link or a Windows short-name alias to the same ordinary file.
+    const canonicalInput = await canonicalOutputPath(resolve(input));
+    if (canonicalInput.toLocaleLowerCase("en-US") === normalized)
       throw new Error("Output cannot overwrite its request file.");
   }
   await mkdir(dirname(target), { recursive: true });

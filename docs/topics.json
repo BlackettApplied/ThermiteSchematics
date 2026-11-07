@@ -1,0 +1,86 @@
+[
+  {
+    "id": "agent-requests",
+    "file": "docs/agent-requests.md",
+    "title": "Agent requests, selectors and integrity",
+    "readBefore": [
+      "before writing an agent request",
+      "before patching source or presentation"
+    ]
+  },
+  {
+    "id": "modeling",
+    "file": "docs/data-model.md",
+    "title": "Objects, I/O, cables and potentials",
+    "readBefore": [
+      "before adding devices, wires, cables, io or potentials; use guide schema for exact shapes"
+    ]
+  },
+  {
+    "id": "libraries",
+    "file": "docs/libraries.md",
+    "title": "Types, profiles, locks and optional libraries",
+    "readBefore": [
+      "before creating or editing a type",
+      "before adding an optional library"
+    ]
+  },
+  {
+    "id": "views",
+    "file": "docs/views.md",
+    "title": "View roots, requests, packets and paper",
+    "readBefore": [
+      "before writing a view or packet request",
+      "before handling R001 or R006"
+    ]
+  },
+  {
+    "id": "review",
+    "file": "docs/review.md",
+    "title": "Snapshots, semantic review, watch and PDF",
+    "readBefore": [
+      "before reviewing changes or exporting PDF"
+    ]
+  },
+  {
+    "id": "circuit-symbols",
+    "file": "docs/circuit-symbols.md",
+    "title": "Function-level circuit marks",
+    "readBefore": [
+      "before setting circuitSymbols"
+    ]
+  },
+  {
+    "id": "circuit-views",
+    "file": "docs/circuit-views.md",
+    "title": "Function-based circuit drawings",
+    "readBefore": [
+      "before drawing function-based circuits"
+    ]
+  },
+  {
+    "id": "report-filtering",
+    "file": "docs/report-filtering.md",
+    "title": "Schedule filters and reference indexes",
+    "readBefore": [
+      "before reading, authoring or exporting a BOM or other report",
+      "before filtering reports or packet references"
+    ]
+  },
+  {
+    "id": "signal-loops",
+    "file": "docs/signal-loops.md",
+    "title": "Field-device hookups and cordsets",
+    "readBefore": [
+      "before drawing signal loops, cordsets or enclosures"
+    ]
+  },
+  {
+    "id": "completeness",
+    "file": "docs/completeness.md",
+    "title": "Required, unused and deferred connections",
+    "readBefore": [
+      "before reviewing connection requirements or model coverage"
+    ]
+  }
+]

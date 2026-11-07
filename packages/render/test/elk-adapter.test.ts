@@ -3,8 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { beforeAll, describe, expect, it } from "vitest";
 
@@ -13,6 +12,7 @@ import {
   serializeElkAdapterForTest,
   validateElkRuntimeOptions,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { ELK_OPTIONS } from "../src/layout/options.js";
 import { buildPresentationGraph } from "../src/presentation.js";
 import type { PresentationGraph } from "../src/types.js";
@@ -22,7 +22,6 @@ import {
   selectCoreSubgraph,
 } from "./fixtures.js";
 
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 const testRoot = dirname(fileURLToPath(import.meta.url));
 
 let coreIr: ElectricalIr;
@@ -375,7 +374,7 @@ describe("observable ELK option placement probes", () => {
       leaf.layoutOptions![ELK_OPTIONS.portLabelsPlacement] = placement;
     if (target === "label")
       label.layoutOptions = { [ELK_OPTIONS.portLabelsPlacement]: placement };
-    const output = await new ElkConstructor().layout({
+    const output = await createElkEngine().layout({
       id: "root",
       layoutOptions: {
         [ELK_OPTIONS.algorithm]: "layered",
@@ -436,7 +435,7 @@ describe("observable ELK option placement probes", () => {
       : ELK_OPTIONS.labelPortVerticalSpacing;
     if (target === "leaf") leafOptions[spacing] = "7";
     if (target === "parent") rootOptions[spacing] = "7";
-    const output = await new ElkConstructor().layout({
+    const output = await createElkEngine().layout({
       id: "root",
       layoutOptions: rootOptions,
       children: [
@@ -499,7 +498,7 @@ describe("observable ELK option placement probes", () => {
     async function positioned(
       constraint: "FIXED_POS" | "FIXED_ORDER",
     ): Promise<readonly number[]> {
-      const output = await new ElkConstructor().layout({
+      const output = await createElkEngine().layout({
         id: "root",
         layoutOptions: { [ELK_OPTIONS.algorithm]: "layered" },
         children: [
@@ -549,7 +548,7 @@ describe("observable ELK option placement probes", () => {
   });
 
   it("keeps a per-label non-inline edge label off its routed segment", async () => {
-    const output = await new ElkConstructor().layout({
+    const output = await createElkEngine().layout({
       id: "root",
       layoutOptions: {
         [ELK_OPTIONS.algorithm]: "layered",

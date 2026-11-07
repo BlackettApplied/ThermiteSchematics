@@ -1,3 +1,9 @@
+import { SYMBOL_PROFILES, resolveSensorSupply } from "@thermite/schema";
+import {
+  symbolFunctionMatchesShape,
+  type IrDeviceType,
+} from "@thermite/compiler";
+import { symbolProfile } from "./profiles.js";
 import type { PresentationClass } from "../ordering.js";
 import type { SchematicViewFamily } from "../types.js";
 import type { SymbolDefinition, SymbolPortBinding } from "./types.js";
@@ -749,135 +755,403 @@ export function findDeviceTypeSymbolMapping(
   return mappings.find((mapping) => mapping.typeId === typeId);
 }
 
-/** Explicit reusable library profiles. Unknown types never acquire behavior by name. */
+/** Cataloged rooted capabilities. Traversal remains the selection engine's job. */
+export const ROOTED_SYMBOL_PROFILES = Object.freeze(
+  SYMBOL_PROFILES.filter((p) =>
+    p.support.some(
+      (s) =>
+        s.family === "power" || s.family === "control" || s.family === "loads",
+    ),
+  ).map((p) => p.id),
+);
+
+function compareText(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/** IR is already admitted. Preserve authored function order independently of
+ * collection storage order, while leaving each function's terminal order intact. */
+function orderedFunctions(type: IrDeviceType): IrDeviceType["functions"] {
+  return [...type.functions].sort(
+    (a, b) =>
+      a.source.line - b.source.line ||
+      a.source.column - b.source.column ||
+      compareText(a.key, b.key),
+  );
+}
+
+/** Bind authored functions, terminal order and roles through a single profile path.
+ * The exported core table above remains a compatibility reference for callers
+ * supplying explicit mappings; production never selects it by type ID.
+ */
 export function projectDeviceTypeSymbolMappings(
   ir: Readonly<import("@thermite/compiler").ElectricalIr>,
 ): readonly DeviceTypeSymbolMapping[] {
-  const mappings: DeviceTypeSymbolMapping[] = [
-    ...CORE_DEVICE_TYPE_SYMBOL_MAPPINGS,
-  ];
-  for (const type of ir.deviceTypes) {
-    if (
-      mappings.some((m) => m.typeId === type.id) ||
-      ![
-        "thermite:io-module",
-        "thermite:terminal-strip",
-        "thermite:dc-supply",
-      ].includes(type.symbol ?? "")
-    )
-      continue;
-    const functions: FunctionSymbolRule[] = [],
-      omissions: ExplicitFunctionOmissionRule[] = [],
-      boundaryTerminals: BoundaryTerminalRule[] = [];
-    for (const f of type.functions) {
-      const terminals = f.terminalKeys;
-      let rule: FunctionSymbolRule | undefined;
-      if (
-        f.kind === "channel" &&
-        terminals.length === 1 &&
-        type.symbol === "thermite:io-module"
-      ) {
-        const input = f.direction === "input";
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: input ? "ais:plc-di" : "ais:plc-do",
-          bindings: [
-            { portId: input ? "DI" : "DO", terminalKey: terminals[0]! },
-          ],
-          classification: input ? "plc-input" : "plc-output",
-          traversalRole: "channel-boundary",
-        };
-      } else if (f.kind === "bus" && terminals.length === 1) {
-        rule = {
-          functionKey: f.key,
-          families: BOTH_FAMILIES,
-          symbolId: "ais:terminal",
-          bindings: [
-            { portId: "in", terminalKey: terminals[0]! },
-            { portId: "out", terminalKey: terminals[0]! },
-          ],
-          classification: "terminal",
-          traversalRole: "terminal-display",
-        };
-      } else if (
-        f.kind === "load" &&
-        terminals.length === 2 &&
-        type.terminals.find((t) => t.key === terminals[0])?.rating
-          ?.voltage_type === "DC"
-      ) {
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: "ais:dc-load",
-          bindings: [
-            { portId: "positive", terminalKey: terminals[0]! },
-            { portId: "return", terminalKey: terminals[1]! },
-          ],
-          classification: "load",
-          traversalRole: "load-boundary",
-        };
-      } else if (
-        f.kind === "source" &&
-        terminals.length === 2 &&
-        type.terminals.find((t) => t.key === terminals[0])?.role ===
-          "dc_positive_output" &&
-        type.terminals.find((t) => t.key === terminals[1])?.role ===
-          "dc_return_output"
-      ) {
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: "ais:power-source-dc",
-          bindings: [
-            { portId: "positive", terminalKey: terminals[0]! },
-            { portId: "return", terminalKey: terminals[1]! },
-          ],
-          classification: "source",
-          traversalRole: "source-boundary",
-        };
-        boundaryTerminals.push(
-          {
-            functionKey: f.key,
-            terminalKey: terminals[0]!,
-            families: CONTROL,
-            boundaryKind: "control-source",
-            requiredRole: "dc_positive_output",
-          },
-          {
-            functionKey: f.key,
-            terminalKey: terminals[1]!,
-            families: CONTROL,
-            boundaryKind: "control-return",
-            requiredRole: "dc_return_output",
-          },
+  return [...ir.deviceTypes]
+    .sort((a, b) => compareText(a.id, b.id))
+    .flatMap((type) => {
+      const definitions = orderedFunctions(type);
+      const profile = symbolProfile(type);
+      const definition = SYMBOL_PROFILES.find((p) => p.id === profile);
+      if (!definition || !ROOTED_SYMBOL_PROFILES.includes(definition.id))
+        return [];
+      const functions: FunctionSymbolRule[] = [],
+        aggregates: AggregateSymbolRule[] = [],
+        omissions: ExplicitFunctionOmissionRule[] = [],
+        boundaryTerminals: BoundaryTerminalRule[] = [];
+      const role = (key: string) =>
+        type.terminals.find((t) => t.key === key)?.role;
+      const bound = new Set<string>();
+      const addAggregate = (
+        key: string,
+        symbolId: SymbolDefinition["id"],
+        family: "power" | "control",
+        members: IrDeviceType["functions"],
+        ports: readonly string[],
+        classification: PresentationClass,
+        traversalRole: TraversalRole,
+      ) => {
+        const bindings = members.flatMap((f) =>
+          f.terminalKeys.map((terminalKey) => ({
+            terminalKey,
+            memberFunctionKey: f.key,
+          })),
         );
+        if (bindings.length !== ports.length) return;
+        aggregates.push({
+          key,
+          symbolId,
+          families: [family],
+          functionKeys: members.map((f) => f.key),
+          bindings: bindings.map((b, i) => ({ ...b, portId: ports[i]! })),
+          classification,
+          traversalRole,
+        });
+        for (const f of members) bound.add(f.key);
+      };
+      const earth = definitions.filter(
+        (f) =>
+          f.kind === "bus" &&
+          f.terminalKeys.length === 1 &&
+          role(f.terminalKeys[0]!) === "protective_earth",
+      );
+      if (
+        profile === "thermite:motor-3ph" ||
+        profile === "thermite:power-source"
+      ) {
+        const main = definitions.filter(
+          (f) =>
+            f.kind === (profile === "thermite:motor-3ph" ? "load" : "source") &&
+            f.terminalKeys.length === 3 &&
+            (profile !== "thermite:power-source" ||
+              f.terminalKeys.every(
+                (t, i) => role(t) === `phase_${i + 1}_source`,
+              )),
+        );
+        for (const f of main) {
+          const motor = profile === "thermite:motor-3ph",
+            pe = main.length === 1 && earth.length === 1 ? earth : [];
+          addAggregate(
+            main.length === 1
+              ? motor
+                ? "motor"
+                : "three-phase-source"
+              : `${motor ? "motor" : "three-phase-source"}:${f.key}`,
+            motor
+              ? pe.length
+                ? "ais:motor-3ph"
+                : "ais:motor-3ph-unbonded"
+              : pe.length
+                ? "ais:power-source-3ph"
+                : "ais:power-source-3wire",
+            "power",
+            [f, ...pe],
+            motor
+              ? ["U", "V", "W", ...(pe.length ? ["PE"] : [])]
+              : ["L1", "L2", "L3", ...(pe.length ? ["PE"] : [])],
+            motor ? "load" : "source",
+            motor ? "load-boundary" : "source-boundary",
+          );
+          if (!motor)
+            for (const t of f.terminalKeys)
+              boundaryTerminals.push({
+                functionKey: f.key,
+                terminalKey: t,
+                families: POWER,
+                boundaryKind: "power-source",
+                requiredRole: role(t)!,
+              });
+          if (!motor)
+            for (const e of pe)
+              boundaryTerminals.push({
+                functionKey: e.key,
+                terminalKey: e.terminalKeys[0]!,
+                families: POWER,
+                boundaryKind: "protective-earth-source",
+                requiredRole: "protective_earth",
+              });
+        }
       }
-      if (rule) {
-        functions.push(rule);
-        if (!rule.families.includes("power"))
+      if (profile === "thermite:sensor-3wire") {
+        const supplies = definitions.filter(
+          (f) => f.kind === "load" && f.terminalKeys.length === 2,
+        );
+        const outputs = definitions.filter(
+          (f) =>
+            f.kind === "channel" &&
+            f.direction === "output" &&
+            f.terminalKeys.length === 1,
+        );
+        if (
+          supplies.length === 1 &&
+          outputs.length === 1 &&
+          new Set([...supplies[0]!.terminalKeys, ...outputs[0]!.terminalKeys])
+            .size === 3
+        ) {
+          const supply = supplies[0]!,
+            output = outputs[0]!;
+          const supplyRoles = resolveSensorSupply(
+            supply.terminalKeys.map((key) => ({ key, role: role(key) })),
+          );
+          if (supplyRoles.ok) {
+            const ordered = {
+              ...supply,
+              terminalKeys: [supplyRoles.positive, supplyRoles.return],
+            };
+            addAggregate(
+              "pnp-sensor",
+              "ais:switch-sensor-pnp",
+              "control",
+              [ordered, output],
+              ["supply", "return", "signal"],
+              "permissive",
+              "non-traversable",
+            );
+          }
+        }
+      }
+      for (const f of definitions) {
+        const terminals = f.terminalKeys;
+        if (bound.has(f.key) || profile === "thermite:sensor-3wire") continue;
+        const supportedFamilies = definition.support
+          .filter(
+            (s) =>
+              (s.family === "power" || s.family === "control") &&
+              s.functions.some((shape) =>
+                symbolFunctionMatchesShape(type, f, shape),
+              ),
+          )
+          .map((s) => s.family as "power" | "control");
+        const families = BOTH_FAMILIES.filter((family) =>
+          supportedFamilies.includes(family),
+        );
+        let rule: FunctionSymbolRule | undefined;
+        const make = (
+          symbolId: SymbolDefinition["id"],
+          ports: readonly string[],
+          classification: PresentationClass,
+          traversalRole: TraversalRole,
+        ): FunctionSymbolRule => ({
+          functionKey: f.key,
+          families,
+          symbolId,
+          bindings: ports.map((portId, i) => ({
+            portId,
+            terminalKey: terminals[i]!,
+          })),
+          classification,
+          traversalRole,
+        });
+        if (families.length) {
+          if (f.kind === "bus" && terminals.length === 1)
+            rule = {
+              ...make("ais:terminal", ["in"], "terminal", "terminal-display"),
+              bindings: [
+                { portId: "in", terminalKey: terminals[0]! },
+                { portId: "out", terminalKey: terminals[0]! },
+              ],
+            };
+          else if (f.kind === "coil")
+            rule = make("ais:coil", ["A1", "A2"], "coil", "coil-root");
+          else if (f.kind === "contact") {
+            const open = f.normal_state === "open";
+            if (profile === "thermite:disconnector") {
+              for (const family of families)
+                functions.push({
+                  ...make(
+                    "ais:disconnector",
+                    ["in", "out"],
+                    family === "power" ? "power-contact" : "permissive",
+                    family === "power" ? "power-contact" : "permissive-contact",
+                  ),
+                  families: [family],
+                });
+            } else if (profile === "thermite:breaker") {
+              const explicit = type.circuitSymbols?.[f.key];
+              const power = terminals.map((key) => role(key));
+              const pole =
+                explicit === "breaker" ||
+                (!explicit &&
+                  power.includes("power_input") &&
+                  power.includes("power_output"));
+              const symbol =
+                explicit === "contact-no"
+                  ? "ais:contact-no"
+                  : explicit === "contact-nc"
+                    ? "ais:contact-nc"
+                    : pole
+                      ? "ais:breaker-pole"
+                      : open
+                        ? "ais:contact-no"
+                        : "ais:contact-nc";
+              rule = make(
+                symbol,
+                ["in", "out"],
+                pole ? "protection" : "power-contact",
+                pole ? "breaker-pole" : "power-contact",
+              );
+            } else if (profile === "thermite:overload")
+              rule = families.includes("power")
+                ? make(
+                    "ais:overload-pole",
+                    ["in", "out"],
+                    "overload",
+                    "overload-pole",
+                  )
+                : make(
+                    open ? "ais:contact-no" : "ais:overload-contact-nc",
+                    ["in", "out"],
+                    "protection",
+                    "protection-contact",
+                  );
+            else if (profile === "thermite:fuse")
+              rule = make(
+                "ais:fuse",
+                ["in", "out"],
+                "protection",
+                "breaker-pole",
+              );
+            else if (
+              profile === "thermite:estop" ||
+              profile === "thermite:selector"
+            )
+              rule = make(
+                `ais:${profile === "thermite:estop" ? "estop" : "selector"}-${open ? "no" : "nc"}`,
+                ["in", "out"],
+                profile === "thermite:estop" ? "command" : "permissive",
+                profile === "thermite:estop"
+                  ? "command-contact"
+                  : "permissive-contact",
+              );
+            else if (profile === "thermite:pushbutton")
+              rule = make(
+                open ? "ais:pushbutton-no" : "ais:pushbutton-nc",
+                ["in", "out"],
+                "command",
+                "command-contact",
+              );
+            else if (profile === "thermite:switch")
+              rule = make(
+                open ? "ais:switch-no" : "ais:switch-nc",
+                ["in", "out"],
+                "permissive",
+                "permissive-contact",
+              );
+            else
+              rule = make(
+                open ? "ais:contact-no" : "ais:contact-nc",
+                ["in", "out"],
+                families.includes("power")
+                  ? "power-contact"
+                  : "control-contact",
+                families.includes("power")
+                  ? "power-contact"
+                  : "control-contact",
+              );
+          } else if (f.kind === "other" && profile === "thermite:fuse")
+            rule = make(
+              "ais:fuse",
+              ["in", "out"],
+              "protection",
+              "breaker-pole",
+            );
+          else if (f.kind === "load" && terminals.length === 2)
+            rule = make(
+              profile === "thermite:motor"
+                ? "ais:motor"
+                : profile === "thermite:lamp"
+                  ? "ais:lamp"
+                  : families.includes("power")
+                    ? "ais:ac-load"
+                    : "ais:dc-load",
+              families.includes("power") && profile !== "thermite:motor"
+                ? ["line", "neutral"]
+                : ["positive", "return"],
+              "load",
+              "load-boundary",
+            );
+          else if (
+            f.kind === "channel" &&
+            terminals.length === 1 &&
+            profile !== "thermite:sensor-3wire"
+          )
+            rule = make(
+              f.direction === "input" ? "ais:plc-di" : "ais:plc-do",
+              [f.direction === "input" ? "DI" : "DO"],
+              f.direction === "input" ? "plc-input" : "plc-output",
+              "channel-boundary",
+            );
+          else if (f.kind === "source" && terminals.length === 2) {
+            rule = make(
+              "ais:power-source-dc",
+              ["positive", "return"],
+              "source",
+              "source-boundary",
+            );
+            for (const [i, boundaryKind] of [
+              "control-source",
+              "control-return",
+            ].entries())
+              boundaryTerminals.push({
+                functionKey: f.key,
+                terminalKey: terminals[i]!,
+                families: CONTROL,
+                boundaryKind: boundaryKind as BoundaryKind,
+                requiredRole: role(terminals[i]!)!,
+              });
+          }
+        }
+        if (rule) functions.push(rule);
+      }
+      // Preserve omission diagnostics for every function/family without a binding.
+      for (const f of definitions) {
+        const supported = [
+          ...functions.filter((r) => r.functionKey === f.key),
+          ...aggregates.filter((r) => r.functionKeys.includes(f.key)),
+        ].flatMap((r) => r.families);
+        const absent = BOTH_FAMILIES.filter(
+          (family) => !supported.includes(family),
+        );
+        if (absent.length)
           omissions.push({
             functionKey: f.key,
-            families: POWER,
-            reason: "outside-family",
+            families: absent,
+            reason:
+              f.kind === "mechanism"
+                ? "metadata-only-mechanism"
+                : supported.length
+                  ? "outside-family"
+                  : "unsupported-v0.1",
           });
-      } else
-        omissions.push({
-          functionKey: f.key,
-          families: BOTH_FAMILIES,
-          reason:
-            f.kind === "mechanism"
-              ? "metadata-only-mechanism"
-              : "unsupported-v0.1",
-        });
-    }
-    mappings.push({
-      typeId: type.id,
-      functions,
-      aggregates: [],
-      omissions,
-      boundaryTerminals,
+      }
+      return [
+        {
+          typeId: type.id,
+          functions,
+          aggregates,
+          omissions,
+          boundaryTerminals,
+        },
+      ];
     });
-  }
-  return mappings;
 }

@@ -1,0 +1,39 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001036",
+      "designation": "Q2",
+      "type": "core:breaker-1p",
+      "description": "Unconnected inventory specimen; no pole selected for service."
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001037",
+      "designation": "Q3",
+      "type": "core:breaker-2p",
+      "description": "Unconnected inventory specimen; no pole selected for service."
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001038",
+      "designation": "F2",
+      "type": "core:fuse-2p",
+      "description": "Unconnected inventory specimen; no pole selected for service."
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001039",
+      "designation": "F3",
+      "type": "core:fuse-3p",
+      "description": "Unconnected inventory specimen; no pole selected for service."
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001040",
+      "designation": "DS1",
+      "type": "core:disconnect-3p",
+      "description": "Unconnected inventory specimen; no pole selected for service."
+    }
+  ]
+}

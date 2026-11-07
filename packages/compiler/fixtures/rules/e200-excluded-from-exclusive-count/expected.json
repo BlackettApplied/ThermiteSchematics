@@ -40,5 +40,14 @@
         "note": "Earlier permitted direct assignment from wire \u0022W-FIRST-VALID\u0022 lands here."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E200/E201 topology gate: skipped E300, E301, E302, W902, W303, I304, I305 on 1 net: [\"INVALID-PEER.T, JUMPER-PEER.T, TARGET.E, WIRE-PEER.T [net:sha256:985df627fe76226b7d7c7d789ff3d3344545cb0a14e3f0db75dd97c365b25c74]\"]."
   }
 ]

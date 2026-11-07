@@ -1,0 +1,16 @@
+{
+  "id": "T10",
+  "version": "1.1.0",
+  "template": "network-pagination",
+  "setup": "setup.mjs",
+  "prompt": "Print the whole Ethernet network on Letter. Change paper/orientation or presentation selection as needed; preserve ALL electrical source, library and manifest bytes. Save drawings/packet.json, packet.html, packet.pdf and request.",
+  "requiredTopics": [
+    {
+      "topic": "views",
+      "beforeCommand": "packet"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "preserveSource": true
+}

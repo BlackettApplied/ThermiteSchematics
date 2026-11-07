@@ -1,5 +1,4 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { createQueryEngine } from "@thermite/query";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -8,6 +7,7 @@ import {
   buildElkAdapterGraph,
   layoutPresentationGraph,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import {
   MAX_SVG_MAGNITUDE,
   normalizeAndValidateLayout,
@@ -28,8 +28,6 @@ import {
   required,
   selectCoreSubgraph,
 } from "./fixtures.js";
-
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 
 let coreIr: ElectricalIr;
 
@@ -196,7 +194,7 @@ async function rawLayout(graph: PresentationGraph): Promise<{
   readonly output: ElkNode;
 }> {
   const input = buildElkAdapterGraph(graph).graph;
-  const output = await new ElkConstructor().layout(structuredClone(input));
+  const output = await createElkEngine().layout(structuredClone(input));
   return { input, output };
 }
 
@@ -289,7 +287,11 @@ function r004Message(
   expect(result.ok).toBe(false);
   if (result.ok) throw new Error("Expected layout validation to fail.");
   expect(result.error.code).toBe("R004");
-  return result.error.message;
+  // Geometry assertions retain the exact source identities that caused the
+  // refusal; the public message now uses device and conductor names.
+  return typeof result.error.details?.originalMessage === "string"
+    ? result.error.details.originalMessage
+    : result.error.message;
 }
 
 function expectGeometryContract(layout: NormalizedSchematicLayout): void {
@@ -1236,16 +1238,23 @@ describe("post-layout rejection", () => {
     const symbolCollision = structuredClone(output);
     const primitive = required(
       baseline.value.nodes.find(
-        ({ kind, primitiveOrigin }) =>
-          kind === "symbol" && primitiveOrigin !== undefined,
+        (node) =>
+          node.kind === "symbol" &&
+          node.primitiveOrigin !== undefined &&
+          graph.nodes.some(
+            (n) =>
+              n.id === node.id &&
+              n.kind === "symbol" &&
+              n.symbolId === "ais:breaker-pole",
+          ),
       )?.primitiveOrigin,
     );
     const symbolLabel = required(
       symbolCollision.edges?.find(({ id }) => id === edgeWithLabel.id)
         ?.labels?.[0],
     );
-    symbolLabel.x = primitive.x;
-    symbolLabel.y = primitive.y;
+    symbolLabel.x = primitive.x + 7;
+    symbolLabel.y = primitive.y + 5;
     expectR004(graph, input, symbolCollision);
 
     const ownEdgeCollision = structuredClone(output);

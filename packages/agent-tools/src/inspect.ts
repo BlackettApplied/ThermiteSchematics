@@ -1,6 +1,7 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import {
   serializeQueryResult,
-  type InspectResult,
+  type InspectResult as QueryInspectResult,
   type ObjectSelector,
   type QueryEngine,
   type QueryResult,
@@ -15,17 +16,27 @@ import {
   requiredString,
   type FieldValidationResult,
 } from "./common/request-validation.js";
+import {
+  validateSourceInclude,
+  type SourceMetadataRequest,
+  type SourceMetadataResult,
+} from "./source-metadata.js";
 
-export type { InspectResult } from "@thermite/query";
+export type InspectResult = SourceMetadataResult<QueryInspectResult>;
 
-export interface InspectObjectRequest extends AgentToolRequestBase {
+export interface InspectObjectRequest
+  extends AgentToolRequestBase, SourceMetadataRequest {
   readonly selector: ObjectSelector;
 }
 
-const REQUEST_FIELDS = new Set(["format", "project", "selector"]);
+const REQUEST_FIELDS = new Set(["format", "project", "selector", "include"]);
 const SELECTOR_FIELDS = new Set(["by", "value"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
-const SELECTOR_KINDS = new Set(["uid", "designation"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["inspect"]["/format"],
+);
+const SELECTOR_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["inspect"]["/selector/by"],
+);
 
 export function inspectCompiledProject(
   engine: QueryEngine,
@@ -77,6 +88,8 @@ export function validateInspectRequest(
   if (selectorAdditional !== undefined) {
     return { ok: false, error: selectorAdditional };
   }
+  const include = validateSourceInclude("inspect", root.value);
+  if (!include.ok) return include;
   const additional = firstAdditionalProperty(
     "inspect",
     root.value,

@@ -1,0 +1,76 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape",
+    "marginMm": 10
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Motor starter command circuit",
+      "flow": "left-to-right",
+      "groups": [
+        {
+          "id": "motor-command",
+          "label": "PLC command, stop and overload interlocks",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "PLC1"
+              },
+              "key": "do0"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "PB1"
+              },
+              "key": "contact11"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "OL1"
+              },
+              "key": "aux95"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "K1"
+              },
+              "key": "coil"
+            }
+          ],
+          "conductors": ["W-CTL-005", "W-CTL-006", "W-CTL-007", "W-CTL-008"]
+        }
+      ],
+      "notes": [
+        "This selection conveys the command circuit; external connections are boundaries. Device functions do not join physical nets."
+      ]
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "io",
+      "device": "PLC1"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "terminals",
+      "device": "TB1"
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": {
+        "by": "designation",
+        "value": "CBL1"
+      },
+      "intent": {
+        "kind": "conductors"
+      }
+    }
+  ],
+  "index": true
+}

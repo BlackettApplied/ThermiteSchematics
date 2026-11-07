@@ -23,6 +23,8 @@ export type ReadToolFailureStage =
   | "stage-cleanup"
   | "precommit-load"
   | "precommit-read"
+  | "write-reserve"
+  | "write-release"
   | "commit-write"
   | "rollback-write"
   | "unexpected";

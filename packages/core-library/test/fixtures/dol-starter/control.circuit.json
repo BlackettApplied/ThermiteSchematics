@@ -1,0 +1,129 @@
+{
+  "format": "circuit-view-request/0.1",
+  "title": "Complete DOL control circuit",
+  "groups": [
+    {
+      "id": "dol-control",
+      "label": "Transformer, DC supply, fused command, holding relay and indication",
+      "functions": [
+        {
+          "device": {
+            "by": "designation",
+            "value": "T1"
+          },
+          "key": "primary"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "T1"
+          },
+          "key": "secondary"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "PS1"
+          },
+          "key": "ac_input"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "PS1"
+          },
+          "key": "dc_output"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "F1"
+          },
+          "key": "pole1"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "S0"
+          },
+          "key": "contact11"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "S1"
+          },
+          "key": "contact11"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "OL1"
+          },
+          "key": "aux95"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "S2"
+          },
+          "key": "contact13"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "R1"
+          },
+          "key": "contact12"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "R1"
+          },
+          "key": "contact14"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "R1"
+          },
+          "key": "coil"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "K1"
+          },
+          "key": "coil"
+        },
+        {
+          "device": {
+            "by": "designation",
+            "value": "H1"
+          },
+          "key": "lamp"
+        }
+      ],
+      "conductors": [
+        "W26",
+        "W27",
+        "W28",
+        "W29",
+        "W30",
+        "W31",
+        "W32",
+        "W33",
+        "W34",
+        "W35",
+        "W36",
+        "W37",
+        "W38",
+        "W39",
+        "W40",
+        "W41",
+        "W42"
+      ]
+    }
+  ]
+}

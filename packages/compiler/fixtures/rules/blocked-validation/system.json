@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "blocked-validation"
+  },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "assessment",
+      "version": "1.0.0",
+      "path": "../validation-library"
+    }
+  ]
+}

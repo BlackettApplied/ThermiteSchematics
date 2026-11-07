@@ -1,3 +1,4 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import {
   serializeQueryResult,
   type CableResult,
@@ -47,10 +48,20 @@ const TERMINAL_PARTS_SELECTOR_FIELDS = new Set([
   "terminalKey",
 ]);
 const TERMINAL_DISPLAY_SELECTOR_FIELDS = new Set(["by", "value"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
-const QUERY_OPERATIONS = new Set(["neighbors", "trace", "cable", "net"]);
-const OBJECT_SELECTOR_KINDS = new Set(["uid", "designation"]);
-const TERMINAL_SELECTOR_KINDS = new Set(["id", "parts", "display"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["query"]["/format"],
+);
+const QUERY_OPERATIONS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["query"]["/query/operation"],
+);
+const OBJECT_SELECTOR_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["query"][
+    "/query/selector/by (neighbors, trace, cable)"
+  ],
+);
+const TERMINAL_SELECTOR_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["query"]["/query/selector/by (net)"],
+);
 
 function validateObjectSelector(
   record: JsonRecord,

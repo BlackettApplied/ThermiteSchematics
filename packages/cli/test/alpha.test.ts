@@ -4,8 +4,16 @@ import { mkdtemp, readFile, rm, writeFile, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { compileProject, lockProject } from "@thermite/compiler";
-import { buildCableSchedule, createQueryEngine } from "@thermite/query";
+import {
+  compileProject,
+  lockProject,
+  resolveShippedCoreLibrary,
+} from "@thermite/compiler";
+import {
+  buildCableSchedule,
+  createQueryEngine,
+  REPORT_KINDS,
+} from "@thermite/query";
 import {
   normalizePaperPage,
   renderSchematicPacket,
@@ -51,6 +59,80 @@ async function editCable(path: string, edit: (value: any) => void) {
   edit(value.objects.find((object: any) => object.kind === "cable"));
   await writeFile(file, JSON.stringify(value));
 }
+
+describe("alpha reference help", () => {
+  it("lists report kinds, CSV output and report-packet JSON with clean help streams", async () => {
+    const { stdout, stderr } = await execFile(process.execPath, [
+      cli,
+      "report",
+      "--help",
+    ]);
+    expect(stderr).toBe("");
+    const help = stdout.replace(/\s+/g, " ");
+    expect(help).toContain(`kinds: ${REPORT_KINDS.join(", ")}`);
+    expect(help).toContain(
+      "write .csv, .html, .pdf, single-sheet .svg, or .json",
+    );
+    expect(help).toContain(
+      "return the report packet (SVG sheets and metadata) as JSON",
+    );
+    await expect(
+      execFile(process.execPath, [cli, "report", "invalid"]),
+    ).rejects.toMatchObject({
+      code: 2,
+      stdout: "",
+      stderr:
+        JSON.stringify({
+          error: {
+            code: "T001",
+            message: `Report kind must be ${REPORT_KINDS.join(", ")}.`,
+          },
+        }) + "\n",
+    });
+  });
+  it.each(REPORT_KINDS)("writes the advertised %s CSV", async (kind) => {
+    const path = await project();
+    const output = join(path, `${kind}.csv`);
+    const { stdout, stderr } = await execFile(process.execPath, [
+      cli,
+      "report",
+      kind,
+      "--project",
+      path,
+      "-o",
+      output,
+    ]);
+    expect(stdout).toBe(`Wrote ${output}\n`);
+    expect(JSON.parse(stderr).error).toBeNull();
+    expect((await readFile(output, "utf8")).trim()).not.toBe("");
+  });
+  it("returns the advertised report packet as JSON", async () => {
+    const path = await project();
+    const { stdout, stderr } = await execFile(process.execPath, [
+      cli,
+      "report",
+      "bom",
+      "--project",
+      path,
+      "--json",
+    ]);
+    expect(JSON.parse(stdout).sheets[0].svg).toContain("<svg");
+    expect(JSON.parse(stderr).error).toBeNull();
+  });
+  it("describes portable watch polling without changing other output help", async () => {
+    const { stdout, stderr } = await execFile(process.execPath, [
+      cli,
+      "watch",
+      "--help",
+    ]);
+    expect(stderr).toBe("");
+    expect(stdout.replace(/\s+/g, " ")).toContain(
+      "regenerate a packet by polling declared inputs and the request",
+    );
+    expect(stdout).not.toContain("(macOS)");
+    expect(stdout).not.toContain(".csv");
+  });
+});
 describe("Thermite alpha physical cable semantics", () => {
   it("initializes visible pinned libraries and reports every core through query and CLI", async () => {
     const path = await project(),
@@ -59,6 +141,20 @@ describe("Thermite alpha physical cable semantics", () => {
       await readFile(join(path, "system.json"), "utf8"),
     );
     expect(manifest.libraries[0].path).toBe("libraries/core");
+    expect(await readFile(join(path, ".gitignore"), "utf8")).toBe(
+      ".thermite-schematics-write.lock\n",
+    );
+    const shipped = resolveShippedCoreLibrary();
+    for (const notice of ["LICENSE", "NOTICE"])
+      expect(
+        await readFile(join(path, "libraries/core", notice)),
+        notice,
+      ).toEqual(await readFile(join(shipped.packageRootPath, notice)));
+    const lockFile = join(path, "electrical-system.lock.json"),
+      lockBytes = await readFile(lockFile);
+    expect(lockBytes.toString("utf8")).not.toMatch(/LICENSE|NOTICE/);
+    expect((await lockProject(path)).ok).toBe(true);
+    expect(await readFile(lockFile)).toEqual(lockBytes);
     const cable = result.ir.cables[0]!;
     const schedule = buildCableSchedule(result.ir, cable.uid);
     expect(schedule.counts).toEqual({
@@ -83,7 +179,8 @@ describe("Thermite alpha physical cable semantics", () => {
       "--json",
     ]);
     expect(JSON.parse(stdout)).toEqual(schedule);
-    expect(JSON.parse(stderr).diagnostics).toEqual([]);
+    expect(result.diagnostics).toEqual([]);
+    expect(JSON.parse(stderr).diagnostics).toEqual(result.diagnostics);
     await expect(initializeAlphaProject(path)).rejects.toThrow(
       "already exists",
     );
@@ -406,6 +503,18 @@ describe("Thermite alpha printable sheets", () => {
       orientation: "portrait",
       marginMm: 15,
     });
+  });
+  it("protects an ordinary request file when the input uses a filesystem alias", async () => {
+    const path = await project();
+    const request = join(path, "packet.json"),
+      alias = join(path, "packet-alias.json"),
+      before = '{"keep":true}';
+    await writeFile(request, before);
+    await symlink(request, alias);
+    await expect(
+      writeAlphaOutput(path, request, "bad", [alias]),
+    ).rejects.toThrow("request file");
+    expect(await readFile(request, "utf8")).toBe(before);
   });
   it("protects source, request, library and linked targets and refuses multi-sheet SVG truncation", async () => {
     const path = await project();

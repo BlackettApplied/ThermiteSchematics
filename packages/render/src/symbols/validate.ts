@@ -466,26 +466,40 @@ function validateFunctionSymbolFacts(
     case "ais:power-source-dc":
       expectFunctionFacts(definition, "source", context);
       return;
+    case "ais:ac-load":
+    case "ais:motor":
+    case "ais:lamp":
     case "ais:dc-load":
       expectFunctionFacts(definition, "load", context);
       return;
     case "ais:breaker-pole":
-      expectFunctionFacts(definition, "contact", context, "closed");
+    case "ais:overload-pole":
+      expectFunctionFacts(definition, "contact", context);
       return;
     case "ais:contact-no":
+    case "ais:disconnector":
+    case "ais:estop-no":
+    case "ais:selector-no":
     case "ais:pushbutton-no":
     case "ais:switch-no":
       expectFunctionFacts(definition, "contact", context, "open");
       return;
     case "ais:contact-nc":
+    case "ais:estop-nc":
+    case "ais:selector-nc":
     case "ais:pushbutton-nc":
     case "ais:switch-nc":
     case "ais:overload-contact-nc":
-    case "ais:overload-pole":
       expectFunctionFacts(definition, "contact", context, "closed");
       return;
     case "ais:coil":
       expectFunctionFacts(definition, "coil", context);
+      return;
+    case "ais:fuse":
+      assertMapping(
+        ["contact", "other"].includes(definition.kind),
+        `${context} requires contact or other.`,
+      );
       return;
     case "ais:terminal":
       expectFunctionFacts(definition, "bus", context);
@@ -615,24 +629,42 @@ function validateAggregateMemberFacts(
   member: IrDeviceTypeFunction,
   context: string,
 ): void {
-  if (rule.symbolId === "ais:power-source-3ph") {
+  if (
+    rule.symbolId === "ais:power-source-3ph" ||
+    rule.symbolId === "ais:power-source-3wire"
+  ) {
     expectFunctionFacts(
       member,
-      member.key === "protective_earth" ? "bus" : "source",
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "PE",
+      )
+        ? "bus"
+        : "source",
       context,
     );
     return;
   }
-  if (rule.symbolId === "ais:motor-3ph") {
+  if (
+    rule.symbolId === "ais:motor-3ph" ||
+    rule.symbolId === "ais:motor-3ph-unbonded"
+  ) {
     expectFunctionFacts(
       member,
-      member.key === "protective_earth" ? "bus" : "load",
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "PE",
+      )
+        ? "bus"
+        : "load",
       context,
     );
     return;
   }
   if (rule.symbolId === "ais:switch-sensor-pnp") {
-    if (member.key === "output") {
+    if (
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "signal",
+      )
+    ) {
       expectFunctionFacts(member, "channel", context, undefined, "output");
     } else {
       expectFunctionFacts(member, "load", context);

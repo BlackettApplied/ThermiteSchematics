@@ -1,5 +1,15 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode, ElkExtendedEdge } from "elkjs/lib/elk-api.js";
+import {
+  emitCircuitContactCaption,
+  type CaptionBox,
+} from "./symbols/circuit-caption.js";
+import { printableTextMetrics } from "./symbols/printable-font.js";
+import { printableLabelGeometry } from "./symbols/printable-label.js";
+import { unsupportedProfileError } from "./preflight.js";
+import { CircuitRenderError } from "./render-error-context.js";
+import type { Diagnostic } from "@thermite/schema";
+import { resolveSensorSupply } from "@thermite/schema";
+import { symbolProfile } from "./symbols/profiles.js";
+import type { ElkNode, ElkExtendedEdge } from "elkjs/lib/elk-api.js";
 import type {
   ElectricalIr,
   IrDevice,
@@ -13,7 +23,18 @@ import {
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
 import {
+  declaredSensorOutput,
+  printableCaption,
+  coilQualifier,
+  motorIsThreePhase,
+} from "./symbols/printable-policy.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
+import {
   circuitAttachment,
+  circuitAttachmentPoints,
+  circuitMarkSegments,
+  circuitTransformerCore,
+  circuitInterfaceMark,
   circuitBlock,
   circuitMark,
   isCircuitTerminalStrip,
@@ -54,6 +75,7 @@ export interface CircuitReference {
   y: number;
 }
 export interface CircuitDrawing {
+  diagnostics?: Diagnostic[];
   id: string;
   label: string;
   lineReference?: string;
@@ -66,6 +88,11 @@ export interface CircuitDrawing {
     functionIds: string[];
     terminalIds: string[];
     boundaryTerminalIds: string[];
+  };
+  pagination?: {
+    part: number;
+    total: number;
+    terminals: { id: string; label: string; parts: number[] }[];
   };
 }
 export interface PreparedCircuitView {
@@ -117,6 +144,7 @@ type DeviceNode = {
   verticalOffsetX: number;
   verticalScaleX: number;
   relationLabels: string[];
+  sourceTerminalKeys: readonly string[];
   relations: {
     functionId: { deviceUid: string; functionKey: string };
     destinations: string[];
@@ -125,7 +153,6 @@ type DeviceNode = {
 };
 const PITCH = 7;
 const TERMINAL_TEXT_SIZE = 2.5;
-const Constructor = BundledElk as unknown as { new (): ELK };
 const n = (v: number) => String(Number(v.toFixed(3)));
 const key = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
 const fkey = (f: IrFunction) =>
@@ -178,7 +205,7 @@ const text = (
   anchor = "start",
   bold = false,
 ) =>
-  `<text x="${n(x)}" y="${n(y)}" text-anchor="${anchor}" font-family="Arial, Helvetica, sans-serif" font-size="${size}" font-weight="${bold ? 700 : 400}" fill="#17212b">${xml(s)}</text>`;
+  `<text x="${n(x)}" y="${n(y)}" text-anchor="${anchor}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="${size}" font-weight="${bold ? 700 : 400}" fill="#17212b">${xml(s)}</text>`;
 const record = (x: unknown): x is Record<string, unknown> =>
   !!x &&
   typeof x === "object" &&
@@ -199,15 +226,31 @@ const channelAssignment = (d: IrDevice, functionKey: string) =>
   d.io && Object.hasOwn(d.io.channels, functionKey)
     ? d.io.channels[functionKey]
     : undefined;
-const channelLabelLines = (d: IrDevice, f: IrFunction): string[] => {
+// Reserve the existing caption space even when its internal key has no printable ink.
+const channelLabelLines = (
+  d: IrDevice,
+  f: IrFunction,
+  type: IrDeviceType,
+  printable = false,
+): string[] => {
   const channel = channelAssignment(d, f.id.functionKey);
   return [
-    [
-      channel?.address ?? f.id.functionKey,
-      channel?.usage === "spare" ? "SPARE" : undefined,
-    ]
-      .filter(Boolean)
-      .join(" "),
+    printable
+      ? printableCaption({
+          kind: "channel",
+          fn: f,
+          type,
+          ...(channel?.address === undefined
+            ? {}
+            : { address: channel.address }),
+          spare: channel?.usage === "spare",
+        })
+      : [
+          channel?.address ?? f.id.functionKey,
+          channel?.usage === "spare" ? "SPARE" : undefined,
+        ]
+          .filter(Boolean)
+          .join(" "),
     ...(channel?.signal
       ? circuitTextLines(channel.signal, 38, TERMINAL_TEXT_SIZE)
       : []),
@@ -501,12 +544,43 @@ function makeNodes(
     const pins: Pin[] = [],
       rows: FunctionRow[] = [];
     let slot = 0;
-    for (const f of functions) {
+    const coupled = type.symbol === "thermite:transformer";
+    const windingSlots = { load: 0, source: 0 };
+    const drawingFunctions = coupled
+      ? [
+          ...functions.filter((f) => circuitMark(type, f) === "winding"),
+          ...functions.filter((f) => circuitMark(type, f) !== "winding"),
+        ]
+      : symbolProfile(type) === "thermite:sensor-3wire"
+        ? functions.map((f) => {
+            if (f.kind !== "load" || f.terminals.length !== 2) return f;
+            if (circuitMark(type, f) !== "sensor-3wire") return f;
+            const supplied = resolveSensorSupply(
+              f.terminals.map((t) => ({
+                key: t.terminalKey,
+                role: type.terminals.find((p) => p.key === t.terminalKey)?.role,
+              })),
+            );
+            if (!supplied.ok)
+              throw new Error(
+                `Invalid sensor supply ${type.id}/${f.id.functionKey}: ${supplied.reason}`,
+              );
+            return {
+              ...f,
+              terminals: [
+                f.terminals.find((t) => t.terminalKey === supplied.positive)!,
+                f.terminals.find((t) => t.terminalKey === supplied.return)!,
+              ],
+            };
+          })
+        : functions;
+    for (const f of drawingFunctions) {
       const mark = circuitMark(type, f);
       const oneSided = oneSidedFunction(f, mark);
       const channelLines =
-        f.kind === "channel" ? channelLabelLines(device, f) : undefined;
+        f.kind === "channel" ? channelLabelLines(device, f, type) : undefined;
       const slots = Math.max(
+        mark === "sensor-3wire" && f.kind === "load" ? 3 : 1,
         oneSided ? f.terminals.length : 1,
         channelLines
           ? Math.ceil(
@@ -515,16 +589,24 @@ function makeNodes(
                     ...channelLines.map((line) =>
                       measure(line, TERMINAL_TEXT_SIZE),
                     ),
-                  ) + 4
-                : channelLines.length * 3.1 + 0.8) / PITCH,
+                  ) + (mark === "sensor-3wire" ? 16 : 4)
+                : channelLines.length * 3.1 +
+                  0.8 +
+                  (["level-sensor", "sensor-3wire"].includes(mark) ? 9 : 0)) /
+                PITCH,
             )
           : 1,
       );
-      const center = 6 + (slot + slots / 2) * PITCH;
+      const winding =
+        coupled &&
+        mark === "winding" &&
+        (f.kind === "load" || f.kind === "source");
+      const start = winding ? windingSlots[f.kind as "load" | "source"] : slot;
+      const center = 6 + (start + slots / 2) * PITCH;
       rows.push({
         f,
         mark,
-        start: slot,
+        start,
         slots,
         center,
         ...(channelLines ? { channelLines } : {}),
@@ -565,7 +647,10 @@ function makeNodes(
             ? center + (i - (f.terminals.length - 1) / 2) * PITCH
             : center,
           side,
-          label: terminal.terminalKey,
+          label:
+            mark === "sensor-3wire"
+              ? `${terminal.terminalKey} (${f.kind === "channel" ? "OUT" : i === 0 ? "+" : "-"})`
+              : terminal.terminalKey,
           outside,
         });
         if (f.kind === "bus" && f.terminals.length === 1 && mark !== "earth")
@@ -579,7 +664,10 @@ function makeNodes(
             outside,
           });
       });
-      slot += slots;
+      if (winding) {
+        windingSlots[f.kind as "load" | "source"] += slots;
+        slot = Math.max(slot, ...Object.values(windingSlots));
+      } else slot += slots;
     }
     const extras = [...terminalSet.values()]
       .filter(
@@ -672,22 +760,47 @@ function makeNodes(
           });
       }
     }
-    const related = [...relationGroups].map(
-      ([destination, keys]) =>
-        `${keys.length === 1 ? keys[0] : `${keys.length} functions`}: ${destination}`,
+    // Caption width is horizontal ink, not the vertical symbol body's length.
+    const priorWidth = width;
+    const captions = [...relationGroups].map(([destination, keys]) => ({
+      kind: "relation" as const,
+      destination,
+      functions: keys.map((k) =>
+        ir.functions.find(
+          (f) => f.id.deviceUid === uid && f.id.functionKey === k,
+        )!,
+      ),
+    }));
+    const fullCaptions = captions.map((caption) => printableCaption(caption));
+    width = Math.max(
+      width,
+      Math.min(
+        100,
+        Math.max(0, ...fullCaptions.map((s) => measure(s, 2.3) + 4)),
+      ),
     );
-    // Keep source-backed references concise; full membership remains in SVG metadata.
-    width = Math.max(width, ...related.map((s) => measure(s, 2.3) + 4));
-    if (width > 100)
-      throw new Error(
-        `Circuit references for ${device.designation} are too wide; shorten circuit line references.`,
-      );
+    const printableRelated = captions.flatMap((caption, i) => {
+      const value = fullCaptions[i]!,
+        available = width - 4;
+      const lines = circuitTextLines(value, available, 2.3);
+      // Never split terminal identities or let an unbounded contact mirror
+      // consume a page. A typed summary retains kind, count and destination.
+      const fits =
+        lines.length <= 4 &&
+        value.split(/\s+/u).every((word) => measure(word, 2.3) <= available);
+      return fits
+        ? lines
+        : circuitTextLines(
+            printableCaption({ ...caption, kind: "relation-summary" }),
+            available,
+            2.3,
+          );
+    });
     for (const p of pins) p.x = p.side === "WEST" ? 0 : width;
-    let height = bodyHeight + 2 + related.length * 3.1,
+    let height = bodyHeight + 2 + printableRelated.length * 3.1,
       verticalOffsetX = 0,
       verticalScaleX = 1;
     if (vertical) {
-      const priorWidth = width;
       // Vertical terminal captions remain horizontal. Reserve their actual
       // extent between adjacent pins on each caption baseline before routing.
       for (const side of ["WEST", "EAST"] as const) {
@@ -733,20 +846,31 @@ function makeNodes(
         ),
       );
       verticalOffsetX = 1 - leftBound;
+      const coilRow = rows.find((row) => row.f.kind === "coil");
+      const designationLeft =
+        printableRelated.length && coilRow
+          ? (bodyHeight - coilRow.center) * verticalScaleX + verticalOffsetX + 3
+          : 0;
       width = Math.max(
         rightBound - leftBound + 2,
-        measure(device.designation, 2.7) + 4,
-        ...related.map((s) => measure(s, 2.3) + 4),
+        measure(device.designation, 2.7) + Math.max(4, designationLeft + 2),
+        ...printableRelated.map((s) => measure(s, 2.3) + 4),
       );
       height =
         Math.max(
           priorWidth + 6,
-          ...rows.map((row) => (row.channelLines?.length ?? 0) * 3.1 + 12),
+          ...rows.map(
+            (row) =>
+              (row.channelLines?.length ?? 0) * 3.1 +
+              12 +
+              (row.mark === "level-sensor" ? 9 : 0),
+          ),
           ...rows
             .filter((row) => row.mark === "motor")
             .map((row) => row.slots * PITCH * verticalScaleX + 12),
         ) +
-        related.length * 3.1;
+        printableRelated.length * 3.1 +
+        (boundary || printableRelated.length ? 5 : 0);
       for (const p of pins) {
         const oldY = p.y;
         p.x = (bodyHeight - oldY) * verticalScaleX + verticalOffsetX;
@@ -796,11 +920,83 @@ function makeNodes(
       bodyHeight,
       verticalOffsetX,
       verticalScaleX,
-      relationLabels: related,
+      relationLabels: printableRelated,
+      sourceTerminalKeys: ir.functions
+        .filter(
+          (f) =>
+            f.id.deviceUid === uid &&
+            f.kind === "source" &&
+            type.symbol !== "thermite:transformer" &&
+            type.circuitSymbols?.[f.id.functionKey] !== "winding",
+        )
+        .flatMap((f) => f.terminals.map((t) => t.terminalKey)),
       relations,
       gangs,
     };
   });
+  return result;
+}
+
+function mechanicalGangs(
+  node: DeviceNode,
+  vertical: boolean,
+  diagramCenterY: number,
+) {
+  const result: {
+    from: { x: number; y: number };
+    to: { x: number; y: number };
+    functions: IrFunction["id"][];
+  }[] = [];
+  for (const gang of node.gangs) {
+    const members = node.rows.filter((r) => gang.includes(r.f.id.functionKey));
+    for (let i = 1; i < members.length; i++) {
+      const first = members[i - 1]!,
+        last = members[i]!;
+      if (
+        node.rows.some(
+          (r) =>
+            r.center > first.center &&
+            r.center < last.center &&
+            !gang.includes(r.f.id.functionKey),
+        )
+      )
+        continue;
+      const blade =
+        ["breaker", "disconnector"].includes(first.mark) &&
+        first.mark === last.mark;
+      const functions = [first.f.id, last.f.id];
+      if (vertical)
+        result.push({
+          from: {
+            x:
+              (node.bodyHeight - first.center) * node.verticalScaleX +
+              node.verticalOffsetX +
+              (blade ? 0.7 : 0),
+            y: diagramCenterY - (blade ? 0.3 : 0),
+          },
+          to: {
+            x:
+              (node.bodyHeight - last.center) * node.verticalScaleX +
+              node.verticalOffsetX +
+              (blade ? 0.7 : 0),
+            y: diagramCenterY - (blade ? 0.3 : 0),
+          },
+          functions,
+        });
+      else
+        result.push({
+          from: {
+            x: node.width / 2 - (blade ? 0.3 : 0),
+            y: first.center - (blade ? 0.7 : 0),
+          },
+          to: {
+            x: node.width / 2 - (blade ? 0.3 : 0),
+            y: last.center - (blade ? 0.7 : 0),
+          },
+          functions,
+        });
+    }
+  }
   return result;
 }
 
@@ -810,6 +1006,7 @@ function emitNode(
   y: number,
   vertical: boolean,
   conductors: PhysicalConductor[],
+  diagnostics: Diagnostic[],
 ): string {
   const out = [
     `<g data-device-uid="${attr(node.device.uid)}" data-circuit-functions="${attr(JSON.stringify(node.functions.map((f) => f.id)))}" data-related-functions="${attr(JSON.stringify(node.relations))}" data-layout-width="${n(node.width)}" data-layout-height="${n(node.height)}" transform="translate(${n(x)} ${n(y)})"><title>${xml([node.device.description, node.type.catalog?.orderNumber, node.type.description].filter(Boolean).join(" | "))}</title>`,
@@ -823,28 +1020,245 @@ function emitNode(
           circuitMark(node.type, f),
         ),
     );
-  if (block) out.push(circuitBlock(node.width, node.height));
+  if (block)
+    out.push(
+      circuitBlock(
+        node.width,
+        node.height,
+        node.pins.filter((p) =>
+          node.sourceTerminalKeys.includes(p.terminal.terminalKey),
+        ),
+        node.pins.every((p) =>
+          node.sourceTerminalKeys.includes(p.terminal.terminalKey),
+        ),
+      ),
+    );
+  const coilRow = node.rows.find((row) => row.f.kind === "coil");
+  const designationX =
+    vertical && node.relationLabels.length && coilRow
+      ? (node.bodyHeight - coilRow.center) * node.verticalScaleX +
+        node.verticalOffsetX +
+        3
+      : node.width / 2;
   out.push(
-    text(node.width / 2, 3.3, node.device.designation, 2.7, "middle", true),
+    text(
+      designationX,
+      3.3,
+      node.device.designation,
+      2.7,
+      vertical && node.relationLabels.length && coilRow ? "start" : "middle",
+      true,
+    ),
   );
   if (node.boundary)
-    out.push(text(node.width / 2, node.height - 1, "BOUNDARY", 2.3, "middle"));
+    out.push(
+      text(
+        node.width / 2,
+        node.height - (vertical ? 7 : 1),
+        "BOUNDARY",
+        2.3,
+        "middle",
+      ),
+    );
+  const verticalFooter =
+    node.relationLabels.length * 3.1 +
+    (node.boundary || node.relationLabels.length ? 5 : 0);
+  const diagramCenterY = (node.height - verticalFooter) / 2;
+  const coupled = node.type.symbol === "thermite:transformer";
+  const windingPins = node.rows
+    .filter((row) => row.mark === "winding")
+    .flatMap((row) =>
+      row.f.terminals.map((t) =>
+        node.pins.find((p) => key(p.terminal) === key(t))!,
+      ),
+    );
+  if (coupled && windingPins.length) {
+    const coordinates = windingPins.map((p) => (vertical ? p.x : p.y));
+    out.push(
+      circuitTransformerCore(
+        vertical ? diagramCenterY : node.width / 2,
+        Math.min(...coordinates) - 1,
+        Math.max(...coordinates) + 1,
+        vertical,
+      ),
+    );
+  }
+  const captionCenters = node.rows.map((row) => {
+    const x = vertical
+        ? (node.bodyHeight - row.center) * node.verticalScaleX +
+          node.verticalOffsetX
+        : node.width / 2,
+      y = vertical ? diagramCenterY : row.center;
+    const segments = circuitMarkSegments(row.mark, x, y, vertical),
+      points = segments.flatMap((s) => [s[0], s[1]]);
+    return {
+      key: row.f.id.functionKey,
+      x,
+      y,
+      bounds: {
+        left: Math.min(...points.map((p) => p.x)),
+        right: Math.max(...points.map((p) => p.x)),
+        top: Math.min(...points.map((p) => p.y)),
+        bottom: Math.max(...points.map((p) => p.y)),
+      },
+    };
+  });
+  const captionSegments = captionCenters.flatMap((c, i) =>
+    circuitMarkSegments(node.rows[i]!.mark, c.x, c.y, vertical),
+  );
+  for (const [i, row] of node.rows.entries())
+    for (const [j, terminal] of row.f.terminals.entries()) {
+      if (j !== 0 && j !== row.f.terminals.length - 1) continue;
+      const side = vertical
+        ? j === 0
+          ? "NORTH"
+          : "SOUTH"
+        : j === 0
+          ? "WEST"
+          : "EAST";
+      const pin =
+        node.pins.find(
+          (p) => key(p.terminal) === key(terminal) && p.side === side,
+        ) ?? node.pins.find((p) => key(p.terminal) === key(terminal));
+      if (!pin) continue;
+      const c = captionCenters[i]!,
+        target = vertical
+          ? { x: c.x, y: c.y + (j === 0 ? -4 : 4) }
+          : { x: c.x + (j === 0 ? -4 : 4), y: c.y };
+      const ps = circuitAttachmentPoints(
+        pin,
+        target,
+        side,
+        node.width,
+        node.height,
+      );
+      for (let k = 1; k < ps.length; k++)
+        captionSegments.push([
+          { x: ps[k - 1]![0], y: ps[k - 1]![1] },
+          { x: ps[k]![0], y: ps[k]![1] },
+        ]);
+    }
+  const box = (
+    value: string,
+    x: number,
+    y: number,
+    size: number,
+    anchor = "start",
+    bold = false,
+  ): CaptionBox => {
+    const m = printableTextMetrics(value, size, bold),
+      start =
+        x -
+        (anchor === "middle"
+          ? m.advance / 2
+          : anchor === "end"
+            ? m.advance
+            : 0);
+    return {
+      left: start + m.left,
+      right: start + m.right,
+      top: y - m.top,
+      bottom: y - m.bottom,
+    };
+  };
+  const captionBoxes: CaptionBox[] = [
+    box(
+      node.device.designation,
+      designationX,
+      3.3,
+      2.7,
+      vertical && node.relationLabels.length && coilRow ? "start" : "middle",
+      true,
+    ),
+    ...node.pins.map((p) =>
+      box(
+        pinLabel(p),
+        p.side === "WEST"
+          ? 1.5
+          : p.side === "EAST"
+            ? node.width - 1.5
+            : p.x + 1,
+        p.side === "WEST" || p.side === "EAST"
+          ? p.y - 1.5
+          : p.side === "NORTH"
+            ? 6
+            : node.height - 1.5,
+        TERMINAL_TEXT_SIZE,
+        p.side === "EAST" ? "end" : "start",
+      ),
+    ),
+  ];
+  for (const gang of mechanicalGangs(node, vertical, diagramCenterY))
+    captionSegments.push([gang.from, gang.to]);
+  captionBoxes.push(
+    ...node.pins.map((p) => ({
+      left: p.x - 0.75,
+      right: p.x + 0.75,
+      top: p.y - 0.75,
+      bottom: p.y + 0.75,
+    })),
+  );
+  if (node.boundary)
+    captionBoxes.push(
+      box(
+        "BOUNDARY",
+        node.width / 2,
+        node.height - (vertical ? 7 : 1),
+        2.3,
+        "middle",
+      ),
+    );
+  node.relationLabels.forEach((value, i) =>
+    captionBoxes.push(
+      box(
+        value,
+        node.width / 2,
+        node.height -
+          (vertical ? 7 : 1) -
+          (node.relationLabels.length - 1 - i) * 3.1,
+        2.3,
+        "middle",
+      ),
+    ),
+  );
   for (const row of node.rows) {
     const { f, mark } = row;
     const cx = vertical
       ? (node.bodyHeight - row.center) * node.verticalScaleX +
         node.verticalOffsetX
       : node.width / 2;
-    const cy = vertical ? node.height / 2 : row.center;
+    const cy = vertical ? diagramCenterY : row.center;
     out.push(
       `<g data-function-key="${attr(f.id.functionKey)}" data-function-id="${attr(fkey(f))}"><title>${xml(`${node.device.designation}/${f.id.functionKey}`)}</title>`,
     );
     if (f.kind === "channel") {
       const lines = row.channelLines!;
-      for (const [i, line] of lines.entries())
+      const specialized = mark === "level-sensor" || mark === "sensor-3wire";
+      const annotationTop = cy - (9 + lines.length * 3.1) / 2;
+      if (mark === "sensor-3wire")
         out.push(
-          `<g data-channel-line="${i === 0 ? "address" : "signal"}">${text(cx, cy + 0.8 + (i - (lines.length - 1) / 2) * 3.1, line, TERMINAL_TEXT_SIZE, "middle")}</g>`,
+          circuitInterfaceMark(
+            mark,
+            cx,
+            annotationTop + 4,
+            f.terminals.map((t) =>
+              node.pins.find((p) => key(p.terminal) === key(t))!,
+            ),
+            vertical,
+          ),
         );
+      else if (specialized)
+        out.push(
+          `<g transform="translate(${n(cx - 4)} ${n(annotationTop)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`,
+        );
+      const printableLines = channelLabelLines(node.device, f, node.type, true);
+      for (const [i] of lines.entries()) {
+        const line = printableLines[i]!;
+        if (!line) continue;
+        out.push(
+          `<g data-channel-line="${i === 0 ? "address" : "signal"}">${text(vertical && mark === "sensor-3wire" ? cx - 6 : cx, specialized ? annotationTop + 11.5 + i * 3.1 : cy + 0.8 + (i - (lines.length - 1) / 2) * 3.1, line, TERMINAL_TEXT_SIZE, "middle")}</g>`,
+        );
+      }
     } else {
       if (mark === "motor")
         out.push(
@@ -856,6 +1270,7 @@ function emitNode(
                 f.terminals.map(
                   (t) => node.pins.find((p) => key(p.terminal) === key(t))!.x,
                 ),
+                motorIsThreePhase(node.type, f),
               )
             : circuitMotor(
                 node.width,
@@ -864,6 +1279,7 @@ function emitNode(
                 f.terminals.map(
                   (t) => node.pins.find((p) => key(p.terminal) === key(t))!.y,
                 ),
+                motorIsThreePhase(node.type, f),
               ),
         );
       else if (mark === "winding") {
@@ -880,8 +1296,41 @@ function emitNode(
                 first.x,
                 last.x,
                 f.kind === "source",
+                coupled,
+                cy,
+                [first.y, last.y],
               )
-            : circuitWinding(node.width, first.y, last.y, f.kind === "source"),
+            : circuitWinding(
+                node.width,
+                first.y,
+                last.y,
+                f.kind === "source",
+                coupled,
+                [first.x, last.x],
+              ),
+        );
+      } else if (
+        [
+          "level-sensor",
+          "conductivity-probe",
+          "receptacle",
+          "ac-input",
+          "dc-output",
+          "source",
+          "sensor-3wire",
+        ].includes(mark)
+      ) {
+        out.push(
+          circuitInterfaceMark(
+            mark,
+            cx,
+            cy,
+            f.terminals.map((t) =>
+              node.pins.find((p) => key(p.terminal) === key(t))!,
+            ),
+            vertical,
+            f.kind === "source",
+          ),
         );
       } else {
         if (mark === "heater" && f.terminals.length === 3 && !vertical)
@@ -892,6 +1341,43 @@ function emitNode(
           `<g transform="translate(${n(cx - 4)} ${n(cy - 4)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`,
         );
       }
+      out.push(
+        emitCircuitContactCaption({
+          type: node.type,
+          fn: f,
+          mark,
+          device: node.device,
+          x: cx,
+          y: cy,
+          centers: captionCenters,
+          segments: captionSegments,
+          occupied: captionBoxes,
+          width: node.width,
+          height: node.height,
+          diagnostics,
+          text,
+        }),
+      );
+      if (mark === "coil" && coilQualifier(node.type, f))
+        out.push(
+          text(cx, cy + 0.8, coilQualifier(node.type, f)!, 2.5, "middle"),
+        );
+      if (mark === "sensor-3wire" && declaredSensorOutput(node.type))
+        out.push(
+          text(
+            cx,
+            vertical
+              ? cy + 8
+              : Math.max(
+                  ...f.terminals.map(
+                    (t) => node.pins.find((p) => key(p.terminal) === key(t))!.y,
+                  ),
+                ) + 5,
+            declaredSensorOutput(node.type)!,
+            2.5,
+            "middle",
+          ),
+        );
       if (!oneSidedFunction(f, mark) || f.kind === "bus") {
         for (const [i, terminal] of [
           f.terminals[0]!,
@@ -919,32 +1405,11 @@ function emitNode(
     }
     out.push("</g>");
   }
-  // Ganging is an explicitly non-conductive function association.
-  for (const gang of node.gangs) {
-    const members = node.rows.filter((r) => gang.includes(r.f.id.functionKey));
-    for (let i = 1; i < members.length; i++) {
-      const first = members[i - 1]!,
-        last = members[i]!;
-      if (
-        node.rows.some(
-          (r) =>
-            r.center > first.center &&
-            r.center < last.center &&
-            !gang.includes(r.f.id.functionKey),
-        )
-      )
-        continue;
-      const data = `data-mechanical-association="ganged" data-ganged-functions="${attr(JSON.stringify([first.f.id, last.f.id]))}"`;
-      if (vertical)
-        out.push(
-          `<line ${data} x1="${n((node.bodyHeight - first.center) * node.verticalScaleX + node.verticalOffsetX)}" x2="${n((node.bodyHeight - last.center) * node.verticalScaleX + node.verticalOffsetX)}" y1="${n(node.height / 2)}" y2="${n(node.height / 2)}" stroke="#17212b" stroke-width=".25" stroke-dasharray="1.5 1"/>`,
-        );
-      else
-        out.push(
-          `<line ${data} x1="${n(node.width / 2)}" x2="${n(node.width / 2)}" y1="${n(first.center)}" y2="${n(last.center)}" stroke="#17212b" stroke-width=".25" stroke-dasharray="1.5 1"/>`,
-        );
-    }
-  }
+  // Ganging is authored mechanical ink, shared with caption collision checks.
+  for (const g of mechanicalGangs(node, vertical, diagramCenterY))
+    out.push(
+      `<line data-mechanical-association="ganged" data-ganged-functions="${attr(JSON.stringify(g.functions))}" x1="${n(g.from.x)}" x2="${n(g.to.x)}" y1="${n(g.from.y)}" y2="${n(g.to.y)}" stroke="#17212b" stroke-width=".25" stroke-dasharray="1.5 1"/>`,
+    );
   for (const p of node.pins) {
     const connected = conductors.some((c) =>
       c.ends.some((t) => key(t) === key(p.terminal)),
@@ -973,7 +1438,9 @@ function emitNode(
     out.push(
       text(
         node.width / 2,
-        node.height - 1 - (node.relationLabels.length - 1 - i) * 3.1,
+        node.height -
+          (vertical ? 7 : 1) -
+          (node.relationLabels.length - 1 - i) * 3.1,
         s,
         2.3,
         "middle",
@@ -985,6 +1452,31 @@ function emitNode(
 }
 
 async function layoutGroup(
+  ...args: Parameters<typeof layoutGroupUnchecked>
+): Promise<CircuitDrawing> {
+  try {
+    return await layoutGroupUnchecked(...args);
+  } catch (error) {
+    if (error instanceof CircuitRenderError) throw error;
+    const [ir, group, fs, cs] = args;
+    const functionKeys = fs.map(
+      (f) =>
+        `${ir.devices.find((d) => d.uid === f.id.deviceUid)!.designation}/${f.id.functionKey}`,
+    );
+    const conductorKeys = cs.map((c) => c.name);
+    const message =
+      error instanceof Error ? error.message : "Circuit layout failed.";
+    throw new CircuitRenderError({
+      code: "R006",
+      root: "packet",
+      reason: "unprintable-layout",
+      message: `${message} Selected keys: functions ${functionKeys.join(", ")}; conductors ${conductorKeys.join(", ") || "none"}.`,
+      details: { groupId: group.id, functionKeys, conductorKeys },
+    });
+  }
+}
+
+async function layoutGroupUnchecked(
   ir: Readonly<ElectricalIr>,
   group: CircuitGroupRequest,
   fs: IrFunction[],
@@ -1053,7 +1545,7 @@ async function layoutGroup(
       ],
     };
   });
-  const graph: ElkNode = await new Constructor().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "circuit",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -1066,6 +1558,25 @@ async function layoutGroup(
       "elk.layered.spacing.edgeEdgeBetweenLayers": "3",
       "elk.layered.spacing.edgeNodeBetweenLayers": "3",
       "elk.spacing.edgeLabel": "1",
+      // A nested fixed-port loop can obstruct an outer-side label. Reserve
+      // enough room for its measured label inside the loop, with 1 mm on
+      // each side; ELK still owns the complete route and node placement.
+      ...(selfLoops.size
+        ? {
+            "elk.spacing.nodeSelfLoop": String(
+              Math.max(
+                10,
+                ...edges
+                  .filter((_, i) => selfLoops.has(i))
+                  .flatMap((edge) =>
+                    edge.labels!.map(
+                      (label) => Math.max(label.width!, label.height!) + 2,
+                    ),
+                  ),
+              ),
+            ),
+          }
+        : {}),
       "elk.padding": "[top=2,left=2,bottom=2,right=2]",
       "elk.randomSeed": "1",
       "elk.layered.considerModelOrder.strategy": "NODES_AND_EDGES",
@@ -1136,7 +1647,7 @@ async function layoutGroup(
             Math.min(a.x, b.x) < right)
         )
           throw new Error(
-            `Circuit ${group.id}: a route crosses a device body.`,
+            `Circuit ${group.id}: conductor ${c.name} (${c.id}) crosses device ${nodes.find((node) => node.id === d.id)!.device.designation}.`,
           );
       }
     }
@@ -1207,7 +1718,9 @@ async function layoutGroup(
           ) >
         1e-7;
       if ((v && overlap("y")) || (h && overlap("x")))
-        throw new Error(`Circuit ${group.id}: unrelated conductors overlap.`);
+        throw new Error(
+          `Circuit ${group.id}: unrelated conductors ${conductors[t.index]!.name} (${conductors[t.index]!.id}) and ${conductors[s.index]!.name} (${conductors[s.index]!.id}) overlap.`,
+        );
     }
   const dots = new Map<string, Point>();
   for (const r of routes)
@@ -1270,19 +1783,23 @@ async function layoutGroup(
     if (!labelObstructed(label)) continue;
     const candidates = own.flatMap((s) => {
       const box = segmentBox(s);
-      if (box.height >= label.height + 1)
+      // Centered labels may overhang a short segment. The full measured box
+      // still has to clear every other route, label and device below.
+      if (box.height > 0)
         return [
           box.y + (box.height - label.height) / 2,
-          box.y + box.height - label.height - 0.5,
-          box.y + 0.5,
+          ...(box.height >= label.height + 1
+            ? [box.y + box.height - label.height - 0.5, box.y + 0.5]
+            : []),
         ].flatMap((y) =>
           [box.x - label.width - 1, box.x + 1].map((x) => ({ ...label, x, y })),
         );
-      if (box.width >= label.width + 1)
+      if (box.width > 0)
         return [
           box.x + (box.width - label.width) / 2,
-          box.x + box.width - label.width - 0.5,
-          box.x + 0.5,
+          ...(box.width >= label.width + 1
+            ? [box.x + box.width - label.width - 0.5, box.x + 0.5]
+            : []),
         ].flatMap((x) =>
           [box.y - label.height - 1, box.y + 1].map((y) => ({
             ...label,
@@ -1329,6 +1846,7 @@ async function layoutGroup(
         `Circuit ${group.id}: a wire label overlaps other drawing content.`,
       );
   }
+  const diagnostics: Diagnostic[] = [];
   const contents = [
     ...wireSvg,
     ...[...dots.values()].map(
@@ -1339,18 +1857,31 @@ async function layoutGroup(
       (l) =>
         `<g data-wire-label="${attr(conductors[l.index]!.id)}"><rect x="${n(l.x)}" y="${n(l.y)}" width="${n(l.width)}" height="${n(l.height)}" fill="white"/>${l.text
           .split("\n")
-          .map((line, i) => text(l.x + 0.75, l.y + 2.8 + i * 3.1, line))
+          .map((line, i) => {
+            const p = printableLabelGeometry(
+              { x: l.x, y: l.y + i * 3.1, width: l.width, height: 3.8 },
+              line,
+              l.width - 1.5,
+              segments
+                .filter((s) => s.index === l.index)
+                .map((s) => [s.a, s.b]),
+              2.5,
+              false,
+            );
+            return text(p.x, p.baseline, line);
+          })
           .join("")}</g>`,
     ),
     ...nodes.map((d) => {
       const l = laidNodes.get(d.id)!;
-      return emitNode(d, l.x!, l.y!, vertical, conductors);
+      return emitNode(d, l.x!, l.y!, vertical, conductors, diagnostics);
     }),
   ].join("");
   const label = group.label ?? group.id;
   return {
     id: group.id,
     label,
+    ...(diagnostics.length ? { diagnostics } : {}),
     ...(group.lineReference ? { lineReference: group.lineReference } : {}),
     width: graph.width!,
     height: graph.height!,
@@ -1416,6 +1947,49 @@ export async function prepareCircuitView(
       fs: selectedFunctions(ir, g),
       cs: selectConductors(all, g),
     }));
+  // Validate every selected function before any ELK work. Explicit circuit marks
+  // remain authoritative; circuitMark checks them before looking at profiles.
+  for (const { fs } of selected)
+    for (const f of fs) {
+      const device = ir.devices.find((d) => d.uid === f.id.deviceUid)!;
+      const type = ir.deviceTypes.find((t) => t.id === device.typeId)!;
+      try {
+        const mark = circuitMark(type, f);
+        if (
+          symbolProfile(type) === "thermite:sensor-3wire" &&
+          mark === "sensor-3wire" &&
+          f.kind === "load" &&
+          f.terminals.length === 2
+        ) {
+          const supply = resolveSensorSupply(
+            f.terminals.map((t) => ({
+              key: t.terminalKey,
+              role: type.terminals.find((p) => p.key === t.terminalKey)?.role,
+            })),
+          );
+          if (!supply.ok)
+            throw Error(
+              `Invalid sensor supply roles for function ${JSON.stringify(f.id.functionKey)}: ${supply.reason}`,
+            );
+        }
+      } catch (error) {
+        throw new CircuitRenderError(
+          unsupportedProfileError(
+            ir,
+            {
+              code: "R006",
+              root: "packet",
+              reason: "unprintable-layout",
+              message: "Unsupported circuit mapping.",
+            },
+            device,
+            f,
+            "circuit",
+            error instanceof Error ? error.message : undefined,
+          ),
+        );
+      }
+    }
   const appearances =
     packetAppearances ?? circuitFunctionAppearances(ir, [request]);
   const groups: CircuitDrawing[] = [];
@@ -1438,4 +2012,173 @@ export async function prepareCircuitView(
     notes: request.notes ?? [],
     groups,
   };
+}
+
+/** Packet-only projection: whole conductors and complete selected symbols. */
+export async function paginateCircuitGroup(
+  ir: Readonly<ElectricalIr>,
+  request: CircuitViewRequest,
+  index: number,
+  original: CircuitDrawing,
+  fits: (drawing: CircuitDrawing) => boolean,
+  appearances?: Map<string, string[]>,
+): Promise<CircuitDrawing[]> {
+  if (fits(original)) return [original];
+  const group = request.groups[index]!;
+  const all = physicalConductors(ir);
+  const fs = selectedFunctions(ir, group),
+    cs = selectConductors(all, group);
+  // Keep selected mechanical gangs and a transformer's shared core together.
+  const clusters = fs.map((f) => new Set([fkey(f)]));
+  const merge = (ids: string[]) => {
+    const matches = clusters.filter((c) => ids.some((id) => c.has(id)));
+    if (matches.length < 2) return;
+    const combined = new Set(matches.flatMap((c) => [...c]));
+    for (const c of matches) clusters.splice(clusters.indexOf(c), 1);
+    clusters.push(combined);
+  };
+  for (const gang of ir.gangedGroups)
+    merge(
+      gang.functionIds.map((f) => JSON.stringify([f.deviceUid, f.functionKey])),
+    );
+  for (const device of ir.devices) {
+    const type = ir.deviceTypes.find((t) => t.id === device.typeId)!;
+    if (type.symbol === "thermite:transformer")
+      merge(fs.filter((f) => f.id.deviceUid === device.uid).map(fkey));
+  }
+  type Unit = {
+    cs: PhysicalConductor[];
+    fs: IrFunction[];
+    terminals: Set<string>;
+  };
+  const unit = (
+    conductors: PhysicalConductor[],
+    functions: IrFunction[],
+  ): Unit => ({
+    cs: conductors,
+    fs: functions,
+    terminals: new Set([
+      ...conductors.flatMap((c) => c.ends.map(key)),
+      ...functions.flatMap((f) => f.terminals.map(key)),
+    ]),
+  });
+  const units = cs.map((c) => {
+    const touching = fs.filter((f) =>
+      f.terminals.some((t) => c.ends.some((e) => key(t) === key(e))),
+    );
+    const members = new Set(
+      clusters
+        .filter((cluster) => touching.some((f) => cluster.has(fkey(f))))
+        .flatMap((cluster) => [...cluster]),
+    );
+    return unit(
+      [c],
+      fs.filter((f) => members.has(fkey(f))),
+    );
+  });
+  const used = new Set(units.flatMap((u) => u.fs.map(fkey)));
+  for (const cluster of clusters)
+    if (![...cluster].some((id) => used.has(id)))
+      units.push(
+        unit(
+          [],
+          fs.filter((f) => cluster.has(fkey(f))),
+        ),
+      );
+  const label = (id: string) => {
+    const [uid, terminal] = JSON.parse(id) as [string, string];
+    return `${ir.devices.find((d) => d.uid === uid)!.designation}.${terminal}`;
+  };
+  const widest = Number("8".repeat(String(units.length).length));
+  const draw = async (items: Unit[], part: number, total: number) => {
+    const chosen = new Set(items.flatMap((u) => u.fs.map(fkey)));
+    const drawing = await layoutGroup(
+      ir,
+      group,
+      fs.filter((f) => chosen.has(fkey(f))),
+      items.flatMap((u) => u.cs),
+      all,
+      request.flow === "top-to-bottom",
+      appearances ?? circuitFunctionAppearances(ir, [request]),
+      request.terminalLayout === "distributed",
+    );
+    drawing.label = `${original.label} - Part ${part}/${total}`;
+    drawing.pagination = {
+      part,
+      total,
+      terminals: drawing.coverage.terminalIds.flatMap((id) => {
+        const count = units.filter(
+          (u) => !items.includes(u) && u.terminals.has(id),
+        ).length;
+        return count
+          ? [
+              {
+                id,
+                label: label(id),
+                parts: Array.from({ length: count }, () => widest),
+              },
+            ]
+          : [];
+      }),
+    };
+    return drawing;
+  };
+  const parts: Unit[][] = [];
+  let current: Unit[] = [];
+  for (const u of units) {
+    const candidate = [...current, u];
+    if (fits(await draw(candidate, widest, widest))) {
+      current = candidate;
+      continue;
+    }
+    if (!current.length)
+      throw new Error(
+        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
+      );
+    parts.push(current);
+    current = [u];
+    if (!fits(await draw(current, widest, widest)))
+      throw new Error(
+        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
+      );
+  }
+  parts.push(current);
+  const drawings: CircuitDrawing[] = [];
+  for (const [i, items] of parts.entries())
+    drawings.push(await draw(items, i + 1, parts.length));
+  for (const drawing of drawings) {
+    drawing.pagination!.terminals = drawing.coverage.terminalIds.flatMap(
+      (id) => {
+        const targets = drawings
+          .filter((d) => d !== drawing && d.coverage.terminalIds.includes(id))
+          .map((d) => d.pagination!.part);
+        return targets.length ? [{ id, label: label(id), parts: targets }] : [];
+      },
+    );
+    drawing.content = `<g data-circuit-part="${drawing.pagination!.part}" data-circuit-parts="${parts.length}">${drawing.content}</g>`;
+    if (!fits(drawing))
+      throw new Error(
+        `Circuit ${group.id}: pagination part exceeds readable sheet bounds.`,
+      );
+  }
+  const equal = (a: string[], b: string[]) =>
+    JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  if (
+    !equal(
+      drawings.flatMap((d) => d.coverage.conductorIds),
+      original.coverage.conductorIds,
+    ) ||
+    !equal(
+      [...new Set(drawings.flatMap((d) => d.coverage.functionIds))],
+      original.coverage.functionIds,
+    ) ||
+    !equal(
+      [...new Set(drawings.flatMap((d) => d.coverage.terminalIds))],
+      original.coverage.terminalIds,
+    )
+  )
+    throw new Error(
+      `Circuit ${group.id}: pagination did not conserve the original source selection.`,
+    );
+  return drawings;
 }

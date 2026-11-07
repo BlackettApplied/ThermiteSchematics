@@ -1,12 +1,12 @@
 # `@thermite/schema`
 
-Requires Node.js `^22.12.0 || >=24`: use Node 22.12 or a supported later
-release. Node 23 is excluded.
+The current source workflow uses Bun 1.4.2. See the [repository quick start](../../README.md).
 
 This private package contains the canonical JSON Schemas, schema-derived TypeScript
 source types, strict JSON parser, schema registry, and source-location-aware
 diagnostic infrastructure used by Thermite Schematics 0.2.0. It is bundled inside the
 private CLI artifact and is not published to a public registry.
+The current public Bun runtime and source checkout also use this schema package.
 
 The canonical definitions are the ordinary files in the
 [schemas directory](./schemas/).
@@ -33,7 +33,7 @@ dependency arm:
 
 An explicit dependency `path` retains the original local-library meaning for every
 accepted value. Omitting `path` requests a shipped library by exact name and
-version; the shipped set is currently only `core@0.1.0`.
+version; the shipped set is `core@0.1.0` and `core@0.2.0`.
 
 The referenced presentation uses `project-presentation/0.1`:
 
@@ -71,6 +71,14 @@ Presentation paths are project-contained and additionally reject empty, `.`, and
 `..` segments.
 
 ## Source conventions
+
+Device instances may declare `nonProcurement: { "reason": "Existing site utility" }`.
+The optional closed object requires a string reason containing non-whitespace.
+The BOM keeps the device and authored quantity, marked `Not purchased` with the
+reason; no profile or type implies this flag. The schema and project format IDs
+stay unchanged as an additive extension; existing files remain valid, while
+older strict runtimes reject the new property. See
+[formats and compatibility](../../docs/formats-and-compatibility.md#documentation-and-library-metadata).
 
 Quantities are bare JSON numbers in these canonical units:
 
@@ -119,11 +127,64 @@ registrations, and validation behavior as filesystem-loaded canonical schemas, w
 no schema discovery I/O.
 
 Generated types are committed under `src/generated`. Repository maintainers run
-`npm run generate:types` after changing a schema;
-`npm run generate:types:check` performs the byte-for-byte drift check used by the
+`bun run generate:types` after changing a schema;
+`bun run generate:types:check` performs the byte-for-byte drift check used by the
 root repository check.
 
 The parsing layer uses `jsonc-parser` 3.3.1 in strict JSON mode. It rejects duplicate
 members, invalid tokens, unexpected EOF, and raw control characters while preserving
 the syntax-tree offsets needed for deterministic line, column, pointer, and related
 locations. CRLF counts as one newline and tabs as one column.
+
+## Valid alternatives in diagnostics
+
+Some diagnostics carry additive repair-discovery fields. Codes, pointers,
+severities, and the other fields do not change. `allowed` lists at most 50 valid
+alternatives and `allowedCount` gives the size of the complete set. If `allowed` is
+truncated, `allowedLookup` names the exact place to read the whole set. Messages
+quote at most 10 values and then say `and N more`. No guess is ranked or applied.
+
+| Code   | `allowed`                                            | Order           |
+| ------ | ---------------------------------------------------- | --------------- |
+| `E014` | The schema `enum` (or `const`) values                | Schema order    |
+| `E016` | Valid source object kinds or library type kinds      | Declared order  |
+| `E017` | Supported project manifest formats                   | Declared order  |
+| `E102` | Terminal keys of the resolved device type            | Code-unit order |
+| `E103` | Device or cable type IDs from the resolved libraries | Code-unit order |
+
+`E103` always sets `allowedLookup`, because no command lists types while a project
+fails to resolve. It names the `types` entries of the expected kind in the
+`sources` files of each resolved library manifest. `E102` names the type's
+`terminals` the same way when it truncates. Each lookup names a file you can
+open, not the logical `file` used for display. A local library path is relative to
+the project manifest directory. The shipped core library is named twice:
+`node_modules/@thermite/core-library/library/...` below the runtime package root,
+and `packages/core-library/library/...` in a source checkout for 0.1.0;
+0.2.0 uses `versions/0.2.0/...` in that package instead. `E013`
+pattern failures also carry `pattern`, the raw ECMAScript regular expression, and
+their message describes it in words. A pattern without a description is quoted as
+`/regex/`.
+
+## Connection coverage
+
+Device types accept `connectionCoverage.status` values `complete`, `partial` and
+`generic`, with nonblank notes. Generic means a reviewed abstract interface;
+partial still applies to a model missing part of its own interface. The published
+schema's catalog-dependent enum rejects generic coverage when exact-part
+manufacturer/order-number catalog metadata is declared (E014 at the status).
+[Connection completeness](../../docs/completeness.md) defines the review scope,
+W904 warnings and informational I005 inventory findings. Diagnostic and agent
+report schemas admit I005 with info severity.
+
+## Diagnostic transport schemas
+
+`diagnostic.schema.json` is the closed compiler-diagnostic contract. Its severity
+values are `error`, `warning` and `info`. Info is advisory and never changes the
+exit status, including strict validation. `agent-tool-report.schema.json` uses
+that same diagnostic schema; reports go to stderr for both success and failure.
+`agent-tool-result.schema.json` describes the separate successful stdout envelope.
+Both envelopes are closed; the tool-specific value and error payload objects
+retain their public TypeScript API contracts rather than duplicating those
+contracts in the envelope schemas. These schemas are exported through the same
+`@thermite/schema/schemas/*` subpath and bundled canonical registry as entity
+schemas. Generate their in-memory copies with `bun run generate:types`.

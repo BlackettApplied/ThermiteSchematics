@@ -1,0 +1,19 @@
+{
+  "id": "T06",
+  "version": "1.1.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "PLC1 talks to a new HMI1 over Ethernet. Model a generic logical Ethernet interface and a planned relationship; physical power and pinout are unspecified and require review. Keep the lock current.",
+  "requiredTopics": [
+    {
+      "topic": "libraries",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic protective-cap pagination"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "cap-pagination-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

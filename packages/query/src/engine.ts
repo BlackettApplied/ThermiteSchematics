@@ -979,19 +979,43 @@ function wrongObjectKind(
   };
 }
 
+/** Same bounds as compiler diagnostics: 50 structured, 10 quoted values. */
+const ALLOWED_LIMIT = 50;
+const MESSAGE_ALLOWED_LIMIT = 10;
+
 function terminalNotFound(
   input: string,
   deviceDesignation: string,
   terminalKey: string,
+  declaredTerminalKeys: readonly string[],
 ): QueryResult<never> {
+  const keys = [...declaredTerminalKeys].sort(compareText);
+  const quoted = `[${keys
+    .slice(0, MESSAGE_ALLOWED_LIMIT)
+    .map((key) => JSON.stringify(key))
+    .join(", ")}]`;
+  const omitted = keys.length - Math.min(keys.length, MESSAGE_ALLOWED_LIMIT);
+  const lookup =
+    keys.length > ALLOWED_LIMIT
+      ? `the "terminals" of the inspect result for device ${JSON.stringify(deviceDesignation)}`
+      : undefined;
+  const listed =
+    omitted === 0
+      ? quoted
+      : lookup === undefined
+        ? `${quoted} and ${omitted} more`
+        : `${quoted} and ${omitted} more; full list: ${lookup}`;
   return {
     ok: false,
     error: {
       code: "Q004",
-      message: `Device ${JSON.stringify(deviceDesignation)} has no terminal ${JSON.stringify(terminalKey)}.`,
+      message: `Device ${JSON.stringify(deviceDesignation)} has no terminal ${JSON.stringify(terminalKey)}. Declared terminal keys: ${listed}.`,
       input,
       deviceDesignation,
       terminalKey,
+      allowed: keys.slice(0, ALLOWED_LIMIT),
+      allowedCount: keys.length,
+      ...(lookup === undefined ? {} : { allowedLookup: lookup }),
     },
   };
 }
@@ -1933,7 +1957,14 @@ class QueryEngineImplementation implements QueryEngine {
       terminalIdKey({ deviceUid: device.uid, terminalKey }),
     );
     if (terminal === undefined) {
-      return terminalNotFound(terminalKey, device.designation, terminalKey);
+      return terminalNotFound(
+        terminalKey,
+        device.designation,
+        terminalKey,
+        (
+          this.#context.indexes.terminalIdsByDeviceUid.get(device.uid) ?? []
+        ).map((id) => id.terminalKey),
+      );
     }
     return { ok: true, value: buildTerminalView(terminal, device) };
   }

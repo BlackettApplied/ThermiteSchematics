@@ -14,9 +14,11 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { format as formatWithPrettier } from "prettier";
 
 import { runCli } from "../packages/cli/dist/index.js";
+import { compileProject } from "../packages/compiler/dist/index.js";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const exampleRoot = join(repositoryRoot, "examples", "motor-starter");
+const LS1_UID = "596f728b-1445-4c4b-8974-a3b4ea703636";
 const cliGoldenRoot = join(
   repositoryRoot,
   "packages",
@@ -267,15 +269,26 @@ async function addCliCase(candidates, rootName, project, testCase) {
   const json = await invoke([...testCase.args, "--project", project, "--json"]);
   requireSuccess(raw, `${rootName}/${testCase.slug} raw`);
   requireSuccess(json, `${rootName}/${testCase.slug} JSON`);
-  if (raw.stderr.length !== 0) {
-    throw new Error(`${rootName}/${testCase.slug} raw stderr is not empty.`);
-  }
   const report = JSON.parse(json.stderr.toString("utf8"));
   if (
-    JSON.stringify(report) !== JSON.stringify({ diagnostics: [], error: null })
+    report.error !== null ||
+    report.diagnostics.length !== 1 ||
+    report.diagnostics[0].code !== "I305" ||
+    report.diagnostics[0].severity !== "info" ||
+    !raw.stderr.toString("utf8").includes("I305")
   ) {
-    throw new Error(`${rootName}/${testCase.slug} JSON report changed.`);
+    throw new Error(
+      `${rootName}/${testCase.slug} expected exactly one I305/info report.`,
+    );
   }
+  candidates.set(
+    destination(join(relativeRoot, `${testCase.slug}.stderr.txt`)),
+    raw.stderr,
+  );
+  candidates.set(
+    destination(join(relativeRoot, `${testCase.slug}.stderr.json`)),
+    json.stderr,
+  );
   candidates.set(
     destination(join(relativeRoot, `${testCase.slug}.stdout.svg`)),
     raw.stdout,
@@ -290,6 +303,43 @@ async function addCliCase(candidates, rootName, project, testCase) {
       raw.stdout,
     );
   }
+}
+
+const queryCases = [
+  { slug: "inspect-k1", args: ["inspect", "K1"] },
+  { slug: "neighbors-k1", args: ["neighbors", "K1"] },
+  { slug: "trace-ls1", args: ["trace", "LS1"] },
+  { slug: "net-plc1-x1-0", args: ["net", "PLC1.X1.0"] },
+  { slug: "cable-cbl1", args: ["cable", "CBL1"] },
+];
+async function addQueryDiagnostics(candidates, project, testCase) {
+  const generated = new Map();
+  await addCliCase(generated, "motor-starter", project, testCase);
+  for (const [path, bytes] of generated) {
+    if (path.includes(".stderr.")) candidates.set(path, bytes);
+    else {
+      const extension = path.endsWith(".svg") ? "txt" : "json";
+      const existing = await readFile(
+        join(
+          repositoryRoot,
+          path.replace(/\.stdout\.(?:svg|json)$/, `.stdout.${extension}`),
+        ),
+      );
+      if (!existing.equals(bytes))
+        throw Error(`Unexpected query stdout change: ${testCase.slug}`);
+    }
+  }
+}
+async function addAgentReport(candidates, project, slug, tool, request) {
+  const invocation = await invokeAgent(project, tool, request);
+  requireSuccess(invocation, slug);
+  candidates.set(
+    destination(
+      join(cliGoldenRoot, "motor-starter-agent", `${slug}.stderr.json`),
+    ),
+    invocation.stderr,
+  );
+  return invocation;
 }
 
 function viewRequest(root = "LS1") {
@@ -346,13 +396,13 @@ async function mutateProject(root, mutate) {
   }
 }
 
-function expectedR005(error) {
+function expectedR005(error, diagnostics) {
   return Buffer.from(
     `${JSON.stringify(
       {
         format: "agent-tool-report/0.1",
         tool: "create-view",
-        diagnostics: [],
+        diagnostics,
         error,
       },
       undefined,
@@ -376,7 +426,17 @@ async function addR005Case(candidates, temporaryRoot, testCase) {
       `${testCase.slug} did not produce exit 1 and empty stdout.`,
     );
   }
-  const expected = expectedR005(testCase.error);
+  const compiled = await compileProject(project);
+  if (
+    !compiled.ok ||
+    compiled.diagnostics.length !== 1 ||
+    compiled.diagnostics[0].code !== "I305"
+  ) {
+    throw Error(
+      `${testCase.slug} expected one I305 before the render-text refusal.`,
+    );
+  }
+  const expected = expectedR005(testCase.error, compiled.diagnostics);
   if (!invocation.stderr.equals(expected)) {
     throw new Error(`${testCase.slug} R005 stderr bytes changed.`);
   }
@@ -450,6 +510,47 @@ const r005Cases = Object.freeze([
   },
 ]);
 
+async function addBaselineAgentReports(candidates, project) {
+  const base = { format: "agent-tool-request/0.1", project: "." };
+  for (const [slug, tool, fields] of [
+    ["baseline-validate", "validate", {}],
+    ["search-ls1", "resolve", { target: { by: "text", value: "LS1" } }],
+    ["inspect-ls1", "inspect", { selector: { by: "uid", value: LS1_UID } }],
+    [
+      "net-ls1-14",
+      "query",
+      {
+        query: {
+          operation: "net",
+          selector: {
+            by: "parts",
+            deviceDesignation: "LS1",
+            terminalKey: "14",
+          },
+        },
+      },
+    ],
+  ])
+    await addAgentReport(candidates, project, slug, tool, {
+      ...base,
+      ...fields,
+    });
+  const baselineView = await addAgentReport(
+    candidates,
+    project,
+    "baseline-view",
+    "create-view",
+    viewRequest(),
+  );
+  requireSuccess(baselineView, "baseline agent view");
+  candidates.set(
+    destination(
+      join(cliGoldenRoot, "motor-starter-agent", "baseline-view.stdout.json"),
+    ),
+    baselineView.stdout,
+  );
+}
+
 async function generate() {
   const candidates = new Map();
   const temporaryRoot = await mkdtemp(
@@ -462,21 +563,14 @@ async function generate() {
     for (const testCase of baselineCases) {
       await addCliCase(candidates, "motor-starter", exampleRoot, testCase);
     }
-    const baselineView = await invokeAgent(
+    for (const testCase of queryCases)
+      await addQueryDiagnostics(candidates, project, testCase);
+    await addBaselineAgentReports(candidates, project);
+    const base = { format: "agent-tool-request/0.1", project: "." };
+    const patched = await addAgentReport(
+      candidates,
       project,
-      "create-view",
-      viewRequest(),
-    );
-    requireSuccess(baselineView, "baseline agent view");
-    candidates.set(
-      destination(
-        join(cliGoldenRoot, "motor-starter-agent", "baseline-view.stdout.json"),
-      ),
-      baselineView.stdout,
-    );
-
-    const patched = await invokeAgent(
-      project,
+      "complete-patch",
       "apply-source-patch",
       completePatchRequest,
     );
@@ -484,7 +578,24 @@ async function generate() {
     for (const testCase of pnpCases) {
       await addCliCase(candidates, "motor-starter-pnp", project, testCase);
     }
-    const pnpView = await invokeAgent(project, "create-view", viewRequest());
+    await addAgentReport(candidates, project, "pnp-inspect", "inspect", {
+      ...base,
+      selector: { by: "uid", value: LS1_UID },
+    });
+    await addAgentReport(
+      candidates,
+      project,
+      "final-validate",
+      "validate",
+      base,
+    );
+    const pnpView = await addAgentReport(
+      candidates,
+      project,
+      "pnp-view",
+      "create-view",
+      viewRequest(),
+    );
     requireSuccess(pnpView, "PNP agent view");
     candidates.set(
       destination(
@@ -503,7 +614,9 @@ async function generate() {
 }
 
 function task4LedgerPaths(candidates) {
-  return [...candidates.keys()].filter((path) => !path.includes("/m8-r005/"));
+  return [...candidates.keys()].filter(
+    (path) => !path.includes("/m8-r005/") && !path.includes(".stderr."),
+  );
 }
 
 async function expectedTask4LedgerPaths() {
@@ -551,11 +664,11 @@ export async function updateTask4Goldens(mode) {
   const expectedAssigned = await expectedTask4LedgerPaths();
   if (
     assigned.length !== 33 ||
-    candidates.size !== 39 ||
+    candidates.size !== 80 ||
     JSON.stringify(assigned) !== JSON.stringify(expectedAssigned)
   ) {
     throw new Error(
-      `Task 4 updater generated ${assigned.length} ledger paths and ${candidates.size - assigned.length} R005 paths.`,
+      `Task 4 updater generated ${assigned.length} ledger paths and ${candidates.size - assigned.length} diagnostic/R005 paths.`,
     );
   }
   for (const [path, bytes] of candidates) {
@@ -574,7 +687,8 @@ export async function updateTask4Goldens(mode) {
   return Object.freeze({
     mode: mode.slice(2),
     ledgerPaths: assigned.length,
-    r005Paths: candidates.size - assigned.length,
+    r005Paths: 6,
+    diagnosticPaths: candidates.size - assigned.length - 6,
   });
 }
 

@@ -1,0 +1,65 @@
+# Third-party notices
+
+Thermite's original source is licensed under [Apache-2.0](LICENSE). This does
+not relicense third-party material. Keep this file, [NOTICE](NOTICE), and the
+applicable license texts with distributions.
+
+## Bundled fonts
+
+`packages/render/assets/fonts/` contains unmodified Noto Sans Regular and Bold
+(Copyright 2015–2021 Google LLC), and Noto Sans Math Regular (Copyright 2018
+Google LLC). The accompanying OFL notice credits The Noto Project Authors.
+Noto Sans Mono Regular (Copyright 2015 Google LLC) is bundled, unmodified, in
+`packages/cli/assets/fonts/`, from the pinned upstream [Noto Sans Mono path](https://github.com/notofonts/noto-fonts/blob/v20201206-phase3/hinted/ttf/NotoSansMono/NotoSansMono-Regular.ttf).
+They are distributed under the **SIL Open Font License 1.1**. The full copyright
+notice and license are in [OFL.txt](packages/cli/assets/fonts/OFL.txt); upstream
+URLs and SHA-256 hashes are in the [font README](packages/cli/assets/fonts/README.md).
+Regular, Bold and Math share one source in the render package for exact metrics
+and CLI SVG/HTML/PDF export. Each package retains its OFL notice. CLI SVG/HTML
+delivery embeds per-document subsets; PDFKit also embeds subsets of the source faces. OpenType layout
+features are removed consistently for metrics, browser and PDF delivery.
+Embedding does not change the license of the generated document
+([OFL FAQ](https://openfontlicense.org/ofl-faq/), section 1.13).
+Retain their license when copying or redistributing the font files.
+
+## Package dependencies
+
+The source checkout and `bun run alpha:pack` archive do not bundle `node_modules`.
+`bun install --frozen-lockfile` installs the versions and integrity hashes in
+`bun.lock`, which does not record license metadata. Each package retains its
+upstream copyright and license; the license files and metadata in its installed
+package directory are authoritative. For example, `png-js` 1.1.0 declares no
+license field but includes an MIT `LICENSE` file, Copyright 2017 Devon Govett.
+The retained `package-lock.json` serves only the frozen private release tooling
+and is not a current dependency inventory.
+
+In particular, the renderer uses **elkjs 0.12.0**, whose package declares
+`EPL-2.0 OR GPL-3.0-or-later`. Thermite uses it under **EPL-2.0**. Source and
+licensing information are available from [elkjs](https://github.com/kieler/elkjs/tree/0.12.0)
+and [Eclipse Layout Kernel](https://github.com/eclipse-elk/elk). ELK remains a
+separate third-party dependency; Thermite's Apache license does not replace its
+terms. The [EPL-2.0 distribution provisions](https://www.eclipse.org/legal/epl/epl-v20.html)
+include source availability and notice requirements when redistributing it.
+
+The runtime ZIP produced by `bun run package:pack` includes the complete installed
+production dependency packages, preserving their original license and notice
+files. `runtime-manifest.json` indexes every dependency by installation path,
+version, lock integrity, and license files, including nested versions. Supplementary
+standard license terms for three packages that declare MIT without supplying
+its full text, plus the applicable Brotli vendor licenses, are copied into those
+packages. Their declarations, origins, transformations and hashes are recorded in
+`scripts/runtime-package/third-party/sources.json` in the source repository and
+`third-party/sources.json` in the runtime ZIP. Its `third-party/ELK-SOURCE.md`
+provides source availability instructions for the unmodified ELK distribution.
+Bun itself is installed separately and is not redistributed in this ZIP.
+
+The `scripts/release-third-party-*` inventories belong to the frozen private
+0.2.0 packager; they are not the current runtime dependency inventory.
+
+## Component research
+
+Manufacturer libraries contain Thermite's authored component definitions and
+source references. Manufacturer manuals, datasheets, trademarks, and linked
+material remain subject to their owners' rights. A source URL is evidence for a
+component fact, not permission to redistribute the complete source document.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for library submission requirements.

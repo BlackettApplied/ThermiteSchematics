@@ -2,7 +2,48 @@
   "diagnostics": [],
   "error": {
     "code": "R004",
-    "message": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"] and [\"wire\",\"f0000000-0000-4000-8000-000000000410\"] form an ambiguous intersection.",
+    "message": "Invalid layout: edges boundary segment (JB1.X1.6 / terminal6 → JB1.X1.6 / terminal6) and EQ-1 (LS1.4 / output → JB1.X1.5 / terminal5) form an ambiguous intersection.",
+    "details": {
+      "originalMessage": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"] and [\"wire\",\"f0000000-0000-4000-8000-000000000410\"] form an ambiguous intersection.",
+      "conductors": [
+        {
+          "id": "[\"wire\",\"f0000000-0000-4000-8000-000000000410\"]",
+          "designation": "EQ-1",
+          "terminals": [
+            {
+              "deviceUid": "596f728b-1445-4c4b-8974-a3b4ea703636",
+              "terminalKey": "4",
+              "designation": "LS1",
+              "functionKeys": ["output"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.5",
+              "designation": "JB1",
+              "functionKeys": ["terminal5"]
+            }
+          ]
+        },
+        {
+          "id": "[\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"]",
+          "designation": "boundary segment",
+          "terminals": [
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.6",
+              "designation": "JB1",
+              "functionKeys": ["terminal6"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.6",
+              "designation": "JB1",
+              "functionKeys": ["terminal6"]
+            }
+          ]
+        }
+      ]
+    },
     "family": "control",
     "netId": "net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9",
     "root": "LS1"

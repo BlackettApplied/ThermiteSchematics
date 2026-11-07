@@ -1,0 +1,3 @@
+[install]
+# Keep workspace packages visible to the guarded local filesystem loader.
+linker = "hoisted"

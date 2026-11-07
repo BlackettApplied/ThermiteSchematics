@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "RM1 core-only rendering regression",
+    "description": "Minimal conveyor power, actuation and loads reproduction; generic hardware remains unselected."
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

@@ -86,6 +86,9 @@ const fixtureNames = [
   "missing-partial-voltage-facts",
   "conflict-suppresses-rating",
   "compatible-partial-later-voltage-origin",
+  "declared-ratings-conflict",
+  "unassessed-rated-nets",
+  "unassessed-single-rated-net",
 ] as const;
 
 const e200FixtureNames = [
@@ -109,6 +112,9 @@ const exactFixtureByRule = {
   W903: "missing-required-connection",
   W904: "partial-connection-model",
   W905: "deferred-connection",
+  W303: "declared-ratings-conflict",
+  I304: "unassessed-rated-nets",
+  I305: "unassessed-single-rated-net",
 } as const satisfies Record<M3RuleId, FixtureName>;
 
 const pipelineRuleErrorFixtures = [
@@ -449,8 +455,10 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
         ({ typeConductor }) => typeConductor !== null,
       );
 
-      expect(diagnostics).toHaveLength(invalidConductors.length);
-      expect(diagnostics.every(({ code }) => code === "E200")).toBe(true);
+      expect(diagnostics.filter((d) => d.code === "E200")).toHaveLength(
+        invalidConductors.length,
+      );
+      expect(diagnostics.map((d) => d.code)).toContain("I208");
       expect(
         validConductors.every(
           ({ source }) =>
@@ -494,7 +502,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     expect(diagnostics).toEqual(
       fixtureExpected("exclusive-terminal-second-wire"),
     );
-    expect(diagnostics).toHaveLength(1);
+    expect(diagnostics).toHaveLength(2);
     expect(diagnostics[0]).toMatchObject({
       code: "E201",
       jsonPointer: "/objects/4/endpoints/0",
@@ -530,7 +538,9 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
 
     expect(diagnostics).toEqual(fixtureExpected("exclusive-jumper-cable"));
     expect(
-      diagnostics.map(({ jsonPointer, uid }) => ({ jsonPointer, uid })),
+      diagnostics
+        .filter((d) => d.code !== "I208")
+        .map(({ jsonPointer, uid }) => ({ jsonPointer, uid })),
     ).toEqual([
       {
         jsonPointer: "/objects/5/endpoints/0",
@@ -551,7 +561,11 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     expect(diagnostics).toEqual(
       fixtureExpected("e200-excluded-from-exclusive-count"),
     );
-    expect(diagnostics.map(({ code }) => code)).toEqual(["E200", "E201"]);
+    expect(diagnostics.map(({ code }) => code)).toEqual([
+      "E200",
+      "E201",
+      "I208",
+    ]);
     expect(
       diagnostics.some(
         ({ code, jsonPointer }) =>
@@ -703,7 +717,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
       Object.assign(later!.electrical, { [field]: value });
 
       const diagnostics = evaluateRules(ir);
-      expect(diagnostics.map(({ code }) => code)).toEqual(["E300"]);
+      expect(diagnostics.map(({ code }) => code)).toEqual(["E300", "I208"]);
       expect(diagnostics[0]?.message).toContain(
         `field ${JSON.stringify(field)}`,
       );
@@ -714,7 +728,11 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const diagnostics = evaluateRules(fixtureIr("three-way-potential-set"));
 
     expect(diagnostics).toEqual(fixtureExpected("three-way-potential-set"));
-    expect(diagnostics.map(({ code, uid }) => ({ code, uid }))).toEqual([
+    expect(
+      diagnostics
+        .filter((d) => d.code !== "I208")
+        .map(({ code, uid }) => ({ code, uid })),
+    ).toEqual([
       {
         code: "W902",
         uid: "30400000-0000-4000-8000-000000000004",
@@ -761,11 +779,15 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     expect(suppressed).toEqual(
       fixtureExpected("topological-error-potential-conflict"),
     );
-    expect(suppressed.map(({ code }) => code)).toEqual(["E201"]);
+    expect(suppressed.map(({ code }) => code)).toEqual(["E201", "I208"]);
     expect(independent).toEqual(
       fixtureExpected("multi-net-potential-independence"),
     );
-    expect(independent.map(({ code }) => code)).toEqual(["E300", "W902"]);
+    expect(independent.map(({ code }) => code)).toEqual([
+      "E300",
+      "W902",
+      "I208",
+    ]);
   });
 
   it("suppresses a potential conflict on an E200-affected net", () => {
@@ -841,7 +863,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
         suppressedCode,
       );
       const diagnostics = evaluateRules(affected);
-      expect(diagnostics.map(({ code }) => code)).toEqual(["E200"]);
+      expect(diagnostics.map(({ code }) => code)).toEqual(["E200", "I208"]);
       expect(diagnostics.map(({ code }) => code)).not.toContain(suppressedCode);
     },
   );
@@ -872,7 +894,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
         suppressedCode,
       );
       const diagnostics = evaluateRules(affected);
-      expect(diagnostics.map(({ code }) => code)).toEqual(["E201"]);
+      expect(diagnostics.map(({ code }) => code)).toEqual(["E201", "I208"]);
       expect(diagnostics.map(({ code }) => code)).not.toContain(suppressedCode);
     },
   );
@@ -906,7 +928,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const diagnostics = evaluateRules(fixtureIr("voltage-type-mismatch"));
 
     expect(diagnostics).toEqual(fixtureExpected("voltage-type-mismatch"));
-    expect(diagnostics).toHaveLength(1);
+    expect(diagnostics).toHaveLength(2);
     expect(diagnostics[0]).toMatchObject({
       code: "E301",
       jsonPointer: "/objects/5",
@@ -931,7 +953,11 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const diagnostics = evaluateRules(fixtureIr("dual-voltage-mismatch"));
 
     expect(diagnostics).toEqual(fixtureExpected("dual-voltage-mismatch"));
-    expect(diagnostics.map(({ code }) => code)).toEqual(["E301", "E302"]);
+    expect(diagnostics.map(({ code }) => code)).toEqual([
+      "E301",
+      "E302",
+      "I208",
+    ]);
     expect(diagnostics[0]?.related?.map(({ note }) => note)).toEqual([
       'Terminal "DUAL.T" is rated for voltage type "DC" here.',
     ]);
@@ -952,7 +978,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const ir = structuredClone(fixtureIr("zero-voltage-return"));
     ir.potentials[0]!.electrical.voltage_type = "AC";
 
-    expect(evaluateRules(ir).map(({ code }) => code)).toEqual(["E301"]);
+    expect(evaluateRules(ir).map(({ code }) => code)).toEqual(["E301", "I208"]);
   });
 
   it("requires both nominal values to be positive but not both voltage types to be present", () => {
@@ -973,7 +999,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const diagnostics = evaluateRules(fixtureIr("conflict-suppresses-rating"));
 
     expect(diagnostics).toEqual(fixtureExpected("conflict-suppresses-rating"));
-    expect(diagnostics.map(({ code }) => code)).toEqual(["E300"]);
+    expect(diagnostics.map(({ code }) => code)).toEqual(["E300", "I208"]);
   });
 
   it.each(["E301", "E302"] as const)(
@@ -997,7 +1023,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
       );
 
       const diagnostics = evaluateRules(conflicting);
-      expect(diagnostics.map(({ code }) => code)).toEqual(["E300"]);
+      expect(diagnostics.map(({ code }) => code)).toEqual(["E300", "I208"]);
       expect(diagnostics.map(({ code }) => code)).not.toContain(suppressedCode);
     },
   );
@@ -1006,7 +1032,7 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
     const affected = evaluateRules(fixtureIr("dual-voltage-mismatch"));
     const nominalFinding = affected.find(({ code }) => code === "E302");
 
-    expect(affected.map(({ code }) => code)).toEqual(["E301", "E302"]);
+    expect(affected.map(({ code }) => code)).toEqual(["E301", "E302", "I208"]);
     expect(nominalFinding?.message).not.toContain("DUAL.T");
     expect(nominalFinding?.related?.map(({ note }) => note)).not.toContain(
       'Terminal "DUAL.T" is rated for nominal voltage 48 V here.',
@@ -1039,11 +1065,13 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
       fixtureExpected("compatible-partial-later-voltage-origin"),
     );
     expect(
-      diagnostics.map(({ code, jsonPointer, uid }) => ({
-        code,
-        jsonPointer,
-        uid,
-      })),
+      diagnostics
+        .filter((d) => d.code !== "I208")
+        .map(({ code, jsonPointer, uid }) => ({
+          code,
+          jsonPointer,
+          uid,
+        })),
     ).toEqual([
       {
         code: "E301",
@@ -1085,6 +1113,9 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
       "W903",
       "W904",
       "W905",
+      "W303",
+      "I304",
+      "I305",
     ]);
     expect(new Set(ids).size).toBe(ids.length);
     expect(Object.keys(exactFixtureByRule)).toEqual(ids);
@@ -1094,7 +1125,9 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
       const fixture = exactFixtureByRule[rule.id];
       const catalog =
         DIAGNOSTIC_CATALOG[rule.id as keyof typeof DIAGNOSTIC_CATALOG];
-      const expected = fixtureExpected(fixture);
+      const expected = fixtureExpected(fixture).filter(
+        (d) => d.code === rule.id,
+      );
       const diagnostics = rule.evaluate(createRuleContext(fixtureIr(fixture)));
       const producers = ELECTRICAL_RULES.filter((candidate) =>
         candidate
@@ -1122,6 +1155,14 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
   it("keeps every broken fixture message and related note specific and reviewable", () => {
     for (const name of fixtureNames) {
       for (const diagnostic of fixtureExpected(name)) {
+        if (
+          diagnostic.code === "I208" ||
+          diagnostic.code === "I304" ||
+          diagnostic.code === "I305"
+        ) {
+          expect(diagnostic.severity).toBe("info");
+          continue;
+        }
         expect(diagnostic.message, `${name} ${diagnostic.code}`).toMatch(
           /\.$/u,
         );
@@ -1152,6 +1193,10 @@ describe("M3 IR-only rule engine through E302 and W902", () => {
         } else if (diagnostic.code === "E201") {
           expect(diagnostic.message, name).toMatch(
             /^Terminal ".+\..+" has connection policy "exclusive", but (?:wire|jumper|cable) /u,
+          );
+        } else if (diagnostic.code === "W303") {
+          expect(diagnostic.message).toContain(
+            "these declared ratings disagree",
           );
         } else if (diagnostic.code === "E301" || diagnostic.code === "E302") {
           const displays = (diagnostic.related ?? []).flatMap(({ note }) => {
@@ -1194,7 +1239,8 @@ describe("M3 compiler pipeline integration", () => {
       expect(compiled).toMatchObject({
         ok: false,
         toolFailure: false,
-        diagnostics: [{ code }],
+        diagnostics:
+          code === "E302" ? [{ code }] : [{ code }, { code: "I208" }],
       });
       expect(compiled.diagnostics).toEqual(fixtureExpected(name));
       expect(Object.hasOwn(compiled, "ir")).toBe(false);
@@ -1255,7 +1301,10 @@ describe("M3 compiler pipeline integration", () => {
     );
 
     expect(compiled.ok).toBe(false);
-    expect(compiled.diagnostics.map(({ code }) => code)).toEqual(["E015"]);
+    expect(compiled.diagnostics.map(({ code }) => code)).toEqual([
+      "E015",
+      "I208",
+    ]);
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
     expect(evaluateRulesStage).not.toHaveBeenCalled();
   });
@@ -1274,7 +1323,10 @@ describe("M3 compiler pipeline integration", () => {
     );
 
     expect(compiled.ok).toBe(false);
-    expect(compiled.diagnostics.map(({ code }) => code)).toEqual(["E021"]);
+    expect(compiled.diagnostics.map(({ code }) => code)).toEqual([
+      "E021",
+      "I208",
+    ]);
     expect(compiled.diagnostics.map(({ code }) => code)).not.toContain("E200");
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
     expect(evaluateRulesStage).not.toHaveBeenCalled();
@@ -1298,7 +1350,10 @@ describe("M3 compiler pipeline integration", () => {
     );
 
     expect(compiled.ok).toBe(false);
-    expect(compiled.diagnostics.map(({ code }) => code)).toEqual(["E031"]);
+    expect(compiled.diagnostics.map(({ code }) => code)).toEqual([
+      "E031",
+      "I208",
+    ]);
     expect(compiled.diagnostics.map(({ code }) => code)).not.toContain("E200");
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
     expect(evaluateRulesStage).not.toHaveBeenCalled();
@@ -1318,7 +1373,7 @@ describe("M3 compiler pipeline integration", () => {
     expect(compiled).toMatchObject({
       ok: false,
       toolFailure: false,
-      diagnostics: [{ code: "E105" }],
+      diagnostics: [{ code: "E105" }, { code: "I208" }],
     });
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
     expect(evaluateRulesStage).not.toHaveBeenCalled();
@@ -1340,7 +1395,7 @@ describe("M3 compiler pipeline integration", () => {
 
     expect(compiled.ok).toBe(false);
     expect(new Set(compiled.diagnostics.map(({ code }) => code))).toEqual(
-      new Set(["E100", "E101", "E102", "E103", "E104"]),
+      new Set(["E100", "E101", "E102", "E103", "E104", "I208"]),
     );
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
     expect(evaluateRulesStage).not.toHaveBeenCalled();
@@ -1358,7 +1413,10 @@ describe("M3 compiler pipeline integration", () => {
       evaluateRules: evaluateRulesStage,
     });
 
-    expect(compiled).toEqual({
+    expect({
+      ...compiled,
+      diagnostics: compiled.diagnostics.filter((d) => d.code !== "I208"),
+    }).toEqual({
       ok: false,
       diagnostics: [
         {

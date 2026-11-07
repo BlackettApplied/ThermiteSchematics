@@ -1,3 +1,10 @@
+import { renderErrorContext } from "./render-error-context.js";
+import { compareText, functionIdKey } from "./ordering.js";
+import {
+  preflightRootedProfiles,
+  hasFunctionBinding,
+  unsupportedProfileError,
+} from "./preflight.js";
 import type {
   CompiledProjectPresentation,
   ElectricalIr,
@@ -5,6 +12,7 @@ import type {
 import type { ELK as ElkApi } from "elkjs/lib/elk-api.js";
 import type { QueryEngine } from "@thermite/query";
 
+import { deepFreeze } from "./internal.js";
 import { layoutPresentationGraph } from "./layout/elk-adapter.js";
 import { buildPresentationGraph } from "./presentation.js";
 import {
@@ -31,6 +39,7 @@ import type {
   SchematicViewRequest,
 } from "./types.js";
 import { normalizeSchematicView } from "./view-spec.js";
+import { traceRootRuleForType } from "./intent-rules.js";
 
 export interface SchematicRendererDependencies {
   readonly mappings?: readonly DeviceTypeSymbolMapping[];
@@ -38,15 +47,6 @@ export interface SchematicRendererDependencies {
   readonly queryEngineFactory?: (ir: Readonly<ElectricalIr>) => QueryEngine;
   readonly layoutEngine?: ElkApi;
   readonly spacingProfile?: "compact" | "dense";
-}
-
-function deepFreeze<Value>(value: Value, seen = new Set<object>()): Value {
-  if (typeof value !== "object" || value === null || seen.has(value)) {
-    return value;
-  }
-  seen.add(value);
-  for (const member of Object.values(value)) deepFreeze(member, seen);
-  return Object.freeze(value);
 }
 
 function detachedFrozen<Value>(value: Value): Value {
@@ -86,7 +86,7 @@ export async function prepareSchematicDrawing(
         ? {}
         : { queryEngineFactory: dependencies.queryEngineFactory }),
     });
-  if (!normalized.ok) return failed(normalized.error);
+  if (!normalized.ok) return failed(renderErrorContext(ir, normalized.error));
 
   const titleContext = prepareSchematicTitleContext(
     ir.project.name,
@@ -94,6 +94,76 @@ export async function prepareSchematicDrawing(
     presentation,
   );
   if (!titleContext.ok) return failed(titleContext.error);
+
+  // Diagnose only actual failures: profile metadata cannot turn a successful
+  // traversal or layout into an error (including unsupported side branches).
+  const diagnose = (error: RenderFailure): RenderFailure => {
+    if (error.code !== "R002" && error.code !== "R003")
+      return renderErrorContext(ir, error);
+    const unrepresented =
+      error.code === "R003" &&
+      error.details?.reason === "unrepresented-terminal";
+    const profile = preflightRootedProfiles(
+      ir,
+      normalized.value.view,
+      mappings,
+    );
+    if (!profile) return renderErrorContext(ir, error);
+    // An unselected terminal is not evidence that its device's profile is bad.
+    // Keep independent limitations elsewhere on the path as secondary context.
+    if (unrepresented && error.deviceUid === profile.deviceUid)
+      return renderErrorContext(ir, error);
+    const device = ir.devices.find((d) => d.uid === profile.deviceUid)!;
+    const f = ir.functions.find(
+      (f) =>
+        f.id.deviceUid === device.uid &&
+        f.id.functionKey === profile.functionKey,
+    );
+    const contextual = renderErrorContext(ir, error, false);
+    const stops = (error.details?.terminalIds ??
+      []) as readonly import("@thermite/compiler").TerminalId[];
+    const allStopsUnsupported =
+      stops.length > 0 &&
+      stops.every((t) => {
+        const stoppedDevice = ir.devices.find((d) => d.uid === t.deviceUid)!;
+        const mapping = mappings.find((m) => m.typeId === stoppedDevice.typeId);
+        const functions = ir.functions.filter(
+          (f) =>
+            f.id.deviceUid === t.deviceUid &&
+            f.kind !== "mechanism" &&
+            f.terminals.some((p) => p.terminalKey === t.terminalKey),
+        );
+        return (
+          functions.length > 0 &&
+          functions.every(
+            (f) => !hasFunctionBinding(mapping, f, profile.family),
+          )
+        );
+      });
+    // Trace leaves describe physical dead ends, not proof that a profile blocked
+    // the signal. Preserve the connectivity refusal and report the candidate only.
+    const traceConnectivity =
+      error.code === "R002" && "intent" in error && error.intent === "trace";
+    const directBinding =
+      error.code === "R003" &&
+      stops.length === 0 &&
+      error.deviceUid === device.uid;
+    if (
+      !unrepresented &&
+      !traceConnectivity &&
+      (allStopsUnsupported || directBinding)
+    )
+      return unsupportedProfileError(ir, contextual, device, f, profile.family);
+    return {
+      ...contextual,
+      message:
+        error.code === "R002" || unrepresented
+          ? `${contextual.message} Additional profile limitation: device ${JSON.stringify(profile.unsupported!.designation)} ${profile.unsupported!.profile === "<missing>" ? "has no rendering profile for this view." : `uses profile ${JSON.stringify(profile.unsupported!.profile)}, which is unsupported for this view.`}`
+          : contextual.message,
+      unsupported: profile.unsupported!,
+      details: { ...contextual.details, profileNote: profile.message },
+    };
+  };
 
   const selected =
     normalized.value.view.format === "schematic-view/0.1"
@@ -134,7 +204,7 @@ export async function prepareSchematicDrawing(
                       );
                     })(),
             });
-  if (!selected.ok) return failed(selected.error);
+  if (!selected.ok) return failed(diagnose(selected.error));
 
   const presented = buildPresentationGraph({
     ir,
@@ -142,7 +212,7 @@ export async function prepareSchematicDrawing(
     mappings,
     catalog,
   });
-  if (!presented.ok) return failed(presented.error);
+  if (!presented.ok) return failed(diagnose(presented.error));
 
   const preflight = preflightRenderText(presented.value.graph);
   if (!preflight.ok) return failed(preflight.error);
@@ -157,7 +227,51 @@ export async function prepareSchematicDrawing(
       ? {}
       : { engine: dependencies.layoutEngine }),
   });
-  if (!laidOut.ok) return failed(laidOut.error);
+  if (!laidOut.ok) {
+    let error = laidOut.error;
+    if (
+      error.code === "R004" &&
+      normalized.value.view.format === "schematic-view/0.2" &&
+      normalized.value.view.intent === "loads"
+    ) {
+      const selectedIds = new Set(
+        selected.value.functionIds.map(functionIdKey),
+      );
+      const loadFunctions = ir.functions.filter(
+        (f) => f.kind === "load" && selectedIds.has(functionIdKey(f.id)),
+      );
+      const loads = ir.devices
+        .filter((device) =>
+          loadFunctions.some((f) => f.id.deviceUid === device.uid),
+        )
+        .map((device) => ({
+          deviceUid: device.uid,
+          designation: device.designation,
+          functionIds: loadFunctions
+            .filter((f) => f.id.deviceUid === device.uid)
+            .map((f) => f.id),
+        }))
+        .sort((a, b) => compareText(a.designation, b.designation));
+      if (loads.length >= 2) {
+        const traceRoots = loads.filter((load) => {
+          const device = ir.devices.find((d) => d.uid === load.deviceUid)!;
+          return (
+            traceRootRuleForType(
+              device.typeId,
+              ir.deviceTypes.find((t) => t.id === device.typeId),
+              mappings.find((m) => m.typeId === device.typeId),
+            ) !== undefined
+          );
+        });
+        error = {
+          ...error,
+          message: `${error.message} Selected loads: ${loads.map((load) => load.designation).join(", ")}. Draw these loads in a circuit view built from details.loads with thermite packet --input.${traceRoots.map((load) => ` A trace can also start at ${load.designation}; choose its connected input target with --to and add --include-power.`).join("")}`,
+          details: { ...error.details, loads },
+        };
+      }
+    }
+    return failed(renderErrorContext(ir, error));
+  }
 
   return {
     ok: true,
@@ -186,7 +300,8 @@ export function createSchematicRendererWithDependencies(
           ? {}
           : { queryEngineFactory: dependencies.queryEngineFactory }),
       });
-      if (!normalized.ok) return failed(normalized.error);
+      if (!normalized.ok)
+        return failed(renderErrorContext(ir, normalized.error));
       const view = normalized.value.view;
       if (
         view.format === "schematic-view/0.2" &&
@@ -271,6 +386,9 @@ export function createSchematicRendererWithDependencies(
         layout,
         titleContext,
         dependencies.catalog ?? SYMBOL_CATALOG,
+        false,
+        undefined,
+        ir,
       );
       if (!emitted.ok) return failed(emitted.error);
       return succeeded({ view, summary, svg: emitted.value });

@@ -1,0 +1,19 @@
+{
+  "id": "T11",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Take drawings/before.json snapshot. Change only the printed label on W-CTL-001 to CONTROL-24V and produce drawings/review.json semantic review.",
+  "requiredTopics": [
+    {
+      "topic": "review",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "agent-requests",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

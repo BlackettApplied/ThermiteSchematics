@@ -1,0 +1,31 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:transmitter-2wire-4-20ma",
+      "description": "Provisional generic two-wire 4-20 mA transmitter.",
+      "terminals": {
+        "+": {
+          "role": "loop_positive",
+          "required": true
+        },
+        "-": {
+          "role": "loop_negative",
+          "required": true
+        }
+      },
+      "functions": {
+        "signal": {
+          "kind": "other",
+          "terminals": ["+", "-"]
+        }
+      },
+      "symbol": "thermite:two-wire-transmitter",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Loop + and - are the sole interface and both are required. Optional: none in this abstract interface. Unmodeled: shield/drain, case bond, configuration and extra terminals. The 4-20 mA class is the type identity; measured quantity, range, supply voltage, compliance, load limits and ratings are unspecified. The author must select hardware and review loop power, polarity, input mode and compatibility. Logical +/- loop markings are not a manufacturer pinout. This nonconductive function does not join its two nets; the existing profile currently supports signal-loop views only."
+      }
+    }
+  ]
+}

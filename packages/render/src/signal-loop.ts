@@ -1,18 +1,24 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import { measureText, wrapText } from "./text-metrics.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 import { createQueryEngine } from "@thermite/query";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 import { fieldDeviceBody, connectorPort } from "./symbols/field-device.js";
+import {
+  validateSignalLoopRequest,
+  selectSeriesLoop,
+} from "./signal-loop/series-selection.js";
 import { drawEnclosures } from "./signal-loop-enclosures.js";
 
 export interface SignalLoopViewRequest {
   readonly format: "signal-loop-view-request/0.1";
   readonly from: { readonly device: string; readonly function: string };
   readonly to: { readonly device: string; readonly function: string };
+  readonly loopPower?: { readonly device: string; readonly function: string };
   readonly flow?: "left-to-right" | "top-to-bottom";
   readonly notes?: readonly string[];
   /** Explicit extra pairs (for example actuator power) within the same chain. */
@@ -31,7 +37,7 @@ export interface SignalLoopViewRequest {
     readonly wallDevice?: string;
   }[];
 }
-interface Conductor {
+export interface Conductor {
   id: string;
   ends: readonly [TerminalId, TerminalId];
   label: string[];
@@ -54,80 +60,9 @@ const text = (
   anchor = "start",
   bold = false,
 ) =>
-  `<text x="${n(x)}" y="${n(y)}" font-family="Arial, Helvetica, sans-serif" font-size="${size}" text-anchor="${anchor}" font-weight="${bold ? 700 : 400}" fill="#18212b">${xml(value)}</text>`;
-const width = (s: string) =>
-  [...s].reduce(
-    (sum, c) =>
-      sum +
-      (/[MW@%]/u.test(c)
-        ? 1
-        : /[ilI1 .,:;'|!]/u.test(c)
-          ? 0.4
-          : c.codePointAt(0)! > 127
-            ? 1.2
-            : 0.75) *
-        2.7,
-    0,
-  );
-function wrap(value: string, max: number): string[] {
-  const lines: string[] = [];
-  let line = "";
-  for (const word of value.split(/\s+/u)) {
-    if (line && width(`${line} ${word}`) > max) {
-      lines.push(line);
-      line = "";
-    }
-    for (const char of (line ? " " : "") + word) {
-      if (width(line + char) > max) {
-        lines.push(line);
-        line = "";
-      }
-      line += char;
-    }
-  }
-  if (line) lines.push(line);
-  return lines;
-}
-const record = (v: unknown): v is Record<string, unknown> =>
-  typeof v === "object" && v !== null && !Array.isArray(v);
-const selector = (v: unknown) =>
-  record(v) &&
-  Object.keys(v).length === 2 &&
-  ["device", "function"].every(
-    (k) => typeof v[k] === "string" && (v[k] as string).trim(),
-  );
-const shortString = (v: unknown, max: number) =>
-  typeof v === "string" && v.trim().length > 0 && v.length <= max;
-const assembliesValid = (v: unknown) =>
-  v === undefined ||
-  (Array.isArray(v) &&
-    v.length <= 7 &&
-    v.every(
-      (a) =>
-        record(a) &&
-        Object.keys(a).length === 3 &&
-        shortString(a.cable, 100) &&
-        shortString(a.connector, 8) &&
-        shortString(a.description, 120),
-    ));
-const enclosuresValid = (v: unknown) =>
-  v === undefined ||
-  (Array.isArray(v) &&
-    v.length <= 4 &&
-    v.every(
-      (e) =>
-        record(e) &&
-        Object.keys(e).every((k) =>
-          ["label", "devices", "wallDevice"].includes(k),
-        ) &&
-        shortString(e.label, 80) &&
-        Array.isArray(e.devices) &&
-        e.devices.length > 0 &&
-        e.devices.length <= 8 &&
-        e.devices.every((d) => shortString(d, 100)) &&
-        (e.wallDevice === undefined || shortString(e.wallDevice, 100)),
-    ));
-
+  `<text x="${n(x)}" y="${n(y)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="${size}" text-anchor="${anchor}" font-weight="${bold ? 700 : 400}" fill="#18212b">${xml(value.normalize("NFC"))}</text>`;
+const width = (value: string) => measureText(value, 2.7).width;
+const wrap = (value: string, max: number) => wrapText(value, max, 2.7);
 // Check ELK's placed labels as well as its routes: a white label background
 // must never erase another conductor or a device body.
 function checkLabels(graph: ElkNode) {
@@ -204,48 +139,7 @@ export function selectSignalLoop(
   ir: Readonly<ElectricalIr>,
   request: SignalLoopViewRequest,
 ) {
-  if (
-    !record(request) ||
-    request.format !== "signal-loop-view-request/0.1" ||
-    Object.keys(request).some(
-      (k) =>
-        ![
-          "format",
-          "from",
-          "to",
-          "flow",
-          "notes",
-          "auxiliary",
-          "cableAssemblies",
-          "enclosures",
-        ].includes(k),
-    ) ||
-    !selector(request.from) ||
-    !selector(request.to) ||
-    (request.auxiliary !== undefined &&
-      (!Array.isArray(request.auxiliary) ||
-        request.auxiliary.length > 2 ||
-        request.auxiliary.some(
-          (a) =>
-            !record(a) ||
-            Object.keys(a).length !== 2 ||
-            !selector(a.from) ||
-            !selector(a.to),
-        ))) ||
-    !assembliesValid(request.cableAssemblies) ||
-    !enclosuresValid(request.enclosures) ||
-    (request.flow !== undefined &&
-      !["left-to-right", "top-to-bottom"].includes(request.flow)) ||
-    (request.notes !== undefined &&
-      (!Array.isArray(request.notes) ||
-        request.notes.length > 6 ||
-        request.notes.some(
-          (s) => typeof s !== "string" || !s.trim() || s.length > 240,
-        )))
-  )
-    throw new Error(
-      "Invalid signal loop request; check selectors, flow, notes, cable assemblies and enclosures.",
-    );
+  validateSignalLoopRequest(request);
 
   // Validate the public IR contract before following physical connectivity.
   createQueryEngine(ir);
@@ -281,7 +175,7 @@ export function selectSignalLoop(
     ) &&
     to.function.kind === "channel" &&
     to.function.direction === "input";
-  if (!input && !output)
+  if (!input && !output && !request.loopPower)
     throw new Error(
       "Signal loop views require a two-wire transmitter to an input channel, or an output channel to an analog-actuator profile.",
     );
@@ -316,6 +210,20 @@ export function selectSignalLoop(
     });
   }
   conductors.sort((a, b) => compare(a.id, b.id));
+  if (request.loopPower) {
+    const series = selectSeriesLoop(ir, request, from, to, input, conductors);
+    return {
+      from,
+      to,
+      output: false,
+      auxiliary: [],
+      stages: series.stages,
+      devices,
+      types,
+      conductors: series.conductors,
+      series,
+    };
+  }
   const adjacent = new Map<string, Conductor[]>();
   for (const c of conductors)
     for (const t of c.ends) {
@@ -488,11 +396,31 @@ export function selectSignalLoop(
   };
 }
 
+export function signalLoopTitle(
+  selected: ReturnType<typeof selectSignalLoop>,
+): string {
+  return selected.output
+    ? `${selected.to.device.designation} - analog output`
+    : `${selected.from.device.designation} - signal loop`;
+}
+
+function selectDrawableSignalLoop(
+  ir: Readonly<ElectricalIr>,
+  request: SignalLoopViewRequest,
+) {
+  const selected = selectSignalLoop(ir, request);
+  if (selected.series)
+    throw new Error(
+      "Series loop drawing is not available in this increment; use an explicit circuit view.",
+    );
+  return selected;
+}
+
 export async function prepareSignalLoopDrawing(
   ir: Readonly<ElectricalIr>,
   request: SignalLoopViewRequest,
 ) {
-  const selected = selectSignalLoop(ir, request),
+  const selected = selectDrawableSignalLoop(ir, request),
     { stages, devices, types } = selected;
   const vertical = request.flow === "top-to-bottom";
   const physicalEdges = selected.conductors.map((c) =>
@@ -762,8 +690,7 @@ export async function prepareSignalLoopDrawing(
             : !p.assembly &&
               p.terminal === e.ends[side === "out" ? 0 : 1].terminalKey),
       )!.id;
-  const Elk = BundledElk as unknown as { new (): ELK };
-  const graph: ElkNode = await new Elk().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "loop",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -983,7 +910,16 @@ export async function prepareSignalLoopDrawing(
           ? (type.terminals.find((t) => t.key === p.terminal)?.description ??
             "Auxiliary feed")
           : "unused";
-        const lines = wrap(label, vertical ? 12 : node.width! - 12);
+        // Use the actual space between adjacent terminal lanes. A short word
+        // such as "unused" stays whole; only genuinely overlong tokens split.
+        const laneWidth =
+          Math.min(
+            ...list
+              .filter((q) => !q.assembly && q.x !== p.x)
+              .map((q) => Math.abs(q.x - p.x)),
+            2 * Math.min(p.x, node.width! - p.x),
+          ) - 2;
+        const lines = wrap(label, vertical ? laneWidth : node.width! - 12);
         if (lines.length > (vertical ? 6 : 2))
           throw new Error("Auxiliary feed legend is too long.");
         lines.forEach((line, i) =>
@@ -1024,9 +960,7 @@ export async function prepareSignalLoopDrawing(
     });
   }
   return {
-    title: selected.output
-      ? `${selected.to.device.designation} - analog output`
-      : `${selected.from.device.designation} - signal loop`,
+    title: signalLoopTitle(selected),
     content: `<g transform="translate(${n(-enclosure.minX)} ${n(-enclosure.minY)})">${out.join("\n")}</g>`,
     width: enclosure.width,
     height: enclosure.height,

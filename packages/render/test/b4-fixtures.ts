@@ -186,7 +186,12 @@ export async function materializeAndCompileB4Tier2Fixture(
 ) {
   const projectRoot = await materializeTier2Project(root, fixtureName);
   const compiled = await compileProject(projectRoot);
-  if (!compiled.ok || compiled.diagnostics.length !== 0) {
+  if (
+    !compiled.ok ||
+    compiled.diagnostics.length !== 1 ||
+    compiled.diagnostics[0]?.code !== "I305" ||
+    compiled.diagnostics[0]?.severity !== "info"
+  ) {
     throw new Error(
       "Tier 2 fixture failed full compilation: " +
         JSON.stringify(compiled.diagnostics),

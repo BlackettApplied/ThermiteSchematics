@@ -130,7 +130,10 @@ function objectLabel(object: ProjectObjectView): string {
   return object.designation ?? `${object.kind}:${object.uid}`;
 }
 
-function renderInspect(result: InspectResult): string[] {
+function renderInspect(
+  result: InspectResult,
+  typeDescription?: string,
+): string[] {
   const lines: string[] = [];
   const object = result.object;
 
@@ -138,12 +141,17 @@ function renderInspect(result: InspectResult): string[] {
     lines.push(`device ${atom(object.designation)}`);
     lines.push(`  uid ${atom(object.uid)}`);
     lines.push(`  type ${atom(object.typeId)}`);
+    if (typeDescription !== undefined)
+      lines.push(`  type-description ${atom(typeDescription)}`);
     if (object.description !== undefined) {
       lines.push(`  description ${atom(object.description)}`);
     }
     renderAliases(lines, 2, object.aliases);
     if (object.location !== undefined) {
       lines.push(`  location ${atom(object.location)}`);
+    }
+    if (object.nonProcurement !== undefined) {
+      lines.push(`  not-purchased ${atom(object.nonProcurement.reason)}`);
     }
     lines.push("  terminals:");
     if (object.terminals.length === 0) none(lines, 4);
@@ -239,6 +247,8 @@ function renderInspect(result: InspectResult): string[] {
     }
     renderAliases(lines, 2, object.aliases);
     lines.push(`  type ${atom(object.typeId)}`);
+    if (typeDescription !== undefined)
+      lines.push(`  type-description ${atom(typeDescription)}`);
     lines.push(`  cable-type ${atom(object.cableType.id)}`);
     if (object.cableType.shield !== undefined) {
       lines.push(`  shield ${String(object.cableType.shield)}`);
@@ -331,10 +341,13 @@ function renderCable(result: CableResult): string[] {
   return lines;
 }
 
-export function renderHumanQueryResult(result: QueryCommandResult): string {
+export function renderHumanQueryResult(
+  result: QueryCommandResult,
+  typeDescription?: string,
+): string {
   let lines: string[];
   if (result.command === "inspect") {
-    lines = renderInspect(result);
+    lines = renderInspect(result, typeDescription);
   } else if (result.command === "neighbors") {
     lines = [
       `neighbors ${atom(result.device.designation)}`,

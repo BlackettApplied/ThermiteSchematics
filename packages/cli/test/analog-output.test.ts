@@ -1,55 +1,16 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
-import { randomUUID } from "node:crypto";
 import { parseHTML } from "linkedom";
 import { afterEach, expect, it } from "vitest";
-import { compileProject, lockProject } from "@thermite/compiler";
 import { buildDocumentation } from "@thermite/query";
 import { renderSchematicPacket } from "@thermite/render";
 import { selectSignalLoop } from "../../render/src/signal-loop.js";
+import {
+  fixture,
+  OUTPUT_REJECTIONS,
+  removeFixtures,
+  renderOutputRejection,
+} from "./analog-output.cases.js";
 
-const temporary: string[] = [];
-afterEach(async () => {
-  for (const p of temporary.splice(0))
-    await rm(p, { recursive: true, force: true });
-});
-async function fixture() {
-  const p = await mkdtemp(join(tmpdir(), "thermite-output-"));
-  temporary.push(p);
-  for (const name of ["field-interfaces", "industrial-pilot"])
-    await cp(resolve("libraries", name), join(p, name), { recursive: true });
-  const write = (name: string, value: unknown) =>
-    writeFile(join(p, name), JSON.stringify(value));
-  await write("system.json", {
-    format: "electrical-system/0.1",
-    project: { name: "Analog actuator fixture" },
-    sources: ["source.json"],
-    libraries: ["field-interfaces", "industrial-pilot"].map((name) => ({
-      name,
-      version: "0.1.0",
-      path: name,
-    })),
-  });
-  const source = JSON.parse(
-    await readFile("packages/cli/fixtures/analog-output/source.json", "utf8"),
-  );
-  const packet = JSON.parse(
-    await readFile(
-      "packages/cli/fixtures/analog-output/packet.request.json",
-      "utf8",
-    ),
-  );
-  await write("source.json", source);
-  expect((await lockProject(p)).ok).toBe(true);
-  async function compile() {
-    await write("source.json", source);
-    const c = await compileProject(p);
-    if (!c.ok) throw new Error(JSON.stringify(c.diagnostics));
-    return c.ir;
-  }
-  return { source, packet, compile };
-}
+afterEach(removeFixtures);
 
 it.each(["left-to-right", "top-to-bottom"])(
   "shows complete command and power nets with a cabinet exit in %s",
@@ -171,49 +132,11 @@ it("uses the documented current pair on channel 2 without adding another module"
       expect(r.value.sheets[0]!.svg).toContain(label);
 });
 
-it.each([
-  "omitted-power",
-  "duplicate-pair",
-  "reverse-pair",
-  "short",
-  "branch",
-  "loose-power",
-  "power-as-spare",
-  "different-chain",
-  "malformed",
-])("rejects %s without hiding an active conductor", async (problem) => {
-  const f = await fixture(),
-    view = f.packet.views[0];
-  const objects = f.source.objects,
-    cable = objects.find((o: any) => o.kind === "cable");
-  if (problem === "omitted-power") delete view.auxiliary;
-  if (problem === "duplicate-pair") view.auxiliary.push(view.auxiliary[0]);
-  if (problem === "reverse-pair")
-    [view.auxiliary[0].from, view.auxiliary[0].to] = [
-      view.auxiliary[0].to,
-      view.auxiliary[0].from,
-    ];
-  if (problem === "loose-power") {
-    cable.conductors[0].endpoints[0] = null;
-    cable.conductors[0].usage = "spare";
-  }
-  if (problem === "power-as-spare") cable.conductors[0].usage = "spare";
-  if (problem === "malformed")
-    view.auxiliary = [{ ...view.auxiliary[0], typo: true }];
-  if (problem === "different-chain")
-    view.auxiliary[0].from = { device: "AQ1", function: "supply" };
-  if (problem === "short" || problem === "branch")
-    objects.push({
-      kind: "wire",
-      uid: randomUUID(),
-      designation: "EXTRA",
-      endpoints: [
-        { device: "XT1", terminal: "3" },
-        { device: "XT1", terminal: problem === "short" ? "1" : "8" },
-      ],
-    });
-  const ir = await f.compile(),
-    result = await renderSchematicPacket(ir, f.packet);
-  expect(result.ok, problem).toBe(false);
-  if (!result.ok) expect(result.error.code).toBe("R006");
-});
+it.each(OUTPUT_REJECTIONS)(
+  "rejects %s without hiding an active conductor",
+  async (problem) => {
+    const result = await renderOutputRejection(problem);
+    expect(result.ok, problem).toBe(false);
+    if (!result.ok) expect(result.error.code).toBe("R006");
+  },
+);

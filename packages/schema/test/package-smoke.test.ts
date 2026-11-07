@@ -10,19 +10,6 @@ import { describe, expect, it } from "vitest";
 const execFileAsync = promisify(execFile);
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
-const npmCommand = process.platform === "win32" ? process.execPath : "npm";
-const npmArgumentPrefix =
-  process.platform === "win32"
-    ? [
-        join(
-          dirname(process.execPath),
-          "node_modules",
-          "npm",
-          "bin",
-          "npm-cli.js",
-        ),
-      ]
-    : [];
 
 async function run(
   command: string,
@@ -66,17 +53,16 @@ describe("packed package", () => {
 
         try {
           packOutput = await run(
-            npmCommand,
+            process.execPath,
             [
-              ...npmArgumentPrefix,
+              "pm",
               "pack",
-              packageRoot,
-              "--pack-destination",
+              "--destination",
               packDirectory,
-              "--json",
+              "--quiet",
               "--ignore-scripts",
             ],
-            temporaryRoot,
+            packageRoot,
           );
         } catch (error) {
           if (
@@ -91,19 +77,16 @@ describe("packed package", () => {
 
           throw error;
         }
-        const packed = JSON.parse(packOutput) as Array<{ filename: string }>;
-        expect(packed).toHaveLength(1);
-        const tarball = join(packDirectory, packed[0]?.filename ?? "");
+        const tarball = resolve(packDirectory, packOutput.trim());
 
         await run(
-          npmCommand,
+          process.execPath,
           [
-            ...npmArgumentPrefix,
             "install",
             "--ignore-scripts",
-            "--no-audit",
-            "--no-fund",
-            "--package-lock=false",
+            "--no-save",
+            "--backend=copyfile",
+            "--linker=hoisted",
             tarball,
           ],
           consumerDirectory,

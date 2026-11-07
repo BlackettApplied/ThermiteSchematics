@@ -1,3 +1,5 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
+import { validationGateExpectations as gates } from "../../compiler/test/validation-gate-expectations.js";
 import { dirname, resolve as resolvePath } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -85,7 +87,11 @@ describe("D4 exact resolution", () => {
         aliases: [],
       },
     };
-    expect(designation).toEqual({ ok: true, diagnostics: [], value: expected });
+    expect(designation).toEqual({
+      ok: true,
+      diagnostics: motorDiagnostics,
+      value: expected,
+    });
     expect(uid).toEqual(designation);
   });
 
@@ -438,9 +444,11 @@ describe("D11 resolve errors and validation precedence", () => {
       error: {
         code: "A001",
         message:
-          'A001 Invalid resolve request at "/format": unsupported value.',
+          'A001 Invalid resolve request at "/format": unsupported value; allowed values: ["agent-tool-request/0.1"].',
         field: "/format",
         reason: "unsupported-value",
+        allowed: ["agent-tool-request/0.1"],
+        allowedCount: 1,
       },
       failureClass: "expected",
     });
@@ -465,6 +473,7 @@ describe("D11 resolve errors and validation precedence", () => {
           column: 1,
           jsonPointer: "",
         },
+        gates.missing,
       ],
       error: null,
       failureClass: "tool",

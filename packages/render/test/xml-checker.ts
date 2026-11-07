@@ -41,6 +41,7 @@ const ATTRIBUTES = new Set([
   "fill",
   "stroke",
   "stroke-width",
+  "stroke-dasharray",
   "stroke-linecap",
   "stroke-linejoin",
   "font-family",

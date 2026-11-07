@@ -1,3 +1,17 @@
+import { SYMBOL_PROFILES, symbolProfile } from "@thermite/schema";
+import {
+  formatSymbolFunctionShape,
+  symbolFunctionMatchesShape,
+} from "@thermite/compiler";
+import {
+  acceptedTraceRoots,
+  acceptedTraceRootDescription,
+} from "./intent-rules.js";
+import {
+  rootProfileFunction,
+  unsupportedProfileError,
+  sensorRoleProblem,
+} from "./preflight.js";
 import type {
   ElectricalIr,
   IrDevice,
@@ -26,7 +40,6 @@ import {
   validateTraceRootRules,
 } from "./intent-rules.js";
 import {
-  CORE_DEVICE_TYPE_SYMBOL_MAPPINGS,
   projectDeviceTypeSymbolMappings,
   type DeviceTypeSymbolMapping,
 } from "./symbols/mappings.js";
@@ -461,6 +474,12 @@ function receivedBoolean(input: RequestedBooleanInput): string {
   return input.kind === "non-boolean" ? input.inputType : input.kind;
 }
 
+function rejectedView(
+  error: import("./errors.js").InvalidViewRequestError,
+): NormalizeSchematicViewResult {
+  return Object.freeze({ ok: false, error: Object.freeze(error) });
+}
+
 function invalid(
   message: string,
   descriptors: RequestDescriptorSnapshot,
@@ -810,7 +829,11 @@ function rootSupportsTrace(
   mappings: readonly DeviceTypeSymbolMapping[],
 ): boolean {
   validateTraceRootRules(ir.deviceTypes, mappings);
-  const rule = traceRootRuleForType(device.typeId);
+  const rule = traceRootRuleForType(
+    device.typeId,
+    deviceType,
+    mappings.find((m) => m.typeId === device.typeId),
+  );
   if (rule === undefined) return false;
   materializedTraceRootFunctions(rule, device.uid, deviceType, ir.functions);
   return true;
@@ -931,6 +954,58 @@ function preparedDevice(
   });
 }
 
+/** Root contracts come from the same executable roles and catalog shapes as binding. */
+function acceptedRootContracts(kind: "power" | "control" | "loads" | "trace") {
+  if (kind === "trace")
+    return acceptedTraceRoots().map((r) => ({
+      profile: r.profile,
+      aliases: r.aliases,
+      shapes: r.functions.map(
+        (f) =>
+          `${f.kind}/${f.terminalCount}${"normalState" in f ? `, normal state ${f.normalState}` : ""}${"direction" in f ? `, direction ${f.direction}` : ""}`,
+      ),
+    }));
+  const family = kind === "loads" ? "control" : kind;
+  const fnKind =
+    kind === "power" ? "load" : kind === "control" ? "coil" : "source";
+  // These kinds receive load-boundary, coil-root and source-boundary roles in
+  // projectDeviceTypeSymbolMappings. Include reusable profiles beyond core types.
+  return SYMBOL_PROFILES.flatMap((p) => {
+    const shapes = [
+      ...new Set(
+        p.support
+          .filter((s) => s.family === family)
+          .flatMap((s) =>
+            s.functions
+              .filter((f) => f.kind === fnKind)
+              .map(formatSymbolFunctionShape),
+          ),
+      ),
+    ];
+    return shapes.length
+      ? [
+          {
+            profile: p.id,
+            aliases: [...p.aliases, ...p.coreAliases.map((b) => b.symbol)],
+            shapes,
+          },
+        ]
+      : [];
+  });
+}
+function acceptedRootDescription(
+  kind: "power" | "control" | "loads" | "trace",
+) {
+  if (kind === "trace") return acceptedTraceRootDescription();
+  return acceptedRootContracts(kind)
+    .map((r) =>
+      "shapes" in r
+        ? `${r.profile}${r.aliases.length ? ` (aliases ${r.aliases.join(", ")})` : ""}: ${r.shapes.join(" or ")}`
+        : "",
+    )
+    .join("; ");
+}
+
 export function normalizeSchematicView(
   ir: Readonly<ElectricalIr>,
   request: unknown,
@@ -990,6 +1065,93 @@ export function normalizeSchematicView(
     ({ typeId }) => typeId === rootDevice.typeId,
   );
 
+  const rejectRoot = (
+    error: InvalidViewRequestError,
+    kind: "power" | "control" | "loads" | "trace",
+  ) => {
+    const rootFamilies: string[] = [];
+    if (rootMapping) {
+      for (const f of ["power", "control"] as const)
+        if (rootSupportsFamily(ir, rootDevice, rootMapping, f))
+          rootFamilies.push(f);
+      if (rootSupportsLoads(ir, rootDevice, rootMapping))
+        rootFamilies.push("loads");
+      if (rootSupportsTrace(ir, rootDevice, rootDeviceType, mappings))
+        rootFamilies.push("trace");
+    }
+    const roleProblem = sensorRoleProblem(ir, rootDevice);
+    const unsupported =
+      roleProblem?.f ??
+      rootProfileFunction(
+        ir,
+        rootDevice,
+        rootMapping,
+        family,
+        kind === "trace" || kind === "loads" ? kind : undefined,
+      );
+    const ownProfile = SYMBOL_PROFILES.find(
+      (p) => p.id === symbolProfile(rootDeviceType),
+    );
+    const badProfile = rootDeviceType.symbol !== undefined && !ownProfile;
+    const drawable = rootDeviceType.functions.filter(
+      (f) => f.kind !== "mechanism",
+    );
+    const badShape =
+      ownProfile &&
+      drawable.length > 0 &&
+      drawable.every(
+        (f) =>
+          !Object.hasOwn(rootDeviceType.circuitSymbols ?? {}, f.key) &&
+          !ownProfile.support.some((s) =>
+            s.functions.some((shape) =>
+              symbolFunctionMatchesShape(rootDeviceType, f, shape),
+            ),
+          ),
+      );
+    const diagnosed =
+      unsupported || badProfile || badShape
+        ? unsupportedProfileError(
+            ir,
+            error,
+            rootDevice,
+            unsupported,
+            family,
+            roleProblem?.cause ??
+              (badShape
+                ? "Declared functions do not fit this profile's cataloged shapes."
+                : undefined),
+          )
+        : {
+            ...error,
+            reason: "root-not-accepted" as const,
+            message: `${error.message} Device ${JSON.stringify(rootDevice.designation)} is not accepted as a ${kind} root. ${kind === "trace" ? "Accepted trace profiles and shapes" : "Accepted profiles and shapes"}: ${acceptedRootDescription(kind)}. ${rootFamilies.length ? `This device can root: ${rootFamilies.join(", ")}. Choose another root or family.` : "This device cannot root a supported family. Choose a different root device."}`,
+            details: {
+              ...error.details,
+              reason: "root-not-accepted",
+              designation: rootDevice.designation,
+              typeId: rootDevice.typeId,
+              profile: rootDeviceType.symbol ?? "<missing>",
+              family,
+            },
+          };
+    return rejectedView({
+      ...diagnosed,
+      ...(diagnosed.reason === "unsupported-symbol-profile"
+        ? {
+            message: `${diagnosed.message} ${error.message} ${kind === "trace" ? "Accepted trace profiles and shapes" : "Accepted profiles and shapes"}: ${acceptedRootDescription(kind)}.`,
+          }
+        : {}),
+      details: {
+        ...diagnosed.details,
+        acceptedRoots: acceptedRootContracts(kind),
+        rootFamilies,
+        ...(kind === "trace"
+          ? { acceptedTraceRoots: acceptedTraceRoots() }
+          : {}),
+      },
+    });
+  };
+
   if (captured.version === "legacy") {
     if (
       rootMapping === undefined ||
@@ -999,13 +1161,16 @@ export function normalizeSchematicView(
         captured.family === "control"
           ? "exactly one mapped coil root"
           : "at least one mapped load terminal";
-      return invalid(
+      const rejected = invalid(
         `Invalid ${captured.family} root: expected ${contract}.`,
         captured,
         canonical,
         captured.family,
         rootDevice.uid,
       );
+      return !rejected.ok && rejected.error.code === "R001"
+        ? rejectRoot(rejected.error, captured.family)
+        : rejected;
     }
     const view: NormalizedLegacySchematicView = Object.freeze({
       format: "schematic-view/0.1",
@@ -1031,13 +1196,15 @@ export function normalizeSchematicView(
       rootMapping === undefined ||
       !rootSupportsTrace(ir, rootDevice, rootDeviceType, mappings)
     ) {
-      return invalid(
+      const rejected = invalid(
         "Invalid trace root: expected one supported mapped trace-root rule.",
         captured,
         canonical,
         "control",
         rootDevice.uid,
       );
+      if (rejected.ok || rejected.error.code !== "R001") return rejected;
+      return rejectRoot(rejected.error, "trace");
     }
     const target = engine.resolveObject(captured.target);
     if (!target.ok) return Object.freeze(target);
@@ -1064,13 +1231,67 @@ export function normalizeSchematicView(
       ({ typeId }) => typeId === targetDevice.typeId,
     );
     if (!targetHasMappedInput(ir, targetDevice, targetMapping)) {
-      return invalid(
+      const unsupported = ir.functions.find(
+        (f) =>
+          f.id.deviceUid === targetDevice.uid &&
+          f.kind === "channel" &&
+          f.direction === "input",
+      );
+      const rejected = invalid(
         "Invalid trace target: expected at least one mapped input channel.",
         captured,
         canonical,
         "control",
         rootDevice.uid,
       );
+      if (rejected.ok || rejected.error.code !== "R001") return rejected;
+      const type = ir.deviceTypes.find((t) => t.id === targetDevice.typeId)!;
+      const profile = SYMBOL_PROFILES.find((p) => p.id === symbolProfile(type));
+      const ownShapeMismatch =
+        unsupported &&
+        profile &&
+        !profile.support.some((s) =>
+          s.functions.some((shape) =>
+            symbolFunctionMatchesShape(
+              type,
+              type.functions.find((f) => f.key === unsupported.id.functionKey)!,
+              shape,
+            ),
+          ),
+        );
+      // Missing metadata is an eligibility failure, like a missing root profile.
+      // A declared unknown symbol or its own mismatched shape is a type problem.
+      const typeProblem =
+        type.symbol !== undefined && (!profile || ownShapeMismatch);
+      const error = typeProblem
+        ? unsupportedProfileError(
+            ir,
+            rejected.error,
+            targetDevice,
+            unsupported,
+            "control",
+          )
+        : {
+            ...rejected.error,
+            reason: "target-not-accepted" as const,
+            message: `${rejected.error.message} Device ${JSON.stringify(targetDevice.designation)} is not accepted as an input target. Choose a different target device with a mapped input channel.`,
+            details: {
+              ...rejected.error.details,
+              reason: "target-not-accepted",
+              family: "control",
+              profile: type.symbol ?? "<missing>",
+            },
+          };
+      return rejectedView({
+        ...error,
+        targetDeviceUid: targetDevice.uid,
+        targetDesignation: targetDevice.designation,
+        details: {
+          ...error.details,
+          targetDeviceUid: targetDevice.uid,
+          targetDesignation: targetDevice.designation,
+        },
+      });
     }
     const view: Extract<
       NormalizedIntentSchematicView,
@@ -1105,13 +1326,16 @@ export function normalizeSchematicView(
     rootMapping === undefined ||
     !rootSupportsLoads(ir, rootDevice, rootMapping)
   ) {
-    return invalid(
+    const rejected = invalid(
       "Invalid loads root: expected exactly one mapped control source with a source/return terminal pair.",
       captured,
       canonical,
       "control",
       rootDevice.uid,
     );
+    return !rejected.ok && rejected.error.code === "R001"
+      ? rejectRoot(rejected.error, "loads")
+      : rejected;
   }
   const view: Extract<
     NormalizedIntentSchematicView,

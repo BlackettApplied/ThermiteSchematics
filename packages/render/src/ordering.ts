@@ -106,9 +106,7 @@ export function compareTerminalId(
     compareText(
       designationForDeviceUid(left.deviceUid),
       designationForDeviceUid(right.deviceUid),
-    ) ||
-    compareText(left.terminalKey, right.terminalKey) ||
-    compareText(left.deviceUid, right.deviceUid)
+    ) || compareText(left.terminalKey, right.terminalKey)
   );
 }
 
@@ -124,8 +122,7 @@ export function compareFunctionId(
       designationForDeviceUid(right.deviceUid),
     ) ||
     mappingOrderForFunction(left) - mappingOrderForFunction(right) ||
-    compareText(left.functionKey, right.functionKey) ||
-    compareText(left.deviceUid, right.deviceUid)
+    compareText(left.functionKey, right.functionKey)
   );
 }
 
@@ -134,11 +131,9 @@ export function compareDeviceUid(
   right: string,
   designationForDeviceUid: (deviceUid: string) => string,
 ): number {
-  return (
-    compareText(
-      designationForDeviceUid(left),
-      designationForDeviceUid(right),
-    ) || compareText(left, right)
+  return compareText(
+    designationForDeviceUid(left),
+    designationForDeviceUid(right),
   );
 }
 
@@ -153,10 +148,17 @@ export function compareLocationIdentity(
 export function comparePresentationNode(
   left: PresentationNode,
   right: PresentationNode,
+  key: (identity: string) => string,
 ): number {
   return (
     comparePresentationClass(left.classification, right.classification) ||
-    compareText(left.id, right.id)
+    (left.kind === "junction" && right.kind === "junction"
+      ? compareText(
+          key(terminalIdKey(left.terminal)),
+          key(terminalIdKey(right.terminal)),
+        )
+      : 0) ||
+    compareText(key(left.id), key(right.id))
   );
 }
 
@@ -168,7 +170,7 @@ export function comparePresentationPort(
   return (
     left.order - right.order ||
     compareTerminalId(left.terminal, right.terminal, designationForDeviceUid) ||
-    compareText(left.id, right.id)
+    compareText(left.symbolPortId, right.symbolPortId)
   );
 }
 
@@ -188,13 +190,14 @@ const PRESENTATION_LABEL_ROLE_RANK: Readonly<
 export function comparePresentationLabel(
   left: PresentationLabel,
   right: PresentationLabel,
+  key: (identity: string) => string = (identity) => identity,
 ): number {
   return (
     compareText(left.ownerKind, right.ownerKind) ||
-    compareText(left.ownerId, right.ownerId) ||
+    compareText(key(left.ownerId), key(right.ownerId)) ||
     PRESENTATION_LABEL_ROLE_RANK[left.role] -
       PRESENTATION_LABEL_ROLE_RANK[right.role] ||
-    compareText(left.id, right.id)
+    compareText(key(left.id), key(right.id))
   );
 }
 

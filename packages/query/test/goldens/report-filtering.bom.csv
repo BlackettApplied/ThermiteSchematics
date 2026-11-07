@@ -1,0 +1,16 @@
+"Qty","Designations","Location","Manufacturer","Order number","Description / type","Instance description / requirements"
+"1","PLC1","Main","","","Generic controller interface",""
+"1","PLC2","Remote","","","Generic controller interface",""
+"1","DOC1","Main","","","Documentary boundary node","Not purchased: Documentary network boundary; outside purchasing scope"
+"1","DOC2","Remote","","","Documentary boundary node",""
+"2","S1, S2","Field","","","Generic field interface",""
+"1","UNLOC","","","","Generic field interface",""
+"1","TB1","Main","","","Generic terminal strip",""
+"1","TB2","Remote","","","Generic terminal strip",""
+"1","CBL1","","","","Generic two-core test cable",""
+"1","CBL2","","","","Generic two-core test cable",""
+"1","LOOSE","","","","Generic two-core test cable",""
+"1","ASM1","Main to Field","","","Generic test cordset
+Assembly only; pin mapping unresolved",""
+"1","ASM2","Remote to Field","","","Generic test cordset
+Assembly only; pin mapping unresolved",""

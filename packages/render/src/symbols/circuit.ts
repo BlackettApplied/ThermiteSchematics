@@ -1,8 +1,23 @@
+import { symbolProfile } from "./profiles.js";
 import type { IrDeviceType, IrFunction } from "@thermite/compiler";
+import {
+  PRINTABLE_SYMBOL_POLICY,
+  sharedMarkHeight,
+  sharedMarkPrimitives,
+  motorLegend,
+  type SharedMark,
+  sourceEnclosure,
+  sourceEnclosureInk,
+} from "./printable-policy.js";
 import { escapeXmlText as xml } from "../svg/escape.js";
 
 /** Closed, original circuit marks. Profiles never grant electrical continuity. */
 export type CircuitMark =
+  | "disconnector"
+  | "estop-no"
+  | "estop-nc"
+  | "selector-no"
+  | "selector-nc"
   | "contact-no"
   | "contact-nc"
   | "breaker"
@@ -23,22 +38,20 @@ export type CircuitMark =
   | "pushbutton-no"
   | "pushbutton-nc"
   | "thermocouple"
-  | "interface";
+  | "interface"
+  | "pressure-no"
+  | "pressure-nc"
+  | "level-no"
+  | "level-nc"
+  | "level-sensor"
+  | "conductivity-probe"
+  | "receptacle"
+  | "ac-input"
+  | "dc-output"
+  | "sensor-3wire";
 
-const CORE_PROFILES: Readonly<Record<string, string>> = Object.freeze({
-  "core:supply-480v-3ph": "thermite:power-source",
-  "core:breaker-3p": "thermite:breaker",
-  "core:contactor-3p-1no": "thermite:contactor",
-  "core:overload-3p-1nc": "thermite:overload",
-  "core:motor-3ph": "thermite:motor-3ph",
-  "core:pushbutton-nc": "thermite:pushbutton",
-  "core:limit-switch-2wire": "thermite:switch",
-  "core:plc-compact": "thermite:io-module",
-  "core:psu-24vdc": "thermite:dc-supply",
-  "core:terminal-block-8": "thermite:terminal-strip",
-  "core:junction-box-8": "thermite:terminal-strip",
-});
 export const CIRCUIT_PROFILES = Object.freeze([
+  "thermite:sensor-3wire",
   "thermite:contactor",
   "thermite:relay",
   "thermite:breaker",
@@ -55,14 +68,20 @@ export const CIRCUIT_PROFILES = Object.freeze([
   "thermite:solenoid",
   "thermite:lamp",
   "thermite:switch",
+  "thermite:disconnector",
   "thermite:pushbutton",
+  "thermite:estop",
+  "thermite:selector",
   "thermite:thermocouple",
+  "thermite:pressure-switch",
+  "thermite:level-switch",
+  "thermite:level-sensor",
+  "thermite:conductivity-probe",
+  "thermite:receptacle",
 ] as const);
 
 export function circuitProfile(type: IrDeviceType): string {
-  const profile = Object.hasOwn(CORE_PROFILES, type.id)
-    ? CORE_PROFILES[type.id]
-    : type.symbol;
+  const profile = symbolProfile(type);
   if (
     !profile ||
     !CIRCUIT_PROFILES.includes(profile as (typeof CIRCUIT_PROFILES)[number])
@@ -74,11 +93,7 @@ export function circuitProfile(type: IrDeviceType): string {
 }
 
 export function isCircuitTerminalStrip(type: IrDeviceType): boolean {
-  return (
-    (Object.hasOwn(CORE_PROFILES, type.id)
-      ? CORE_PROFILES[type.id]
-      : type.symbol) === "thermite:terminal-strip"
-  );
+  return symbolProfile(type) === "thermite:terminal-strip";
 }
 
 export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
@@ -101,26 +116,34 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
           "switch-nc",
           "pushbutton-no",
           "pushbutton-nc",
+          "pressure-no",
+          "pressure-nc",
+          "level-no",
+          "level-nc",
         ].includes(explicit)) ||
       (f.kind === "coil" &&
         count === 2 &&
         ["coil", "solenoid"].includes(explicit)) ||
       (f.kind === "load" &&
         (([2, 3].includes(count) &&
-          ["motor", "heater", "load"].includes(explicit)) ||
+          ["motor", "heater", "load", "receptacle", "ac-input"].includes(
+            explicit,
+          )) ||
           (count === 2 && ["lamp", "winding"].includes(explicit)))) ||
       (f.kind === "source" &&
         ((count >= 1 && count <= 4 && explicit === "source") ||
-          (count === 2 && explicit === "winding"))) ||
+          (count === 2 && ["winding", "dc-output"].includes(explicit)))) ||
       (f.kind === "bus" &&
         count === 1 &&
         ["terminal", "earth"].includes(explicit)) ||
       (f.kind === "channel" &&
         [1, 2].includes(count) &&
-        explicit === "interface") ||
+        ["interface", "level-sensor"].includes(explicit)) ||
       (f.kind === "other" &&
-        ((count >= 1 && count <= 8 && explicit === "interface") ||
-          (count === 2 && ["thermocouple", "fuse"].includes(explicit))));
+        ((count >= 1 && count <= 32 && explicit === "interface") ||
+          (count === 2 && ["thermocouple", "fuse"].includes(explicit)) ||
+          ([2, 3].includes(count) && explicit === "level-sensor") ||
+          (count >= 2 && count <= 8 && explicit === "conductivity-probe")));
     if (
       !valid ||
       (f.kind === "contact" &&
@@ -145,12 +168,37 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
       )
     )
       return f.normal_state === "open" ? "contact-no" : "contact-nc";
-    if (profile === "thermite:breaker") return "breaker";
+    if (profile === "thermite:breaker") {
+      const roles = f.terminals.map(
+        (t) => type.terminals.find((p) => p.key === t.terminalKey)?.role,
+      );
+      return roles.includes("power_input") && roles.includes("power_output")
+        ? "breaker"
+        : f.normal_state === "open"
+          ? "contact-no"
+          : "contact-nc";
+    }
     if (profile === "thermite:overload")
-      return f.normal_state === "closed" ? "contact-nc" : "overload";
+      return f.terminals.every(
+        (t, i) =>
+          type.terminals.find((p) => p.key === t.terminalKey)?.role ===
+          (i === 0 ? "power_input" : "power_output"),
+      )
+        ? "overload"
+        : f.normal_state === "open"
+          ? "contact-no"
+          : "contact-nc";
     if (profile === "thermite:fuse") return "fuse";
+    if (profile === "thermite:disconnector" && f.normal_state === "open")
+      return "disconnector";
     if (profile === "thermite:switch")
       return f.normal_state === "open" ? "switch-no" : "switch-nc";
+    if (profile === "thermite:pressure-switch")
+      return f.normal_state === "open" ? "pressure-no" : "pressure-nc";
+    if (profile === "thermite:level-switch")
+      return f.normal_state === "open" ? "level-no" : "level-nc";
+    if (profile === "thermite:estop" || profile === "thermite:selector")
+      return `${profile === "thermite:estop" ? "estop" : "selector"}-${f.normal_state === "open" ? "no" : "nc"}`;
     if (profile === "thermite:pushbutton")
       return f.normal_state === "open" ? "pushbutton-no" : "pushbutton-nc";
   }
@@ -159,13 +207,22 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
       return "coil";
     if (profile === "thermite:solenoid") return "solenoid";
   }
+  if (
+    profile === "thermite:sensor-3wire" &&
+    ((f.kind === "load" && count === 2) ||
+      (f.kind === "channel" && f.direction === "output" && count === 1))
+  )
+    return "sensor-3wire";
   if (f.kind === "load") {
     if (profile === "thermite:motor-3ph" && count === 3) return "motor";
     if (profile === "thermite:motor" && count === 2) return "motor";
     if (profile === "thermite:heater" && [2, 3].includes(count))
       return "heater";
     if (profile === "thermite:lamp" && count === 2) return "lamp";
+    if (profile === "thermite:receptacle" && [2, 3].includes(count))
+      return "receptacle";
     if (profile === "thermite:transformer" && count === 2) return "winding";
+    if (profile === "thermite:dc-supply" && count === 2) return "dc-output";
     if (
       ["thermite:dc-supply", "thermite:relay", "thermite:io-module"].includes(
         profile,
@@ -176,6 +233,7 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
   }
   if (f.kind === "source") {
     if (profile === "thermite:transformer" && count === 2) return "winding";
+    if (profile === "thermite:dc-supply" && count === 2) return "dc-output";
     if (
       [
         "thermite:dc-supply",
@@ -197,9 +255,22 @@ export function circuitMark(type: IrDeviceType, f: IrFunction): CircuitMark {
     profile === "thermite:io-module" &&
     f.kind === "other" &&
     count >= 1 &&
-    count <= 8
+    count <= 32
   )
     return "interface";
+  if (
+    profile === "thermite:level-sensor" &&
+    ((f.kind === "other" && [2, 3].includes(count)) ||
+      (f.kind === "channel" && [1, 2].includes(count)))
+  )
+    return "level-sensor";
+  if (
+    profile === "thermite:conductivity-probe" &&
+    f.kind === "other" &&
+    count >= 2 &&
+    count <= 8
+  )
+    return "conductivity-probe";
   if (profile === "thermite:fuse" && f.kind === "other" && count === 2)
     return "fuse";
   if (profile === "thermite:thermocouple" && f.kind === "other" && count === 2)
@@ -253,26 +324,84 @@ const CONTACT = [
   line(4, 3, 4, 9),
   line(8, 3, 8, 9),
 ];
+const pressure: Primitive[] = [
+  line(6, 0, 6, 2),
+  {
+    kind: "polyline",
+    points: [
+      [2, 0],
+      [3, 1],
+      [4, 0],
+      [5, 1],
+      [6, 0],
+      [7, 1],
+      [8, 0],
+      [9, 1],
+      [10, 0],
+    ],
+  },
+];
+const level: Primitive[] = [
+  line(6, 0, 6, 2),
+  {
+    kind: "polyline",
+    points: [
+      [6, 0],
+      [4, 1],
+      [6, 2],
+      [8, 1],
+      [6, 0],
+    ],
+  },
+];
+function sharedCircuitPrimitives(mark: SharedMark): Primitive[] {
+  const y = (v: number) => 6 + (v - sharedMarkHeight(mark) / 2) * 0.3;
+  return sharedMarkPrimitives(mark).map((original) => {
+    const pivot = sharedMarkHeight(mark) / 2 - 6;
+    const transform = (v: { x: number; y: number }) => ({
+      x: 20 + (v.x - 20) * 1.5,
+      y: pivot + (v.y - pivot) * 1.5,
+    });
+    const p =
+      original.style !== "actuator"
+        ? original
+        : original.kind === "line"
+          ? {
+              ...original,
+              from: transform(original.from),
+              to: transform(original.to),
+            }
+          : original.kind === "polyline"
+            ? { ...original, points: original.points.map(transform) }
+            : original;
+    switch (p.kind) {
+      case "line":
+        return line(p.from.x * 0.3, y(p.from.y), p.to.x * 0.3, y(p.to.y));
+      case "polyline":
+        return {
+          kind: "polyline",
+          points: p.points.map((v) => [v.x * 0.3, y(v.y)] as Point),
+        };
+      case "rect":
+        return rect(p.x * 0.3, y(p.y), p.width * 0.3, p.height * 0.3);
+      default:
+        throw Error(`Unsupported shared mark primitive ${p.kind}`);
+    }
+  });
+}
 const MARKS: Readonly<Record<CircuitMark, readonly Primitive[]>> =
   Object.freeze({
-    "contact-no": CONTACT,
-    "contact-nc": [...CONTACT, line(2, 10, 10, 2)],
-    breaker: [
-      line(0, 6, 3, 6),
-      line(3, 6, 8, 2),
-      line(9, 6, 12, 6),
-      {
-        kind: "polyline",
-        points: [
-          [5, 2],
-          [6, 0],
-          [8, 1],
-        ],
-      },
-    ],
-    overload: [rect(3, 2, 6, 8), line(0, 6, 3, 6), line(9, 6, 12, 6), zigzag],
+    disconnector: sharedCircuitPrimitives("disconnector"),
+    "estop-no": sharedCircuitPrimitives("estop-no"),
+    "estop-nc": sharedCircuitPrimitives("estop-nc"),
+    "selector-no": sharedCircuitPrimitives("selector-no"),
+    "selector-nc": sharedCircuitPrimitives("selector-nc"),
+    "contact-no": sharedCircuitPrimitives("contact-no"),
+    "contact-nc": sharedCircuitPrimitives("contact-nc"),
+    breaker: sharedCircuitPrimitives("breaker"),
+    overload: sharedCircuitPrimitives("overload"),
     fuse: [line(0, 6, 12, 6), rect(3, 4, 6, 4)],
-    coil: [line(0, 6, 2, 6), line(10, 6, 12, 6), circle(6, 6, 4)],
+    coil: sharedCircuitPrimitives("coil"),
     motor: [circle(6, 6, 5), label("M")],
     heater: [zigzag],
     winding: [
@@ -316,20 +445,10 @@ const MARKS: Readonly<Record<CircuitMark, readonly Primitive[]>> =
       line(6, 0, 6, 1),
       line(6, 11, 6, 12),
     ],
-    "switch-no": [...CONTACT, line(6, 0, 6, 3), line(6, 0, 9, 0)],
-    "switch-nc": [
-      ...CONTACT,
-      line(2, 10, 10, 2),
-      line(6, 0, 6, 3),
-      line(6, 0, 9, 0),
-    ],
-    "pushbutton-no": [...CONTACT, line(6, 0, 6, 3), line(3, 0, 9, 0)],
-    "pushbutton-nc": [
-      ...CONTACT,
-      line(2, 10, 10, 2),
-      line(6, 0, 6, 3),
-      line(3, 0, 9, 0),
-    ],
+    "switch-no": sharedCircuitPrimitives("switch-no"),
+    "switch-nc": sharedCircuitPrimitives("switch-nc"),
+    "pushbutton-no": sharedCircuitPrimitives("pushbutton-no"),
+    "pushbutton-nc": sharedCircuitPrimitives("pushbutton-nc"),
     thermocouple: [
       {
         kind: "polyline",
@@ -344,12 +463,68 @@ const MARKS: Readonly<Record<CircuitMark, readonly Primitive[]>> =
       circle(10, 6, 0.7),
     ],
     interface: [rect(1, 1, 10, 10)],
+    "pressure-no": [...CONTACT, ...pressure],
+    "pressure-nc": [...CONTACT, ...pressure, line(2, 10, 10, 2)],
+    "level-no": [...CONTACT, ...level],
+    "level-nc": [...CONTACT, ...level, line(2, 10, 10, 2)],
+    "level-sensor": [
+      rect(1, 1, 10, 10),
+      {
+        kind: "polyline",
+        points: [
+          [6, 3],
+          [3, 6],
+          [6, 9],
+          [9, 6],
+          [6, 3],
+        ],
+      },
+    ],
+    "conductivity-probe": [circle(6, 6, 5), line(4, 3, 4, 9), line(8, 3, 8, 9)],
+    receptacle: [
+      circle(6, 6, 5),
+      line(4, 3, 4, 7),
+      line(8, 3, 8, 7),
+      {
+        kind: "polyline",
+        points: [
+          [5, 9],
+          [5, 8],
+          [7, 8],
+          [7, 9],
+        ],
+      },
+    ],
+    "ac-input": [
+      rect(1, 1, 10, 10),
+      {
+        kind: "polyline",
+        points: [
+          [2, 6],
+          [3, 4],
+          [4, 3],
+          [5, 4],
+          [7, 8],
+          [8, 9],
+          [9, 8],
+          [10, 6],
+        ],
+      },
+    ],
+    "sensor-3wire": [rect(1, 1, 10, 10), circle(6, 6, 2), line(8, 6, 12, 6)],
+    "dc-output": [
+      rect(1, 1, 10, 10),
+      line(3, 4, 9, 4),
+      line(3, 7, 4, 7),
+      line(5, 7, 7, 7),
+      line(8, 7, 9, 7),
+    ],
   });
 const n = (v: number) => String(Number(v.toFixed(3)));
 
 /** Fixed 12 mm catalog mark; labels and terminals are composed separately. */
 export function emitCircuitMark(mark: CircuitMark, vertical = false): string {
-  return `<g data-circuit-mark="${mark}" stroke="#17212b" stroke-width=".4" fill="none"${vertical ? ' transform="translate(12 0) rotate(90)"' : ""}>${MARKS[
+  return `<g data-circuit-mark="${mark}" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"${vertical ? ' transform="translate(12 0) rotate(90)"' : ""}>${MARKS[
     mark
   ]
     .map((p) => {
@@ -363,14 +538,54 @@ export function emitCircuitMark(mark: CircuitMark, vertical = false): string {
         case "rect":
           return `<rect x="${n(p.x)}" y="${n(p.y)}" width="${n(p.width)}" height="${n(p.height)}"/>`;
         case "text":
-          return `<text x="${n(p.x)}" y="${n(p.y)}" text-anchor="middle" stroke="none" fill="#17212b" font-family="Arial, Helvetica, sans-serif" font-size="${p.text.length > 1 ? 2.5 : 3.5}"${vertical ? ` transform="rotate(-90 ${p.x} ${p.y})"` : ""}>${xml(p.text)}</text>`;
+          return `<text x="${n(p.x)}" y="${n(p.y)}" text-anchor="middle" stroke="none" fill="#17212b" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="${p.text.length > 1 ? 2.5 : 3.5}"${vertical ? ` transform="rotate(-90 ${p.x} ${p.y})"` : ""}>${xml(p.text)}</text>`;
       }
     })
     .join("")}</g>`;
 }
 
-export function circuitBlock(width: number, height: number): string {
-  return `<rect width="${n(width)}" height="${n(height)}" fill="white" stroke="#17212b" stroke-width=".4"/>`;
+export type CircuitSide = "WEST" | "EAST" | "NORTH" | "SOUTH";
+const SYMBOL_SIDE = {
+  WEST: "west",
+  EAST: "east",
+  NORTH: "north",
+  SOUTH: "south",
+} as const;
+
+export function circuitBlock(
+  width: number,
+  height: number,
+  sourcePins?: readonly { x: number; y: number; side: CircuitSide }[],
+  onlySources = true,
+): string {
+  if (sourcePins?.length) {
+    const ink = sourceEnclosureInk();
+    const outline = sourceEnclosure(
+      { x: 0, y: 0, width, height },
+      sourcePins.map((p) => ({
+        side: SYMBOL_SIDE[p.side],
+        at: p.side === "WEST" || p.side === "EAST" ? p.y : p.x,
+      })),
+      1.5,
+    );
+    const lines = outline
+      .map((p) => {
+        const side =
+          p.from.x === p.to.x
+            ? p.from.x === 0
+              ? "WEST"
+              : "EAST"
+            : p.from.y === 0
+              ? "NORTH"
+              : "SOUTH";
+        const isolated =
+          onlySources || sourcePins.some((pin) => pin.side === side);
+        return `<line x1="${n(p.from.x)}" y1="${n(p.from.y)}" x2="${n(p.to.x)}" y2="${n(p.to.y)}" stroke="${ink.color}" stroke-width="${n(isolated ? ink.strokeWidth : PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}"${isolated ? ` stroke-dasharray="${ink.dash}"` : ""}/>`;
+      })
+      .join("");
+    return `<g data-source-enclosure="true" fill="none"><rect width="${n(width)}" height="${n(height)}" fill="white" stroke="none"/>${lines}</g>`;
+  }
+  return `<rect width="${n(width)}" height="${n(height)}" fill="white" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}"/>`;
 }
 
 export function circuitTerminal(
@@ -387,11 +602,12 @@ export function circuitMotor(
   top: number,
   span: number,
   portYs: readonly number[],
+  threePhase = false,
 ): string {
   const cx = width / 2,
     cy = top + span / 2,
     r = Math.min(width / 2 - 2, Math.max(5, span / 2 - 2));
-  return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width=".4" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portYs
+  return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portYs
     .map((y) => {
       const dy = Math.max(-r, Math.min(r, y - cy)),
         x = cx - Math.sqrt(r * r - dy * dy);
@@ -399,7 +615,7 @@ export function circuitMotor(
     })
     .join(
       "",
-    )}<text x="${n(cx)}" y="${n(cy + 1.2)}" font-family="Arial, Helvetica, sans-serif" font-size="3.5" text-anchor="middle" stroke="none" fill="#17212b">M</text></g>`;
+    )}<text x="${n(cx)}" y="${n(cy + 1.2)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="3.5" text-anchor="middle" stroke="none" fill="#17212b">${motorLegend(threePhase)[0]}</text>${threePhase ? `<text x="${n(cx)}" y="${n(cy + 5)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="2.5" text-anchor="middle" stroke="none" fill="#17212b">3~</text>` : ""}</g>`;
 }
 
 export function circuitMotorVertical(
@@ -407,9 +623,10 @@ export function circuitMotorVertical(
   cy: number,
   span: number,
   portXs: readonly number[],
+  threePhase = false,
 ): string {
   const r = Math.max(5, span / 2 - 2);
-  return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width=".4" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portXs
+  return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portXs
     .map((x) => {
       const dx = Math.max(-r, Math.min(r, x - cx)),
         y = cy - Math.sqrt(r * r - dx * dx);
@@ -417,7 +634,7 @@ export function circuitMotorVertical(
     })
     .join(
       "",
-    )}<text x="${n(cx)}" y="${n(cy + 1.2)}" font-family="Arial, Helvetica, sans-serif" font-size="3.5" text-anchor="middle" stroke="none" fill="#17212b">M</text></g>`;
+    )}<text x="${n(cx)}" y="${n(cy + 1.2)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="3.5" text-anchor="middle" stroke="none" fill="#17212b">${motorLegend(threePhase)[0]}</text>${threePhase ? `<text x="${n(cx)}" y="${n(cy + 5)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="2.5" text-anchor="middle" stroke="none" fill="#17212b">3~</text>` : ""}</g>`;
 }
 
 /** Both winding terminals remain distinct; this local mark has no IR net effect. */
@@ -426,21 +643,23 @@ export function circuitWinding(
   y1: number,
   y2: number,
   source: boolean,
+  coupled = false,
+  terminalXs?: readonly [number, number],
 ): string {
-  const x = width / 2,
+  const x = width / 2 + (coupled ? (source ? 3 : -3) : 0),
     edge = source ? width : 0,
     span = y2 - y1;
   const points: Point[] = [
-    [edge, y1],
+    [terminalXs?.[0] ?? edge, y1],
     [x, y1],
     ...[1, 2, 3, 4, 5, 6, 7].map((i): Point => [
-      x + (i % 2 ? 2 : 0),
+      x + (i % 2 ? (coupled && source ? -2 : 2) : 0),
       y1 + (span * i) / 8,
     ]),
     [x, y2],
-    [edge, y2],
+    [terminalXs?.[1] ?? edge, y2],
   ];
-  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/><line x1="${n(x + 4)}" x2="${n(x + 4)}" y1="${n(y1 - 1)}" y2="${n(y2 + 1)}"/></g>`;
+  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/>${coupled ? "" : `<line x1="${n(x + 4)}" x2="${n(x + 4)}" y1="${n(y1 - 1)}" y2="${n(y2 + 1)}"/>`}</g>`;
 }
 
 export function circuitWindingVertical(
@@ -448,31 +667,34 @@ export function circuitWindingVertical(
   x1: number,
   x2: number,
   source: boolean,
+  coupled = false,
+  center = height / 2,
+  terminalYs?: readonly [number, number],
 ): string {
-  const y = height / 2,
+  const y = center + (coupled ? (source ? 3 : -3) : 0),
     edge = source ? height : 0,
     span = x2 - x1;
   const points: Point[] = [
-    [x1, edge],
+    [x1, terminalYs?.[0] ?? edge],
     [x1, y],
     ...[1, 2, 3, 4, 5, 6, 7].map((i): Point => [
       x1 + (span * i) / 8,
-      y + (i % 2 ? 2 : 0),
+      y + (i % 2 ? (coupled && source ? -2 : 2) : 0),
     ]),
     [x2, y],
-    [x2, edge],
+    [x2, terminalYs?.[1] ?? edge],
   ];
-  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width=".4" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/><line x1="${n(Math.min(x1, x2) - 1)}" x2="${n(Math.max(x1, x2) + 1)}" y1="${n(y + 4)}" y2="${n(y + 4)}"/></g>`;
+  return `<g data-circuit-mark="winding" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><polyline points="${points.map((p) => `${n(p[0])},${n(p[1])}`).join(" ")}"/>${coupled ? "" : `<line x1="${n(Math.min(x1, x2) - 1)}" x2="${n(Math.max(x1, x2) + 1)}" y1="${n(y + 4)}" y2="${n(y + 4)}"/>`}</g>`;
 }
 
 /** Local catalog attachment for a function terminal, including a reused physical common. */
-export function circuitAttachment(
+export function circuitAttachmentPoints(
   from: { x: number; y: number; side: string },
   to: { x: number; y: number },
   targetSide: string,
   width: number,
   height: number,
-): string {
+): Point[] {
   let points: Point[];
   if (targetSide === "WEST" || targetSide === "EAST") {
     const fromEdge = from.side === "WEST" ? 1 : width - 1,
@@ -513,8 +735,101 @@ export function circuitAttachment(
             [to.x, to.y],
           ];
   }
+  return points;
+}
+export function circuitAttachment(
+  ...args: Parameters<typeof circuitAttachmentPoints>
+): string {
+  const points = circuitAttachmentPoints(...args);
   const path = points
     .map((p, i) => `${i ? "L" : "M"} ${n(p[0])} ${n(p[1])}`)
     .join(" ");
   return `<path d="${path}" fill="none" stroke="white" stroke-width=".8"/><path d="${path}" fill="none" stroke="#17212b" stroke-width=".35"/>`;
+}
+
+/** A shared magnetic core is a presentation association, never a conductor. */
+export function circuitTransformerCore(
+  center: number,
+  from: number,
+  to: number,
+  vertical: boolean,
+): string {
+  const lines = [-0.5, 0.5]
+    .map((offset) =>
+      vertical
+        ? `<line x1="${n(from)}" x2="${n(to)}" y1="${n(center + offset)}" y2="${n(center + offset)}"/>`
+        : `<line y1="${n(from)}" y2="${n(to)}" x1="${n(center + offset)}" x2="${n(center + offset)}"/>`,
+    )
+    .join("");
+  return `<g data-magnetic-association="shared-core" data-presentation-only="true" stroke="#17212b" stroke-width=".35">${lines}</g>`;
+}
+
+/** Interface leads land on their enclosure; isolated source stubs stop clear of the mark. */
+export function circuitInterfaceMark(
+  mark: CircuitMark,
+  cx: number,
+  cy: number,
+  pins: readonly { x: number; y: number; side: string }[],
+  vertical: boolean,
+  source = false,
+): string {
+  const coordinates = pins.map((p) => (vertical ? p.x : p.y));
+  const low = Math.min(...coordinates) - 2,
+    high = Math.max(...coordinates) + 2;
+  const outline = vertical
+    ? `<rect x="${n(low)}" y="${n(cy - 5)}" width="${n(high - low)}" height="10"/>`
+    : `<rect x="${n(cx - 5)}" y="${n(low)}" width="10" height="${n(high - low)}"/>`;
+  const sensorOutput = mark === "sensor-3wire" && pins.length === 1;
+  const leadEnd = source ? 6 : sensorOutput ? 10 / 3 : 5;
+  const leads = pins
+    .map((p) =>
+      vertical
+        ? `<line${source ? ' data-source-stub="true"' : ""} x1="${n(p.x)}" x2="${n(p.x)}" y1="${n(p.y)}" y2="${n(cy + (p.side === "NORTH" ? -leadEnd : leadEnd))}"/>`
+        : `<line${source ? ' data-source-stub="true"' : ""} y1="${n(p.y)}" y2="${n(p.y)}" x1="${n(p.x)}" x2="${n(cx + (p.side === "WEST" ? -leadEnd : leadEnd))}"/>`,
+    )
+    .join("");
+  return `<g data-function-interface="${mark}" fill="none" stroke="#17212b" stroke-width=".35">${source || sensorOutput ? "" : outline}${leads}</g><g transform="translate(${n(cx - 4)} ${n(cy - 4)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`;
+}
+
+/** Segment obstacles from the exact catalog primitives, in the composed 8 mm box. */
+export function circuitMarkSegments(
+  mark: CircuitMark,
+  cx: number,
+  cy: number,
+  vertical: boolean,
+) {
+  const segments: (readonly [
+    { x: number; y: number },
+    { x: number; y: number },
+  ])[] = [];
+  const point = ([x, y]: Point) => {
+    const a = vertical ? 12 - y : x,
+      b = vertical ? x : y;
+    return { x: cx - 4 + a * 0.666667, y: cy - 4 + b * 0.666667 };
+  };
+  const chain = (ps: readonly Point[]) => {
+    for (let i = 1; i < ps.length; i++)
+      segments.push([point(ps[i - 1]!), point(ps[i]!)]);
+  };
+  for (const p of MARKS[mark]) {
+    if (p.kind === "line") chain([p.a, p.b]);
+    else if (p.kind === "polyline") chain(p.points);
+    else if (p.kind === "rect")
+      chain([
+        [p.x, p.y],
+        [p.x + p.width, p.y],
+        [p.x + p.width, p.y + p.height],
+        [p.x, p.y + p.height],
+        [p.x, p.y],
+      ]);
+    else if (p.kind === "circle")
+      chain([
+        [p.x - p.radius, p.y - p.radius],
+        [p.x + p.radius, p.y - p.radius],
+        [p.x + p.radius, p.y + p.radius],
+        [p.x - p.radius, p.y + p.radius],
+        [p.x - p.radius, p.y - p.radius],
+      ]);
+  }
+  return segments;
 }

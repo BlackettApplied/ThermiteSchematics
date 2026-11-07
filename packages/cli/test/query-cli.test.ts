@@ -153,6 +153,11 @@ async function expectCompilerStopsQuery(
   diagnostics: readonly Diagnostic[],
   exitCode: 1 | 2,
 ): Promise<void> {
+  const compiled = await compileProject(project);
+  expect(compiled.diagnostics.filter((d) => d.code !== "I208")).toEqual(
+    diagnostics.filter((d) => d.code !== "I208"),
+  );
+  diagnostics = compiled.diagnostics;
   const [human, json] = await Promise.all([
     invoke(["inspect", "__QUERY_MUST_NOT_EXECUTE__", "--project", project]),
     invoke([
@@ -499,10 +504,13 @@ describe("Task 7 exact query errors and compiler boundaries", () => {
       args: ["net", "A.B.C.D"],
       error: {
         code: "Q004",
-        message: 'Device "A.B" has no terminal "C.D".',
+        message:
+          'Device "A.B" has no terminal "C.D". Declared terminal keys: ["C"].',
         input: "C.D",
         deviceDesignation: "A.B",
         terminalKey: "C.D",
+        allowed: ["C"],
+        allowedCount: 1,
       },
     },
   ] as const;
@@ -635,7 +643,7 @@ describe("Task 7 exact query errors and compiler boundaries", () => {
         code: "E102",
         severity: "error",
         message:
-          'Device "A.B" of type "query:a-dot-b" has no terminal "UNKNOWN".',
+          'Device "A.B" of type "query:a-dot-b" has no terminal "UNKNOWN". Declared terminal keys: ["C"].',
         file: "sources/objects.json",
         line: 73,
         column: 40,
@@ -649,6 +657,8 @@ describe("Task 7 exact query errors and compiler boundaries", () => {
             note: 'Resolved device type "query:a-dot-b" is declared here.',
           },
         ],
+        allowed: ["C"],
+        allowedCount: 1,
       },
     ];
     await expectCompilerStopsQuery(project, diagnostics, 1);

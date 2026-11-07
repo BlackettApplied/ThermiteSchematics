@@ -1,0 +1,40 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:fuse-2p",
+      "description": "Provisional generic 2-pole fuse; no selected hardware, ratings or protection suitability.",
+      "terminals": {
+        "1/L1": {
+          "role": "power_input"
+        },
+        "2/T1": {
+          "role": "power_output"
+        },
+        "3/L2": {
+          "role": "power_input"
+        },
+        "4/T2": {
+          "role": "power_output"
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "other",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "other",
+          "terminals": ["3/L2", "4/T2"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:fuse",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: 2 input/output pole pair(s), numbered by the existing core line/load convention. Two-terminal fuse elements are modeled as other functions, without a contact normal state; no common trip or switching mechanism is inferred. Optional: pole use by application; require both ends of every used pole in project review. No universal required points. Unmodeled: neutral, bonding, indicators and auxiliary interfaces. Author must select hardware and add voltage/AC/DC, current, fuse class, interrupting capacity and coordination data as applicable. No manufacturer pinout is asserted. L/T denote line and load side only, not phase or polarity."
+      }
+    }
+  ]
+}

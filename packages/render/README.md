@@ -7,6 +7,16 @@ or mutate compiler IR. Pass it the `ir` and detached `presentation` from a
 successful `CompileResult` (`ok === true`). Malformed or partial IR is an invariant
 violation, not a supported render input.
 
+## Runtime
+
+The source workflow runs on Bun 1.4.2. The renderer loads the pinned ELK 0.12.0
+worker source in a CommonJS scope with `self` shadowed, then supplies its
+in-process worker through ELK's `workerFactory` option. This avoids mistaking
+Bun's global `self` for a browser worker, without changing that global or the
+upstream library. ELK must be installed on disk; this source workflow does not
+produce a standalone executable. The byte-exact drawing regressions remain the
+rendering authority.
+
 ## Public API
 
 The package root exports only the renderer entry points, version constants, and the
@@ -405,7 +415,7 @@ not claim that each terminal belongs to every member.
 `breaker-pole`, `overload-pole`, `terminal-display`, and `non-traversable`. Visual
 class never grants path adjacency.
 
-The core mapping surface is:
+The core 0.1.0 mapping surface is:
 
 | Core type                                      | Rendered function or aggregate                           | Family behavior                                                                                  |
 | ---------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -423,8 +433,10 @@ The core mapping surface is:
 
 Omission reasons are exactly `metadata-only-mechanism`, `boundary-metadata-only`,
 `outside-family`, and `unsupported-v0.1`. The cable type is not a device mapping; a
-selected cable conductor is an edge. `ais:fuse` is catalog vocabulary, but no current
-core fuse type exists. An unknown selected type/function returns R003; no generic
+selected cable conductor is an edge. `ais:fuse` is catalog vocabulary; core 0.2.0
+ships `core:fuse-1p`, `core:fuse-2p` and `core:fuse-3p`, each declaring
+`thermite:fuse`. See the [core inventory](../core-library/README.md) for their
+generic-model scope. An unknown selected type/function returns R003; no generic
 symbol is guessed.
 
 Selected devices group under the exact authored location tuple or the separately
@@ -435,6 +447,40 @@ provenance on that rail and omits empty location/device groups. Groups add no
 electrical connectivity. Two conductors plus one semantic attachment create an
 explicit junction; an isolated perpendicular crossing has neither a dot nor shared
 connectivity.
+
+Printable rooted and circuit families use the shared vocabulary in
+`symbols/printable-policy.ts`: rectangular coils, breaker blades with a cross,
+stepped thermal overload elements, and distinct NO/NC contact marks (NC has a
+stroke). Overload power elements resolve from authored power-input/output roles;
+auxiliary contacts resolve from their own contact state. Protection marks never
+inherit NC/NO captions. Coil AC/DC text comes only from its terminal ratings;
+motors carry M and carry 3~ only for a three-phase profile/function shape.
+`thermite:estop` and `thermite:selector` retain their parent pushbutton/switch
+support and add mushroom/latch and rotary/detent operator marks. Identity is
+never inferred from names, descriptions or designations. `thermite:disconnector`
+uses an open blade, gap and fixed-contact bar, without an operator linkage or
+trip element. It has power contact traversal and switch-parity control traversal;
+closed states, loads and signal loops are unsupported. See the
+[identity and suitability limits](../../docs/circuit-symbols.md#shared-printable-vocabulary).
+Rooted gang ink uses only authored same-device breaker or disconnector associations, with aligned poles and a clear
+corridor; unaligned or obstructed associations are omitted. This changes no
+symbol bounds, port positions, ELK placement, nets or conductor accounting.
+
+All printable families use `Thermite Sans, Thermite Math, sans-serif`. The render
+package bundles the original Noto faces for exact advances and ink bounds. Labels
+print at natural width; compression is limited to 9%, and wider text widens its
+reservation. Conductor-facing ink stays inside its existing reserved clip, including the padding when needed after semantic reordering;
+text moves inside the existing clip, without moving a route or port. Serializable render/agent results contain family references only.
+CLI SVG file exports embed a deterministic document subset; HTML embeds one
+shared subset block in the head. Fontkit 2.0.4 selects glyphs and composite
+closure. OpenType layout tables (GPOS, GSUB, GDEF and legacy/AAT variants) are
+removed because the shared glyph model does not model those features. Exact
+metrics, browser delivery and PDFKit use the same feature-free faces; outlines,
+advances and hinting stay original. Pako 0.2.9 performs platform-independent JS
+compression. Each standalone SVG has a 61,440-byte font-block limit, checked at
+file delivery, across shipped examples and independently by E3. PDFKit embeds
+subsets of the feature-free source faces. The font parity test pins subset bytes and compares browser
+and PDF ink. No host font installation or network is required for file exports.
 
 No IEC 60617 artwork is copied, embedded, redistributed, or claimed. Existing
 `iec:*` library strings are semantic hints only, and this package makes no standards
@@ -503,6 +549,60 @@ ELK graph sizes `2171 x 501`/`732.6 x 1742` for PNP trace and
 label, and route coordinate returned by ELK is normalized and emitted verbatim; there
 is no authored coordinate, UID patch, post-layout repair, or collision exemption.
 
+All rooted views compare authored device designations, terminal/function keys and
+semantic net membership. Nested presentation IDs remain identity; their comparison
+keys recursively substitute authored names. Equal-distance selected steps use a
+semantic order before path ranking, junction arms, and the first PNP signal edge
+reach ELK. SVG labels and endpoint tuples use the same order. Unnamed jumpers use
+their endpoint tuple and authored source file/JSON pointer to break ties.
+
+At a two-arm source fork, an external load gets the straight port before a load
+inside the source's location; reverse designation order (then reverse terminal-key
+order) breaks ties. The turned branch uses the outside of its catalog source port
+(positive above, return below in right flow). The reviewed pair geometry is kept;
+its SVG label/metadata order is now semantic too. Pair recovery retains its limit
+of 16 straight/turned port-side combinations.
+
+Larger loads forks use distinct sides on a four-way junction. Higher degrees use
+a chain of junctions at that exact compiler terminal, linked by presentation-only
+segments with no physical element IDs. Looped supplies keep each incoming and
+outgoing conductor and give the continuing branch an outward arm. Recovery first
+tries six coordinated side permutations on each of at most two supply nets (36
+layouts including the original), then at most 255 independent component choices.
+Repeated side assignments are skipped; with one junction per net the second stage
+is identical and omitted (36 layouts total). The general cap remains 291 layouts,
+independent of load count. Existing PNP shared
+trace forks also admit at most 279 validated side choices so migration of branch
+order preserves their drawable topology. Every attempt runs the
+complete geometry and topology validator. No conductor is clipped, merged or
+removed. Recovery reads the validator's structured failure kind, independently of
+message wording. Every R004 in a loads view triggers the bounded recovery,
+including label collisions; an exhausted search retains the load advice and
+`details.loads`. In other views, invalid ELK contracts do not trigger recovery.
+
+The plc3, plc4, daisy, PNP mixed-load and machine-demo loads drawings render in both
+flows as continuous SVGs. Sheet composition still enforces the existing print-size
+rules and may return R006. Exhaustion returns the original R004 and unchanged load
+advice: build a circuit view from the source function, `details.loads[].functionIds`
+and the authored conductors connecting those devices, put it in the `views` array
+of a `schematic-packet-request/0.1` file, and run `thermite packet --input <file>`.
+Trace advice names only loads whose catalog mapping accepts a trace root, such as
+B1; choose its connected input target with `--to` and add `--include-power`.
+
+Test-only SVG snapshots cover external/same-location pairs and N=3/looped supplies
+in both flows. RB's exact diagnostic snapshots remain forced-exhaustion controls.
+Update and inspect diffs with:
+
+```sh
+VITEST_MAX_WORKERS=2 bun run test -- packages/render/test/render-robustness.test.ts -t 'direct pair golden|#60' --update
+VITEST_MAX_WORKERS=2 bun run test -- packages/render/test/load-layout.test.ts --update
+bun scripts/update-render-ordering-goldens.mjs --write
+```
+
+The final script requires a build and owns only the existing adapter hash golden
+and `test/snapshots/semantic-ordering/layout-metrics.json`. Use `--check` to verify
+those bytes. The closed historical golden inventory is unchanged.
+
 Target-sensitive options are attached to their legal effective target. Port-label
 placement targets the leaf, while horizontal/vertical port-label spacing `4` targets
 the effective device/root parent. Function/aggregate/rail label placement targets its
@@ -525,9 +625,10 @@ edge-label coordinates are already global under `json.edgeCoords=ROOT`, so no ow
 offset is added. Missing, non-finite, out-of-range, non-orthogonal, disconnected,
 ambiguous, overlapping, T-intersecting, or colliding geometry returns R004 before SVG.
 
-Text boxes are computed without platform font measurement. Every text element carries
-deterministic `textLength` and the `spacingAndGlyphs` `lengthAdjust` to reserve inline
-advance and a stable per-label `clipPath` whose rectangle hard-bounds ink. SVG bytes,
+Text boxes are computed without platform font measurement. Rooted labels print
+at natural advance; only text that needs bounded compression gets `textLength`
+and `spacingAndGlyphs`. A stable per-label clip retains the reservation, while
+its opaque plate and validation use the same exact ink bounds. SVG bytes,
 not platform-identical glyph rasterization, are guaranteed.
 
 ## Text preflight and semantic IDs
@@ -608,8 +709,19 @@ literal tab/CR, and exactly one final LF.
 
 ## Expected errors
 
+See the complete [diagnostic catalog](../schema/src/diagnostic-catalog.ts),
+including R006 and R007, for current printable errors.
+
 All R-errors include `code`, `message`, and string `root`. Optional fields are omitted
 when inapplicable.
+
+Observed-geometry witness values such as `details.originalMessage` and
+`details.conductors` follow the actual layout; code, family, root, net identity,
+field names/types and serialization remain contractual, and every other existing
+field keeps its dev value with additive diagnostics, including byte-identical
+`message` text for unchanged geometry. Historical Tier 2 payloads
+remain exact serialization controls under injected refusals, while separately
+named snapshots pin the live semantic-layout witnesses.
 
 | Code / public type                     | Expected failure                                                       | Additional fields and policy                                                                                                 |
 | -------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -619,6 +731,29 @@ when inapplicable.
 | R003 / `UnsupportedSymbolMappingError` | Selected type/function/aggregate has no valid binding.                 | `family`, `deviceUid`, `typeId`, and optional `functionKey`; never emits a generic box.                                      |
 | R004 / `InvalidLayoutError`            | Returned geometry violates the layout/SVG contract.                    | `family` and optional implicated `netId`; no SVG.                                                                            |
 | R005 / `InvalidRenderTextError`        | Project/title/graph text violates the fixed renderability contract.    | `family`, closed `ownerKind`, safe `ownerId`, closed `field`, and one of five closed reasons; never echoes rejected text.    |
+
+Control, power, trace and loads selection check intermediate conductor terminals
+for a selected function, mapped terminal-display symbol or selected boundary.
+Invalid profiles retain their existing binding diagnostic. Otherwise, a supported
+function terminal without a selected owner returns R003 with
+`details.reason: "unrepresented-terminal"`, the real device/terminal and incident
+conductor identities. For example, a K1 coil return through PLC1.M cannot display
+the PLC supply function as an individual M terminal. A circuit view selecting
+K1's coil and the same conductors can show those real terminal boundaries.
+`details.alternative` contains that source-selected `circuit-view-request/0.1`:
+put it in the `views` array of a `schematic-packet-request/0.1` file and run
+`thermite packet --input <file>`; passing the circuit view alone is not a packet.
+Its functions and conductors are drawn from the actual selection. Cable
+conductor views retain their existing endpoint-binding rules. Selection does
+not change wiring or declare an electrical repair. Presentation's missing-owner
+throw remains an invariant for selection/mapping programming errors.
+An independent unsupported profile on another path device remains in
+`unsupported`, `details.profileNote` and an "Additional profile limitation"
+sentence alongside the terminal diagnosis.
+
+When R002 retains an incomplete-path explanation alongside an unsupported profile
+note, its message appends a sentence naming that device and profile. The existing
+message remains a prefix and the structured fields stay the same.
 
 Catalog corruption, impossible-after-validation presentation state, a thrown ELK
 error, or an emitter programming failure rejects the promise as an unexpected tool
@@ -634,16 +769,20 @@ The source and IR contracts remain `electrical-system/0.1` and
 `ais-symbols/0.3` and `elk-layered/0.4+elkjs-0.12.0`.
 
 For equivalent IR semantics, compiled presentation, normalized view, supported
-Node/ELK runtime, and exported versions, the SVG string is byte-identical. Title
+Bun/ELK runtime, and exported versions, the SVG string is byte-identical. Title
 content uses only project name, declared/default revision, normalized view identity,
-authored lines, and fixed product/renderer versions. Title measurement uses fixed
-code-point arithmetic; no platform font API participates.
+authored lines, and fixed product/renderer versions. Title measurement uses shared deterministic metrics within its existing
+code-point reservation; no platform font API participates.
 
 All consumed collections cross semantic boundaries as freshly sorted arrays. ELK
 receives a fresh deep DTO; results and summaries do not alias later renders. No
 mutable singleton, layout array order, path, clock, Git state, locale, timezone,
 process ID, random value, environment value, or output filename enters SVG. ELK is
 0.12.0, seed is `1`, both merge options are false, and no cache exists.
+Semantic IR keys are rebuilt for each render, outside selection comparators;
+editing an IR in place gives the same result as rendering its fresh clone.
+Ordered paths and graph comparison keys belong to that render's objects;
+no module-level memo table retains them.
 
 The checked-in K1 control, M1 power, LS1-to-PLC1 trace, CBL1 conductors, and PS1 loads
 SVGs are reviewed byte goldens from the same unchanged motor-starter IR.

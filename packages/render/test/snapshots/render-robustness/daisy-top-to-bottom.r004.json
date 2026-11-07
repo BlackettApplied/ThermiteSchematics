@@ -1,0 +1,70 @@
+{
+  "code": "R004",
+  "message": "Invalid layout: edges boundary segment (PLC1.L+ / supply → PLC1.L+ / supply) and W-X-1 (PLC1.L+ / supply → PLC2.L+ / supply) overlap collinearly. Selected loads: PLC1, PLC2. Draw these loads in a circuit view built from details.loads with thermite packet --input.",
+  "details": {
+    "originalMessage": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:5086a6bd96ad33b25e493f55e4c395e9708f4bc9f5221fdac929940ab7c14e78\\\",\\\"3cac4a97-5d0c-48ae-8d77-4f357564b339\\\",\\\"L+\\\"]\",\"[\\\"function\\\",\\\"3cac4a97-5d0c-48ae-8d77-4f357564b339\\\",\\\"supply\\\"]\"] and [\"wire\",\"61a3c376-da4f-408d-83d9-f4a57d4df7ea\"] overlap collinearly.",
+    "conductors": [
+      {
+        "id": "[\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:5086a6bd96ad33b25e493f55e4c395e9708f4bc9f5221fdac929940ab7c14e78\\\",\\\"3cac4a97-5d0c-48ae-8d77-4f357564b339\\\",\\\"L+\\\"]\",\"[\\\"function\\\",\\\"3cac4a97-5d0c-48ae-8d77-4f357564b339\\\",\\\"supply\\\"]\"]",
+        "designation": "boundary segment",
+        "terminals": [
+          {
+            "deviceUid": "3cac4a97-5d0c-48ae-8d77-4f357564b339",
+            "terminalKey": "L+",
+            "designation": "PLC1",
+            "functionKeys": ["supply"]
+          },
+          {
+            "deviceUid": "3cac4a97-5d0c-48ae-8d77-4f357564b339",
+            "terminalKey": "L+",
+            "designation": "PLC1",
+            "functionKeys": ["supply"]
+          }
+        ]
+      },
+      {
+        "id": "[\"wire\",\"61a3c376-da4f-408d-83d9-f4a57d4df7ea\"]",
+        "designation": "W-X-1",
+        "terminals": [
+          {
+            "deviceUid": "3cac4a97-5d0c-48ae-8d77-4f357564b339",
+            "terminalKey": "L+",
+            "designation": "PLC1",
+            "functionKeys": ["supply"]
+          },
+          {
+            "deviceUid": "5f999ed0-fbb9-4c8f-8621-aba0984475b9",
+            "terminalKey": "L+",
+            "designation": "PLC2",
+            "functionKeys": ["supply"]
+          }
+        ]
+      }
+    ],
+    "loads": [
+      {
+        "deviceUid": "3cac4a97-5d0c-48ae-8d77-4f357564b339",
+        "designation": "PLC1",
+        "functionIds": [
+          {
+            "deviceUid": "3cac4a97-5d0c-48ae-8d77-4f357564b339",
+            "functionKey": "supply"
+          }
+        ]
+      },
+      {
+        "deviceUid": "5f999ed0-fbb9-4c8f-8621-aba0984475b9",
+        "designation": "PLC2",
+        "functionIds": [
+          {
+            "deviceUid": "5f999ed0-fbb9-4c8f-8621-aba0984475b9",
+            "functionKey": "supply"
+          }
+        ]
+      }
+    ]
+  },
+  "family": "control",
+  "netId": "net:sha256:5086a6bd96ad33b25e493f55e4c395e9708f4bc9f5221fdac929940ab7c14e78",
+  "root": "PS1"
+}

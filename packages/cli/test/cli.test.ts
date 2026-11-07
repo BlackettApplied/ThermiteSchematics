@@ -1,9 +1,12 @@
+import { motorDiagnostics } from "./motor-starter-diagnostics.js";
+import { withSkippedChecks } from "../../compiler/src/validation-skips.js";
 import { spawn } from "node:child_process";
 import {
   cp,
   lstat,
   mkdtemp,
   readFile,
+  readdir,
   rm,
   symlink,
   unlink,
@@ -14,9 +17,16 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import type { Diagnostic } from "@thermite/schema";
-import { afterEach, describe, expect, it } from "vitest";
+import * as compiler from "@thermite/compiler";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { runCli, runCompile, runLock, runValidate } from "../src/index.js";
+import {
+  formatHumanDiagnostics,
+  runCli,
+  runCompile,
+  runLock,
+  runValidate,
+} from "../src/index.js";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
@@ -112,16 +122,218 @@ async function expectedRuleDiagnostics(name: string): Promise<Diagnostic[]> {
   ) as Diagnostic[];
 }
 
-async function runDirectCli(args: readonly string[]): Promise<CliInvocation> {
+async function runDirectCli(
+  args: readonly string[],
+  cwd?: string,
+): Promise<CliInvocation> {
   let stdout = "";
   let stderr = "";
   const exitCode = await runCli(["node", "thermite", ...args], {
     stdout: { write: (text) => (stdout += text) },
     stderr: { write: (text) => (stderr += text) },
+    ...(cwd === undefined ? {} : { cwd }),
   });
 
   return { exitCode, stdout, stderr };
 }
+
+async function projectBytes(root: string): Promise<Record<string, string>> {
+  const files: Record<string, string> = {};
+  for (const entry of await readdir(root, { withFileTypes: true })) {
+    const path = join(root, entry.name);
+    if (entry.isDirectory()) {
+      for (const [file, bytes] of Object.entries(await projectBytes(path)))
+        files[`${entry.name}/${file}`] = bytes;
+    } else files[entry.name] = (await readFile(path)).toString("base64");
+  }
+  return files;
+}
+
+describe.each(["validate", "lock"])("%s project path aliases", (name) => {
+  const flags = name === "lock" ? ["--check", "--json"] : ["--json"];
+  it("accepts directory/manifest, absolute/relative and spaced paths with identical streams", async () => {
+    const project = await copyValidCompileFixture();
+    if (name === "lock") expect((await runLock(project)).exitCode).toBe(0);
+    const before = await projectBytes(dirname(project));
+    for (const path of [
+      project,
+      join(project, "system.json"),
+      "valid project",
+      "valid project/system.json",
+    ]) {
+      for (const selected of [
+        flags,
+        flags.filter((flag) => flag !== "--json"),
+      ]) {
+        const positional = await runDirectCli(
+          [name, path, ...selected],
+          dirname(project),
+        );
+        const alias = await runDirectCli(
+          [name, "--project", path, ...selected],
+          dirname(project),
+        );
+        expect(positional.exitCode).toBe(0);
+        expect(alias).toEqual(positional);
+        expect(alias.stderr).toBe("");
+        if (selected.includes("--json"))
+          expect(Array.isArray(JSON.parse(alias.stdout))).toBe(true);
+      }
+    }
+    const defaulted = await runDirectCli([name, ...flags], project);
+    expect(defaulted).toEqual(
+      await runDirectCli([name, "--project", ".", ...flags], project),
+    );
+    expect(defaulted.exitCode).toBe(0);
+    expect(await projectBytes(dirname(project))).toEqual(before);
+  });
+
+  it("rejects both forms before loading or writing, even when equal and in either order", async () => {
+    const first = await copyValidLockFixture();
+    const second = await copyValidLockFixture();
+    const cwd = await copyValidLockFixture();
+    const roots = [first, second, cwd].map(dirname);
+    const before = await Promise.all(roots.map(projectBytes));
+    const loading = vi.spyOn(
+      compiler,
+      name === "validate" ? "compileProject" : "lockProject",
+    );
+    try {
+      for (const other of [first, second, join(first, "system.json")]) {
+        for (const paths of [
+          [first, "--project", other],
+          ["--project", other, first],
+        ]) {
+          const result = await runDirectCli([name, ...paths, "--json"], cwd);
+          expect(loading).not.toHaveBeenCalled();
+          expect(await Promise.all(roots.map(projectBytes))).toEqual(before);
+          expect(result).toEqual({
+            exitCode: 2,
+            stdout: "",
+            stderr:
+              "error: specify either [path] or --project <path>, not both\n",
+          });
+        }
+      }
+      const missing = join(cwd, "missing");
+      expect(
+        await runDirectCli([name, missing, "--project", missing], cwd),
+      ).toEqual({
+        exitCode: 2,
+        stdout: "",
+        stderr: "error: specify either [path] or --project <path>, not both\n",
+      });
+      expect(loading).not.toHaveBeenCalled();
+    } finally {
+      loading.mockRestore();
+    }
+  });
+
+  it("pins alias/default help and keeps help/version and usage streams", async () => {
+    const help = await runDirectCli([name, "--help"]);
+    expect(help.exitCode).toBe(0);
+    expect(help.stderr).toBe("");
+    const text = help.stdout.replace(/\s+/g, " ");
+    expect(text).toContain("--project <path>");
+    expect(text).toContain(
+      "alias for [path]: project directory or direct manifest path; use only one form",
+    );
+    expect(text).toContain(
+      "Defaults to the current directory. Supply [path] or --project <path>, not both.",
+    );
+    for (const args of [
+      [name, "--project"],
+      [name, "--unknown"],
+    ]) {
+      const result = await runDirectCli(args);
+      expect(result.exitCode).toBe(2);
+      expect(result.stdout).toBe("");
+      expect(result.stderr).toMatch(/^error:/);
+    }
+    const version = await runDirectCli(["--version"]);
+    expect(version.exitCode).toBe(0);
+    expect(version.stdout.trim()).not.toBe("");
+    expect(version.stderr).toBe("");
+  });
+
+  it("preserves human/JSON authored and tool failure exits", async () => {
+    for (const [project, exit] of [
+      [fixture("missing manifest"), 2],
+      [fixture("duplicate uid cross scopes"), 1],
+    ] as const) {
+      for (const extra of [[], ["--json"]]) {
+        const check = name === "lock" ? ["--check"] : [];
+        const positional = await runDirectCli([
+          name,
+          project,
+          ...check,
+          ...extra,
+        ]);
+        expect(positional.exitCode).toBe(exit);
+        expect(
+          await runDirectCli([name, "--project", project, ...check, ...extra]),
+        ).toEqual(positional);
+      }
+    }
+  });
+});
+
+it("keeps compile positional-only", async () => {
+  const result = await runDirectCli(["compile", "--project", "."]);
+  expect(result).toEqual({
+    exitCode: 2,
+    stdout: "",
+    stderr: "error: unknown option '--project'\n",
+  });
+});
+
+it("lock --project writes only the selected project and --check stays read-only", async () => {
+  const project = await copyValidLockFixture();
+  const cwd = await copyValidLockFixture();
+  const before = await projectBytes(dirname(cwd));
+  const selected = await projectBytes(dirname(project));
+  const checked = await runDirectCli(
+    ["lock", "--project", project, "--check", "--json"],
+    cwd,
+  );
+  expect(checked.exitCode).toBe(1);
+  expect(await projectBytes(dirname(project))).toEqual(selected);
+  expect(checked.stderr).toBe("");
+  const written = await runDirectCli(
+    ["lock", "--project", project, "--json"],
+    cwd,
+  );
+  expect(written).toEqual({ exitCode: 0, stdout: "[]\n", stderr: "" });
+  expect(
+    await readFile(join(project, "electrical-system.lock.json"), "utf8"),
+  ).toContain('"lockfile_version": 1');
+  expect(await projectBytes(dirname(cwd))).toEqual(before);
+});
+
+it("validate --project preserves strict warning severity and human/JSON streams", async () => {
+  const project = fixture("unmatched glob");
+  for (const extra of [[], ["--json"]]) {
+    const normal = await runDirectCli(["validate", project, ...extra]);
+    const strict = await runDirectCli([
+      "validate",
+      project,
+      "--strict",
+      ...extra,
+    ]);
+    expect(normal.exitCode).toBe(0);
+    expect(strict.exitCode).toBe(1);
+    expect(strict.stdout).toBe(normal.stdout);
+    expect(
+      await runDirectCli([
+        "validate",
+        "--project",
+        project,
+        "--strict",
+        ...extra,
+      ]),
+    ).toEqual(strict);
+  }
+});
 
 async function runCliSubprocess(
   args: readonly string[],
@@ -183,6 +395,7 @@ describe("thermite validate loader", () => {
         column: 1,
         jsonPointer: "",
       },
+      { code: "I208" },
     ]);
   });
 
@@ -194,7 +407,7 @@ describe("thermite validate loader", () => {
     const result = await runValidate(fixture(name));
 
     expect(result.exitCode).toBe(2);
-    expect(result.diagnostics).toHaveLength(1);
+    expect(result.diagnostics).toHaveLength(2);
     expect(result.diagnostics[0]).toMatchObject({
       code: "E001",
       line: 1,
@@ -232,9 +445,9 @@ describe("thermite validate loader", () => {
       result.diagnostics.filter((diagnostic) => diagnostic.code === code);
 
     expect(result.exitCode).toBe(1);
-    expect(result.diagnostics.map(diagnosticShape)).toEqual(
-      await expectedDiagnostics("library issues"),
-    );
+    expect(
+      result.diagnostics.filter((d) => d.code !== "I208").map(diagnosticShape),
+    ).toEqual(await expectedDiagnostics("library issues"));
     expect(byCode("E027")).toHaveLength(2);
     expect(byCode("E027")[0]).toMatchObject({
       file: "../problem libraries/mismatched/types/01-first.json",
@@ -338,16 +551,16 @@ describe("thermite validate loader", () => {
 
     expect(result.output).toContain("\n\nsystem.json:");
     expect(result.output).not.toContain("\\");
-    expect(nonemptyLines.every((line) => /:\d+:\d+ E\d{3} /u.test(line))).toBe(
-      true,
-    );
+    expect(
+      nonemptyLines.every((line) => /:\d+:\d+ [EI]\d{3} /u.test(line)),
+    ).toBe(true);
     expect(
       result.diagnostics.every((diagnostic) => !diagnostic.file.includes("\\")),
     ).toBe(true);
   });
 
   it("renders the exact E032 rows through human and JSON CLI modes", async () => {
-    const diagnostics = [
+    const diagnostics = withSkippedChecks("project loading/structural", [
       {
         code: "E032",
         severity: "error",
@@ -361,22 +574,20 @@ describe("thermite validate loader", () => {
         code: "E032",
         severity: "error",
         message:
-          'Shipped library "core" does not provide version "9.9.9"; available version is "0.1.0".',
+          'Shipped library "core" does not provide version "9.9.9"; available versions are "0.1.0", "0.2.0".',
         file: "system.json",
         line: 1,
         column: 162,
         jsonPointer: "/libraries/1/version",
       },
-    ];
+    ]);
     const [human, json] = await Promise.all([
       runDirectCli(["validate", unavailableShippedLibraryRoot]),
       runDirectCli(["validate", unavailableShippedLibraryRoot, "--json"]),
     ]);
     expect(human).toEqual({
       exitCode: 1,
-      stdout:
-        'system.json:1:108 E032 Shipped library "unknown" at version "9.9.9" is unavailable.\n' +
-        'system.json:1:162 E032 Shipped library "core" does not provide version "9.9.9"; available version is "0.1.0".\n',
+      stdout: formatHumanDiagnostics(diagnostics) + "\n",
       stderr: "",
     });
     expect(json).toEqual({
@@ -388,7 +599,7 @@ describe("thermite validate loader", () => {
 });
 
 describe("Stage D engineering content", () => {
-  it("keeps motor-starter clean in normal, strict, and compile flows", async () => {
+  it("reports motor-starter assessment info without failing normal, strict, or compile flows", async () => {
     const [normal, strict, compiled] = await Promise.all([
       runValidate(motorStarterRoot),
       runValidate(motorStarterRoot, { strict: true }),
@@ -396,20 +607,36 @@ describe("Stage D engineering content", () => {
     ]);
 
     expect(normal).toMatchObject({
-      diagnostics: [],
+      diagnostics: motorDiagnostics,
       exitCode: 0,
-      output: "",
+      output: formatHumanDiagnostics(motorDiagnostics),
     });
     expect(strict).toMatchObject({
-      diagnostics: [],
+      diagnostics: motorDiagnostics,
       exitCode: 0,
-      output: "",
+      output: formatHumanDiagnostics(motorDiagnostics),
     });
     expect(compiled).toMatchObject({
-      diagnostics: [],
+      diagnostics: motorDiagnostics,
       exitCode: 0,
-      stderr: "",
+      stderr: formatHumanDiagnostics(motorDiagnostics),
       written: false,
+    });
+    // API fields omit the line ending; the CLI adds it at the stream boundary.
+    const human = `${formatHumanDiagnostics(motorDiagnostics)}\n`;
+    for (const flags of [[], ["--strict"]]) {
+      expect(
+        await runDirectCli(["validate", motorStarterRoot, ...flags]),
+      ).toEqual({
+        exitCode: 0,
+        stdout: human,
+        stderr: "",
+      });
+    }
+    expect(await runDirectCli(["compile", motorStarterRoot])).toEqual({
+      exitCode: 0,
+      stdout: compiled.stdout,
+      stderr: human,
     });
     expect(JSON.parse(compiled.stdout)).toMatchObject({
       format: "electrical-ir/0.1",
@@ -429,7 +656,9 @@ describe("Stage D engineering content", () => {
       name: "core",
       version: "0.1.0",
     });
-    expect(result.diagnostics).toEqual([]);
+    expect(result.diagnostics.map((d) => [d.code, d.severity])).toEqual([
+      ["I305", "info"],
+    ]);
     expect(result.exitCode).toBe(0);
   });
 });
@@ -472,7 +701,10 @@ describe("thermite lock", () => {
 
     expect(validation).toMatchObject({
       exitCode: 1,
-      diagnostics: [{ code: "E105", jsonPointer: "/libraries" }],
+      diagnostics: [
+        { code: "E105", jsonPointer: "/libraries" },
+        { code: "I208" },
+      ],
     });
     expect(missing).toMatchObject({
       exitCode: 1,
@@ -613,7 +845,10 @@ describe("thermite compile", () => {
       expect(exitCode).toBe(1);
       expect(stdout).toBe("");
       if (json) {
-        expect(JSON.parse(stderr)).toMatchObject([{ code: "E105" }]);
+        expect(JSON.parse(stderr)).toMatchObject([
+          { code: "E105" },
+          { code: "I208" },
+        ]);
       } else {
         expect(stderr).toContain("E105");
         expect(stderr).toContain("system.json:");
@@ -635,7 +870,10 @@ describe("thermite compile", () => {
 
     expect(replace).toMatchObject({ exitCode: 1, stdout: "", written: false });
     expect(create).toMatchObject({ exitCode: 1, stdout: "", written: false });
-    expect(JSON.parse(create.stderr)).toMatchObject([{ code: "E105" }]);
+    expect(JSON.parse(create.stderr)).toMatchObject([
+      { code: "E105" },
+      { code: "I208" },
+    ]);
     expect(await readFile(existing, "utf8")).toBe("preserve me\n");
     await expect(readFile(absent)).rejects.toMatchObject({ code: "ENOENT" });
   });
@@ -722,7 +960,7 @@ describe("full-pipeline thermite validate", () => {
     const json = await runValidate(project, { json: true });
     expect(human).toMatchObject({
       exitCode: 1,
-      diagnostics: [{ code: "E103" }],
+      diagnostics: [{ code: "E103" }, { code: "I208" }],
     });
     expect(human.output).toContain("E103");
     expect(JSON.parse(json.output)).toEqual(json.diagnostics);
@@ -746,11 +984,11 @@ describe("M3 rule-aware CLI integration", () => {
         runDirectCli(["validate", project, "--json"]),
       ]);
 
-      expect(expected).toHaveLength(1);
+      expect(expected.filter((d) => d.severity === "error")).toHaveLength(1);
       expect(expected[0]).toMatchObject({ code, severity: "error" });
       expect(human).toEqual({
         exitCode: 1,
-        stdout: `${expected[0]!.file}:${expected[0]!.line}:${expected[0]!.column} ${code} ${expected[0]!.message}\n`,
+        stdout: formatHumanDiagnostics(expected) + "\n",
         stderr: "",
       });
       expect(json.exitCode).toBe(1);

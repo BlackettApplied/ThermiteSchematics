@@ -10,8 +10,32 @@ import { parseHTML } from "linkedom";
 const project = dirname(fileURLToPath(import.meta.url));
 const compiled = await compileProject(project);
 assert.equal(compiled.ok, true, JSON.stringify(compiled.diagnostics));
-assert.equal(compiled.diagnostics.length, 4);
-assert(compiled.diagnostics.every((d) => d.code === "W904"));
+assert.deepEqual(
+  compiled.diagnostics.filter((d) => d.code === "I304"),
+  [
+    {
+      file: "system.json",
+      line: 3,
+      column: 14,
+      jsonPointer: "/project",
+      code: "I304",
+      severity: "info",
+      message:
+        'Voltage compatibility is unassessed on rated nets without voltage facts in potentials (4 nets: ["X16-TEST.A1, X16-TEST.B1, X16.A1, X16.B1 [net:sha256:9342b6606dff038b72d5aa871fc3b39fa1e30ca6ebd389d6f8a7a6343d8ed536]", "XMT-TEST.A1, XMT-TEST.A2, XMT.A1, XMT.A2 [net:sha256:e0bb5ec5d0dc7e94f03ba9de6cc602abfb8df64527619f9d35205020e5845e0a]", "XQ-TEST.A1, XQ-TEST.A2, XQ-TEST.B1, XQ-TEST.B2, XQ.A1, XQ.A2, XQ.B1, XQ.B2 [net:sha256:7fc2f4b0e63cf426caf668cf1c1d236f4adcb13f328a2e8f7a7df67f10c22e13]", "XQB-TEST.A1, XQB-TEST.A2, XQB-TEST.B1, XQB-TEST.B2, XQB.A1, XQB.A2, XQB.B1, XQB.B2 [net:sha256:d037d4e9e3d41414572eb83747c18a23324dfd882b8037e1eecea610edc36bad]"]). Ratings describe equipment capability; potentials declare net intent.',
+    },
+  ],
+);
+assert.equal(compiled.diagnostics.length, 6);
+const singleRated = compiled.diagnostics.filter((d) => d.code === "I305");
+assert.equal(singleRated.length, 1);
+assert.equal(singleRated[0].severity, "info");
+assert(singleRated[0].message.includes("(1 net:"));
+assert.deepEqual(
+  compiled.diagnostics
+    .filter((d) => d.code !== "I304" && d.code !== "I305")
+    .map((d) => d.code),
+  ["W904", "W904", "W904", "W904"],
+);
 const device = (ir, tag) => ir.devices.find((d) => d.designation === tag);
 const type = (ir, tag) =>
   ir.deviceTypes.find((t) => t.id === device(ir, tag).typeId);

@@ -7,6 +7,9 @@ import { describe, expect, it } from "vitest";
 import {
   DIAGNOSTIC_CATALOG,
   DIAGNOSTIC_CODES,
+  DIAGNOSTIC_CATALOG_CODES,
+  isDiagnosticCode,
+  isDiagnosticCatalogCode,
 } from "../src/diagnostic-catalog.js";
 import { normalizeDiagnostics, type Diagnostic } from "../src/diagnostics.js";
 import {
@@ -16,6 +19,103 @@ import {
 } from "../src/json-pointer.js";
 
 const packageRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
+
+const EXPECTED_CATALOG_CODES = [
+  "E001",
+  "E002",
+  "E003",
+  "E010",
+  "E011",
+  "E012",
+  "E013",
+  "E014",
+  "E015",
+  "E016",
+  "E017",
+  "E020",
+  "E021",
+  "E022",
+  "E023",
+  "E024",
+  "E025",
+  "E026",
+  "E027",
+  "E028",
+  "E029",
+  "E030",
+  "E031",
+  "E032",
+  "E100",
+  "E101",
+  "E102",
+  "E103",
+  "E104",
+  "E105",
+  "E106",
+  "E107",
+  "E108",
+  "E109",
+  "E110",
+  "E200",
+  "E201",
+  "E202",
+  "E203",
+  "E204",
+  "E205",
+  "E206",
+  "E207",
+  "E300",
+  "E301",
+  "E302",
+  "W303",
+  "I304",
+  "I208",
+  "W801",
+  "W901",
+  "W902",
+  "W903",
+  "W904",
+  "W905",
+  "W906",
+  "W111",
+  "I005",
+  "I001",
+  "I002",
+  "I003",
+  "R001",
+  "R002",
+  "R003",
+  "R004",
+  "R005",
+  "R006",
+  "Q001",
+  "Q002",
+  "Q003",
+  "Q004",
+  "A001",
+  "A002",
+  "A003",
+  "A004",
+  "A005",
+  "A006",
+  "T001",
+  "INIT000",
+  "INIT001",
+  "INIT002",
+  "INIT003",
+  "INIT004",
+  "INIT005",
+  "INIT006",
+  "INIT007",
+  "INIT008",
+  "INIT009",
+  "INIT010",
+  "INIT011",
+  "INIT012",
+  "I305",
+  "R007",
+  "W907",
+];
 
 const exactE1xxFixtureByCode = {
   E100: "../compiler/fixtures/referential-diagnostics/expected.json",
@@ -68,69 +168,27 @@ async function findExpectedSidecars(root: string): Promise<string[]> {
 
 describe("diagnostic catalog", () => {
   it("contains the original diagnostic codes and alpha documentation extensions", () => {
-    expect(DIAGNOSTIC_CODES).toEqual([
-      "E001",
-      "E002",
-      "E003",
-      "E010",
-      "E011",
-      "E012",
-      "E013",
-      "E014",
-      "E015",
-      "E016",
-      "E017",
-      "E020",
-      "E021",
-      "E022",
-      "E023",
-      "E024",
-      "E025",
-      "E026",
-      "E027",
-      "E028",
-      "E029",
-      "E030",
-      "E031",
-      "E032",
-      "E100",
-      "E101",
-      "E102",
-      "E103",
-      "E104",
-      "E105",
-      "E106",
-      "E107",
-      "E108",
-      "E109",
-      "E110",
-      "E200",
-      "E201",
-      "E202",
-      "E203",
-      "E204",
-      "E205",
-      "E206",
-      "E207",
-      "E300",
-      "E301",
-      "E302",
-      "W901",
-      "W902",
-      "W903",
-      "W904",
-      "W905",
-    ]);
+    expect(DIAGNOSTIC_CATALOG_CODES).toEqual(EXPECTED_CATALOG_CODES);
     expect(DIAGNOSTIC_CATALOG.W901.severity).toBe("warning");
     expect(DIAGNOSTIC_CATALOG.W902.severity).toBe("warning");
     expect(
-      DIAGNOSTIC_CODES.filter(
+      DIAGNOSTIC_CATALOG_CODES.filter(
         (code) => DIAGNOSTIC_CATALOG[code].severity === "error",
       ),
-    ).toHaveLength(DIAGNOSTIC_CODES.length - 5);
+    ).toHaveLength(DIAGNOSTIC_CATALOG_CODES.length - 17);
   });
 
-  it("covers every code with an invalid-fixture sidecar except unit-tested E001 and E032", async () => {
+  it("keeps compiler diagnostics separate from the full lookup catalog", () => {
+    expect(DIAGNOSTIC_CODES.every((code) => /^[EWI]\d{3}$/.test(code))).toBe(
+      true,
+    );
+    for (const code of ["R001", "Q001", "A004", "A006", "T001", "INIT012"]) {
+      expect(isDiagnosticCode(code)).toBe(false);
+      expect(isDiagnosticCatalogCode(code)).toBe(true);
+    }
+  });
+
+  it("covers every code with an invalid-fixture sidecar except unit-tested E001, E032, W801 and render W906/W907", async () => {
     const sidecars = (
       await Promise.all([
         findExpectedSidecars(join(packageRoot, "fixtures/invalid")),
@@ -152,7 +210,14 @@ describe("diagnostic catalog", () => {
 
     expect([...coveredCodes].sort()).toEqual(
       DIAGNOSTIC_CODES.filter(
-        (code) => code !== "E001" && code !== "E032",
+        (code) =>
+          /^[EWI]/.test(code) &&
+          !["I001", "I002", "I003"].includes(code) &&
+          code !== "E001" &&
+          code !== "E032" &&
+          code !== "W801" &&
+          code !== "W906" &&
+          code !== "W907",
       ).sort(),
     );
     expect(DIAGNOSTIC_CATALOG.E032).toEqual({
@@ -213,8 +278,9 @@ describe("diagnostic catalog", () => {
       const expected = JSON.parse(
         await readFile(join(packageRoot, relativeFixture), "utf8"),
       ) as Diagnostic[];
-      expect(expected, code).toHaveLength(1);
-      const diagnostic = expected[0]!;
+      const electrical = expected.filter((d) => d.code !== "I208");
+      expect(electrical, code).toHaveLength(1);
+      const diagnostic = electrical[0]!;
       expect(diagnostic.code, code).toBe(code);
       expect(diagnostic.severity, code).toBe(DIAGNOSTIC_CATALOG[code].severity);
       expect(typeof diagnostic.message, code).toBe("string");

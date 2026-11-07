@@ -1,3 +1,4 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -147,14 +148,14 @@ describe("motor-starter IR golden", () => {
     expect(motorBytes).toBe(await readFile(goldenPath, "utf8"));
   });
 
-  it("stays diagnostic-free and byte-stable across repeated full compiles", async () => {
+  it("reports only assessment info and stays byte-stable across repeated full compiles", async () => {
     const first = await compileProject(motorStarterRoot);
     const second = await compileProject(motorStarterRoot);
 
     expect(first.ok).toBe(true);
     expect(second.ok).toBe(true);
-    expect(first.diagnostics).toEqual([]);
-    expect(second.diagnostics).toEqual([]);
+    expect(first.diagnostics).toEqual(motorDiagnostics);
+    expect(second.diagnostics).toEqual(first.diagnostics);
     if (!first.ok || !second.ok) return;
     expect(serializeIr(first.ir)).toBe(motorBytes);
     expect(serializeIr(second.ir)).toBe(motorBytes);

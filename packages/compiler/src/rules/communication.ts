@@ -45,7 +45,11 @@ export const communicationConnectionsRule: ElectricalRule = {
       ] as const) {
         const device = devices.get(uid)!;
         const type = types.get(device.typeId)!;
-        const port = type.ports?.[key];
+        // Own ports only: inherited names such as "constructor" are undeclared.
+        const port =
+          type.ports !== undefined && Object.hasOwn(type.ports, key)
+            ? type.ports[key]
+            : undefined;
         if (!port) {
           error(
             `${device.designation}.${key} is not a declared communication port.`,

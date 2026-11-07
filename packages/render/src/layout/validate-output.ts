@@ -1,3 +1,5 @@
+import { graphSemanticOrder } from "../semantic-order.js";
+import { printableLabelGeometry } from "../symbols/printable-label.js";
 import type {
   ElkExtendedEdge,
   ElkLabel,
@@ -29,7 +31,6 @@ import type {
   PresentationLabel,
   PresentationNode,
   PresentationPort,
-  RenderOutcome,
 } from "../types.js";
 import { MAX_SVG_MAGNITUDE } from "../svg/numbers.js";
 import {
@@ -45,7 +46,11 @@ export { MAX_SVG_MAGNITUDE } from "../svg/numbers.js";
 class LayoutContractViolation extends Error {
   readonly netId: string | undefined;
 
-  constructor(message: string, netId?: string) {
+  constructor(
+    message: string,
+    netId?: string,
+    readonly failureKind: LayoutFailureKind = "contract-violation",
+  ) {
     super(message);
     this.name = "LayoutContractViolation";
     this.netId = netId;
@@ -116,17 +121,87 @@ function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`Layout input invariant: ${message}`);
 }
 
-function reject(message: string, netId?: string): never {
-  throw new LayoutContractViolation(message, netId);
+export type LayoutFailureKind =
+  "contract-violation" | "ambiguous-intersection" | "collinear-overlap";
+export type LayoutValidationOutcome =
+  | { readonly ok: true; readonly value: NormalizedSchematicLayout }
+  | {
+      readonly ok: false;
+      readonly error: InvalidLayoutError;
+      readonly failureKind: LayoutFailureKind;
+    };
+
+function reject(
+  message: string,
+  netId?: string,
+  failureKind?: LayoutFailureKind,
+): never {
+  throw new LayoutContractViolation(message, netId, failureKind);
 }
 
 function invalidLayoutError(
   graph: Readonly<PresentationGraph>,
   violation: LayoutContractViolation,
 ): InvalidLayoutError {
+  const names = new Map(
+    graph.deviceGroups.map((d) => [d.deviceUid, d.designation]),
+  );
+  const terminal = (t: import("@thermite/compiler").TerminalId) => ({
+    ...t,
+    designation: names.get(t.deviceUid) ?? t.deviceUid,
+    functionKeys: [
+      ...new Set(
+        graph.nodes.flatMap((node) =>
+          "deviceUid" in node && node.deviceUid === t.deviceUid
+            ? node.ports
+                .filter((p) => p.terminal.terminalKey === t.terminalKey)
+                .flatMap((p) =>
+                  p.memberFunctionId
+                    ? [p.memberFunctionId.functionKey]
+                    : node.functionIds.map((f) => f.functionKey),
+                )
+            : [],
+        ),
+      ),
+    ],
+  });
+  const edges = graph.edges
+    .filter((e) => violation.message.includes(e.id))
+    .map((e) => ({
+      id: e.id,
+      designation: e.conductor
+        ? e.conductor.kind === "cable-conductor"
+          ? `${e.conductor.cableDesignation}/${e.conductor.conductorId}`
+          : e.conductor.designation
+        : "boundary segment",
+      // Diagnostic companions keep their historical structural terminal tuple.
+      // This ordering never reaches the adapter or drawing.
+      terminals: [...e.endpoints]
+        .sort(
+          (a, b) =>
+            compareText(a.deviceUid, b.deviceUid) ||
+            compareText(a.terminalKey, b.terminalKey),
+        )
+        .map(terminal),
+    }));
+  let message = violation.message;
+  for (const edge of edges)
+    message = message.replaceAll(
+      edge.id,
+      `${edge.designation} (${edge.terminals.map((t) => `${t.designation}.${t.terminalKey}${t.functionKeys.length ? ` / ${[...new Set(t.functionKeys)].join(", ")}` : ""}`).join(" → ")})`,
+    );
+  for (const [uid, name] of names) message = message.replaceAll(uid, name);
   return Object.freeze({
     code: "R004",
-    message: `Invalid layout: ${violation.message}.`,
+    message: `Invalid layout: ${message}.`,
+    ...(message === violation.message
+      ? {}
+      : {
+          details: {
+            originalMessage: `Invalid layout: ${violation.message}.`,
+            conductors: edges,
+          },
+        }),
     family: graph.view.family,
     ...(violation.netId === undefined ? {} : { netId: violation.netId }),
     root: graph.view.root.designation,
@@ -1162,8 +1237,33 @@ function validateNodeAndLabelCollisions(
     }
   }
   const labels = [...geometry.labels.values()];
+  const captions = new Map(
+    [
+      ...graph.locationGroups.map((g) => g.label),
+      ...graph.deviceGroups.map((g) => g.label),
+      ...graph.nodes.flatMap((n) => (n.kind === "junction" ? [] : n.labels)),
+      ...graph.edges.flatMap((e) =>
+        [e.label, e.netLabel].filter(
+          (l): l is PresentationLabel => l !== undefined,
+        ),
+      ),
+    ].map((l) => [l.id, l]),
+  );
+  const inkBounds = (label: LayoutLabel): Bounds => {
+    const caption = captions.get(label.id);
+    if (!caption) reject(`label ${label.id} has no presentation caption`);
+    const text = caption.printableText ?? caption.text;
+    return printableLabelGeometry(
+      label,
+      text,
+      caption.textLength,
+      label.ownerKind === "edge"
+        ? [geometry.edges.get(label.ownerId)?.points ?? []]
+        : undefined,
+    ).ink;
+  };
   for (const label of labels) {
-    const labelBounds = boundsOf(label);
+    const labelBounds = inkBounds(label);
     for (const [nodeId, boundsList] of primitiveBounds) {
       if (
         boundsList.some((bounds) =>
@@ -1189,7 +1289,7 @@ function validateNodeAndLabelCollisions(
     ) {
       const left = labels[leftIndex]!;
       const right = labels[rightIndex]!;
-      if (positiveAreaIntersection(boundsOf(left), boundsOf(right)))
+      if (positiveAreaIntersection(inkBounds(left), inkBounds(right)))
         reject(`labels ${left.id} and ${right.id} overlap`);
     }
   }
@@ -1328,6 +1428,7 @@ function validateRouteInteractions(
         reject(
           `edges ${left.edge.id} and ${right.edge.id} overlap collinearly`,
           left.edge.netId,
+          "collinear-overlap",
         );
       const pointValue = intersection.point;
       const leftEdgeEndpoint = edgeEndpoint(left.edge, pointValue);
@@ -1364,6 +1465,7 @@ function validateRouteInteractions(
       reject(
         `edges ${left.edge.id} and ${right.edge.id} form an ambiguous intersection`,
         left.edge.netId,
+        "ambiguous-intersection",
       );
     }
   }
@@ -1508,7 +1610,7 @@ export function normalizeAndValidateLayout(
   adapterInput: Readonly<ElkNode>,
   elkOutput: Readonly<ElkNode>,
   catalog: readonly SymbolDefinition[],
-): RenderOutcome<NormalizedSchematicLayout> {
+): LayoutValidationOutcome {
   const input = inputIndex(adapterInput);
   const presentation = presentationIndex(graph);
   invariant(
@@ -1550,8 +1652,9 @@ export function normalizeAndValidateLayout(
     validateNodeAndLabelCollisions(graph, geometry, catalog, segments);
     const crossings = validateRouteInteractions(graph, geometry, segments);
     validateFinalBounds(graph, geometry, rootWidth, rootHeight, catalog);
+    const order = graphSemanticOrder(graph);
     const labels = [...presentation.labels.values()]
-      .sort(comparePresentationLabel)
+      .sort((a, b) => comparePresentationLabel(a, b, order.key))
       .map((label) => geometry.labels.get(label.id)!);
     return {
       ok: true,
@@ -1573,7 +1676,11 @@ export function normalizeAndValidateLayout(
     };
   } catch (error) {
     if (error instanceof LayoutContractViolation) {
-      return { ok: false, error: invalidLayoutError(graph, error) };
+      return {
+        ok: false,
+        error: invalidLayoutError(graph, error),
+        failureKind: error.failureKind,
+      };
     }
     throw error;
   }

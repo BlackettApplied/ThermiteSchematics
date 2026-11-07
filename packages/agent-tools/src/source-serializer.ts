@@ -38,6 +38,19 @@ function bytesEqual(left: Uint8Array, right: Uint8Array): boolean {
 }
 
 export function serializeSourceValue(value: JsonValue): Uint8Array {
+  // Native stringify limits differ between JavaScript engines. Reject pathological
+  // depth before allocating indentation or staging files, keeping the same sanitized
+  // serialization failure on Bun and Node instead of a later compiler failure.
+  const pending: { value: JsonValue; depth: number }[] = [{ value, depth: 0 }];
+  while (pending.length > 0) {
+    const current = pending.pop()!;
+    if (current.depth > 4096)
+      throw new RangeError("Source serialization depth exceeded.");
+    if (current.value !== null && typeof current.value === "object") {
+      for (const child of Object.values(current.value))
+        pending.push({ value: child, depth: current.depth + 1 });
+    }
+  }
   return Buffer.from(`${JSON.stringify(value, undefined, 2)}\n`, "utf8");
 }
 

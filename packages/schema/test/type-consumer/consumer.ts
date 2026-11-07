@@ -71,6 +71,10 @@ const legacyLockEntry: LibraryLock["libraries"][string] = {
 };
 void shippedDependency;
 void legacyLockEntry.resolutionKind;
+const nonProcurement: Device["nonProcurement"] = {
+  reason: "Existing site utility; outside purchasing scope",
+};
+void nonProcurement;
 
 export function discriminateDeviceFunction(value: DeviceFunction): string {
   switch (value.kind) {

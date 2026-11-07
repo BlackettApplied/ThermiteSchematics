@@ -1,0 +1,41 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "74000000-0000-4000-8000-000000000001",
+      "designation": "R1",
+      "type": "assembly-note-fixture:rack"
+    },
+    {
+      "kind": "device",
+      "uid": "74000000-0000-4000-8000-000000000002",
+      "designation": "S1",
+      "type": "assembly-note-fixture:field"
+    },
+    {
+      "kind": "relation",
+      "uid": "74000000-0000-4000-8000-000000000003",
+      "designation": "CBL1",
+      "relation": "associated_with",
+      "from": {
+        "device": "R1"
+      },
+      "to": {
+        "device": "S1"
+      },
+      "assembly": {
+        "kind": "cable",
+        "fromPort": "X1",
+        "toPort": "P",
+        "status": "documented",
+        "cable": {
+          "specification": "Synthetic field cordset"
+        },
+        "pinMapping": {
+          "status": "unresolved",
+          "reason": "The fixture records an assembly without its conductor pin mapping."
+        }
+      }
+    }
+  ]
+}

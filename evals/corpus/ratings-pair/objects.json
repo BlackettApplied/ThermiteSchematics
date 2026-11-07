@@ -1,0 +1,25 @@
+{
+  "objects": [
+    {
+      "uid": "89df5e84-55d1-5c3e-b2b7-6d75e1823116",
+      "kind": "device",
+      "designation": "N1",
+      "type": "eval:node"
+    },
+    {
+      "uid": "e0068ad9-15b4-513e-85e9-db212ee768a5",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "N1",
+          "terminal": "a"
+        },
+        {
+          "device": "N1",
+          "terminal": "b"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "65000000-0000-4000-8000-000000000001",
+      "designation": "S1",
+      "type": "self-loop-fixture:outputs"
+    },
+    {
+      "kind": "device",
+      "uid": "65000000-0000-4000-8000-000000000002",
+      "designation": "D1",
+      "type": "self-loop-fixture:inputs"
+    },
+    {
+      "kind": "wire",
+      "uid": "65000000-0000-4000-8000-000000000011",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "I3"
+        },
+        {
+          "device": "D1",
+          "terminal": "I4"
+        }
+      ],
+      "properties": {
+        "label": "BRIDGE"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "65000000-0000-4000-8000-000000000012",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "S1",
+          "terminal": "O2"
+        },
+        {
+          "device": "D1",
+          "terminal": "I2"
+        }
+      ],
+      "properties": {
+        "label": "102"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "65000000-0000-4000-8000-000000000013",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "D1",
+          "terminal": "I2"
+        },
+        {
+          "device": "D1",
+          "terminal": "I5"
+        }
+      ],
+      "properties": {
+        "label": "103"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "65000000-0000-4000-8000-000000000014",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "S1",
+          "terminal": "O1"
+        },
+        {
+          "device": "D1",
+          "terminal": "I6"
+        }
+      ],
+      "properties": {
+        "label": "101"
+      }
+    }
+  ]
+}

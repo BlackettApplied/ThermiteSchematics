@@ -1,0 +1,591 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001001",
+      "designation": "PLC1",
+      "type": "core:plc-8di-8do-2ai",
+      "io": {
+        "addressSpace": "RM3 logical I/O",
+        "channels": {
+          "di0": {
+            "address": "DI[0]",
+            "usage": "in-use",
+            "signal": "Start feedback"
+          },
+          "di1": {
+            "address": "DI[1]",
+            "usage": "in-use",
+            "signal": "Limit"
+          },
+          "di2": {
+            "address": "DI[2]",
+            "usage": "in-use",
+            "signal": "Level"
+          },
+          "di3": {
+            "address": "DI[3]",
+            "usage": "in-use",
+            "signal": "Discharge sensor"
+          },
+          "di4": {
+            "address": "DI[4]",
+            "usage": "in-use",
+            "signal": "Selector"
+          },
+          "di5": {
+            "address": "DI[5]",
+            "usage": "spare"
+          },
+          "di6": {
+            "address": "DI[6]",
+            "usage": "spare"
+          },
+          "di7": {
+            "address": "DI[7]",
+            "usage": "spare"
+          },
+          "do0": {
+            "address": "DO[0]",
+            "usage": "in-use",
+            "signal": "Relay command"
+          },
+          "do1": {
+            "address": "DO[1]",
+            "usage": "spare"
+          },
+          "do2": {
+            "address": "DO[2]",
+            "usage": "spare"
+          },
+          "do3": {
+            "address": "DO[3]",
+            "usage": "spare"
+          },
+          "do4": {
+            "address": "DO[4]",
+            "usage": "spare"
+          },
+          "do5": {
+            "address": "DO[5]",
+            "usage": "spare"
+          },
+          "do6": {
+            "address": "DO[6]",
+            "usage": "spare"
+          },
+          "do7": {
+            "address": "DO[7]",
+            "usage": "spare"
+          },
+          "ai0": {
+            "address": "AI[0]",
+            "usage": "in-use",
+            "signal": "Unpowered two-wire interface sample"
+          },
+          "ai1": {
+            "address": "AI[1]",
+            "usage": "spare"
+          }
+        }
+      }
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001002",
+      "designation": "HMI1",
+      "type": "core:hmi"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001003",
+      "designation": "TX1",
+      "type": "core:transmitter-2wire-4-20ma"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001004",
+      "designation": "LS1",
+      "type": "core:level-switch-no"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001005",
+      "designation": "B1",
+      "type": "core:prox-pnp-3wire"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001006",
+      "designation": "S3",
+      "type": "core:selector-2pos"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001007",
+      "designation": "S4",
+      "type": "core:limit-switch-2wire"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001008",
+      "designation": "TB1",
+      "type": "core:terminal-block-8"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001009",
+      "designation": "JB1",
+      "type": "core:junction-box-8"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000001010",
+      "designation": "R2",
+      "type": "core:relay-1co"
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001011",
+      "designation": "W1011",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "L+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001012",
+      "designation": "W1012",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "M"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001013",
+      "designation": "W1013",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "HMI1",
+          "terminal": "L+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001014",
+      "designation": "W1014",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "HMI1",
+          "terminal": "M"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001015",
+      "designation": "W1015",
+      "endpoints": [
+        {
+          "device": "S2",
+          "terminal": "14"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI0"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001016",
+      "designation": "W1016",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "S4",
+          "terminal": "13"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001017",
+      "designation": "W1017",
+      "endpoints": [
+        {
+          "device": "S4",
+          "terminal": "14"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001018",
+      "designation": "W1018",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "LS1",
+          "terminal": "13"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001019",
+      "designation": "W1019",
+      "endpoints": [
+        {
+          "device": "LS1",
+          "terminal": "14"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001020",
+      "designation": "W1020",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "S3",
+          "terminal": "13"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001021",
+      "designation": "W1021",
+      "endpoints": [
+        {
+          "device": "S3",
+          "terminal": "14"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI4"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "00000000-0000-4000-8000-000000001022",
+      "designation": "CBL2",
+      "type": "core:cordset-sensor-4core",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "1"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.1"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "2",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "3"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.2"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "3",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "4"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.3"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "4",
+          "endpoints": [
+            null,
+            {
+              "device": "JB1",
+              "terminal": "X1.4"
+            }
+          ],
+          "usage": "spare"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001023",
+      "designation": "W1023",
+      "endpoints": [
+        {
+          "device": "JB1",
+          "terminal": "X1.1"
+        },
+        {
+          "device": "TB1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001024",
+      "designation": "W1024",
+      "endpoints": [
+        {
+          "device": "JB1",
+          "terminal": "X1.2"
+        },
+        {
+          "device": "TB1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001025",
+      "designation": "W1025",
+      "endpoints": [
+        {
+          "device": "JB1",
+          "terminal": "X1.3"
+        },
+        {
+          "device": "TB1",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001026",
+      "designation": "W1026",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "TB1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001027",
+      "designation": "W1027",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "TB1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001028",
+      "designation": "W1028",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "3"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI3"
+        }
+      ]
+    },
+    {
+      "kind": "cable",
+      "uid": "00000000-0000-4000-8000-000000001029",
+      "designation": "CBL3",
+      "type": "core:cable-instrumentation-1pair",
+      "conductors": [
+        {
+          "id": "1+",
+          "endpoints": [
+            {
+              "device": "TX1",
+              "terminal": "+"
+            },
+            {
+              "device": "TB1",
+              "terminal": "5"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "1-",
+          "endpoints": [
+            {
+              "device": "TX1",
+              "terminal": "-"
+            },
+            {
+              "device": "TB1",
+              "terminal": "6"
+            }
+          ],
+          "usage": "in-use"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001030",
+      "designation": "W1030",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "5"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "AI0+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001031",
+      "designation": "W1031",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "6"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "AI0-"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001032",
+      "designation": "W1032",
+      "endpoints": [
+        {
+          "device": "PLC1",
+          "terminal": "DO0"
+        },
+        {
+          "device": "R2",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000001033",
+      "designation": "W1033",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "R2",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "kind": "relation",
+      "uid": "00000000-0000-4000-8000-000000001034",
+      "designation": "NET1",
+      "relation": "associated_with",
+      "from": {
+        "device": "PLC1"
+      },
+      "to": {
+        "device": "HMI1"
+      },
+      "connection": {
+        "fromPort": "ETH",
+        "toPort": "ETH",
+        "medium": "ethernet",
+        "protocol": "unspecified",
+        "status": "planned"
+      }
+    },
+    {
+      "kind": "relation",
+      "uid": "00000000-0000-4000-8000-000000001035",
+      "designation": "CTRL1",
+      "relation": "controls",
+      "from": {
+        "device": "PLC1"
+      },
+      "to": {
+        "device": "R2"
+      }
+    }
+  ]
+}

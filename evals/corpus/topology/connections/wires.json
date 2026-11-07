@@ -1,0 +1,79 @@
+{
+  "objects": [
+    {
+      "uid": "e0068ad9-15b4-513e-85e9-db212ee768a5",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "X1",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "Synthetic wire"
+      }
+    },
+    {
+      "uid": "72ba8b44-9c1c-51f1-b418-7e5d646d9841",
+      "kind": "wire",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "X1",
+          "terminal": "1"
+        },
+        {
+          "device": "N1",
+          "terminal": "a"
+        }
+      ]
+    },
+    {
+      "uid": "7cbb0af7-20e1-5ebd-942d-322f203590a0",
+      "kind": "wire",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "X1",
+          "terminal": "2"
+        },
+        {
+          "device": "N1",
+          "terminal": "d"
+        }
+      ]
+    },
+    {
+      "uid": "03932199-ecc9-5636-9007-aa792972ecb3",
+      "kind": "jumper",
+      "designation": "J1",
+      "endpoints": [
+        {
+          "device": "X1",
+          "terminal": "1"
+        },
+        {
+          "device": "X1",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "uid": "87193fe7-3f26-5aa7-a274-ef91cc8ea90d",
+      "kind": "relation",
+      "designation": "R1",
+      "relation": "associated_with",
+      "from": {
+        "device": "PS1"
+      },
+      "to": {
+        "device": "N1"
+      }
+    }
+  ]
+}

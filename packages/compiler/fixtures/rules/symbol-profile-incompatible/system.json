@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "symbol-profile-clone"
+  },
+  "sources": ["sources/*.json"],
+  "libraries": [
+    {
+      "name": "site",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

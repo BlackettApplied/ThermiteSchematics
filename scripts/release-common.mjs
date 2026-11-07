@@ -10,6 +10,7 @@ import {
   realpath,
   rename,
   rm,
+  stat,
   writeFile,
 } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
@@ -308,9 +309,99 @@ export function parseGitIndexEntries(input) {
   return Object.freeze(entries);
 }
 
+const GITDIR_LINK_PREFIX = "gitdir: ";
+
+function gitdirLinkTarget(bytes) {
+  let text;
+  try {
+    text = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(
+      bytes,
+    );
+  } catch {
+    text = undefined;
+  }
+  // Git strips only trailing LF/CR from a gitfile before reading its path;
+  // embedded CR/LF are ordinary POSIX pathname characters.
+  const line = text?.replace(/[\r\n]+$/u, "");
+  if (
+    line === undefined ||
+    !line.startsWith(GITDIR_LINK_PREFIX) ||
+    line.length === GITDIR_LINK_PREFIX.length ||
+    line.includes("\0")
+  ) {
+    throw new Error(
+      "REL024 Git repository metadata is invalid: the .git file is not a gitdir link.",
+    );
+  }
+  return line.slice(GITDIR_LINK_PREFIX.length);
+}
+
+// Resolves a gitdir link to a physical directory the way the operating system
+// resolves the path when Git opens it. A relative link (submodules,
+// worktree.useRelativePaths) starts from the directory containing the .git
+// file. POSIX follows a symlink before applying a later "..", so each ".." is
+// applied to the already-physical prefix: collapsing "link/.." lexically, as
+// path.resolve() and Bun's realpath() do, can name a different Git directory.
+// Win32 path normalization collapses ".." lexically before following reparse
+// points, and Git for Windows opens paths through it, so Windows resolves
+// lexically.
+async function physicalGitdir(repositoryRoot, link) {
+  if (process.platform === "win32") {
+    return realpath(resolve(repositoryRoot, link));
+  }
+  let current = isAbsolute(link) ? "/" : await realpath(repositoryRoot);
+  for (const component of link.split("/")) {
+    if (component === "" || component === ".") continue;
+    if (component !== "..") {
+      current = join(current, component);
+      continue;
+    }
+    const physical = await realpath(current);
+    if (!(await stat(physical)).isDirectory()) {
+      throw new Error(`${physical} is not a directory.`);
+    }
+    current = dirname(physical);
+  }
+  return realpath(current);
+}
+
+// Locates the staging index the way Git does. A primary checkout keeps it at
+// .git/index. A linked worktree (`git worktree add`), submodule, or
+// --separate-git-dir checkout has a .git *file* naming its own Git directory
+// (gitrepository-layout(5)). The index is per-worktree state, so it is read
+// from that directory, never from the shared directory named by `commondir`.
+// Only the index follows the link: the private-release HEAD, ref, and object
+// readers below still require an ordinary .git directory (REL024).
+export async function resolveGitIndexPath(repositoryRoot = REPOSITORY_ROOT) {
+  const dotGit = join(repositoryRoot, ".git");
+  let stats;
+  try {
+    stats = await stat(dotGit);
+  } catch {
+    stats = undefined;
+  }
+  // Anything but a gitfile keeps the historical location, so reading it
+  // reports exactly the error it always did.
+  if (stats === undefined || !stats.isFile()) return join(dotGit, "index");
+  const link = gitdirLinkTarget(await readFile(dotGit));
+  let directory;
+  try {
+    directory = await physicalGitdir(repositoryRoot, link);
+    if (!(await stat(directory)).isDirectory()) directory = undefined;
+  } catch {
+    directory = undefined;
+  }
+  if (directory === undefined) {
+    throw new Error(
+      "REL024 Git repository metadata is invalid: the .git file does not name a Git directory.",
+    );
+  }
+  return join(directory, "index");
+}
+
 export async function readGitIndexEntries(repositoryRoot = REPOSITORY_ROOT) {
   return parseGitIndexEntries(
-    await readFile(join(repositoryRoot, ".git", "index")),
+    await readFile(await resolveGitIndexPath(repositoryRoot)),
   );
 }
 

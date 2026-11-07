@@ -1,0 +1,8 @@
+{
+  "format": "project-presentation/0.1",
+  "revision": "EVAL-1",
+  "backgroundColor": "#ffffff",
+  "titleBlock": {
+    "lines": ["Synthetic evaluation only"]
+  }
+}

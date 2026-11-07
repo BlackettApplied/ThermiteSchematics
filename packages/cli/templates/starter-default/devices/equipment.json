@@ -7,7 +7,19 @@
       "designation": "PS1",
       "type": "core:psu-24vdc",
       "description": "480 VAC line-to-line to 24 VDC control power supply",
-      "location": "MAIN-PANEL"
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "L": {
+            "status": "deferred",
+            "reason": "Starter AC feed is not designed; select and wire the upstream supply and protection before use."
+          },
+          "N": {
+            "status": "deferred",
+            "reason": "Starter AC return/feed is not designed; review the supply topology and wire it before use."
+          }
+        }
+      }
     },
     {
       "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",

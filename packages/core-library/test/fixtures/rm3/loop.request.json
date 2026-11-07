@@ -1,0 +1,14 @@
+{
+  "format": "signal-loop-view-request/0.1",
+  "from": {
+    "device": "TX1",
+    "function": "signal"
+  },
+  "to": {
+    "device": "PLC1",
+    "function": "ai0"
+  },
+  "notes": [
+    "Unpowered interface harness; select loop power, AI mode and hardware before service."
+  ]
+}

@@ -1,4 +1,6 @@
 export {
+  SHIPPED_CORE_VERSIONS,
+  resolveShippedCoreLibraryVersion,
   SHIPPED_CORE_DISPLAY_ROOT,
   SHIPPED_CORE_FILE_INVENTORY,
   SHIPPED_CORE_LIBRARY_LOCATOR,
@@ -14,6 +16,10 @@ export {
   type CompiledProjectPresentation,
   type CompileResult,
 } from "./compiler.js";
+export {
+  symbolFunctionMatchesShape,
+  formatSymbolFunctionShape,
+} from "./symbol-shapes.js";
 export {
   expandResolvedProject,
   type ExpansionResult,
@@ -69,6 +75,7 @@ export {
 export { evaluateRules, type M3RuleId } from "./rules/index.js";
 export {
   loadProject,
+  loadProjectForSourcePatch,
   type LoadedDocument,
   type LoadedDocumentKind,
   type LoadedDocumentOwner,
@@ -80,6 +87,8 @@ export {
   type LibraryResolutionKind,
   type LoadProjectOptions,
   type LoadResult,
+  type SourcePatchProject,
+  type SourcePatchLoadResult,
   type NormalizedLibraryLock,
   type NormalizedLibraryLockEntry,
   type ProjectLibraryDependency,
@@ -126,3 +135,5 @@ export {
   type CompletenessFinding,
   type ConnectionInventoryEntry,
 } from "./completeness.js";
+
+export { PROJECT_WRITE_LOCK_FILE_NAME } from "./filesystem-names.js";

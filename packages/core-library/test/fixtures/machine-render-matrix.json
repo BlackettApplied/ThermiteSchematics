@@ -1,0 +1,1091 @@
+[
+  {
+    "type": "breaker-1p",
+    "profile": "thermite:breaker",
+    "bindings": {
+      "circuit": ["pole1"],
+      "power": ["pole1"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "breaker-2p",
+    "profile": "thermite:breaker",
+    "bindings": {
+      "circuit": ["pole1", "pole2"],
+      "power": ["pole1", "pole2"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "breaker-3p",
+    "profile": "thermite:breaker",
+    "bindings": {
+      "circuit": ["pole1", "pole2", "pole3"],
+      "power": ["pole1", "pole2", "pole3"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "cable-2pair-shielded",
+    "profile": null,
+    "reason": "cable_type has no profile/coverage fields; physical cores render through conductor views.",
+    "bindings": null,
+    "probes": {
+      "power": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "cable-instrumentation-1pair",
+    "profile": null,
+    "reason": "cable_type has no profile/coverage fields; physical cores render through conductor views.",
+    "bindings": null,
+    "probes": {
+      "power": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "cable-power-4core",
+    "profile": null,
+    "reason": "cable_type has no profile/coverage fields; physical cores render through conductor views.",
+    "bindings": null,
+    "probes": {
+      "power": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "contactor-3p-1no",
+    "profile": "thermite:contactor",
+    "bindings": {
+      "circuit": ["aux13", "coil", "pole1", "pole2", "pole3"],
+      "power": ["pole1", "pole2", "pole3"],
+      "control": ["aux13", "coil"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "coil",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "coil",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "control-transformer",
+    "profile": "thermite:transformer",
+    "bindings": {
+      "circuit": ["primary", "secondary"],
+      "power": [],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "secondary",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "secondary"
+      },
+      "control": {
+        "key": "secondary",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "secondary"
+      },
+      "loads": {
+        "key": "primary",
+        "outcome": "gap",
+        "code": "R003",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "primary"
+      }
+    }
+  },
+  {
+    "type": "cordset-sensor-4core",
+    "profile": null,
+    "reason": "cable_type has no profile/coverage fields; physical cores render through conductor views.",
+    "bindings": null,
+    "probes": {
+      "power": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "physical-cores",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "disconnect-3p",
+    "profile": "thermite:disconnector",
+    "functionShapes": {
+      "pole1": "contact/2",
+      "pole2": "contact/2",
+      "pole3": "contact/2"
+    },
+    "bindings": {
+      "circuit": ["pole1", "pole2", "pole3"],
+      "power": ["pole1", "pole2", "pole3"],
+      "control": ["pole1", "pole2", "pole3"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "estop-nc",
+    "profile": "thermite:estop",
+    "bindings": {
+      "circuit": ["contact11"],
+      "power": [],
+      "control": ["contact11"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact11",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact11"
+      },
+      "control": {
+        "key": "contact11",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "contact11",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "fuse-1p",
+    "profile": "thermite:fuse",
+    "bindings": {
+      "circuit": ["pole1"],
+      "power": ["pole1"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    },
+    "functionShapes": {
+      "pole1": "other/2"
+    }
+  },
+  {
+    "type": "fuse-2p",
+    "profile": "thermite:fuse",
+    "bindings": {
+      "circuit": ["pole1", "pole2"],
+      "power": ["pole1", "pole2"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    },
+    "functionShapes": {
+      "pole1": "other/2",
+      "pole2": "other/2"
+    }
+  },
+  {
+    "type": "fuse-3p",
+    "profile": "thermite:fuse",
+    "bindings": {
+      "circuit": ["pole1", "pole2", "pole3"],
+      "power": ["pole1", "pole2", "pole3"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "pole1"
+      },
+      "loads": {
+        "key": "pole1",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    },
+    "functionShapes": {
+      "pole1": "other/2",
+      "pole2": "other/2",
+      "pole3": "other/2"
+    }
+  },
+  {
+    "type": "hmi",
+    "profile": "thermite:io-module",
+    "functionShapes": {
+      "supply": "load/2"
+    },
+    "bindings": {
+      "circuit": ["supply"],
+      "power": [],
+      "control": ["supply"],
+      "loads": ["supply"]
+    },
+    "probes": {
+      "power": {
+        "key": "supply",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete power view: lane \"U\" does not reach a required boundary. Device \"M1\", function \"motor_load\". Path stopped at DUT.M (function supply)."
+      },
+      "control": {
+        "key": "supply",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "supply",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "junction-box-8",
+    "profile": "thermite:terminal-strip",
+    "bindings": {
+      "circuit": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "power": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "control": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "loads": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ]
+    },
+    "probes": {
+      "power": {
+        "key": "terminal1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "terminal1",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "terminal1",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "level-switch-no",
+    "profile": "thermite:level-switch",
+    "functionShapes": {
+      "contact13": "contact/2"
+    },
+    "bindings": {
+      "circuit": ["contact13"],
+      "power": [],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact13"
+      },
+      "control": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact13"
+      },
+      "loads": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "limit-switch-2wire",
+    "profile": "thermite:switch",
+    "bindings": {
+      "circuit": ["contact13"],
+      "power": [],
+      "control": ["contact13"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact13"
+      },
+      "control": {
+        "key": "contact13",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "motor-3ph",
+    "profile": "thermite:motor-3ph",
+    "bindings": {
+      "circuit": ["motor_load", "protective_earth"],
+      "power": ["motor_load", "protective_earth"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "motor_load",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "motor_load",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      },
+      "loads": {
+        "key": "motor_load",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "overload-3p-1nc",
+    "profile": "thermite:overload",
+    "bindings": {
+      "circuit": ["aux95", "pole1", "pole2", "pole3"],
+      "power": ["pole1", "pole2", "pole3"],
+      "control": ["aux95"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "pole1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "aux95",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "aux95",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "pilot-light",
+    "profile": "thermite:lamp",
+    "bindings": {
+      "circuit": ["lamp"],
+      "power": [],
+      "control": ["lamp"],
+      "loads": ["lamp"]
+    },
+    "probes": {
+      "power": {
+        "key": "lamp",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete power view: lane \"U\" does not reach a required boundary. Device \"M1\", function \"motor_load\". Path stopped at DUT.X2 (function lamp)."
+      },
+      "control": {
+        "key": "lamp",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "lamp",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "plc-8di-8do-2ai",
+    "profile": "thermite:io-module",
+    "functionShapes": {
+      "supply": "load/2",
+      "di0": "channel/1",
+      "di1": "channel/1",
+      "di2": "channel/1",
+      "di3": "channel/1",
+      "di4": "channel/1",
+      "di5": "channel/1",
+      "di6": "channel/1",
+      "di7": "channel/1",
+      "do0": "channel/1",
+      "do1": "channel/1",
+      "do2": "channel/1",
+      "do3": "channel/1",
+      "do4": "channel/1",
+      "do5": "channel/1",
+      "do6": "channel/1",
+      "do7": "channel/1",
+      "ai0": "channel/2",
+      "ai1": "channel/2"
+    },
+    "bindings": {
+      "circuit": [
+        "ai0",
+        "ai1",
+        "di0",
+        "di1",
+        "di2",
+        "di3",
+        "di4",
+        "di5",
+        "di6",
+        "di7",
+        "do0",
+        "do1",
+        "do2",
+        "do3",
+        "do4",
+        "do5",
+        "do6",
+        "do7",
+        "supply"
+      ],
+      "power": [],
+      "control": [
+        "di0",
+        "di1",
+        "di2",
+        "di3",
+        "di4",
+        "di5",
+        "di6",
+        "di7",
+        "do0",
+        "do1",
+        "do2",
+        "do3",
+        "do4",
+        "do5",
+        "do6",
+        "do7",
+        "supply"
+      ],
+      "loads": ["supply"]
+    },
+    "probes": {
+      "power": {
+        "key": "supply",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete power view: lane \"U\" does not reach a required boundary. Device \"M1\", function \"motor_load\". Path stopped at DUT.M (function supply)."
+      },
+      "control": {
+        "key": "supply",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "supply",
+        "outcome": "renders"
+      }
+    },
+    "additionalProbes": [
+      {
+        "family": "control",
+        "key": "do0",
+        "outcome": "renders"
+      },
+      {
+        "family": "control",
+        "key": "ai0",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete control view: no input path reaches a required boundary. Device \"K1\", function \"coil\". Path stopped at DUT.AI0- (function ai0)."
+      }
+    ]
+  },
+  {
+    "type": "plc-compact",
+    "profile": "thermite:io-module",
+    "bindings": {
+      "circuit": ["di0", "di1", "do0", "do1", "supply"],
+      "power": [],
+      "control": ["di0", "di1", "do0", "do1", "supply"],
+      "loads": ["supply"]
+    },
+    "probes": {
+      "power": {
+        "key": "supply",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete power view: lane \"U\" does not reach a required boundary. Device \"M1\", function \"motor_load\". Path stopped at DUT.M (function supply)."
+      },
+      "control": {
+        "key": "supply",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "supply",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "prox-pnp-3wire",
+    "profile": "thermite:sensor-3wire",
+    "bindings": {
+      "circuit": ["output", "supply"],
+      "power": [],
+      "control": ["output", "supply"],
+      "loads": ["output", "supply"]
+    },
+    "probes": {
+      "power": {
+        "key": "supply",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete power view: lane \"U\" does not reach a required boundary. Device \"M1\", function \"motor_load\". Path stopped at DUT.3 (function supply)."
+      },
+      "control": {
+        "key": "output",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "supply",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "psu-24vdc",
+    "profile": "thermite:dc-supply",
+    "bindings": {
+      "circuit": ["ac_input", "dc_output"],
+      "power": ["ac_input"],
+      "control": ["dc_output"],
+      "loads": ["dc_output"]
+    },
+    "probes": {
+      "power": {
+        "key": "ac_input",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "dc_output",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "dc_output",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "pushbutton-nc",
+    "profile": "thermite:pushbutton",
+    "bindings": {
+      "circuit": ["contact11"],
+      "power": [],
+      "control": ["contact11"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact11",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact11"
+      },
+      "control": {
+        "key": "contact11",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "contact11",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "pushbutton-no",
+    "profile": "thermite:pushbutton",
+    "bindings": {
+      "circuit": ["contact13"],
+      "power": [],
+      "control": ["contact13"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact13"
+      },
+      "control": {
+        "key": "contact13",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "relay-1co",
+    "profile": "thermite:relay",
+    "bindings": {
+      "circuit": ["coil", "contact12", "contact14"],
+      "power": [],
+      "control": ["coil", "contact12", "contact14"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact14",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact14"
+      },
+      "control": {
+        "key": "coil",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "coil",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "selector-2pos",
+    "profile": "thermite:selector",
+    "bindings": {
+      "circuit": ["contact13"],
+      "power": [],
+      "control": ["contact13"],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "contact13"
+      },
+      "control": {
+        "key": "contact13",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "contact13",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "supply-480v-3ph",
+    "profile": "thermite:power-source",
+    "bindings": {
+      "circuit": ["protective_earth", "three_phase_source"],
+      "power": ["protective_earth", "three_phase_source"],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "three_phase_source",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "three_phase_source",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "three_phase_source"
+      },
+      "loads": {
+        "key": "three_phase_source",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    }
+  },
+  {
+    "type": "terminal-block-8",
+    "profile": "thermite:terminal-strip",
+    "bindings": {
+      "circuit": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "power": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "control": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ],
+      "loads": [
+        "terminal1",
+        "terminal2",
+        "terminal3",
+        "terminal4",
+        "terminal5",
+        "terminal6",
+        "terminal7",
+        "terminal8"
+      ]
+    },
+    "probes": {
+      "power": {
+        "key": "terminal1",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "terminal1",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "terminal1",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "terminal-pe",
+    "profile": "thermite:terminal-strip",
+    "bindings": {
+      "circuit": ["earth"],
+      "power": ["earth"],
+      "control": ["earth"],
+      "loads": ["earth"]
+    },
+    "probes": {
+      "power": {
+        "key": "earth",
+        "outcome": "renders"
+      },
+      "control": {
+        "key": "earth",
+        "outcome": "renders"
+      },
+      "loads": {
+        "key": "earth",
+        "outcome": "renders"
+      }
+    }
+  },
+  {
+    "type": "transmitter-2wire-4-20ma",
+    "profile": "thermite:two-wire-transmitter",
+    "functionShapes": {
+      "signal": "other/2"
+    },
+    "bindings": {
+      "circuit": [],
+      "power": [],
+      "control": [],
+      "loads": []
+    },
+    "probes": {
+      "power": {
+        "key": "signal",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "signal"
+      },
+      "control": {
+        "key": "signal",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": "unsupported-symbol-profile",
+        "functionKey": "signal"
+      },
+      "loads": {
+        "key": "signal",
+        "outcome": "gap",
+        "code": "R002",
+        "reason": null,
+        "message": "Incomplete loads view: the requested source has no complete renderable load. Device \"PS1\", function \"dc_output\"."
+      }
+    },
+    "circuitGap": {
+      "code": "R006",
+      "reason": "unprintable-layout",
+      "detailsReason": "unsupported-symbol-profile",
+      "functionKey": "signal"
+    }
+  }
+]

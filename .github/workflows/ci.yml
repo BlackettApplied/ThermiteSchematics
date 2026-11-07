@@ -1,17 +1,72 @@
 name: TypeScript alpha
 
 on:
+  push:
+    branches: [release]
   pull_request:
+    branches: [release]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   check:
-    runs-on: macos-15
+    if: github.ref == 'refs/heads/release' || github.base_ref == 'release'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, ubuntu-24.04, windows-2022]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      VITEST_MAX_WORKERS: 2
+      THERMITE_REQUIRE_BROWSER: "1"
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
         with:
-          node-version: "24"
-          cache: npm
-      - run: npm ci
-      - run: npm run check
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .bun-version
+      - run: bun install --frozen-lockfile
+      - run: bun run check
+        env:
+          THERMITE_RESEARCH_PYTHON: python
+      - name: Check a linked worktree
+        run: bun scripts/check-worktree.mjs
+        env:
+          THERMITE_RESEARCH_PYTHON: python
+      - run: bun run package:pack
+      - name: Verify Linux candidate without network access
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          docker pull oven/bun:1.4.2
+          for archive in release-out/runtime/*/*.zip; do
+            docker run --rm --network=none --user "$(id -u):$(id -g)" \
+              --volume "$PWD:/work:ro" --volume "$PWD/release-out:/evidence" \
+              --workdir /work oven/bun:1.4.2 bun -e '
+                import { verifyRuntimeArchive } from "./scripts/runtime-package/verify.mjs";
+                import { writeFileSync } from "node:fs";
+                const report = await verifyRuntimeArchive(process.argv[1]);
+                if (report.networkIsolation !== "loopback-only-network-namespace")
+                  throw new Error("Linux acceptance requires network isolation");
+                writeFileSync(process.argv[2], JSON.stringify(report, null, 2) + "\n");
+              ' "/work/$archive" "/evidence/${archive#release-out/}.network-verification.json"
+          done
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: runtime-${{ runner.os }}-${{ runner.arch }}-${{ github.sha }}
+          path: |
+            release-out/runtime/**/*.zip
+            release-out/runtime/**/*.zip.sha256
+            release-out/runtime/**/*.zip.json
+            release-out/runtime/**/verification.json
+            release-out/runtime/**/*.network-verification.json
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0

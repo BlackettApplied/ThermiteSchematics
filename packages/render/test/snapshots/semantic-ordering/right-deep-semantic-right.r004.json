@@ -1,0 +1,33 @@
+{
+  "diagnostics": [],
+  "error": {
+    "code": "R004",
+    "message": "Invalid layout: label [\"label\",\"edge\",\"[\\\"wire\\\",\\\"00000000-0000-4000-8000-000000000416\\\"]\",\"conductor\"] overlaps edge L1-B (TB1.8 / terminal8 → JB1.X1.7 / terminal7).",
+    "details": {
+      "originalMessage": "Invalid layout: label [\"label\",\"edge\",\"[\\\"wire\\\",\\\"00000000-0000-4000-8000-000000000416\\\"]\",\"conductor\"] overlaps edge [\"wire\",\"00000000-0000-4000-8000-000000000417\"].",
+      "conductors": [
+        {
+          "id": "[\"wire\",\"00000000-0000-4000-8000-000000000417\"]",
+          "designation": "L1-B",
+          "terminals": [
+            {
+              "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+              "terminalKey": "8",
+              "designation": "TB1",
+              "functionKeys": ["terminal8"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.7",
+              "designation": "JB1",
+              "functionKeys": ["terminal7"]
+            }
+          ]
+        }
+      ]
+    },
+    "family": "control",
+    "netId": "net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9",
+    "root": "LS1"
+  }
+}

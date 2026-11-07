@@ -1,0 +1,49 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "assemblies": ["W1"],
+      "devices": ["R1"]
+    },
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "assemblies": ["CAP-X2"]
+    },
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "assemblies": ["W2"]
+    },
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "assemblies": ["W3"],
+      "devices": ["Y1"]
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet",
+      "devices": ["S1"]
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "nrg-bus"
+    },
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet",
+      "devices": ["N3"]
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "assemblies"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "network"
+    }
+  ]
+}

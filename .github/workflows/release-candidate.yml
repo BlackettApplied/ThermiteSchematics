@@ -9,6 +9,8 @@ permissions:
 
 jobs:
   release_candidate:
+    # Frozen private v0.2.0 pipeline: opt in only on its historical revision.
+    if: github.repository == 'BlackettApplied/ThermiteSchematics' && github.event.repository.private == true && github.event.repository.fork == false && vars.THERMITE_LEGACY_RELEASE == 'true'
     runs-on: ubuntu-24.04
     outputs:
       artifact_id: ${{ steps.candidate-upload.outputs.artifact-id }}
@@ -170,7 +172,7 @@ jobs:
 
   release_gate:
     needs: [release_candidate, acceptance]
-    if: always()
+    if: always() && github.repository == 'BlackettApplied/ThermiteSchematics' && github.event.repository.private == true && github.event.repository.fork == false && vars.THERMITE_LEGACY_RELEASE == 'true'
     runs-on: ubuntu-24.04
     steps:
       - name: Require producer and all four consumers

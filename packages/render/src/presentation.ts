@@ -1,4 +1,13 @@
 import {
+  irSemanticOrder,
+  compareSemanticElementIds,
+  graphSemanticOrder,
+  type SemanticOrder,
+} from "./semantic-order.js";
+import { printableSlotWidth } from "./symbols/printable-font.js";
+import { symbolProfile } from "./symbols/profiles.js";
+import { printableCaption } from "./symbols/printable-policy.js";
+import {
   compareConductiveElementId,
   type ConductiveElementId,
   type ElectricalIr,
@@ -90,6 +99,9 @@ export type BuildPresentationGraphResult =
   | { readonly ok: false; readonly error: UnsupportedSymbolMappingError };
 
 interface PresentationContext {
+  readonly order: SemanticOrder;
+  orderedPaths?: readonly SelectedPath[];
+  readonly directLoadPair: boolean;
   readonly ir: Readonly<ElectricalIr>;
   readonly selected: Readonly<SelectedSubgraph>;
   readonly mappings: readonly DeviceTypeSymbolMapping[];
@@ -113,6 +125,7 @@ interface SymbolRepresentation {
 }
 
 interface MutablePresentationEdge {
+  readonly authoredOrderKey?: string;
   readonly id: string;
   readonly parentId: "root";
   readonly kind: "conductor" | "boundary-segment";
@@ -229,7 +242,10 @@ function orientedSymbolSize(
 }
 
 function labelWidth(text: string): number {
-  return Math.max(12, Number((6 + 6.2 * [...text].length).toFixed(3)));
+  return printableSlotWidth(
+    text,
+    Math.max(12, Number((6 + 6.2 * [...text].length).toFixed(3))),
+  );
 }
 
 function textSource(
@@ -339,7 +355,9 @@ function createContext(
     ok: true,
     value: {
       ir: request.ir,
+      order: irSemanticOrder(request.ir),
       selected: request.selected,
+      directLoadPair: hasDirectLoadPairPaths(request.selected),
       mappings,
       catalog,
       deviceByUid,
@@ -494,7 +512,7 @@ function selectedRepresentations(
   return {
     ok: true,
     value: [...representations.values()].sort((left, right) =>
-      compareText(left.id, right.id),
+      context.order.compare(left.id, right.id),
     ),
   };
 }
@@ -560,7 +578,16 @@ function selectedEndpointFacts(
   return { boundaries, constraints };
 }
 
-function selectedStepKey(step: SelectedPath["steps"][number]): string {
+function selectedStepKey(
+  context: Pick<PresentationContext, "order">,
+  step: SelectedPath["steps"][number],
+): string {
+  return context.order.key(structuralSelectedStepKey(step));
+}
+
+function structuralSelectedStepKey(
+  step: SelectedPath["steps"][number],
+): string {
   return step.kind === "conductor"
     ? structuralTupleId(
         "conductor",
@@ -579,18 +606,32 @@ function selectedStepKey(step: SelectedPath["steps"][number]): string {
 }
 
 function compareStructuralSteps(
+  context: PresentationContext,
   left: SelectedPath,
   right: SelectedPath,
 ): number {
   const count = Math.min(left.steps.length, right.steps.length);
   for (let index = 0; index < count; index++) {
     const compared = compareText(
-      selectedStepKey(left.steps[index]!),
-      selectedStepKey(right.steps[index]!),
+      selectedStepKey(context, left.steps[index]!),
+      selectedStepKey(context, right.steps[index]!),
     );
     if (compared !== 0) return compared;
   }
-  return left.steps.length - right.steps.length;
+  const endpointKey = (path: SelectedPath) =>
+    JSON.stringify([
+      path.lane,
+      ...[path.start, path.end].map((e) => [
+        context.order.key(terminalIdKey(e.terminal)),
+        e.constraint ?? "",
+        e.boundary?.kind ?? "",
+        e.boundary?.label ?? "",
+      ]),
+    ]);
+  return (
+    left.steps.length - right.steps.length ||
+    compareText(endpointKey(left), endpointKey(right))
+  );
 }
 
 const POWER_LANE_RANK: Readonly<Record<string, number>> = Object.freeze({
@@ -603,34 +644,128 @@ const POWER_LANE_RANK: Readonly<Record<string, number>> = Object.freeze({
   PE: 3,
 });
 
+/** Selection may enumerate equal-distance branches by structural identity.
+ * Order those steps by directed distance, then authored semantic identity here;
+ * preserve the selected path and every conductor's orientation and membership. */
+function orderedPathSteps(
+  context: Pick<PresentationContext, "order">,
+  path: SelectedPath,
+): SelectedPath {
+  const distance = new Map([[terminalIdKey(path.start.terminal), 0]]);
+  const pending = [path.start.terminal];
+  while (pending.length) {
+    const from = pending.shift()!,
+      rank = distance.get(terminalIdKey(from))!;
+    for (const step of path.steps) {
+      if (
+        !sameTerminal(step.from, from) ||
+        distance.has(terminalIdKey(step.to))
+      )
+        continue;
+      distance.set(terminalIdKey(step.to), rank + 1);
+      pending.push(step.to);
+    }
+  }
+  return {
+    ...path,
+    steps: [...path.steps].sort(
+      (a, b) =>
+        (distance.get(terminalIdKey(a.from)) ?? Number.MAX_SAFE_INTEGER) -
+          (distance.get(terminalIdKey(b.from)) ?? Number.MAX_SAFE_INTEGER) ||
+        compareText(selectedStepKey(context, a), selectedStepKey(context, b)),
+    ),
+  };
+}
+
 function orderedSelectedPaths(
   context: PresentationContext,
 ): readonly SelectedPath[] {
-  return [...context.selected.paths].sort((left, right) => {
-    if (context.selected.view.family === "power") {
+  const cached = context.orderedPaths;
+  if (cached) return cached;
+  const ordered = context.selected.paths
+    .map((p) => orderedPathSteps(context, p))
+    .sort((left, right) => {
+      if (context.directLoadPair) {
+        return (
+          compareTerminalId(left.start.terminal, right.start.terminal, (uid) =>
+            designationFor(context, uid),
+          ) ||
+          compareTerminalId(left.end.terminal, right.end.terminal, (uid) =>
+            designationFor(context, uid),
+          ) ||
+          compareStructuralSteps(context, left, right)
+        );
+      }
+      if (context.selected.view.family === "power") {
+        return (
+          (POWER_LANE_RANK[left.lane] ?? Number.MAX_SAFE_INTEGER) -
+            (POWER_LANE_RANK[right.lane] ?? Number.MAX_SAFE_INTEGER) ||
+          compareText(left.lane, right.lane) ||
+          compareStructuralSteps(context, left, right)
+        );
+      }
+      const leftBoundary = left.start.boundary ?? left.end.boundary;
+      const rightBoundary = right.start.boundary ?? right.end.boundary;
+      const boundaryRank =
+        (leftBoundary?.kind === "channel" || leftBoundary?.kind === "potential"
+          ? 0
+          : 1) -
+        (rightBoundary?.kind === "channel" ||
+        rightBoundary?.kind === "potential"
+          ? 0
+          : 1);
       return (
-        (POWER_LANE_RANK[left.lane] ?? Number.MAX_SAFE_INTEGER) -
-          (POWER_LANE_RANK[right.lane] ?? Number.MAX_SAFE_INTEGER) ||
-        compareText(left.lane, right.lane) ||
-        compareText(left.id, right.id)
+        boundaryRank ||
+        left.steps.length - right.steps.length ||
+        compareStructuralSteps(context, left, right)
       );
-    }
-    const leftBoundary = left.start.boundary ?? left.end.boundary;
-    const rightBoundary = right.start.boundary ?? right.end.boundary;
-    const boundaryRank =
-      (leftBoundary?.kind === "channel" || leftBoundary?.kind === "potential"
-        ? 0
-        : 1) -
-      (rightBoundary?.kind === "channel" || rightBoundary?.kind === "potential"
-        ? 0
-        : 1);
-    return (
-      boundaryRank ||
-      left.steps.length - right.steps.length ||
-      compareStructuralSteps(left, right) ||
-      compareText(left.id, right.id)
+    });
+  context.orderedPaths = ordered;
+  return ordered;
+}
+
+function hasDirectLoadPairPaths(selected: Readonly<SelectedSubgraph>): boolean {
+  const view = selected.view;
+  return (
+    "intent" in view &&
+    view.intent === "loads" &&
+    selected.paths.length === 4 &&
+    new Set(selected.paths.map((path) => path.end.terminal.deviceUid)).size ===
+      2 &&
+    selected.paths.every(
+      (path) => path.steps.length === 1 && path.steps[0]?.kind === "conductor",
+    )
+  );
+}
+
+/** Keep an external load straight ahead of the source's location group. The
+ * local branch must turn outwards before ELK routes it back into that group. */
+function compareDirectLoadsUses(
+  context: PresentationContext,
+  left: EndpointUse,
+  right: EndpointUse,
+): number {
+  const target = (use: EndpointUse) =>
+    required(
+      use.edge.endpoints.find((t) => !sameTerminal(t, use.terminal)),
+      "Direct load target",
     );
-  });
+  const leftTarget = target(left),
+    rightTarget = target(right);
+  const sourceLocation = locationIdentity(
+    context.deviceByUid.get(left.terminal.deviceUid)!,
+  );
+  const sameLocation = (t: TerminalId) =>
+    compareLocationIdentity(
+      sourceLocation,
+      locationIdentity(context.deviceByUid.get(t.deviceUid)!),
+    ) === 0;
+  return (
+    Number(sameLocation(leftTarget)) - Number(sameLocation(rightTarget)) ||
+    -compareTerminalId(leftTarget, rightTarget, (uid) =>
+      designationFor(context, uid),
+    )
+  );
 }
 
 function representationBindings(
@@ -715,7 +850,7 @@ function addImplicitTerminalRepresentations(
   return {
     ok: true,
     value: [...byId.values()].sort((left, right) =>
-      compareText(left.id, right.id),
+      context.order.compare(left.id, right.id),
     ),
   };
 }
@@ -761,10 +896,8 @@ function buildGroups(
       identityById.get(id),
       `Location identity ${id} is missing.`,
     );
-    const sortedDevices = [...locationDevices].sort(
-      (left, right) =>
-        compareText(left.designation, right.designation) ||
-        compareText(left.uid, right.uid),
+    const sortedDevices = [...locationDevices].sort((left, right) =>
+      compareText(left.designation, right.designation),
     );
     const textSources =
       identity[0] === "virtual"
@@ -824,8 +957,7 @@ function buildGroups(
       (left, right) =>
         (flowRankByDeviceUid.get(left.uid) ?? Number.MAX_SAFE_INTEGER) -
           (flowRankByDeviceUid.get(right.uid) ?? Number.MAX_SAFE_INTEGER) ||
-        compareText(left.designation, right.designation) ||
-        compareText(left.uid, right.uid),
+        compareText(left.designation, right.designation),
     )
     .map((device) => {
       const id = deviceGroupId(device.uid);
@@ -1039,7 +1171,43 @@ function buildSymbolNode(
   const portDefinitionById = new Map(
     symbol.ports.map((definition) => [definition.id, definition]),
   );
-  const labels: PresentationLabel[] = [nodeLabel];
+  const printableText =
+    representation.kind === "aggregate"
+      ? printableCaption({
+          kind: "aggregate",
+          mark: symbol.id,
+          type: required(
+            context.ir.deviceTypes.find(
+              (t) => t.id === representation.device.typeId,
+            ),
+            "Missing aggregate caption type",
+          ),
+        })
+      : printableCaption({
+          kind: "function",
+          fn: required(
+            context.functionByKey.get(
+              functionIdKey(representation.functionIds[0]!),
+            ),
+            "Missing caption function",
+          ),
+          type: required(
+            context.ir.deviceTypes.find(
+              (t) => t.id === representation.device.typeId,
+            ),
+            "Missing caption type",
+          ),
+          mark: symbol.id,
+        });
+  const captionWidth = Math.max(nodeLabel.width, labelWidth(printableText));
+  const labels: PresentationLabel[] = [
+    {
+      ...nodeLabel,
+      printableText,
+      width: captionWidth,
+      textLength: Number((captionWidth - 6).toFixed(3)),
+    },
+  ];
   const ports = representationBindings(representation).map((binding) => {
     const definition: SymbolPortDefinition = required(
       portDefinitionById.get(binding.portId),
@@ -1320,6 +1488,7 @@ function buildRailNode(
 }
 
 function attachmentsByTerminal(
+  order: SemanticOrder,
   nodes: readonly (SymbolPresentationNode | RailPresentationNode)[],
 ): ReadonlyMap<string, readonly SemanticAttachment[]> {
   const byTerminal = new Map<string, SemanticAttachment[]>();
@@ -1332,7 +1501,7 @@ function attachmentsByTerminal(
   for (const attachments of byTerminal.values()) {
     attachments.sort(
       (left, right) =>
-        compareText(left.nodeId, right.nodeId) ||
+        order.compare(left.nodeId, right.nodeId) ||
         compareText(left.kind, right.kind),
     );
   }
@@ -1379,7 +1548,9 @@ function buildSymbolAndRailNodes(
     ok: true,
     value: {
       groups,
-      nodes: [...symbols, ...rails].sort(comparePresentationNode),
+      nodes: [...symbols, ...rails].sort((a, b) =>
+        comparePresentationNode(a, b, context.order.key),
+      ),
     },
   };
 }
@@ -1390,11 +1561,15 @@ interface IrConductorRecord {
 }
 
 function canonicalConductorEndpoints(
+  ir: Readonly<ElectricalIr>,
   left: TerminalId,
   right: TerminalId,
 ): readonly [TerminalId, TerminalId] {
-  return (compareText(left.deviceUid, right.deviceUid) ||
-    compareText(left.terminalKey, right.terminalKey)) <= 0
+  return compareTerminalId(
+    left,
+    right,
+    (uid) => ir.devices.find((d) => d.uid === uid)!.designation,
+  ) <= 0
     ? [cloneTerminal(left), cloneTerminal(right)]
     : [cloneTerminal(right), cloneTerminal(left)];
 }
@@ -1412,6 +1587,7 @@ function irConductorRecord(
       return {
         id: cloneElement(elementId),
         endpoints: canonicalConductorEndpoints(
+          ir,
           wire.endpoints[0].terminal,
           wire.endpoints[1].terminal,
         ),
@@ -1425,6 +1601,7 @@ function irConductorRecord(
       return {
         id: cloneElement(elementId),
         endpoints: canonicalConductorEndpoints(
+          ir,
           jumper.endpoints[0].terminal,
           jumper.endpoints[1].terminal,
         ),
@@ -1442,6 +1619,7 @@ function irConductorRecord(
       return {
         id: cloneElement(elementId),
         endpoints: canonicalConductorEndpoints(
+          ir,
           conductor.endpoints[0].terminal,
           conductor.endpoints[1].terminal,
         ),
@@ -1697,10 +1875,15 @@ function buildConductorEdges(context: PresentationContext): BuiltConductors {
         netId: step.netId,
         elementIds: [cloneElement(step.elementId)],
         conductor: conductorMetadata(context, step.elementId),
-        endpoints: [
-          cloneTerminal(record.endpoints[0]),
-          cloneTerminal(record.endpoints[1]),
-        ],
+        ...(step.elementId.kind === "jumper" &&
+        context.ir.jumpers.find(
+          (j) => conductorKey({ kind: "jumper", uid: j.uid }) === key,
+        )?.designation === undefined
+          ? { authoredOrderKey: context.order.key(step.elementId.uid) }
+          : {}),
+        endpoints: [...record.endpoints].sort((a, b) =>
+          compareTerminalId(a, b, (uid) => designationFor(context, uid)),
+        ) as [TerminalId, TerminalId],
         pathRank,
         label: conductorLabel(context, step.elementId, id),
       };
@@ -1747,7 +1930,9 @@ function uniquePotentialForNet(context: PresentationContext, netId: string) {
 }
 
 function netSortKey(context: PresentationContext, netId: string): string {
-  return uniquePotentialForNet(context, netId)?.name ?? netId;
+  return (
+    uniquePotentialForNet(context, netId)?.name ?? context.order.key(netId)
+  );
 }
 
 function comparePresentationEdge(
@@ -1759,22 +1944,23 @@ function comparePresentationEdge(
     compareText(
       netSortKey(context, left.netId),
       netSortKey(context, right.netId),
-    ) || compareText(left.netId, right.netId);
+    ) || context.order.compare(left.netId, right.netId);
   if (net !== 0) return net;
   const path = left.pathRank - right.pathRank;
   if (path !== 0) return path;
   if (left.kind !== right.kind) return left.kind === "conductor" ? -1 : 1;
   if (left.kind === "conductor" && right.kind === "conductor") {
-    const element = compareConductiveElementId(
+    const element = compareSemanticElementIds(
+      context.order,
       left.elementIds[0]!,
       right.elementIds[0]!,
     );
     if (element !== 0) return element;
   }
   return (
-    compareText(left.sourcePortId, right.sourcePortId) ||
-    compareText(left.targetPortId, right.targetPortId) ||
-    compareText(left.id, right.id)
+    context.order.compare(left.sourcePortId, right.sourcePortId) ||
+    context.order.compare(left.targetPortId, right.targetPortId) ||
+    context.order.compare(left.id, right.id)
   );
 }
 
@@ -1902,7 +2088,7 @@ function compareTraceDagEdge(
   left: TraceSignalDagEdge,
   right: TraceSignalDagEdge,
 ): number {
-  return left.stableRank - right.stableRank || compareText(left.id, right.id);
+  return left.stableRank - right.stableRank;
 }
 
 function traceDagIndex(dag: TraceSignalDag): TraceDagIndex {
@@ -2458,8 +2644,11 @@ function isTwoLanePnpTraceSignalJunction(
     view.intent !== "trace" ||
     view.root.kind !== "device" ||
     !("deviceUid" in view.root) ||
-    context.deviceByUid.get(view.root.deviceUid)?.typeId !==
-      "core:prox-pnp-3wire" ||
+    symbolProfile(
+      context.ir.deviceTypes.find(
+        (t) => t.id === context.deviceByUid.get(view.root.deviceUid)?.typeId,
+      ) ?? {},
+    ) !== "thermite:sensor-3wire" ||
     uses.length !== 2 ||
     attachments.length !== 1 ||
     uses[0]!.end !== uses[1]!.end
@@ -3011,11 +3200,98 @@ export function emitClosedTraceStructuresForTest(
     edges = edges.filter(({ id }) => !replacedBoundaryIds.has(id));
     edges.push(...emitted.boundaryEdges);
   }
+  const order = graphSemanticOrder(source);
   return {
     ...structuredClone(source),
-    nodes: nodes.sort(comparePresentationNode),
+    nodes: nodes.sort((a, b) => comparePresentationNode(a, b, order.key)),
     edges: edges.map(immutableEdge),
   };
+}
+
+/** A high-degree source terminal is a chain of four-way presentation junctions.
+ * Links retain this exact compiler terminal and have no physical element IDs. */
+function loadSourceIncidence(
+  context: PresentationContext,
+  uses: readonly EndpointUse[],
+  attachments: readonly SemanticAttachment[],
+  portById: ReadonlyMap<string, PresentationPort>,
+): ClosedTraceIncidence | undefined {
+  const view = context.selected.view;
+  if (
+    !("intent" in view) ||
+    view.intent !== "loads" ||
+    uses.length < 3 ||
+    attachments.length !== 1 ||
+    uses.some((use) => use.end !== "source")
+  )
+    return undefined;
+  const orderedUses = [...uses].sort(
+    (a, b) =>
+      compareDirectLoadsUses(context, a, b) ||
+      context.order.compare(a.edge.id, b.edge.id),
+  );
+  const outputs = orderedUses.map((use, stableRank) => ({
+    id: use.edge.id,
+    from: "",
+    to: "",
+    stableRank,
+  }));
+  const flow = view.flow;
+  let template: ClosedRoleTemplate;
+  if (outputs.length <= 4) template = rootClosedTemplate(flow, outputs);
+  else {
+    const components: ClosedRoleTemplate["components"][number][] = [];
+    for (let offset = 0; offset < outputs.length; offset += 2) {
+      const index = offset / 2;
+      const last = offset + 2 >= outputs.length;
+      const assignments = outputs
+        .slice(offset, offset + 2)
+        .map((edge, i) =>
+          closedAssignment(
+            flow,
+            { kind: "edge", edgeId: edge.id },
+            i === 0 ? "P" : index === 0 ? "Q" : "S",
+            i,
+          ),
+        );
+      assignments.push(
+        closedAssignment(
+          flow,
+          index === 0
+            ? { kind: "attachment" }
+            : { kind: "link-in", index: index - 1 },
+          index === 0 ? "R" : "Q",
+          assignments.length,
+        ),
+      );
+      if (!last)
+        assignments.push(
+          closedAssignment(
+            flow,
+            { kind: "link-out", index },
+            index === 0 ? "S" : "R",
+            assignments.length,
+          ),
+        );
+      components.push({ index, assignments });
+    }
+    template = { kind: "root", components };
+  }
+  if (attachmentPort(attachments[0]!, portById).symbolPortId === "return") {
+    const q = structuralSide(flow, "Q"),
+      s = structuralSide(flow, "S");
+    template = {
+      ...template,
+      components: template.components.map((c) => ({
+        ...c,
+        assignments: c.assignments.map((a) => ({
+          ...a,
+          side: a.side === q ? s : a.side === s ? q : a.side,
+        })),
+      })),
+    };
+  }
+  return { orderedUses, template };
 }
 
 function insertSemanticJunctions(
@@ -3023,7 +3299,7 @@ function insertSemanticJunctions(
   visibleNodes: readonly (SymbolPresentationNode | RailPresentationNode)[],
   conductors: BuiltConductors,
 ): JunctionInsertionResult {
-  const attachments = attachmentsByTerminal(visibleNodes);
+  const attachments = attachmentsByTerminal(context.order, visibleNodes);
   const nodeById = new Map(visibleNodes.map((node) => [node.id, node]));
   const portById = new Map(
     visibleNodes.flatMap((node) =>
@@ -3037,13 +3313,13 @@ function insertSemanticJunctions(
   const junctions: JunctionPresentationNode[] = [];
   const boundaryEdges: MutablePresentationEdge[] = [];
   const signalOrder = traceSignalOrder(context);
-  for (const key of [...terminalKeys].sort(compareText)) {
+  for (const key of [...terminalKeys].sort(context.order.compare)) {
     const terminalAttachments = attachments.get(key) ?? [];
     const defaultOrderedUses = [
       ...(conductors.endpointUses.get(key) ?? []),
     ].sort(
       (left, right) =>
-        compareText(left.edge.id, right.edge.id) ||
+        context.order.compare(left.edge.id, right.edge.id) ||
         compareText(left.end, right.end),
     );
     const twoArmLoadsSource = isTwoArmLoadsSourceJunction(
@@ -3059,7 +3335,9 @@ function insertSemanticJunctions(
     const uses = twoArmLoadsSource
       ? [...defaultOrderedUses].sort(
           (left, right) =>
-            comparePresentationEdge(context, left.edge, right.edge) ||
+            (context.directLoadPair
+              ? compareDirectLoadsUses(context, left, right)
+              : comparePresentationEdge(context, left.edge, right.edge)) ||
             compareText(left.end, right.end),
         )
       : twoLanePnpTraceSignal
@@ -3142,13 +3420,20 @@ function insertSemanticJunctions(
       }
       continue;
     }
-    const closed = closedTraceIncidence(
-      key,
-      defaultOrderedUses,
-      terminalAttachments,
-      signalOrder,
-      context.selected.view.flow,
-    );
+    const closed =
+      loadSourceIncidence(
+        context,
+        defaultOrderedUses,
+        terminalAttachments,
+        portById,
+      ) ??
+      closedTraceIncidence(
+        key,
+        defaultOrderedUses,
+        terminalAttachments,
+        signalOrder,
+        context.selected.view.flow,
+      );
     if (closed !== undefined) {
       const emitted = emitClosedTraceJunction(
         (deviceUid) => designationFor(context, deviceUid),
@@ -3208,12 +3493,31 @@ function insertSemanticJunctions(
         terminal: cloneTerminal(terminal),
         netId,
         side:
-          (twoArmLoadsSource || twoLanePnpTraceSignal) && index === 1
-            ? counterClockwiseSide(primarySide(context, "outgoing"))
-            : primarySide(
-                context,
-                use.end === "target" ? "incoming" : "outgoing",
-              ),
+          "intent" in context.selected.view &&
+          context.selected.view.intent === "loads" &&
+          uses.some((u) => u.end === "target") &&
+          uses.some((u) => u.end === "source") &&
+          use.end === "source"
+            ? counterClockwiseSide(
+                primarySide(
+                  context,
+                  attachmentPort(terminalAttachments[0]!, portById)
+                    .symbolPortId === "return"
+                    ? "incoming"
+                    : "outgoing",
+                ),
+              )
+            : (twoArmLoadsSource || twoLanePnpTraceSignal) && index === 1
+              ? twoArmLoadsSource &&
+                context.directLoadPair &&
+                attachmentPort(terminalAttachments[0]!, portById)
+                  .symbolPortId === "return"
+                ? counterClockwiseSide(primarySide(context, "incoming"))
+                : counterClockwiseSide(primarySide(context, "outgoing"))
+              : primarySide(
+                  context,
+                  use.end === "target" ? "incoming" : "outgoing",
+                ),
         offset: 0.5,
         order: index,
         label: "",
@@ -3288,7 +3592,9 @@ function insertSemanticJunctions(
     });
   }
   return {
-    junctions: junctions.sort(comparePresentationNode),
+    junctions: junctions.sort((a, b) =>
+      comparePresentationNode(a, b, context.order.key),
+    ),
     boundaryEdges,
   };
 }
@@ -3496,6 +3802,9 @@ function immutableEdge(edge: MutablePresentationEdge): PresentationEdge {
   }
   return {
     id: edge.id,
+    ...(edge.authoredOrderKey === undefined
+      ? {}
+      : { authoredOrderKey: edge.authoredOrderKey }),
     parentId: "root",
     kind: edge.kind,
     sourcePortId: edge.sourcePortId,
@@ -3577,11 +3886,12 @@ export function buildPresentationGraph(
   attachNetLabels(context, mutableEdges);
   const graph: PresentationGraph = {
     format: "schematic-presentation/0.1",
+    directLoadPair: context.directLoadPair,
     view: cloneView(context.selected),
     locationGroups: [...visible.value.groups.locationGroups],
     deviceGroups: [...visible.value.groups.deviceGroups],
-    nodes: [...visible.value.nodes, ...inserted.junctions].sort(
-      comparePresentationNode,
+    nodes: [...visible.value.nodes, ...inserted.junctions].sort((a, b) =>
+      comparePresentationNode(a, b, context.order.key),
     ),
     edges: mutableEdges
       .sort((left, right) => comparePresentationEdge(context, left, right))
@@ -3644,6 +3954,7 @@ interface ClosedTraceValidationIndex {
 }
 
 function closedTraceValidationRecords(
+  ir: Readonly<ElectricalIr>,
   selected: Readonly<SelectedSubgraph>,
   graph: Readonly<PresentationGraph>,
 ): ClosedTraceValidationIndex {
@@ -3655,7 +3966,7 @@ function closedTraceValidationRecords(
   }
   const signals = selected.paths.filter(({ lane }) => lane === "signal");
   invariant(signals.length === 1, "one selected trace signal path");
-  const signal = signals[0]!;
+  const signal = orderedPathSteps({ order: irSemanticOrder(ir) }, signals[0]!);
   const terminalByKey = new Map<string, TerminalId>();
   const netByKey = new Map<string, string>();
   const edges = signal.steps
@@ -3752,6 +4063,7 @@ function junctionLinkComponent(
   start: JunctionPresentationNode,
   graph: Readonly<PresentationGraph>,
   ownerByPortId: ReadonlyMap<string, PresentationNode>,
+  order: SemanticOrder,
 ): readonly JunctionPresentationNode[] {
   const visited = new Map<string, JunctionPresentationNode>();
   const pending = [start];
@@ -3777,7 +4089,9 @@ function junctionLinkComponent(
       }
     }
   }
-  return [...visited.values()].sort(comparePresentationNode);
+  return [...visited.values()].sort((a, b) =>
+    comparePresentationNode(a, b, order.key),
+  );
 }
 
 function sameStringSet(
@@ -3792,7 +4106,14 @@ function sameStringSet(
 }
 
 function validateLabel(label: PresentationLabel): void {
-  invariant(label.width === labelWidth(label.text), `${label.id} width`);
+  invariant(
+    label.width ===
+      Math.max(
+        labelWidth(label.text),
+        labelWidth(label.printableText ?? label.text),
+      ),
+    `${label.id} width`,
+  );
   invariant(label.height === 14, `${label.id} height`);
   invariant(
     label.textLength === Number((label.width - 6).toFixed(3)),
@@ -3957,6 +4278,7 @@ export function validatePresentationGraph(
   mappings: readonly DeviceTypeSymbolMapping[] = CORE_DEVICE_TYPE_SYMBOL_MAPPINGS,
 ): void {
   invariant(graph.format === "schematic-presentation/0.1", "graph format");
+  const order = graphSemanticOrder(graph);
   invariant(
     JSON.stringify(graph.view) === JSON.stringify(selected.view),
     "normalized view identity",
@@ -4125,7 +4447,11 @@ export function validatePresentationGraph(
   }
   invariant(
     JSON.stringify(graph.nodes) ===
-      JSON.stringify([...graph.nodes].sort(comparePresentationNode)),
+      JSON.stringify(
+        [...graph.nodes].sort((a, b) =>
+          comparePresentationNode(a, b, order.key),
+        ),
+      ),
     "presentation node order",
   );
 
@@ -4231,7 +4557,7 @@ export function validatePresentationGraph(
     }
   }
 
-  const closedTraceRecords = closedTraceValidationRecords(selected, graph);
+  const closedTraceRecords = closedTraceValidationRecords(ir, selected, graph);
   for (const junction of graph.nodes.filter(
     (node): node is JunctionPresentationNode => node.kind === "junction",
   )) {
@@ -4321,6 +4647,18 @@ export function validatePresentationGraph(
           junction.ports.length,
         `${junction.id} closed trace distinct sides`,
       );
+    } else if (
+      "intent" in graph.view &&
+      graph.view.intent === "loads" &&
+      links.length > 0
+    ) {
+      invariant(
+        conductors.length >= 1 &&
+          junction.ports.length <= 4 &&
+          new Set(junction.ports.map((p) => p.side)).size ===
+            junction.ports.length,
+        `${junction.id} load comb distinct arms`,
+      );
     } else if (conductors.length === 0) {
       invariant(
         links.length === 0 && attachmentCount >= 3,
@@ -4333,11 +4671,45 @@ export function validatePresentationGraph(
       );
     }
 
-    const component = junctionLinkComponent(junction, graph, ownerByPortId);
+    const component = junctionLinkComponent(
+      junction,
+      graph,
+      ownerByPortId,
+      order,
+    );
     const componentIds = new Set(component.map(({ id }) => id));
     const componentPortIds = new Set(
       component.flatMap((node) => node.ports.map(({ id }) => id)),
     );
+    if (closed === undefined && component.length > 1) {
+      const internal = graph.edges.filter(
+        (e) =>
+          e.kind === "boundary-segment" &&
+          componentPortIds.has(e.sourcePortId) &&
+          componentPortIds.has(e.targetPortId),
+      );
+      const external = graph.edges.filter(
+        (e) =>
+          componentPortIds.has(e.sourcePortId) !==
+          componentPortIds.has(e.targetPortId),
+      );
+      invariant(
+        "intent" in graph.view &&
+          graph.view.intent === "loads" &&
+          internal.length === component.length - 1 &&
+          external.filter((e) => e.kind === "boundary-segment").length === 1,
+        `${junction.id} load comb chain and one attachment`,
+      );
+      invariant(
+        component.every(
+          (n) =>
+            n.parentId === junction.parentId &&
+            n.netId === junction.netId &&
+            sameTerminal(n.terminal, junction.terminal),
+        ),
+        `${junction.id} load comb inheritance`,
+      );
+    }
     if (closed !== undefined) {
       invariant(
         sameStringSet([...componentIds], closed.componentIds),
@@ -4405,7 +4777,12 @@ export function validatePresentationGraph(
       if (owner !== undefined && owner.kind !== "junction") {
         visibleNodeIds.add(owner.id);
       } else if (owner?.kind === "junction" && !componentIds.has(owner.id)) {
-        const remote = junctionLinkComponent(owner, graph, ownerByPortId);
+        const remote = junctionLinkComponent(
+          owner,
+          graph,
+          ownerByPortId,
+          order,
+        );
         const remoteIds = new Set(
           remote.flatMap((node) => node.ports.map(({ id }) => id)),
         );

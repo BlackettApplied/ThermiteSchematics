@@ -1,0 +1,2415 @@
+{
+  "format": "printable-label-baseline/1.0",
+  "base": "d7f10b3439540b88a4546b1f754c44b763029b44",
+  "measurement": "Dev Chromium ink at 300 dpi, original forced widths; distances in layout units, before stroke subtraction.",
+  "cases": [
+    {
+      "key": "examples_machine-demo-0-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"06544688-44d6-5c2d-9072-f433c9a0ecdb\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:cceab0ceef61a59b73a06160c2537cf672927c44ba6ff52ac0a7ced4b9992c34"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a60b039-08eb-5d82-b832-eb19897b4d7b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:d70e00f002422c0269e1b3cfed411bc22933fc25cef2799448582c7954d38938"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2b063b2c-5317-5a7b-8263-2562aa14c93a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:44a3f716eeed8680a56e3548b86c54773eaad6892a0bf5ff6ef5e8cdfb29f6cf"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"459aa89c-76bb-5d93-a745-f6c3aba186ed\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:d4ff97201f6f8384c6ff7edd61f195283a8a7a47d94118f608035f182ed29d0c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"574e217f-de3b-51d1-8727-4f61811e5f01\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:4f426555cdb92653f3f39b15d10ea78358ed8387135d00e2f7ccd6da8591a9af"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"644ab432-7e6c-570c-a170-8a6dcfd01f44\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:01bd6fba612b58531b139a10537b67a6ada95bb14a7720771fc34ee0e6589274"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8342ab34-6c54-5f36-83c2-06616c7cef13\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:cd423890e43084a823a7e8a1585bf4b069a17873a374a01cff93676d903a2b47"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"848edee4-f5c0-5363-829c-86a3e69249e1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:63e3041968c2f9e1f232e8b307931cb22dd1918f96c9bcda1df83b3ecf234f75"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94e505d9-353e-5bf1-a25a-d77fad35fd26\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:0451acaf63e190a8a1d44cd0b0d7fbe78f86857c590688077647feb29444fdfa"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9fa66108-fa0d-506c-9089-ea2c07216389\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:b0a5e32a0cc9c87f8f990cf8b4cbaf065587879e907ce824f434b054b3f9ef0c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d25f05a5-7af0-5d66-9d5f-63b84c3c98a5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:62fc060fbdd57b704865802a665baa1890e743f05fbe36168e27ac0e28d0dcaf"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"06544688-44d6-5c2d-9072-f433c9a0ecdb\\\"]\",\"conductor\"]": 5.931660141277348,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a60b039-08eb-5d82-b832-eb19897b4d7b\\\"]\",\"conductor\"]": 5.931546746073366,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2b063b2c-5317-5a7b-8263-2562aa14c93a\\\"]\",\"conductor\"]": 5.931660141277348,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"conductor\"]": 9.530705693822085,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"net\"]": 6.458830401304795,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"459aa89c-76bb-5d93-a745-f6c3aba186ed\\\"]\",\"conductor\"]": 9.58912820248446,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"574e217f-de3b-51d1-8727-4f61811e5f01\\\"]\",\"conductor\"]": 5.96132711895487,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"conductor\"]": 5.961116047089206,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"net\"]": 5.961116047089206,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"644ab432-7e6c-570c-a170-8a6dcfd01f44\\\"]\",\"conductor\"]": 5.96132711895487,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8342ab34-6c54-5f36-83c2-06616c7cef13\\\"]\",\"conductor\"]": 5.93133567420773,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"848edee4-f5c0-5363-829c-86a3e69249e1\\\"]\",\"conductor\"]": 9.588402974765899,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94e505d9-353e-5bf1-a25a-d77fad35fd26\\\"]\",\"conductor\"]": 9.598538796136552,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9fa66108-fa0d-506c-9089-ea2c07216389\\\"]\",\"conductor\"]": 5.93133567420773,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d25f05a5-7af0-5d66-9d5f-63b84c3c98a5\\\"]\",\"conductor\"]": 5.931660141277348
+      }
+    },
+    {
+      "key": "examples_machine-demo-0-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"06544688-44d6-5c2d-9072-f433c9a0ecdb\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:cceab0ceef61a59b73a06160c2537cf672927c44ba6ff52ac0a7ced4b9992c34"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a60b039-08eb-5d82-b832-eb19897b4d7b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:d70e00f002422c0269e1b3cfed411bc22933fc25cef2799448582c7954d38938"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2b063b2c-5317-5a7b-8263-2562aa14c93a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:44a3f716eeed8680a56e3548b86c54773eaad6892a0bf5ff6ef5e8cdfb29f6cf"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"459aa89c-76bb-5d93-a745-f6c3aba186ed\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:d4ff97201f6f8384c6ff7edd61f195283a8a7a47d94118f608035f182ed29d0c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"574e217f-de3b-51d1-8727-4f61811e5f01\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:4f426555cdb92653f3f39b15d10ea78358ed8387135d00e2f7ccd6da8591a9af"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"644ab432-7e6c-570c-a170-8a6dcfd01f44\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:01bd6fba612b58531b139a10537b67a6ada95bb14a7720771fc34ee0e6589274"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8342ab34-6c54-5f36-83c2-06616c7cef13\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:cd423890e43084a823a7e8a1585bf4b069a17873a374a01cff93676d903a2b47"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"848edee4-f5c0-5363-829c-86a3e69249e1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:63e3041968c2f9e1f232e8b307931cb22dd1918f96c9bcda1df83b3ecf234f75"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94e505d9-353e-5bf1-a25a-d77fad35fd26\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:0451acaf63e190a8a1d44cd0b0d7fbe78f86857c590688077647feb29444fdfa"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9fa66108-fa0d-506c-9089-ea2c07216389\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:b0a5e32a0cc9c87f8f990cf8b4cbaf065587879e907ce824f434b054b3f9ef0c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d25f05a5-7af0-5d66-9d5f-63b84c3c98a5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:62fc060fbdd57b704865802a665baa1890e743f05fbe36168e27ac0e28d0dcaf"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"06544688-44d6-5c2d-9072-f433c9a0ecdb\\\"]\",\"conductor\"]": 6.064436532773982,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a60b039-08eb-5d82-b832-eb19897b4d7b\\\"]\",\"conductor\"]": 6.064436532773982,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2b063b2c-5317-5a7b-8263-2562aa14c93a\\\"]\",\"conductor\"]": 6.064455591706576,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"conductor\"]": 8.443944258552335,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"436002bd-211e-515a-a885-7bf17ad1d6e7\\\"]\",\"net\"]": 6.443944285107989,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"459aa89c-76bb-5d93-a745-f6c3aba186ed\\\"]\",\"conductor\"]": 8.28754473797045,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"574e217f-de3b-51d1-8727-4f61811e5f01\\\"]\",\"conductor\"]": 6.064431177643883,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"conductor\"]": 6.064436532774039,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b6a590c-2539-5bb4-9835-eda6b9b8dcb6\\\"]\",\"net\"]": 6.287526453559963,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"644ab432-7e6c-570c-a170-8a6dcfd01f44\\\"]\",\"conductor\"]": 6.064431177643883,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8342ab34-6c54-5f36-83c2-06616c7cef13\\\"]\",\"conductor\"]": 6.06444948819086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"848edee4-f5c0-5363-829c-86a3e69249e1\\\"]\",\"conductor\"]": 8.287538634454904,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94e505d9-353e-5bf1-a25a-d77fad35fd26\\\"]\",\"conductor\"]": 8.287556945001711,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9fa66108-fa0d-506c-9089-ea2c07216389\\\"]\",\"conductor\"]": 6.06444948819086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d25f05a5-7af0-5d66-9d5f-63b84c3c98a5\\\"]\",\"conductor\"]": 6.064455591706576
+      }
+    },
+    {
+      "key": "examples_machine-demo-1-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M2" },
+        "family": "power",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a781057-b1f8-51bd-b57c-c9b4141bed99\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-012-M2",
+          "netId": "net:sha256:b257bad2a4bf252bd14db33b7fc4c3b7ac8b942e0c03fb77e63c99c7bf2f7f5b"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"212d1ae5-b0a6-500f-827c-6d718a7da91a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-005-M2",
+          "netId": "net:sha256:800cda896779c1496c4e01b9ee6be96d2fc0bf95e55194206b4a70d21e53e076"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2930173f-d728-5f87-95da-880eba26b0e5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-004-M2",
+          "netId": "net:sha256:d4d9dd571d35dbb7049156b65439d1f268cd817002df1b0205121c1314b1a8e2"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3921ff8b-f536-5bfd-bcc3-a34a749464a3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-003-M2",
+          "netId": "net:sha256:d70e00f002422c0269e1b3cfed411bc22933fc25cef2799448582c7954d38938"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"450595d4-e2bb-501e-99fa-6087854a97e0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-007-M2",
+          "netId": "net:sha256:3c57cf3dd1f78bbf107b37a5c28ff04ef933c4a0924af507a6b543c111278b8a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4edeecf8-9e5e-5ce8-970b-cbbcc67b3e12\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-010-M2",
+          "netId": "net:sha256:9a3df5703a47476b97048824f3a945fe413641b4fb39b879c213c84cfd0cead8"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5fa351bc-9cb6-5dfe-bb0d-5b98cf972602\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-008-M2",
+          "netId": "net:sha256:d4670dd5cb30d6560ac10f6af1a0536302ab9f99ec97e39240cfb319f5ef4ce9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-013-M2",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7c095789-52b4-579b-a301-e8f6fdbef3c2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-002-M2",
+          "netId": "net:sha256:cceab0ceef61a59b73a06160c2537cf672927c44ba6ff52ac0a7ced4b9992c34"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"918387b0-7da6-5015-a3d1-7734a9c99a5b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-009-M2",
+          "netId": "net:sha256:a8b397380217086fc5f46aa3a70f77c1cd77d429595a097a141453c44fc0be41"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dff6a2fa-4e0e-5bb5-bf74-bd139d3b586b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-011-M2",
+          "netId": "net:sha256:ac7f36005f5556bc99012b610122dfb7fb7361ddd6b32576d6f898cedd4e533c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e0851a54-0d14-5ee3-b2c4-3359b18ff275\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-006-M2",
+          "netId": "net:sha256:c2b444d181e546a330cfbf3dca8b153ff53abc09aa37ea5f069234b0ff9c27d9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-001-M2",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a781057-b1f8-51bd-b57c-c9b4141bed99\\\"]\",\"conductor\"]": 9.589203373676526,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"212d1ae5-b0a6-500f-827c-6d718a7da91a\\\"]\",\"conductor\"]": 5.9316962792707955,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2930173f-d728-5f87-95da-880eba26b0e5\\\"]\",\"conductor\"]": 5.932138239085873,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3921ff8b-f536-5bfd-bcc3-a34a749464a3\\\"]\",\"conductor\"]": 5.931510920415462,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"450595d4-e2bb-501e-99fa-6087854a97e0\\\"]\",\"conductor\"]": 5.932138239085873,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4edeecf8-9e5e-5ce8-970b-cbbcc67b3e12\\\"]\",\"conductor\"]": 9.588273677962064,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5fa351bc-9cb6-5dfe-bb0d-5b98cf972602\\\"]\",\"conductor\"]": 5.9316962792707955,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"conductor\"]": 9.589432358684462,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"net\"]": 6.458746751222634,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7c095789-52b4-579b-a301-e8f6fdbef3c2\\\"]\",\"conductor\"]": 5.9316962792707955,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"918387b0-7da6-5015-a3d1-7734a9c99a5b\\\"]\",\"conductor\"]": 5.931239060760959,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dff6a2fa-4e0e-5bb5-bf74-bd139d3b586b\\\"]\",\"conductor\"]": 9.588746155166689,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e0851a54-0d14-5ee3-b2c4-3359b18ff275\\\"]\",\"conductor\"]": 5.931239060760959,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"conductor\"]": 5.931866379431341,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"net\"]": 5.961163073416827
+      }
+    },
+    {
+      "key": "examples_machine-demo-1-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M2" },
+        "family": "power",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a781057-b1f8-51bd-b57c-c9b4141bed99\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-012-M2",
+          "netId": "net:sha256:b257bad2a4bf252bd14db33b7fc4c3b7ac8b942e0c03fb77e63c99c7bf2f7f5b"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"212d1ae5-b0a6-500f-827c-6d718a7da91a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-005-M2",
+          "netId": "net:sha256:800cda896779c1496c4e01b9ee6be96d2fc0bf95e55194206b4a70d21e53e076"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2930173f-d728-5f87-95da-880eba26b0e5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-004-M2",
+          "netId": "net:sha256:d4d9dd571d35dbb7049156b65439d1f268cd817002df1b0205121c1314b1a8e2"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3921ff8b-f536-5bfd-bcc3-a34a749464a3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-003-M2",
+          "netId": "net:sha256:d70e00f002422c0269e1b3cfed411bc22933fc25cef2799448582c7954d38938"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"450595d4-e2bb-501e-99fa-6087854a97e0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-007-M2",
+          "netId": "net:sha256:3c57cf3dd1f78bbf107b37a5c28ff04ef933c4a0924af507a6b543c111278b8a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4edeecf8-9e5e-5ce8-970b-cbbcc67b3e12\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-010-M2",
+          "netId": "net:sha256:9a3df5703a47476b97048824f3a945fe413641b4fb39b879c213c84cfd0cead8"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5fa351bc-9cb6-5dfe-bb0d-5b98cf972602\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-008-M2",
+          "netId": "net:sha256:d4670dd5cb30d6560ac10f6af1a0536302ab9f99ec97e39240cfb319f5ef4ce9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-013-M2",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:0f960f7fb1bad6d0d6e9d81c2af5938cb7de534b198e4133204d69c715a635c5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7c095789-52b4-579b-a301-e8f6fdbef3c2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-002-M2",
+          "netId": "net:sha256:cceab0ceef61a59b73a06160c2537cf672927c44ba6ff52ac0a7ced4b9992c34"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"918387b0-7da6-5015-a3d1-7734a9c99a5b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-009-M2",
+          "netId": "net:sha256:a8b397380217086fc5f46aa3a70f77c1cd77d429595a097a141453c44fc0be41"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dff6a2fa-4e0e-5bb5-bf74-bd139d3b586b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-011-M2",
+          "netId": "net:sha256:ac7f36005f5556bc99012b610122dfb7fb7361ddd6b32576d6f898cedd4e533c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e0851a54-0d14-5ee3-b2c4-3359b18ff275\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-006-M2",
+          "netId": "net:sha256:c2b444d181e546a330cfbf3dca8b153ff53abc09aa37ea5f069234b0ff9c27d9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-PWR-001-M2",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:d0277d66da2ec1b41924eaab1973b0b75c90852c0950afe817bd2ac9fc394245"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1a781057-b1f8-51bd-b57c-c9b4141bed99\\\"]\",\"conductor\"]": 8.010101710899676,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"212d1ae5-b0a6-500f-827c-6d718a7da91a\\\"]\",\"conductor\"]": 6.180458219697414,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2930173f-d728-5f87-95da-880eba26b0e5\\\"]\",\"conductor\"]": 6.180494840791084,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3921ff8b-f536-5bfd-bcc3-a34a749464a3\\\"]\",\"conductor\"]": 6.18046737497076,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"450595d4-e2bb-501e-99fa-6087854a97e0\\\"]\",\"conductor\"]": 6.180494840791084,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4edeecf8-9e5e-5ce8-970b-cbbcc67b3e12\\\"]\",\"conductor\"]": 8.010089503868585,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5fa351bc-9cb6-5dfe-bb0d-5b98cf972602\\\"]\",\"conductor\"]": 6.180458219697414,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"conductor\"]": 8.010077296837153,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6e3c1df1-8dc7-5359-873f-19be00984c9b\\\"]\",\"net\"]": 6.443944285107932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7c095789-52b4-579b-a301-e8f6fdbef3c2\\\"]\",\"conductor\"]": 6.180458219697414,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"918387b0-7da6-5015-a3d1-7734a9c99a5b\\\"]\",\"conductor\"]": 6.18046737497076,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dff6a2fa-4e0e-5bb5-bf74-bd139d3b586b\\\"]\",\"conductor\"]": 8.010095607384017,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e0851a54-0d14-5ee3-b2c4-3359b18ff275\\\"]\",\"conductor\"]": 6.18046737497076,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"conductor\"]": 6.180494840791084,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"ee72c6df-094e-56a9-b95b-5a3d5e9c0e35\\\"]\",\"net\"]": 6.287556971137974
+      }
+    },
+    {
+      "key": "examples_machine-demo-2-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2f4b71a9-3736-58cb-a2d8-7c8842093ae5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:83d6baf0fba136014ddd3f820d72061f612a767772e0e48a60be4073447f1ef9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e43eb73d-5e34-5d73-a3ee-d966138de446\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:90d3645fec4abe0e234fe3b622165b0df5ff07fd68057a98baa968556fd8f72c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e4d85ddf-87a0-5da7-b7e4-be1ed8eef737\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:671761dc668c10360b1bcb1015970fc36e89b83a387cbb5741b483f41381dd98"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2f4b71a9-3736-58cb-a2d8-7c8842093ae5\\\"]\",\"conductor\"]": 5.960934761512277,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"conductor\"]": 9.588754003764961,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"net\"]": 5.931638104917539,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e43eb73d-5e34-5d73-a3ee-d966138de446\\\"]\",\"conductor\"]": 5.960934761512277,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e4d85ddf-87a0-5da7-b7e4-be1ed8eef737\\\"]\",\"conductor\"]": 5.931638104917539
+      }
+    },
+    {
+      "key": "examples_machine-demo-2-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2f4b71a9-3736-58cb-a2d8-7c8842093ae5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:83d6baf0fba136014ddd3f820d72061f612a767772e0e48a60be4073447f1ef9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e43eb73d-5e34-5d73-a3ee-d966138de446\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:90d3645fec4abe0e234fe3b622165b0df5ff07fd68057a98baa968556fd8f72c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e4d85ddf-87a0-5da7-b7e4-be1ed8eef737\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:671761dc668c10360b1bcb1015970fc36e89b83a387cbb5741b483f41381dd98"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2f4b71a9-3736-58cb-a2d8-7c8842093ae5\\\"]\",\"conductor\"]": 6.0644350287259385,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"conductor\"]": 8.363222120640444,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6fdf711a-95ad-5cba-940f-ed2352fe3850\\\"]\",\"net\"]": 7.034174093490094,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e43eb73d-5e34-5d73-a3ee-d966138de446\\\"]\",\"conductor\"]": 5.620504447417261,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e4d85ddf-87a0-5da7-b7e4-be1ed8eef737\\\"]\",\"conductor\"]": 5.570064575478
+      }
+    },
+    {
+      "key": "examples_machine-demo-3-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K2" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-008-M2",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3d9a640e-c500-55bb-a523-761efe604cc4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-005-M2",
+          "netId": "net:sha256:b441722780d99695fa687389a45647b895a7f783d7d5ee5e74ba0c9e1bf3db80"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"441c9af6-0445-5de9-8d57-0d6febc47eac\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-006-M2",
+          "netId": "net:sha256:d76dc95a87690b3490bd21162ebbe972137f7b983a375b2611b13a9dcd9d50bd"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8459e308-fa51-5dea-9c1e-55d4ac387bf9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-007-M2",
+          "netId": "net:sha256:ff78152d3754b7fc48bea200c6bf7c2b3396ae688f54b5665366905a482c2e0a"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"conductor\"]": 9.5888671875,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3d9a640e-c500-55bb-a523-761efe604cc4\\\"]\",\"conductor\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"441c9af6-0445-5de9-8d57-0d6febc47eac\\\"]\",\"conductor\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8459e308-fa51-5dea-9c1e-55d4ac387bf9\\\"]\",\"conductor\"]": 5.931640625
+      }
+    },
+    {
+      "key": "examples_machine-demo-3-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K2" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-008-M2",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:68ca625c89367abbd2ca17382a2bef998ca9209201da34340b129e9949575370"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3d9a640e-c500-55bb-a523-761efe604cc4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-005-M2",
+          "netId": "net:sha256:b441722780d99695fa687389a45647b895a7f783d7d5ee5e74ba0c9e1bf3db80"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"441c9af6-0445-5de9-8d57-0d6febc47eac\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-006-M2",
+          "netId": "net:sha256:d76dc95a87690b3490bd21162ebbe972137f7b983a375b2611b13a9dcd9d50bd"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8459e308-fa51-5dea-9c1e-55d4ac387bf9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-CTL-007-M2",
+          "netId": "net:sha256:ff78152d3754b7fc48bea200c6bf7c2b3396ae688f54b5665366905a482c2e0a"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"conductor\"]": 8.010089503868414,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3aa9cbc7-757d-5db3-9cb3-cb1e9b5fd389\\\"]\",\"net\"]": 7.034174093490094,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3d9a640e-c500-55bb-a523-761efe604cc4\\\"]\",\"conductor\"]": 6.180464323212959,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"441c9af6-0445-5de9-8d57-0d6febc47eac\\\"]\",\"conductor\"]": 6.180464323212959,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"8459e308-fa51-5dea-9c1e-55d4ac387bf9\\\"]\",\"conductor\"]": 6.180464323212959
+      }
+    },
+    {
+      "key": "examples_machine-demo-4-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1-",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"6128fb52-2dce-5aeb-aaa8-0b4cf4766da6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"15fe2eef-fece-5b8a-a81f-cea3f0bf1d22\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-RETURN-PLC1-DI0",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5a9b0f1c-80d5-54cc-9e43-61ff5694f198\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-SWITCHED-RETURN",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e03d9e91-d9b9-5198-a54f-e22f92570191\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-LS1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": 9.608196554389224,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": 7.96071052395348,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"6128fb52-2dce-5aeb-aaa8-0b4cf4766da6\\\"]\",\"conductor\"]": 7.608252951005824,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"conductor\"]": 9.530109913078633,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"net\"]": 7.931763639555072,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"15fe2eef-fece-5b8a-a81f-cea3f0bf1d22\\\"]\",\"conductor\"]": 5.931659522724431,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5a9b0f1c-80d5-54cc-9e43-61ff5694f198\\\"]\",\"conductor\"]": 5.960785719442299,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e03d9e91-d9b9-5198-a54f-e22f92570191\\\"]\",\"conductor\"]": 5.931820036171672
+      }
+    },
+    {
+      "key": "examples_machine-demo-4-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1-",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"6128fb52-2dce-5aeb-aaa8-0b4cf4766da6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"15fe2eef-fece-5b8a-a81f-cea3f0bf1d22\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-RETURN-PLC1-DI0",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5a9b0f1c-80d5-54cc-9e43-61ff5694f198\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-SWITCHED-RETURN",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e03d9e91-d9b9-5198-a54f-e22f92570191\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-LS1",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": 8.39349065663356,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": 7.776914697434449,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"6128fb52-2dce-5aeb-aaa8-0b4cf4766da6\\\"]\",\"conductor\"]": 6.064437971329767,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"conductor\"]": 8.494397896584815,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"0bd6530b-3ca4-5ab2-aea2-170b313d3b7f\\\"]\",\"net\"]": 8.494397896584815,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"15fe2eef-fece-5b8a-a81f-cea3f0bf1d22\\\"]\",\"conductor\"]": 6.287550861802515,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5a9b0f1c-80d5-54cc-9e43-61ff5694f198\\\"]\",\"conductor\"]": 5.343027874589325,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e03d9e91-d9b9-5198-a54f-e22f92570191\\\"]\",\"conductor\"]": 6.0644350287259385
+      }
+    },
+    {
+      "key": "examples_machine-demo-5-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS2" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "RIO1" },
+          "includePower": true
+        },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dae8c7b0-f68f-5923-b138-b314c128441b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-LS2-INPUT",
+          "netId": "net:sha256:d7e27bc92b22f278426fb1b03cb14f077cb49b097bd5ab71462954491908d754"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-LS2-SUPPLY",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dae8c7b0-f68f-5923-b138-b314c128441b\\\"]\",\"conductor\"]": 5.931615256681965,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"conductor\"]": 9.53010382227896,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"net\"]": 7.931590035543337
+      }
+    },
+    {
+      "key": "examples_machine-demo-5-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS2" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "RIO1" },
+          "includePower": true
+        },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dae8c7b0-f68f-5923-b138-b314c128441b\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-LS2-INPUT",
+          "netId": "net:sha256:d7e27bc92b22f278426fb1b03cb14f077cb49b097bd5ab71462954491908d754"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W-LS2-SUPPLY",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"dae8c7b0-f68f-5923-b138-b314c128441b\\\"]\",\"conductor\"]": 5.464126302935142,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"conductor\"]": 8.010095607384017,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"f63615ee-14c8-5997-8d3f-ca29b478cae9\\\"]\",\"net\"]": 8.494391793069155
+      }
+    },
+    {
+      "key": "examples_machine-demo-6-left-to-right",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": 9.588537485597811,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"net\"]": 5.931868841493468,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": 9.579255795234872
+      }
+    },
+    {
+      "key": "examples_machine-demo-6-top-to-bottom",
+      "project": "examples/machine-demo",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:964f1ca4464e126ffaf786a4a0b742258aece22d18e88bd1246af5b630abae4f"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:08ec811407ffc0c8f62c8ef7f85f687bcecf5b410eafa2aaba86167610307a46"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"conductor\"]": 8.393484556125486,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1+\\\"]\",\"net\"]": 6.494385689553553,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"4b1a196b-faae-51db-b286-bfe168a5d443\\\",\\\"1-\\\"]\",\"conductor\"]": 8.393490659641088
+      }
+    },
+    {
+      "key": "examples_motor-starter-0-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"030d640b-a7ba-4a34-8bdc-a1e800ec4398\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:68258f3a152368afd62a501da7b3fb0dcf1083c89e35e8367f0a5eafd21119cc"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2a4ac02a-c4dc-4fa8-a135-9600fab2fbbe\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:8d49f43674cfa3024bc2fffb6f58c15075c10943067b114959872ab5324a499d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3b359535-a301-4f5a-95b5-00f01ebc54af\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:3b67598e0ecf3028d423522ca4946610148f52db8c81de5534a64857e63b1e21"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c2d75f0-b850-4641-9a65-f8247278b2f4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:6f72278ea9e513fd32dd4786775ecbbd9b1a07d662dae8feed051ea2a73158bc"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c6cca2f-3f0e-40ad-af82-d310fb7243d1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:0ed8b5d5440f8c42b8e4f61d4332189c4e630922a2a804cdc1d2a2d79d6c64d5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4d2e1bd4-d553-470f-8c0f-e167bdb9c25a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:d84193c45ef2dd9f0fd849a6d59cdce28071e8d0ba8652bc3470f8786de9cbb8"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d508a7f-6602-4958-b590-f4285616f5f3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:a956f28d654c65096eacbdec1189dd972cd8f06c30a87f2a8376164fd4c25db7"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"698ecf0f-9bc4-4361-b2ce-932d8e7dba6c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:cf554decaabe2bb3b6baeda86b2e38fb6dcf809ea7dc87419077832095cd3b12"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"713d6b10-9196-4088-9e4e-39302ccb5854\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:15c3458e516e2e6ed194933a7c8c6a37e40fe4232116d2eb4fea070353453efa"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:5901afd9631d2b87fc7b5fdaca3a23aec1a1f3bd10736cd833f9167244fb6ada"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:5901afd9631d2b87fc7b5fdaca3a23aec1a1f3bd10736cd833f9167244fb6ada"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a168ed4b-11a8-41b5-99bb-b8d111a1c9a3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:52ba7a062565b174f4600a3a6abed4b7579246a66e0a5e76b194ad71484cae44"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:ed29b56b7960cb4273f6090ee961a0ebdb7af49832610a2a01c811666115dc65"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:ed29b56b7960cb4273f6090ee961a0ebdb7af49832610a2a01c811666115dc65"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d4489c99-98fd-4a37-871f-f6e70352dcb0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:41a6325a0b80c8d8c20c419014ac9841b5a29f15125f9a77b1d50af8877c52f6"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"030d640b-a7ba-4a34-8bdc-a1e800ec4398\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2a4ac02a-c4dc-4fa8-a135-9600fab2fbbe\\\"]\",\"conductor\"]": 5.931596819076958,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3b359535-a301-4f5a-95b5-00f01ebc54af\\\"]\",\"conductor\"]": 9.588928585866086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c2d75f0-b850-4641-9a65-f8247278b2f4\\\"]\",\"conductor\"]": 9.598599704830008,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c6cca2f-3f0e-40ad-af82-d310fb7243d1\\\"]\",\"conductor\"]": 5.961069330192117,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4d2e1bd4-d553-470f-8c0f-e167bdb9c25a\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d508a7f-6602-4958-b590-f4285616f5f3\\\"]\",\"conductor\"]": 5.9315224905514015,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"698ecf0f-9bc4-4361-b2ce-932d8e7dba6c\\\"]\",\"conductor\"]": 5.9315224905514015,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"713d6b10-9196-4088-9e4e-39302ccb5854\\\"]\",\"conductor\"]": 5.961069330192117,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"conductor\"]": 9.530436402330452,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"net\"]": 6.458919406827192,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a168ed4b-11a8-41b5-99bb-b8d111a1c9a3\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"conductor\"]": 5.960995001666532,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"net\"]": 5.960995001666532,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d4489c99-98fd-4a37-871f-f6e70352dcb0\\\"]\",\"conductor\"]": 9.588709089261158
+      }
+    },
+    {
+      "key": "examples_motor-starter-0-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"030d640b-a7ba-4a34-8bdc-a1e800ec4398\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:68258f3a152368afd62a501da7b3fb0dcf1083c89e35e8367f0a5eafd21119cc"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2a4ac02a-c4dc-4fa8-a135-9600fab2fbbe\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:8d49f43674cfa3024bc2fffb6f58c15075c10943067b114959872ab5324a499d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3b359535-a301-4f5a-95b5-00f01ebc54af\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:3b67598e0ecf3028d423522ca4946610148f52db8c81de5534a64857e63b1e21"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c2d75f0-b850-4641-9a65-f8247278b2f4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:6f72278ea9e513fd32dd4786775ecbbd9b1a07d662dae8feed051ea2a73158bc"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c6cca2f-3f0e-40ad-af82-d310fb7243d1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:0ed8b5d5440f8c42b8e4f61d4332189c4e630922a2a804cdc1d2a2d79d6c64d5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4d2e1bd4-d553-470f-8c0f-e167bdb9c25a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:d84193c45ef2dd9f0fd849a6d59cdce28071e8d0ba8652bc3470f8786de9cbb8"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d508a7f-6602-4958-b590-f4285616f5f3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:a956f28d654c65096eacbdec1189dd972cd8f06c30a87f2a8376164fd4c25db7"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"698ecf0f-9bc4-4361-b2ce-932d8e7dba6c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:cf554decaabe2bb3b6baeda86b2e38fb6dcf809ea7dc87419077832095cd3b12"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"713d6b10-9196-4088-9e4e-39302ccb5854\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:15c3458e516e2e6ed194933a7c8c6a37e40fe4232116d2eb4fea070353453efa"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:5901afd9631d2b87fc7b5fdaca3a23aec1a1f3bd10736cd833f9167244fb6ada"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:5901afd9631d2b87fc7b5fdaca3a23aec1a1f3bd10736cd833f9167244fb6ada"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a168ed4b-11a8-41b5-99bb-b8d111a1c9a3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:52ba7a062565b174f4600a3a6abed4b7579246a66e0a5e76b194ad71484cae44"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:ed29b56b7960cb4273f6090ee961a0ebdb7af49832610a2a01c811666115dc65"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:ed29b56b7960cb4273f6090ee961a0ebdb7af49832610a2a01c811666115dc65"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d4489c99-98fd-4a37-871f-f6e70352dcb0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:41a6325a0b80c8d8c20c419014ac9841b5a29f15125f9a77b1d50af8877c52f6"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"030d640b-a7ba-4a34-8bdc-a1e800ec4398\\\"]\",\"conductor\"]": 6.064455591706633,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2a4ac02a-c4dc-4fa8-a135-9600fab2fbbe\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3b359535-a301-4f5a-95b5-00f01ebc54af\\\"]\",\"conductor\"]": 8.28754473797045,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c2d75f0-b850-4641-9a65-f8247278b2f4\\\"]\",\"conductor\"]": 8.287556945001597,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"3c6cca2f-3f0e-40ad-af82-d310fb7243d1\\\"]\",\"conductor\"]": 6.064461695222121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4d2e1bd4-d553-470f-8c0f-e167bdb9c25a\\\"]\",\"conductor\"]": 6.064455591706633,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d508a7f-6602-4958-b590-f4285616f5f3\\\"]\",\"conductor\"]": 6.06444948819086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"698ecf0f-9bc4-4361-b2ce-932d8e7dba6c\\\"]\",\"conductor\"]": 6.06444948819086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"713d6b10-9196-4088-9e4e-39302ccb5854\\\"]\",\"conductor\"]": 6.064461695222121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"conductor\"]": 8.443944258552364,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"9c936afd-55a9-4a8a-9bc8-5689a9642ea8\\\"]\",\"net\"]": 6.443944250965046,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a168ed4b-11a8-41b5-99bb-b8d111a1c9a3\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"a45366a0-5c53-486e-9d77-82e8950a8f34\\\"]\",\"net\"]": 6.287526431444405,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"d4489c99-98fd-4a37-871f-f6e70352dcb0\\\"]\",\"conductor\"]": 8.28753863445462
+      }
+    },
+    {
+      "key": "examples_motor-starter-1-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"70dc52cc-2b19-4f80-aa32-ef9a1dd61f07\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:dd7c3227e6124826bed08e1861e49edce66b7aae83bef5d189698fe69b978e23"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"71881aaf-f3a4-41fd-8d3d-1afe88f122ce\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:de8cd0d0a2b62f2b540a39b338e9701f6e5b5e9479a2b7dc96ab8e90fc998ce5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"74280b71-4394-4895-b34b-6c159bb9748d\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:1784e6e95ccec31dcc7c5d1788c3a4c12f0487bcf2248b5a571e677dd5382e64"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"70dc52cc-2b19-4f80-aa32-ef9a1dd61f07\\\"]\",\"conductor\"]": 9.529490682067234,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"71881aaf-f3a4-41fd-8d3d-1afe88f122ce\\\"]\",\"conductor\"]": 5.960548362509826,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"74280b71-4394-4895-b34b-6c159bb9748d\\\"]\",\"conductor\"]": 7.96005621361536,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"conductor\"]": 9.589171063625884,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"net\"]": 5.931251705644684
+      }
+    },
+    {
+      "key": "examples_motor-starter-1-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"70dc52cc-2b19-4f80-aa32-ef9a1dd61f07\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:dd7c3227e6124826bed08e1861e49edce66b7aae83bef5d189698fe69b978e23"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"71881aaf-f3a4-41fd-8d3d-1afe88f122ce\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:de8cd0d0a2b62f2b540a39b338e9701f6e5b5e9479a2b7dc96ab8e90fc998ce5"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"74280b71-4394-4895-b34b-6c159bb9748d\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:1784e6e95ccec31dcc7c5d1788c3a4c12f0487bcf2248b5a571e677dd5382e64"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"70dc52cc-2b19-4f80-aa32-ef9a1dd61f07\\\"]\",\"conductor\"]": 8.443938152702174,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"71881aaf-f3a4-41fd-8d3d-1afe88f122ce\\\"]\",\"conductor\"]": 6.064412031388372,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"74280b71-4394-4895-b34b-6c159bb9748d\\\"]\",\"conductor\"]": 7.620531913237528,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"conductor\"]": 8.363252638218626,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"de231b10-b644-4aea-8d9d-16252196c3d3\\\"]\",\"net\"]": 7.034204611068219
+      }
+    },
+    {
+      "key": "examples_motor-starter-2-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "examples_motor-starter-2-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "examples_motor-starter-3-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+ · red · 18AWG",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2- · green · 18AWG",
+          "netId": "net:sha256:50fed8ce9a698f44530313ab1acec2f9d6d5c57de79e1eb999204414f1f3f4d0"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": 9.5888671875,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": 9.5791015625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"conductor\"]": 9.5888671875,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2-\\\"]\",\"conductor\"]": 7.8017578125
+      }
+    },
+    {
+      "key": "examples_motor-starter-3-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+ · red · 18AWG",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2- · green · 18AWG",
+          "netId": "net:sha256:50fed8ce9a698f44530313ab1acec2f9d6d5c57de79e1eb999204414f1f3f4d0"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": 8.393515073703611,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"net\"]": 6.494416207131735,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": 8.393551694797452,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"conductor\"]": 8.393502840607283,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2+\\\"]\",\"net\"]": 7.034183248763583,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"2-\\\"]\",\"conductor\"]": 8.393466245578566
+      }
+    },
+    {
+      "key": "examples_motor-starter-4-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-PLC1",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-PLC1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"conductor\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"conductor\"]": 7.5302734375,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"net\"]": 5.931640625
+      }
+    },
+    {
+      "key": "examples_motor-starter-4-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-PLC1",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:72a015f08216f38a067efa9dcc5f76ad2ed9246cb564f07dcd2abaed457c366d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-PLC1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"conductor\"]": 6.064448692174437,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"00f8fde6-55ad-4b82-8bfb-ac3a0268161a\\\"]\",\"net\"]": 7.034167989974492,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"conductor\"]": 6.494379566539067,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d\\\"]\",\"net\"]": 6.494379586037951
+      }
+    },
+    {
+      "key": "examples_motor-starter-5-left-to-right",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1-",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"7bdee01c-ec15-4747-9208-ee650da1e681\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-LS1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c2dccef7-ec9d-48dc-b58b-6e0dd990dd51\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-SWITCHED-RETURN",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e84a9629-373c-4946-8b48-184b7464d474\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-RETURN-PLC1-DI0",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": 7.962500181059227,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": 9.607988776989316,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"7bdee01c-ec15-4747-9208-ee650da1e681\\\"]\",\"conductor\"]": 5.960933497677388,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"conductor\"]": 5.932355451036273,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"net\"]": 5.932355451036273,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c2dccef7-ec9d-48dc-b58b-6e0dd990dd51\\\"]\",\"conductor\"]": 5.960501295894119,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c\\\"]\",\"conductor\"]": 9.531047855161319,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e84a9629-373c-4946-8b48-184b7464d474\\\"]\",\"conductor\"]": 7.529813047695086
+      }
+    },
+    {
+      "key": "examples_motor-starter-5-top-to-bottom",
+      "project": "examples/motor-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1-",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"7bdee01c-ec15-4747-9208-ee650da1e681\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-LS1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c2dccef7-ec9d-48dc-b58b-6e0dd990dd51\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-SWITCHED-RETURN",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:3d137761e58b445ed267e091f04cad782acdcec2f6a9f762594531476d54202a"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e84a9629-373c-4946-8b48-184b7464d474\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "LS1-RETURN-PLC1-DI0",
+          "netId": "net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1+\\\"]\",\"conductor\"]": 7.499428922925219,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"c4c1bfdf-567a-4f6c-9e08-147342061afe\\\",\\\"1-\\\"]\",\"conductor\"]": 8.393508967180423,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"7bdee01c-ec15-4747-9208-ee650da1e681\\\"]\",\"conductor\"]": 6.5499634100489175,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"conductor\"]": 6.064431976968081,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4f3f64e8-af7c-4b5d-9cbc-250368ad3e75\\\"]\",\"net\"]": 6.494404000100474,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c2dccef7-ec9d-48dc-b58b-6e0dd990dd51\\\"]\",\"conductor\"]": 5.342947025224703,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c3a0ee52-fbc4-4034-8d6a-ab9832e0f44c\\\"]\",\"conductor\"]": 8.494471138772383,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e84a9629-373c-4946-8b48-184b7464d474\\\"]\",\"conductor\"]": 6.034175744954609
+      }
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-0-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L1",
+          "netId": "net:sha256:c5474ac6b8bf1d70d160940997eed31bdec94ebdbceb9bc636eab974631ceec3"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L2",
+          "netId": "net:sha256:3cc4144f61c6c4cef6403829a74e843a80eb6ff85d41ee1d4f059fe2b26e4bb4"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L3",
+          "netId": "net:sha256:5d74f8d884762d575cb98adc7f4e089dd4d78a0d040256708114a5329e15ca52"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"PE\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.PE",
+          "netId": "net:sha256:2713ef05d655429c0bcf208a3ac6a27f7b2b350bd1bf78a41c59fa493b1a6a26"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000015\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W15",
+          "netId": "net:sha256:e948fe2e76901e3db596a548ea54b85aa3c68e0caf4ede234caba0d06e2c0a7c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000016\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W16",
+          "netId": "net:sha256:c31fc51f0167655a8d1905f273da7640ba427606a83d9dbdda04a55b1fd5499f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000017\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W17",
+          "netId": "net:sha256:e84f7778aa69652d9fe6d63d76f55c3bf211a921710a2bb051085971685e2d5f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000018\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W18",
+          "netId": "net:sha256:cba7a541154550903c8365964012d89c4e5817e35d9235798982e221f22b58c6"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000019\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W19",
+          "netId": "net:sha256:46849a11d08682c71fa4056407d929d562e0f911bed62fbd3d79da7040c6780d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000020\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W20",
+          "netId": "net:sha256:af98329944cdbcdac3b2dee5e773cd930b81ba610da3b97d90e8abc133ab9654"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000021\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W21",
+          "netId": "net:sha256:fbff1c2802f2f7a5916ae43817a7ecd8d8e6f535a83491f810c697585731a2b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000022\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W22",
+          "netId": "net:sha256:fe9c1eb4d8a3e032ee917e1b0f59cf2b8c0c0608f013bd4657f3b515c743dca1"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000023\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W23",
+          "netId": "net:sha256:de5fa0f393cb5a7746fe53f18c0bb927acb3d74f66213590d5e02ede454dd333"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000024\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W24",
+          "netId": "net:sha256:2713ef05d655429c0bcf208a3ac6a27f7b2b350bd1bf78a41c59fa493b1a6a26"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L1\\\"]\",\"conductor\"]": 5.961472911743016,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L2\\\"]\",\"conductor\"]": 5.931926880346907,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L3\\\"]\",\"conductor\"]": 5.93161657825749,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"PE\\\"]\",\"conductor\"]": 5.960406975939236,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000015\\\"]\",\"conductor\"]": 5.961306553316376,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000016\\\"]\",\"conductor\"]": 5.932176147510802,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000017\\\"]\",\"conductor\"]": 5.961472911743016,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000018\\\"]\",\"conductor\"]": 5.931926880346907,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000019\\\"]\",\"conductor\"]": 5.931926880346907,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000020\\\"]\",\"conductor\"]": 5.931926880346907,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000021\\\"]\",\"conductor\"]": 5.931752419221425,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000022\\\"]\",\"conductor\"]": 5.93161657825749,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000023\\\"]\",\"conductor\"]": 5.93161657825749,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000024\\\"]\",\"conductor\"]": 5.931110211706994
+      }
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-0-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L1\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L1",
+          "netId": "net:sha256:c5474ac6b8bf1d70d160940997eed31bdec94ebdbceb9bc636eab974631ceec3"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L2",
+          "netId": "net:sha256:3cc4144f61c6c4cef6403829a74e843a80eb6ff85d41ee1d4f059fe2b26e4bb4"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L3\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.L3",
+          "netId": "net:sha256:5d74f8d884762d575cb98adc7f4e089dd4d78a0d040256708114a5329e15ca52"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"PE\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.PE",
+          "netId": "net:sha256:2713ef05d655429c0bcf208a3ac6a27f7b2b350bd1bf78a41c59fa493b1a6a26"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000015\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W15",
+          "netId": "net:sha256:e948fe2e76901e3db596a548ea54b85aa3c68e0caf4ede234caba0d06e2c0a7c"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000016\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W16",
+          "netId": "net:sha256:c31fc51f0167655a8d1905f273da7640ba427606a83d9dbdda04a55b1fd5499f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000017\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W17",
+          "netId": "net:sha256:e84f7778aa69652d9fe6d63d76f55c3bf211a921710a2bb051085971685e2d5f"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000018\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W18",
+          "netId": "net:sha256:cba7a541154550903c8365964012d89c4e5817e35d9235798982e221f22b58c6"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000019\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W19",
+          "netId": "net:sha256:46849a11d08682c71fa4056407d929d562e0f911bed62fbd3d79da7040c6780d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000020\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W20",
+          "netId": "net:sha256:af98329944cdbcdac3b2dee5e773cd930b81ba610da3b97d90e8abc133ab9654"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000021\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W21",
+          "netId": "net:sha256:fbff1c2802f2f7a5916ae43817a7ecd8d8e6f535a83491f810c697585731a2b9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000022\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W22",
+          "netId": "net:sha256:fe9c1eb4d8a3e032ee917e1b0f59cf2b8c0c0608f013bd4657f3b515c743dca1"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000023\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W23",
+          "netId": "net:sha256:de5fa0f393cb5a7746fe53f18c0bb927acb3d74f66213590d5e02ede454dd333"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000024\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "W24",
+          "netId": "net:sha256:2713ef05d655429c0bcf208a3ac6a27f7b2b350bd1bf78a41c59fa493b1a6a26"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L1\\\"]\",\"conductor\"]": 6.064359419752918,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L2\\\"]\",\"conductor\"]": 6.1804436373818135,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"L3\\\"]\",\"conductor\"]": 6.07451606155422,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"10000000-0000-4000-8000-000000000025\\\",\\\"PE\\\"]\",\"conductor\"]": 5.746616365121696,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000015\\\"]\",\"conductor\"]": 6.024059847114472,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000016\\\"]\",\"conductor\"]": 6.054340565750977,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000017\\\"]\",\"conductor\"]": 6.135056596698519,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000018\\\"]\",\"conductor\"]": 6.044263268913824,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000019\\\"]\",\"conductor\"]": 6.0745317805191235,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000020\\\"]\",\"conductor\"]": 6.034185972076557,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000021\\\"]\",\"conductor\"]": 6.064405655556982,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000022\\\"]\",\"conductor\"]": 6.180477674653446,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000023\\\"]\",\"conductor\"]": 6.074537884034839,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"10000000-0000-4000-8000-000000000024\\\"]\",\"conductor\"]": 6.124967092830133
+      }
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-1-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "error": "R002"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-1-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "error": "R002"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-2-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-2-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-3-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "left-to-right"
+      },
+      "error": "R003"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-3-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "top-to-bottom"
+      },
+      "error": "R003"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-4-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "left-to-right"
+      },
+      "error": "R002"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-4-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "top-to-bottom"
+      },
+      "error": "R002"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-5-left-to-right",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "left-to-right"
+      },
+      "error": "Q001"
+    },
+    {
+      "key": "packages_core-library_test_fixtures_dol-starter-5-top-to-bottom",
+      "project": "packages/core-library/test/fixtures/dol-starter",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "top-to-bottom"
+      },
+      "error": "Q001"
+    },
+    {
+      "key": "examples_conveyor-line-0-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"24900c61-3ace-41b5-b43b-e07798a86e17\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:6963429132a60753b0555d3cdf5eee7ef34f3031ffbe4ed4a830fc4b3f4c2e07"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:d2108b823119919daeba8fe816b8eceec05ac9cf984f60ac5908baf5337a2319"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:d2108b823119919daeba8fe816b8eceec05ac9cf984f60ac5908baf5337a2319"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4941b14c-6e44-43fa-bfa8-ae302925b2f4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:6a8968c3d5e14206a71f38d749dd7a3de7b816b0a7275484b2fa2a284f2b1394"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4ceb7a69-e956-40cb-80e2-01e884f3148c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:88e764c2a3b25dae2df1b30aee86d90c4cf028b63c548d3593d24daa6cc8bfee"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"54de9989-976e-46cc-b683-1d3b36270b74\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:e1edf0d653950a2ea1d83a0d067a4e5d344095f2473933dffe7c9efef794c85e"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"61a096bc-7d56-46ab-a836-3f7301cd6571\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:73a1213d37d0b9d5f2d461dedd48129578b825d50b4e2d1218e2776a76001435"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6ed0b137-89fe-424f-bd24-bfa76f1106f2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:bba31e1a4081b94447adaab05be0031af4c3f86d72b054a7c87c6d8b442d5f74"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:7eb8760b2889b8a8a274bdadd15cd52d3d670c9316df3434625086b3509b467d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:7eb8760b2889b8a8a274bdadd15cd52d3d670c9316df3434625086b3509b467d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94635036-dc3d-4357-aa70-5aea3af67d59\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:52311f9c1de33f5d54e7f5dbb1809f178c548485dd74ba5fb0089bcc2dd99f29"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"b7c2c3ea-bed5-4866-832f-311212314e62\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:7c180f5a47d5b2cd3976bf5ca78915a64eab9c43fb9ac939ed623fe734152702"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"becf6f69-2366-4484-9b0b-0f084d703fd0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:3276ffdadc6e93449864259e81493dc1e2e6c4a4d89a67e982061505d382b08d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"bf79bb59-64a7-4233-886f-cc9b00a45948\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:41013a10d241c2051a8a7bc1bc369cc08825dfe743405158d0161111c4aa30c3"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c329c1f4-c2bd-488e-a5e0-5651a1365942\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:3134e99ae8bab697dac1c422b3d918e070572a6fb62375f9753b84e865cca091"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"24900c61-3ace-41b5-b43b-e07798a86e17\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"conductor\"]": 9.530436402330452,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"net\"]": 6.458919406827192,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4941b14c-6e44-43fa-bfa8-ae302925b2f4\\\"]\",\"conductor\"]": 9.598599704830008,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4ceb7a69-e956-40cb-80e2-01e884f3148c\\\"]\",\"conductor\"]": 5.9315224905514015,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"54de9989-976e-46cc-b683-1d3b36270b74\\\"]\",\"conductor\"]": 9.588709089261158,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"61a096bc-7d56-46ab-a836-3f7301cd6571\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6ed0b137-89fe-424f-bd24-bfa76f1106f2\\\"]\",\"conductor\"]": 5.931647497617121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"conductor\"]": 5.960995001666532,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"net\"]": 5.960995001666532,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94635036-dc3d-4357-aa70-5aea3af67d59\\\"]\",\"conductor\"]": 5.931596819076958,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"b7c2c3ea-bed5-4866-832f-311212314e62\\\"]\",\"conductor\"]": 5.961069330192117,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"becf6f69-2366-4484-9b0b-0f084d703fd0\\\"]\",\"conductor\"]": 5.961069330192117,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"bf79bb59-64a7-4233-886f-cc9b00a45948\\\"]\",\"conductor\"]": 9.588928585866086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c329c1f4-c2bd-488e-a5e0-5651a1365942\\\"]\",\"conductor\"]": 5.9315224905514015
+      }
+    },
+    {
+      "key": "examples_conveyor-line-0-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "M1" },
+        "family": "power",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"24900c61-3ace-41b5-b43b-e07798a86e17\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-K1-OL1",
+          "netId": "net:sha256:6963429132a60753b0555d3cdf5eee7ef34f3031ffbe4ed4a830fc4b3f4c2e07"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PE-SRC-M1",
+          "netId": "net:sha256:d2108b823119919daeba8fe816b8eceec05ac9cf984f60ac5908baf5337a2319"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "PE",
+          "netId": "net:sha256:d2108b823119919daeba8fe816b8eceec05ac9cf984f60ac5908baf5337a2319"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4941b14c-6e44-43fa-bfa8-ae302925b2f4\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-OL1-M1-V",
+          "netId": "net:sha256:6a8968c3d5e14206a71f38d749dd7a3de7b816b0a7275484b2fa2a284f2b1394"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4ceb7a69-e956-40cb-80e2-01e884f3148c\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-CB1-K1",
+          "netId": "net:sha256:88e764c2a3b25dae2df1b30aee86d90c4cf028b63c548d3593d24daa6cc8bfee"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"54de9989-976e-46cc-b683-1d3b36270b74\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-OL1-M1-U",
+          "netId": "net:sha256:e1edf0d653950a2ea1d83a0d067a4e5d344095f2473933dffe7c9efef794c85e"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"61a096bc-7d56-46ab-a836-3f7301cd6571\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-SRC-CB1",
+          "netId": "net:sha256:73a1213d37d0b9d5f2d461dedd48129578b825d50b4e2d1218e2776a76001435"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6ed0b137-89fe-424f-bd24-bfa76f1106f2\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L2-CB1-K1",
+          "netId": "net:sha256:bba31e1a4081b94447adaab05be0031af4c3f86d72b054a7c87c6d8b442d5f74"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-SRC-CB1",
+          "netId": "net:sha256:7eb8760b2889b8a8a274bdadd15cd52d3d670c9316df3434625086b3509b467d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "L1",
+          "netId": "net:sha256:7eb8760b2889b8a8a274bdadd15cd52d3d670c9316df3434625086b3509b467d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94635036-dc3d-4357-aa70-5aea3af67d59\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-SRC-CB1",
+          "netId": "net:sha256:52311f9c1de33f5d54e7f5dbb1809f178c548485dd74ba5fb0089bcc2dd99f29"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"b7c2c3ea-bed5-4866-832f-311212314e62\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-K1-OL1",
+          "netId": "net:sha256:7c180f5a47d5b2cd3976bf5ca78915a64eab9c43fb9ac939ed623fe734152702"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"becf6f69-2366-4484-9b0b-0f084d703fd0\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L1-CB1-K1",
+          "netId": "net:sha256:3276ffdadc6e93449864259e81493dc1e2e6c4a4d89a67e982061505d382b08d"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"bf79bb59-64a7-4233-886f-cc9b00a45948\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-OL1-M1-W",
+          "netId": "net:sha256:41013a10d241c2051a8a7bc1bc369cc08825dfe743405158d0161111c4aa30c3"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c329c1f4-c2bd-488e-a5e0-5651a1365942\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "L3-K1-OL1",
+          "netId": "net:sha256:3134e99ae8bab697dac1c422b3d918e070572a6fb62375f9753b84e865cca091"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"24900c61-3ace-41b5-b43b-e07798a86e17\\\"]\",\"conductor\"]": 6.064455591706633,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"conductor\"]": 8.443944258552364,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"47d899d7-7502-4426-a76c-6aa8818159ee\\\"]\",\"net\"]": 6.443944250965046,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4941b14c-6e44-43fa-bfa8-ae302925b2f4\\\"]\",\"conductor\"]": 8.287556945001597,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"4ceb7a69-e956-40cb-80e2-01e884f3148c\\\"]\",\"conductor\"]": 6.06444948819086,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"54de9989-976e-46cc-b683-1d3b36270b74\\\"]\",\"conductor\"]": 8.28753863445462,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"61a096bc-7d56-46ab-a836-3f7301cd6571\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"6ed0b137-89fe-424f-bd24-bfa76f1106f2\\\"]\",\"conductor\"]": 6.064455591706633,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"77cec021-7247-476b-8293-549bbd3739c0\\\"]\",\"net\"]": 6.287526431444405,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"94635036-dc3d-4357-aa70-5aea3af67d59\\\"]\",\"conductor\"]": 6.064440281978932,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"b7c2c3ea-bed5-4866-832f-311212314e62\\\"]\",\"conductor\"]": 6.064461695222121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"becf6f69-2366-4484-9b0b-0f084d703fd0\\\"]\",\"conductor\"]": 6.064461695222121,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"bf79bb59-64a7-4233-886f-cc9b00a45948\\\"]\",\"conductor\"]": 8.28754473797045,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"c329c1f4-c2bd-488e-a5e0-5651a1365942\\\"]\",\"conductor\"]": 6.06444948819086
+      }
+    },
+    {
+      "key": "examples_conveyor-line-1-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"014ad3b9-983a-4d77-805c-6111c65b8db8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:2b89110ece643ed319a9a86dc0e0986be6abda4e26d8242c5d95a609a86f07e4"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7589ca3f-d966-40b5-8a36-b18d7e3dd87a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:460c8455e5bad795907fd76701b98760023ba4199d81f812049aaf5f98520e43"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e6aa2286-ea8c-489f-833e-9602627028aa\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:a39f435770cf3fb066aaab1289c14d202e72f50daa03658e7d5a9add29d979bf"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"014ad3b9-983a-4d77-805c-6111c65b8db8\\\"]\",\"conductor\"]": 9.529490682067234,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7589ca3f-d966-40b5-8a36-b18d7e3dd87a\\\"]\",\"conductor\"]": 7.96005621361536,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e6aa2286-ea8c-489f-833e-9602627028aa\\\"]\",\"conductor\"]": 5.960548362509826,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"conductor\"]": 9.589171063625884,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"net\"]": 5.931251705644684
+      }
+    },
+    {
+      "key": "examples_conveyor-line-1-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "K1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"014ad3b9-983a-4d77-805c-6111c65b8db8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "PLC1-DO0-STOP",
+          "netId": "net:sha256:2b89110ece643ed319a9a86dc0e0986be6abda4e26d8242c5d95a609a86f07e4"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7589ca3f-d966-40b5-8a36-b18d7e3dd87a\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "STOP-OL1-NC",
+          "netId": "net:sha256:460c8455e5bad795907fd76701b98760023ba4199d81f812049aaf5f98520e43"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e6aa2286-ea8c-489f-833e-9602627028aa\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "OL1-NC-K1-A1",
+          "netId": "net:sha256:a39f435770cf3fb066aaab1289c14d202e72f50daa03658e7d5a9add29d979bf"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "K1-A2-0V",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"014ad3b9-983a-4d77-805c-6111c65b8db8\\\"]\",\"conductor\"]": 8.443938152702174,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"7589ca3f-d966-40b5-8a36-b18d7e3dd87a\\\"]\",\"conductor\"]": 7.620531913237528,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"e6aa2286-ea8c-489f-833e-9602627028aa\\\"]\",\"conductor\"]": 6.064412031388372,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"conductor\"]": 8.363252638218626,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"eec270ab-13d6-449e-83ee-0d46e07d5902\\\"]\",\"net\"]": 7.034204611068219
+      }
+    },
+    {
+      "key": "examples_conveyor-line-2-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "left-to-right"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "examples_conveyor-line-2-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.1",
+        "root": { "by": "designation", "value": "PS1" },
+        "family": "control",
+        "flow": "top-to-bottom"
+      },
+      "error": "R001"
+    },
+    {
+      "key": "examples_conveyor-line-3-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:fa0124ba9a0eada80d2e727008fc9abc82e0b5c13eef67af41d77ad2dd502085"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+ · red · 18AWG",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2- · green · 18AWG",
+          "netId": "net:sha256:d2d7a8c04e5c532366922863ba1b22a9d9f837d7cb41837d35bb519354e985a7"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": 9.5888671875,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1-\\\"]\",\"conductor\"]": 9.5791015625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": 9.5888671875,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"net\"]": 5.931640625,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2-\\\"]\",\"conductor\"]": 7.8017578125
+      }
+    },
+    {
+      "key": "examples_conveyor-line-3-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "CBL1" },
+        "intent": { "kind": "conductors" },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+ · black · 18AWG",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1- · white · 18AWG",
+          "netId": "net:sha256:fa0124ba9a0eada80d2e727008fc9abc82e0b5c13eef67af41d77ad2dd502085"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+ · red · 18AWG",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2-\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2- · green · 18AWG",
+          "netId": "net:sha256:d2d7a8c04e5c532366922863ba1b22a9d9f837d7cb41837d35bb519354e985a7"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": 8.393515073703611,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"net\"]": 6.494416207131735,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1-\\\"]\",\"conductor\"]": 8.393551694797452,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": 8.393502840607283,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"net\"]": 7.034183248763583,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2-\\\"]\",\"conductor\"]": 8.393466245578566
+      }
+    },
+    {
+      "key": "examples_conveyor-line-4-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "left-to-right"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"3c7f916e-b8e8-43f8-8892-114b17daccf6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"14d788a9-d2c4-4dcb-98fe-c3edf7485947\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-TB1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-PLC1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2338b207-f90c-4087-8986-6d8bcd09cba5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-PX1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d13c9d6-1dcd-4ecb-a450-3292c736a024\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-JB1-PX1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"66665011-47ab-4788-bdbe-42c4019316b8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-PLC1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": 9.607876066499358,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": 9.608140134690245,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"3c7f916e-b8e8-43f8-8892-114b17daccf6\\\"]\",\"conductor\"]": 7.607898462212091,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"14d788a9-d2c4-4dcb-98fe-c3edf7485947\\\"]\",\"conductor\"]": 5.931858732084891,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"conductor\"]": 5.9319459747548535,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"net\"]": 5.9319459747548535,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2338b207-f90c-4087-8986-6d8bcd09cba5\\\"]\",\"conductor\"]": 7.607898462212091,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d13c9d6-1dcd-4ecb-a450-3292c736a024\\\"]\",\"conductor\"]": 5.931858732084891,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"66665011-47ab-4788-bdbe-42c4019316b8\\\"]\",\"conductor\"]": 5.932107541541171,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"conductor\"]": 5.931187856140468,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"net\"]": 5.931187856140468
+      }
+    },
+    {
+      "key": "examples_conveyor-line-4-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "PS1" },
+        "intent": { "kind": "loads" },
+        "flow": "top-to-bottom"
+      },
+      "facts": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.1+",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "CBL1.2+",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"3c7f916e-b8e8-43f8-8892-114b17daccf6\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "JP1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"14d788a9-d2c4-4dcb-98fe-c3edf7485947\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-TB1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-PLC1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "+24VDC",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2338b207-f90c-4087-8986-6d8bcd09cba5\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-JB1-PX1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d13c9d6-1dcd-4ecb-a450-3292c736a024\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-JB1-PX1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"66665011-47ab-4788-bdbe-42c4019316b8\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "+24V-PS1-TB1",
+          "netId": "net:sha256:d25c6159e91671c7f2d890dd2cae04d62edc405eae5ee4a3d635feace88159a9"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"conductor\"]": {
+          "role": "conductor",
+          "text": "0V-PS1-PLC1",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        },
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"net\"]": {
+          "role": "net",
+          "text": "0VDC",
+          "netId": "net:sha256:9527c8affcae214bd279857c73a82afe5d5c0c49a08151edb78655c90c7a0183"
+        }
+      },
+      "distances": {
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"1+\\\"]\",\"conductor\"]": 8.393490656633617,
+        "[\"label\",\"edge\",\"[\\\"cable-conductor\\\",\\\"a5e8db31-d6f0-4ee3-bbd4-c12bb7ba662b\\\",\\\"2+\\\"]\",\"conductor\"]": 8.393502863664878,
+        "[\"label\",\"edge\",\"[\\\"jumper\\\",\\\"3c7f916e-b8e8-43f8-8892-114b17daccf6\\\"]\",\"conductor\"]": 6.549877904442383,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"14d788a9-d2c4-4dcb-98fe-c3edf7485947\\\"]\",\"conductor\"]": 6.06443042925838,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"conductor\"]": 6.064431934985691,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"1d5b89e1-acb0-41c4-b3dd-e735711436c9\\\"]\",\"net\"]": 6.494373482522519,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"2338b207-f90c-4087-8986-6d8bcd09cba5\\\"]\",\"conductor\"]": 6.494397896584815,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"5d13c9d6-1dcd-4ecb-a450-3292c736a024\\\"]\",\"conductor\"]": 6.06443042925838,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"66665011-47ab-4788-bdbe-42c4019316b8\\\"]\",\"conductor\"]": 6.064453339272859,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"conductor\"]": 6.064448692174437,
+        "[\"label\",\"edge\",\"[\\\"wire\\\",\\\"fd37ae09-e179-422b-8c02-b28865488214\\\"]\",\"net\"]": 7.03416806951202
+      }
+    },
+    {
+      "key": "examples_conveyor-line-5-left-to-right",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "left-to-right"
+      },
+      "error": "Q001"
+    },
+    {
+      "key": "examples_conveyor-line-5-top-to-bottom",
+      "project": "examples/conveyor-line",
+      "request": {
+        "format": "schematic-view-request/0.2",
+        "root": { "by": "designation", "value": "LS1" },
+        "intent": {
+          "kind": "trace",
+          "to": { "by": "designation", "value": "PLC1" },
+          "includePower": true
+        },
+        "flow": "top-to-bottom"
+      },
+      "error": "Q001"
+    }
+  ]
+}

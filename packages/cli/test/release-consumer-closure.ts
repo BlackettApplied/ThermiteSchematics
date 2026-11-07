@@ -1,3 +1,4 @@
+import { readBunLock, lockedPackage } from "../../../scripts/read-bun-lock.mjs";
 import { readFile, realpath } from "node:fs/promises";
 import { isBuiltin } from "node:module";
 import { join, posix, relative, resolve, sep } from "node:path";
@@ -392,23 +393,10 @@ async function assertPinnedTestToolRoots(repositoryRoot: string): Promise<{
   readonly typescriptLibRoot: string;
   readonly nodeEntry: string;
 }> {
-  const lock = requireRecord(
-    await readJson(join(repositoryRoot, "package-lock.json")),
-    "Root package lock",
-  );
-  const lockPackages = requireRecord(lock.packages, "Lock package map");
-  const nodeLock = requireRecord(
-    lockPackages["node_modules/@types/node"],
-    "@types/node lock row",
-  );
-  const undiciLock = requireRecord(
-    lockPackages["node_modules/undici-types"],
-    "undici-types lock row",
-  );
-  const typescriptLock = requireRecord(
-    lockPackages["node_modules/typescript"],
-    "TypeScript lock row",
-  );
+  const lock = await readBunLock(repositoryRoot);
+  const nodeLock = lockedPackage(lock, "@types/node");
+  const undiciLock = lockedPackage(lock, "undici-types");
+  const typescriptLock = lockedPackage(lock, "typescript");
   const nodeDependencies = requireRecord(
     nodeLock.dependencies,
     "@types/node lock dependencies",

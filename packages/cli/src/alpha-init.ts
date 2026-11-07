@@ -12,14 +12,16 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   compileProject,
+  PROJECT_WRITE_LOCK_FILE_NAME,
   lockProject,
-  resolveShippedCoreLibrary,
-  SHIPPED_CORE_FILE_INVENTORY,
+  resolveShippedCoreLibraryVersion,
+  SHIPPED_CORE_VERSIONS,
 } from "@thermite/compiler";
 import { isValidInitText, runInit } from "./init.js";
 import { assertOrdinaryPath } from "./alpha-output.js";
 
 export interface AlphaInitOptions {
+  /** An explicit name; omit it for the default name and starter title block. */
   name?: string;
   revision?: string;
   template?: "starter" | "cabinets";
@@ -49,9 +51,10 @@ export async function initializeAlphaProject(
   try {
     const initialized = await runInit(name, revision, { cwd: stage });
     if (initialized.exitCode !== 0) throw new Error(initialized.stderr.trim());
-    const core = resolveShippedCoreLibrary();
-    for (const file of SHIPPED_CORE_FILE_INVENTORY) {
-      const relative = file.replace(/^library\//, "");
+    const core = resolveShippedCoreLibraryVersion("0.2.0")!;
+    const version = SHIPPED_CORE_VERSIONS["0.2.0"]!;
+    for (const file of version.fileInventory) {
+      const relative = file.slice(version.directory.length + 1);
       const output = join(stage, "libraries/core", relative);
       await mkdir(dirname(output), { recursive: true });
       await writeFile(
@@ -60,11 +63,18 @@ export async function initializeAlphaProject(
         { flag: "wx" },
       );
     }
+    // Apache-2.0 notices travel with the copied library, outside its locked sources.
+    for (const notice of ["LICENSE", "NOTICE"])
+      await writeFile(
+        join(stage, "libraries/core", notice),
+        await readFile(join(core.packageRootPath, notice)),
+        { flag: "wx" },
+      );
     const manifest = JSON.parse(
       await readFile(join(stage, "system.json"), "utf8"),
     );
     manifest.libraries = [
-      { name: "core", version: "0.1.0", path: "libraries/core" },
+      { name: "core", version: "0.2.0", path: "libraries/core" },
     ];
     const presentation = JSON.parse(
       await readFile(join(stage, "presentation.json"), "utf8"),
@@ -132,6 +142,11 @@ export async function initializeAlphaProject(
       presentation.titleBlock = {
         lines: ["Inter-cabinet cable / two used cores and two spare cores"],
       };
+    } else if (options.name !== undefined) {
+      // Every title block already prints project.name as its heading. The
+      // starter's "Starter project" caption is a placeholder for an unnamed
+      // project, so an explicit name replaces it instead of contradicting it.
+      delete presentation.titleBlock;
     }
     await writeFile(
       join(stage, "system.json"),
@@ -146,6 +161,13 @@ export async function initializeAlphaProject(
       await readFile(
         fileURLToPath(new URL("../assets/THERMITE_AGENTS.md", import.meta.url)),
       ),
+    );
+    // The alpha scaffold owns a new staged directory, so this cannot overwrite
+    // a user's existing ignore rules. Legacy init retains its exact file set.
+    await writeFile(
+      join(stage, ".gitignore"),
+      `${PROJECT_WRITE_LOCK_FILE_NAME}\n`,
+      { flag: "wx" },
     );
     const locked = await lockProject(stage);
     if (!locked.ok) throw new Error(JSON.stringify(locked.diagnostics));

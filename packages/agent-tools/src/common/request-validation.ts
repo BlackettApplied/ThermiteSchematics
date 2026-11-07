@@ -62,7 +62,7 @@ export function requiredString(
   if (literals !== undefined && !literals.has(value)) {
     return {
       ok: false,
-      error: createA001Error(tool, field, "unsupported-value"),
+      error: createA001Error(tool, field, "unsupported-value", literals),
     };
   }
   return { ok: true, value };

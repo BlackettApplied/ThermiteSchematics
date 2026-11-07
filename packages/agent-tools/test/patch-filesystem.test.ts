@@ -1,3 +1,5 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
+import { validationGateExpectations as gates } from "../../compiler/test/validation-gate-expectations.js";
 import {
   cp,
   lstat,
@@ -26,7 +28,6 @@ import type { Diagnostic } from "@thermite/schema";
 import { describe, expect, it, vi, type TestContext } from "vitest";
 
 import {
-  createInternalApplySourcePatchTool,
   defaultApplySourcePatchDependencies,
   type ApplySourcePatchDependencies,
 } from "../src/apply-source-patch.js";
@@ -42,14 +43,17 @@ import {
   type FileStatus,
   type PatchFilesystemDependencies,
 } from "../src/patch-filesystem.js";
-import type {
-  ApplySourcePatchRequest,
-  SourcePatchOperation,
-} from "../src/source-patch-request.js";
+import type { ApplySourcePatchRequest } from "../src/source-patch-request.js";
 import {
   createPatchProjectFixture,
   type PatchProjectFixture,
 } from "./patch-project-fixture.js";
+import {
+  applyWith,
+  mutateBeforePrecommit,
+  PRECOMMIT_MUTATIONS,
+  requestForFiles,
+} from "./patch-filesystem.cases.js";
 
 function codedError(code: string): Error {
   return Object.assign(new Error("private path must not escape"), { code });
@@ -210,50 +214,6 @@ function dependenciesWithStagedWarnings(
         : compiled;
     },
   };
-}
-
-async function requestForFiles(
-  fixture: PatchProjectFixture,
-  paths: readonly string[],
-  dryRun = false,
-  operationsFor: (path: string) => readonly SourcePatchOperation[] = () => [
-    { op: "test", path: "", value: { objects: [] } },
-  ],
-): Promise<ApplySourcePatchRequest> {
-  return {
-    format: "agent-tool-request/0.1",
-    project: "project",
-    patchFormat: "json-patch/0.1",
-    dryRun,
-    files: await Promise.all(
-      paths.map(async (path) => ({
-        path,
-        expectedIntegrity: computeFileIntegrity(
-          await readFile(join(fixture.projectRoot, path)),
-        ),
-        operations: operationsFor(path),
-      })),
-    ),
-  };
-}
-
-async function repairRequest(
-  fixture: PatchProjectFixture,
-): Promise<ApplySourcePatchRequest> {
-  return requestForFiles(fixture, ["sources/objects.json"], false, () => [
-    { op: "remove", path: "/objects/4" },
-  ]);
-}
-
-function applyWith(
-  fixture: PatchProjectFixture,
-  request: ApplySourcePatchRequest,
-  dependencies: ApplySourcePatchDependencies,
-) {
-  return createInternalApplySourcePatchTool(
-    { cwd: fixture.root },
-    dependencies,
-  ).applySourcePatch(request);
 }
 
 function expectQuarantinePathIsInternal(
@@ -1295,7 +1255,17 @@ describe("D10 filesystem safety and rollback", () => {
           {
             code: "E001",
             message:
+              "Agent apply-source-patch tool failure (commit-write/E_COMMIT).",
+          },
+          {
+            code: "E001",
+            message:
               "Agent apply-source-patch tool failure (rollback-write/E_ROLLBACK).",
+          },
+          {
+            code: "E001",
+            message:
+              'Source patch rollback restored []; not restored [{"file":"sources/a.json","reason":"I/O (E_ROLLBACK)"}]. Only successfully replaced files were candidates for restoration.',
           },
         ],
         error: null,
@@ -1355,7 +1325,7 @@ describe("D10 real source-chain rechecks", () => {
     }
   });
 
-  it("catches a real ancestor swap at a later per-target recheck and rolls back", async (context) => {
+  it("refuses restoration after a real ancestor swap following the first write", async (context) => {
     const fixture = await createPatchProjectFixture("clean");
     try {
       await proveDirectoryLinkCapability(context, fixture);
@@ -1368,45 +1338,50 @@ describe("D10 real source-chain rechecks", () => {
           ),
         ),
       );
-      const writer = vi.fn(
-        defaultApplySourcePatchDependencies.writeFileAtomically,
-      );
-      let validationCalls = 0;
+      let swapped = false;
+      const writer = vi.fn(async (path: string, bytes: Uint8Array) => {
+        await defaultApplySourcePatchDependencies.writeFileAtomically(
+          path,
+          bytes,
+        );
+        if (!swapped) {
+          swapped = true;
+          await swapSourcesDirectoryForLink(fixture);
+        }
+      });
       const outcome = await applyWith(
         fixture,
         await requestForFiles(fixture, paths),
-        {
-          ...defaultApplySourcePatchDependencies,
-          writeFileAtomically: writer,
-          async validateSourceChain(project, document) {
-            validationCalls += 1;
-            if (validationCalls === 4) {
-              await swapSourcesDirectoryForLink(fixture);
-            }
-            return validateProjectSourceChain(
-              project,
-              document,
-              defaultApplySourcePatchDependencies.filesystem,
-            );
-          },
-        },
+        { ...defaultApplySourcePatchDependencies, writeFileAtomically: writer },
       );
       expect(outcome).toMatchObject({
         ok: false,
-        diagnostics: [],
+        diagnostics: [
+          {
+            code: "E001",
+            message:
+              "Agent apply-source-patch tool failure (rollback-write/PATCH_WRITE_GUARD_MISMATCH).",
+          },
+          {
+            code: "E001",
+            message:
+              'Source patch rollback restored []; not restored [{"file":"sources/a.json","reason":"chain changed"}]. Only successfully replaced files were candidates for restoration.',
+          },
+        ],
         error: {
           code: "A003",
           file: "sources/b.json",
           reason: "reparse-point",
         },
-        failureClass: "expected",
+        failureClass: "tool",
       });
-      expect(writer).toHaveBeenCalledTimes(2);
-      for (const path of paths) {
-        expect(await readFile(join(fixture.projectRoot, path))).toEqual(
-          originals.get(path),
-        );
-      }
+      expect(writer).toHaveBeenCalledTimes(1);
+      expect(await readFile(join(fixture.projectRoot, paths[0]))).not.toEqual(
+        originals.get(paths[0]),
+      );
+      expect(await readFile(join(fixture.projectRoot, paths[1]))).toEqual(
+        originals.get(paths[1]),
+      );
     } finally {
       await fixture.cleanup();
     }
@@ -1414,104 +1389,28 @@ describe("D10 real source-chain rechecks", () => {
 });
 
 describe("D10 real controlled-snapshot mutation classes", () => {
-  it.each([
-    {
-      name: "manifest",
-      kind: "clean" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.projectRoot, "system.json"),
-      displayFile: "system.json",
-      request: (fixture: PatchProjectFixture) =>
-        requestForFiles(fixture, ["sources/a.json"]),
-    },
-    {
-      name: "lockfile",
-      kind: "clean" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.projectRoot, "electrical-system.lock.json"),
-      displayFile: "electrical-system.lock.json",
-      request: (fixture: PatchProjectFixture) =>
-        requestForFiles(fixture, ["sources/a.json"]),
-    },
-    {
-      name: "library",
-      kind: "repair" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.root, "library", "library.json"),
-      displayFile: "../library/library.json",
-      request: repairRequest,
-    },
-    {
-      name: "local library source",
-      kind: "repair" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.root, "library", "types", "connectivity.json"),
-      displayFile: "../library/types/connectivity.json",
-      request: repairRequest,
-    },
-    {
-      name: "target source",
-      kind: "clean" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.projectRoot, "sources", "a.json"),
-      displayFile: "sources/a.json",
-      request: (fixture: PatchProjectFixture) =>
-        requestForFiles(fixture, ["sources/a.json"]),
-    },
-    {
-      name: "non-target source",
-      kind: "clean" as const,
-      diskPath: (fixture: PatchProjectFixture) =>
-        join(fixture.projectRoot, "sources", "b.json"),
-      displayFile: "sources/b.json",
-      request: (fixture: PatchProjectFixture) =>
-        requestForFiles(fixture, ["sources/a.json"]),
-    },
-  ])(
+  it.each(PRECOMMIT_MUTATIONS)(
     "returns frozen A004 for a real $name mutation between staging and precommit",
-    async ({ kind, diskPath, displayFile, request }) => {
-      const fixture = await createPatchProjectFixture(kind);
-      try {
-        const path = diskPath(fixture);
-        const isMissingLock = displayFile === "electrical-system.lock.json";
-        const before = isMissingLock ? undefined : await readFile(path);
-        const changed = isMissingLock
-          ? Buffer.from("{}\n", "utf8")
-          : Buffer.concat([before!, Buffer.from("\n", "utf8")]);
-        let captureCalls = 0;
-        const filesystem = defaultApplySourcePatchDependencies.filesystem;
-        const dependencies: ApplySourcePatchDependencies = {
-          ...defaultApplySourcePatchDependencies,
-          async captureSnapshot(project) {
-            captureCalls += 1;
-            if (captureCalls === 2) await writeFile(path, changed);
-            return captureProjectControlledSnapshot(project, filesystem);
-          },
-        };
-        const outcome = await applyWith(
-          fixture,
-          await request(fixture),
-          dependencies,
-        );
-        const expectedIntegrity =
-          before === undefined ? "missing" : computeFileIntegrity(before);
-        const actualIntegrity = computeFileIntegrity(changed);
-        expect(outcome).toEqual({
-          ok: false,
-          diagnostics: [],
-          error: {
-            code: "A004",
-            message: `A004 Guarded file ${JSON.stringify(displayFile)} does not match its required integrity.`,
-            file: displayFile,
-            expectedIntegrity,
-            actualIntegrity,
-          },
-          failureClass: "expected",
-        });
-        expect(captureCalls).toBe(2);
-      } finally {
-        await fixture.cleanup();
-      }
+    async (mutation) => {
+      const { displayFile } = mutation;
+      const { outcome, before, changed, captureCalls } =
+        await mutateBeforePrecommit(mutation);
+      const expectedIntegrity =
+        before === undefined ? "missing" : computeFileIntegrity(before);
+      const actualIntegrity = computeFileIntegrity(changed);
+      expect(outcome).toEqual({
+        ok: false,
+        diagnostics: [],
+        error: {
+          code: "A004",
+          message: `A004 Guarded file ${JSON.stringify(displayFile)} does not match its required integrity.`,
+          file: displayFile,
+          expectedIntegrity,
+          actualIntegrity,
+        },
+        failureClass: "expected",
+      });
+      expect(captureCalls).toBe(2);
     },
   );
 });
@@ -2271,7 +2170,18 @@ describe("D7 shipped-package violation phase matrix", () => {
         );
         expect(outcome).toEqual({
           ok: false,
-          diagnostics: expectedMatrixDiagnostics(change, missingStage),
+          diagnostics:
+            missingStage === "stage-compile"
+              ? [
+                  ...expectedMatrixDiagnostics(change, missingStage),
+                  {
+                    "source-mutation": gates.shippedMutation,
+                    "source-removal": gates.shippedRemoval,
+                    "manifest-version": gates.shippedVersion,
+                    "manifest-missing": gates.shippedMissing,
+                  }[change],
+                ]
+              : expectedMatrixDiagnostics(change, missingStage),
           error: null,
           failureClass: change === "manifest-missing" ? "tool" : "expected",
         });
@@ -2332,7 +2242,7 @@ describe("D7 shipped-package violation phase matrix", () => {
         );
         expect(outcome).toEqual({
           ok: true,
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           value: {
             dryRun: false,
             applied: true,
@@ -2367,7 +2277,12 @@ describe("D7 shipped-package violation phase matrix", () => {
         );
         expect(nextCompile).toEqual({
           ok: false,
-          diagnostics: expectedShippedDiagnostic(change),
+          diagnostics: [
+            ...expectedShippedDiagnostic(change),
+            change === "source-mutation"
+              ? gates.shippedMutation
+              : gates.shippedRemoval,
+          ],
           toolFailure: false,
         });
       } finally {

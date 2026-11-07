@@ -80,16 +80,22 @@ deduplication; the first invalid start wins, and an empty list succeeds with `[]
 `QueryError` always contains `code`, `message`, and the canonical `input`. It contains
 no source location because query misses are not compiler diagnostics.
 
-| Code   | Meaning                                                                         | Optional fields                     |
-| ------ | ------------------------------------------------------------------------------- | ----------------------------------- |
-| `Q001` | Exact UID or canonical designation was not found.                               | None.                               |
-| `Q002` | The object exists but the operation requires a device or cable.                 | `expectedKind`, `actualKind`.       |
-| `Q003` | A display terminal selector has no non-empty compiled-device prefix and suffix. | None.                               |
-| `Q004` | The selected device has no exact materialized terminal key.                     | `deviceDesignation`, `terminalKey`. |
+| Code   | Meaning                                                                         | Optional fields                                                                 |
+| ------ | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `Q001` | Exact UID or canonical designation was not found.                               | None.                                                                           |
+| `Q002` | The object exists but the operation requires a device or cable.                 | `expectedKind`, `actualKind`.                                                   |
+| `Q003` | A display terminal selector has no non-empty compiled-device prefix and suffix. | None.                                                                           |
+| `Q004` | The selected device has no exact materialized terminal key.                     | `deviceDesignation`, `terminalKey`, `allowed`, `allowedCount`, `allowedLookup`. |
 
 `input` is the unmodified object selector string, the selected terminal key for
 `Q004`, or compact structural JSON for `id` and `parts` selectors where required.
 Optional fields are omitted when they do not apply.
+
+`Q004` lists the device's materialized terminal keys in code-unit order: `allowed`
+holds at most 50 and `allowedCount` the total. When more than 50 exist,
+`allowedLookup` points at the `terminals` of the device's `inspect` result. The
+message quotes at most 10 keys. Devices have no selectable function keys, so none
+are listed.
 
 ## Structural identity and shared views
 
@@ -216,6 +222,47 @@ M4 deliberately exports no `shortestConductivePath`, `ConductivePath`, generic s
 filter language, or point-to-point path command. Higher-level views and rendering are
 downstream concerns.
 
+## Documentation tables
+
+`buildDocumentation(ir, request)` returns BOM, wire/core, cable, terminal, I/O,
+connector I/O, network and connector-assembly tables for CSV and packet rendering.
+Missing descriptive data is blank; authored text and meaningful assignment/link
+states remain visible. BOM type descriptions accompany a separate column of
+instance requirements. Groups share type, location, authored description and
+non-procurement reason; missing, empty and whitespace-only descriptions group
+together and print blank. Each row carries one description for every listed
+device. Within each type/location, rows order by their lowest natural designation
+(M1, M2, M10), and members use the same order. Authored `nonProcurement.reason`
+marks retained items `Not purchased`; quantities count authored instances, not a
+purchasable total. Type descriptions fall back to IDs in report tables, including CSV. Cable schedule JSON includes optional `description` only when authored
+(empty strings included).
+Report cells replace C0/C1 controls and DEL with spaces, except tab and LF; source,
+IR and query metadata stay unchanged. Print type cells keep a single line of at
+most 160 Unicode code points whole;
+otherwise they prefer the first line, complete sentences, then a word boundary.
+Cuts never split a grapheme cluster (`Intl.Segmenter`); an unbroken overlong word
+uses a grapheme boundary. LF, U+2028 and U+2029 start lines. Only an actual cut adds
+an ellipsis and a full-text note. Missing/blank type descriptions use their IDs;
+instance blanks stay blank and instance text is never abbreviated.
+`thermite inspect <designation> --type-description` shows full type text without
+changing JSON. `Mfr.` is the print header for manufacturer.
+
+For CSV, pass `{ output: "csv" }` as the fourth `buildDocumentation` argument,
+then call `documentationCsv(table)`. That mode retains full type descriptions and
+full headers (`Manufacturer`) while keeping the same row identities, quantities,
+selection, control normalization and spreadsheet protection. The default mode is
+print for existing renderer callers; neither request JSON nor query metadata is
+extended. `DocumentationOptions` documents this optional output context.
+
+The optional third argument, `ScheduleReferences`, injects from/to sheet.zone
+pairs by wire/jumper UID (`conductors`) or by cable UID and core ID (`cableCores`).
+`buildCableSchedule` also accepts a core-to-pair map as its third argument and
+retains `sheetZone` on existing endpoints. Pairs follow schedule endpoint order;
+null or omitted entries add no location. The wire/core table adds both reference
+columns only when a retained endpoint has a value. These APIs do not compute
+packet locations or change source/request JSON. See
+[report columns and references](../../docs/report-filtering.md#report-columns-and-authored-meaning).
+
 ## Rendering boundary
 
 `@thermite/render` consumes the same fresh successful in-memory `ElectricalIr`
@@ -229,3 +276,15 @@ Milestone 7's [`@thermite/agent-tools`](../agent-tools/README.md) composes this
 public boundary: inspect returns the existing one-hop DTO and graph query dispatches
 only `neighbors`, `trace`, `net`, or `cable`. It does not widen query with a generic
 search/traversal DSL, point-to-point helper, new selector semantics, or new Q-code.
+
+### BOM CSV goldens
+
+`test/documentation-goldens.test.ts` locks the report-filtering and machine-demo
+BOMs as readable CSV snapshots. Snapshot row endings normalize CRLF to LF; the
+CSV API still emits CRLF. After an intentional report change, update and review:
+
+```sh
+bun run build
+VITEST_MAX_WORKERS=2 bun run test -- packages/query/test/documentation-goldens.test.ts -u
+VITEST_MAX_WORKERS=2 bun run test -- packages/query/test/documentation-goldens.test.ts
+```

@@ -63,7 +63,7 @@ No manufacturer manuals or source-machine drawings are redistributed here.
 After the repository source build:
 
 ```sh
-node thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
+bun thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
 node libraries/phoenix-terminal-pilot/examples/terminal-wiring/verify.mjs
 ```
 

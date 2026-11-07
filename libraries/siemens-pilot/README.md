@@ -18,6 +18,12 @@ September 6, 2026. The base units, backplane distribution, interface modules and
 network are outside this first library model. Their required selection must be
 completed for an actual installation. No implicit internal net joins are made.
 
+The three original CPU 1212C / ET 200SP profiles explicitly declare `partial`
+connection coverage. Their existing connector abstractions omit Ethernet or
+BaseUnit/backplane interfaces, as described in the type notes. Instantiating
+these types now produces W904 with those limits; this classification adds no
+terminals, internal conductive paths or installation requirements.
+
 Use an explicit relative path in the project's `system.json`, then run
 `thermite lock <project>`. All library JSON remains visible. For new types, the
 explicit `thermite:io-module`, `thermite:terminal-strip` and `thermite:dc-supply`

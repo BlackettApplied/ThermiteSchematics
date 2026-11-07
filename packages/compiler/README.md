@@ -74,17 +74,21 @@ type ProjectLibraryDependency =
 ```
 
 An explicit `path` always selects the existing local-library loader. A dependency
-without `path` resolves only the shipped pair `core@0.1.0` from
+without `path` resolves the exact shipped pair `core@0.1.0` or `core@0.2.0` from
 `@thermite/core-library`. Any other name/version-only request produces E032;
 the compiler never consults npm, `NODE_PATH`, cwd ancestors, environment variables,
 a user cache, or the network.
+The loader's optional `resolveShippedCoreLibrary(version)` test override applies
+to both supported shipped versions and receives the selected version. Local and
+unavailable dependencies never invoke it; production uses the package registry.
 
 Loaded libraries and `IrLibrary` records carry required
 `resolutionKind: "local" | "shipped"`. The v1 lock schema accepts the field as
 optional for compatibility; absence normalizes to `local` only after successful
 schema validation. Every canonical lock writer emits the field. Local entries retain
 their authored path; shipped core uses internal provenance locator
-`ais-shipped:core@0.1.0`. Stable shipped diagnostic/source paths begin
+`ais-shipped:core@<version>`. Core 0.1.0 retains its existing bytes and paths;
+0.2.0 lives in `versions/0.2.0/` inside the core package. Stable shipped diagnostic/source paths begin
 `@thermite/core-library/` and never reveal an install prefix.
 
 ## Presentation loading
@@ -115,6 +119,13 @@ E200/E201-affected nets do not produce dependent potential or rating findings. E
 suppresses E301/E302 on its net, and E301 suppresses E302 only for the same terminal.
 Missing policies, declarations, and ratings remain unknown rather than diagnostic.
 CLI strictness is an exit policy and does not change warning severity.
+Coverage `generic` describes a reviewed abstract interface. Its I005 completeness
+finding retains notes and actual-part limitations, like I003's audit information;
+it is not a compiler warning. Partial coverage still emits W904. Schema validation
+rejects generic types with exact-part catalog facts (E014). Core 0.2.0 uses generic
+coverage, so a fully connected project can pass strict validation; the starter's
+required, deferred PSU feed retains W905 and fails strict, while cabinets
+passes. See [connection completeness](../../docs/completeness.md).
 
 ## Canonical outputs and downstream consumers
 

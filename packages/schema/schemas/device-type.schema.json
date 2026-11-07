@@ -304,7 +304,16 @@
             "pushbutton-no",
             "pushbutton-nc",
             "thermocouple",
-            "interface"
+            "interface",
+            "pressure-no",
+            "pressure-nc",
+            "level-no",
+            "level-nc",
+            "level-sensor",
+            "conductivity-probe",
+            "receptacle",
+            "ac-input",
+            "dc-output"
           ]
         }
       }
@@ -400,7 +409,8 @@
       "required": ["status", "notes"],
       "properties": {
         "status": {
-          "enum": ["complete", "partial"]
+          "enum": ["complete", "partial", "generic"],
+          "description": "complete: every connection of an exact part is modeled; partial: the model omits connections; generic: the abstract interface was reviewed, without exact-part catalog facts."
         },
         "notes": {
           "type": "string",
@@ -451,6 +461,25 @@
               }
             }
           }
+        }
+      }
+    }
+  },
+  "dependentSchemas": {
+    "catalog": {
+      "description": "An exact-part catalog requires manufacturer and orderNumber; its coverage cannot be generic.",
+      "properties": {
+        "connectionCoverage": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "enum": ["complete", "partial"]
+            },
+            "notes": {
+              "$ref": "#/properties/connectionCoverage/properties/notes"
+            }
+          },
+          "additionalProperties": false
         }
       }
     }

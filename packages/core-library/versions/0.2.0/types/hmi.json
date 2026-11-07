@@ -1,0 +1,43 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:hmi",
+      "description": "Provisional generic HMI with Ethernet; DC supply; voltage not specified.",
+      "terminals": {
+        "L+": {
+          "role": "supply_positive",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "M": {
+          "role": "supply_return",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["L+", "M"]
+        }
+      },
+      "symbol": "thermite:io-module",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Supply L+/M is universally required. DC supply; voltage not specified. Optional: ETH communication by application, including an offline powered HMI. Unmodeled: extra power feeds, ports, shields, bonding, display and operator functions. Supply magnitude, other ratings, Ethernet connector and protocol are unspecified; the author must select hardware and add its connection inventory and ratings. L+/M and ETH are the same logical generic markings as the PLC, not a manufacturer pinout. The io-module profile represents the electrical interface only; it does not draw a display."
+      },
+      "ports": {
+        "ETH": {
+          "medium": "ethernet",
+          "connector": "unspecified"
+        }
+      }
+    }
+  ]
+}

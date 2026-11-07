@@ -1,3 +1,4 @@
+import { validationGateExpectations as gates } from "../../compiler/test/validation-gate-expectations.js";
 import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve as resolvePath } from "node:path";
@@ -59,9 +60,9 @@ function injectedTools(
 
 describe("D7 exact compiler validation", () => {
   it.each([
-    ["clean success", motorProject, true, []],
+    ["info-only success", motorProject, true, ["I305"]],
     ["warning success", warningProject, true, ["W902"]],
-    ["authored error", errorProject, false, ["E201"]],
+    ["authored error", errorProject, false, ["E201", "I208"]],
   ])(
     "matches direct compileProject for %s",
     async (_name, project, expectedOk, expectedCodes) => {
@@ -191,11 +192,12 @@ describe("D7 exact compiler validation", () => {
           column: 108,
           jsonPointer: "/libraries/0/name",
         },
+        gates.unavailable,
         {
           code: "E032",
           severity: "error",
           message:
-            'Shipped library "core" does not provide version "9.9.9"; available version is "0.1.0".',
+            'Shipped library "core" does not provide version "9.9.9"; available versions are "0.1.0", "0.2.0".',
           file: "system.json",
           line: 1,
           column: 162,
@@ -230,6 +232,7 @@ describe("D7 compiler tool-failure routing", () => {
           column: 1,
           jsonPointer: "",
         },
+        gates.missing,
       ],
       error: null,
       failureClass: "tool",

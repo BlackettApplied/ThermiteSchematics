@@ -1,3 +1,4 @@
+import { createRequire } from "node:module";
 import { readFile } from "node:fs/promises";
 import { basename, posix, win32 } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,11 +19,14 @@ import {
 } from "../src/schema-registry.js";
 
 const EXPECTED_SCHEMA_FILES = [
+  "agent-tool-report.schema.json",
+  "agent-tool-result.schema.json",
   "cable-type.schema.json",
   "cable.schema.json",
   "common.schema.json",
   "device-type.schema.json",
   "device.schema.json",
+  "diagnostic.schema.json",
   "jumper.schema.json",
   "library-file.schema.json",
   "library-lock.schema.json",
@@ -36,6 +40,9 @@ const EXPECTED_SCHEMA_FILES = [
 ] as const;
 
 const EXPECTED_ROOT_TITLES: Readonly<Record<string, string>> = {
+  "agent-tool-report.schema.json": "AgentToolJsonReport",
+  "agent-tool-result.schema.json": "AgentToolJsonResult",
+  "diagnostic.schema.json": "Diagnostic",
   "cable.schema.json": "Cable",
   "cable-type.schema.json": "CableType",
   "device.schema.json": "Device",
@@ -151,7 +158,7 @@ function internalRelationIsLegal(
 describe("canonical schema metadata", async () => {
   const schemas = await loadCanonicalSchemas();
 
-  it("contains the fourteen-file M2 inventory with draft 2020-12 unique ids", () => {
+  it("contains the source and diagnostic transport inventory with draft 2020-12 unique ids", () => {
     expect(schemas.map(({ fileName }) => fileName)).toEqual(
       EXPECTED_SCHEMA_FILES,
     );
@@ -162,7 +169,13 @@ describe("canonical schema metadata", async () => {
         $schema: "https://json-schema.org/draft/2020-12/schema",
         $id: `https://thermiteschematics.com/schemas/0.1/${fileName}`,
       });
-      assertObjectShapesAreClosed(schema);
+      if (fileName.startsWith("agent-tool-")) {
+        // Transport envelopes are closed. Tool-specific result/error payloads
+        // are open objects; source entity schemas retain their strict closure.
+        expect(
+          (schema as { additionalProperties: boolean }).additionalProperties,
+        ).toBe(false);
+      } else assertObjectShapesAreClosed(schema);
 
       if (fileName === "common.schema.json") {
         expect(schema).not.toHaveProperty("title");
@@ -330,12 +343,13 @@ describe("canonical schema metadata", async () => {
   it("exports every canonical file through the package schema subpath", async () => {
     for (const fileName of EXPECTED_SCHEMA_FILES) {
       const specifier = `@thermite/schema/schemas/${fileName}`;
-      const resolved = import.meta.resolve(specifier);
+      // Use the native resolver: Vitest rewrites import.meta.resolve and its
+      // Windows file-URL base is not understood by Bun. This still exercises
+      // the package exports map for every canonical JSON subpath.
+      const resolved = createRequire(import.meta.url).resolve(specifier);
 
-      expect(basename(fileURLToPath(resolved))).toBe(fileName);
-      await expect(
-        readFile(fileURLToPath(resolved), "utf8"),
-      ).resolves.toContain(
+      expect(basename(resolved)).toBe(fileName);
+      await expect(readFile(resolved, "utf8")).resolves.toContain(
         `https://thermiteschematics.com/schemas/0.1/${fileName}`,
       );
     }
@@ -914,6 +928,25 @@ describe("circuit symbol schema", () => {
       validate(registry, "device-type", {
         ...type,
         circuitSymbols: { "aux/~": "contact-nc" },
+      }),
+    ).toEqual([]);
+  });
+
+  it.each([
+    "pressure-no",
+    "pressure-nc",
+    "level-no",
+    "level-nc",
+    "level-sensor",
+    "conductivity-probe",
+    "receptacle",
+    "ac-input",
+    "dc-output",
+  ])("accepts catalog mark %s structurally", (mark) => {
+    expect(
+      validate(registry, "device-type", {
+        ...type,
+        circuitSymbols: { "aux/~": mark },
       }),
     ).toEqual([]);
   });

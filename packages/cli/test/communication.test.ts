@@ -1,7 +1,5 @@
-import { mkdtemp, mkdir, writeFile, readFile, rm } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -16,73 +14,16 @@ import {
   reviewProject,
 } from "@thermite/query";
 import { renderSchematicPacket } from "@thermite/render";
-const temporary: string[] = [],
-  exec = promisify(execFile);
-afterEach(async () => {
-  for (const p of temporary.splice(0))
-    await rm(p, { recursive: true, force: true });
-});
-async function fixture() {
-  const p = await mkdtemp(join(tmpdir(), "thermite-ports-"));
-  temporary.push(p);
-  await mkdir(join(p, "lib"));
-  const write = async (name: string, value: unknown) =>
-    writeFile(join(p, name), JSON.stringify(value));
-  await write("system.json", {
-    format: "electrical-system/0.1",
-    project: { name: "Port topology" },
-    sources: ["source.json"],
-    libraries: [{ name: "test", version: "1.0.0", path: "lib" }],
-  });
-  await write("lib/library.json", {
-    name: "test",
-    version: "1.0.0",
-    sources: ["types.json"],
-  });
-  const types = {
-    types: [
-      {
-        kind: "device_type",
-        id: "test:node",
-        description: "Communication node",
-        terminals: { P: {}, M: {} },
-        functions: {},
-        ports: {
-          ETH1: { medium: "ethernet", connector: "RJ45" },
-          ETH2: { medium: "ethernet", connector: "RJ45" },
-          BUS: { medium: "nrg-bus", connector: "Proprietary" },
-        },
-      },
-    ],
-  };
-  await write("lib/types.json", types);
-  const devices = ["A", "B", "C"].map((designation) => ({
-    uid: randomUUID(),
-    kind: "device",
-    designation,
-    type: "test:node",
-    location: "Cabinet",
-  }));
-  const relation = {
-    uid: randomUUID(),
-    kind: "relation",
-    designation: "NET1",
-    relation: "associated_with",
-    from: { device: "A" },
-    to: { device: "B" },
-    connection: {
-      fromPort: "ETH1",
-      toPort: "ETH1",
-      medium: "ethernet",
-      protocol: "PROFINET",
-      status: "planned",
-    },
-  };
-  const source = { objects: [...devices, relation] as any[] };
-  await write("source.json", source);
-  expect((await lockProject(p)).ok).toBe(true);
-  return { p, write, source, relation, devices, types };
-}
+import {
+  compileCableLength,
+  compileConnectionRejection,
+  CONNECTION_REJECTIONS,
+  fixture,
+  INVALID_CABLE_LENGTHS,
+  removeFixtures,
+} from "./communication.cases.js";
+const exec = promisify(execFile);
+afterEach(removeFixtures);
 async function compiled(p: string) {
   const c = await compileProject(p);
   if (!c.ok) throw new Error(JSON.stringify(c.diagnostics));
@@ -145,41 +86,20 @@ describe("typed communication ports", () => {
       "B",
     ]);
   });
-  it.each([
-    "missing-port",
-    "medium",
-    "occupied",
-    "verb",
-    "self",
-    "missing-device",
-  ])("rejects %s with authored diagnostics", async (problem) => {
-    const f = await fixture();
-    if (problem === "missing-port") f.relation.connection.fromPort = "MISSING";
-    if (problem === "medium") f.relation.connection.fromPort = "BUS";
-    if (problem === "verb") f.relation.relation = "controls";
-    if (problem === "self") {
-      f.relation.to.device = "A";
-      f.relation.connection.toPort = "ETH2";
-    }
-    if (problem === "missing-device") f.relation.to.device = "MISSING";
-    if (problem === "occupied")
-      f.source.objects.push({
-        ...structuredClone(f.relation),
-        uid: randomUUID(),
-        designation: "NET2",
-        to: { device: "C" },
-      });
-    await f.write("source.json", f.source);
-    const c = await compileProject(f.p);
-    expect(c.ok).toBe(false);
-    expect(
-      c.diagnostics.some(
-        (d) =>
-          d.code === (problem === "missing-device" ? "E101" : "E204") &&
-          d.file === "source.json",
-      ),
-    ).toBe(true);
-  });
+  it.each(CONNECTION_REJECTIONS)(
+    "rejects %s with authored diagnostics",
+    async (problem) => {
+      const c = await compileConnectionRejection(problem);
+      expect(c.ok).toBe(false);
+      expect(
+        c.diagnostics.some(
+          (d) =>
+            d.code === (problem === "missing-device" ? "E101" : "E204") &&
+            d.file === "source.json",
+        ),
+      ).toBe(true);
+    },
+  );
   it("reports each link once and every unconnected port without inferring spare capacity", async () => {
     const f = await fixture(),
       c = await compiled(f.p);
@@ -345,13 +265,10 @@ describe("typed communication ports", () => {
   });
 });
 
-it.each([0, -1, "eight", null])(
+it.each(INVALID_CABLE_LENGTHS)(
   "rejects invalid physical communication cable length %j",
   async (lengthM) => {
-    const f = await fixture();
-    (f.relation.connection as any).cable = { specification: "Cat5e", lengthM };
-    await f.write("source.json", f.source);
-    const c = await compileProject(f.p);
+    const c = await compileCableLength(lengthM);
     expect(c.ok).toBe(false);
     expect(
       c.diagnostics.some(

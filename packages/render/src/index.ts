@@ -13,6 +13,9 @@ export {
   type PaperPage,
   type RenderedPacket,
   type RenderedSheet,
+  type CircuitContinuation,
+  type CommunicationContinuation,
+  type ReferenceSelection,
   type SchematicPacketRequest,
 } from "./sheets.js";
 export type {
@@ -22,6 +25,7 @@ export type {
   IncompletePathError,
   RenderError,
   RenderErrorBase,
+  UnsupportedSymbolProfile,
   RenderErrorCode,
   RenderTextField,
   RenderTextOwnerKind,
@@ -63,3 +67,17 @@ export type {
   CircuitGroupRequest,
   CircuitFunctionSelector,
 } from "./circuit.js";
+
+export type { PacketCoverage, CoverageEntry } from "./coverage.js";
+
+export type {
+  TopologyCoverage,
+  TopologyRelationEntry,
+  TopologyPortEntry,
+  TopologyAppearance,
+  PortIdentity,
+} from "./topology-coverage.js";
+
+export { describeCodePoint, supportsGlyph } from "./text-metrics.js";
+
+export { unshapedPrintableFont } from "./symbols/font-shaping.js";

@@ -13,7 +13,9 @@ import { join, resolve } from "node:path";
 import { afterEach, expect, it } from "vitest";
 
 const helper = resolve("scripts/library-batch/research-tools.py");
-const python = process.env.THERMITE_RESEARCH_PYTHON ?? "python3";
+const python =
+  process.env.THERMITE_RESEARCH_PYTHON ??
+  (process.platform === "win32" ? "python" : "python3");
 const temporary: string[] = [];
 afterEach(() => {
   for (const path of temporary.splice(0))

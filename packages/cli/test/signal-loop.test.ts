@@ -1,95 +1,29 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import { readFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
-import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { parseHTML } from "linkedom";
 import { afterEach, expect, it } from "vitest";
-import { compileProject, lockProject } from "@thermite/compiler";
 import { buildDocumentation } from "@thermite/query";
 import {
   renderSchematicPacket,
   type SignalLoopViewRequest,
 } from "@thermite/render";
+import { packetPdf } from "../src/alpha-pdf.js";
 import { selectSignalLoop } from "../../render/src/signal-loop.js";
+import {
+  assemblyView,
+  compiled,
+  fixture,
+  LOOP_REJECTIONS,
+  packet,
+  removeFixtures,
+  renderLoopRejection,
+  view,
+} from "./signal-loop.cases.js";
 
-const temporary: string[] = [],
-  exec = promisify(execFile);
-afterEach(async () => {
-  for (const p of temporary.splice(0))
-    await rm(p, { recursive: true, force: true });
-});
-async function fixture() {
-  const p = await mkdtemp(join(tmpdir(), "thermite-loop-"));
-  temporary.push(p);
-  for (const name of ["field-interfaces", "industrial-pilot"])
-    await cp(resolve("libraries", name), join(p, name), { recursive: true });
-  const write = (name: string, value: unknown) =>
-    writeFile(join(p, name), JSON.stringify(value));
-  await write("system.json", {
-    format: "electrical-system/0.1",
-    project: { name: "Pressure hookup fixture" },
-    sources: ["source.json"],
-    libraries: ["field-interfaces", "industrial-pilot"].map((name) => ({
-      name,
-      version: "0.1.0",
-      path: name,
-    })),
-  });
-  const source = JSON.parse(
-    await readFile(
-      resolve("packages/cli/fixtures/signal-loop/source.json"),
-      "utf8",
-    ),
-  );
-  await write("source.json", source);
-  expect((await lockProject(p)).ok).toBe(true);
-  return {
-    p,
-    write,
-    source,
-    cable: source.objects.find((o: any) => o.kind === "cable"),
-  };
-}
-async function compiled(p: string) {
-  const c = await compileProject(p);
-  if (!c.ok) throw new Error(JSON.stringify(c.diagnostics));
-  return c.ir;
-}
-const view: SignalLoopViewRequest = {
-  format: "signal-loop-view-request/0.1",
-  from: { device: "PT1", function: "signal" },
-  to: { device: "AI1", function: "ch0" },
-};
-const assemblyView: SignalLoopViewRequest = {
-  ...view,
-  cableAssemblies: [
-    {
-      cable: "CB1",
-      connector: "M12",
-      description: "4-pole A-coded molded cordset (proposed)",
-    },
-  ],
-  enclosures: [
-    {
-      label: "Main electrical cabinet",
-      devices: ["XP1", "XT1", "AI1"],
-      wallDevice: "XP1",
-    },
-  ],
-};
-const packet = (v: SignalLoopViewRequest = view) => ({
-  format: "schematic-packet-request/0.1" as const,
-  page: {
-    size: "tabloid" as const,
-    orientation:
-      v.flow === "top-to-bottom"
-        ? ("portrait" as const)
-        : ("landscape" as const),
-  },
-  views: [v],
-});
+const exec = promisify(execFile);
+afterEach(removeFixtures);
 
 it("keeps independent feed-through contacts and transmitter terminals on separate physical nets", async () => {
   const f = await fixture(),
@@ -159,52 +93,15 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
   },
 );
 
-it.each([
-  "missing-wire",
-  "branch",
-  "short",
-  "active-spare",
-  "loose-core",
-  "unassigned-core",
-  "extra-active",
-  "spare-branch",
-  "different-chain",
-])("rejects %s without omitting electrical facts", async (problem) => {
-  const f = await fixture(),
-    objects = f.source.objects;
-  const wire = (a: string, ap: string, b: string, bp: string) => ({
-    kind: "wire",
-    uid: randomUUID(),
-    designation: "EXTRA",
-    endpoints: [
-      { device: a, terminal: ap },
-      { device: b, terminal: bp },
-    ],
-  });
-  if (problem === "missing-wire") objects.pop();
-  if (problem === "branch") objects.push(wire("XT1", "1", "XT1", "5"));
-  if (problem === "short") objects.push(wire("XT1", "1", "XT1", "2"));
-  if (problem === "active-spare") f.cable.conductors[0].usage = "spare";
-  if (problem === "loose-core") f.cable.conductors[3].endpoints[1] = null;
-  if (problem === "unassigned-core") f.cable.conductors.pop();
-  if (problem === "extra-active") f.cable.conductors[3].usage = "in-use";
-  if (problem === "spare-branch") objects.push(wire("XP1", "3", "XT1", "5"));
-  if (problem === "different-chain") {
-    const onward = objects.find((o: any) => o.designation === "W4");
-    onward.endpoints[0] = { device: "XP1", terminal: "2" };
-    objects.splice(
-      objects.findIndex((o: any) => o.designation === "W3"),
-      1,
-    );
-  }
-  await f.write("source.json", f.source);
-  const ir = await compiled(f.p);
-  for (const mode of [view, assemblyView]) {
-    const result = await renderSchematicPacket(ir, packet(mode));
-    expect(result.ok).toBe(false);
-    if (!result.ok) expect(result.error.code).toBe("R006");
-  }
-});
+it.each(LOOP_REJECTIONS)(
+  "rejects %s without omitting electrical facts",
+  async (problem) => {
+    for (const result of await renderLoopRejection(problem)) {
+      expect(result.ok).toBe(false);
+      if (!result.ok) expect(result.error.code).toBe("R006");
+    }
+  },
+);
 
 it.each(["left-to-right", "top-to-bottom"] as const)(
   "draws one complete cable assembly with a cabinet wall in %s flow",
@@ -224,6 +121,12 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
     expect(document.querySelectorAll("[data-cable-assembly]")).toHaveLength(1);
     expect(cable.querySelectorAll("path")).toHaveLength(1);
     expect(cable.hasAttribute("data-net-id")).toBe(false);
+    const loopLabels = [...document.querySelectorAll("text")].map(
+      (t) => t.textContent,
+    );
+    expect(loopLabels.filter((value) => value === "unused")).toHaveLength(2);
+    expect(loopLabels).not.toContain("unuse");
+    expect(loopLabels).not.toContain("d");
     const cores = JSON.parse(cable.querySelector("desc")!.textContent!) as {
       id: string;
       net: string;
@@ -433,3 +336,62 @@ it("uses the normal CLI packet output protections and preserves an earlier drawi
   ).rejects.toThrow();
   expect(await readFile(join(f.p, "loop.html"), "utf8")).toBe(before);
 });
+
+const loopRaster = await import("./helpers/pdf-raster.js");
+const loopRasterCases = (["left-to-right", "top-to-bottom"] as const).flatMap(
+  (flow) => ["plain", "assembly"].map((mode) => ({ flow, mode })),
+);
+async function loopRasterPacket(
+  flow: "left-to-right" | "top-to-bottom",
+  mode: string,
+) {
+  const f = await fixture(),
+    ir = await compiled(f.p),
+    result = await renderSchematicPacket(
+      ir,
+      packet({ ...(mode === "assembly" ? assemblyView : view), flow }),
+    );
+  if (!result.ok) throw Error(result.error.message);
+  return result.value;
+}
+it.each(loopRasterCases)(
+  "unconditionally paints both unused labels in PDF: $mode $flow",
+  async ({ flow, mode }) => {
+    const input = await loopRasterPacket(flow, mode),
+      svg = input.sheets[0]!.svg,
+      crops = await loopRaster.svgTextCrops(svg, "unused"),
+      pdf = await packetPdf(input, "Unused labels");
+    expect(crops).toHaveLength(2);
+    expect(svg).not.toContain(">unuse</text>");
+    for (const crop of crops) {
+      const ink = loopRaster.inkBounds(await loopRaster.pdfCrop(pdf, crop));
+      expect(ink.count).toBeGreaterThan(100);
+      expect(ink.left).toBeGreaterThan(0);
+      expect(ink.right).toBeLessThan(Math.ceil((crop.width * 300) / 25.4) - 1);
+    }
+  },
+);
+for (const { flow, mode } of loopRasterCases)
+  it.skipIf(!loopRaster.browserPath)(
+    `paints unused in browser and PDF: ${mode} ${flow}`,
+    async () => {
+      const input = await loopRasterPacket(flow, mode),
+        svg = input.sheets[0]!.svg,
+        browser = await loopRaster.launchBrowser();
+      try {
+        const crops = await loopRaster.svgTextCrops(svg, "unused"),
+          pdf = await packetPdf(input, "Unused labels");
+        for (const crop of crops) {
+          const browserInk = loopRaster.inkBounds(
+              await loopRaster.browserCrop(browser, svg, crop),
+            ),
+            pdfInk = loopRaster.inkBounds(await loopRaster.pdfCrop(pdf, crop));
+          expect(browserInk.count).toBeGreaterThan(100);
+          expect(pdfInk.width / browserInk.width).toBeGreaterThan(0.8);
+          expect(pdfInk.width / browserInk.width).toBeLessThan(1.25);
+        }
+      } finally {
+        await browser.close();
+      }
+    },
+  );

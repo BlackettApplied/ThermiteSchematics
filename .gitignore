@@ -12,6 +12,7 @@ coverage/
 
 # Logs and local scratch
 *.log
+.thermite-schematics-write.lock
 .codex-reviews/
 
 # Editor/OS
@@ -58,3 +59,11 @@ docs/planning/
 # it must stay out of this repository. Tracked here rather than in
 # .git/info/exclude so the rule survives a fresh clone.
 /projects/
+
+# Evaluation transcripts, timings and checkpoint artifacts are local evidence.
+/evals/out/
+
+# Built from docs/topics.json by scripts/build-guide.mjs
+/packages/cli/assets/guide/
+
+/packages/cli/assets/guide-source.json

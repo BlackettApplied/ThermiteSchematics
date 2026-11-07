@@ -1,0 +1,19 @@
+{
+  "id": "T01",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Change PS1 description to \"Pump control supply\". Produce drawings/ps1-loads.pdf showing its loads.",
+  "requiredTopics": [
+    {
+      "topic": "agent-requests",
+      "beforeCommand": "agent"
+    },
+    {
+      "topic": "views",
+      "beforeCommand": "agent"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

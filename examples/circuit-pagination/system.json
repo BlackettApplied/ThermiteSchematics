@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic complete-wire circuit pagination"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "circuit-pagination-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

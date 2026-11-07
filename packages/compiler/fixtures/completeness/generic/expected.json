@@ -1,0 +1,12 @@
+[
+  {
+    "code": "I005",
+    "severity": "info",
+    "message": "Generic connection interface: terminals of an actual part beyond this abstract interface cannot be checked. Reviewed two-point abstract interface; actual-part bonding and additional interfaces are outside this model."
+  },
+  {
+    "code": "I005",
+    "severity": "info",
+    "message": "Generic connection interface: terminals of an actual part beyond this abstract interface cannot be checked. Reviewed two-point abstract interface; actual-part bonding and additional interfaces are outside this model."
+  }
+]

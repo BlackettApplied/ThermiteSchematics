@@ -1,3 +1,4 @@
+import { embedPrintableFont, fontBudgetFailure } from "./printable-font.js";
 import { readFile } from "node:fs/promises";
 import { extname, resolve } from "node:path";
 import { analyzeCompleteness, compileProject } from "@thermite/compiler";
@@ -10,8 +11,10 @@ import {
   reviewProject,
   type DocumentationRequest,
   type ReportKind,
+  type DeviceFilter,
   buildCableSchedule,
   createQueryEngine,
+  auditContinuity,
 } from "@thermite/query";
 import {
   renderSchematicPacket,
@@ -22,6 +25,7 @@ import {
 } from "@thermite/render";
 import { parseJson } from "@thermite/schema";
 import { Command, CommanderError, Option } from "commander";
+import { registerGuideCommand } from "./alpha-guide.js";
 import { runCli } from "./index.js";
 import { initializeAlphaProject } from "./alpha-init.js";
 import { watchAlphaProject } from "./alpha-watch.js";
@@ -34,6 +38,7 @@ interface Flags {
   project: string;
   output?: string;
   json?: boolean;
+  strict?: boolean;
   paper?: PageSettings["size"];
   orientation?: PageSettings["orientation"];
   margin?: string;
@@ -50,6 +55,7 @@ interface Flags {
   device?: string;
   before?: string;
   location?: string;
+  filter?: string;
 }
 async function requestJson(path: string): Promise<unknown> {
   const chunks: Buffer[] = [];
@@ -125,14 +131,19 @@ function viewRequest(root: string, flags: Flags): SchematicViewRequest {
         : { kind: flags.loads ? "loads" : "conductors" },
   };
 }
-function printingOptions(command: Command): Command {
+function printingOptions(command: Command, report = false): Command {
   return command
     .option("--project <directory>", "electrical project directory", ".")
     .option(
       "-o, --output <file>",
-      "write .html, .pdf, single-sheet .svg, or .json",
+      `write ${report ? ".csv, " : ""}.html, .pdf, single-sheet .svg, or .json`,
     )
-    .option("--json", "return all SVG sheets and metadata as JSON")
+    .option(
+      "--json",
+      report
+        ? "return the report packet (SVG sheets and metadata) as JSON"
+        : "return all SVG sheets and metadata as JSON",
+    )
     .addOption(
       new Option("--paper <size>", "override project paper size").choices([
         "tabloid",
@@ -177,6 +188,7 @@ export async function runThermite(argv = process.argv): Promise<number> {
     )
     .version(THERMITE_VERSION)
     .exitOverride();
+  registerGuideCommand(command);
   command
     .command("init <directory>")
     .description("create a project with visible, editable core library files")
@@ -195,10 +207,17 @@ export async function runThermite(argv = process.argv): Promise<number> {
           revision: string;
           template: "starter" | "cabinets";
         },
+        init: Command,
       ) => {
-        await initializeAlphaProject(directory, options);
+        // Commander fills the default name; only an explicit --name names it.
+        const { name, ...rest } = options;
+        await initializeAlphaProject(directory, {
+          ...rest,
+          ...(init.getOptionValueSource("name") === "cli" ? { name } : {}),
+        });
         process.stdout.write(
-          `Initialized ${resolve(directory)} with a local core library.\n`,
+          `Initialized ${resolve(directory)} with a local core library. Read AGENTS.md; ` +
+            "`thermite guide` lists reference topics.\n",
         );
       },
     );
@@ -264,6 +283,71 @@ export async function runThermite(argv = process.argv): Promise<number> {
       process.stderr.write(
         JSON.stringify({ diagnostics: c.diagnostics, error: null }) + "\n",
       );
+    });
+  command
+    .command("continuity")
+    .description(
+      "check declared physical continuity obligations without inferring device behavior",
+    )
+    .option("--project <directory>", "project directory", ".")
+    .requiredOption(
+      "--input <file>",
+      "continuity-check-request/0.1 JSON file, or - for stdin",
+    )
+    .option("--json", "structured physical continuity report")
+    .option("-o, --output <file>", "write .txt or .json")
+    .action(async (flags: Flags) => {
+      const extension = flags.output ? extname(flags.output).toLowerCase() : "";
+      if (flags.output && ![".txt", ".json"].includes(extension))
+        throw new Error("Continuity output must use .txt or .json.");
+      if (flags.json && flags.output && extension !== ".json")
+        throw new Error("--json output must use a .json filename.");
+      const compiled = await compileProject(flags.project);
+      if (!compiled.ok) {
+        process.stderr.write(
+          JSON.stringify({ diagnostics: compiled.diagnostics }) + "\n",
+        );
+        exitCode = compiled.toolFailure ? 2 : 1;
+        return;
+      }
+      let report;
+      try {
+        report = auditContinuity(compiled.ir, await requestJson(flags.input!));
+      } catch (error) {
+        process.stderr.write(
+          JSON.stringify({
+            diagnostics: compiled.diagnostics,
+            error: {
+              code: "Q001",
+              message:
+                error instanceof Error
+                  ? error.message
+                  : "Invalid continuity request.",
+            },
+          }) + "\n",
+        );
+        exitCode = 1;
+        return;
+      }
+      const content =
+        flags.json || extension === ".json"
+          ? JSON.stringify(report, null, 2) + "\n"
+          : `${report.counts.satisfied}/${report.counts.total} physical continuity obligations satisfied; ${report.counts.missingModeledPath} missing modeled paths; ${report.counts.indeterminate} indeterminate\n${report.checks.map((check) => `${check.status.toUpperCase()} ${check.id}: ${check.reason}${check.errors.length ? " - " + check.errors.map((e) => e.error.message).join("; ") : ""}`).join("\n")}\n${report.limitations.join("\n")}\n`;
+      if (flags.output) {
+        await writeAlphaOutput(
+          flags.project,
+          flags.output,
+          content,
+          flags.input === "-" ? [] : [flags.input!],
+          { allowText: true },
+        );
+        process.stdout.write(`Wrote ${resolve(flags.output)}\n`);
+      } else process.stdout.write(content);
+      process.stderr.write(
+        JSON.stringify({ diagnostics: compiled.diagnostics, error: null }) +
+          "\n",
+      );
+      if (!report.passed) exitCode = 1;
     });
   command
     .command("cable <designation>")
@@ -349,17 +433,23 @@ export async function runThermite(argv = process.argv): Promise<number> {
             }),
       } as SchematicPacketRequest;
     }
-    const result = await renderSchematicPacket(
-      compiled.ir,
-      packet ?? {
-        format: "schematic-packet-request/0.1",
-        views: [view!],
-        ...(page ? { page } : {}),
-        ...(flags.layout ? { layout: flags.layout } : {}),
-        ...(flags.index ? { index: true } : {}),
-      },
-      compiled.presentation,
-    );
+    const result =
+      packet === undefined
+        ? await renderSchematicSheets(
+            compiled.ir,
+            view!,
+            compiled.presentation,
+            page,
+            {
+              ...(flags.layout ? { layout: flags.layout } : {}),
+              ...(flags.index ? { index: true } : {}),
+            },
+          )
+        : await renderSchematicPacket(
+            compiled.ir,
+            packet,
+            compiled.presentation,
+          );
     if (!result.ok) {
       process.stderr.write(
         JSON.stringify({
@@ -370,6 +460,17 @@ export async function runThermite(argv = process.argv): Promise<number> {
       exitCode = 1;
       return;
     }
+    const diagnostics = [
+      ...compiled.diagnostics,
+      ...(packet === undefined
+        ? []
+        : (result.value.coverage.diagnostics ?? [])),
+    ];
+    if (flags.strict && diagnostics.some((d) => d.severity === "warning")) {
+      process.stderr.write(JSON.stringify({ diagnostics, error: null }) + "\n");
+      exitCode = 1;
+      return;
+    }
     let content: string | Buffer;
     const extension =
       flags.output === undefined
@@ -377,28 +478,38 @@ export async function runThermite(argv = process.argv): Promise<number> {
         : extname(flags.output).toLowerCase();
     if (flags.json && extension !== undefined && extension !== ".json")
       throw new Error("--json output must use a .json filename.");
-    if (flags.json || extension === ".json")
-      content = JSON.stringify(result.value, null, 2) + "\n";
-    else if (extension === ".svg") {
-      if (result.value.sheets.length !== 1) {
-        process.stderr.write(
-          JSON.stringify({
-            diagnostics: compiled.diagnostics,
-            error: {
-              code: "R006",
-              message: `This view requires ${result.value.sheets.length} sheets. Use .html, .pdf or .json to retain the complete drawing.`,
-            },
-          }) + "\n",
-        );
-        exitCode = 1;
-        return;
-      }
-      content = result.value.sheets[0]!.svg;
-    } else if (extension === ".pdf")
-      content = await packetPdf(result.value, compiled.ir.project.name);
-    else if (extension === ".csv")
-      throw new Error("Use thermite report <kind> to export a CSV schedule.");
-    else content = result.value.html;
+    try {
+      if (flags.json || extension === ".json")
+        content = JSON.stringify(result.value, null, 2) + "\n";
+      else if (extension === ".svg") {
+        if (result.value.sheets.length !== 1) {
+          process.stderr.write(
+            JSON.stringify({
+              diagnostics: compiled.diagnostics,
+              error: {
+                code: "R006",
+                message: `This view requires ${result.value.sheets.length} sheets. Use .html, .pdf or .json to retain the complete drawing.`,
+              },
+            }) + "\n",
+          );
+          exitCode = 1;
+          return;
+        }
+        content = embedPrintableFont(result.value.sheets[0]!.svg);
+      } else if (extension === ".pdf")
+        content = await packetPdf(result.value, compiled.ir.project.name);
+      else if (extension === ".csv")
+        throw new Error("Use thermite report <kind> to export a CSV schedule.");
+      else content = embedPrintableFont(result.value.html);
+    } catch (error) {
+      const failure = fontBudgetFailure(error);
+      if (!failure) throw error;
+      process.stderr.write(
+        JSON.stringify({ diagnostics, error: failure }) + "\n",
+      );
+      exitCode = 1;
+      return;
+    }
     if (flags.output) {
       await writeAlphaOutput(
         flags.project,
@@ -410,9 +521,7 @@ export async function runThermite(argv = process.argv): Promise<number> {
         `Wrote ${result.value.sheets.length} sheet(s) to ${resolve(flags.output)}\n`,
       );
     } else process.stdout.write(content);
-    process.stderr.write(
-      JSON.stringify({ diagnostics: compiled.diagnostics, error: null }) + "\n",
-    );
+    process.stderr.write(JSON.stringify({ diagnostics, error: null }) + "\n");
   }
   printingOptions(
     command
@@ -438,6 +547,10 @@ export async function runThermite(argv = process.argv): Promise<number> {
       .command("packet")
       .description("combine views into consistently numbered printable sheets"),
   )
+    .option(
+      "--strict",
+      "reject packet output when validation or coverage has warnings",
+    )
     .requiredOption(
       "--input <file>",
       "schematic-packet-request/0.1 JSON file, or - for stdin",
@@ -446,13 +559,16 @@ export async function runThermite(argv = process.argv): Promise<number> {
   printingOptions(
     command
       .command("report <kind>")
-      .description(
-        "generate BOM, wire/cable/network schedules, terminal and I/O plans",
-      ),
+      .description(`generate a report; kinds: ${REPORT_KINDS.join(", ")}`),
+    true,
   )
     .option(
       "--device <designation>",
       "limit terminal or I/O report to one device",
+    )
+    .option(
+      "--filter <file>",
+      "device/type/location filter JSON file, or - for stdin",
     )
     .action(async (kind: string, flags: Flags) => {
       if (!REPORT_KINDS.includes(kind as ReportKind))
@@ -461,6 +577,9 @@ export async function runThermite(argv = process.argv): Promise<number> {
         format: "documentation-view-request/0.1",
         kind: kind as ReportKind,
         ...(flags.device ? { device: flags.device } : {}),
+        ...(flags.filter
+          ? { filter: (await requestJson(flags.filter)) as DeviceFilter }
+          : {}),
       };
       if (flags.output?.toLowerCase().endsWith(".csv")) {
         if (flags.json)
@@ -473,14 +592,21 @@ export async function runThermite(argv = process.argv): Promise<number> {
           exitCode = c.toolFailure ? 2 : 1;
           return;
         }
+        const table = buildDocumentation(c.ir, request, undefined, {
+          output: "csv",
+        });
         await writeAlphaOutput(
           flags.project,
           flags.output,
-          documentationCsv(buildDocumentation(c.ir, request)),
+          documentationCsv(table),
         );
         process.stdout.write(`Wrote ${resolve(flags.output)}\n`);
         process.stderr.write(
-          JSON.stringify({ diagnostics: c.diagnostics, error: null }) + "\n",
+          JSON.stringify({
+            diagnostics: c.diagnostics,
+            error: null,
+            ...(table.selection ? { selection: table.selection } : {}),
+          }) + "\n",
         );
       } else await produce(flags, request);
     });
@@ -548,7 +674,9 @@ export async function runThermite(argv = process.argv): Promise<number> {
   printingOptions(
     command
       .command("watch")
-      .description("regenerate a packet after local JSON changes (macOS)"),
+      .description(
+        "regenerate a packet by polling declared inputs and the request",
+      ),
   )
     .requiredOption("--input <file>", "packet request file")
     .action(async (flags: Flags) => {

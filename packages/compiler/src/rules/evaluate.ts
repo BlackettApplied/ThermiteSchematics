@@ -3,6 +3,7 @@ import { normalizeDiagnostics, type Diagnostic } from "@thermite/schema";
 import type { ElectricalIr } from "../ir.js";
 import { createRuleContext } from "./context.js";
 import { ELECTRICAL_RULES } from "./registry.js";
+import { skippedNetChecks } from "./validation-skips.js";
 
 export function evaluateRules(ir: ElectricalIr): Diagnostic[] {
   const context = createRuleContext(ir);
@@ -19,5 +20,8 @@ export function evaluateRules(ir: ElectricalIr): Diagnostic[] {
     }
   }
 
-  return normalizeDiagnostics(diagnostics);
+  return normalizeDiagnostics([
+    ...diagnostics,
+    ...skippedNetChecks(context, diagnostics),
+  ]);
 }

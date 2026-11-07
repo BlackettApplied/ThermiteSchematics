@@ -1,11 +1,11 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
 import type { CommunicationDrawing } from "./communication.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 
 /** A deliberate subset of physical wiring, never an inferred circuit or net short. */
 export interface WiringViewRequest {
@@ -15,7 +15,6 @@ export interface WiringViewRequest {
   readonly notes?: readonly string[];
   readonly deviceOrder?: readonly string[];
 }
-const Constructor = BundledElk as unknown as { new (): ELK };
 const key = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
 const n = (v: number) => String(Number(v.toFixed(3)));
 const width = (s: string) =>
@@ -33,7 +32,7 @@ const width = (s: string) =>
     0,
   );
 const text = (x: number, y: number, s: string, bold = false) =>
-  `<text x="${n(x)}" y="${n(y)}" font-family="Arial, Helvetica, sans-serif" font-size="2.7" font-weight="${bold ? 700 : 400}" fill="#18212b">${xml(s)}</text>`;
+  `<text x="${n(x)}" y="${n(y)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="2.7" font-weight="${bold ? 700 : 400}" fill="#18212b">${xml(s)}</text>`;
 function wrap(s: string, max: number): string[] {
   const lines: string[] = [];
   let line = "";
@@ -233,7 +232,7 @@ export async function prepareWiringDrawing(
       }),
     };
   });
-  const graph: ElkNode = await new Constructor().layout({
+  const graph: ElkNode = await createElkEngine().layout({
     id: "wiring",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -270,7 +269,7 @@ export async function prepareWiringDrawing(
   for (const [i, edge] of (graph.edges ?? []).entries()) {
     if (!edge.sections?.length) throw new Error("Incomplete wiring route.");
     out.push(
-      `<g data-wiring-conductor="${attr(selected[i]!.id)}"><title>${xml(selected[i]!.name + (selected[i]!.detail ? " / " + selected[i]!.detail : ""))}</title>`,
+      `<g data-wiring-conductor="${attr(selected[i]!.id)}" data-endpoints="${attr(JSON.stringify(selected[i]!.ends))}"><title>${xml(selected[i]!.name + (selected[i]!.detail ? " / " + selected[i]!.detail : ""))}</title>`,
     );
     for (const section of edge.sections) {
       const points = [
@@ -492,6 +491,11 @@ export async function prepareWiringDrawing(
     width: graph.width!,
     height: graph.height!,
     references,
+    coverage: {
+      kind: "wiring",
+      conductorIds: selected.map((c) => c.id),
+      functionIds: [],
+    },
     note: [
       "Terminal wiring: device internals are not shown. [ +N ] = other physical connections at that terminal; see wire schedule.",
       ...(request.notes ?? []),

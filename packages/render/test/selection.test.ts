@@ -1074,7 +1074,7 @@ describe("internal LS1-to-PLC trace selection", () => {
       ({ boundaryKind }) => boundaryKind !== "control-source",
     );
     const result = traceResult(ir, true, mappings);
-    expect(result).toEqual({
+    expect(result).toMatchObject({
       ok: false,
       error: {
         code: "R002",
@@ -1131,7 +1131,7 @@ describe("internal LS1-to-PLC trace selection", () => {
     const signalIr = structuredClone(coreIr);
     removeFixtureWire(signalIr, "W-FLD-003");
     const missingSignal = traceResult(signalIr, false);
-    expect(missingSignal).toEqual({
+    expect(missingSignal).toMatchObject({
       ok: false,
       error: {
         code: "R002",
@@ -1145,8 +1145,14 @@ describe("internal LS1-to-PLC trace selection", () => {
         root: "LS1",
       },
     });
-    if (!missingSignal.ok)
+    if (!missingSignal.ok) {
       expect(Object.isFrozen(missingSignal.error)).toBe(true);
+      expect(missingSignal.error.details).toEqual({
+        terminalIds: [
+          { deviceUid: deviceUid(signalIr, "LS1"), terminalKey: "14" },
+        ],
+      });
+    }
 
     const positiveIr = structuredClone(coreIr);
     removeFixtureWire(positiveIr, "W-FLD-002");
@@ -1839,11 +1845,15 @@ describe("selection determinism", () => {
     expect(loadsSelected(shuffled, reversedMappings)).toEqual(baselineLoads);
   });
 
-  it("chooses potential UID lexically last after all other duplicate ties", () => {
+  it("uses authored declaration position as the final potential tie-break", () => {
     const ir = structuredClone(coreIr);
     const original = potential(ir, "0VDC");
     const duplicateUid = "00000000-0000-4000-8000-000000000001";
-    ir.potentials.push({ ...structuredClone(original), uid: duplicateUid });
+    ir.potentials.push({
+      ...structuredClone(original),
+      uid: duplicateUid,
+      source: { ...original.source, jsonPointer: "/objects/4" },
+    });
     required(
       ir.nets.find(({ id }) => id === original.netId),
     ).potentialUids.push(duplicateUid);
@@ -1854,7 +1864,7 @@ describe("selection determinism", () => {
     const first = selected(ir, "K1", "control");
     const firstBoundary = first.paths.find(({ lane }) => lane === "return")!.end
       .boundary!;
-    expect(firstBoundary.potentialUid).toBe(duplicateUid);
+    expect(firstBoundary.potentialUid).toBe(original.uid);
 
     ir.potentials.reverse();
     for (const net of ir.nets) net.potentialUids.reverse();

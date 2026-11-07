@@ -1031,11 +1031,11 @@ describe("D4 complete core symbol mapping", () => {
   });
 
   it("rejects compiled contact-state and channel-direction disagreement", () => {
-    const breaker = mutableType("core:breaker-3p");
-    breaker.functions[0]!.normal_state = "open";
+    const contact = mutableType("core:pushbutton-nc");
+    contact.functions[0]!.normal_state = "open";
     const plc = mutableType("core:plc-compact");
     plc.functions.find(({ key }) => key === "di0")!.direction = "output";
-    for (const changed of [breaker, plc]) {
+    for (const changed of [contact, plc]) {
       const deviceTypes = coreIr.deviceTypes.map((deviceType) =>
         deviceType.id === changed.id ? changed : deviceType,
       );

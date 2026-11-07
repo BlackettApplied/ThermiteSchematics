@@ -1,0 +1,34 @@
+[
+  {
+    "file": "sources/objects.json",
+    "line": 14,
+    "column": 9,
+    "jsonPointer": "/objects/1/endpoints/0",
+    "code": "W303",
+    "severity": "warning",
+    "message": "Net \"net:sha256:cea2adc1e0fabe51f61952325c5f427cf925815fc84bd602e2923d53d197154b\": these declared ratings disagree: N1.ac rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} at ../validation-library/types.json:7:15 /types/0/terminals/ac; N1.dc rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} at ../validation-library/types.json:13:15 /types/0/terminals/dc. No potential declares voltage facts on this net; voltage compatibility is unassessed.",
+    "related": [
+      {
+        "file": "../validation-library/types.json",
+        "line": 7,
+        "column": 15,
+        "note": "Terminal \"N1.ac\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+      },
+      {
+        "file": "../validation-library/types.json",
+        "line": 13,
+        "column": 15,
+        "note": "Terminal \"N1.dc\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+      }
+    ]
+  },
+  {
+    "file": "system.json",
+    "line": 3,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I304",
+    "severity": "info",
+    "message": "Voltage compatibility is unassessed on rated nets without voltage facts in potentials (1 net: [\"N1.ac, N1.dc [net:sha256:cea2adc1e0fabe51f61952325c5f427cf925815fc84bd602e2923d53d197154b]\"]). Ratings describe equipment capability; potentials declare net intent."
+  }
+]

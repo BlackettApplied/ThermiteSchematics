@@ -219,13 +219,33 @@ describe("frozen release workflow topology", () => {
     ]);
     expect(workflow.equals(authority)).toBe(true);
     const text = workflow.toString("utf8");
-    expect(text).toContain("pull_request:");
-    expect(text).toContain("runs-on: macos-15");
-    expect(text).toContain('node-version: "24"');
-    expect(text).toContain("cache: npm");
-    expect(text).toContain("run: npm ci");
-    expect(text).toContain("run: npm run check");
-    expect(text).not.toMatch(/artifact|candidate|pull_request_target/u);
+    expect(text).toContain("pull_request:\n    branches: [release]");
+    expect(text).toContain("push:\n    branches: [release]");
+    expect(text).not.toContain("branches: [dev]");
+    expect(text).toContain(
+      "if: github.ref == 'refs/heads/release' || github.base_ref == 'release'",
+    );
+    expect(text).toContain("permissions:\n  contents: read");
+    expect(text).toContain("persist-credentials: false");
+    expect(text).toContain("runs-on: ${{ matrix.os }}");
+    expect(text).toContain("os: [macos-15, ubuntu-24.04, windows-2022]");
+    expect(text).toContain("oven-sh/setup-bun@v2");
+    expect(text).toContain("bun-version-file: .bun-version");
+    expect(text).toContain("run: bun install --frozen-lockfile");
+    expect(text).toContain("run: bun run check");
+    expect(text).toContain("run: bun run package:pack");
+    expect(text).toContain("--network=none");
+    expect(text).toContain("if: runner.os == 'Linux'");
+    expect(text).toContain(
+      "runtime-${{ runner.os }}-${{ runner.arch }}-${{ github.sha }}",
+    );
+    expect(text).toContain("release-out/runtime/**/*.zip");
+    expect(text).toContain("if-no-files-found: error");
+    // Ordinary CI retains its own runtime outputs, without invoking or
+    // acquiring the frozen private release pipeline's evidence authority.
+    expect(text).not.toMatch(
+      /pull_request_target|run-vitest-and-audit|release-evidence-audit|release-publish\.mjs|THERMITE_SCHEMATICS_RELEASE_/u,
+    );
   });
 
   it("parses the exact protected producer, consumer, and gate graph", async () => {
@@ -240,6 +260,10 @@ describe("frozen release workflow topology", () => {
     const producer = block(text, "release_candidate", 2);
     const acceptance = block(text, "acceptance", 2);
     const gate = block(text, "release_gate", 2);
+    const privateTarget =
+      "github.repository == 'BlackettApplied/ThermiteSchematics' && github.event.repository.private == true && github.event.repository.fork == false && vars.THERMITE_LEGACY_RELEASE == 'true'";
+    expect(producer).toContain(`if: ${privateTarget}`);
+    expect(gate).toContain(`if: always() && ${privateTarget}`);
     expect(producer).toContain("runs-on: ubuntu-24.04");
     expect(producer).toContain("fetch-depth: 0");
     expect(producer).toContain("node-version: 24.11.1");

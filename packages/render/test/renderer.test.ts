@@ -1,9 +1,9 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import {
   evaluateRules,
   type CompiledProjectPresentation,
   type ElectricalIr,
 } from "@thermite/compiler";
-import Elk from "elkjs/lib/elk.bundled.js";
 import type { ELK } from "elkjs/lib/elk-api.js";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +21,7 @@ import {
   incompleteLoadsPathError,
   incompleteTracePathError,
 } from "../src/errors.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { createSchematicRendererWithDependencies } from "../src/renderer.js";
 import { buildPresentationGraph } from "../src/presentation.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
@@ -234,7 +235,7 @@ describe("integrated renderer", () => {
 
   it("attempts layout for the compiler-valid equal-shortest PNP regression deterministically", async () => {
     const ir = pnpParallelTraceFixture(coreIr);
-    expect(evaluateRules(ir)).toEqual([]);
+    expect(evaluateRules(ir)).toEqual(motorDiagnostics);
     const reordered = structuredClone(ir);
     for (const collection of [
       reordered.devices,
@@ -278,7 +279,7 @@ describe("integrated renderer", () => {
 
   it("locks the v23 compiled-context N=2 RIGHT failure and DOWN success across two production runs", async () => {
     const ir = b4CompiledContextN2Fixture(coreIr);
-    expect(evaluateRules(ir)).toEqual([]);
+    expect(evaluateRules(ir)).toEqual(motorDiagnostics);
 
     const plcInput = b4Terminal(ir, "PLC1", "X1.0");
     expect(
@@ -360,7 +361,7 @@ describe("integrated renderer", () => {
       const rawSizes: (readonly [number | undefined, number | undefined])[] =
         [];
       const canonicalOutputs: string[] = [];
-      const delegate = new Elk();
+      const delegate = createElkEngine();
       const renderer = createSchematicRendererWithDependencies({
         layoutEngine: {
           knownLayoutOptions: () => delegate.knownLayoutOptions(),
@@ -398,11 +399,14 @@ describe("integrated renderer", () => {
           [1082.6, 377],
           [1082.6, 377],
         ]);
-        expect(first).toEqual({
+        expect(first).toMatchObject({
           ok: false,
           error: {
             code: "R004",
-            message: `Invalid layout: edges ${boundaryId} and ${wireId} form an ambiguous intersection.`,
+            details: {
+              originalMessage: `Invalid layout: edges ${boundaryId} and ${wireId} form an ambiguous intersection.`,
+            },
+            message: expect.stringContaining("W-FLD-001 (TB1.3"),
             family: "control",
             netId,
             root: "LS1",
@@ -516,12 +520,13 @@ describe("integrated renderer", () => {
       mappings,
       layoutEngine: spy.engine,
     }).render(coreIr, conductorsRequest);
-    expect(result).toEqual({
+    expect(result).toMatchObject({
       ok: false,
       error: {
         code: "R003",
-        message:
-          'Unsupported symbol mapping: type "core:junction-box-8" has no valid control binding.',
+        message: expect.stringContaining(
+          'Unsupported symbol mapping: function "terminal1" on type "core:junction-box-8" has no valid control binding. Device "JB1", function "terminal1".',
+        ),
         family: "control",
         deviceUid: jb1.uid,
         typeId: "core:junction-box-8",
@@ -608,7 +613,13 @@ describe("integrated renderer", () => {
       const result = await createSchematicRendererWithDependencies({
         layoutEngine: spy.engine,
       }).render(ir, testCase.request);
-      expect(result).toEqual({ ok: false, error: expected });
+      expect(result).toMatchObject({
+        ok: false,
+        error: {
+          ...expected,
+          message: expect.stringContaining(expected.message),
+        },
+      });
       if (!result.ok) expect(Object.isFrozen(result.error)).toBe(true);
       expect(spy.knownLayoutOptions).not.toHaveBeenCalled();
       expect(spy.layout).not.toHaveBeenCalled();
@@ -616,7 +627,7 @@ describe("integrated renderer", () => {
   });
 
   it("returns exact v0.2 R004 without emitting an artifact", async () => {
-    const delegate = new Elk();
+    const delegate = createElkEngine();
     const layout = vi.fn(async () => ({ id: "root" }));
     const result = await createSchematicRendererWithDependencies({
       layoutEngine: {
@@ -1012,7 +1023,9 @@ describe("M8 opaque canvas and deterministic title block", () => {
       )) {
         expect(attribute(titleLine, "fill")).toBe("#101828");
         expect(attribute(titleLine, "dominant-baseline")).toBe("hanging");
-        expect(attribute(titleLine, "lengthAdjust")).toBe("spacingAndGlyphs");
+        if (titleLine.includes("textLength="))
+          expect(attribute(titleLine, "lengthAdjust")).toBe("spacingAndGlyphs");
+        else expect(titleLine).not.toContain("lengthAdjust=");
         expect(titleLine).not.toMatch(/opacity|filter|mask/u);
       }
       expect(contrast("#101828", "#ffffff")).toBeGreaterThanOrEqual(4.5);

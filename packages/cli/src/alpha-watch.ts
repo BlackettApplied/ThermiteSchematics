@@ -77,7 +77,7 @@ export async function watchAlphaProject(
     process.on("SIGINT", stop);
     process.on("SIGTERM", stop);
     process.stderr.write(
-      "Checking declared source, libraries and the request every second. Refresh the HTML after a successful rebuild. Failed builds preserve the last successful output; diagnostics remain on stderr. Ctrl+C stops.\n",
+      "Polling declared source, libraries and the request one second after each run finishes. Refresh the HTML after a successful rebuild. Failed builds preserve the last successful output; diagnostics remain on stderr. Ctrl+C stops.\n",
     );
     active = generate().then(() => {
       if (!stopped)

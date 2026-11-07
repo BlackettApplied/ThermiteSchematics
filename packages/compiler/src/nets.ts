@@ -1,3 +1,4 @@
+import { compareConductiveElementId } from "./ordering.js";
 import { createHash } from "node:crypto";
 
 import type { ExpansionResult } from "./expansion.js";
@@ -30,40 +31,6 @@ function compareTerminalId(left: TerminalId, right: TerminalId): number {
   return (
     compareText(left.deviceUid, right.deviceUid) ||
     compareText(left.terminalKey, right.terminalKey)
-  );
-}
-
-const conductiveKindOrder: Record<ConductiveElementId["kind"], number> = {
-  wire: 0,
-  jumper: 1,
-  cable_conductor: 2,
-};
-
-function compareConductiveElementId(
-  left: ConductiveElementId,
-  right: ConductiveElementId,
-): number {
-  const kindOrder =
-    conductiveKindOrder[left.kind] - conductiveKindOrder[right.kind];
-
-  if (kindOrder !== 0) {
-    return kindOrder;
-  }
-
-  if (left.kind === "cable_conductor") {
-    const rightConductor = right as Extract<
-      ConductiveElementId,
-      { kind: "cable_conductor" }
-    >;
-    return (
-      compareText(left.cableUid, rightConductor.cableUid) ||
-      compareText(left.conductorId, rightConductor.conductorId)
-    );
-  }
-
-  return compareText(
-    left.uid,
-    (right as Extract<ConductiveElementId, { kind: typeof left.kind }>).uid,
   );
 }
 

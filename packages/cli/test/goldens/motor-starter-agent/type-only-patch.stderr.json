@@ -5,7 +5,7 @@
     {
       "code": "E102",
       "severity": "error",
-      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"13\".",
+      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"13\". Declared terminal keys: [\"1\", \"3\", \"4\"].",
       "file": "connections/field-terminations.json",
       "line": 24,
       "column": 40,
@@ -18,12 +18,27 @@
           "column": 13,
           "note": "Resolved device type \"core:prox-pnp-3wire\" is declared here."
         }
-      ]
+      ],
+      "allowed": [
+        "1",
+        "3",
+        "4"
+      ],
+      "allowedCount": 3
+    },
+    {
+      "file": "connections/field-terminations.json",
+      "line": 24,
+      "column": 40,
+      "jsonPointer": "/objects/1/endpoints/1/terminal",
+      "code": "I208",
+      "severity": "info",
+      "message": "Checks not completed: resolution gate (E102); skipped W111 and rules E200, E201, E300, E301, E302, W902, E202, E203, E204, E207, E205, E206, W903, W904, W905, W303, I304, I305 for the whole project. Blocking objects/locations (2 items: [\"uid 4f3f64e8-af7c-4b5d-9cbc-250368ad3e75 at connections/field-terminations.json:24:40 /objects/1/endpoints/1/terminal\", \"uid c2dccef7-ec9d-48dc-b58b-6e0dd990dd51 at connections/field-terminations.json:37:40 /objects/2/endpoints/0/terminal\"]); net IDs are unavailable before trustworthy IR exists."
     },
     {
       "code": "E102",
       "severity": "error",
-      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"14\".",
+      "message": "Device \"LS1\" of type \"core:prox-pnp-3wire\" has no terminal \"14\". Declared terminal keys: [\"1\", \"3\", \"4\"].",
       "file": "connections/field-terminations.json",
       "line": 37,
       "column": 40,
@@ -36,7 +51,13 @@
           "column": 13,
           "note": "Resolved device type \"core:prox-pnp-3wire\" is declared here."
         }
-      ]
+      ],
+      "allowed": [
+        "1",
+        "3",
+        "4"
+      ],
+      "allowedCount": 3
     }
   ],
   "error": null

@@ -291,7 +291,7 @@ async function trackedAssetEntries(
     ]);
     if (!rootLicense.equals(coreLicense)) {
       throw new Error(
-        "Core-library LICENSE differs from root proprietary authority.",
+        "Core-library LICENSE differs from root license authority.",
       );
     }
     for (const { path } of await enumerateTree(

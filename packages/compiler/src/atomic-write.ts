@@ -17,6 +17,8 @@ export interface AtomicWriteOperations {
 }
 
 export interface AtomicWriteOptions {
+  /** Recheck a caller-owned path/content guard before opening and replacing. */
+  validateDestination?: () => Promise<void>;
   operations?: AtomicWriteOperations;
   maxCollisionRetries?: number;
   temporaryPath?: (destinationPath: string, attempt: number) => string;
@@ -85,6 +87,7 @@ export async function writeFileAtomically(
 
     let handle: AtomicWritableFile;
 
+    await options.validateDestination?.();
     try {
       handle = await operations.open(temporaryPath, "wx");
     } catch (error) {
@@ -102,6 +105,7 @@ export async function writeFileAtomically(
       await handle.writeFile(bytes);
       await handle.close();
       handleOpen = false;
+      await options.validateDestination?.();
       await operations.rename(temporaryPath, destinationPath);
       return;
     } catch (error) {

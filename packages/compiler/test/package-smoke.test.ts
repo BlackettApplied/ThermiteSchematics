@@ -1,3 +1,6 @@
+import { formatHumanDiagnostics } from "../../cli/src/index.js";
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
+import { embedPrintableFont } from "../../cli/src/printable-font.js";
 import { execFile } from "node:child_process";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -19,19 +22,6 @@ const agentToolsRoot = join(repositoryRoot, "packages", "agent-tools");
 const cliRoot = join(repositoryRoot, "packages", "cli");
 const motorProject = join(repositoryRoot, "examples", "motor-starter");
 const rendererGoldenRoot = join(renderRoot, "test", "goldens", "motor-starter");
-const npmCommand = process.platform === "win32" ? process.execPath : "npm";
-const npmArgumentPrefix =
-  process.platform === "win32"
-    ? [
-        join(
-          dirname(process.execPath),
-          "node_modules",
-          "npm",
-          "bin",
-          "npm-cli.js",
-        ),
-      ]
-    : [];
 
 async function run(
   command: string,
@@ -46,29 +36,13 @@ async function run(
   });
 }
 
-async function pack(
-  source: string,
-  destination: string,
-  cwd: string,
-): Promise<string> {
+async function pack(source: string, destination: string): Promise<string> {
   const { stdout } = await run(
-    npmCommand,
-    [
-      ...npmArgumentPrefix,
-      "pack",
-      source,
-      "--pack-destination",
-      destination,
-      "--json",
-      "--ignore-scripts",
-    ],
-    cwd,
+    process.execPath,
+    ["pm", "pack", "--destination", destination, "--quiet", "--ignore-scripts"],
+    source,
   );
-  const result = JSON.parse(stdout) as Array<{ filename: string }>;
-  if (result.length !== 1 || result[0] === undefined) {
-    throw new Error(`Unexpected npm pack result: ${stdout}`);
-  }
-  return join(destination, result[0].filename);
+  return resolve(destination, stdout.trim());
 }
 
 function isChildProcessDenied(error: unknown): boolean {
@@ -179,23 +153,54 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
         let tarballs: string[];
         try {
           tarballs = [
-            await pack(schemaRoot, packDirectory, temporaryRoot),
-            await pack(coreLibraryRoot, packDirectory, temporaryRoot),
-            await pack(packageRoot, packDirectory, temporaryRoot),
-            await pack(queryRoot, packDirectory, temporaryRoot),
-            await pack(renderRoot, packDirectory, temporaryRoot),
-            await pack(agentToolsRoot, packDirectory, temporaryRoot),
-            await pack(cliRoot, packDirectory, temporaryRoot),
+            await pack(schemaRoot, packDirectory),
+            await pack(coreLibraryRoot, packDirectory),
+            await pack(packageRoot, packDirectory),
+            await pack(queryRoot, packDirectory),
+            await pack(renderRoot, packDirectory),
+            await pack(agentToolsRoot, packDirectory),
+            await pack(cliRoot, packDirectory),
           ];
+          // Bun resolves transitive semver references independently of tarball
+          // arguments. Pin every private workspace to its packed artifact so the
+          // isolated consumer never tries to fetch @thermite packages from npm.
+          const packedRoots = [
+            schemaRoot,
+            coreLibraryRoot,
+            packageRoot,
+            queryRoot,
+            renderRoot,
+            agentToolsRoot,
+            cliRoot,
+          ];
+          const overrides = Object.fromEntries(
+            await Promise.all(
+              packedRoots.map(async (root, index) => {
+                const manifest = JSON.parse(
+                  await readFile(join(root, "package.json"), "utf8"),
+                );
+                return [manifest.name, `file:${tarballs[index]}`];
+              }),
+            ),
+          );
+          await writeFile(
+            join(consumerDirectory, "package.json"),
+            JSON.stringify({
+              name: "compiler-package-smoke-consumer",
+              private: true,
+              type: "module",
+              overrides,
+            }),
+            "utf8",
+          );
           await run(
-            npmCommand,
+            process.execPath,
             [
-              ...npmArgumentPrefix,
               "install",
               "--ignore-scripts",
-              "--no-audit",
-              "--no-fund",
-              "--package-lock=false",
+              "--no-save",
+              "--backend=copyfile",
+              "--linker=hoisted",
               ...tarballs,
             ],
             consumerDirectory,
@@ -226,23 +231,28 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           'if (JSON.stringify(coreLibraryPackage.SHIPPED_CORE_FILE_INVENTORY) !== JSON.stringify(["library/library.json","library/types/breaker-3p.json","library/types/cable-2pair-shielded.json","library/types/contactor-3p-1no.json","library/types/junction-box-8.json","library/types/limit-switch-2wire.json","library/types/motor-3ph.json","library/types/overload-3p-1nc.json","library/types/plc-compact.json","library/types/prox-pnp-3wire.json","library/types/psu-24vdc.json","library/types/pushbutton-nc.json","library/types/supply-480v-3ph.json","library/types/terminal-block-8.json"])) throw new Error("packed core inventory mismatch");',
           "const shippedCore = coreLibraryPackage.resolveShippedCoreLibrary();",
           "const shippedCoreTopLevel = (await readPackedDirectory(shippedCore.packageRootPath)).sort();",
-          'if (JSON.stringify(shippedCoreTopLevel) !== JSON.stringify(["LICENSE","README.md","dist","library","package.json"])) throw new Error("packed core top-level files mismatch");',
+          'if (JSON.stringify(shippedCoreTopLevel) !== JSON.stringify(["LICENSE","NOTICE","README.md","dist","library","package.json","versions"])) throw new Error("packed core top-level files mismatch");',
           "for (const path of coreLibraryPackage.SHIPPED_CORE_FILE_INVENTORY) { const asset = shippedCore.packageRootPath + '/' + path; const stats = await lstatPacked(asset); if (!stats.isFile() || stats.isSymbolicLink()) throw new Error('packed core asset is not ordinary: ' + path); await readPackedFile(asset); }",
+          'if (JSON.stringify(Object.keys(coreLibraryPackage.SHIPPED_CORE_VERSIONS)) !== JSON.stringify(["0.1.0", "0.2.0"])) throw new Error("packed core versions mismatch");',
+          'for (const [version, entry] of Object.entries(coreLibraryPackage.SHIPPED_CORE_VERSIONS)) { const resolution = coreLibraryPackage.resolveShippedCoreLibraryVersion(version); if (resolution.locator !== `ais-shipped:core@${version}` || entry.fileInventory.length !== (version === "0.1.0" ? 14 : 34)) throw new Error("packed version identity mismatch"); const manifest = JSON.parse(await readPackedFile(resolution.libraryRootPath + "/library.json", "utf8")); if (manifest.version !== version) throw new Error("packed manifest version mismatch"); for (const path of entry.fileInventory) { const asset = resolution.packageRootPath + "/" + path; const stats = await lstatPacked(asset); if (!stats.isFile() || stats.isSymbolicLink()) throw new Error("nonordinary packed version file " + path); await readPackedFile(asset); } }',
+          // Prove each blocked subpath exists in the installed payload. Bun uses
+          // ERR_MODULE_NOT_FOUND for both missing files and unexported subpaths.
+          'for (const subpath of ["core-library/dist/index.js", "agent-tools/dist/common/errors.js", "schema/dist/parser.js", "compiler/dist/loader.js", "query/dist/ordering.js", "render/dist/renderer.js", "cli/dist/agent-command.js"]) { const target = new URL("./node_modules/@thermite/" + subpath, import.meta.url); const stats = await lstatPacked(target); if (!stats.isFile() || stats.isSymbolicLink()) throw new Error("blocked export probe target is not an ordinary file: " + subpath); }',
           "let coreDeepImportBlocked = false;",
-          'try { await import("@thermite/core-library/anything"); } catch (error) { coreDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/core-library/dist/index.js"); } catch (error) { coreDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!coreDeepImportBlocked) throw new Error("core-library deep subpath leaked");',
           'if (agentToolsPackage.AGENT_TOOLS_VERSION !== "agent-tools/0.1") throw new Error("packed agent-tools version mismatch");',
           'const agentReport = agentToolsPackage.serializeAgentToolReport("validate", [], null);',
           'if (agentReport !== "{\\n  \\"format\\": \\"agent-tool-report/0.1\\",\\n  \\"tool\\": \\"validate\\",\\n  \\"diagnostics\\": [],\\n  \\"error\\": null\\n}\\n") throw new Error("packed agent report bytes mismatch");',
           'if (typeof agentToolsPackage.createAgentTools !== "function" || typeof agentToolsPackage.serializeAgentToolResult !== "function") throw new Error("complete agent surface missing");',
           "let agentToolsDeepImportBlocked = false;",
-          'try { await import("@thermite/agent-tools/common/errors"); } catch (error) { agentToolsDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/agent-tools/dist/common/errors.js"); } catch (error) { agentToolsDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!agentToolsDeepImportBlocked) throw new Error("agent-tools deep subpath leaked");',
           "let schemaDeepImportBlocked = false;",
-          'try { await import("@thermite/schema/parser"); } catch (error) { schemaDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/schema/dist/parser.js"); } catch (error) { schemaDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!schemaDeepImportBlocked) throw new Error("schema deep subpath leaked");',
           "let compilerDeepImportBlocked = false;",
-          'try { await import("@thermite/compiler/loader"); } catch (error) { compilerDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/compiler/dist/loader.js"); } catch (error) { compilerDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!compilerDeepImportBlocked) throw new Error("compiler deep subpath leaked");',
           "const empty = await compileProject();",
           'if (!empty.ok) throw new Error("packed empty compile failed");',
@@ -253,13 +263,13 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           'if ("shortestConductivePath" in queryPackage) throw new Error("private path helper leaked");',
           'if ("compareText" in queryPackage || "compareTerminalView" in queryPackage) throw new Error("private ordering helper leaked");',
           "let queryDeepImportBlocked = false;",
-          'try { await import("@thermite/query/ordering"); } catch (error) { queryDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/query/dist/ordering.js"); } catch (error) { queryDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!queryDeepImportBlocked) throw new Error("query deep subpath leaked");',
           "let renderDeepImportBlocked = false;",
-          'try { await import("@thermite/render/renderer"); } catch (error) { renderDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/render/dist/renderer.js"); } catch (error) { renderDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!renderDeepImportBlocked) throw new Error("render deep subpath leaked");',
           "let cliDeepImportBlocked = false;",
-          'try { await import("@thermite/cli/agent-command"); } catch (error) { cliDeepImportBlocked = error?.code === "ERR_PACKAGE_PATH_NOT_EXPORTED"; }',
+          'try { await import("@thermite/cli/dist/agent-command.js"); } catch (error) { cliDeepImportBlocked = ["ERR_PACKAGE_PATH_NOT_EXPORTED", "ERR_MODULE_NOT_FOUND"].includes(error?.code); }',
           'if (!cliDeepImportBlocked) throw new Error("CLI deep subpath leaked");',
           'if (renderPackage.RENDERER_VERSION !== "render/0.3") throw new Error("packed renderer version mismatch");',
           'if (renderPackage.SYMBOL_CATALOG_VERSION !== "ais-symbols/0.3") throw new Error("packed symbol catalog version mismatch");',
@@ -374,16 +384,20 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
             "RENDERER_VERSION",
             "SYMBOL_CATALOG_VERSION",
             "createSchematicRenderer",
+            "describeCodePoint",
             "normalizePaperPage",
             "printPacketHtml",
             "renderSchematic",
             "renderSchematicPacket",
             "renderSchematicSheets",
+            "supportsGlyph",
+            "unshapedPrintableFont",
           ],
           rendererVersion: "render/0.3",
           symbolCatalogVersion: "ais-symbols/0.3",
           layoutConfigVersion: "elk-layered/0.4+elkjs-0.12.0",
           agentToolsRuntimeExports: [
+            "AGENT_REQUEST_VOCABULARY",
             "AGENT_TOOLS_VERSION",
             "createAgentTools",
             "serializeAgentToolReport",
@@ -524,7 +538,7 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           },
         });
         expect(JSON.parse(queryCli.stderr)).toEqual({
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           error: null,
         });
 
@@ -545,7 +559,10 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
             ],
             consumerDirectory,
           );
-          expect(rawRender).toEqual({ stdout: expected.svg, stderr: "" });
+          expect(rawRender).toEqual({
+            stdout: expected.svg,
+            stderr: `${formatHumanDiagnostics(motorDiagnostics)}\n`,
+          });
         }
 
         const jsonRender = await run(
@@ -573,7 +590,7 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           },
         });
         expect(JSON.parse(jsonRender.stderr)).toEqual({
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           error: null,
         });
 
@@ -606,11 +623,11 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           },
         });
         expect(JSON.parse(fileRender.stderr)).toEqual({
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           error: null,
         });
         expect(await readFile(join(consumerDirectory, output), "utf8")).toBe(
-          apiResult.power.svg,
+          embedPrintableFont(apiResult.power.svg),
         );
 
         const installedViewCases = [
@@ -632,7 +649,10 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
             [installedCli, "view", ...args, "--project", motorProject],
             consumerDirectory,
           );
-          expect(rawView).toEqual({ stdout: expected.svg, stderr: "" });
+          expect(rawView).toEqual({
+            stdout: expected.svg,
+            stderr: `${formatHumanDiagnostics(motorDiagnostics)}\n`,
+          });
         }
 
         const jsonView = await run(
@@ -661,7 +681,7 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           },
         });
         expect(JSON.parse(jsonView.stderr)).toEqual({
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           error: null,
         });
 
@@ -693,12 +713,12 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           },
         });
         expect(JSON.parse(fileView.stderr)).toEqual({
-          diagnostics: [],
+          diagnostics: motorDiagnostics,
           error: null,
         });
         expect(
           await readFile(join(consumerDirectory, viewOutput), "utf8"),
-        ).toBe(apiResult.loads.svg);
+        ).toBe(embedPrintableFont(apiResult.loads.svg));
 
         const appliedPatchFile = apiResult.agentRuntime.apply.files[0] as
           { afterIntegrity: string } | undefined;
@@ -794,7 +814,8 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           expect(JSON.parse(invocation.stderr)).toEqual({
             format: "agent-tool-report/0.1",
             tool: entry.tool,
-            diagnostics: [],
+            diagnostics:
+              entry.tool === "apply-source-patch" ? [] : motorDiagnostics,
             error: null,
           });
           expect(invocation.stdout + invocation.stderr).not.toContain(
@@ -837,12 +858,12 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
           join(consumerDirectory, "consumer.ts"),
           [
             'import { compareConductiveElementId, compileLoadedProject, evaluateRules, serializeIr, type CompileResult, type ConductiveElementId, type ElectricalIr, type M3RuleId } from "@thermite/compiler";',
-            'import { SHIPPED_CORE_FILE_INVENTORY, SHIPPED_CORE_LIBRARY_LOCATOR, resolveShippedCoreLibrary, type ShippedCoreLibraryResolution } from "@thermite/core-library";',
+            'import { SHIPPED_CORE_FILE_INVENTORY, SHIPPED_CORE_LIBRARY_LOCATOR, resolveShippedCoreLibrary, resolveShippedCoreLibraryVersion, type ShippedCoreLibraryResolution } from "@thermite/core-library";',
             'import { type RenderCommandJsonResult, type RenderCommandReport } from "@thermite/cli";',
             'import { InvalidElectricalIrError, createQueryEngine, serializeQueryResult, type CableConductorView, type CableResult, type ConductiveEdgeView, type ConductiveElementView, type ConductiveNeighbor, type DeviceView, type FunctionView, type GangedGroupView, type IncidentProjectRelationView, type InspectedObject, type InspectedTerminalView, type InspectResult, type InternalRelationView, type NeighborsResult, type NetResult, type NetSummaryView, type ObjectSelector, type PotentialView, type ProjectObjectKind, type ProjectObjectView, type ProjectRelationView, type QueryCommandResult, type QueryEngine, type QueryError, type QueryErrorCode, type QueryResult, type RelationNeighbor, type TerminalSelector, type TerminalView, type TraceComponent, type TraceResult, type TraceVisit } from "@thermite/query";',
             'import { LAYOUT_CONFIG_VERSION, RENDERER_VERSION, SYMBOL_CATALOG_VERSION, createSchematicRenderer, renderSchematic, type DemonstrationViewIntent, type IncompletePathError, type IntentSchematicViewRequest, type InvalidLayoutError, type InvalidRenderTextError, type InvalidViewRequestError, type LegacySchematicViewRequest, type NormalizedIntentSchematicView, type NormalizedLegacySchematicView, type NormalizedSchematicView, type RenderError, type RenderErrorBase, type RenderErrorCode, type RenderFailure, type RenderOutcome, type RenderSummary, type RenderTextField, type RenderTextOwnerKind, type RenderTextReason, type RenderedSchematic, type RequestedBooleanInput, type RequestedFamilyInput, type RequestedFlowInput, type RequestedFormatInput, type RequestedIntentInput, type RequestedRootInput, type RequestedStringInput, type RuntimeInputType, type SchematicFlow, type SchematicRenderer, type SchematicViewFamily, type SchematicViewRequest, type UnsupportedSymbolMappingError } from "@thermite/render";',
             'import type { Diagnostic } from "@thermite/schema";',
-            'import { AGENT_TOOLS_VERSION, createAgentTools, serializeAgentToolReport, serializeAgentToolResult, type A001Error, type A001Reason, type A002Error, type A002Reason, type A003Error, type A003Reason, type A004Error, type AgentToolError, type AgentToolErrorCode, type AgentToolFailure, type AgentToolJsonReport, type AgentToolJsonResult, type AgentToolName, type AgentToolOutcome, type AgentToolRequestBase, type AgentToolValueByName, type AgentTools, type AppliedSourceFile, type ApplySourcePatchRequest, type ApplySourcePatchValue, type CreateAgentToolsOptions, type DeepReadonly, type ExecuteGraphQueryRequest, type GraphQueryValue, type JsonPrimitive, type JsonValue, type SourceFilePatch, type SourcePatchOperation, type ValidateProjectRequest, type ValidateProjectValue } from "@thermite/agent-tools";',
+            'import { AGENT_TOOLS_VERSION, createAgentTools, serializeAgentToolReport, serializeAgentToolResult, type A001Error, type A001Reason, type A002Error, type A002Reason, type A003Error, type A003Reason, type A004Error, type A005Error, type ProjectWriteOwner, type ProjectWriteOwnerState, type AgentToolError, type AgentToolErrorCode, type AgentToolFailure, type AgentToolJsonReport, type AgentToolJsonResult, type AgentToolName, type AgentToolOutcome, type AgentToolRequestBase, type AgentToolValueByName, type AgentTools, type AppliedSourceFile, type ApplySourcePatchRequest, type ApplySourcePatchValue, type CreateAgentToolsOptions, type DeepReadonly, type ExecuteGraphQueryRequest, type GraphQueryValue, type JsonPrimitive, type JsonValue, type SourceFilePatch, type SourcePatchOperation, type ValidateProjectRequest, type ValidateProjectValue } from "@thermite/agent-tools";',
             'import type { CreateViewRequest, InspectObjectRequest, InspectResult as AgentInspectResult, ProjectObjectView as AgentProjectObjectView, RenderedSchematic as AgentRenderedSchematic, ResolveObjectsRequest, ResolveObjectsValue, SearchMatch, SearchMatchField, SearchMatchKind } from "@thermite/agent-tools";',
             "// @ts-expect-error Schema package exports intentionally block implementation subpaths.",
             'import type { JsonObject } from "@thermite/schema/parser";',
@@ -867,6 +888,9 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
             'const agentToolsVersion: "agent-tools/0.1" = AGENT_TOOLS_VERSION;',
             'const shippedCoreLocator: "ais-shipped:core@0.1.0" = SHIPPED_CORE_LIBRARY_LOCATOR;',
             "const shippedCoreResolution: ShippedCoreLibraryResolution = resolveShippedCoreLibrary();",
+            'const originalResolutionLocator: "ais-shipped:core@0.1.0" = shippedCoreResolution.locator;',
+            'const nextCoreResolution: ShippedCoreLibraryResolution<string> | undefined = resolveShippedCoreLibraryVersion("0.2.0");',
+
             "void SHIPPED_CORE_FILE_INVENTORY;",
             "void shippedCoreLocator;",
             "void shippedCoreResolution;",
@@ -1033,6 +1057,10 @@ describe("packed schema, core-library, compiler, query, render, agent-tools, and
             "declare const a002Error: A002Error;",
             "declare const a003Error: A003Error;",
             "declare const a004Error: A004Error;",
+            'const reservationErrorCode: AgentToolErrorCode = "A005";',
+            "declare const reservationError: A005Error;",
+            "const reservationOwner: ProjectWriteOwner | null = reservationError.owner;",
+            "const reservationOwnerState: ProjectWriteOwnerState = reservationError.ownerState;",
             "declare const agentFailure: AgentToolFailure;",
             "declare const readonlyTuple: DeepReadonly<[{ value: string }, string[]]>;",
             "// @ts-expect-error DeepReadonly preserves tuple shape and freezes nested members.",
