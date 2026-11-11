@@ -452,6 +452,8 @@ export async function prepareCommunicationPages(
   ir: Readonly<ElectricalIr>,
   request: CommunicationViewRequest,
   fits: (drawing: CommunicationDrawing) => boolean,
+  unfit = (_drawing: CommunicationDrawing, message: string): Error =>
+    new Error(message),
 ): Promise<CommunicationDrawing[]> {
   // A malformed original layout must fail before attempting smaller parts.
   const full = await prepareCommunicationDrawing(ir, request);
@@ -503,18 +505,32 @@ export async function prepareCommunicationPages(
   let current: Unit[] = [];
   for (const unit of units) {
     const candidate = [...current, unit];
-    if (fits(await draw(candidate, widestPart, widestPart, trialAppearances))) {
+    const trial = await draw(
+      candidate,
+      widestPart,
+      widestPart,
+      trialAppearances,
+    );
+    if (fits(trial)) {
       current = candidate;
       continue;
     }
     if (!current.length)
-      throw new Error(
+      throw unfit(
+        trial,
         "A complete communication link or device and its references cannot fit at readable size; use larger paper or shorter labels.",
       );
     parts.push(current);
     current = [unit];
-    if (!fits(await draw(current, widestPart, widestPart, trialAppearances)))
-      throw new Error(
+    const single = await draw(
+      current,
+      widestPart,
+      widestPart,
+      trialAppearances,
+    );
+    if (!fits(single))
+      throw unfit(
+        single,
         "A complete communication link or device and its references cannot fit at readable size; use larger paper or shorter labels.",
       );
   }
@@ -528,11 +544,20 @@ export async function prepareCommunicationPages(
   for (const [i, items] of parts.entries()) {
     const drawing = await draw(items, i + 1, parts.length, appearances);
     if (!fits(drawing))
-      throw new Error(
+      throw unfit(
+        drawing,
         "A communication pagination part exceeds the readable sheet bounds.",
       );
     drawings.push(drawing);
   }
+  assertCommunicationPageCoverage(drawings, original);
+  return drawings;
+}
+
+function assertCommunicationPageCoverage(
+  drawings: CommunicationDrawing[],
+  original: NonNullable<CommunicationDrawing["topologyCoverage"]>,
+) {
   const equal = (a: readonly string[], b: readonly string[]) =>
     JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
   const coverage = drawings.map((d) => d.topologyCoverage!);
@@ -555,7 +580,6 @@ export async function prepareCommunicationPages(
     throw new Error(
       "Communication pagination did not conserve the original selection.",
     );
-  return drawings;
 }
 
 function communicationPorts(

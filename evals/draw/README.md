@@ -401,6 +401,12 @@ an eligible historical report can still serve as the baseline. Renderer and
 checker lanes must finish before the shared target is captured. Do not re-pin
 the new identifier predicate as an accepted defect.
 
+Rows carrying `data-tag-field` are primary text even inside a circuit relation
+or reference group: designation requires 2.7 mm em and every other tag field
+2.5 mm. The circuit-only 2.3 mm secondary-reference allowance never applies to
+a tag row. This classification correction changes the complete checker bundle
+hash; capture a fresh target under the existing 4.4 report protocol.
+
 ## Marker identity, drift and updates
 
 Markers pin DQ, source family, stable locator, defect kind and check, with exact

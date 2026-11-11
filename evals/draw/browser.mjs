@@ -149,7 +149,7 @@ export function measureSheet(options = {}) {
   const tagIdentity = (e) => {
     const owner = attr(e, "data-tag-owner-uid"),
       kind = attr(e, "data-tag-kind");
-    if (!owner) return {};
+    if (!owner) return { tagField: attr(e, "data-tag-field") };
     let terminal;
     try {
       terminal = JSON.parse(attr(e, "data-tag-terminal-id") ?? "null");

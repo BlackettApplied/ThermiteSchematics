@@ -189,6 +189,8 @@ export async function prepareWiringDrawing(
   const children: ElkNode[] = ordered.map((uid) => {
     const d = devices.get(uid)!,
       type = types.get(d.typeId)!;
+    // Retain validation of authored type text even when an instance overrides it.
+    xml(type.description ?? "");
     const tag = drawingDeviceTag(d, type, 48);
     tags.set(uid, tag);
     const nodeWidth = tag.widthMm;

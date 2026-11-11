@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
 import { launch, drawingContextOptions, openSheet } from "./browser.mjs";
-import { deviceTags } from "./checks.mjs";
+import { deviceTags, legibility } from "./checks.mjs";
+import { classifyTextGeometry } from "./text-classification.mjs";
 import { evaluateSheet } from "./evaluate.mjs";
 let browser, context, page;
 beforeAll(async () => {
@@ -42,6 +43,50 @@ const full = () =>
   text("part", "P/1-A", 30);
 const body = (content) =>
   `<g data-device-uid="a"><rect x="10" y="10" width="80" height="40" fill="none" stroke="black"/>${content}</g>`;
+
+it.each(["body", "reference", "unknown", "unowned"])(
+  "keeps %s tag fields primary inside a circuit relation owner",
+  async (kind) => {
+    const owner = (content) =>
+      `<g data-device-uid="a" data-circuit-functions='["contact"]' data-related-functions='["coil"]'>${content}</g>`;
+    let rows = full().replaceAll(
+      'data-tag-kind="body"',
+      `data-tag-kind="${kind}"`,
+    );
+    if (kind === "unowned")
+      rows = rows.replaceAll('data-tag-owner-uid="a"', "");
+    const measure = async (content) =>
+      classifyTextGeometry(await openSheet(page, svg(owner(content))), ir);
+    const good = await measure(
+      rows
+        .replaceAll('font-size="2.7"', 'font-size="2.5"')
+        .replace('font-size="2.5"', 'font-size="2.7"'),
+    );
+    expect(good.texts.every((t) => !t.secondaryReference)).toBe(true);
+    expect(legibility(good)).toEqual([]);
+    // Mutate only the description em, retaining relation and C1 ownership metadata.
+    const small = await measure(
+      rows.replace(/<text[^>]*data-tag-field="description"[^>]*>/, (tag) =>
+        tag.replace('font-size="2.7"', 'font-size="2.4"'),
+      ),
+    );
+    expect(
+      small.texts.find((t) => t.tagField === "description").secondaryReference,
+    ).toBe(false);
+    expect(legibility(small)).toEqual([
+      expect.objectContaining({
+        kind: "text-below-minimum-em",
+        minimumMm: 2.5,
+      }),
+    ]);
+    if (kind === "body") {
+      expect(deviceTags(good, ir, refs, true)).toEqual([]);
+      expect(deviceTags(small, ir, refs, true)[0].missing).toContain(
+        "authored description",
+      );
+    }
+  },
+);
 
 it("measures owned fields without introducing appearances, joins or terminals", async () => {
   const g = await openSheet(page, svg(body(full())));

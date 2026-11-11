@@ -2,7 +2,7 @@ import type { ElectricalIr, IrDevice, IrDeviceType } from "@thermite/compiler";
 import type { RenderOutcome, RenderTextSource } from "./types.js";
 import { svgSemanticId } from "./svg/escape.js";
 import { printableTextMetrics } from "./symbols/printable-font.js";
-import { wrapIdentity } from "./packet/label-wrap.js";
+import { wrapDeviceTagText } from "./device-tag-wrap.js";
 
 export type DeviceTagField = "designation" | "description" | "part";
 export interface DeviceTagSource {
@@ -116,11 +116,11 @@ function fieldRows(field: DeviceTagSource, widthMm: number): RowSpec[] {
     printableTextMetrics(text, emMm, bold, true);
   const lines = bold
     ? [value]
-    : wrapIdentity(
+    : wrapDeviceTagText(
         value,
         widthMm - 6,
         (text) => metricWidth(metrics(text)),
-        field.field === "description" ? (c) => c === " " : undefined,
+        field.field === "description",
       );
   let start = 0;
   return lines.map((text) => {

@@ -67,7 +67,7 @@ function rowsAt(chars: readonly string[], ends: readonly number[]) {
 }
 
 /** A JS array has at most 2^32-1 entries: 32 binary probes suffice. */
-function fittingEnd(
+export function fittingEnd(
   chars: readonly string[],
   start: number,
   fits: (value: string) => boolean,

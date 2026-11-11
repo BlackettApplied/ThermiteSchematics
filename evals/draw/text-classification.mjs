@@ -76,6 +76,7 @@ export function classifyTextGeometry(g, ir = {}) {
     const unowned =
       !t.nested && !t.deviceUid && !t.wire && !t.row && !t.continuation;
     t.furniture = !!(
+      t.tagField == null &&
       unowned &&
       (zoneIds.has(t.element) ||
         [headerBand, topBand, g.titleBlock].some((b) => b && inside(t.bbox, b)))
@@ -85,6 +86,7 @@ export function classifyTextGeometry(g, ir = {}) {
       devices.get(t.deviceUid) ?? role?.primaryDesignation,
     );
     t.secondaryReference = !!(
+      t.tagField == null &&
       role &&
       primary &&
       normal(t.text) !== primary &&

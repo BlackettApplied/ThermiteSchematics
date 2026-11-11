@@ -214,8 +214,9 @@ and symbol lanes in top-to-bottom flow. Its reservation precedes ELK, including
 any stems needed to reach the node boundary. Repeated functions in one device
 node share the tag; each split part repeats its local devices' complete tags.
 Tag designation uses at least 2.7 mm em and other fields at least 2.5 mm em.
-Long descriptions wrap at words, then graphemes; literal parts retain all authored
-characters and separators. No truncation, inferred rating or subminimum fit is
+Long descriptions wrap at words, then after existing separators, then graphemes;
+parts prefer existing separators. Every character is retained, and wrapping adds
+no punctuation or spaces. No truncation, inferred rating or subminimum fit is
 used. An owner that cannot fit with its tag produces R006.
 
 Primary symbol legends, wire labels, conductor details, terminal labels and PLC channel addresses use at least 2.5 mm em at printed scale. Secondary cross-reference and boundary captions use 2.3 mm em. Long labels are measured before routing and pagination; an unreadable block or group is rejected rather than clipped.

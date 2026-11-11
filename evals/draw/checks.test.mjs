@@ -185,6 +185,7 @@ describe("mandatory DQ mutation kills", () => {
         geometry({
           texts: [
             text("K1", {
+              fontSize: 2.7,
               tagOwnerUid: "d",
               tagField: "designation",
               tagKind: "body",
@@ -212,6 +213,7 @@ describe("mandatory DQ mutation kills", () => {
         geometry({
           texts: [
             text("K1", {
+              fontSize: 2.7,
               tagOwnerUid: "d",
               tagField: "designation",
               tagKind: "body",

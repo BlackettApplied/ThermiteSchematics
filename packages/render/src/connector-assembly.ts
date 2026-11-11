@@ -529,6 +529,8 @@ export async function prepareConnectorAssemblyPages(
   ir: Readonly<ElectricalIr>,
   request: ConnectorAssemblyViewRequest,
   fits: (drawing: ConnectorAssemblyDrawing) => boolean,
+  unfit = (_drawing: ConnectorAssemblyDrawing, message: string): Error =>
+    new Error(message),
 ): Promise<ConnectorAssemblyDrawing[]> {
   const selection = selectAssemblyView(ir, request);
   const full = await layoutAssemblyDrawing(request, selection);
@@ -576,18 +578,22 @@ export async function prepareConnectorAssemblyPages(
   let current: Unit[] = [];
   for (const unit of units) {
     const candidate = [...current, unit];
-    if (fits(await draw(candidate, widestPart, widestPart, true))) {
+    const trial = await draw(candidate, widestPart, widestPart, true);
+    if (fits(trial)) {
       current = candidate;
       continue;
     }
     if (!current.length)
-      throw new Error(
+      throw unfit(
+        trial,
         "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
       );
     parts.push(current);
     current = [unit];
-    if (!fits(await draw(current, widestPart, widestPart, true)))
-      throw new Error(
+    const single = await draw(current, widestPart, widestPart, true);
+    if (!fits(single))
+      throw unfit(
+        single,
         "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
       );
   }
@@ -601,32 +607,41 @@ export async function prepareConnectorAssemblyPages(
       i === parts.length - 1,
     );
     if (!fits(drawing))
-      throw new Error(
+      throw unfit(
+        drawing,
         "A cap pagination part exceeds the readable sheet bounds.",
       );
     drawings.push(drawing);
   }
+  assertAssemblyPageCoverage(drawings, full.topologyCoverage!, identity);
+  return drawings;
+}
+
+function assertAssemblyPageCoverage(
+  drawings: ConnectorAssemblyDrawing[],
+  original: NonNullable<ConnectorAssemblyDrawing["topologyCoverage"]>,
+  identity: (deviceUid: string, portKey: string) => string,
+) {
   const coverage = drawings.map((d) => d.topologyCoverage!);
   const equal = (a: string[], b: readonly string[]) =>
     JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
   if (
     !equal(
       coverage.flatMap((c) => c.relationIds),
-      full.topologyCoverage!.relationIds,
+      original.relationIds,
     ) ||
     !equal(
       coverage.flatMap((c) =>
         c.ports.map((p) => identity(p.deviceUid, p.portKey)),
       ),
-      full.topologyCoverage!.ports.map((p) => identity(p.deviceUid, p.portKey)),
+      original.ports.map((p) => identity(p.deviceUid, p.portKey)),
     ) ||
     !equal(
       [...new Set(coverage.flatMap((c) => c.deviceUids))],
-      full.topologyCoverage!.deviceUids,
+      original.deviceUids,
     )
   )
     throw new Error("Cap pagination did not conserve the original selection.");
-  return drawings;
 }
 
 /** Separate point-to-point assemblies may cross, but may not share a drawn segment. */

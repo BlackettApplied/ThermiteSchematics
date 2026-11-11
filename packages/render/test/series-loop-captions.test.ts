@@ -2,6 +2,7 @@ import { parseHTML } from "linkedom";
 import { expect, it } from "vitest";
 import { prepareSignalLoopDrawing } from "../src/signal-loop.js";
 import { measureText } from "../src/text-metrics.js";
+import { printableTextMetrics } from "../src/symbols/printable-font.js";
 import { seriesFixture, request, uid } from "./series-loop-fixture.js";
 import {
   fieldSeriesFixture,
@@ -79,6 +80,7 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
       });
     try {
       const d = await prepareSignalLoopDrawing(f.ir, request({ flow })),
+        c = caption(d.content, uid(3)),
         doc = parseHTML(`<svg>${d.content}</svg>`).document,
         parts = [
           ...doc.querySelectorAll(
@@ -87,8 +89,15 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
         ].map((e) => e.textContent!);
       expect(parts.length).toBeGreaterThan(1);
       expect(parts.join("")).toBe(orderNumber);
-      for (const line of parts)
-        expect(measureText(line, 2.7).width).toBeLessThanOrEqual(44);
+      for (const line of parts.slice(0, -1))
+        expect(line.endsWith("-")).toBe(true);
+      for (const line of parts) expect(line.startsWith("-")).toBe(false);
+      for (const line of parts) {
+        const m = printableTextMetrics(line, 2.7, false, true);
+        expect(
+          Math.max(m.advance, m.right) - Math.min(0, m.left),
+        ).toBeLessThanOrEqual(c.width - 6 + 0.001);
+      }
     } finally {
       await f.dispose();
     }

@@ -153,15 +153,20 @@ describe("operator console wiring", () => {
         })
       ).ok,
     ).toBe(false);
-    const hostile = structuredClone(c.ir);
-    hostile.deviceTypes.find(
-      (t) => t.id === "console-planning:dc-feed",
-    )!.description = "bad\u0000text";
-    hostile.devices.find(
-      (d) => d.typeId === "console-planning:dc-feed",
-    )!.description = "bad\u0000text";
-    expect(
-      (await renderSchematicPacket(hostile, { ...request, views: [view] })).ok,
-    ).toBe(false);
+    for (const field of ["type", "instance"] as const) {
+      const hostile = structuredClone(c.ir);
+      if (field === "type")
+        hostile.deviceTypes.find(
+          (t) => t.id === "console-planning:dc-feed",
+        )!.description = "bad\u0000text";
+      else
+        hostile.devices.find(
+          (d) => d.typeId === "console-planning:dc-feed",
+        )!.description = "bad\u0000text";
+      expect(
+        (await renderSchematicPacket(hostile, { ...request, views: [view] }))
+          .ok,
+      ).toBe(false);
+    }
   });
 });

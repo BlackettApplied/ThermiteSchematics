@@ -327,8 +327,9 @@ instance description (otherwise nonblank type description), then catalog order
 number. Absent optional fields and location rows are omitted. Description and part
 are independent; neither replaces the other. Tags use dark ink on a light
 background, with at least 2.7 mm designation em and 2.5 mm other-field em after
-packet scaling. Measured wrapping preserves every character without truncation or
-inserted identifier punctuation. Headers and terminal origins are reserved before
+packet scaling. Descriptions wrap at words, then after retained separators, then
+graphemes; parts prefer retained separators. Wrapping preserves every character
+without inserting punctuation or spaces. Headers and terminal origins are reserved before
 ELK; split parts repeat complete tags for their local devices. A tag and its owner
 that cannot fit at readable size produce R006; use larger paper or a narrower
 selection. No device rating is inferred.

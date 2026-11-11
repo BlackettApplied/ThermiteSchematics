@@ -353,9 +353,10 @@ describe("printable function facts", () => {
           Number(annotatedNode.getAttribute("data-circuit-body-height")) -
             Number(plainNode.getAttribute("data-circuit-body-height")),
         ).toBeCloseTo(footer, 2);
-        const designation = [...coil.children].find(
-          (e) => e.localName === "text" && e.textContent === "K1",
+        const designation = coil.querySelector(
+          'g[data-tag-kind="body"] > text[data-tag-field="designation"]',
         )!;
+        expect(designation.textContent).toBe("K1");
         expect(Number(designation.getAttribute("x"))).toBeGreaterThan(
           Number(coil.getAttribute("data-circuit-body-width")),
         );

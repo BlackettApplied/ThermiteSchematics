@@ -1,4 +1,5 @@
 import { deviceTagFitDetails } from "./device-tag-fit.js";
+import { CircuitRenderError } from "../render-error-context.js";
 import { wrapText } from "../text-metrics.js";
 import { prepareWiringDrawing, type WiringViewRequest } from "../wiring.js";
 import { circuitTextLines } from "../circuit.js";
@@ -74,7 +75,6 @@ export async function topologyDrafts(
   presentation: CompiledProjectPresentation | undefined,
   page: PaperPage,
 ): Promise<RenderOutcome<Draft[]>> {
-  let fitRefusal: RenderOutcome<never> | undefined;
   try {
     const wiring = request.format === "wiring-view-request/0.1";
     const signalLoop = request.format === "signal-loop-view-request/0.1";
@@ -221,18 +221,15 @@ export async function topologyDrafts(
         },
       };
     };
-    const fits = (drawing: NotedDrawing) => {
-      const result = compose(drawing);
-      if (!result.ok) fitRefusal = result;
-      return result.ok;
-    };
+    const fits = (drawing: NotedDrawing) => compose(drawing).ok;
+    const unfit = topologyUnfit(compose);
     const drawings = wiring
       ? [await prepareWiringDrawing(ir, request)]
       : signalLoop
         ? [await prepareSignalLoopDrawing(ir, request)]
         : assembly
-          ? await prepareConnectorAssemblyPages(ir, request, fits)
-          : await prepareCommunicationPages(ir, request, fits);
+          ? await prepareConnectorAssemblyPages(ir, request, fits, unfit)
+          : await prepareCommunicationPages(ir, request, fits, unfit);
     const drafts: Draft[] = [];
     for (const drawing of drawings) {
       const result = compose(drawing);
@@ -241,8 +238,22 @@ export async function topologyDrafts(
     }
     return { ok: true, value: drafts };
   } catch (e) {
-    return topologyFailure(ir, request, e, fitRefusal);
+    return topologyFailure(ir, request, e);
   }
+}
+
+function topologyUnfit(
+  compose: (drawing: NotedDrawing) => RenderOutcome<Draft>,
+) {
+  return (drawing: NotedDrawing, message: string) => {
+    const result = compose(drawing);
+    return result.ok || result.error.code !== "R006"
+      ? new Error(message)
+      : new CircuitRenderError({
+          ...result.error,
+          message: `${message} ${result.error.message}`,
+        });
+  };
 }
 
 function topologyFitFailure(
@@ -293,16 +304,11 @@ function topologyFailure(
   ir: Readonly<ElectricalIr>,
   request: unknown,
   error: unknown,
-  fitRefusal?: RenderOutcome<never>,
 ) {
-  const fit =
-    fitRefusal && !fitRefusal.ok && fitRefusal.error.code === "R006"
-      ? fitRefusal.error
-      : undefined;
+  const fit = error instanceof CircuitRenderError ? error.error : undefined;
   return failure(
     "unprintable-layout",
-    (error instanceof Error ? error.message : "Topology view failed.") +
-      (fit ? ` ${fit.message}` : ""),
+    error instanceof Error ? error.message : "Topology view failed.",
     { ...topologySelectionContext(ir, request), ...fit?.details },
   );
 }

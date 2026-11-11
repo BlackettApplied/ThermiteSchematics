@@ -139,7 +139,9 @@ for (const flow of flows) {
         "[data-circuit-functions][data-device-uid]",
       )) {
         const uid = owner.getAttribute("data-device-uid");
-        const tag = [...owner.children].find((e) => e.localName === "text");
+        const tag = owner.querySelector(
+          'g[data-tag-kind="body"] > text[data-tag-field="designation"]',
+        );
         expect(tag?.textContent).toBe(
           must(f.ir.devices.find((d) => d.uid === uid)).designation,
         );
@@ -258,7 +260,9 @@ it("reserves a separate self-loop S1 tag lane and designation paint order", asyn
   expect(Number(t.getAttribute("font-size"))).toBeGreaterThanOrEqual(2.7);
   expect(t.getAttribute("data-tag-field")).toBe("designation");
   const owner = must(t.closest("[data-device-uid]"));
-  expect([...owner.children].find((e) => e.localName === "text")).toBe(t);
+  const tag = must(owner.querySelector('g[data-tag-kind="body"]'));
+  expect(owner.firstElementChild).toBe(tag);
+  expect(tag.firstElementChild).toBe(t);
 });
 
 for (const flow of flows)

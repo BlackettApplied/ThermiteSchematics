@@ -2,7 +2,7 @@ import { circuitConductorFunctions } from "./symbols/circuit-pagination-function
 import { deviceTagFitDetails } from "./packet/device-tag-fit.js";
 import { deviceTagSvg } from "./device-tag-svg.js";
 import type { DeviceTagPlan } from "./device-tags.js";
-import { ownedTagText } from "./device-tag-ownership.js";
+import { ownedTagText, tagAttributes } from "./device-tag-ownership.js";
 import {
   circuitTextLines,
   measure,
@@ -997,7 +997,7 @@ function emitNode(
           : `<g data-terminal-attachment="${attr(key(p.terminal))}" data-attachment-from="${attr(JSON.stringify({ x: sx, y: sy }))}" data-attachment-to="${attr(JSON.stringify({ x: end.x, y: end.y }))}"><path d="M ${n(sx)} ${n(sy)} L ${n(end.x)} ${n(end.y)}" fill="none" stroke="#344054" stroke-width="0.3"/></g>`;
       })
       .join("");
-    return `<g${circuitNodeAttributes(node)} data-circuit-body-width="${n(body.width)}" data-circuit-body-height="${n(body.height)}" data-circuit-tag-lane="${attr(node.device.uid)}" transform="translate(${n(x)} ${n(y)})">${deviceTagSvg(plan, g.tagX, g.tagY)}${emitNode(body, g.bodyX, g.bodyY, vertical, conductors, diagnostics, true)}${stems}</g>`;
+    return `<g${circuitNodeAttributes(node)} data-circuit-body-width="${n(body.width)}" data-circuit-body-height="${n(body.height)}" data-circuit-tag-lane="${attr(node.device.uid)}" transform="translate(${n(x)} ${n(y)})"><g ${tagAttributes(node.device.uid)}>${deviceTagSvg(plan, g.tagX, g.tagY)}</g>${emitNode(body, g.bodyX, g.bodyY, vertical, conductors, diagnostics, true)}${stems}</g>`;
   }
   const out = [
     `<g${omitDesignation ? circuitNodeAttributes(node).replace(/ data-device-uid="[^"]*"/u, "") : circuitNodeAttributes(node)} transform="translate(${n(x)} ${n(y)})"><title>${xml([node.device.description, node.type.catalog?.orderNumber, node.type.description].filter(Boolean).join(" | "))}</title>`,

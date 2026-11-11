@@ -118,8 +118,23 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
         ...circuit.request.views[0]!,
         flow,
       });
-      for (const group of drawing.groups)
+      for (const group of drawing.groups) {
         complete(ir, group.content, group.references);
+        for (const row of parseHTML(
+          `<svg>${group.content}</svg>`,
+        ).document.querySelectorAll("text[data-tag-field]")) {
+          expect(row.parentElement!.localName).toBe("g");
+          expect(row.parentElement!.getAttribute("data-tag-owner-uid")).toBe(
+            row.getAttribute("data-tag-owner-uid"),
+          );
+          expect(
+            row.parentElement!.hasAttribute("data-circuit-functions"),
+          ).toBe(false);
+          expect(
+            row.parentElement!.hasAttribute("data-related-functions"),
+          ).toBe(false);
+        }
+      }
       expect(JSON.stringify(ir)).toBe(before);
       for (const [fixture, view] of [
         [series, request({ flow })],

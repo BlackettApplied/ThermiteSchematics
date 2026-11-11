@@ -163,6 +163,29 @@ it("does not turn literal BOUNDARY or unknown source labels into secondary capti
   classifyTextGeometry(g);
   expect(g.texts.map((t) => t.secondaryReference)).toEqual([false, false]);
 });
+it.each(["body", "reference", "unknown", undefined])(
+  "enforces primary tag floors even with stale secondary metadata and kind %s",
+  (tagKind) => {
+    const rows = [
+      ["description", 2.4, 2.5],
+      ["part", 2.4, 2.5],
+      ["designation", 2.6, 2.7],
+    ].map(([tagField, fontSize, minimum]) => ({
+      ...text(tagField, "K1", 80, 31),
+      tagField,
+      tagKind,
+      fontSize,
+      secondaryReference: true,
+      minimum,
+    }));
+    expect(legibility(sheet(rows)).map((f) => f.minimumMm)).toEqual([
+      2.5, 2.5, 2.7,
+    ]);
+    expect(
+      legibility(sheet(rows.map((r) => ({ ...r, fontSize: r.minimum })))),
+    ).toEqual([]);
+  },
+);
 it("uses one distortion finding for PDF em anisotropy too", () => {
   const f = legibility({
     texts: [

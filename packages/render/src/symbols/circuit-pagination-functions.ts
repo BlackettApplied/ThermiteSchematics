@@ -5,7 +5,9 @@ const key = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
 
 /** A shared common need not repeat every channel when each channel also has
  * its own selected conductor. Keep equally specific appearances and all gangs;
- * this chooses drawing ownership only, never conduction through a function. */
+ * this chooses drawing ownership only, never conduction through a function.
+ * The per-conductor scan is quadratic in selected conductors; circuit requests
+ * bound each group to 120 conductors and 80 functions. */
 export function circuitConductorFunctions(
   functions: IrFunction[],
   conductors: readonly Conductor[],

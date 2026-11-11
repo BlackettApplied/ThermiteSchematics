@@ -23,8 +23,31 @@ export function deviceTagFitDetails(
     availableWidthMm: availableWidth,
     availableHeightMm: availableHeight,
   };
-  const message = deviceTags.length
-    ? ` Device tags ${deviceTags.map((t) => `${t.designation} (${t.fields.join(", ")}; ${t.requiredWidthMm.toFixed(2)} × ${t.requiredHeightMm.toFixed(2)} mm)`).join("; ")} require an owner drawing ${drawing.width.toFixed(2)} × ${drawing.height.toFixed(2)} mm; ${availableWidth.toFixed(2)} × ${availableHeight.toFixed(2)} mm available. Try another flow or a narrower selection.`
+  const vertical =
+    drawing.height / availableHeight >= drawing.width / availableWidth;
+  const plans = [...(drawing.deviceTags ?? [])].sort((a, b) =>
+    vertical ? b.heightMm - a.heightMm : b.widthMm - a.widthMm,
+  );
+  const plan = plans[0];
+  const field = plan?.fields
+    .map((f) => {
+      const rows = plan.rows.filter((r) => r.field === f.field);
+      const extent = vertical
+        ? Math.max(...rows.map((r) => r.ink.y + r.ink.h)) -
+          Math.min(...rows.map((r) => r.ink.y))
+        : Math.max(...rows.map((r) => r.ink.x + r.ink.w));
+      return { field: f.field, extent };
+    })
+    .sort((a, b) => b.extent - a.extent)[0]?.field;
+  const deviceTag =
+    plan && deviceTags.find((t) => t.deviceUid === plan.ownerUid);
+  const message = deviceTag
+    ? ` Device ${deviceTag.designation} ${field} has the largest tag reservation (${deviceTag.requiredWidthMm.toFixed(2)} × ${deviceTag.requiredHeightMm.toFixed(2)} mm); its owner drawing requires ${drawing.width.toFixed(2)} × ${drawing.height.toFixed(2)} mm, with ${availableWidth.toFixed(2)} × ${availableHeight.toFixed(2)} mm available. Try another flow or a narrower selection.`
     : "";
-  return { deviceTags, dimensions, message };
+  return {
+    deviceTag: deviceTag ? { ...deviceTag, field } : undefined,
+    deviceTags,
+    dimensions,
+    message,
+  };
 }
