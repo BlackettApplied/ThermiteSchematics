@@ -24,7 +24,7 @@ it("uses rectangular coils in both printable families", () => {
   expect(coil.primitives.find((p) => p.kind === "rect")).not.toHaveProperty(
     "radius",
   );
-  const svg = parseHTML(emitCircuitMark("coil")).document;
+  const svg = parseHTML(emitCircuitMark("coil", false, 1)).document;
   expect(svg.querySelector("circle")).toBeNull();
   expect(svg.querySelector("rect")).not.toBeNull();
 });
@@ -95,7 +95,7 @@ it("uses shared protection and contact primitives without inventing a trip class
     expect(
       SYMBOL_CATALOG.find((s) => s.id === `ais:${id}`)!.primitives,
     ).toEqual(sharedMarkPrimitives(mark));
-    const svg = parseHTML(emitCircuitMark(mark)).document;
+    const svg = parseHTML(emitCircuitMark(mark, false, 1)).document;
     expect(svg.querySelectorAll("rect").length).toBe(
       mark === "overload" ? 1 : 0,
     );
@@ -111,7 +111,9 @@ it("uses shared protection and contact primitives without inventing a trip class
     from: { x: 11, y: 17 },
     to: { x: 29, y: 3 },
   });
-  expect(emitCircuitMark("breaker")).not.toMatch(/thermal|magnetic|NC|NO/);
+  expect(emitCircuitMark("breaker", false, 1)).not.toMatch(
+    /thermal|magnetic|NC|NO/,
+  );
 });
 
 it("selects all four operators only from profiles and preserves their parent support", async () => {

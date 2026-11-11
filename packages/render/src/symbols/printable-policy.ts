@@ -114,7 +114,7 @@ function functionWord(
     if (!fact) continue;
     // Conflicting direction/class declarations do not establish one class.
     if (fact[2] !== fn.direction) return neutral;
-    if (fact[1]) classes.add(fact[1]);
+    classes.add(fact[1] as string);
   }
   if (classes.size !== 1) return neutral;
   if (classes.has("analog")) return fn.direction === "input" ? "AI" : "AO";

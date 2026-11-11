@@ -1,4 +1,6 @@
-export const measure = (s: string, size = 2.5) =>
+export const TERMINAL_TEXT_SIZE = 2.5;
+
+export const measure = (s: string, size = TERMINAL_TEXT_SIZE) =>
   [...s].reduce(
     (sum, c) =>
       sum +
@@ -15,7 +17,7 @@ export const measure = (s: string, size = 2.5) =>
 export function circuitTextLines(
   value: string,
   width: number,
-  size = 2.5,
+  size = TERMINAL_TEXT_SIZE,
 ): string[] {
   const lines: string[] = [];
   let line = "";
@@ -48,7 +50,7 @@ export function channelRowSlots(
   if (!lines) return 1;
   return Math.ceil(
     (vertical
-      ? Math.max(...lines.map((line) => measure(line, 2.5))) +
+      ? Math.max(...lines.map((line) => measure(line, TERMINAL_TEXT_SIZE))) +
         (mark === "sensor-3wire" ? 16 : 4)
       : lines.length * 3.1 +
         0.8 +

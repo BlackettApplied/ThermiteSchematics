@@ -85,7 +85,7 @@ it("has one canonical profile, open shapes, no loads or loop, and no operator pr
   expect(
     SYMBOL_CATALOG.find((s) => s.id === "ais:disconnector")!.primitives,
   ).toEqual(ink);
-  expect(emitCircuitMark("disconnector")).toContain(
+  expect(emitCircuitMark("disconnector", false, 1)).toContain(
     'data-circuit-mark="disconnector"',
   );
   const rules = projectDeviceTypeSymbolMappings(ir)

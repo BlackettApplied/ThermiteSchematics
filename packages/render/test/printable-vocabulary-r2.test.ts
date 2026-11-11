@@ -156,7 +156,8 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
 );
 it("pins circuit geometry of each operator, independently of its selected ID", () => {
   const geometry = (mark: Parameters<typeof emitCircuitMark>[0]) =>
-    parseHTML(emitCircuitMark(mark)).document.querySelector("g")!.innerHTML;
+    parseHTML(emitCircuitMark(mark, false, 1)).document.querySelector("g")!
+      .innerHTML;
   // These independent head coordinates also enforce the print-size enlargement.
   const stop = geometry("estop-nc"),
     push = geometry("pushbutton-nc"),

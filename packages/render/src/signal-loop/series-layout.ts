@@ -499,7 +499,7 @@ function emitNode(
         vertical ? 25 : w / 2,
       );
   const mark = info.source
-    ? `<g transform="translate(${n(vertical ? 19 : w / 2 - 6)} 3)">${emitCircuitMark("dc-output")}</g>`
+    ? `<g transform="translate(${n(vertical ? 19 : w / 2 - 6)} 3)">${emitCircuitMark("dc-output", false, 1)}</g>`
     : "";
   const caption = info.caption
     .map((s, i) =>

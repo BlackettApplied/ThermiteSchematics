@@ -118,9 +118,9 @@ async function circuitFunctions(
     if (!irType) throw Error(`Missing type: ${type.id}`);
     for (const f of expected) {
       const mark = circuitMark(irType, f);
-      expect(emitCircuitMark(mark, request.flow === "top-to-bottom")).toContain(
-        `data-circuit-mark="${mark}"`,
-      );
+      expect(
+        emitCircuitMark(mark, request.flow === "top-to-bottom", 1),
+      ).toContain(`data-circuit-mark="${mark}"`);
     }
     const cloned = await prepareCircuitView(
       cloneMachineType(ir, type.id),

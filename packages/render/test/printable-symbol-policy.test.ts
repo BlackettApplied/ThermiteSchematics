@@ -13,6 +13,8 @@ import {
   circuitInterfaceMark,
   composedCircuitMark,
   emitCircuitMark,
+  circuitMarkLegendInk,
+  circuitLegendReservation,
 } from "../src/symbols/circuit.js";
 import {
   PRINTABLE_SYMBOL_POLICY,
@@ -29,6 +31,7 @@ import {
   catalogGeometry,
   svgGeometry,
   svgTextGeometry,
+  inkClearance,
 } from "./source-isolation.js";
 import { compileCoreFixture } from "./fixtures.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
@@ -62,7 +65,7 @@ describe("printable symbol policy", () => {
       // These are all three text-bearing entries in the closed mark catalog.
       for (const mark of ["source", "load", "motor"] as const) {
         for (const svg of [
-          emitCircuitMark(mark, vertical),
+          emitCircuitMark(mark, vertical, 1),
           composedCircuitMark(mark, 20, 20, vertical),
         ]) {
           const texts = svgTextGeometry(
@@ -70,10 +73,47 @@ describe("printable symbol policy", () => {
           );
           expect(texts).toHaveLength(1);
           expect(texts[0]!.em).toBeGreaterThanOrEqual(2.5);
+          const ink = texts[0]!.corners;
+          // Bound actual transformed glyph ink against every own-mark stroke,
+          // including the circular motor outline; an owner-box fit is insufficient.
+          for (const stroke of geometry(`<svg>${svg}</svg>`).shapes)
+            expect(
+              inkClearance(
+                { points: [...ink, ink[0]!], stroke: 0, solid: true },
+                stroke,
+              ),
+              `${mark}: legend clearance`,
+            ).toBeGreaterThanOrEqual(0.3);
         }
       }
       // The series-loop emitter uses this unscaled, text-free mark.
-      expect(emitCircuitMark("dc-output")).not.toContain("<text");
+      expect(emitCircuitMark("dc-output", false, 1)).not.toContain("<text");
+    },
+  );
+  it.each([false, true])(
+    "reserves source/load ink plus 2 mm on both layout axes (vertical=%s)",
+    (vertical) => {
+      for (const mark of ["source", "load"] as const) {
+        const ink = circuitMarkLegendInk(mark, 0, 0)[0]!;
+        const reservation = circuitLegendReservation(mark, vertical);
+        const width = ink.right - ink.left;
+        const height = ink.bottom - ink.top;
+        expect(reservation.row).toBeGreaterThanOrEqual(
+          (vertical ? width : height) + 2,
+        );
+        expect(reservation.block).toBeGreaterThanOrEqual(
+          (vertical ? height : width) + 2,
+        );
+        // The pre-layout estimate must match the emitted composed transform.
+        const svg = `<svg>${composedCircuitMark(mark, 0, 0, vertical)}</svg>`;
+        const corners = svgTextGeometry(
+          parseHTML(svg).document.querySelector("svg")!,
+        )[0]!.corners;
+        expect(Math.min(...corners.map((p) => p.x))).toBeCloseTo(ink.left, 6);
+        expect(Math.max(...corners.map((p) => p.x))).toBeCloseTo(ink.right, 6);
+        expect(Math.min(...corners.map((p) => p.y))).toBeCloseTo(ink.top, 6);
+        expect(Math.max(...corners.map((p) => p.y))).toBeCloseTo(ink.bottom, 6);
+      }
     },
   );
   it("uses physical ink sizes and can retire individual fact words per mark", () => {

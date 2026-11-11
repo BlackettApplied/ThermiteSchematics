@@ -297,8 +297,8 @@ const legendEm = (value: string, mmPerUnit: number) =>
 /** Catalog geometry is 12 units. mmPerUnit includes every enclosing scale. */
 export function emitCircuitMark(
   mark: CircuitMark,
-  vertical = false,
-  mmPerUnit = 1,
+  vertical: boolean,
+  mmPerUnit: number,
 ): string {
   return `<g data-circuit-mark="${mark}" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"${vertical ? ' transform="translate(12 0) rotate(90)"' : ""}>${MARKS[
     mark
@@ -314,7 +314,7 @@ export function emitCircuitMark(
         case "rect":
           return `<rect x="${n(p.x)}" y="${n(p.y)}" width="${n(p.width)}" height="${n(p.height)}"/>`;
         case "text":
-          return `<text x="${n(p.x)}" y="${n(p.y)}" text-anchor="middle" stroke="none" fill="#17212b" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="${legendEm(p.text, mmPerUnit)}"${vertical ? ` transform="rotate(-90 ${p.x} ${p.y})"` : ""}>${xml(p.text)}</text>`;
+          return `<text x="${n(p.x)}" y="${n(p.y)}" text-anchor="middle" stroke="none" fill="#17212b" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="${legendEm(p.text, mmPerUnit)}"${vertical ? ' transform="rotate(-90 6 6)"' : ""}>${xml(p.text)}</text>`;
       }
     })
     .join("")}</g>`;
@@ -330,21 +330,20 @@ export function composedCircuitMark(
   return `<g transform="translate(${n(cx - 4)} ${n(cy - 4)}) scale(.666667)">${emitCircuitMark(mark, vertical, MARK_SCALE)}</g>`;
 }
 
-/** Horizontal legend ink after mark rotation and its counter-rotation. Used
+/** Mark-centred counter-rotation leaves the legend ink identical in both flows. Used
  * before ELK for row/block reservations and again for caption obstacles. */
 export function circuitMarkLegendInk(
   mark: CircuitMark,
   cx: number,
   cy: number,
-  vertical: boolean,
 ) {
   return MARKS[mark].flatMap((p) =>
     p.kind === "text"
       ? [
           captionInk(
             p.text,
-            cx - 4 + (vertical ? 12 - p.y : p.x) * MARK_SCALE,
-            cy - 4 + (vertical ? p.x : p.y) * MARK_SCALE,
+            cx - 4 + p.x * MARK_SCALE,
+            cy - 4 + p.y * MARK_SCALE,
             legendEm(p.text, MARK_SCALE) * MARK_SCALE,
             "middle",
           ),
@@ -353,9 +352,10 @@ export function circuitMarkLegendInk(
   );
 }
 
-/** Minimum row and block spans, including a 1 mm margin on either side. */
+/** Guard row/block spans with 1 mm either side of the centred ink envelope.
+ * Today's catalog fits its existing terminal rows and minimum block sizes. */
 export function circuitLegendReservation(mark: CircuitMark, vertical: boolean) {
-  const ink = circuitMarkLegendInk(mark, 0, 0, vertical);
+  const ink = circuitMarkLegendInk(mark, 0, 0);
   const x = Math.max(
     0,
     ...ink.flatMap((b) => [Math.abs(b.left), Math.abs(b.right)]),
@@ -411,7 +411,7 @@ export function circuitMarkSegments(
         [p.x - p.radius, p.y - p.radius],
       ]);
   }
-  for (const b of circuitMarkLegendInk(mark, cx, cy, vertical)) {
+  for (const b of circuitMarkLegendInk(mark, cx, cy)) {
     append([
       { x: b.left, y: b.top },
       { x: b.right, y: b.top },

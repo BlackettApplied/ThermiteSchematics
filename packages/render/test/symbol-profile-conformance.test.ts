@@ -233,7 +233,7 @@ describe("schema/render symbol profile conformance", () => {
         )!;
         const mark = circuitMark(type, f);
         for (const vertical of [false, true])
-          expect(emitCircuitMark(mark, vertical)).toContain(
+          expect(emitCircuitMark(mark, vertical, 1)).toContain(
             `data-circuit-mark="${mark}"`,
           );
       }
@@ -274,7 +274,7 @@ describe("schema/render symbol profile conformance", () => {
             if (fits) {
               const mark = circuitMark(type, f);
               for (const vertical of [false, true])
-                expect(emitCircuitMark(mark, vertical), label).toContain(
+                expect(emitCircuitMark(mark, vertical, 1), label).toContain(
                   `data-circuit-mark="${mark}"`,
                 );
             } else expect(() => circuitMark(type, f), label).toThrow();
@@ -311,7 +311,7 @@ describe("schema/render symbol profile conformance", () => {
       if (symbol === "site:custom-relay")
         expect(() => circuitProfile(type)).toThrow();
       for (const fn of materializeTypeFunctions(type, "device"))
-        expect(emitCircuitMark(circuitMark(type, fn))).toContain(
+        expect(emitCircuitMark(circuitMark(type, fn), false, 1)).toContain(
           `data-circuit-mark="${type.circuitSymbols[fn.id.functionKey]}"`,
         );
       for (const flow of ["left-to-right", "top-to-bottom"] as const) {
@@ -381,9 +381,9 @@ describe("schema/render symbol profile conformance", () => {
         expect(() => circuitMark(type, materialized)).toThrow();
         if (kind === "contact") {
           type.circuitSymbols = { f: "fuse" };
-          expect(emitCircuitMark(circuitMark(type, materialized))).toContain(
-            'data-circuit-mark="fuse"',
-          );
+          expect(
+            emitCircuitMark(circuitMark(type, materialized), false, 1),
+          ).toContain('data-circuit-mark="fuse"');
         }
       }
     },

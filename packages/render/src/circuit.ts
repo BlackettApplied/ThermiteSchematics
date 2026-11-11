@@ -2,6 +2,7 @@ import {
   circuitTextLines,
   measure,
   channelRowSlots,
+  TERMINAL_TEXT_SIZE,
 } from "./symbols/circuit-text.js";
 export { circuitTextLines } from "./symbols/circuit-text.js";
 import { relationCaptionPlan } from "./symbols/circuit-relations.js";
@@ -167,7 +168,6 @@ type DeviceNode = {
   gangs: string[][];
 };
 const PITCH = 7;
-const TERMINAL_TEXT_SIZE = 2.5;
 const n = (v: number) => String(Number(v.toFixed(3)));
 const key = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
 const fkey = (f: IrFunction) =>

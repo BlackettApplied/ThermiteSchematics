@@ -65,7 +65,7 @@ describe("functional symbol conveyance", () => {
   );
 
   it.each(["left-to-right", "top-to-bottom"] as const)(
-    "refuses an unprintable source/legend composition without shrinking or dropping ink in %s",
+    "returns R006 when authored terminal text exceeds the readable block width in %s",
     async (flow) => {
       const changed = structuredClone(ir);
       const device = changed.devices.find((d) => d.designation === "AC1")!;
@@ -81,7 +81,7 @@ describe("functional symbol conveyance", () => {
         views: [
           {
             format: "circuit-view-request/0.1",
-            title: "Unprintable source legend",
+            title: "Oversized authored terminal text",
             flow,
             groups: [
               {
