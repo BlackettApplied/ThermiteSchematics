@@ -1,3 +1,7 @@
+import { circuitConductorFunctions } from "./symbols/circuit-pagination-functions.js";
+import { deviceTagFitDetails } from "./packet/device-tag-fit.js";
+import { deviceTagSvg } from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
 import { ownedTagText } from "./device-tag-ownership.js";
 import {
   circuitTextLines,
@@ -8,7 +12,11 @@ import {
 export { circuitTextLines } from "./symbols/circuit-text.js";
 import { relationCaptionPlan } from "./symbols/circuit-relations.js";
 import { nodeCaptionSegments } from "./symbols/circuit-node-ink.js";
-import { reserveCircuitCaptions } from "./symbols/circuit-caption-reservation.js";
+import {
+  reserveCircuitCaptions,
+  reserveCircuitDeviceTag,
+  circuitTagReservation,
+} from "./symbols/circuit-caption-reservation.js";
 import {
   emitCircuitContactCaption,
   type CaptionBox,
@@ -93,6 +101,7 @@ export interface CircuitReference {
 }
 export interface CircuitDrawing {
   diagnostics?: Diagnostic[];
+  deviceTags?: readonly DeviceTagPlan[];
   id: string;
   label: string;
   lineReference?: string;
@@ -167,6 +176,11 @@ type DeviceNode = {
     destinations: string[];
   }[];
   gangs: string[][];
+  tagLane?: {
+    body: DeviceNode;
+    plan: DeviceTagPlan;
+    geometry: ReturnType<typeof circuitTagReservation>;
+  };
 };
 const PITCH = 7;
 const n = (v: number) => String(Number(v.toFixed(3)));
@@ -892,7 +906,7 @@ function makeNodes(
   reserveCircuitCaptions(result, vertical, (node) =>
     emitNode(node, 0, 0, vertical, conductors, []),
   );
-  return result;
+  return result.map((node) => reserveCircuitDeviceTag(node, vertical));
 }
 
 function mechanicalGangs(
@@ -958,6 +972,10 @@ function mechanicalGangs(
   return result;
 }
 
+function circuitNodeAttributes(node: DeviceNode): string {
+  return ` data-device-uid="${attr(node.device.uid)}" data-circuit-functions="${attr(JSON.stringify(node.functions.map((f) => f.id)))}" data-related-functions="${attr(JSON.stringify(node.relations))}" data-layout-width="${n(node.width)}" data-layout-height="${n(node.height)}"`;
+}
+
 function emitNode(
   node: DeviceNode,
   x: number,
@@ -965,9 +983,24 @@ function emitNode(
   vertical: boolean,
   conductors: PhysicalConductor[],
   diagnostics: Diagnostic[],
+  omitDesignation = false,
 ): string {
+  if (node.tagLane) {
+    const { body, plan, geometry: g } = node.tagLane;
+    const stems = body.pins
+      .map((p, i) => {
+        const end = node.pins[i]!;
+        const sx = p.x + g.bodyX,
+          sy = p.y + g.bodyY;
+        return sx === end.x && sy === end.y
+          ? ""
+          : `<g data-terminal-attachment="${attr(key(p.terminal))}" data-attachment-from="${attr(JSON.stringify({ x: sx, y: sy }))}" data-attachment-to="${attr(JSON.stringify({ x: end.x, y: end.y }))}"><path d="M ${n(sx)} ${n(sy)} L ${n(end.x)} ${n(end.y)}" fill="none" stroke="#344054" stroke-width="0.3"/></g>`;
+      })
+      .join("");
+    return `<g${circuitNodeAttributes(node)} data-circuit-body-width="${n(body.width)}" data-circuit-body-height="${n(body.height)}" data-circuit-tag-lane="${attr(node.device.uid)}" transform="translate(${n(x)} ${n(y)})">${deviceTagSvg(plan, g.tagX, g.tagY)}${emitNode(body, g.bodyX, g.bodyY, vertical, conductors, diagnostics, true)}${stems}</g>`;
+  }
   const out = [
-    `<g data-device-uid="${attr(node.device.uid)}" data-circuit-functions="${attr(JSON.stringify(node.functions.map((f) => f.id)))}" data-related-functions="${attr(JSON.stringify(node.relations))}" data-layout-width="${n(node.width)}" data-layout-height="${n(node.height)}" transform="translate(${n(x)} ${n(y)})"><title>${xml([node.device.description, node.type.catalog?.orderNumber, node.type.description].filter(Boolean).join(" | "))}</title>`,
+    `<g${omitDesignation ? circuitNodeAttributes(node).replace(/ data-device-uid="[^"]*"/u, "") : circuitNodeAttributes(node)} transform="translate(${n(x)} ${n(y)})"><title>${xml([node.device.description, node.type.catalog?.orderNumber, node.type.description].filter(Boolean).join(" | "))}</title>`,
   ];
   const block =
     node.boundary ||
@@ -989,7 +1022,7 @@ function emitNode(
         node.pins.every((p) =>
           node.sourceTerminalKeys.includes(p.terminal.terminalKey),
         ),
-      ),
+      ).replace(/^<rect /u, '<rect class="circuit-device-frame" '),
     );
   const coilRow = node.rows.find((row) => row.f.kind === "coil");
   let designationX =
@@ -1111,42 +1144,46 @@ function emitNode(
     bottom: node.height - 0.5,
   };
   const obstacles = strokeBoxes(ownerSegments, 0.4);
-  const designation = vertical
-    ? ownerCaption(
+  const designation =
+    vertical && !omitDesignation
+      ? ownerCaption(
+          node.device.designation,
+          designationX,
+          3.3,
+          2.7,
+          designationAnchor,
+          true,
+          bounds,
+          obstacles,
+          captionBoxes,
+        )
+      : { x: designationX, y: 3.3, anchor: designationAnchor };
+  designationX = designation.x;
+  if (!omitDesignation)
+    captionBoxes.push(
+      box(
         node.device.designation,
-        designationX,
-        3.3,
+        designation.x,
+        designation.y,
         2.7,
         designationAnchor,
         true,
-        bounds,
-        obstacles,
-        captionBoxes,
-      )
-    : { x: designationX, y: 3.3, anchor: designationAnchor };
-  designationX = designation.x;
-  captionBoxes.push(
-    box(
-      node.device.designation,
-      designation.x,
-      designation.y,
-      2.7,
-      designationAnchor,
-      true,
-    ),
-  );
-  out[designationIndex] = ownedTagText(
-    text(
-      designation.x,
-      designation.y,
-      node.device.designation,
-      2.7,
-      designationAnchor,
-      true,
-    ),
-    node.device.uid,
-    "designation",
-  );
+      ),
+    );
+  out[designationIndex] = omitDesignation
+    ? ""
+    : ownedTagText(
+        text(
+          designation.x,
+          designation.y,
+          node.device.designation,
+          2.7,
+          designationAnchor,
+          true,
+        ),
+        node.device.uid,
+        "designation",
+      );
   const footers = node.relationLabels.map((value, i) => {
     const y =
       node.height -
@@ -1217,7 +1254,7 @@ function emitNode(
               )
             : circuitMotor(
                 node.width,
-                6 + row.start * PITCH,
+                row.center - (row.slots * PITCH) / 2,
                 row.slots * PITCH,
                 f.terminals.map(
                   (t) => node.pins.find((p) => key(p.terminal) === key(t))!.y,
@@ -1278,7 +1315,7 @@ function emitNode(
       } else {
         if (mark === "heater" && f.terminals.length === 3 && !vertical)
           out.push(
-            `<g transform="translate(0 ${n(6 + row.start * PITCH)})">${circuitBlock(node.width, row.slots * PITCH)}</g>`,
+            `<g transform="translate(0 ${n(row.center - (row.slots * PITCH) / 2)})">${circuitBlock(node.width, row.slots * PITCH)}</g>`,
           );
         out.push(composedCircuitMark(mark, cx, cy, vertical));
       }
@@ -1806,14 +1843,14 @@ async function layoutGroupUnchecked(
       return emitNode(d, l.x!, l.y!, vertical, conductors, diagnostics);
     }),
   ].join("");
-  const label = group.label ?? group.id;
   return {
     id: group.id,
-    label,
+    label: group.label ?? group.id,
     ...(diagnostics.length ? { diagnostics } : {}),
     ...(group.lineReference ? { lineReference: group.lineReference } : {}),
     width: graph.width!,
     height: graph.height!,
+    deviceTags: circuitDeviceTags(nodes),
     content: `<g data-circuit-group="${attr(group.id)}"${group.lineReference ? ` data-source-line-reference="${attr(group.lineReference)}"` : ""}>${contents}</g>`,
     references: nodes.map((d) => {
       const l = laidNodes.get(d.id)!;
@@ -1846,6 +1883,10 @@ async function layoutGroupUnchecked(
 }
 
 /** All geometry is derived from compiled source and closed catalog profiles; no source mutation. */
+function circuitDeviceTags(nodes: DeviceNode[]) {
+  return nodes.flatMap((node) => (node.tagLane ? [node.tagLane.plan] : []));
+}
+
 export function circuitFunctionAppearances(
   ir: Readonly<ElectricalIr>,
   requests: readonly CircuitViewRequest[],
@@ -1951,6 +1992,7 @@ export async function paginateCircuitGroup(
   original: CircuitDrawing,
   fits: (drawing: CircuitDrawing) => boolean,
   appearances?: Map<string, string[]>,
+  fitBounds?: { w: number; h: number },
 ): Promise<CircuitDrawing[]> {
   if (fits(original)) return [original];
   const group = request.groups[index]!;
@@ -1992,9 +2034,7 @@ export async function paginateCircuitGroup(
     ]),
   });
   const units = cs.map((c) => {
-    const touching = fs.filter((f) =>
-      f.terminals.some((t) => c.ends.some((e) => key(t) === key(e))),
-    );
+    const touching = circuitConductorFunctions(fs, cs, c);
     const members = new Set(
       clusters
         .filter((cluster) => touching.some((f) => cluster.has(fkey(f))))
@@ -2061,15 +2101,11 @@ export async function paginateCircuitGroup(
       continue;
     }
     if (!current.length)
-      throw new Error(
-        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
-      );
+      throw circuitPartFitError(group.id, original, fitBounds);
     parts.push(current);
     current = [u];
     if (!fits(await draw(current, widest, widest)))
-      throw new Error(
-        `Circuit ${group.id}: a complete conductor, symbol or continuation block cannot fit at readable size.`,
-      );
+      throw circuitPartFitError(group.id, original, fitBounds);
   }
   parts.push(current);
   const drawings: CircuitDrawing[] = [];
@@ -2085,10 +2121,7 @@ export async function paginateCircuitGroup(
       },
     );
     drawing.content = `<g data-circuit-part="${drawing.pagination!.part}" data-circuit-parts="${parts.length}">${drawing.content}</g>`;
-    if (!fits(drawing))
-      throw new Error(
-        `Circuit ${group.id}: pagination part exceeds readable sheet bounds.`,
-      );
+    if (!fits(drawing)) throw circuitPartFitError(group.id, drawing, fitBounds);
   }
   const equal = (a: string[], b: string[]) =>
     JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
@@ -2110,4 +2143,21 @@ export async function paginateCircuitGroup(
       `Circuit ${group.id}: pagination did not conserve the original source selection.`,
     );
   return drawings;
+}
+
+function circuitPartFitError(
+  groupId: string,
+  drawing: CircuitDrawing,
+  available?: { w: number; h: number },
+) {
+  const fit = available
+    ? deviceTagFitDetails(drawing, available.w, available.h)
+    : undefined;
+  return new CircuitRenderError({
+    code: "R006",
+    root: "packet",
+    reason: "unprintable-layout",
+    message: `Circuit ${groupId}: a complete conductor, symbol or continuation block cannot fit at readable size.${fit?.message ?? ""}`,
+    details: { groupId, ...fit },
+  });
 }

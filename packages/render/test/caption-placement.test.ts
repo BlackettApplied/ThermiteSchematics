@@ -136,7 +136,7 @@ for (const flow of flows) {
         ).find((t) => t.text === "DUT"),
       );
       for (const owner of parseHTML(r.value.html).document.querySelectorAll(
-        "[data-circuit-functions]",
+        "[data-circuit-functions][data-device-uid]",
       )) {
         const uid = owner.getAttribute("data-device-uid");
         const tag = [...owner.children].find((e) => e.localName === "text");
@@ -195,7 +195,9 @@ for (const flow of flows) {
           ),
         ),
         owner = must(footer.closest("[data-device-uid]"));
-      expect(must(owner.lastElementChild).textContent).toBe("13-14: 300");
+      expect([...owner.querySelectorAll("text")].at(-1)?.textContent).toBe(
+        "13-14: 300",
+      );
     } finally {
       await browser.close();
     }
@@ -233,13 +235,13 @@ for (const flow of flows) {
         ),
       );
     expect(coil.textContent).toContain("40 contacts: 300");
-    const width = Number(coil.getAttribute("data-layout-width"));
+    const width = Number(coil.getAttribute("data-circuit-body-width"));
     expect(width).toBeLessThan(40);
     expect(width).toBeGreaterThanOrEqual(20);
   });
 }
 
-it("preserves the self-loop S1 baseline and designation paint order", async () => {
+it("reserves a separate self-loop S1 tag lane and designation paint order", async () => {
   const c = await compileProject("examples/self-loop-labels");
   if (!c.ok) throw Error("Compile failed");
   const { readFile } = await import("node:fs/promises");
@@ -253,7 +255,8 @@ it("preserves the self-loop S1 baseline and designation paint order", async () =
     t = must(
       [...doc.querySelectorAll("text")].find((e) => e.textContent === "S1"),
     );
-  expect(t.getAttribute("y")).toBe("3.3");
+  expect(Number(t.getAttribute("font-size"))).toBeGreaterThanOrEqual(2.7);
+  expect(t.getAttribute("data-tag-field")).toBe("designation");
   const owner = must(t.closest("[data-device-uid]"));
   expect([...owner.children].find((e) => e.localName === "text")).toBe(t);
 });
@@ -379,8 +382,10 @@ it("preserves designation order before boundary text", async () => {
   if (!r.ok) throw Error(r.error.message);
   const doc = parseHTML(r.value.html).document;
   let boundary = 0;
-  for (const owner of doc.querySelectorAll("[data-circuit-functions]")) {
-    const texts = [...owner.children].filter((e) => e.localName === "text");
+  for (const owner of doc.querySelectorAll(
+    "[data-circuit-functions][data-device-uid]",
+  )) {
+    const texts = [...owner.querySelectorAll("text")];
     if (texts.some((t) => t.textContent === "BOUNDARY")) {
       const device = must(
         motor.devices.find(

@@ -1,7 +1,10 @@
 import {
-  ownedTagText,
-  drawingDeviceReference,
-} from "./device-tag-ownership.js";
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
+import { drawingDeviceReference } from "./device-tag-ownership.js";
 import {
   assertTopologyIdentities,
   assertTopologyRouteEndpoints,
@@ -34,6 +37,7 @@ export interface CommunicationDrawing {
     y: number;
   }[];
   note: string;
+  deviceTags?: readonly DeviceTagPlan[];
   topologyCoverage?: TopologyDrawingCoverage;
   coverage?: DrawingCoverage;
   pagination?: {
@@ -184,23 +188,26 @@ async function layoutCommunicationDrawing(
     { key: string; side: "WEST" | "EAST"; y: number }[]
   >();
   const captions = new Map<string, string[]>();
-  const nodeWidth = request.medium === "nrg-bus" ? 44 : 66;
+  const tags = new Map<string, DeviceTagPlan>();
   const children: ElkNode[] = ordered.map((uid) => {
     const device = devices.get(uid)!,
       type = types.get(device.typeId)!;
+    const tag = drawingDeviceTag(
+      device,
+      type,
+      request.medium === "nrg-bus" ? 44 : 66,
+    );
+    tags.set(uid, tag);
+    const nodeWidth = tag.widthMm;
     const boundary = selected.size > 0 && !selected.has(uid);
     const caption = [
-      device.designation,
-      ...wrap(
-        type.catalog?.orderNumber ?? type.description ?? type.id,
-        request.medium === "nrg-bus" ? 24 : 35,
-        nodeWidth - 6,
-      ),
-      ...wrap(
-        device.location ?? "Location unspecified",
-        request.medium === "nrg-bus" ? 24 : 35,
-        nodeWidth - 6,
-      ),
+      ...(device.location?.trim()
+        ? wrap(
+            device.location,
+            request.medium === "nrg-bus" ? 24 : 35,
+            nodeWidth - 6,
+          )
+        : []),
       ...(boundary ? ["Boundary (schedule)"] : []),
       ...(projection &&
       selectedLinks.some(
@@ -220,14 +227,7 @@ async function layoutCommunicationDrawing(
         `Communication caption for ${device.designation} is too wide; use a shorter label.`,
       );
     captions.set(uid, caption);
-    const connected = links.flatMap<{ key: string; side: "WEST" | "EAST" }>(
-      (l) =>
-        l.fromDeviceUid === uid
-          ? [{ key: l.connection.fromPort, side: "EAST" as const }]
-          : l.toDeviceUid === uid
-            ? [{ key: l.connection.toPort, side: "WEST" as const }]
-            : [],
-    );
+    const connected = communicationPorts(links, uid);
     const west = connected.filter((p) => p.side === "WEST"),
       east = connected.filter((p) => p.side === "EAST");
     for (let i = 0; i < Math.max(west.length, east.length); i++)
@@ -238,7 +238,7 @@ async function layoutCommunicationDrawing(
         throw new Error(
           `Communication port labels on ${device.designation} cannot fit without overlap.`,
         );
-    const labelBottom = 4 + caption.length * 3.7;
+    const labelBottom = deviceHeaderHeight(tag, caption) + 3;
     const list = [
       ...west.map((p, i) => ({ ...p, y: labelBottom + 4 + i * 5 })),
       ...east.map((p, i) => ({ ...p, y: labelBottom + 4 + i * 5 })),
@@ -383,14 +383,7 @@ async function layoutCommunicationDrawing(
       `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})">`,
       `<rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#f5f8fb" stroke="#344054" stroke-width="0.3"/>`,
     );
-    out.push(
-      ...communicationCaptionSvg(
-        uid,
-        captions.get(uid)!,
-        types.get(device.typeId),
-        request.medium,
-      ),
-    );
+    out.push(deviceHeaderSvg(tags.get(uid), captions.get(uid)!));
     for (const port of rows.get(uid)!) {
       const px = port.side === "WEST" ? 0 : node.width!;
       out.push(
@@ -447,6 +440,7 @@ async function layoutCommunicationDrawing(
     width: graph.width!,
     height: graph.height!,
     references,
+    deviceTags: [...tags.values()],
     note: projection
       ? `${links.length} of ${selectedLinks.length} authored links in this part; ${selected.size ? "boundary devices included; " : ""}see communication schedule for status and unconnected ports.`
       : `${links.length} authored links; ${selected.size ? "boundary devices included; " : ""}see communication schedule for status and unconnected ports.`,
@@ -564,36 +558,15 @@ export async function prepareCommunicationPages(
   return drawings;
 }
 
-function communicationCaptionSvg(
+function communicationPorts(
+  links: ReturnType<typeof buildCommunicationInventory>["links"],
   uid: string,
-  caption: readonly string[],
-  type: ElectricalIr["deviceTypes"][number] | undefined,
-  medium: string,
 ) {
-  const result: string[] = [],
-    nodeWidth = medium === "nrg-bus" ? 44 : 66;
-  caption.forEach((s, j) =>
-    result.push(
-      ownedTagText(
-        text(3, 5 + j * 3.7, s, j === 0),
-        uid,
-        j === 0
-          ? "designation"
-          : j <=
-              wrap(
-                type?.catalog?.orderNumber ??
-                  type?.description ??
-                  type?.id ??
-                  "",
-                medium === "nrg-bus" ? 24 : 35,
-                nodeWidth - 6,
-              ).length
-            ? type?.catalog?.orderNumber
-              ? "part"
-              : "description"
-            : undefined,
-      ),
-    ),
+  return links.flatMap<{ key: string; side: "WEST" | "EAST" }>((l) =>
+    l.fromDeviceUid === uid
+      ? [{ key: l.connection.fromPort, side: "EAST" as const }]
+      : l.toDeviceUid === uid
+        ? [{ key: l.connection.toPort, side: "WEST" as const }]
+        : [],
   );
-  return result;
 }

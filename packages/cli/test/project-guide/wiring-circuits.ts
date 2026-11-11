@@ -365,22 +365,32 @@ const module: FactModule = {
   facts: [
     {
       claim:
-        "Circuit primary text uses ≥2.5 mm em; secondary references/boundaries use 2.3 mm em.",
+        "Tags: designation ≥2.7 mm, instance/else-type description and catalog part ≥2.5 mm.",
       async check() {
         const doc = parseHTML((await multi()).svg).document;
         const texts = [...doc.querySelectorAll("svg")].flatMap((svg) =>
           svgTextGeometry(svg),
         );
-        const primary = texts.filter((t) =>
-          t.element.closest("[data-circuit-mark]"),
+        const tags = texts.filter((t) =>
+          t.element.hasAttribute("data-tag-field"),
         );
-        expect(primary.length).toBeGreaterThan(0);
-        for (const t of primary) expect(t.em).toBeGreaterThanOrEqual(2.5);
-        const boundary = texts.filter(
-          (t) => t.element.textContent === "BOUNDARY",
+        expect(tags.length).toBeGreaterThan(0);
+        for (const t of tags)
+          expect(t.em).toBeGreaterThanOrEqual(
+            t.element.getAttribute("data-tag-field") === "designation"
+              ? 2.7
+              : 2.5,
+          );
+        const owners = new Set(
+          tags.map((t) => t.element.getAttribute("data-tag-owner-uid")),
         );
-        expect(boundary.length).toBeGreaterThan(0);
-        for (const t of boundary) expect(t.em).toBe(2.3);
+        for (const uid of owners) {
+          const fields = tags
+            .filter((t) => t.element.getAttribute("data-tag-owner-uid") === uid)
+            .map((t) => t.element.getAttribute("data-tag-field"));
+          expect(fields).toContain("designation");
+          expect(fields).toContain("description");
+        }
       },
     },
     {

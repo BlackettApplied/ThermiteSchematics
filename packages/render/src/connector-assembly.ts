@@ -1,4 +1,9 @@
-import { ownedTagText } from "./device-tag-ownership.js";
+import {
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
 import {
   assertTopologyIdentities,
   assertTopologyRouteEndpoints,
@@ -32,6 +37,7 @@ export interface ConnectorAssemblyDrawing {
     y: number;
   }[];
   note: string;
+  deviceTags?: readonly DeviceTagPlan[];
   topologyCoverage?: TopologyDrawingCoverage;
   paginated?: boolean;
 }
@@ -194,7 +200,7 @@ async function layoutAssemblyDrawing(
         lines: string[];
       }[]
     >();
-  const nodeWidth = 58;
+  const tags = new Map<string, DeviceTagPlan>();
   const edgeCaptions = links.map((r) => [
     r.designation ?? r.uid,
     ...wrap(
@@ -219,16 +225,12 @@ async function layoutAssemblyDrawing(
   const children: ElkNode[] = ordered.map((uid) => {
     const device = devices.get(uid)!,
       type = types.get(device.typeId)!;
-    const caption = [
-      device.designation,
-      ...wrap(device.description ?? type.description ?? type.id, nodeWidth - 6),
-      ...wrap(type.catalog?.orderNumber ?? "", nodeWidth - 6),
-      ...wrap(device.location ?? "Location unspecified", nodeWidth - 6),
-    ];
-    if (caption.some((s) => width(s) > nodeWidth - 6))
-      throw new Error(
-        `Assembly device designation ${device.designation} is too wide.`,
-      );
+    const tag = drawingDeviceTag(device, type, 58);
+    tags.set(uid, tag);
+    const nodeWidth = tag.widthMm;
+    const caption = device.location?.trim()
+      ? wrap(device.location, nodeWidth - 6)
+      : [];
     captions.set(uid, caption);
     const available = inventory.ports.filter((p) => p.deviceUid === uid);
     const originalPorts = available.filter(
@@ -260,7 +262,7 @@ async function layoutAssemblyDrawing(
           nodeWidth - 6,
         ),
       );
-    let y = 5 + caption.length * 3.6;
+    let y = deviceHeaderHeight(tag, caption) + 5;
     const list = ports.map((p, i) => {
       const incoming = links.some(
         (a) => a.toDeviceUid === uid && a.assembly.toPort === p.key,
@@ -485,7 +487,7 @@ async function layoutAssemblyDrawing(
     if (![node.x, node.y, node.width, node.height].every(Number.isFinite))
       throw new Error("Invalid assembly node bounds.");
     out.push(
-      `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})"><rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#fafafa" stroke="#344054" stroke-width=".35"/>${assemblyCaptionSvg(device, types.get(device.typeId), captions.get(uid)!, nodeWidth)}`,
+      `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})"><rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#fafafa" stroke="#344054" stroke-width=".35"/>${deviceHeaderSvg(tags.get(uid), captions.get(uid)!)}`,
     );
     out.push(...assemblyPortSvg(node, rows.get(uid)!));
     out.push("</g>");
@@ -512,6 +514,7 @@ async function layoutAssemblyDrawing(
     width: graph.width!,
     height: graph.height!,
     references,
+    deviceTags: [...tags.values()],
     note: [
       projection
         ? `${links.length} of ${selection.links.length} authored cap assemblies in this part. Complete named connector reservations; pin mapping not applicable. Repeated device bodies show different ports. See other parts and assembly schedule.`
@@ -684,32 +687,4 @@ function assemblyPortSvg(
     );
   }
   return result;
-}
-
-function assemblyCaptionSvg(
-  device: ElectricalIr["devices"][number],
-  type: ElectricalIr["deviceTypes"][number] | undefined,
-  caption: readonly string[],
-  nodeWidth: number,
-) {
-  const descriptionRows = wrap(
-    device.description ?? type?.description ?? type?.id ?? "",
-    nodeWidth - 6,
-  ).length;
-  const partRows = wrap(type?.catalog?.orderNumber ?? "", nodeWidth - 6).length;
-  return caption
-    .map((s, i) =>
-      ownedTagText(
-        text(3, 5 + i * 3.6, s, i === 0),
-        device.uid,
-        i === 0
-          ? "designation"
-          : i <= descriptionRows
-            ? "description"
-            : i <= descriptionRows + partRows
-              ? "part"
-              : undefined,
-      ),
-    )
-    .join("");
 }

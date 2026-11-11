@@ -228,7 +228,7 @@ describe("functional symbol conveyance", () => {
         ...doc.querySelectorAll('[data-function-key="output"]'),
       ].find(
         (e) =>
-          e.parentElement!.getAttribute("data-device-uid") ===
+          e.closest("[data-device-uid]")!.getAttribute("data-device-uid") ===
           ir.devices.find((d) => d.designation === "LD1")!.uid,
       )!;
       expect(

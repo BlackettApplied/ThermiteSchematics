@@ -236,7 +236,11 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
 it.each(["letter", "tabloid"] as const)(
   "suggests another orientation and flow on %s without advising larger than tabloid",
   async (size) => {
-    const f = await seriesFixture();
+    const f = await seriesFixture((m) => {
+      for (const type of m.types)
+        type.description =
+          "Synthetic field interface qualification for note-space fit";
+    });
     try {
       const r = await renderSchematicPacket(f.ir, {
         format: "schematic-packet-request/0.1",

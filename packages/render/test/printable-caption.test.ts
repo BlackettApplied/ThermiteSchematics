@@ -87,12 +87,12 @@ describe("printable function facts", () => {
         expect(
           circuitTextLines(
             label,
-            Number(coil.getAttribute("data-layout-width")) - 4 + 0.001,
+            Number(coil.getAttribute("data-circuit-body-width")) - 4 + 0.001,
             2.3,
           ),
         ).toEqual([label]);
       expect(
-        Number(coil.getAttribute("data-layout-width")),
+        Number(coil.getAttribute("data-circuit-body-width")),
       ).toBeLessThanOrEqual(100);
       // Exercise the bounded semantic-summary fallback without a huge drawn
       // contact bank obscuring what this regression is checking.
@@ -350,20 +350,15 @@ describe("printable function facts", () => {
           .closest("[data-device-uid]")!;
         const footer = 2 * 3.1 + 5;
         expect(
-          Number(annotatedNode.getAttribute("data-layout-height")) -
-            Number(plainNode.getAttribute("data-layout-height")),
+          Number(annotatedNode.getAttribute("data-circuit-body-height")) -
+            Number(plainNode.getAttribute("data-circuit-body-height")),
         ).toBeCloseTo(footer, 2);
-        const mark = coil.querySelector(
-          '[data-function-key="coil"] g[transform]',
-        )!;
-        const x =
-          Number(
-            /translate\(([-\d.]+)/.exec(mark.getAttribute("transform")!)![1],
-          ) + 4;
         const designation = [...coil.children].find(
           (e) => e.localName === "text" && e.textContent === "K1",
         )!;
-        expect(Number(designation.getAttribute("x"))).toBeCloseTo(x + 3, 2);
+        expect(Number(designation.getAttribute("x"))).toBeGreaterThan(
+          Number(coil.getAttribute("data-circuit-body-width")),
+        );
         expect(designation.getAttribute("text-anchor")).toBe("start");
       }
       const available =

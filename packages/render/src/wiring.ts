@@ -1,7 +1,10 @@
 import {
-  ownedTagText,
-  drawingDeviceReference,
-} from "./device-tag-ownership.js";
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
+import { drawingDeviceReference } from "./device-tag-ownership.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 import {
@@ -178,6 +181,7 @@ export async function prepareWiringDrawing(
   const ids = new Map(ordered.map((uid, i) => [uid, `d${i}`]));
   const ports = new Map<string, string>();
   const labels = new Map<string, string[]>();
+  const tags = new Map<string, DeviceTagPlan>();
   const rows = new Map<
     string,
     { key: string; label: string; side: "WEST" | "EAST"; y: number }[]
@@ -185,14 +189,10 @@ export async function prepareWiringDrawing(
   const children: ElkNode[] = ordered.map((uid) => {
     const d = devices.get(uid)!,
       type = types.get(d.typeId)!;
-    const nodeWidth = 48;
-    if (width(d.designation) > nodeWidth - 6)
-      throw wiringWidthError(d.designation);
-    const caption = [
-      d.designation,
-      ...wrap(type.description ?? type.id, nodeWidth - 6),
-      ...wrap(d.location ?? "Location unspecified", nodeWidth - 6),
-    ];
+    const tag = drawingDeviceTag(d, type, 48);
+    tags.set(uid, tag);
+    const nodeWidth = tag.widthMm;
+    const caption = d.location?.trim() ? wrap(d.location, nodeWidth - 6) : [];
     const pins = [...terminalIds.values()]
       .filter((t) => t.deviceUid === uid)
       .sort(
@@ -204,7 +204,7 @@ export async function prepareWiringDrawing(
     const omitted = Object.keys(type.terminals).length - pins.length;
     if (omitted) caption.push(`${omitted} other terminals: schedule`);
     labels.set(uid, caption);
-    let y = 6 + caption.length * 3.7;
+    let y = deviceHeaderHeight(tag, caption) + 6;
     const list = pins.map((t) => {
       const side = selected.some((w) => key(w.ends[1]!) === key(t))
         ? ("WEST" as const)
@@ -469,22 +469,7 @@ export async function prepareWiringDrawing(
     out.push(
       `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})"><rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#f5f8fb" stroke="#344054" stroke-width=".3"/>`,
     );
-    labels
-      .get(uid)!
-      .forEach((s, i) =>
-        out.push(
-          ownedTagText(
-            text(3, 5 + i * 3.7, s, i === 0),
-            uid,
-            i === 0
-              ? "designation"
-              : i <=
-                  wrap(types.get(d.typeId)?.description ?? d.typeId, 42).length
-                ? "description"
-                : undefined,
-          ),
-        ),
-      );
+    out.push(deviceHeaderSvg(tags.get(uid), labels.get(uid)!));
     out.push(...wiringPortSvg(node, rows.get(uid)!));
     out.push("</g>");
     references.push(drawingDeviceReference(node, d));
@@ -495,6 +480,7 @@ export async function prepareWiringDrawing(
     width: graph.width!,
     height: graph.height!,
     references,
+    deviceTags: [...tags.values()],
     coverage: {
       kind: "wiring",
       conductorIds: selected.map((c) => c.id),

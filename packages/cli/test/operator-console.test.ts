@@ -157,6 +157,9 @@ describe("operator console wiring", () => {
     hostile.deviceTypes.find(
       (t) => t.id === "console-planning:dc-feed",
     )!.description = "bad\u0000text";
+    hostile.devices.find(
+      (d) => d.typeId === "console-planning:dc-feed",
+    )!.description = "bad\u0000text";
     expect(
       (await renderSchematicPacket(hostile, { ...request, views: [view] })).ok,
     ).toBe(false);

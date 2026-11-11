@@ -242,7 +242,12 @@ it.each(flows)(
 it.each(flows)(
   "refuses unreadable direct-loop notes with its own fit message in %s",
   async (flow) => {
-    const f = await directFixture(roleFree);
+    const f = await directFixture((m) => {
+      roleFree(m);
+      for (const type of m.types)
+        type.description =
+          "Synthetic field interface with a complete qualification for the note-space fit reproduction";
+    });
     try {
       const r = await renderSchematicPacket(
         f.ir,
@@ -259,8 +264,9 @@ it.each(flows)(
         error: {
           code: "R006",
           reason: "unprintable-layout",
-          message:
+          message: expect.stringContaining(
             'Packet view[0] "TX1 - signal loop": Signal loop notes and diagram cannot fit at readable size. Try another orientation or flow, larger paper, or fewer devices or shorter notes.',
+          ),
         },
       });
       expect(r).not.toHaveProperty("value");

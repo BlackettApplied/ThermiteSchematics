@@ -393,8 +393,9 @@ it("refuses notes that cannot fit without hiding or shrinking them", async () =>
       error: {
         code: "R006",
         reason: "unprintable-layout",
-        message:
-          'Packet view[0] "TX1 - signal loop": Series loop notes and diagram cannot fit at readable size. Try another orientation or flow, larger paper, or fewer devices or shorter notes.',
+        message: expect.stringContaining(
+          'Packet view[0] "TX1 - signal loop": Series loop notes and diagram cannot fit at readable size.',
+        ),
       },
     });
     expect(r).not.toHaveProperty("value");
@@ -495,7 +496,7 @@ it("reserves note space before fitting a borderline readable diagram", async () 
   const f = await seriesFixture();
   try {
     const notes = Array.from(
-      { length: 5 },
+      { length: 6 },
       (_, i) => `Installation note ${i}: ${"Wide text ".repeat(20).trimEnd()}`,
     );
     const result = await renderSchematicPacket(

@@ -321,6 +321,18 @@ per sheet without changing electrical metadata. An unprintable arrangement retur
 than clipping a device, overlapping a continuation label, or silently omitting
 content. Change flow, page size, or the selected view to resolve it.
 
+Circuit, wiring, signal-loop (ordinary and series), communication and connector
+assembly drawings print source-backed device tags in this order: bold designation,
+instance description (otherwise nonblank type description), then catalog order
+number. Absent optional fields and location rows are omitted. Description and part
+are independent; neither replaces the other. Tags use dark ink on a light
+background, with at least 2.7 mm designation em and 2.5 mm other-field em after
+packet scaling. Measured wrapping preserves every character without truncation or
+inserted identifier punctuation. Headers and terminal origins are reserved before
+ELK; split parts repeat complete tags for their local devices. A tag and its owner
+that cannot fit at readable size produce R006; use larger paper or a narrower
+selection. No device rating is inferred.
+
 Signal-loop selected-channel captions use the authored I/O address, or the shared
 AI/AO/DI/DO vocabulary only when explicit terminal roles establish the class.
 Otherwise `IN`/`OUT` states only the authored direction. The current schema has no

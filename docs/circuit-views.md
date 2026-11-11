@@ -206,6 +206,18 @@ Explicit `circuitSymbols` marks include `contact-no`, `contact-nc`, `breaker`, `
 
 ELK places device/function blocks and routes all selected physical conductors. The catalog supplies component marks and their terminal attachments. Circuit groups are measured at readable size and packed into one or two columns. A wide group may span both columns; multiple wide groups can share a page. A complete group is never clipped or reduced below the circuit text size to force it onto paper. View notes appear once in a measured block after the last group, using remaining column space when available.
 
+Each drawn device has an owned printing tag: bold designation, nonblank instance
+description (otherwise type description), and the exact catalog order number when
+authored. Description and part occupy separate rows; empty fields have no row.
+The measured tag lane is above the body in left-to-right flow and beside the pin
+and symbol lanes in top-to-bottom flow. Its reservation precedes ELK, including
+any stems needed to reach the node boundary. Repeated functions in one device
+node share the tag; each split part repeats its local devices' complete tags.
+Tag designation uses at least 2.7 mm em and other fields at least 2.5 mm em.
+Long descriptions wrap at words, then graphemes; literal parts retain all authored
+characters and separators. No truncation, inferred rating or subminimum fit is
+used. An owner that cannot fit with its tag produces R006.
+
 Primary symbol legends, wire labels, conductor details, terminal labels and PLC channel addresses use at least 2.5 mm em at printed scale. Secondary cross-reference and boundary captions use 2.3 mm em. Long labels are measured before routing and pagination; an unreadable block or group is rejected rather than clipped.
 
 Vertical device designations, and relation footers in both flows, use pinned

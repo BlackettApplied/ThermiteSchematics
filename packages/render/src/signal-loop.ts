@@ -1,4 +1,9 @@
-import { ownedTagText } from "./device-tag-ownership.js";
+import {
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
 import { selectedChannelCaption } from "./symbols/printable-policy.js";
 import { measureText, wrapText } from "./text-metrics.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
@@ -475,6 +480,7 @@ export async function prepareSignalLoopDrawing(
     ...physicalEdges.filter((e) => !e.cable || !assembledCables.has(e.cable)),
     ...assemblies,
   ];
+  const tags = new Map<string, DeviceTagPlan>();
   const captions = new Map<string, string[]>(),
     ports = new Map<
       string,
@@ -499,29 +505,25 @@ export async function prepareSignalLoopDrawing(
           ? selected.to
           : undefined;
     const isChannel = channel?.function.kind === "channel";
-    const captionWidth = selected.output
+    const preferredWidth = selected.output
       ? index === 0 || index === stages.length - 1
         ? 50
         : 44
       : isChannel
         ? 66
         : 50;
+    const tag = drawingDeviceTag(device, type, preferredWidth);
+    tags.set(uid, tag);
+    const captionWidth = tag.widthMm;
     let w = captionWidth;
     const caption = [
-      device.designation,
-      ...wrap(
-        isChannel
-          ? (type.catalog?.orderNumber ?? type.description ?? type.id)
-          : (type.description ?? type.id),
-        captionWidth - 6,
-      ),
-      ...wrap(device.location ?? "Location unspecified", captionWidth - 6),
+      ...(device.location?.trim()
+        ? wrap(device.location, captionWidth - 6)
+        : []),
       ...(isChannel
         ? wrap(selectedChannelCaption(channel!), captionWidth - 6)
         : []),
     ];
-    if (width(device.designation) > captionWidth - 6)
-      throw new Error("Device designation is too wide for a signal loop view.");
     captions.set(uid, caption);
     const terms = new Set(
       physicalEdges.flatMap((e) =>
@@ -564,8 +566,7 @@ export async function prepareSignalLoopDrawing(
     const header =
       (index === 0 && type.symbol === "thermite:pressure-transmitter"
         ? 26
-        : 5) +
-      caption.length * 3.7;
+        : 5) + deviceHeaderHeight(tag, caption);
     const h = vertical
       ? Math.max(header + 5, 35)
       : header + ordered.length * 10 + 5;
@@ -789,7 +790,13 @@ export async function prepareSignalLoopDrawing(
         vertical ? 25 : node.width! / 2,
       ),
     );
-    out.push(...signalCaptionSvg(uid, captions.get(uid)!, selected, index));
+    out.push(
+      deviceHeaderSvg(
+        tags.get(uid),
+        captions.get(uid)!,
+        index === 0 && type.symbol === "thermite:pressure-transmitter" ? 21 : 0,
+      ),
+    );
     const list = ports.get(uid)!;
     for (const p of list) {
       if (p.assembly) {
@@ -940,66 +947,10 @@ export async function prepareSignalLoopDrawing(
       width: enclosure.width,
       height: enclosure.height,
       references,
+      deviceTags: [...tags.values()],
     },
     selected,
     request,
     assemblies.length > 0,
   );
-}
-
-function signalCaptionSvg(
-  uid: string,
-  caption: readonly string[],
-  selected: ReturnType<typeof selectSignalLoop>,
-  index: number,
-) {
-  const device = selected.devices.get(uid),
-    type = selected.types.get(device?.typeId ?? "");
-  if (!type) throw Error("Missing signal caption type");
-  const stages = selected.stages,
-    result: string[] = [];
-  const channelCaption =
-    uid === selected.from.device.uid
-      ? selected.from
-      : uid === selected.to.device.uid
-        ? selected.to
-        : undefined;
-  const partCaption =
-    channelCaption?.function.kind === "channel" && type.catalog?.orderNumber;
-  const tagRows = wrap(
-    partCaption || type.description || type.id,
-    (selected.output
-      ? index === 0 || index === stages.length - 1
-        ? 50
-        : 44
-      : channelCaption?.function.kind === "channel"
-        ? 66
-        : 50) - 6,
-  ).length;
-  caption.forEach((s, i) =>
-    result.push(
-      ownedTagText(
-        text(
-          3,
-          (index === 0 && type.symbol === "thermite:pressure-transmitter"
-            ? 26
-            : 5) +
-            i * 3.7,
-          s,
-          2.7,
-          "start",
-          i === 0,
-        ),
-        uid,
-        i === 0
-          ? "designation"
-          : i <= tagRows
-            ? partCaption
-              ? "part"
-              : "description"
-            : undefined,
-      ),
-    ),
-  );
-  return result;
 }

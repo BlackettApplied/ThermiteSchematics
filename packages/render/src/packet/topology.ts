@@ -1,3 +1,4 @@
+import { deviceTagFitDetails } from "./device-tag-fit.js";
 import { wrapText } from "../text-metrics.js";
 import { prepareWiringDrawing, type WiringViewRequest } from "../wiring.js";
 import { circuitTextLines } from "../circuit.js";
@@ -73,6 +74,7 @@ export async function topologyDrafts(
   presentation: CompiledProjectPresentation | undefined,
   page: PaperPage,
 ): Promise<RenderOutcome<Draft[]>> {
+  let fitRefusal: RenderOutcome<never> | undefined;
   try {
     const wiring = request.format === "wiring-view-request/0.1";
     const signalLoop = request.format === "signal-loop-view-request/0.1";
@@ -112,21 +114,19 @@ export async function topologyDrafts(
             ) * 1000,
           ) / 1000;
       }
+      const tagFit = topologyTagFit(
+        drawing,
+        b,
+        headingHeight,
+        reserveNotes ? 4 + noteHeight : 6,
+      );
       if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
-        return failure(
-          "unprintable-layout",
-          drawing.engineNotes
-            ? loopFitRefusal(page, request)
-            : reserveNotes && assembly
-              ? "Connector assembly notes and diagram cannot fit at readable size. Shorten notes, select fewer assemblies or use larger paper."
-              : wiring
-                ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
-                : signalLoop
-                  ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
-                  : assembly
-                    ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
-                    : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.",
-          { devices: drawing.references },
+        return topologyFitFailure(
+          drawing,
+          page,
+          request,
+          { wiring, signalLoop, assembly, reserveNotes },
+          tagFit,
         );
       const x = b.x + (b.w - drawing.width * scale) / 2,
         y = b.y + headingHeight;
@@ -221,17 +221,18 @@ export async function topologyDrafts(
         },
       };
     };
+    const fits = (drawing: NotedDrawing) => {
+      const result = compose(drawing);
+      if (!result.ok) fitRefusal = result;
+      return result.ok;
+    };
     const drawings = wiring
       ? [await prepareWiringDrawing(ir, request)]
       : signalLoop
         ? [await prepareSignalLoopDrawing(ir, request)]
         : assembly
-          ? await prepareConnectorAssemblyPages(
-              ir,
-              request,
-              (d) => compose(d).ok,
-            )
-          : await prepareCommunicationPages(ir, request, (d) => compose(d).ok);
+          ? await prepareConnectorAssemblyPages(ir, request, fits)
+          : await prepareCommunicationPages(ir, request, fits);
     const drafts: Draft[] = [];
     for (const drawing of drawings) {
       const result = compose(drawing);
@@ -240,19 +241,69 @@ export async function topologyDrafts(
     }
     return { ok: true, value: drafts };
   } catch (e) {
-    return topologyFailure(ir, request, e);
+    return topologyFailure(ir, request, e, fitRefusal);
   }
+}
+
+function topologyFitFailure(
+  drawing: NotedDrawing,
+  page: PaperPage,
+  request: { format: string; loopPower?: unknown },
+  flags: {
+    wiring: boolean;
+    signalLoop: boolean;
+    assembly: boolean;
+    reserveNotes: boolean;
+  },
+  tagFit: ReturnType<typeof deviceTagFitDetails>,
+) {
+  const { wiring, signalLoop, assembly, reserveNotes } = flags;
+  return failure(
+    "unprintable-layout",
+    (drawing.engineNotes
+      ? loopFitRefusal(page, request)
+      : reserveNotes && assembly
+        ? "Connector assembly notes and diagram cannot fit at readable size. Shorten notes, select fewer assemblies or use larger paper."
+        : wiring
+          ? "Wiring view cannot fit at readable text size. Select fewer conductors or larger paper."
+          : signalLoop
+            ? "Signal loop cannot fit at readable text size. Use larger paper or another flow."
+            : assembly
+              ? "Connector assembly view cannot fit at readable text size. Select fewer assemblies or larger paper; omitted ports remain identified."
+              : "Communication view cannot fit at readable text size. Select fewer devices or larger paper; boundary links will remain visible.") +
+      tagFit.message,
+    { devices: drawing.references, ...tagFit },
+  );
+}
+
+function topologyTagFit(
+  drawing: NotedDrawing,
+  b: { w: number; h: number },
+  heading: number,
+  footer: number,
+) {
+  return deviceTagFitDetails(
+    drawing,
+    b.w / (2.5 / 2.7),
+    (b.h - heading - footer) / (2.5 / 2.7),
+  );
 }
 
 function topologyFailure(
   ir: Readonly<ElectricalIr>,
   request: unknown,
   error: unknown,
+  fitRefusal?: RenderOutcome<never>,
 ) {
+  const fit =
+    fitRefusal && !fitRefusal.ok && fitRefusal.error.code === "R006"
+      ? fitRefusal.error
+      : undefined;
   return failure(
     "unprintable-layout",
-    error instanceof Error ? error.message : "Topology view failed.",
-    topologySelectionContext(ir, request),
+    (error instanceof Error ? error.message : "Topology view failed.") +
+      (fit ? ` ${fit.message}` : ""),
+    { ...topologySelectionContext(ir, request), ...fit?.details },
   );
 }
 

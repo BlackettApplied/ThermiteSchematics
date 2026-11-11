@@ -1,3 +1,4 @@
+import { deviceTagFitDetails } from "./device-tag-fit.js";
 import {
   CircuitRenderError,
   renderErrorContext,
@@ -67,8 +68,7 @@ export async function circuitDrafts(
         "unprintable-layout",
         "Circuit notes leave insufficient readable drawing space.",
       );
-    const gap = 8,
-      columnWidth = (b.w - gap * (prepared.columns - 1)) / prepared.columns;
+    const columnWidth = (b.w - 8 * (prepared.columns - 1)) / prepared.columns;
     const drafts: Draft[] = [];
     let column = 0,
       cursors = [0, 0];
@@ -117,6 +117,7 @@ export async function circuitDrafts(
           group,
           fits,
           appearances,
+          { ...b, h: available },
         )),
       );
     for (const group of groups) {
@@ -125,8 +126,12 @@ export async function circuitDrafts(
       if (group.width > width + 0.001)
         return failure(
           "unprintable-layout",
-          `Circuit ${group.id} needs ${n(group.width)} mm at readable size; select a narrower circuit group, another flow, or larger paper.`,
-          { groupId: group.id, devices: group.references },
+          `Circuit ${group.id} needs ${n(group.width)} mm at readable size; select a narrower circuit group, another flow, or larger paper.${deviceTagFitDetails(group, width, available).message}`,
+          {
+            groupId: group.id,
+            devices: group.references,
+            ...deviceTagFitDetails(group, width, available),
+          },
         );
       const heading = [
         group.lineReference ? `Ref. ${group.lineReference}` : undefined,
@@ -141,8 +146,12 @@ export async function circuitDrafts(
       if (height > available)
         return failure(
           "unprintable-layout",
-          `Circuit ${group.id} cannot fit as a complete group at readable size. Split its source selection into smaller circuit or channel groups.`,
-          { groupId: group.id, devices: group.references },
+          `Circuit ${group.id} cannot fit as a complete group at readable size. Split its source selection into smaller circuit or channel groups.${deviceTagFitDetails(group, width, available).message}`,
+          {
+            groupId: group.id,
+            devices: group.references,
+            ...deviceTagFitDetails(group, width, available),
+          },
         );
       let offset = spanning ? Math.max(...cursors) : cursors[column]!;
       if (offset + height > available) {
@@ -168,7 +177,7 @@ export async function circuitDrafts(
         conductorIds: [...group.coverage.conductorIds],
         functionIds: [...group.coverage.functionIds],
       });
-      const x = b.x + (spanning ? 0 : column * (columnWidth + gap)),
+      const x = b.x + (spanning ? 0 : column * (columnWidth + 8)),
         y = b.y + headerHeight + offset;
       draft.content +=
         headings
@@ -204,7 +213,7 @@ export async function circuitDrafts(
       const noted = appendCircuitNotes(
         drafts,
         prepared,
-        { b, columnWidth, headerHeight, cursors, available, gap },
+        { b, columnWidth, headerHeight, cursors, available, gap: 8 },
         notes,
         newDraft,
       );

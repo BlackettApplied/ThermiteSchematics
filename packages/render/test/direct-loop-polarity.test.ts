@@ -113,10 +113,10 @@ it.each(flows)(
         createHash("sha256").update(result.value.sheets[0]!.svg).digest("hex"),
       ).toBe(
         flow === "left-to-right"
-          ? "1c9a1bc999df54e030164a56dfdefa9ba3fa91a2b6d09cdbb5d4cfd1d028e81a"
-          : "bacadd1abb5ed079e1b98d3352df8e2129f2310bd57b82558bdbd9b76e052fe5",
+          ? "3576b108c63c888f7efb1880b852bf47ed12526fdeb0033b690b407b18ccdcfa"
+          : "2d4f9590defa4e3e8ec110797d20a44744e1dc234fd91355bb4b6793bffcdbf8",
       );
-      // C1 ownership metadata must leave the reviewed printed SVG byte-identical.
+      // Pin the complete measured-tag drawing independently of ownership metadata.
       expect(
         createHash("sha256")
           .update(
@@ -128,8 +128,8 @@ it.each(flows)(
           .digest("hex"),
       ).toBe(
         flow === "left-to-right"
-          ? "eb71b4cdc2516856a1b735e230bf039ce37fad9e30341fbb0a426d4156895b04"
-          : "f62e5523600d6ddb9600c9bbd6f1986508fa5a5ccf041d50911ea7d82f3f2c55",
+          ? "8e8547e5ad9bc02f6fc9e2923627a39795f86025132bf64f4f5f2cec45828f1e"
+          : "b86c74e0c4a34e11b0b3b1886cd63590e66152a32dd18d3386baf2b16fbd8b9a",
       );
     }
     expect(JSON.stringify(ir)).toBe(before);

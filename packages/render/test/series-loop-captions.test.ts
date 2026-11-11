@@ -27,10 +27,16 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
       const d = await prepareSignalLoopDrawing(f.ir, { ...fieldRequest, flow }),
         c = caption(d.content, uid(4)),
         orderNumber = "6ES7134-6GD01-0BA1";
-      expect(c.lines).toContain(orderNumber);
-      expect(c.width - 6).toBeGreaterThanOrEqual(
-        measureText(orderNumber, 2.7).width,
-      );
+      const doc = parseHTML(`<svg>${d.content}</svg>`).document;
+      expect(
+        [
+          ...doc.querySelectorAll(
+            `[data-tag-owner-uid="${uid(4)}"][data-tag-field="part"]`,
+          ),
+        ]
+          .map((e) => e.textContent)
+          .join(""),
+      ).toBe(orderNumber);
     } finally {
       await f.dispose();
     }
@@ -65,7 +71,7 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
 );
 
 it.each(["left-to-right", "top-to-bottom"] as const)(
-  "breaks an overlong caption token only after a retained hyphen in %s",
+  "preserves every character of an overlong description in %s",
   async (flow) => {
     const orderNumber = "6ES7134-6GD01-0BA1-6ES7134-6GD01-0BA1",
       f = await seriesFixture((m) => {
@@ -73,13 +79,14 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
       });
     try {
       const d = await prepareSignalLoopDrawing(f.ir, request({ flow })),
-        c = caption(d.content, uid(3)),
-        end = c.lines.indexOf("Location unspecified"),
-        parts = c.lines.slice(1, end);
+        doc = parseHTML(`<svg>${d.content}</svg>`).document,
+        parts = [
+          ...doc.querySelectorAll(
+            `[data-tag-owner-uid="${uid(3)}"][data-tag-field="description"]`,
+          ),
+        ].map((e) => e.textContent!);
       expect(parts.length).toBeGreaterThan(1);
       expect(parts.join("")).toBe(orderNumber);
-      for (const line of parts.slice(0, -1))
-        expect(line.endsWith("-")).toBe(true);
       for (const line of parts)
         expect(measureText(line, 2.7).width).toBeLessThanOrEqual(44);
     } finally {
@@ -89,17 +96,21 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
 );
 
 it.each(["left-to-right", "top-to-bottom"] as const)(
-  "refuses an unbreakable caption token wider than the available box in %s",
+  "wraps uninterrupted description tokens without losing characters in %s",
   async (flow) => {
     const f = await seriesFixture((m) => {
       m.types[2].description = "X".repeat(40);
     });
     try {
-      await expect(
-        prepareSignalLoopDrawing(f.ir, request({ flow })),
-      ).rejects.toThrow(
-        "Series loop caption token cannot fit without splitting an identifier; use a circuit view.",
-      );
+      const d = await prepareSignalLoopDrawing(f.ir, request({ flow }));
+      const doc = parseHTML(`<svg>${d.content}</svg>`).document;
+      const rows = [
+        ...doc.querySelectorAll(
+          `[data-tag-owner-uid="${uid(3)}"][data-tag-field="description"]`,
+        ),
+      ];
+      expect(rows.length).toBeGreaterThan(1);
+      expect(rows.map((e) => e.textContent).join("")).toBe("X".repeat(40));
     } finally {
       await f.dispose();
     }

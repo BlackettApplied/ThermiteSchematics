@@ -1,4 +1,8 @@
-import { ownedTagText } from "../device-tag-ownership.js";
+import {
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "../device-tag-svg.js";
 import { selectedChannelCaption } from "../symbols/printable-policy.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
 import type { ElkNode, ElkExtendedEdge } from "elkjs/lib/elk-api.js";
@@ -199,6 +203,7 @@ function nodePorts(
   w: number,
   h: number,
   header: number,
+  captionWidth: number,
 ): Port[] {
   return terms.flatMap((terminal, i) => {
     const landed = edges.filter((e) =>
@@ -226,7 +231,7 @@ function nodePorts(
           : incoming
             ? "WEST"
             : "EAST",
-        x: vertical ? 56 + i * 12 : incoming ? 0 : w,
+        x: vertical ? captionWidth + 6 + i * 12 : incoming ? 0 : w,
         y: vertical ? (incoming ? 0 : h) : header + 5 + i * 10,
       };
     });
@@ -241,16 +246,11 @@ function nodeCaption(
 ) {
   const device = need(selected.devices.get(uid)),
     type = need(selected.types.get(device.typeId));
-  const values = [
-    type.catalog?.orderNumber ?? type.description ?? type.id,
-    device.location ?? "Location unspecified",
-  ];
+  const values = device.location?.trim() ? [device.location] : [];
   if (source) values.push(`Loop power: ${device.designation}`);
   if (uid === selected.to.device.uid)
     values.push(selectedChannelCaption(selected.to));
-  if (width(device.designation) > 44)
-    throw new Error("Device designation is too wide for a signal loop view.");
-  const captionWidth = vertical
+  const preferredWidth = vertical
     ? 50
     : Math.max(
         36,
@@ -262,14 +262,12 @@ function nodeCaption(
           ) + 6,
         ),
       );
+  const tag = drawingDeviceTag(device, type, preferredWidth);
+  const captionWidth = tag.widthMm;
   return {
+    tag,
     captionWidth,
-    tagRows: wrapCaption(values[0] ?? "", captionWidth - 6).length,
-    tagField: type.catalog?.orderNumber ? "part" : "description",
-    caption: [
-      device.designation,
-      ...values.flatMap((s) => wrapCaption(s, captionWidth - 6)),
-    ],
+    caption: values.flatMap((s) => wrapCaption(s, captionWidth - 6)),
   };
 }
 
@@ -294,27 +292,27 @@ function deviceNode(
       ),
     ).values(),
   ];
-  const order = type.terminalOrder ?? type.terminals.map((t) => t.key);
-  terms.sort(
-    (a, b) =>
-      order.indexOf(a.terminalKey) - order.indexOf(b.terminalKey) ||
-      compare(a.terminalKey, b.terminalKey),
-  );
-  const { caption, captionWidth } = captionPlan;
-  const header = (pressure ? 26 : source ? 20 : 5) + caption.length * 3.7;
-  const w = vertical ? 50 + Math.max(30, terms.length * 12 + 8) : captionWidth;
+  sortTerminals(type, terms);
+  const { caption, captionWidth, tag } = captionPlan;
+  const header =
+    (pressure ? 21 : source ? 15 : 0) + deviceHeaderHeight(tag, caption) + 5;
+  const w = vertical
+    ? captionWidth + Math.max(30, terms.length * 12 + 8)
+    : captionWidth;
   const h = vertical
     ? Math.max(header + 5, 26)
     : header + terms.length * 10 + 4;
-  const ports = nodePorts(terms, index, edges, vertical, w, h, header);
-  if (
-    ports.some(
-      (p) => width(p.terminal.terminalKey) > (vertical ? 10 : w / 2 - 5),
-    )
-  )
-    throw new Error(
-      "Terminal identifier is too wide for the signal loop symbol.",
-    );
+  const ports = nodePorts(
+    terms,
+    index,
+    edges,
+    vertical,
+    w,
+    h,
+    header,
+    captionWidth,
+  );
+  validateTerminalWidths(ports, vertical, w);
   const node: ElkNode = {
     id: `n${index}`,
     width: w,
@@ -338,6 +336,29 @@ function deviceNode(
     pressure,
     feedThrough: !loopFunctions(selected).some((f) => f.device.uid === uid),
   };
+}
+
+function sortTerminals(
+  type: ElectricalIr["deviceTypes"][number],
+  terms: TerminalId[],
+) {
+  const order = type.terminalOrder ?? type.terminals.map((t) => t.key);
+  terms.sort(
+    (a, b) =>
+      order.indexOf(a.terminalKey) - order.indexOf(b.terminalKey) ||
+      compare(a.terminalKey, b.terminalKey),
+  );
+}
+
+function validateTerminalWidths(ports: Port[], vertical: boolean, w: number) {
+  if (
+    ports.some(
+      (p) => width(p.terminal.terminalKey) > (vertical ? 10 : w / 2 - 5),
+    )
+  )
+    throw new Error(
+      "Terminal identifier is too wide for the signal loop symbol.",
+    );
 }
 
 function overlaps(a: Box, b: Box) {
@@ -500,22 +521,11 @@ function emitNode(
   const mark = info.source
     ? `<g transform="translate(${n(vertical ? 19 : w / 2 - 6)} 3)">${emitCircuitMark("dc-output", false, 1)}</g>`
     : "";
-  const caption = info.caption
-    .map((s, i) =>
-      ownedTagText(
-        text(
-          3,
-          (info.pressure ? 26 : info.source ? 20 : 5) + i * 3.7,
-          s,
-          2.7,
-          "start",
-          i === 0 ? 700 : 400,
-        ),
-        info.uid,
-        i === 0 ? "designation" : i <= info.tagRows ? info.tagField : undefined,
-      ),
-    )
-    .join("");
+  const caption = deviceHeaderSvg(
+    info.tag,
+    info.caption,
+    info.pressure ? 21 : info.source ? 15 : 0,
+  );
   const ports = info.ports
     .map(
       (p) =>
@@ -640,6 +650,7 @@ export async function prepareSeriesLoopDrawing(
     width: enclosure.width,
     height: enclosure.height,
     references,
+    deviceTags: infos.map((info) => info.tag),
     engineNotes: notes,
     note: [
       ...notes,

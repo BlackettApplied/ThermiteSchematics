@@ -329,7 +329,7 @@ functions, not spares. Group order affects presentation; order functions by read
 stage (PLC outputs, terminal points, interlocks, coils). A device's first appearance
 sets its display order.
 
-Circuit primary text uses ≥2.5 mm em; secondary references/boundaries use 2.3 mm em.
+Tags: designation ≥2.7 mm, instance/else-type description and catalog part ≥2.5 mm.
 The view draws selected functions with terminal labels, wire numbers and references.
 A wire's `properties.label` is its
 printed number, separate from its source identity; repeated labels never join
