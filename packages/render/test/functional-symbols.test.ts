@@ -9,6 +9,7 @@ import {
   type SchematicPacketRequest,
 } from "../src/sheets.js";
 import { prepareCircuitView, type CircuitViewRequest } from "../src/circuit.js";
+import { svgTextGeometry } from "./source-isolation.js";
 
 const root = fileURLToPath(
   new URL("../../../examples/functional-symbols/", import.meta.url),
@@ -26,6 +27,89 @@ const request = async (flow = "left-to-right") =>
   ) as SchematicPacketRequest;
 
 describe("functional symbol conveyance", () => {
+  it.each(["left-to-right", "top-to-bottom"] as const)(
+    "prints every composed mark legend at physical 2.5 mm em or larger in %s",
+    async (flow) => {
+      const result = await renderSchematicPacket(ir, await request(flow));
+      if (!result.ok) throw Error(result.error.message);
+      const legends: string[] = [];
+      for (const sheet of result.value.sheets) {
+        const doc = parseHTML(sheet.svg).document;
+        for (const node of doc.querySelectorAll("[data-layout-width]")) {
+          const width = Number(node.getAttribute("data-layout-width"));
+          const height = Number(node.getAttribute("data-layout-height"));
+          // Measure inside the reserved owner, including the mark's nested
+          // scale/rotation and the legend's counter-rotation.
+          const copy = node.cloneNode(true) as Element;
+          copy.removeAttribute("transform");
+          for (const t of svgTextGeometry(copy).filter((t) =>
+            t.element.closest("[data-circuit-mark]"),
+          )) {
+            legends.push(t.element.textContent!);
+            expect(t.em).toBeGreaterThanOrEqual(2.5);
+            for (const c of t.corners) {
+              expect(c.x).toBeGreaterThanOrEqual(0);
+              expect(c.x).toBeLessThanOrEqual(width);
+              expect(c.y).toBeGreaterThanOrEqual(0);
+              expect(c.y).toBeLessThanOrEqual(height);
+            }
+          }
+        }
+        for (const t of svgTextGeometry(doc.querySelector("svg")!).filter((t) =>
+          t.element.closest("[data-circuit-mark]"),
+        ))
+          expect(t.em).toBeGreaterThanOrEqual(2.5);
+      }
+      expect(legends).toEqual(expect.arrayContaining(["SUP", "PWR"]));
+    },
+  );
+
+  it.each(["left-to-right", "top-to-bottom"] as const)(
+    "refuses an unprintable source/legend composition without shrinking or dropping ink in %s",
+    async (flow) => {
+      const changed = structuredClone(ir);
+      const device = changed.devices.find((d) => d.designation === "AC1")!;
+      const fn = changed.functions.find((f) => f.id.deviceUid === device.uid)!;
+      const type = changed.deviceTypes.find((t) => t.id === device.typeId)!;
+      const terminal = fn.terminals[0]!;
+      const old = terminal.terminalKey;
+      // Synthetic authored terminal text exceeds the complete block's capacity.
+      terminal.terminalKey = "UNPRINTABLE_".repeat(30);
+      type.terminals.find((t) => t.key === old)!.key = terminal.terminalKey;
+      const result = await renderSchematicPacket(changed, {
+        format: "schematic-packet-request/0.1",
+        views: [
+          {
+            format: "circuit-view-request/0.1",
+            title: "Unprintable source legend",
+            flow,
+            groups: [
+              {
+                id: "source",
+                functions: [
+                  {
+                    device: { by: "designation", value: "AC1" },
+                    key: fn.id.functionKey,
+                  },
+                ],
+                conductors: [],
+              },
+            ],
+          },
+        ],
+      });
+      expect(result).toMatchObject({
+        ok: false,
+        error: {
+          code: "R006",
+          reason: "unprintable-layout",
+          message: expect.stringContaining("readable block width"),
+        },
+      });
+      expect(result).not.toHaveProperty("value");
+    },
+  );
+
   it.each(["left-to-right", "top-to-bottom"])(
     "preserves every source endpoint and function in %s",
     async (flow) => {

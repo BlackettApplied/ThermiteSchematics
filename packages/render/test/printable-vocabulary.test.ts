@@ -1,11 +1,22 @@
-import { readFile } from "node:fs/promises";
-import { expect, it } from "vitest";
+import { cp, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { afterAll, beforeAll, expect, it } from "vitest";
 import { parseHTML } from "linkedom";
-import { compileProject } from "@thermite/compiler";
+import {
+  compileProject,
+  lockProject,
+  type ElectricalIr,
+} from "@thermite/compiler";
 import { SYMBOL_CATALOG } from "../src/symbols/catalog.js";
 import { circuitMark, emitCircuitMark } from "../src/symbols/circuit.js";
 import { printableCaption } from "../src/symbols/printable-policy.js";
 import { prepareCircuitView } from "../src/circuit.js";
+import {
+  prepareSignalLoopDrawing,
+  type SignalLoopViewRequest,
+} from "../src/signal-loop.js";
+import { renderSchematicPacket } from "../src/sheets.js";
 
 it("uses rectangular coils in both printable families", () => {
   const coil = SYMBOL_CATALOG.find((s) => s.id === "ais:coil")!;
@@ -396,4 +407,205 @@ it("does not call a custom L/N/PE motor function three-phase", async () => {
       )!,
     ),
   ).toBe(true);
+});
+
+const channelFixtures = new Map<string, ElectricalIr>();
+const channelRoots: string[] = [];
+beforeAll(async () => {
+  for (const name of ["analog-output", "signal-loop"]) {
+    const root = await mkdtemp(join(tmpdir(), "thermite-channel-caption-"));
+    channelRoots.push(root);
+    for (const library of ["field-interfaces", "industrial-pilot"])
+      await cp(`libraries/${library}`, join(root, library), {
+        recursive: true,
+      });
+    await cp(
+      `packages/cli/fixtures/${name}/source.json`,
+      join(root, "source.json"),
+    );
+    await writeFile(
+      join(root, "system.json"),
+      JSON.stringify({
+        format: "electrical-system/0.1",
+        project: { name: "Synthetic channel caption" },
+        sources: ["source.json"],
+        libraries: ["field-interfaces", "industrial-pilot"].map((name) => ({
+          name,
+          version: "0.1.0",
+          path: name,
+        })),
+      }),
+    );
+    expect((await lockProject(root)).ok).toBe(true);
+    const c = await compileProject(root);
+    if (!c.ok) throw Error(JSON.stringify(c.diagnostics));
+    channelFixtures.set(name, c.ir);
+  }
+});
+afterAll(async () => {
+  for (const root of channelRoots)
+    await rm(root, { recursive: true, force: true });
+});
+
+for (const fixture of ["analog-output", "signal-loop"] as const)
+  it.each(["left-to-right", "top-to-bottom"] as const)(
+    `prints authored channel vocabulary and retains key metadata for ${fixture} in %s`,
+    async (flow) => {
+      const original = channelFixtures.get(fixture)!;
+      const output = fixture === "analog-output";
+      const view: SignalLoopViewRequest = {
+        format: "signal-loop-view-request/0.1",
+        from: output
+          ? { device: "AQ1", function: "ch3" }
+          : { device: "PT1", function: "signal" },
+        to: output
+          ? { device: "V1", function: "command" }
+          : { device: "AI1", function: "ch0" },
+        ...(output
+          ? {
+              auxiliary: [
+                {
+                  from: { device: "XT1", function: "aux1" },
+                  to: { device: "V1", function: "supply" },
+                },
+              ],
+            }
+          : {}),
+        cableAssemblies: [
+          {
+            cable: "CB1",
+            connector: "M12",
+            description: "Synthetic fixture cordset",
+          },
+        ],
+        flow,
+      };
+      for (const mode of [
+        "direction",
+        "analog-role",
+        "digital-role",
+        "address",
+      ] as const) {
+        const ir = structuredClone(original);
+        const device = ir.devices.find(
+          (d) => d.designation === (output ? "AQ1" : "AI1"),
+        )!;
+        const key = output ? "ch3" : "ch0";
+        const fn = ir.functions.find(
+          (f) => f.id.deviceUid === device.uid && f.id.functionKey === key,
+        )!;
+        const type = ir.deviceTypes.find((t) => t.id === device.typeId)!;
+        if (mode === "analog-role")
+          type.terminals.find(
+            (t) => t.key === fn.terminals[0]!.terminalKey,
+          )!.role = output
+            ? "analog_output_positive"
+            : "analog_input_0_positive";
+        if (mode === "digital-role")
+          type.terminals.find(
+            (t) => t.key === fn.terminals[0]!.terminalKey,
+          )!.role = output ? "digital_output_0" : "digital_input";
+        // The supplied fixtures declare no analog terminal role. Do not derive
+        // one from their names, descriptions, pin labels or internal keys.
+        const expected =
+          mode === "address"
+            ? "AUTHORED <address> & channel"
+            : mode === "analog-role"
+              ? output
+                ? "AO"
+                : "AI"
+              : mode === "digital-role"
+                ? output
+                  ? "DO"
+                  : "DI"
+                : output
+                  ? "OUT"
+                  : "IN";
+        if (mode === "address")
+          device.io = {
+            addressSpace: "Synthetic",
+            channels: { [key]: { address: expected } },
+          };
+        const before = JSON.stringify(ir);
+        const drawing = await prepareSignalLoopDrawing(ir, view);
+        const visible = [
+          ...parseHTML(drawing.content).document.querySelectorAll("text"),
+        ]
+          .map((t) => t.textContent)
+          .join(" ")
+          .replace(/\s+/gu, " ");
+        expect(visible).toContain(`${expected} / selected channel`);
+        expect(visible).not.toContain(`${key} / selected channel`);
+        expect(drawing.references).toContainEqual(
+          expect.objectContaining({
+            deviceUid: device.uid,
+            functions: expect.arrayContaining([key]),
+          }),
+        );
+        const packet = await renderSchematicPacket(ir, {
+          format: "schematic-packet-request/0.1",
+          page: {
+            size: "tabloid",
+            orientation: flow === "top-to-bottom" ? "portrait" : "landscape",
+          },
+          views: [view],
+        });
+        if (!packet.ok) throw Error(packet.error.message);
+        expect(packet.value.sheets.flatMap((s) => s.references)).toContainEqual(
+          expect.objectContaining({
+            deviceUid: device.uid,
+            functions: expect.arrayContaining([key]),
+          }),
+        );
+        expect(JSON.stringify(ir)).toBe(before);
+      }
+    },
+  );
+
+it("never derives analog mode, an address or a rating from a channel key", async () => {
+  const ir = channelFixtures.get("analog-output")!;
+  const device = ir.devices.find((d) => d.designation === "AQ1")!;
+  const type = ir.deviceTypes.find((t) => t.id === device.typeId)!;
+  const original = ir.functions.find(
+    (f) => f.id.deviceUid === device.uid && f.kind === "channel",
+  )!;
+  const fn = {
+    ...original,
+    id: { ...original.id, functionKey: "AO_QW3_4-20mA_250V" },
+  };
+  expect(printableCaption({ kind: "channel", fn, type, spare: false })).toBe(
+    "OUT",
+  );
+});
+
+it("uses direction alone when class roles conflict, mismatch or are undeclared", async () => {
+  const ir = channelFixtures.get("analog-output")!;
+  const device = ir.devices.find((d) => d.designation === "AQ1")!;
+  const original = ir.functions.find(
+    (f) => f.id.deviceUid === device.uid && f.kind === "channel",
+  )!;
+  const type = structuredClone(
+    ir.deviceTypes.find((t) => t.id === device.typeId)!,
+  );
+  for (const roles of [
+    ["analog_output", "digital_output"],
+    ["analog_input", "analog_input"],
+    ["signal_output", "return"],
+    ["analog_output_guess", "digital_output_guess"],
+  ]) {
+    for (const [i, terminal] of original.terminals.entries())
+      type.terminals.find((p) => p.key === terminal.terminalKey)!.role =
+        roles[i];
+    expect(
+      printableCaption({ kind: "channel", fn: original, type, spare: false }),
+    ).toBe("OUT");
+    expect(
+      printableCaption({
+        kind: "function",
+        fn: original,
+        type,
+        mark: "ais:plc-do",
+      }),
+    ).toBe("OUT");
+  }
 });

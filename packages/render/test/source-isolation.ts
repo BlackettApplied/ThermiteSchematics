@@ -5,6 +5,7 @@ import type {
 } from "../src/symbols/types.js";
 import { DEFAULT_SYMBOL_STROKE } from "../src/symbols/catalog.js";
 import { sourceEnclosureInk } from "../src/symbols/printable-policy.js";
+import { captionInk } from "../src/symbols/caption-ink.js";
 
 export type Point = SymbolPoint;
 type Matrix = readonly [number, number, number, number, number, number];
@@ -729,4 +730,39 @@ export function assertSourceIsolation(
         `Source ${port.id} bridges another terminal within ${gapMm} mm`,
       );
   }
+}
+
+/** Physical text ink and em after every nested mark transform. Packet circuit
+ * viewBox units are mm; translations/rotations must not hide a scale breach. */
+export function svgTextGeometry(root: Element) {
+  const texts: { element: Element; em: number; corners: Point[] }[] = [];
+  function walk(e: Element, parent: Matrix) {
+    const matrix = multiply(
+      parent,
+      parseTransform(e.getAttribute("transform") ?? ""),
+    );
+    if (e.localName === "text") {
+      const size = Number(e.getAttribute("font-size"));
+      const b = captionInk(
+        e.textContent ?? "",
+        Number(e.getAttribute("x")),
+        Number(e.getAttribute("y")),
+        size,
+        e.getAttribute("text-anchor") ?? "start",
+      );
+      texts.push({
+        element: e,
+        em: size * scaleOf(matrix),
+        corners: [
+          p(b.left, b.top),
+          p(b.right, b.top),
+          p(b.right, b.bottom),
+          p(b.left, b.bottom),
+        ].map((v) => transform(matrix, v)),
+      });
+    }
+    for (const child of e.children) walk(child, matrix);
+  }
+  walk(root, IDENTITY);
+  return texts;
 }

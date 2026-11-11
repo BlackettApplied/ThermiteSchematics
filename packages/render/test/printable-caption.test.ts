@@ -218,6 +218,69 @@ describe("printable function facts", () => {
       expect(texts(rooted.value.svg)).toContain("AI");
       expect(texts(rooted.value.svg)).not.toContain("DI");
     });
+    it(`uses neutral direction in rooted and circuit captions when class is undeclared in ${flow}`, async () => {
+      const changed = structuredClone(ir);
+      const plc = changed.devices.find((d) => d.designation === "PLC1")!;
+      const type = changed.deviceTypes.find((t) => t.id === plc.typeId)!;
+      delete plc.io;
+      type.description = "AI AO DI DO in free prose is not a class declaration";
+      for (const fn of changed.functions.filter(
+        (f) =>
+          f.id.deviceUid === plc.uid &&
+          ["di0", "do0"].includes(f.id.functionKey),
+      ))
+        for (const t of fn.terminals)
+          delete type.terminals.find((p) => p.key === t.terminalKey)!.role;
+      const before = JSON.stringify(changed);
+      const circuit = await prepareCircuitView(changed, {
+        format: "circuit-view-request/0.1",
+        title: "Unclassified channels",
+        flow,
+        groups: [
+          {
+            id: "unknown",
+            functions: ["di0", "do0"].map((key) => ({
+              device: { by: "designation", value: "PLC1" },
+              key,
+            })),
+            conductors: [],
+          },
+        ],
+      });
+      expect(texts(circuit.groups[0]!.content)).toEqual(
+        expect.arrayContaining(["IN", "OUT"]),
+      );
+      for (const [root, expected] of [
+        ["K1", "OUT"],
+        ["LS1", "IN"],
+      ] as const) {
+        const result = await renderSchematic(
+          changed,
+          root === "K1"
+            ? {
+                format: "schematic-view-request/0.1",
+                root: { by: "designation", value: root },
+                family: "control",
+                flow,
+              }
+            : {
+                format: "schematic-view-request/0.2",
+                root: { by: "designation", value: root },
+                intent: {
+                  kind: "trace",
+                  to: { by: "designation", value: "PLC1" },
+                  includePower: true,
+                },
+                flow,
+              },
+        );
+        if (!result.ok) throw Error(result.error.message);
+        expect(texts(result.value.svg)).toContain(expected);
+        expect(texts(result.value.svg)).not.toContain("DI");
+        expect(texts(result.value.svg)).not.toContain("DO");
+      }
+      expect(JSON.stringify(changed)).toBe(before);
+    });
     it(`names related functions at two destinations in ${flow}`, async () => {
       const feedback = {
         format: "circuit-view-request/0.1" as const,

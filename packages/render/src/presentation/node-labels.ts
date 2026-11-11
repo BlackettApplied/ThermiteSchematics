@@ -1,4 +1,4 @@
-import type { IrPotential } from "@thermite/compiler";
+import type { IrPotential, IrDeviceType } from "@thermite/compiler";
 import type { IrFunction, TerminalId, FunctionId } from "@thermite/compiler";
 import type { PresentationContext, SymbolRepresentation } from "./model.js";
 import {
@@ -24,12 +24,15 @@ import type { AggregateSymbolRule } from "../symbols/mappings.js";
 import { printableCaption } from "../symbols/printable-policy.js";
 import { contactCaptionRegion } from "./contact-caption.js";
 
-function functionLabelText(materialized: IrFunction): string {
+function functionLabelText(
+  materialized: IrFunction,
+  type: IrDeviceType,
+): string {
   if (materialized.kind === "contact") {
     return `${materialized.id.functionKey} ${materialized.normal_state === "open" ? "NO" : "NC"}`;
   }
   if (materialized.kind === "channel") {
-    return `${materialized.id.functionKey} ${materialized.direction === "input" ? "DI" : "DO"}`;
+    return `${materialized.id.functionKey} ${printableCaption({ kind: "channel", fn: materialized, type, spare: false })}`;
   }
   if (
     materialized.kind === "coil" &&
@@ -201,7 +204,15 @@ function representationLabel(
             "symbol",
             representation.id,
             "function",
-            functionLabelText(materialized),
+            functionLabelText(
+              materialized,
+              required(
+                context.ir.deviceTypes.find(
+                  (t) => t.id === representation.device.typeId,
+                ),
+                "Missing channel label type",
+              ),
+            ),
             [
               textSource(
                 "function",

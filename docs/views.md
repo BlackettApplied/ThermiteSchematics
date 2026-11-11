@@ -277,11 +277,20 @@ invariant; pre-dispatch CLI usage errors with plain-text stderr are outside it t
 
 
 Circuit sheets use ELK's validated diagram, preserving its geometry. Cuts avoid
-devices, rails, symbol/terminal labels, junctions, and routing bends. Circuit text
-never scales below 2.5 mm. Repeated SVG IDs are namespaced per sheet without
-changing electrical metadata. An unprintable arrangement returns R006 rather
+devices, rails, symbol/terminal labels, junctions, and routing bends. Primary circuit
+text, including symbol legends, uses at least 2.5 mm em at printed scale; secondary
+cross-reference and boundary captions use 2.3 mm em. Repeated SVG IDs are namespaced
+per sheet without changing electrical metadata. An unprintable arrangement returns R006 rather
 than clipping a device, overlapping a continuation label, or silently omitting
 content. Change flow, page size, or the selected view to resolve it.
+
+Signal-loop selected-channel captions use the authored I/O address, or the shared
+AI/AO/DI/DO vocabulary only when explicit terminal roles establish the class.
+Otherwise `IN`/`OUT` states only the authored direction. The current schema has no
+separate channel signal/interface-class field; free-text signal labels, type names,
+keys, addresses and ratings do not establish a class. Conflicting class/direction
+roles also use `IN`/`OUT`. Internal keys remain in metadata and never supply an
+address, range or rating.
 
 `renderSchematicSheets` and `renderSchematicPacket` are exported by the render
 package. `renderSchematic` and agent `create-view` retain continuous SVG for legacy

@@ -108,13 +108,13 @@ it.each(flows)(
       expect(result.value.sheets[0]!.svg).not.toContain(
         "polarity not verified",
       );
-      // Measured before the change: verified direct loops retain every SVG byte.
+      // Pin the reviewed direct-loop output, including its semantic channel caption.
       expect(
         createHash("sha256").update(result.value.sheets[0]!.svg).digest("hex"),
       ).toBe(
         flow === "left-to-right"
-          ? "558fa188360c211f1858f3933c03134194bc76e8470570db8810ca41fa260e4c"
-          : "b95c1843662cf41126302e936e08c67e0a5cb664d1a9cc4be904791220623a23",
+          ? "eb71b4cdc2516856a1b735e230bf039ce37fad9e30341fbb0a426d4156895b04"
+          : "f62e5523600d6ddb9600c9bbd6f1986508fa5a5ccf041d50911ea7d82f3f2c55",
       );
     }
     expect(JSON.stringify(ir)).toBe(before);

@@ -37,3 +37,21 @@ export function circuitTextLines(
   if (line) lines.push(line);
   return lines;
 }
+
+/** Preserve the measured channel-row reservation in either reading direction. */
+export function channelRowSlots(
+  lines: readonly string[] | undefined,
+  vertical: boolean,
+  mark: string,
+  pitch: number,
+): number {
+  if (!lines) return 1;
+  return Math.ceil(
+    (vertical
+      ? Math.max(...lines.map((line) => measure(line, 2.5))) +
+        (mark === "sensor-3wire" ? 16 : 4)
+      : lines.length * 3.1 +
+        0.8 +
+        (["level-sensor", "sensor-3wire"].includes(mark) ? 9 : 0)) / pitch,
+  );
+}

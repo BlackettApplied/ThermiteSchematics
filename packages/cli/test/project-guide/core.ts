@@ -1520,7 +1520,7 @@ const module: FactModule = {
       "Printing advice for a browser; the PDF page-size facts cover paper sizes.",
     ],
     [
-      "Reconstructing a drawing: record page/line provenance, separate aliases from verified pins, preserve conflicting labels as review issues, and assert critical endpoints and nets independently.",
+      "Reconstruction: record page/line provenance, separate aliases from verified pins, preserve conflicts for review, and assert critical endpoints and nets.",
       "Reconstruction practice for a human source drawing; continuity checks are executed in their own fact.",
     ],
   ]),

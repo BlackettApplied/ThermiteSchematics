@@ -8,7 +8,12 @@ import {
   SYMBOL_CATALOG,
   orientSymbolDefinition,
 } from "../src/symbols/catalog.js";
-import { circuitBlock, circuitInterfaceMark } from "../src/symbols/circuit.js";
+import {
+  circuitBlock,
+  circuitInterfaceMark,
+  composedCircuitMark,
+  emitCircuitMark,
+} from "../src/symbols/circuit.js";
 import {
   PRINTABLE_SYMBOL_POLICY,
   printableCaption,
@@ -23,6 +28,7 @@ import {
   assertSourceIsolation,
   catalogGeometry,
   svgGeometry,
+  svgTextGeometry,
 } from "./source-isolation.js";
 import { compileCoreFixture } from "./fixtures.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
@@ -50,6 +56,26 @@ const geometry = (svg: string) =>
   svgGeometry(parseHTML(svg).document.querySelector("svg")!);
 
 describe("printable symbol policy", () => {
+  it.each([false, true])(
+    "keeps all text-bearing catalog marks printable at native and composed scales (vertical=%s)",
+    (vertical) => {
+      // These are all three text-bearing entries in the closed mark catalog.
+      for (const mark of ["source", "load", "motor"] as const) {
+        for (const svg of [
+          emitCircuitMark(mark, vertical),
+          composedCircuitMark(mark, 20, 20, vertical),
+        ]) {
+          const texts = svgTextGeometry(
+            parseHTML(`<svg>${svg}</svg>`).document.querySelector("svg")!,
+          );
+          expect(texts).toHaveLength(1);
+          expect(texts[0]!.em).toBeGreaterThanOrEqual(2.5);
+        }
+      }
+      // The series-loop emitter uses this unscaled, text-free mark.
+      expect(emitCircuitMark("dc-output")).not.toContain("<text");
+    },
+  );
   it("uses physical ink sizes and can retire individual fact words per mark", () => {
     expect(sourceEnclosureInk()).toEqual({
       strokeWidth: 0.18,

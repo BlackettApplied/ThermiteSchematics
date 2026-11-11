@@ -167,3 +167,49 @@ for (const series of [false, true])
         }
       },
     );
+
+it.each(["left-to-right", "top-to-bottom"] as const)(
+  "uses the address or authored analog role for series-loop selected captions in %s",
+  async (flow) => {
+    const { seriesFixture, seriesRequest } =
+      await import("./series-loop-fixture.js");
+    const fixture = await seriesFixture();
+    try {
+      for (const address of [undefined, "IW 42 <authored>"]) {
+        const ir = structuredClone(fixture.ir);
+        const device = ir.devices.find((d) => d.designation === "AI1")!;
+        if (address !== undefined)
+          device.io = {
+            addressSpace: "Synthetic",
+            channels: { input: { address } },
+          };
+        const before = JSON.stringify(ir);
+        const drawing = await prepareSignalLoopDrawing(ir, {
+          ...seriesRequest,
+          flow,
+        });
+        const visible = [
+          ...parseHTML(drawing.content).document.querySelectorAll("text"),
+        ]
+          .map((t) => t.textContent)
+          .join(" ");
+        expect(visible).toContain(`${address ?? "AI"} / selected channel`);
+        expect(visible).not.toContain("input / selected channel");
+        expect(drawing.references).toContainEqual(
+          expect.objectContaining({
+            deviceUid: device.uid,
+            functions: ["input"],
+          }),
+        );
+        const result = await renderSchematicPacket(ir, {
+          format: "schematic-packet-request/0.1",
+          views: [{ ...seriesRequest, flow }],
+        });
+        expect(result.ok, JSON.stringify(result)).toBe(true);
+        expect(JSON.stringify(ir)).toBe(before);
+      }
+    } finally {
+      await fixture.dispose();
+    }
+  },
+);

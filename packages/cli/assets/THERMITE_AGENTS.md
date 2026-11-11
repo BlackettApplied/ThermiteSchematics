@@ -244,8 +244,9 @@ A packet can include `signal-loop-view-request/0.1` with
 `from: {device: "PT1", function: "signal"}`, `to: {device: "AI1", function:
 "ch0"}`, optional `flow` and up to six short `notes`: a two-wire transmitter,
 authored cordset, continuous bulkhead contacts, optional feed-through terminals
-and the input channel. The opt-in `field-interfaces` library supplies proposed
-generic M12 profiles. For series power, read `thermite guide signal-loops`.
+and the input channel. The opt-in `field-interfaces` library offers proposed
+M12 profiles. See `thermite guide signal-loops` for series power.
+Channels: authored address, proven AI/AO/DI/DO, else IN/OUT; keys are metadata.
 
 Both paths must be complete and unbranched, with every traversed cable core
 represented; extra cores must be explicitly spare and terminated at both ends.
@@ -320,22 +321,23 @@ a shield or protective bond.
 
 ## Function-based circuit drawings
 
-Packets also accept `circuit-view-request/0.1` with `title`, `groups` and
-optional `flow`, `columns: 1|2` and `notes`. Each group has a unique `id`,
+Packets accept `circuit-view-request/0.1` with `title`, `groups`, optional
+`flow`, `columns: 1|2` and `notes`. Each group has a unique `id`,
 optional `label` and `lineReference`, `conductors`, and `functions` selectors
 such as `{device: {by: "designation", value: "PLC1"}, key: "do0"}`. Use real
-function keys and conductor identities. An empty conductor list shows unconnected
-functions without implying spare status. Group order is presentation, not
-connectivity; order functions by reading stage (PLC outputs, terminal points,
-interlocks, coils), as a device's first appearance sets its display order.
+function keys and conductor identities. Empty conductors show unconnected
+functions, not spares. Group order affects presentation; order functions by reading
+stage (PLC outputs, terminal points, interlocks, coils). A device's first appearance
+sets its display order.
 
-The view draws selected functions from a closed symbol catalog with terminal
-labels, wire numbers and cross-references. A wire's `properties.label` is its
+Circuit primary text uses ≥2.5 mm em; secondary references/boundaries use 2.3 mm em.
+The view draws selected functions with terminal labels, wire numbers and references.
+A wire's `properties.label` is its
 printed number, separate from its source identity; repeated labels never join
 nets. Boundary counts expose connections outside the selection; a circuit view is
-not a completeness audit. ELK owns placement and routing. A group too large for
-one sheet splits into numbered parts that keep each conductor whole; R006 means
-a conductor, coupled symbol or label still cannot fit. Narrow the selection or
+not a completeness audit. ELK owns placement and routing. Large groups split into
+numbered parts with whole conductors; R006 means
+a conductor, coupled symbol or label cannot fit. Narrow the selection or
 use a larger sheet; never change topology to obtain a drawing.
 
 Library `circuitSymbols` maps real function keys to explicit closed-catalog marks,
@@ -346,6 +348,5 @@ Follow `thermite guide circuit-symbols` and `thermite guide circuit-views`; neve
 infer a mark from a tag or part-number substring. Marks do not create continuity
 or bonds.
 
-Reconstructing a drawing: record page/line provenance, separate aliases from
-verified pins, preserve conflicting labels as review issues, and assert critical
-endpoints and nets independently.
+Reconstruction: record page/line provenance, separate aliases from verified
+pins, preserve conflicts for review, and assert critical endpoints and nets.

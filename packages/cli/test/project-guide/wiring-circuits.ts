@@ -4,6 +4,8 @@
 // circuit-pagination example. Accepted views are drawn together in one packet
 // (one sheet per view) and read by title; each refusal keeps its own run.
 import { cp } from "node:fs/promises";
+import { parseHTML } from "linkedom";
+import { svgTextGeometry } from "../../../render/test/source-isolation.js";
 import { join } from "node:path";
 import { expect } from "vitest";
 import {
@@ -363,6 +365,26 @@ const module: FactModule = {
   facts: [
     {
       claim:
+        "Circuit primary text uses ≥2.5 mm em; secondary references/boundaries use 2.3 mm em.",
+      async check() {
+        const doc = parseHTML((await multi()).svg).document;
+        const texts = [...doc.querySelectorAll("svg")].flatMap((svg) =>
+          svgTextGeometry(svg),
+        );
+        const primary = texts.filter((t) =>
+          t.element.closest("[data-circuit-mark]"),
+        );
+        expect(primary.length).toBeGreaterThan(0);
+        for (const t of primary) expect(t.em).toBeGreaterThanOrEqual(2.5);
+        const boundary = texts.filter(
+          (t) => t.element.textContent === "BOUNDARY",
+        );
+        expect(boundary.length).toBeGreaterThan(0);
+        for (const t of boundary) expect(t.em).toBe(2.3);
+      },
+    },
+    {
+      claim:
         "Read `thermite guide circuit-symbols` before selecting a disconnector profile.",
       async check() {
         const guide = await ok(["guide", "circuit-symbols"], ctx.work);
@@ -477,7 +499,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "Packets also accept `circuit-view-request/0.1` with `title`, `groups` and optional `flow`, `columns: 1|2` and `notes`.",
+        "Packets accept `circuit-view-request/0.1` with `title`, `groups`, optional `flow`, `columns: 1|2` and `notes`.",
       async check() {
         const drawing = await accepted();
         const { text } = sheet(drawing, "Circuit title");
@@ -553,8 +575,7 @@ const module: FactModule = {
       },
     },
     {
-      claim:
-        "An empty conductor list shows unconnected functions without implying spare status.",
+      claim: "Empty conductors show unconnected functions, not spares.",
       async check() {
         const { svg } = await multi();
         // An open (white) terminal mark has no selected wiring.
@@ -575,7 +596,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "Group order is presentation, not connectivity; order functions by reading stage (PLC outputs, terminal points, interlocks, coils), as a device's first appearance sets its display order.",
+        "Group order affects presentation; order functions by reading stage (PLC outputs, terminal points, interlocks, coils). A device's first appearance sets its display order.",
       async check() {
         const [drawing, { tb1, tb2 }] = await Promise.all([accepted(), ids()]);
         const forward = sheet(drawing, "Forward").svg;
@@ -590,7 +611,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "The view draws selected functions from a closed symbol catalog with terminal labels, wire numbers and cross-references.",
+        "The view draws selected functions with terminal labels, wire numbers and references.",
       async check() {
         const { svg, text } = await multi();
         expect(svg).toContain('data-circuit-mark="load"');
@@ -647,7 +668,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "A group too large for one sheet splits into numbered parts that keep each conductor whole; R006 means a conductor, coupled symbol or label still cannot fit. Narrow the selection or use a larger sheet; never change topology to obtain a drawing.",
+        "Large groups split into numbered parts with whole conductors; R006 means a conductor, coupled symbol or label cannot fit. Narrow the selection or use a larger sheet; never change topology to obtain a drawing.",
       async check() {
         const source = "examples/circuit-pagination";
         const project = await makeProject({

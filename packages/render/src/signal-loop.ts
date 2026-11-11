@@ -1,3 +1,4 @@
+import { selectedChannelCaption } from "./symbols/printable-policy.js";
 import { measureText, wrapText } from "./text-metrics.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
@@ -515,7 +516,7 @@ export async function prepareSignalLoopDrawing(
       ),
       ...wrap(device.location ?? "Location unspecified", captionWidth - 6),
       ...(isChannel
-        ? [`${channel!.function.id.functionKey} / selected channel`]
+        ? wrap(selectedChannelCaption(channel!), captionWidth - 6)
         : []),
     ];
     if (width(device.designation) > captionWidth - 6)

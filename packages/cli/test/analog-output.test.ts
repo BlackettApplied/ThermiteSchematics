@@ -49,10 +49,11 @@ it.each(["left-to-right", "top-to-bottom"])(
       "V1 - analog output",
       "Q3+",
       "Q3-",
-      "ch3 / selected channel",
+      "OUT / selected channel",
       "1:1, 2:2, 3:3, 4:4",
     ])
       expect(svg).toContain(value);
+    expect(svg).not.toContain("ch3 / selected channel");
     expect(svg).not.toContain(">unused</text>");
     if (flow === "left-to-right") {
       const valveUid = ir.devices.find((d) => d.designation === "V1")!.uid;

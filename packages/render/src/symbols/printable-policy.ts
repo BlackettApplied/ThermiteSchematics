@@ -1,5 +1,5 @@
 import { symbolProfile } from "./profiles.js";
-import type { IrFunction, IrDeviceType } from "@thermite/compiler";
+import type { IrFunction, IrDeviceType, IrDevice } from "@thermite/compiler";
 import type {
   SymbolDefinition,
   SymbolPoint,
@@ -14,6 +14,8 @@ export type FunctionWord =
   | "DO"
   | "AI"
   | "AO"
+  | "IN"
+  | "OUT"
   | "PNP"
   | "NPN"
   | "coil"
@@ -89,6 +91,8 @@ export type PrintableCaption =
       readonly destination: string;
     };
 
+// The current schema has no channel signal/interface-class field. Only explicit
+// terminal roles establish A/D; direction, keys, signal prose and type names do not.
 function functionWord(
   fn: IrFunction,
   type: IrDeviceType,
@@ -98,12 +102,23 @@ function functionWord(
   if (fn.kind === "source") return "source";
   if (fn.kind === "load") return "load";
   if (fn.kind !== "channel") return undefined;
-  const roles = fn.terminals.map(
-    (t) => type.terminals.find((p) => p.key === t.terminalKey)?.role,
-  );
-  if (fn.direction === "input")
-    return roles.includes("analog_input") ? "AI" : "DI";
-  return roles.includes("analog_output") ? "AO" : "DO";
+  const neutral = fn.direction === "input" ? "IN" : "OUT";
+  const classes = new Set<string>();
+  for (const terminal of fn.terminals) {
+    const role = type.terminals.find(
+      (p) => p.key === terminal.terminalKey,
+    )?.role;
+    const fact = role?.match(
+      /^(analog|digital)_(input|output)(?:_\d+)?(?:_(?:positive|negative))?$/u,
+    );
+    if (!fact) continue;
+    // Conflicting direction/class declarations do not establish one class.
+    if (fact[2] !== fn.direction) return neutral;
+    if (fact[1]) classes.add(fact[1]);
+  }
+  if (classes.size !== 1) return neutral;
+  if (classes.has("analog")) return fn.direction === "input" ? "AI" : "AO";
+  return fn.direction === "input" ? "DI" : "DO";
 }
 
 /** Recognize standalone positive declarations, including the unchanged core
@@ -178,6 +193,23 @@ export function printableCaption(
     case "relation":
       return `${caption.functions.map((fn) => (fn.kind === "coil" ? "coil" : fn.terminals.map((t) => t.terminalKey).join("-"))).join(", ")}: ${caption.destination}`;
   }
+}
+
+/** Selected-loop captions share channel vocabulary; object keys stay metadata. */
+export function selectedChannelCaption(channel: {
+  function: IrFunction;
+  device: IrDevice;
+  type: IrDeviceType;
+}): string {
+  const address =
+    channel.device.io?.channels[channel.function.id.functionKey]?.address;
+  return `${printableCaption({
+    kind: "channel",
+    fn: channel.function,
+    type: channel.type,
+    ...(address === undefined ? {} : { address }),
+    spare: false,
+  })} / selected channel`;
 }
 
 export interface SourceEnclosureOpening {

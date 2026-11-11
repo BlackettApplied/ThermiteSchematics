@@ -283,6 +283,37 @@ const module: FactModule = {
   facts: [
     {
       claim:
+        "Channels: authored address, proven AI/AO/DI/DO, else IN/OUT; keys are metadata.",
+      async check() {
+        const [input, output] = await Promise.all([
+          shared.grouped(),
+          shared.analog(),
+        ]);
+        expect(input.visible).toContain("IN / selected channel");
+        expect(output.visible).toContain("OUT / selected channel");
+        expect(input.visible).not.toContain("ch0 / selected channel");
+        expect(output.visible).not.toContain("ch3 / selected channel");
+        const metadata = input.json.sheets.flatMap((s: any) => s.references);
+        expect(metadata).toContainEqual(
+          expect.objectContaining({ designation: "AI1", functions: ["ch0"] }),
+        );
+        const addressed = await variant(
+          "caption-address",
+          "signal-loop",
+          (s) => {
+            object(s, "AI1").io = {
+              addressSpace: "Synthetic",
+              channels: { ch0: { address: "IW42" } },
+            };
+          },
+        );
+        expect((await drawn(addressed, GROUPED)).visible).toContain(
+          "IW42 / selected channel",
+        );
+      },
+    },
+    {
+      claim:
         'A packet can include `signal-loop-view-request/0.1` with `from: {device: "PT1", function: "signal"}`, `to: {device: "AI1", function: "ch0"}`, optional `flow` and up to six short `notes`: a two-wire transmitter, authored cordset, continuous bulkhead contacts, optional feed-through terminals and the input channel.',
       async check() {
         const { project } = await loop();
@@ -344,7 +375,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "The opt-in `field-interfaces` library supplies proposed generic M12 profiles.",
+        "The opt-in `field-interfaces` library offers proposed M12 profiles.",
       async check() {
         for (const template of ["starter", "cabinets"] as const) {
           const project = ctx.pristine[template];
@@ -390,7 +421,7 @@ const module: FactModule = {
       },
     },
     {
-      claim: "For series power, read `thermite guide signal-loops`.",
+      claim: "See `thermite guide signal-loops` for series power.",
       async check() {
         const doc = flatten(
           await readFile(join(repositoryRoot, "docs/signal-loops.md"), "utf8"),
@@ -790,7 +821,8 @@ const module: FactModule = {
           title: "V1 - analog output",
         });
         expect(d.references).toEqual(["AQ1", "XT1", "XP1", "V1"]);
-        expect(d.visible).toContain("ch3 / selected channel");
+        expect(d.visible).toContain("OUT / selected channel");
+        expect(d.visible).not.toContain("ch3 / selected channel");
         // Only the library can make V1's command a one-terminal function.
         const oneTerminal = sharedProject(
           "signal-loops:one-terminal-command",

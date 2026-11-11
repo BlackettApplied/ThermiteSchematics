@@ -1,4 +1,8 @@
-import { circuitTextLines, measure } from "./symbols/circuit-text.js";
+import {
+  circuitTextLines,
+  measure,
+  channelRowSlots,
+} from "./symbols/circuit-text.js";
 export { circuitTextLines } from "./symbols/circuit-text.js";
 import { relationCaptionPlan } from "./symbols/circuit-relations.js";
 import { nodeCaptionSegments } from "./symbols/circuit-node-ink.js";
@@ -53,7 +57,8 @@ import {
   circuitWinding,
   circuitWindingVertical,
   circuitTerminal,
-  emitCircuitMark,
+  composedCircuitMark,
+  circuitLegendReservation,
   type CircuitMark,
 } from "./symbols/circuit.js";
 
@@ -197,7 +202,7 @@ const channelAssignment = (d: IrDevice, functionKey: string) =>
   d.io && Object.hasOwn(d.io.channels, functionKey)
     ? d.io.channels[functionKey]
     : undefined;
-// Reserve the existing caption space even when its internal key has no printable ink.
+// Reserve the larger of legacy identity space and the actual printable caption.
 const channelLabelLines = (
   d: IrDevice,
   f: IrFunction,
@@ -205,23 +210,24 @@ const channelLabelLines = (
   printable = false,
 ): string[] => {
   const channel = channelAssignment(d, f.id.functionKey);
+  const caption = printableCaption({
+    kind: "channel",
+    fn: f,
+    type,
+    ...(channel?.address === undefined ? {} : { address: channel.address }),
+    spare: channel?.usage === "spare",
+  });
+  const legacy = [
+    channel?.address ?? f.id.functionKey,
+    channel?.usage === "spare" ? "SPARE" : undefined,
+  ]
+    .filter(Boolean)
+    .join(" ");
   return [
-    printable
-      ? printableCaption({
-          kind: "channel",
-          fn: f,
-          type,
-          ...(channel?.address === undefined
-            ? {}
-            : { address: channel.address }),
-          spare: channel?.usage === "spare",
-        })
-      : [
-          channel?.address ?? f.id.functionKey,
-          channel?.usage === "spare" ? "SPARE" : undefined,
-        ]
-          .filter(Boolean)
-          .join(" "),
+    !printable &&
+    measure(legacy, TERMINAL_TEXT_SIZE) > measure(caption, TERMINAL_TEXT_SIZE)
+      ? legacy
+      : caption,
     ...(channel?.signal
       ? circuitTextLines(channel.signal, 38, TERMINAL_TEXT_SIZE)
       : []),
@@ -551,22 +557,10 @@ function makeNodes(
       const channelLines =
         f.kind === "channel" ? channelLabelLines(device, f, type) : undefined;
       const slots = Math.max(
+        Math.ceil(circuitLegendReservation(mark, vertical).row / PITCH),
         mark === "sensor-3wire" && f.kind === "load" ? 3 : 1,
         oneSided ? f.terminals.length : 1,
-        channelLines
-          ? Math.ceil(
-              (vertical
-                ? Math.max(
-                    ...channelLines.map((line) =>
-                      measure(line, TERMINAL_TEXT_SIZE),
-                    ),
-                  ) + (mark === "sensor-3wire" ? 16 : 4)
-                : channelLines.length * 3.1 +
-                  0.8 +
-                  (["level-sensor", "sensor-3wire"].includes(mark) ? 9 : 0)) /
-                PITCH,
-            )
-          : 1,
+        channelRowSlots(channelLines, vertical, mark, PITCH),
       );
       const winding =
         coupled &&
@@ -679,7 +673,14 @@ function makeNodes(
     let width = Math.max(
       boundary ? 24 : 26,
       measure(device.designation, 2.7) + 4,
-      left + right + 14,
+      left +
+        right +
+        Math.max(
+          14,
+          ...rows.map(
+            (row) => circuitLegendReservation(row.mark, vertical).block,
+          ),
+        ),
     );
     if (functions.some((f) => f.kind === "channel"))
       width = Math.max(width, 42);
@@ -1187,9 +1188,7 @@ function emitNode(
           ),
         );
       else if (specialized)
-        out.push(
-          `<g transform="translate(${n(cx - 4)} ${n(annotationTop)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`,
-        );
+        out.push(composedCircuitMark(mark, cx, annotationTop + 4, vertical));
       const printableLines = channelLabelLines(node.device, f, node.type, true);
       for (const [i] of lines.entries()) {
         const line = printableLines[i]!;
@@ -1276,9 +1275,7 @@ function emitNode(
           out.push(
             `<g transform="translate(0 ${n(6 + row.start * PITCH)})">${circuitBlock(node.width, row.slots * PITCH)}</g>`,
           );
-        out.push(
-          `<g transform="translate(${n(cx - 4)} ${n(cy - 4)}) scale(.666667)">${emitCircuitMark(mark, vertical)}</g>`,
-        );
+        out.push(composedCircuitMark(mark, cx, cy, vertical));
       }
       out.push(
         emitCircuitContactCaption({
