@@ -60,6 +60,7 @@ it("auth-only CODEX_HOME permits exactly auth.json", () => {
           access_token: secret,
           refresh_token: "synthetic-refresh-token",
         },
+        last_refresh: new Date().toISOString(),
       });
     writeFileSync(path, before);
     expect(seedCodexAuth(w.env, path)).toBe(true);
@@ -73,6 +74,72 @@ it("auth-only CODEX_HOME permits exactly auth.json", () => {
     expect(() =>
       assertIsolation(w.project, w.env, { codexAuth: true }),
     ).toThrow();
+  } finally {
+    rmSync(w.root, { recursive: true, force: true });
+  }
+});
+const authNow = Date.parse("2026-01-20T01:00:00Z"),
+  scheduledRefresh = 8 * 24 * 60 * 60_000,
+  runTimeout = 15 * 60_000;
+const accessToken = (expires) =>
+  `eyJhbGciOiJIUzI1NiJ9.${Buffer.from(JSON.stringify({ exp: expires / 1000 })).toString("base64url")}.synthetic-signature`;
+
+it.each([
+  ["missing refresh date", undefined, secret],
+  ["invalid refresh date", "invalid", secret],
+  ["future refresh date", new Date(authNow + 60_000).toISOString(), secret],
+  [
+    "scheduled refresh during the run",
+    new Date(authNow - scheduledRefresh + runTimeout).toISOString(),
+    secret,
+  ],
+  [
+    "access token expires during the run",
+    new Date(authNow).toISOString(),
+    accessToken(authNow + runTimeout),
+  ],
+  [
+    "access token expires in the setup margin",
+    new Date(authNow).toISOString(),
+    accessToken(authNow + runTimeout + 8 * 60_000),
+  ],
+])(
+  "auth seeding refuses %s before copying ChatGPT credentials",
+  (label, last_refresh, access_token) => {
+    const w = fixture();
+    try {
+      const path = join(w.root, "original.json");
+      writeFileSync(
+        path,
+        JSON.stringify({
+          auth_mode: "chatgpt",
+          last_refresh,
+          tokens: { access_token },
+        }),
+      );
+      expect(() =>
+        seedCodexAuth(w.env, path, { timeoutMs: runTimeout, now: authNow }),
+      ).toThrow(/run your own Codex installation/i);
+      expect(existsSync(join(w.env.CODEX_HOME, "auth.json"))).toBe(false);
+    } finally {
+      rmSync(w.root, { recursive: true, force: true });
+    }
+  },
+);
+it("auth seeding accepts a ChatGPT login fresh for the run", () => {
+  const w = fixture();
+  try {
+    const path = join(w.root, "original.json");
+    writeFileSync(
+      path,
+      JSON.stringify({
+        last_refresh: new Date(authNow).toISOString(),
+        tokens: { access_token: accessToken(authNow + 60 * 60_000) },
+      }),
+    );
+    expect(
+      seedCodexAuth(w.env, path, { timeoutMs: runTimeout, now: authNow }),
+    ).toBe(true);
   } finally {
     rmSync(w.root, { recursive: true, force: true });
   }

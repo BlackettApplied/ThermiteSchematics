@@ -30,6 +30,7 @@ import {
 } from "./run.mjs";
 import { libraryTypes } from "./source-files.mjs";
 import { projectReader } from "./capture-files.mjs";
+import { planAttempt } from "./attempts.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const moduleURL = (path) => pathToFileURL(join(root, path)).href;
@@ -71,15 +72,27 @@ function fixture(work, task, files) {
 const marker = (path) =>
   `import{writeFileSync as mark}from"node:fs";mark(${JSON.stringify(path)},"ran");`;
 
-it.each(["invalid", "valid"])(
-  "discards %s run-local Codex auth after the agent exits",
+it.each(["invalid", "valid", "stale"])(
+  "confines Codex auth in the %s fixture",
   async (replacement) => {
     if (!confined) return;
     const work = temporary("eval-auth-boundary-");
     const operatorAuth = join(work, "operator.json");
-    const original = JSON.stringify({
-      OPENAI_API_KEY: "synthetic-operator-key",
-    });
+    const operatorKey = "synthetic-operator-key";
+    const original = JSON.stringify(
+      replacement === "stale"
+        ? {
+            auth_mode: "chatgpt",
+            last_refresh: "2020-01-01T00:00:00Z",
+            tokens: { access_token: operatorKey },
+          }
+        : { OPENAI_API_KEY: operatorKey },
+    );
+    const jwt =
+      "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzeW50aGV0aWMifQ.synthetic-signature";
+    const apiKey = "sk-proj-synthetic-fixture-123456789";
+    const refreshToken = "rt_synthetic_fixture_123456789";
+    const streamText = `Fixture complete ${operatorKey} ${jwt} ${apiKey} ${refreshToken}`;
     try {
       writeFileSync(operatorAuth, original, { mode: 0o600 });
       writeFileSync(
@@ -97,8 +110,9 @@ switch (process.argv[2]) {
           ? JSON.stringify({ OPENAI_API_KEY: "synthetic-run-key" })
           : "invalid fixture",
       )});
-    console.log(JSON.stringify({type:"item.completed",item:{type:"agent_message",text:"Fixture complete"}}));
+    console.log(JSON.stringify({type:"item.completed",item:{type:"agent_message",text:${JSON.stringify(streamText)}}}));
     console.log(JSON.stringify({type:"turn.completed",usage:{input_tokens:0,output_tokens:0}}));
+    console.error(${JSON.stringify(streamText)});
 }
 `,
         { mode: 0o700 },
@@ -119,9 +133,27 @@ switch (process.argv[2]) {
         agent: "codex",
         codexAuth: operatorAuth,
       });
-      expect(result.status).toBe("complete");
       expect(readFileSync(operatorAuth, "utf8") === original).toBe(true);
       expect(result).not.toHaveProperty("authRefresh");
+      if (replacement === "stale") {
+        expect(result).toMatchObject({
+          status: "infrastructure-failure",
+          stage: "authentication",
+          infrastructureError: expect.stringContaining("Run your own Codex"),
+        });
+        expect(existsSync(join(evidence, "transcript.jsonl"))).toBe(false);
+        expect(existsSync(join(evidence, "auth-status.json"))).toBe(false);
+      } else {
+        expect(result.status).toBe("complete");
+        for (const file of ["transcript.jsonl", "agent.stderr"]) {
+          const text = readFileSync(join(evidence, file), "utf8");
+          expect(text).toContain(
+            "Fixture complete <credential> <credential> <credential> <credential>",
+          );
+          for (const token of [operatorKey, jwt, apiKey, refreshToken])
+            expect(text.includes(token)).toBe(false);
+        }
+      }
     } finally {
       vi.unstubAllEnvs();
       rmSync(work, { recursive: true, force: true });
@@ -281,7 +313,7 @@ it("privileged validation and checking use the confined project snapshot", async
   }
 }, 20000);
 
-it.each(["library", "glob"])(
+it.each(["library", "presentation", "glob", "library source glob"])(
   "privileged validation refuses a %s path outside the snapshot",
   async (kind) => {
     if (!confined) return;
@@ -295,23 +327,38 @@ it.each(["library", "glob"])(
           import { readFileSync, writeFileSync } from "node:fs";
           import { join } from "node:path";
           export default ({project}) => {
-            const path = join(project, "system.json");
+            const kind = ${JSON.stringify(kind)};
+            const path = join(project, kind === "library source glob" ? "libraries/core/library.json" : "system.json");
             const manifest = JSON.parse(readFileSync(path));
-            if (${JSON.stringify(kind)} === "library")
+            if (kind === "library")
               manifest.libraries[0].path = "../outside";
+            else if (kind === "presentation") manifest.presentation = "../outside.json";
+            else if (kind === "library source glob") manifest.sources.push("../../../outside/*.json");
             else manifest.sources.push("{devices/equipment.json,../outside/*.json}");
             writeFileSync(path, JSON.stringify(manifest));
             return "Path fixture complete";
           }
         `,
-          "check.mjs": "export default () => ({ pass: true })",
+          "check.mjs":
+            "export default () => { throw new Error('Checker must be skipped'); }",
         },
       );
       const evidence = join(work, "evidence");
       const result = await runOne({ taskDir, prepared: context, evidence });
-      expect(result.status).toBe("infrastructure-failure");
-      expect(result.infrastructureError).toContain("leaves the eval snapshot");
+      expect(result).toMatchObject({
+        status: "task-failure",
+        agentFailure: "snapshot-scope",
+        infrastructureKind: null,
+        outcome: {
+          pass: false,
+          agentFailure: "snapshot-scope",
+          message: expect.stringContaining("leaves the eval snapshot"),
+        },
+        shimErrors: [],
+      });
+      expect(planAttempt([result]).kind).toBe("skip");
       expect(existsSync(join(evidence, "validate.stdout"))).toBe(false);
+      expect(existsSync(join(evidence, "validate.stderr"))).toBe(false);
       expect(existsSync(join(evidence, "project", "system.json"))).toBe(true);
     } finally {
       rmSync(work, { recursive: true, force: true });
@@ -726,6 +773,11 @@ it("a run whose project root was replaced records the whole-root refusal", async
     const run = await runOne({ taskDir, prepared: context, evidence });
     expect(run.status, JSON.stringify(run)).toBe("complete");
     expect(run.judgement).toBe("pending-two-judges");
+    const manifest = JSON.parse(
+      readFileSync(join(evidence, "manifest.json"), "utf8"),
+    );
+    expect(manifest.projectRefusals).toEqual(["."]);
+    expect(existsSync(join(evidence, "project"))).toBe(false);
     const packet = JSON.parse(
       readFileSync(join(evidence, "judge-packet.json"), "utf8"),
     );

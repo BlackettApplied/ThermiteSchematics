@@ -84,10 +84,29 @@ rejected. This explicit option suppresses inherited Codex API keys so billing
 follows the supplied auth file. A ChatGPT-login file uses that account's login
 route; an API-key auth file uses API billing. The supplied file remains the
 operator's authoritative copy. The runner gathers redaction values before
-launch and treats the isolated `auth.json` as disposable. Refresh the
-authoritative credentials through the operator's Codex installation.
+launch and discards the isolated `auth.json` without reading it back or
+writing to the operator's copy.
 
-`--check-auth` checks local credential presence/readiness, not provider validity; dummy tokens can pass. Invalid tokens surface as structured provider-auth failures on a live run. Codex warns that temporary CODEX_HOME cannot install PATH helper aliases; verify apply_patch availability in the first live smoke run (no model was launched here).
+Before each run and during `--check-auth`, the harness refuses to seed a
+ChatGPT login if its `last_refresh` is missing, invalid, or in the future,
+or if eight days from that timestamp or the access token's readable JWT
+expiry falls within the run timeout plus a ten-minute margin. Before a batch,
+run your own Codex installation once, then use `--check-auth` against its
+current auth file. If the freshness check still fails, sign in again there
+and retry. A provider rejection such as a 401 can still cause an unexpected
+refresh. Rotation in the disposable copy can leave the operator's refresh
+token already used, which can break later runs and require signing in again
+in the operator's installation. [Codex refresh implementation](https://github.com/openai/codex/blob/rust-v0.169.0/codex-rs/login/src/auth/manager.rs)
+
+The transcript (agent stdout) and agent stderr redact the credentials known
+before launch and common token shapes, including JWTs and prefixed API and
+OAuth tokens. Shape matching can redact ordinary text that resembles a token
+and can miss unfamiliar or opaque credentials issued during a run.
+
+`--check-auth` checks local credential readiness. Dummy tokens can pass.
+Invalid tokens surface as structured provider-auth failures on a live run.
+Codex warns that temporary CODEX_HOME cannot install PATH helper aliases.
+Verify apply_patch availability in the first live smoke run.
 
 The recipe contracts have offline tests with stub status/import CLIs. Non-model
 checks on the development host also passed for an isolated ChatGPT login and a
@@ -1039,11 +1058,15 @@ files, and the CLI observer receives the capture files as open descriptors.
 The project archive contains the regular files copied through the pinned
 project root. The copy excludes Git metadata, links, special files and
 unreadable entries. Scored run manifests list refusals in `projectRefusals`.
+If another directory replaces the project root, the manifest records
+`projectRefusals: ["."]`. Validation and electrical task checks use an empty
+snapshot, and the evidence has no project archive.
 The runner uses this protected snapshot for validation, final file state,
 source diffs and electrical task checkers. Source and library lookups resolve
-through the confined reader, and manifest dependency paths and expanded glob
-bases must stay within the snapshot before the compiler runs. User-facing
-Thermite CLI and compiler behavior are unchanged.
+through the confined reader. If a manifest library path, presentation path,
+or expanded source glob escapes the snapshot, the runner records a scored
+`task-failure` with reason `snapshot-scope` and skips the privileged compiler
+and task checker.
 
 Checker regeneration copies the captured project into checker evidence.
 It reads delivered artifacts through the confined reader and rebuilds view

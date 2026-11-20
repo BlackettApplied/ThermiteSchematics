@@ -9,6 +9,10 @@ export const credentialKeys = [
   "CODEX_API_KEY",
   "OPENAI_API_KEY",
 ];
+const codexRefreshIntervalMs = 8 * 24 * 60 * 60_000;
+// Codex can refresh five minutes before expiry. Allow another five for setup.
+const codexRefreshMarginMs = 10 * 60_000;
+
 export function validateAuth(bytes) {
   let value;
   try {
@@ -33,10 +37,47 @@ export function validateAuth(bytes) {
   );
   return value;
 }
-export function seedCodexAuth(env, source) {
+function accessTokenExpiry(token) {
+  const parts = token?.split(".");
+  if (parts?.length !== 3) return null;
+  try {
+    const expiry = JSON.parse(Buffer.from(parts[1], "base64url")).exp;
+    return Number.isFinite(expiry) ? expiry * 1000 : null;
+  } catch {
+    return null;
+  }
+}
+export function seedCodexAuth(
+  env,
+  source,
+  { timeoutMs = 0, now = Date.now() } = {},
+) {
   if (!source) return false;
   const bytes = readFileSync(resolve(source));
-  validateAuth(bytes);
+  const auth = validateAuth(bytes);
+  const apiKeyMode =
+    (auth.auth_mode ?? (auth.OPENAI_API_KEY ? "apikey" : "chatgpt")) ===
+    "apikey";
+  if (!apiKeyMode && typeof auth.tokens?.access_token === "string") {
+    const lastRefresh =
+        typeof auth.last_refresh === "string"
+          ? Date.parse(auth.last_refresh)
+          : NaN,
+      expires = accessTokenExpiry(auth.tokens.access_token),
+      horizon = now + timeoutMs + codexRefreshMarginMs;
+    if (
+      !Number.isFinite(lastRefresh) ||
+      lastRefresh > now ||
+      lastRefresh + codexRefreshIntervalMs <= horizon ||
+      (expires !== null && expires <= horizon)
+    )
+      throw Object.assign(
+        new Error(
+          "Codex ChatGPT login may need a refresh during this run. Run your own Codex installation once to refresh the operator login. If it still fails this check, sign in again and retry.",
+        ),
+        { stage: "authentication" },
+      );
+  }
   writeFileSync(join(env.CODEX_HOME, "auth.json"), bytes, {
     mode: 0o600,
     flag: "wx",
@@ -61,6 +102,11 @@ export function redactSecrets(text, values) {
   let out = String(text);
   for (const value of values) out = out.replaceAll(value, "<credential>");
   return out;
+}
+export function redactAgentOutput(text, values) {
+  return redactSecrets(text, values)
+    .replace(/\beyJ[\w-]*\.[\w-]+\.[\w-]+/g, "<credential>")
+    .replace(/\b(?:sk-|rk-|sess-|rt_|at_)[\w-]{12,}/g, "<credential>");
 }
 export async function preflightAuth(
   agent,

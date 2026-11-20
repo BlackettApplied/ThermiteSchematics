@@ -31,6 +31,7 @@ import {
   preflightAuth,
   seedCodexAuth,
   secretValues,
+  redactAgentOutput,
   redactSecrets,
   credentialKeys,
 } from "./auth.mjs";
@@ -61,7 +62,10 @@ import {
   assertIsolation,
 } from "./launch.mjs";
 import { cli, read, write, documents, uid } from "./task-support.mjs";
-import { assertConfinedProjectPaths } from "./source-files.mjs";
+import {
+  assertConfinedProjectPaths,
+  snapshotScopeError,
+} from "./source-files.mjs";
 const here = dirname(fileURLToPath(import.meta.url)),
   root = resolve(here, "../..");
 const git = (cwd, ...args) =>
@@ -692,7 +696,7 @@ export async function runOne({
     initial,
     runtimeBefore,
     finalMessage,
-    rootLost = false,
+    rootRefused = false,
     guideBytes,
     scratch,
     source,
@@ -732,12 +736,9 @@ export async function runOne({
           !engineRoots.some((p) => value.includes(p)),
           `Checkout path leaked through ${key}`,
         );
-    if (agent === "codex") {
-      authSeeded = seedCodexAuth(env, codexAuth);
-      if (codexAuth) {
-        delete env.CODEX_API_KEY;
-        delete env.OPENAI_API_KEY;
-      }
+    if (agent === "codex" && codexAuth) {
+      delete env.CODEX_API_KEY;
+      delete env.OPENAI_API_KEY;
     }
     secretList = secretValues(env);
     const ctx = {
@@ -825,6 +826,8 @@ export async function runOne({
       "-m",
       "Task start",
     );
+    if (agent === "codex")
+      authSeeded = seedCodexAuth(env, codexAuth, { timeoutMs });
     const isolation = assertIsolation(project, env, {
       claudeLoader: agent === "claude",
       codexAuth: !!authSeeded,
@@ -942,8 +945,8 @@ export async function runOne({
         await stopCapture();
       }
     }
-    execution.stdout = redactSecrets(execution.stdout, secretList);
-    execution.stderr = redactSecrets(execution.stderr, secretList);
+    execution.stdout = redactAgentOutput(execution.stdout, secretList);
+    execution.stderr = redactAgentOutput(execution.stderr, secretList);
     writeFileSync(join(live, "transcript.jsonl"), execution.stdout);
     writeFileSync(join(live, "agent.stderr"), execution.stderr);
     const normalized = normalizeTranscript(execution.stdout, {
@@ -969,26 +972,29 @@ export async function runOne({
       projectDirectory = workSource.inspect("project").isDirectory();
     } catch {}
     if (!projectDirectory) {
-      rootLost = true;
+      rootRefused = true;
       runHooks.afterRootLoss?.(project);
       throw new Error(
         "Project root is missing or no longer a directory after the agent exited; the run cannot be scored",
       );
     }
     const rootIntact = source.intact();
+    rootRefused = !rootIntact;
     const stagedProject = rootIntact
       ? join(live, "project")
       : join(scratch, "empty-project");
-    let projectRefusals = [];
+    let projectRefusals = ["."];
     if (rootIntact) {
       archiveProject = stagedProject;
       projectRefusals = copyConfinedTree(source, stagedProject);
     } else mkdirSync(stagedProject);
     const beforeFlush = snapshot(stagedProject);
-    assertConfinedProjectPaths(
+    const scopeError = snapshotScopeError(
       stagedProject,
       beforeFlush.documents["system.json"],
     );
+    const scopeFailure =
+      scopeError && !batchHaltReason(classification) && !execution.notStarted;
     const flushAudit = join(scratch, "audit"),
       auditInputErrors = [];
     initAudit(flushAudit);
@@ -1012,7 +1018,9 @@ export async function runOne({
     // From here on, CLI calls run with harness privileges: never from the
     // agent-writable runtime, never with the project's Bun config or .env
     // files, and only with environment values the harness selects.
-    const trusted = await protectedRuntime(prepared.path, scratch, task);
+    const trusted = scopeError
+      ? null
+      : await protectedRuntime(prepared.path, scratch, task);
     ctx.env = {
       ...freshEnvironment(
         join(scratch, "isolated"),
@@ -1024,26 +1032,28 @@ export async function runOne({
       THERMITE_EVAL_ERRORS: join(flushAudit, "shim-errors.jsonl"),
       THERMITE_EVAL_PHASE: "flush",
       THERMITE_EVAL_AUDIT_ROOT: JSON.stringify(flushIdentity),
-      THERMITE_EVAL_BUN_CONFIG: trusted.config,
+      ...(trusted && { THERMITE_EVAL_BUN_CONFIG: trusted.config }),
     };
     ctx.originalProject = project;
     ctx.project = stagedProject;
-    ctx.thermite = join(trusted.runtime, "thermite.mjs");
-    const validation = cli(ctx, "validate", ".", "--json");
-    writeFileSync(
-      join(live, "validate.stdout"),
-      redactSecrets(validation.stdout, secretList),
-    );
-    writeFileSync(
-      join(live, "validate.stderr"),
-      redactSecrets(validation.stderr, secretList),
-    );
-    const final = fileState(
-        stagedProject,
-        join(trusted.runtime, "thermite.real.mjs"),
-        ctx.env,
-      ),
-      calls = parseCalls(ctx.env.THERMITE_EVAL_LOG);
+    let final = { ...beforeFlush, schemaInvalidFiles: [] };
+    ctx.validationDiagnostics = [];
+    if (trusted) {
+      ctx.thermite = join(trusted.runtime, "thermite.mjs");
+      const validation = cli(ctx, "validate", ".", "--json");
+      writeFileSync(
+        join(live, "validate.stdout"),
+        redactSecrets(validation.stdout, secretList),
+      );
+      writeFileSync(
+        join(live, "validate.stderr"),
+        redactSecrets(validation.stderr, secretList),
+      );
+      ctx.thermite = join(trusted.runtime, "thermite.real.mjs");
+      ctx.validationDiagnostics = validationDiagnostics(validation);
+      final = fileState(stagedProject, ctx.thermite, ctx.env);
+    }
+    const calls = parseCalls(ctx.env.THERMITE_EVAL_LOG);
     final.sourceFiles = documents(stagedProject).map((doc) => doc.path);
     const shimErrors = [
       ...auditInputErrors,
@@ -1056,13 +1066,11 @@ export async function runOne({
       shimErrors.push({ kind: "shim-error", stage: "missing-head" });
     }
     shimErrors.push(...auditErrors(calls, head));
-    if (!calls.some((call) => call.phase === "flush"))
+    if (trusted && !calls.some((call) => call.phase === "flush"))
       shimErrors.push({ kind: "shim-error", stage: "missing-flush" });
     ctx.initial = initial;
     ctx.final = final;
     ctx.calls = calls;
-    ctx.validationDiagnostics = validationDiagnostics(validation);
-    ctx.thermite = join(trusted.runtime, "thermite.real.mjs");
     if (task.contributor) {
       // Contributor scoring still inspects the live Git worktree/install and
       // independently runs its submitted code. See the contributor boundary.
@@ -1111,24 +1119,26 @@ export async function runOne({
     });
     // Let queued operator signals run after synchronous CLI flush work.
     await new Promise((resolve) => setImmediate(resolve));
+    const agentStopped = [
+      "infrastructure-failure",
+      "halted-infra",
+      "needs-adjudication",
+      "interrupted",
+      "not-started",
+    ].includes(classification.status);
     let outcome =
-      stoppingSignal ||
-      [
-        "infrastructure-failure",
-        "halted-infra",
-        "needs-adjudication",
-        "interrupted",
-        "not-started",
-      ].includes(classification.status)
+      stoppingSignal || (agentStopped && !scopeFailure)
         ? {
             pass: false,
             agentFailure: stoppingSignal
               ? "operator-interruption"
               : classification.reason,
           }
-        : await evaluateTask(taskDir, ctx);
+        : scopeFailure
+          ? { pass: false, agentFailure: "snapshot-scope", message: scopeError }
+          : await evaluateTask(taskDir, ctx);
     outcome = JSON.parse(redactSecrets(JSON.stringify(outcome), secretList));
-    if (classification.taskFailure)
+    if (classification.taskFailure && !scopeFailure)
       outcome = {
         ...outcome,
         pass: false,
@@ -1183,19 +1193,15 @@ export async function runOne({
     await new Promise((resolve) => setImmediate(resolve));
     const status = stoppingSignal
       ? "interrupted"
-      : [
-            "infrastructure-failure",
-            "halted-infra",
-            "needs-adjudication",
-            "interrupted",
-            "not-started",
-          ].includes(classification.status)
-        ? classification.status
-        : outcome.error?.kind === "checker-error"
-          ? "checker-error"
-          : shimErrors.length
-            ? "infrastructure-failure"
-            : classification.status;
+      : scopeFailure
+        ? "task-failure"
+        : agentStopped
+          ? classification.status
+          : outcome.error?.kind === "checker-error"
+            ? "checker-error"
+            : shimErrors.length
+              ? "infrastructure-failure"
+              : classification.status;
     manifest = {
       ...identity,
       format: "thermite-agent-run/1.1",
@@ -1232,7 +1238,8 @@ export async function runOne({
       isolation,
       agentExit: execution.exit,
       agentSignal: execution.signal ?? null,
-      agentFailure: classification.reason,
+      agentFailure:
+        status === "task-failure" ? "snapshot-scope" : classification.reason,
       warnings: classification.warnings ?? [],
       exitAfterCompletion: classification.exitAfterCompletion ?? false,
       retryAt: classification.retryAt ?? null,
@@ -1332,6 +1339,7 @@ export async function runOne({
       stage: error.stage ?? "harness",
       infrastructureKind:
         error.stage === "authentication" ? "authentication" : "harness",
+      ...(rootRefused && { projectRefusals: ["."] }),
       workspace: keep ? work : null,
     };
     // A rubric run whose agent finished but whose project root was lost or
@@ -1339,7 +1347,7 @@ export async function runOne({
     if (task?.rubric && source && finalMessage !== undefined)
       try {
         // A detected loss stands even if the directory comes back later.
-        if (rootLost || !source.intact())
+        if (rootRefused || !source.intact())
           save(
             "judge-packet.json",
             judgePacket({
@@ -1358,7 +1366,7 @@ export async function runOne({
       message: manifest.infrastructureError,
     });
     save("manifest.json", manifest);
-    if (!rootLost && !archiveProject)
+    if (!rootRefused && !archiveProject)
       try {
         // If setup failed before the project was pinned, no agent ran.
         source ??= projectReader(project);
@@ -1688,7 +1696,7 @@ export async function runBatch(tasks, { runTask, concurrency = 1 } = {}) {
   );
   return results;
 }
-async function authOnly(values) {
+async function authOnly(values, timeoutMs) {
   assert(
     ["claude", "codex"].includes(values.agent),
     "--check-auth requires --agent claude|codex",
@@ -1702,7 +1710,7 @@ async function authOnly(values) {
   let seed;
   try {
     if (values.agent === "codex") {
-      seed = seedCodexAuth(env, values["codex-auth"]);
+      seed = seedCodexAuth(env, values["codex-auth"], { timeoutMs });
       if (values["codex-auth"]) {
         delete env.CODEX_API_KEY;
         delete env.OPENAI_API_KEY;
@@ -1714,6 +1722,18 @@ async function authOnly(values) {
     });
     console.log(JSON.stringify(status));
     if (!status.ok) process.exitCode = 1;
+  } catch (error) {
+    if (error.stage !== "authentication") throw error;
+    console.error(error.message);
+    console.log(
+      JSON.stringify({
+        ok: false,
+        agent: values.agent,
+        billing: "chatgpt-login",
+        reason: "refresh-required",
+      }),
+    );
+    process.exitCode = 1;
   } finally {
     if (!values.keep) rmSync(work, { recursive: true, force: true });
   }
@@ -1747,8 +1767,10 @@ async function main() {
       timeout: { type: "string", default: "900" },
     },
   });
+  const timeoutMs = Number(values.timeout) * 1000;
+  assert(Number.isFinite(timeoutMs) && timeoutMs > 0);
   if (values["check-auth"]) {
-    await authOnly(values);
+    await authOnly(values, timeoutMs);
     return;
   }
   assert(confinedPlatform, windowsUnavailable);
@@ -1767,11 +1789,9 @@ async function main() {
   assert(/^[a-zA-Z0-9][a-zA-Z0-9._-]{0,39}$/.test(values.arm));
   assert(values.arm === "A" || values.guide, "Alternate arm requires --guide");
   const seed = Number(values.seed),
-    concurrency = Number(values.concurrency),
-    timeoutMs = Number(values.timeout) * 1000;
+    concurrency = Number(values.concurrency);
   assert(Number.isSafeInteger(seed) && seed > 0);
   assert([1, 2].includes(concurrency));
-  assert(Number.isFinite(timeoutMs) && timeoutMs > 0);
   const tasksDir = resolve(values["tasks-dir"]);
   let tasks = values.all
     ? readdirSync(tasksDir)
@@ -1979,7 +1999,7 @@ async function main() {
         });
       const attempt = action.attempt;
       process.stdout.write(`${task} (attempt ${attempt})…\n`);
-      return runAttempts({
+      const result = await runAttempts({
         prior,
         control,
         reopenInfra,
@@ -2020,6 +2040,9 @@ async function main() {
           }),
         forceRerun: action.forceRerun,
       });
+      if (result?.stage === "authentication" && !result.replayed)
+        process.stderr.write(`${task}: ${result.infrastructureError}\n`);
+      return result;
     },
   });
   write(join(destination, "checkpoint.json"), {

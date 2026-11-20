@@ -154,10 +154,15 @@ function escapes(root, path) {
 }
 // The compiler can use paths named inside captured manifests. Check their
 // lexical scope before handing the link-free snapshot to its normal loader.
-export function assertConfinedProjectPaths(
+export function snapshotScopeError(
   project,
   manifest = jsonAt(join(project, "system.json")),
 ) {
+  if (
+    typeof manifest?.presentation === "string" &&
+    escapes(project, resolve(project, manifest.presentation))
+  )
+    return "Project presentation path leaves the eval snapshot";
   const checkSources = (root, patterns) => {
     if (!Array.isArray(patterns)) return;
     for (const pattern of patterns) {
@@ -169,19 +174,28 @@ export function assertConfinedProjectPaths(
               isAbsolute(entry) || escapes(project, resolve(root, entry)),
           )
         )
-          throw new Error("Source glob leaves the eval snapshot");
+          return "Source glob leaves the eval snapshot";
       }
     }
   };
-  checkSources(project, manifest?.sources);
+  const sourceError = checkSources(project, manifest?.sources);
+  if (sourceError) return sourceError;
   if (!Array.isArray(manifest?.libraries)) return;
   for (const dependency of manifest.libraries) {
     if (typeof dependency?.path !== "string") continue;
     const root = resolve(project, dependency.path);
     if (escapes(project, root))
-      throw new Error("Project library dependency leaves the eval snapshot");
-    checkSources(root, jsonAt(join(root, "library.json"))?.sources);
+      return "Project library dependency leaves the eval snapshot";
+    const libraryError = checkSources(
+      root,
+      jsonAt(join(root, "library.json"))?.sources,
+    );
+    if (libraryError) return libraryError;
   }
+}
+export function assertConfinedProjectPaths(project, manifest) {
+  const error = snapshotScopeError(project, manifest);
+  if (error) throw new Error(error);
 }
 export const canonical = (value) => JSON.stringify(sortKeys(value));
 export function sortKeys(value) {
