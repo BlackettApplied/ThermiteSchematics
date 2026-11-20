@@ -128,6 +128,8 @@ export function testPeerOwnerPacket(project) {
       const measured = await peerOwnerMeasurements(page, packet.value, native);
       assertDistances(measured);
     },
-    45_000,
+    // The machine packet renders and measures up to 37 sheets. Native CI
+    // timed out at 45 s, and the conveyor packet took as long as 36 s.
+    project === "machine-demo" ? 120_000 : 75_000,
   );
 }

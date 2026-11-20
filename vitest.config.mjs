@@ -138,12 +138,16 @@ const ciWorkers =
   process.env.CI && !process.env.VITEST_MAX_WORKERS
     ? Number(process.env.THERMITE_CI_MAX_WORKERS) || undefined
     : undefined;
+// ELK work and browser or nested processes contend with Vitest on the
+// three-vCPU macOS runners. Keep the two phases with a two-worker ceiling.
+const ciMainWorkers =
+  ciWorkers === 3 && process.platform === "darwin" ? 2 : ciWorkers;
 
 export default defineConfig({
   test: {
     ...testDefaults,
     ...(process.env.CI ? { sequence: { sequencer: CiSequencer } } : {}),
-    maxWorkers: ciWorkers,
+    maxWorkers: ciMainWorkers,
     include,
     ...(ciWorkers === 3
       ? {
@@ -163,7 +167,7 @@ export default defineConfig({
                 name: "main",
                 include,
                 exclude: [...testDefaults.exclude, ...limitedFiles],
-                maxWorkers: 3,
+                maxWorkers: ciMainWorkers,
                 sequence: { groupOrder: 1 },
               },
             },

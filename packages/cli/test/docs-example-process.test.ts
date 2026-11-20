@@ -55,9 +55,11 @@ it("a child deadline rejects only after the child is dead", async () => {
     ["-e", "setInterval(() => {}, 1000)"],
     await root(),
     process.env,
-    { timeoutMs: 50 },
+    { timeoutMs: 50, label: "fixture command" },
   ).catch((e) => e);
-  expect(error.message).toContain("deadline");
+  expect(error.message).toBe(
+    "Example child exceeded 50 ms deadline: fixture command",
+  );
   expect(error.childPid).toEqual(expect.any(Number));
   expect(alive(error.childPid)).toBe(false);
 });

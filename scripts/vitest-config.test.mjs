@@ -9,6 +9,7 @@ async function resolveProjects(workers) {
       name,
       include: config.include,
       exclude: config.exclude,
+      maxWorkers: config.maxWorkers,
       testTimeout: config.testTimeout,
       hookTimeout: config.hookTimeout,
     }));
@@ -17,7 +18,7 @@ async function resolveProjects(workers) {
   }
 }
 
-it("preserves the root Vitest timeouts and exclusions in both CI projects", async () => {
+it("preserves Vitest defaults and caps workers in both CI projects", async () => {
   vi.stubEnv("CI", "1");
   vi.stubEnv("VITEST_MAX_WORKERS", undefined);
   try {
@@ -30,6 +31,9 @@ it("preserves the root Vitest timeouts and exclusions in both CI projects", asyn
 
     expect(root.hookTimeout).toBe(120_000);
     expect(root.testTimeout).toBe(120_000);
+    expect(root.maxWorkers).toBe(2);
+    expect(limited.maxWorkers).toBe(2);
+    expect(main.maxWorkers).toBe(process.platform === "darwin" ? 2 : 3);
     expect(root.exclude).toEqual(
       expect.arrayContaining(["alpha-out/**", "release-out/**"]),
     );

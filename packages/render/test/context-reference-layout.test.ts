@@ -509,5 +509,6 @@ for (const flow of flows)
         await browser.close();
       }
     },
-    flow === "top-to-bottom" ? 180000 : 120000,
+    // The standard top-to-bottom packet reached 160 s on native CI.
+    flow === "top-to-bottom" ? 240_000 : 120_000,
   );

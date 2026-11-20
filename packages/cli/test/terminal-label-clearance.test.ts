@@ -102,8 +102,9 @@ const measureFixtureGap = sheetMeasurementSource((options, h) => {
   return h.terminalLabelClearances(c, 0.8)[0]?.gapMm;
 });
 
-async function roundTwoFindingsAtGap(targetGapMm: number) {
-  let labelX = 25.24;
+async function roundTwoFindingsAtGap(targetGapMm: number, labelX: number) {
+  // Start near the target in the embedded font and calibrate against the
+  // measured ink to allow for native Chromium differences.
   await displaySheet(page, transformerSecondary(roundTwoWinding, labelX));
   const label = page.locator('[data-terminal-key="X2"] text');
   for (let attempt = 0; attempt < 8; attempt++) {
@@ -125,7 +126,7 @@ async function roundTwoFindingsAtGap(targetGapMm: number) {
 }
 
 it("catches an X2 label just inside the 0.50 mm clearance", async () => {
-  const findings = await roundTwoFindingsAtGap(0.45);
+  const findings = await roundTwoFindingsAtGap(0.45, 25.189);
   expect(findings).toEqual([
     expect.objectContaining({
       kind: "terminal-label-body-clearance",
@@ -134,9 +135,9 @@ it("catches an X2 label just inside the 0.50 mm clearance", async () => {
     }),
   ]);
   expect(findings[0].gapMm).toBeCloseTo(0.45, 2);
-});
+}, 150_000);
 
 it("accepts an X2 label just outside the 0.50 mm clearance", async () => {
-  const findings = await roundTwoFindingsAtGap(0.55);
+  const findings = await roundTwoFindingsAtGap(0.55, 25.298);
   expect(findings).toEqual([]);
-});
+}, 150_000);

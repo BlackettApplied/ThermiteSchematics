@@ -40,6 +40,12 @@ export function registerDocsExampleTests(
           ? "workspace"
           : "other";
     if (parts !== group) continue;
+    const timeoutMs =
+      group === "workspace"
+        ? recipe === "workspace-shell"
+          ? 300_000 // Three commands can each use up to 90 s on native CI.
+          : 240_000
+        : 120_000;
     it(
       recipes[recipe].testName(file, recipe),
       async () => {
@@ -59,9 +65,7 @@ export function registerDocsExampleTests(
           active.delete(c);
         }
       },
-      file === "docs/machine-demo.md" && recipe === "repo-shell"
-        ? 240000
-        : 120000,
+      timeoutMs,
     );
   }
 }

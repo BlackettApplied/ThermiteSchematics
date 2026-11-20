@@ -83,7 +83,6 @@ it.each([
   "plc3",
   "plc4",
   "daisy",
-  "pnp",
   "two_psu",
   "loads_via_k2",
   "tb_loads",
@@ -99,10 +98,7 @@ it.each([
       variant === "min_sameloc" ? { plc2Location: "MAIN-PANEL" } : {},
     );
     const requests =
-      variant === "plant" ||
-      variant === "coil_fork" ||
-      variant === "pnp" ||
-      variant === "parallel"
+      variant === "plant" || variant === "coil_fork" || variant === "parallel"
         ? rootedRequests(ir)
         : [loads];
     if (variant === "two_psu")
@@ -110,6 +106,18 @@ it.each([
     await checkSeeds(variant, ir, requests);
   },
   120000,
+);
+
+it.each([0, 15])(
+  "pnp has one ELK input sequence and SVG (seed block starting at %i)",
+  async (first) => {
+    const { ir } = await fixture.compile("pnp", 0);
+    const seeds = Array.from({ length: 15 }, (_, offset) => first + offset);
+    // Both blocks compare every assignment against the same seed-zero output.
+    if (first !== 0) seeds.unshift(0);
+    await checkSeeds("pnp", ir, rootedRequests(ir), flows, seeds);
+  },
+  120_000,
 );
 
 it("uses authored source positions for indistinguishable unnamed jumpers", async () => {

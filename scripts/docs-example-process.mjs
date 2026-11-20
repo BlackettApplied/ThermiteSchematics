@@ -16,15 +16,16 @@ export class ProcessOwner {
   }
   async run(args, cwd, env = process.env, options = {}) {
     if (this.closing) throw new Error("Example process owner is closed");
+    const { timeoutMs = this.timeoutMs, label = args[0] } = options;
     const handle = start(args, cwd, env, options, this.interruptGraceMs);
     this.children.add(handle);
     const timer = setTimeout(() => {
       handle.error = new Error(
-        `Example child exceeded ${options.timeoutMs ?? this.timeoutMs} ms deadline: ${args[0]}`,
+        `Example child exceeded ${timeoutMs} ms deadline: ${label}`,
       );
       handle.error.childPid = handle.child.pid;
       void handle.kill();
-    }, options.timeoutMs ?? this.timeoutMs);
+    }, timeoutMs);
     try {
       const result = await handle.closed;
       if (handle.error) throw handle.error;

@@ -85,17 +85,23 @@ export async function runtimeShell(c, fence) {
 
 export async function workspaceShell(c, fence) {
   await (c.workspaceReady ??= prepareWorkspace(c, fence.file));
-  if (fence.file === "evals/agent/README.md") {
-    const run = c.run;
-    // The single offline run/recheck smoke test took 26.2 s on Windows
-    // before Vitest startup and teardown. Give its shell the same budget.
-    c = {
+  // Workspace commands can launch builds and nested Vitest workers. Native
+  // Windows and macOS CI exceeded 30 s per command even with shared setup.
+  const nativeCi =
+    process.env.CI && ["win32", "darwin"].includes(process.platform);
+  const timeoutMs = nativeCi ? 90_000 : 60_000;
+  let command = 0;
+  return shell(
+    {
       ...c,
-      run: (args, cwd, env, settings) =>
-        run(args, cwd, env, { timeoutMs: 60000, ...settings }),
-    };
-  }
-  return shell(c, fence.body);
+      run: (args, cwd, env) =>
+        c.run(args, cwd, env, {
+          timeoutMs,
+          label: `${fence.file} fence ${fence.ordinal}, command ${++command}`,
+        }),
+    },
+    fence.body,
+  );
 }
 
 async function prepareWorkspace(c, file) {

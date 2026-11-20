@@ -30,7 +30,8 @@ workflow; contributors still run the local checks before submitting changes.
 Both CI jobs upload a Vitest JSON report with per-test durations when the suite
 finishes. Set `THERMITE_TEST_TIMINGS=1` with a local check to write the same
 report to `coverage/test-timings.json`.
-Both jobs run Vitest with three workers on Windows and macOS and two on Linux.
+Both jobs run Vitest with up to three workers on Windows and two on macOS and
+Linux.
 Windows and macOS reserve a two-worker phase for the offline reference
 pipeline, its executable docs fence, and short-deadline fit and artifact
 checks. macOS also runs the largest Chromium and nested test workloads in
