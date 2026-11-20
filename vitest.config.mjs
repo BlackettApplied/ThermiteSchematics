@@ -99,7 +99,19 @@ class CiSequencer extends BaseSequencer {
 }
 
 const include = [...configDefaults.include, "evals/**/*.test.mjs"];
-const exclude = [...configDefaults.exclude, "evals/out/**", "projects/**"];
+// Inline projects don't inherit the root options. Release and review archives
+// contain independent checkouts whose copied tests must stay excluded.
+const testDefaults = {
+  testTimeout: 120_000,
+  hookTimeout: 120_000,
+  exclude: [
+    ...configDefaults.exclude,
+    "evals/out/**",
+    "projects/**",
+    "alpha-out/**",
+    "release-out/**",
+  ],
+};
 // Keep the short-deadline fit and artifact checks and the nested reference
 // pipeline within a two-worker phase. Include other large Chromium and
 // nested test workloads in that phase on the smaller macOS runners.
@@ -129,27 +141,28 @@ const ciWorkers =
 
 export default defineConfig({
   test: {
+    ...testDefaults,
     ...(process.env.CI ? { sequence: { sequencer: CiSequencer } } : {}),
     maxWorkers: ciWorkers,
     include,
-    exclude,
     ...(ciWorkers === 3
       ? {
           projects: [
             {
               test: {
+                ...testDefaults,
                 name: "limited",
                 include: limitedFiles,
-                exclude,
                 maxWorkers: 2,
                 sequence: { groupOrder: 0 },
               },
             },
             {
               test: {
+                ...testDefaults,
                 name: "main",
                 include,
-                exclude: [...exclude, ...limitedFiles],
+                exclude: [...testDefaults.exclude, ...limitedFiles],
                 maxWorkers: 3,
                 sequence: { groupOrder: 1 },
               },

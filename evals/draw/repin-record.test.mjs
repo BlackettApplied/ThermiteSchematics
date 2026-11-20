@@ -3,9 +3,14 @@ import { it, expect } from "vitest";
 import { recordFixture } from "./repin-record-fixture.mjs";
 import { readRecordChain } from "./repin-record-chain.mjs";
 import { readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
-import { verifyRecord, deterministicReceipt } from "./repin-record.mjs";
+import {
+  readRecord,
+  verifyRecord,
+  deterministicReceipt,
+} from "./repin-record.mjs";
 import { hash, json } from "./support.mjs";
 import { strictJsonBytes } from "./repin-io.mjs";
 const records = fileURLToPath(new URL("./repins/", import.meta.url));
@@ -17,6 +22,16 @@ function archive() {
     fileURLToPath(new URL("./expectations.mjs", import.meta.url)),
   ));
 }
+async function archivedRecord(pr) {
+  try {
+    return (await archive()).records.get(pr);
+  } catch {
+    // The chain test reports its own failure. Verify this PR independently.
+    return readRecord(join(records, pr), {
+      pin: pins.records.find((p) => String(p.pr) === pr),
+    });
+  }
+}
 it("checks every pinned record and the registry chain", async () => {
   expect((await archive()).records.size).toBeGreaterThan(0);
 });
@@ -25,7 +40,7 @@ for (const pr of (await readdir(records, { withFileTypes: true }))
   .map((e) => e.name)
   .sort()) {
   it(`verifies durable re-pin ${pr}: originals, every crop and path map`, async () => {
-    const r = (await archive()).records.get(pr);
+    const r = await archivedRecord(pr);
     expect(r).toBeDefined();
     expect(String(r.record.pr)).toBe(pr);
     if (pr === "92") {

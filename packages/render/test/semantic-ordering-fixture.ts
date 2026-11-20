@@ -212,6 +212,7 @@ export async function checkSeeds(
     const ir = reidentify(base, seed, printed);
     // Each identity assignment starts with a fresh ELK worker. Reuse it for
     // this seed's sequential requests and capture every actual layout input.
+    // This reuse is test-only. Production creates a fresh engine per layout.
     const engine = createElkEngine();
     const layout = engine.layout.bind(engine);
     const renderer = createSchematicRendererWithDependencies({
