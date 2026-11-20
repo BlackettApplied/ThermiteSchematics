@@ -24,6 +24,12 @@ function runTests(selected, { cwd = process.cwd(), env = process.env } = {}) {
       // Keep each test worker in a separate process, using the same Bun runtime
       // for Vitest and the child CLIs exercised by integration tests.
       "--pool=forks",
+      "--testTimeout=120000",
+      "--hookTimeout=120000",
+      // Release and review archives contain independent source checkouts. Their
+      // copied tests are not tests of the active checkout.
+      "--exclude=alpha-out/**",
+      "--exclude=release-out/**",
       ...(timings
         ? [
             "--reporter=default",

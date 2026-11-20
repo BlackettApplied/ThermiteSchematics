@@ -43,3 +43,29 @@ it("preserves the root Vitest timeouts and exclusions in both CI projects", asyn
     vi.unstubAllEnvs();
   }
 });
+
+it("passes timeouts and archive exclusions to Vitest for config-less runs", async () => {
+  const spawnSync = vi.fn().mockReturnValue({ status: 0 });
+  const argv = process.argv;
+  const exitCode = process.exitCode;
+  vi.doMock("node:child_process", () => ({ spawnSync }));
+  vi.stubEnv("THERMITE_CONTRIBUTOR_BUN", undefined);
+  try {
+    process.argv = [process.execPath, "scripts/test.mjs"];
+    await import("./test.mjs");
+    expect(spawnSync).toHaveBeenCalledOnce();
+    expect(spawnSync.mock.calls[0][1]).toEqual(
+      expect.arrayContaining([
+        "--testTimeout=120000",
+        "--hookTimeout=120000",
+        "--exclude=alpha-out/**",
+        "--exclude=release-out/**",
+      ]),
+    );
+  } finally {
+    vi.doUnmock("node:child_process");
+    vi.unstubAllEnvs();
+    process.argv = argv;
+    process.exitCode = exitCode;
+  }
+});
