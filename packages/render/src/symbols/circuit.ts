@@ -349,7 +349,7 @@ export function circuitMotor(
   const cx = width / 2,
     cy = top + span / 2,
     r = Math.min(width / 2 - 2, Math.max(5, span / 2 - 2)),
-    leadRadius = r + PRINTABLE_SYMBOL_POLICY.separateStubGapMm;
+    leadRadius = r + PRINTABLE_SYMBOL_POLICY.circularStubGapMm;
   return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portYs
     .map((y) => {
       const dy = Math.max(-r, Math.min(r, y - cy)),
@@ -369,7 +369,7 @@ export function circuitMotorVertical(
   threePhase = false,
 ): string {
   const r = Math.max(5, span / 2 - 2),
-    leadRadius = r + PRINTABLE_SYMBOL_POLICY.separateStubGapMm;
+    leadRadius = r + PRINTABLE_SYMBOL_POLICY.circularStubGapMm;
   return `<g data-circuit-mark="motor" stroke="#17212b" stroke-width="${n(PRINTABLE_SYMBOL_POLICY.conductorStrokeMm)}" fill="none"><circle cx="${n(cx)}" cy="${n(cy)}" r="${n(r)}"/>${portXs
     .map((x) => {
       const dx = Math.max(-r, Math.min(r, x - cx)),

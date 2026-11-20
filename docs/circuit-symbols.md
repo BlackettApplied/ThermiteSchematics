@@ -152,10 +152,21 @@ roles. Spacing and orientation carry the following meanings in both flows.
 Unmarked overload power poles use a stepped thermal element. Their auxiliary
 contacts use their own authored state. Protection elements have no NC/NO caption.
 
-When two or more independent terminal stubs approach the same symbol face edge,
-end each stub about 1 mm short of the outline in both flows. This keeps the
-outline visually separate from the leads. Native terminals and conductors
+When independent leads approach one continuous symbol outline, leave white
+space between the lead tips and that outline. The rule applies to a whole
+circle, including leads that reach it from opposite sides. Motor and lamp
+circles use about 0.7 mm between stroke centrelines in both flows so the leads
+visually follow the circle while their ink stays separate. Independent stubs
+at rectangular load and interface faces use a 1 mm centreline gap. The
+established through-symbol marks for contacts, coils, fuses and windings
+describe the function between its terminals. Native terminals and conductors
 determine electrical connectivity.
+
+The light grey device boundary groups a device's terminals and functions.
+It may pass through terminal marks because it represents the device
+enclosure. The darker electrical strokes and individual terminal marks
+show the landings. V2 applies to continuous electrical symbol ink, and the
+drawing checker excludes the grey boundary when tracing that ink.
 
 Rooted DC source and load polarity qualifiers stay upright in both flows, with
 owned annotation ink reserved inside the symbol size and offset from the leads.

@@ -354,9 +354,9 @@
     <circle id="terminal-00330031003300660062003000330061002d0035006600310038002d0034006100660034002d0039003700660038002d006100370061003500340032003400300033006500310034--0036002f00540033--006f00750074" class="terminal-marker" cx="40" cy="10" r="2" data-symbol-port-id="out" data-device-uid="313fb03a-5f18-4af4-97f8-a7a542403e14" data-designation="OL1" data-terminal-key="6/T3" data-member-function-key="pole3" data-net-id="net:sha256:3b67598e0ecf3028d423522ca4946610148f52db8c81de5534a64857e63b1e21"/>
   </g>
   <g id="aggregate-00330066003100390030003100650063002d0031003000380037002d0034003400350066002d0039006200640033002d006400630064003600350037006300610030003700640065--006d006f0074006f0072" class="symbol aggregate-symbol load" transform="translate(1882.259 283)" data-symbol-id="ais:motor-3ph" data-device-uid="3f1901ec-1087-445f-9bd3-dcd657ca07de" data-aggregate-key="motor">
-    <polyline class="symbol-body" points="0,12 28,12 28,26"/>
-    <polyline class="symbol-body" points="0,36 10,36"/>
-    <polyline class="symbol-body" points="0,60 10,60"/>
+    <polyline class="symbol-body" points="0,12 28,12 28,27"/>
+    <polyline class="symbol-body" points="0,36 11,36"/>
+    <polyline class="symbol-body" points="0,60 11,60"/>
     <line class="symbol-body" x1="0" y1="84" x2="18" y2="84"/>
     <circle class="symbol-body" cx="28" cy="48" r="18"/>
     <line class="symbol-annotation" x1="18" y1="84" x2="18" y2="88"/>

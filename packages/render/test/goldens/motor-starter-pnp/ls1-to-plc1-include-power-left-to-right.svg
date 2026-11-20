@@ -218,9 +218,9 @@
     <circle id="terminal-00380031003100340038006100640033002d0038006300300033002d0034006300380064002d0038006300370030002d003600620033003300620062003300620030003200360036--00580031002e0030--00440049" class="terminal-marker" cx="0" cy="12" r="2" data-symbol-port-id="DI" data-device-uid="81148ad3-8c03-4c8d-8c70-6b33bb3b0266" data-designation="PLC1" data-terminal-key="X1.0" data-member-function-key="di0" data-net-id="net:sha256:18a8e0f2eaa867a37d205621354e76aae3cb3399b0e7b568b1bf2400f95f9340"/>
   </g>
   <g id="aggregate-00350039003600660037003200380062002d0031003400340035002d0034006300340062002d0038003900370034002d006100330062003400650061003700300033003600330036--0070006e0070002d00730065006e0073006f0072" class="symbol aggregate-symbol permissive" transform="translate(1866 229)" data-symbol-id="ais:switch-sensor-pnp" data-device-uid="596f728b-1445-4c4b-8974-a3b4ea703636" data-aggregate-key="pnp-sensor">
-    <line class="symbol-body" x1="0" y1="10" x2="4" y2="10"/>
-    <line class="symbol-body" x1="0" y1="30" x2="4" y2="30"/>
-    <rect width="30" height="32" class="symbol-body" x="8" y="4" rx="2" ry="2"/>
+    <line class="symbol-body" x1="0" y1="10" x2="7" y2="10"/>
+    <line class="symbol-body" x1="0" y1="30" x2="7" y2="30"/>
+    <rect width="27" height="32" class="symbol-body" x="11" y="4" rx="2" ry="2"/>
     <circle class="symbol-actuator" cx="21" cy="20" r="6"/>
     <line class="symbol-body" x1="27" y1="20" x2="48" y2="20"/>
     <polyline class="symbol-operator" points="29,14 35,20 29,26"/>

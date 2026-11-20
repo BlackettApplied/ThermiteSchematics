@@ -114,22 +114,22 @@
     <circle id="terminal-00610036003300380036006300630063002d0061003200620065002d0034006600610034002d0038003600370032002d003500380066003700340061006100310061006500650038--002d--00720065007400750072006e" class="terminal-marker" cx="36" cy="56" r="2" data-symbol-port-id="return" data-device-uid="a6386ccc-a2be-4fa4-8672-58f74aa1aee8" data-designation="PS1" data-terminal-key="-" data-member-function-key="dc_output" data-net-id="net:sha256:54e8550bc576b1f94e2e6bf1c5a90335d37401f763169af50dd911cc1762d358"/>
   </g>
   <g id="function-00330063006100630034006100390037002d0035006400300063002d0034003800610065002d0038006400370037002d003400660033003500370035003600340062003300330039--0073007500700070006c0079" class="symbol function-symbol load" transform="translate(232.2 387)" data-symbol-id="ais:dc-load" data-device-uid="3cac4a97-5d0c-48ae-8d77-4f357564b339" data-function-key="supply">
-    <line class="symbol-body" x1="0" y1="8" x2="4" y2="8"/>
-    <line class="symbol-body" x1="0" y1="56" x2="4" y2="56"/>
-    <rect width="24" height="56" class="symbol-body" x="8" y="4" rx="2" ry="2"/>
-    <line class="symbol-annotation" x1="15" y1="16" x2="21" y2="16" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
-    <line class="symbol-annotation" x1="18" y1="13" x2="18" y2="19" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
-    <line class="symbol-annotation" x1="15" y1="48" x2="21" y2="48" data-symbol-port-id="return" data-symbol-qualifier="polarity" data-polarity="negative"/>
+    <line class="symbol-body" x1="0" y1="8" x2="7" y2="8"/>
+    <line class="symbol-body" x1="0" y1="56" x2="7" y2="56"/>
+    <rect width="21" height="56" class="symbol-body" x="11" y="4" rx="2" ry="2"/>
+    <line class="symbol-annotation" x1="17" y1="16" x2="23" y2="16" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
+    <line class="symbol-annotation" x1="20" y1="13" x2="20" y2="19" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
+    <line class="symbol-annotation" x1="17" y1="48" x2="23" y2="48" data-symbol-port-id="return" data-symbol-qualifier="polarity" data-polarity="negative"/>
     <circle id="terminal-00330063006100630034006100390037002d0035006400300063002d0034003800610065002d0038006400370037002d003400660033003500370035003600340062003300330039--004c002b--0070006f007300690074006900760065" class="terminal-marker" cx="0" cy="8" r="2" data-symbol-port-id="positive" data-device-uid="3cac4a97-5d0c-48ae-8d77-4f357564b339" data-designation="PLC1" data-terminal-key="L+" data-member-function-key="supply" data-net-id="net:sha256:5086a6bd96ad33b25e493f55e4c395e9708f4bc9f5221fdac929940ab7c14e78"/>
     <circle id="terminal-00330063006100630034006100390037002d0035006400300063002d0034003800610065002d0038006400370037002d003400660033003500370035003600340062003300330039--004d--00720065007400750072006e" class="terminal-marker" cx="0" cy="56" r="2" data-symbol-port-id="return" data-device-uid="3cac4a97-5d0c-48ae-8d77-4f357564b339" data-designation="PLC1" data-terminal-key="M" data-member-function-key="supply" data-net-id="net:sha256:54e8550bc576b1f94e2e6bf1c5a90335d37401f763169af50dd911cc1762d358"/>
   </g>
   <g id="function-00350066003900390039006500640030002d0066006200620039002d0034006300380066002d0038003600320031002d006100620061003000390038003400340037003500620039--0073007500700070006c0079" class="symbol function-symbol load" transform="translate(902.6 218)" data-symbol-id="ais:dc-load" data-device-uid="5f999ed0-fbb9-4c8f-8621-aba0984475b9" data-function-key="supply">
-    <line class="symbol-body" x1="0" y1="8" x2="4" y2="8"/>
-    <line class="symbol-body" x1="0" y1="56" x2="4" y2="56"/>
-    <rect width="24" height="56" class="symbol-body" x="8" y="4" rx="2" ry="2"/>
-    <line class="symbol-annotation" x1="15" y1="16" x2="21" y2="16" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
-    <line class="symbol-annotation" x1="18" y1="13" x2="18" y2="19" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
-    <line class="symbol-annotation" x1="15" y1="48" x2="21" y2="48" data-symbol-port-id="return" data-symbol-qualifier="polarity" data-polarity="negative"/>
+    <line class="symbol-body" x1="0" y1="8" x2="7" y2="8"/>
+    <line class="symbol-body" x1="0" y1="56" x2="7" y2="56"/>
+    <rect width="21" height="56" class="symbol-body" x="11" y="4" rx="2" ry="2"/>
+    <line class="symbol-annotation" x1="17" y1="16" x2="23" y2="16" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
+    <line class="symbol-annotation" x1="20" y1="13" x2="20" y2="19" data-symbol-port-id="positive" data-symbol-qualifier="polarity" data-polarity="positive"/>
+    <line class="symbol-annotation" x1="17" y1="48" x2="23" y2="48" data-symbol-port-id="return" data-symbol-qualifier="polarity" data-polarity="negative"/>
     <circle id="terminal-00350066003900390039006500640030002d0066006200620039002d0034006300380066002d0038003600320031002d006100620061003000390038003400340037003500620039--004c002b--0070006f007300690074006900760065" class="terminal-marker" cx="0" cy="8" r="2" data-symbol-port-id="positive" data-device-uid="5f999ed0-fbb9-4c8f-8621-aba0984475b9" data-designation="PLC2" data-terminal-key="L+" data-member-function-key="supply" data-net-id="net:sha256:5086a6bd96ad33b25e493f55e4c395e9708f4bc9f5221fdac929940ab7c14e78"/>
     <circle id="terminal-00350066003900390039006500640030002d0066006200620039002d0034006300380066002d0038003600320031002d006100620061003000390038003400340037003500620039--004d--00720065007400750072006e" class="terminal-marker" cx="0" cy="56" r="2" data-symbol-port-id="return" data-device-uid="5f999ed0-fbb9-4c8f-8621-aba0984475b9" data-designation="PLC2" data-terminal-key="M" data-member-function-key="supply" data-net-id="net:sha256:54e8550bc576b1f94e2e6bf1c5a90335d37401f763169af50dd911cc1762d358"/>
   </g>

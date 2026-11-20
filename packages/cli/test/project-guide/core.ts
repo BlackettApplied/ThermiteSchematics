@@ -1555,7 +1555,7 @@ const module: FactModule = {
       "Instruction about runtime packages, which this source-checkout suite does not use.",
     ],
     [
-      "Source checkouts need `bun install --frozen-lockfile && bun run build` before use and after engine changes.",
+      "In source run `bun install --frozen-lockfile && bun run build` before use and after changes.",
       "Setup instruction; this suite itself runs from a built checkout.",
     ],
     [

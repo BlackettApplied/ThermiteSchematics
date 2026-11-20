@@ -8,6 +8,13 @@ import {
   useCompactPresentation,
 } from "./corpus/compact-frames.mjs";
 const flows = ["left-to-right", "top-to-bottom"];
+const quickCases = new Set([
+  "init-starter-left-to-right",
+  "init-starter-top-to-bottom",
+  "machine-demo-left-to-right",
+  "ea-f3-wide-label-left-to-right",
+  "functional-symbols-top-to-bottom",
+]);
 export function cases(quick = false) {
   const list = [];
   const add = (id, project, request, recipe) => {
@@ -21,6 +28,9 @@ export function cases(quick = false) {
             : request,
         recipe,
         flow,
+        ...(id === "motor-starter-documentation" && flow === "left-to-right"
+          ? { extraCircuitGroup: requests.motorLoadGroup }
+          : {}),
       });
   };
   add(
@@ -84,16 +94,7 @@ export function cases(quick = false) {
     requests.wide,
     "wide",
   );
-  if (quick)
-    return list.filter((x) =>
-      [
-        "init-starter-left-to-right",
-        "init-starter-top-to-bottom",
-        "machine-demo-left-to-right",
-        "ea-f3-wide-label-left-to-right",
-        "functional-symbols-top-to-bottom",
-      ].includes(x.id),
-    );
+  if (quick) return list.filter((x) => quickCases.has(x.id));
   for (const [project, request] of [
     ["motor-starter", requests.sweepPower],
     [
@@ -188,7 +189,7 @@ export async function prepareProject(c, root, dest, cli) {
   if (c.recipe) {
     project = join(dest, "project");
     await cp(join(root, c.project), project, { recursive: true });
-    if (c.recipe === "compact-frame") await useCompactPresentation(project);
+    if (c.recipe === "compact-frame") await useCompactPresentation(project, c);
     else if (["starter", "wide"].includes(c.recipe)) {
       // Fixed template UUIDs; init's only electrical transformation is a local core copy.
       const starterSystem = await readJson(join(project, "system.json"));
@@ -267,6 +268,8 @@ export async function prepareRequest(c, root) {
   if (c.recipe === "field" && c.flow === "top-to-bottom")
     request.page = { ...request.page, orientation: "portrait" };
   applyPacketVariant(c, request);
+  if (c.extraCircuitGroup)
+    request.views[0].groups.push(structuredClone(c.extraCircuitGroup));
   return request;
 }
 

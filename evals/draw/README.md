@@ -1190,6 +1190,10 @@ projects and requests by path:
   so the standing capture fits its output budget. The
   [compact-frame ledger](corpus/compact-frame-ledger.json) records the
   full-packet exploration and the new strict cases' scope.
+- The [load symbol coverage](corpus/load-symbols-ledger.json) extends two
+  existing cases. The motor-starter documentation adds the M1 motor load in
+  circuit view. The conveyor-line compact-frame case adds the rooted PS1 AC
+  input and uses wire designations on four branches in the copied fixture.
 - D1/D2 packets have a documented deferred E2 slot, never substituted or scored.
 
 The 36-cell sweep is three projects × tabloid/A3/letter × landscape/portrait ×

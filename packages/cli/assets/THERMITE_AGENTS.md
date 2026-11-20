@@ -3,9 +3,8 @@
 TypeScript + ELK alpha; Bun 1.4.2. `thermite` means
 `bun <thermite>/thermite.mjs`; use one absolute runtime/source path outside this
 project (ask if unknown). No `thermite` is on PATH.
-Never install/build in a downloaded runtime. Source checkouts need
-`bun install --frozen-lockfile && bun run build` before use and
-after engine changes.
+Never install/build in a downloaded runtime. In source run
+`bun install --frozen-lockfile && bun run build` before use and after changes.
 
 ```sh
 thermite init ../conveyor --name "Conveyor 1"
@@ -96,7 +95,7 @@ Packet JSON `html` matches `.html` byte for byte. Text fitting uses bundled font
 Use a short group `lineReference` for circuit captions.
 
 Keep labels clear of ink, pin approaches, bends, junctions and cable ends.
-See `thermite guide circuit-symbols`.
+See `thermite guide circuit-symbols` for lead gaps.
 
 ## Offline project workflows
 

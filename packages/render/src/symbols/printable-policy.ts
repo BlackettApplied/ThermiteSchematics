@@ -60,6 +60,9 @@ export const PRINTABLE_SYMBOL_POLICY = Object.freeze({
   enclosureDashMm: Object.freeze([0.6, 0.6] as const),
   minimumGapMm: 0.3,
   separateStubGapMm: 1,
+  // Centreline gap at a circular face. Two 0.4 mm strokes leave at
+  // least 0.3 mm of white space, even with rounded lead caps.
+  circularStubGapMm: 0.7,
   color: "#17212b",
   rootedMmPerUnit: 0.25,
   // R4 may list a word here only after that mark carries the same fact in ink.

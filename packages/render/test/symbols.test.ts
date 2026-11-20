@@ -366,7 +366,7 @@ describe("D3 original symbol catalog", () => {
         [8, 56].map((y) => ({
           kind: "line",
           from: { x: side === "east" ? 8 : 0, y },
-          to: { x: side === "east" ? 36 : 4, y },
+          to: { x: side === "east" ? 36 : 7, y },
           style: "body",
         })),
       );
@@ -418,10 +418,38 @@ describe("D3 original symbol catalog", () => {
         );
         return Math.hypot(fx + t * dx, fy + t * dy) - circle.radius;
       });
-      expect(Math.min(...clearance)).toBeGreaterThan(3);
-      expect(Math.min(...clearance)).toBeLessThan(5);
+      expect(Math.min(...clearance)).toBeGreaterThanOrEqual(2.8);
+      expect(Math.min(...clearance)).toBeLessThanOrEqual(3);
     }
   });
+
+  it.each(["ais:motor", "ais:lamp"] as const)(
+    "leaves an ink gap at both poles of %s in both flows",
+    (id) => {
+      const symbol = SYMBOL_CATALOG.find((definition) => definition.id === id)!;
+      for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+        const { primitives } = orientSymbolDefinition(symbol, flow);
+        const [first, second, face] = [
+          primitives[1],
+          primitives[3],
+          primitives[4],
+        ];
+        if (
+          first?.kind !== "line" ||
+          second?.kind !== "line" ||
+          face?.kind !== "circle"
+        )
+          throw Error("Expected two lead tips and a circular face.");
+        expect(first.to.x + second.to.x).toBe(2 * face.center.x);
+        expect(first.to.y + second.to.y).toBe(2 * face.center.y);
+        for (const { to } of [first, second])
+          expect(
+            Math.hypot(to.x - face.center.x, to.y - face.center.y) -
+              face.radius,
+          ).toBe(3);
+      }
+    },
+  );
 
   it("deep-freezes built-ins and returns frozen independent orientations", () => {
     expectDeepFrozen(SYMBOL_CATALOG);
@@ -441,9 +469,9 @@ describe("D3 original symbol catalog", () => {
     expect(vertical.primitives[2]).toEqual({
       kind: "rect",
       x: 4,
-      y: 8,
+      y: 11,
       width: 32,
-      height: 30,
+      height: 27,
       radius: 2,
       style: "body",
     });

@@ -59,3 +59,11 @@ export const sweepPower = packet([
   rooted("M1", "power"),
   rooted("K1", "control"),
 ]);
+export const motorLoadGroup = {
+  id: "motor-load",
+  label: "Motor load",
+  functions: [
+    { device: { by: "designation", value: "M1" }, key: "motor_load" },
+  ],
+  conductors: [],
+};
