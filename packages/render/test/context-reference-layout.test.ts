@@ -457,59 +457,54 @@ it("builds bounded leaders from each real port", () => {
 });
 
 for (const flow of flows)
-  it.each([flow])(
-    "prints both port-anchored leaders and the label with independent 1 mm clearances (%s)",
-    async (flow) => {
+  it.each(["standard", "compact"] as const)(
+    `prints both port-anchored leaders and the label with independent 1 mm clearances (${flow}, %s)`,
+    async (layout) => {
       const browser = await launchBrowser(),
         page = await browser.newPage();
       try {
-        for (const layout of ["standard", "compact"] as const) {
-          const r = await renderSchematicPacket(
-            must(fixtures.get("saved")).ir,
-            {
-              format: "schematic-packet-request/0.1",
-              layout,
-              views: [actuation("K1", flow)],
-            },
-          );
-          if (!r.ok) throw Error(r.error.message);
-          expect(r.value.sheets.length).toBeLessThanOrEqual(
-            flow === "left-to-right"
-              ? layout === "standard"
-                ? 3
-                : 2
-              : layout === "standard"
-                ? 4
-                : 3,
-          );
-          const labels = [],
-            leaders = [];
-          for (const sheet of r.value.sheets) {
-            if (!sheet.svg.includes("context-reference-leader")) continue;
-            const ink = await referenceInkOracle(page, sheet.svg);
-            labels.push(...ink.labels);
-            leaders.push(...ink.leaders);
-          }
-          expect(labels).toHaveLength(1);
-          expect(labels[0]?.text).toBe("R1.A1 (reference, no wire)");
-          expect(leaders).toHaveLength(2);
-          for (const l of labels) {
-            expect(l.strokeGap).toBeGreaterThanOrEqual(1);
-            expect(l.textGap).toBeGreaterThanOrEqual(1);
-            expect(l.sizeMm).toBeGreaterThanOrEqual(2.5 - 0.001);
-          }
-          for (const l of leaders) {
-            expect(l.length).toBeCloseTo(2, 3);
-            expect(l.paintedLength).toBeCloseTo(2, 3);
-            expect(l.strokeGap).toBeGreaterThanOrEqual(1);
-            expect(l.textGap).toBeGreaterThanOrEqual(1);
-          }
-          expect(
-            r.value.sheets
-              .flatMap((s) => s.continuations)
-              .some((c) => c.conductor.includes("reference, no wire")),
-          ).toBe(false);
+        const r = await renderSchematicPacket(must(fixtures.get("saved")).ir, {
+          format: "schematic-packet-request/0.1",
+          layout,
+          views: [actuation("K1", flow)],
+        });
+        if (!r.ok) throw Error(r.error.message);
+        expect(r.value.sheets.length).toBeLessThanOrEqual(
+          flow === "left-to-right"
+            ? layout === "standard"
+              ? 3
+              : 2
+            : layout === "standard"
+              ? 4
+              : 3,
+        );
+        const labels = [],
+          leaders = [];
+        for (const sheet of r.value.sheets) {
+          if (!sheet.svg.includes("context-reference-leader")) continue;
+          const ink = await referenceInkOracle(page, sheet.svg);
+          labels.push(...ink.labels);
+          leaders.push(...ink.leaders);
         }
+        expect(labels).toHaveLength(1);
+        expect(labels[0]?.text).toBe("R1.A1 (reference, no wire)");
+        expect(leaders).toHaveLength(2);
+        for (const l of labels) {
+          expect(l.strokeGap).toBeGreaterThanOrEqual(1);
+          expect(l.textGap).toBeGreaterThanOrEqual(1);
+          expect(l.sizeMm).toBeGreaterThanOrEqual(2.5 - 0.001);
+        }
+        for (const l of leaders) {
+          expect(l.length).toBeCloseTo(2, 3);
+          expect(l.paintedLength).toBeCloseTo(2, 3);
+          expect(l.strokeGap).toBeGreaterThanOrEqual(1);
+          expect(l.textGap).toBeGreaterThanOrEqual(1);
+        }
+        expect(
+          r.value.sheets
+            .flatMap((s) => s.continuations)
+            .some((c) => c.conductor.includes("reference, no wire")),
+        ).toBe(false);
       } finally {
         await browser.close();
       }

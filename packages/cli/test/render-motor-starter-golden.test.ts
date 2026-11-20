@@ -359,37 +359,35 @@ describe("M5 Task 8 and M6 Task 6 reviewed schematic CLI goldens", () => {
     },
   );
 
-  it(
-    "matches both split-stream goldens across repeated fresh CLI processes",
+  it.for(cases)(
+    "matches both split-stream $slug goldens across repeated fresh CLI processes",
     { timeout: 120_000 },
-    async ({ skip }) => {
-      for (const { slug, args: commandArgs } of cases) {
-        for (const json of [false, true]) {
-          const args = [
-            ...commandArgs,
-            "--project",
-            motorProject,
-            ...(json ? ["--json"] : []),
-          ];
-          let first: ByteInvocation;
-          let second: ByteInvocation;
-          try {
-            first = await invokeSubprocess(args);
-            second = await invokeSubprocess(args);
-          } catch (error) {
-            if (isChildProcessDenied(error)) {
-              skip("The execution sandbox denied child-process creation.");
-              return;
-            }
-            throw error;
+    async ({ slug, args: commandArgs }, { skip }) => {
+      for (const json of [false, true]) {
+        const args = [
+          ...commandArgs,
+          "--project",
+          motorProject,
+          ...(json ? ["--json"] : []),
+        ];
+        let first: ByteInvocation;
+        let second: ByteInvocation;
+        try {
+          first = await invokeSubprocess(args);
+          second = await invokeSubprocess(args);
+        } catch (error) {
+          if (isChildProcessDenied(error)) {
+            skip("The execution sandbox denied child-process creation.");
+            return;
           }
-          expect(first).toEqual(second);
-          expect(first).toEqual({
-            exitCode: 0,
-            stdout: await golden(slug, "stdout", json ? "json" : "svg"),
-            stderr: await golden(slug, "stderr", json ? "json" : "txt"),
-          });
+          throw error;
         }
+        expect(first).toEqual(second);
+        expect(first).toEqual({
+          exitCode: 0,
+          stdout: await golden(slug, "stdout", json ? "json" : "svg"),
+          stderr: await golden(slug, "stderr", json ? "json" : "txt"),
+        });
       }
     },
   );

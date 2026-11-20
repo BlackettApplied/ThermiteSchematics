@@ -21,7 +21,9 @@ for (const entry of inventory.entries) {
 // Sequential groups: at most one CLI child per worker, with independent trees.
 // Existing topic recipes are executed by their specifically named guide tests,
 // not recursively launched from here. The inventory test checks their hashes.
-export function registerDocsExampleTests(parts: "workspace" | "other") {
+export function registerDocsExampleTests(
+  parts: "agent" | "workspace" | "other",
+) {
   const active = new Set<Awaited<ReturnType<typeof context>>>();
   afterEach(async () => {
     await Promise.all([...active].map((c) => c.cleanup()));
@@ -31,7 +33,13 @@ export function registerDocsExampleTests(parts: "workspace" | "other") {
     const { file, recipe } = entries[0];
     const workspace =
       recipe === "workspace-shell" || file === "docs/machine-demo.md";
-    if (workspace !== (parts === "workspace")) continue;
+    const group =
+      recipe === "workspace-shell" && file === "evals/agent/README.md"
+        ? "agent"
+        : workspace
+          ? "workspace"
+          : "other";
+    if (parts !== group) continue;
     it(
       recipes[recipe].testName(file, recipe),
       async () => {

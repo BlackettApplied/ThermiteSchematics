@@ -198,6 +198,7 @@ export async function checkSeeds(
   base: ElectricalIr,
   requests: readonly SchematicViewRequest[],
   testFlows: readonly (typeof flows)[number][] = flows,
+  seeds = Array.from({ length: 30 }, (_, seed) => seed),
 ) {
   const expected = new Map<
     string,
@@ -207,20 +208,24 @@ export async function checkSeeds(
   // public label can legitimately change exact font metrics; mutate internal
   // identities while keeping these printed labels fixed in this matrix.
   const printed = base.jumpers.filter((j) => !j.designation).map((j) => j.uid);
-  for (let seed = 0; seed < 30; seed++) {
+  for (const seed of seeds) {
     const ir = reidentify(base, seed, printed);
+    // Each identity assignment starts with a fresh ELK worker. Reuse it for
+    // this seed's sequential requests and capture every actual layout input.
+    const engine = createElkEngine();
+    const layout = engine.layout.bind(engine);
+    const renderer = createSchematicRendererWithDependencies({
+      layoutEngine: engine,
+    });
+    let inputs: string[];
+    engine.layout = async (...args) => {
+      inputs.push(digest(semanticIdentities(ir, args[0])));
+      return layout(...args);
+    };
     for (const request of requests)
       for (const flow of testFlows) {
-        const engine = createElkEngine(),
-          layout = engine.layout.bind(engine),
-          inputs: string[] = [];
-        engine.layout = async (...args) => {
-          inputs.push(digest(semanticIdentities(ir, args[0])));
-          return layout(...args);
-        };
-        const r = await createSchematicRendererWithDependencies({
-          layoutEngine: engine,
-        }).render(ir, { ...request, flow });
+        inputs = [];
+        const r = await renderer.render(ir, { ...request, flow });
         const key = JSON.stringify({ ...request, flow });
         const svg = r.ok ? r.value.svg : null;
         const svgHash = digest(semanticIdentities(ir, svg));

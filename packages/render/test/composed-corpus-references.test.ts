@@ -1,8 +1,9 @@
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { mkdtemp, realpath, rm } from "node:fs/promises";
-import { join } from "node:path";
+import { mkdtemp, realpath, rm, glob } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
-import { compileProject, lockProject } from "@thermite/compiler";
+import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { scopedReferenceOracle } from "./helpers/local-reference-oracle.js";
 import {
@@ -11,7 +12,18 @@ import {
   prepareRequest,
 } from "../../../evals/draw/corpus.mjs";
 
+import { checkSvgFontBudget } from "../../../evals/draw/font-budget.mjs";
+import { embedPrintableFont } from "../../cli/src/printable-font.js";
+
 const corpus = cases();
+const extraFontCases = ["left-to-right", "top-to-bottom"].map((flow) => ({
+  id: `off-view-connections-${flow}`,
+  project: "examples/off-view-connections",
+  request: "examples/off-view-connections/packet.json",
+  flow,
+  recipe: undefined,
+}));
+const fontCases = [...corpus.filter((spec) => !spec.sweep), ...extraFontCases];
 const compiled = new Map<string, ReturnType<typeof compileProject>>();
 const composed = new Set<string>();
 const refusals = new Set([
@@ -23,12 +35,47 @@ const refusals = new Set([
 let scratch: string;
 const root = process.cwd();
 
-async function lockFixture([, project]: [string, string]) {
-  const result = await lockProject(project);
-  return {
-    code: result.ok ? 0 : 1,
-    stderr: JSON.stringify(result.diagnostics),
-  };
+async function lockFixture(args: string[]) {
+  const result = spawnSync(
+    process.execPath,
+    [resolve("thermite.mjs"), ...args],
+    {
+      encoding: "utf8",
+    },
+  );
+  return { code: result.status, stderr: result.stderr };
+}
+
+// Flow, page and layout variants only alter the request. Each recipe gets
+// one compiled project, and the adjacent ink and resource audits share a
+// single packet for the exact same case.
+async function renderCase(spec: (typeof corpus)[number]) {
+  const key = JSON.stringify([spec.project, spec.recipe]);
+  let project = compiled.get(key);
+  if (!project) {
+    project = prepareProject(
+      spec,
+      root,
+      join(scratch, spec.id),
+      lockFixture,
+    ).then((path: string) => compileProject(path));
+    compiled.set(key, project);
+  }
+  const c = await project;
+  if (!c.ok) throw Error(JSON.stringify(c.diagnostics));
+  return renderSchematicPacket(
+    c.ir,
+    await prepareRequest(spec, root),
+    c.presentation,
+  );
+}
+
+let lastPacket:
+  { id: string; result: ReturnType<typeof renderCase> } | undefined;
+function packetFor(spec: (typeof corpus)[number]) {
+  if (lastPacket?.id !== spec.id)
+    lastPacket = { id: spec.id, result: renderCase(spec) };
+  return lastPacket.result;
 }
 
 beforeAll(async () => {
@@ -50,30 +97,11 @@ afterAll(async () => {
     await rm(scratch, { recursive: true, force: true });
   }
 });
-for (const entry of corpus)
+for (const entry of corpus) {
   it.each([entry])(
     "keeps every composed local resource scoped in $id",
     async (spec) => {
-      // Flow, page and layout variants only alter the request. Compile and
-      // lock one copy per project recipe, then render every request separately.
-      const key = JSON.stringify([spec.project, spec.recipe]);
-      let project = compiled.get(key);
-      if (!project) {
-        project = prepareProject(
-          spec,
-          root,
-          join(scratch, spec.id),
-          lockFixture,
-        ).then((path: string) => compileProject(path));
-        compiled.set(key, project);
-      }
-      const c = await project;
-      if (!c.ok) throw Error(JSON.stringify(c.diagnostics));
-      const packet = await renderSchematicPacket(
-        c.ir,
-        await prepareRequest(spec, root),
-        c.presentation,
-      );
+      const packet = await packetFor(spec);
       if (!packet.ok) {
         expect(refusals.has(spec.id), JSON.stringify(packet.error)).toBe(true);
         expect(packet.error.code).toBe("R006");
@@ -100,3 +128,46 @@ for (const entry of corpus)
       ? 60_000
       : 30_000,
   );
+  if (!entry.sweep) registerFontBudget(entry);
+}
+for (const entry of extraFontCases) registerFontBudget(entry);
+
+function registerFontBudget(entry: (typeof corpus)[number]) {
+  it.each([entry])(
+    "bounds every rendered shipped-example SVG: $id",
+    async (spec) => {
+      const result = await packetFor(spec);
+      if (!result.ok) {
+        expect(spec.id).toBe("motor-starter-top-to-bottom");
+        expect(result.error.code).toBe("R006");
+        return;
+      }
+      const style = result.value.html.match(
+        /<style data-thermite-font="[^"]+">[^<]*<\/style>/u,
+      );
+      expect(style?.[0]).toBeDefined();
+      expect(Buffer.byteLength(style?.[0] ?? "")).toBeLessThanOrEqual(
+        500 * 1024,
+      );
+      for (const sheet of result.value.sheets) {
+        const svg = embedPrintableFont(sheet.svg);
+        expect(
+          checkSvgFontBudget(svg, `${spec.id}/${sheet.number}`),
+        ).toBeLessThanOrEqual(61440);
+      }
+    },
+  );
+}
+
+it("covers every shipped example project in the font budget matrix", async () => {
+  const inventory: string[] = [];
+  for await (const file of glob("examples/**/system.json"))
+    inventory.push(file.replace(/\\/gu, "/").replace(/\/system.json$/u, ""));
+  expect(
+    new Set(
+      fontCases
+        .filter((spec) => spec.project.startsWith("examples/"))
+        .map((spec) => spec.project),
+    ),
+  ).toEqual(new Set(inventory));
+});

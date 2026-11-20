@@ -36,56 +36,58 @@ const cases = [
   ["G", "letter", "portrait", "compact", "top-to-bottom", 6],
 ] as const;
 
-it.each(cases)(
-  "keeps fit witness %s complete within its page-cost bound",
-  async (name, size, orientation, layout, flow, base) => {
-    const r = await renderSchematicPacket(ir, {
-      format: "schematic-packet-request/0.1",
-      views: views(flow),
-      page: { size, orientation },
-      layout,
-    });
-    if (name === "G" && !r.ok) {
-      expect(r).toMatchObject({
-        ok: false,
-        error: {
-          code: "R006",
-          details: {
-            constraint: "page-cost-bound",
-            basePages: 6,
-            maximumPages: 12,
-          },
-        },
+for (const witness of cases)
+  it.each([witness])(
+    "keeps fit witness %s complete within its page-cost bound",
+    async (name, size, orientation, layout, flow, base) => {
+      const r = await renderSchematicPacket(ir, {
+        format: "schematic-packet-request/0.1",
+        views: views(flow),
+        page: { size, orientation },
+        layout,
       });
-      for (const text of [
-        "PS1.-",
-        "W-CTL-002",
-        "W-CTL-004",
-        "landscape",
-        "sheets",
-      ])
-        expect(r.error.message).toContain(text);
-      return;
-    }
-    if (!r.ok) throw Error(JSON.stringify(r.error));
-    expect(r.value.sheets.length).toBeLessThanOrEqual(2 * base);
-    for (const sheet of r.value.sheets) {
-      const doc = parseSvg(sheet.svg);
-      expect(doc.querySelectorAll("[data-selected-view-notice]")).toHaveLength(
-        1,
-      );
-      expect(
-        [...doc.querySelectorAll(".off-view-heading,.off-view-row")].every(
-          (t) => Number(t.getAttribute("font-size")) >= 12,
-        ),
-      ).toBe(true);
-      expect(
-        doc.querySelectorAll(".off-view-annotation [textLength]"),
-      ).toHaveLength(0);
-    }
-  },
-  30000,
-);
+      if (name === "G" && !r.ok) {
+        expect(r).toMatchObject({
+          ok: false,
+          error: {
+            code: "R006",
+            details: {
+              constraint: "page-cost-bound",
+              basePages: 6,
+              maximumPages: 12,
+            },
+          },
+        });
+        for (const text of [
+          "PS1.-",
+          "W-CTL-002",
+          "W-CTL-004",
+          "landscape",
+          "sheets",
+        ])
+          expect(r.error.message).toContain(text);
+        return;
+      }
+      if (!r.ok) throw Error(JSON.stringify(r.error));
+      expect(r.value.sheets.length).toBeLessThanOrEqual(2 * base);
+      for (const sheet of r.value.sheets) {
+        const doc = parseSvg(sheet.svg);
+        expect(
+          doc.querySelectorAll("[data-selected-view-notice]"),
+        ).toHaveLength(1);
+        expect(
+          [...doc.querySelectorAll(".off-view-heading,.off-view-row")].every(
+            (t) => Number(t.getAttribute("font-size")) >= 12,
+          ),
+        ).toBe(true);
+        expect(
+          doc.querySelectorAll(".off-view-annotation [textLength]"),
+        ).toHaveLength(0);
+      }
+    },
+    // The bounded F packet search took 30.6 s on Windows check.
+    witness[0] === "F" ? 60000 : 30000,
+  );
 
 it("finds K1's alternate PS1.- placement after its default G reservation refuses", async () => {
   const view = views("top-to-bottom")[1]!;

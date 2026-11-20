@@ -18,7 +18,7 @@ import {
   pdf,
   pdfInfo,
 } from "./artifacts.mjs";
-import { documents, objects, read, write } from "./task-support.mjs";
+import { locate, documents, objects, read, write } from "./task-support.mjs";
 import { snapshot } from "./snapshot.mjs";
 import { check } from "./tasks.mjs";
 const thermite = fileURLToPath(new URL("../../thermite.mjs", import.meta.url));
@@ -125,7 +125,8 @@ it("regeneration rejects forged packet metadata and a header-only unrelated PDF"
   } finally {
     rmSync(ctx.root, { recursive: true, force: true });
   }
-}, 12000);
+  // One regeneration plus the fixed artifact negatives took 11.4 s on Windows check.
+}, 24000);
 it("manifest globs exclude unlisted source-like JSON used to spoof HMI or provenance", () => {
   const ctx = fixture();
   try {
@@ -158,48 +159,50 @@ it("manifest globs exclude unlisted source-like JSON used to spoof HMI or proven
     rmSync(ctx.root, { recursive: true, force: true });
   }
 });
-it("only-label and semantic repair checks reject extra changes and accept reordered keys", async () => {
+it.each([false, true])(
+  "only-label checker requires exactly the label change (extra edit: %s)",
+  async (extraEdit) => {
+    const ctx = fixture();
+    try {
+      ctx.task = { id: "T11" };
+      ctx.initial = snapshot(ctx.project);
+      const before = ctx.run(
+        "snapshot",
+        "--project",
+        ctx.project,
+        "-o",
+        join(ctx.project, "drawings/before.json"),
+      );
+      expect(before.status, before.stderr).toBe(0);
+      const { file, index } = locate(ctx.project, "W-CTL-001"),
+        path = join(ctx.project, file),
+        doc = read(path),
+        wire = doc.objects[index];
+      wire.properties.label = "CONTROL-24V";
+      if (extraEdit) wire.description = "extra semantic edit";
+      write(path, doc);
+      ctx.final = snapshot(ctx.project);
+      const result = await check("T11", ctx);
+      expect(result.checks.onlyLabel).toBe(!extraEdit);
+      expect(result.checks.review).toBe(true);
+    } finally {
+      rmSync(ctx.root, { recursive: true, force: true });
+    }
+  },
+  12000,
+);
+
+it("semantic repair accepts reordered keys", async () => {
   const ctx = fixture();
   try {
-    ctx.task = { id: "T11" };
-    ctx.initial = snapshot(ctx.project);
-    let r = ctx.run(
-      "snapshot",
-      "--project",
-      ctx.project,
-      "-o",
-      join(ctx.project, "drawings/before.json"),
-    );
-    expect(r.status).toBe(0);
-    const manifest = read(join(ctx.project, "system.json")),
-      file = documents(ctx.project).find((d) =>
-        d.objects.some((o) => o.designation === "W-CTL-001"),
-      ).path,
+    const { file, index } = locate(ctx.project, "W-CTL-001"),
       path = join(ctx.project, file),
       doc = read(path),
-      wire = doc.objects.find((o) => o.designation === "W-CTL-001");
-    wire.properties.label = "CONTROL-24V";
-    wire.description = "extra semantic edit";
-    write(path, doc);
-    ctx.final = snapshot(ctx.project);
-    const review = ctx.run(
-      "review",
-      "--project",
-      ctx.project,
-      "--before",
-      join(ctx.project, "drawings/before.json"),
-      "--json",
-    );
-    writeFileSync(join(ctx.project, "drawings/review.json"), review.stdout);
-    expect((await check("T11", ctx)).checks.onlyLabel).toBe(false);
-    delete wire.description;
-    write(path, doc);
-    ctx.final = snapshot(ctx.project);
-    expect((await check("T11", ctx)).checks.onlyLabel).toBe(true);
-    wire.endpoints.find((e) => e.device === "PLC1").terminal = "L";
+      endpoint = doc.objects[index].endpoints.find((e) => e.device === "PLC1");
+    endpoint.terminal = "L";
     write(path, doc);
     ctx.initial = snapshot(ctx.project);
-    wire.endpoints.find((e) => e.device === "PLC1").terminal = "L+";
+    endpoint.terminal = "L+";
     doc.objects = doc.objects.map((o) =>
       Object.fromEntries(Object.entries(o).reverse()),
     );
@@ -210,6 +213,7 @@ it("only-label and semantic repair checks reject extra changes and accept reorde
     rmSync(ctx.root, { recursive: true, force: true });
   }
 }, 12000);
+
 for (const provenance of ["p2 line 7", "page 2, line 7", "p2 line7"])
   it(`provenance accepts ${provenance}`, async () => {
     const ctx = fixture();

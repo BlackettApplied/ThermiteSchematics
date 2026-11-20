@@ -149,76 +149,80 @@ it("refuses an exit-7 shell fence in the real modeling topic instead of reportin
   );
 });
 
-it("every real topic recipe records successful fences only, excluding a failing fence and its unexecuted successor", async () => {
-  const { root, bindings, testFiles } = await topicFixture();
-  const originals = new Map<string, ReturnType<typeof exampleFences>>();
-  for (const binding of Object.values(bindings)) {
-    const text = await readFile(join(root, binding.file), "utf8");
-    originals.set(
-      binding.file,
-      exampleFences({ documents: new Map([[binding.file, { text }]]) }).filter(
-        (f) => ["json", "sh"].includes(f.lang),
-      ),
-    );
-    await writeFile(
-      join(root, binding.file),
-      text +
-        '\n```json\n{"unexecutedTopicProbe":true}\n```\n\n```sh\nbun -e \'process.exit(7)\'\n```\n\n```json\n{"unexecutedSuccessor":true}\n```\n',
-    );
-  }
-  const directory = join(root, "evidence");
-  await mkdir(directory);
-  const report = join(root, "results.json");
-  const owner = new ProcessOwner({ timeoutMs: 120000 });
-  try {
-    const run = await owner.run(
-      [
-        join(repositoryRoot, "scripts/test.mjs"),
-        ...testFiles,
-        "-t",
-        `^(?:${Object.values(bindings)
-          .map((binding) =>
-            binding.testName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-          )
-          .join("|")})$`,
-        "--reporter=json",
-        `--outputFile=${report}`,
-      ],
-      root,
-      {
-        ...process.env,
-        VITEST_MAX_WORKERS: "2",
-        THERMITE_DOC_EXAMPLE_EVIDENCE: directory,
-        TMPDIR: root,
-        TMP: root,
-        TEMP: root,
-      },
-    );
-    expect(run.code, run.stderr).toBe(1);
-    const results = JSON.parse(await readFile(report, "utf8"));
-    const tests = results.testResults.flatMap((r: any) => r.assertionResults);
-    expect(tests.filter((t: any) => t.status === "failed")).toHaveLength(
-      Object.keys(bindings).length,
-    );
-    for (const [recipe, binding] of Object.entries(bindings)) {
-      const proof = await readFile(
-        evidencePath(directory, binding.file),
-        "utf8",
-      )
-        .then(JSON.parse)
-        .catch(() => ({ hashes: [] }));
-      // Modeling cannot run shell; it must refuse before executing any fence.
-      // Other recipes must retain the successful prefix, never either mutation.
-      expect(proof.hashes, recipe).toEqual(
-        recipe === "topic-modeling"
-          ? []
-          : originals.get(binding.file)!.map((f) => f.hash),
+it(
+  "every real topic recipe records successful fences only, excluding a failing fence and its unexecuted successor",
+  { timeout: 180000 },
+  async () => {
+    const { root, bindings, testFiles } = await topicFixture();
+    const originals = new Map<string, ReturnType<typeof exampleFences>>();
+    for (const binding of Object.values(bindings)) {
+      const text = await readFile(join(root, binding.file), "utf8");
+      originals.set(
+        binding.file,
+        exampleFences({
+          documents: new Map([[binding.file, { text }]]),
+        }).filter((f) => ["json", "sh"].includes(f.lang)),
+      );
+      await writeFile(
+        join(root, binding.file),
+        text +
+          '\n```json\n{"unexecutedTopicProbe":true}\n```\n\n```sh\nbun -e \'process.exit(7)\'\n```\n\n```json\n{"unexecutedSuccessor":true}\n```\n',
       );
     }
-  } finally {
-    await owner.close();
-  }
-});
+    const directory = join(root, "evidence");
+    await mkdir(directory);
+    const report = join(root, "results.json");
+    const owner = new ProcessOwner({ timeoutMs: 180000 });
+    try {
+      const run = await owner.run(
+        [
+          join(repositoryRoot, "scripts/test.mjs"),
+          ...testFiles,
+          "-t",
+          `^(?:${Object.values(bindings)
+            .map((binding) =>
+              binding.testName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            )
+            .join("|")})$`,
+          "--reporter=json",
+          `--outputFile=${report}`,
+        ],
+        root,
+        {
+          ...process.env,
+          VITEST_MAX_WORKERS: "2",
+          THERMITE_DOC_EXAMPLE_EVIDENCE: directory,
+          TMPDIR: root,
+          TMP: root,
+          TEMP: root,
+        },
+      );
+      expect(run.code, run.stderr).toBe(1);
+      const results = JSON.parse(await readFile(report, "utf8"));
+      const tests = results.testResults.flatMap((r: any) => r.assertionResults);
+      expect(tests.filter((t: any) => t.status === "failed")).toHaveLength(
+        Object.keys(bindings).length,
+      );
+      for (const [recipe, binding] of Object.entries(bindings)) {
+        const proof = await readFile(
+          evidencePath(directory, binding.file),
+          "utf8",
+        )
+          .then(JSON.parse)
+          .catch(() => ({ hashes: [] }));
+        // Modeling cannot run shell; it must refuse before executing any fence.
+        // Other recipes must retain the successful prefix, never either mutation.
+        expect(proof.hashes, recipe).toEqual(
+          recipe === "topic-modeling"
+            ? []
+            : originals.get(binding.file)!.map((f) => f.hash),
+        );
+      }
+    } finally {
+      await owner.close();
+    }
+  },
+);
 it("refuses the quoted invalid JSON fence even when the actual topic parser ignores it", async () => {
   const root = await fixture(
     "docs/review.md",
@@ -301,8 +305,11 @@ async function machineFixture(launcher: string) {
     join(repositoryRoot, "docs/machine-demo.md"),
     "utf8",
   );
+  // This fixture checks watch launcher handling. The complete fenced command
+  // sequence, including packet and report exports, runs in the docs suite.
   const body = text
-    .match(/```sh\n(bun thermite\.mjs packet[\s\S]*?)\n```/)![1]!
+    .split("\n")
+    .find((line) => line.startsWith("bun thermite.mjs watch "))!
     .replace("bun thermite.mjs watch", `bun ${launcher} watch`);
   const root = await fixture(
     "docs/machine-demo.md",

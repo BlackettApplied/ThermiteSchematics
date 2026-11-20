@@ -168,7 +168,8 @@ it("reference pipeline rechecks the kept workspace without another agent attempt
   }
   // This exercises real guarded CLI writes and both checker passes. Rendering has
   // its own artifact tests; duplicating PDF generation here obscured recovery.
-}, 30000);
+  // The Windows check took 26.2 s through this fixed run/recheck sequence.
+}, 60000);
 
 it("judge packet removes run identities and includes rubric deliverables", () => {
   const work = realpathSync(mkdtempSync(join(tmpdir(), "eval-judge-")));

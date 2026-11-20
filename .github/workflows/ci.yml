@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     env:
-      VITEST_MAX_WORKERS: ${{ matrix.os == 'windows-2022' && '3' || '2' }}
+      THERMITE_CI_MAX_WORKERS: ${{ matrix.os == 'ubuntu-24.04' && '2' || '3' }}
       THERMITE_REQUIRE_BROWSER: "1"
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/../thermite-playwright
     steps:
@@ -116,7 +116,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     env:
-      VITEST_MAX_WORKERS: ${{ matrix.os == 'windows-2022' && '3' || '2' }}
+      THERMITE_CI_MAX_WORKERS: ${{ matrix.os == 'ubuntu-24.04' && '2' || '3' }}
       THERMITE_REQUIRE_BROWSER: "1"
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/../thermite-playwright
     steps:

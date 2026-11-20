@@ -2,10 +2,10 @@ import assert from "node:assert/strict";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { hash, json } from "./support.mjs";
-import { readRecord, verifyRecord } from "./repin-record.mjs";
+import { readRecordFiles, verifyRecord } from "./repin-record.mjs";
 import { strictJsonBytes } from "./repin-io.mjs";
 import { validRecordId } from "./repin-record-policy.mjs";
-export function verifyRecordChain(pins, records, registrySha256) {
+function verifiedRecordChain(pins, records, registrySha256) {
   assert(
     pins.format === "thermite-draw-repin-pins/1.0" &&
       Array.isArray(pins.records) &&
@@ -22,6 +22,7 @@ export function verifyRecordChain(pins, records, registrySha256) {
     !ids.includes("92") || ids[0] === "92",
     "D1 must be the first retained pin",
   );
+  const verified = new Map();
   let previous;
   for (const pin of pins.records) {
     assert(
@@ -53,7 +54,11 @@ export function verifyRecordChain(pins, records, registrySha256) {
       "Pinned record base changed",
     );
     assert(pin.pr === r.record.pr, "Pinned record PR changed");
-    verifyRecord(r.record, r.files, { pin });
+    verified.set(String(pin.pr), {
+      record: r.record,
+      files: r.files,
+      ...verifyRecord(r.record, r.files, { pin }),
+    });
     assert(
       previous === undefined || r.record.registryBeforeSha256 === previous,
       "Re-pin registry chain is broken",
@@ -64,21 +69,28 @@ export function verifyRecordChain(pins, records, registrySha256) {
     previous === registrySha256,
     "Newest retained re-pin must bind the current registry",
   );
-  return ids;
+  return verified;
+}
+
+export function verifyRecordChain(pins, records, registrySha256) {
+  return [...verifiedRecordChain(pins, records, registrySha256).keys()];
 }
 export async function readRecordChain(directory, registryPath) {
   const pins = strictJsonBytes(await readFile(join(directory, "pins.json")));
-  const rows = new Map((pins.records ?? []).map((p) => [String(p.pr), p]));
   const records = new Map();
   for (const e of await readdir(directory, { withFileTypes: true })) {
     assert(!e.isSymbolicLink(), "Record directories cannot be symlinks");
     if (e.isDirectory())
-      records.set(
-        e.name,
-        await readRecord(join(directory, e.name), { pin: rows.get(e.name) }),
-      );
+      records.set(e.name, await readRecordFiles(join(directory, e.name)));
     else assert(e.name === "pins.json", "Unlisted record table file");
   }
-  verifyRecordChain(pins, records, hash(await readFile(registryPath)));
-  return { pins, records };
+  const verified = verifiedRecordChain(
+    pins,
+    records,
+    hash(await readFile(registryPath)),
+  );
+  return {
+    pins,
+    records: new Map([...records.keys()].map((id) => [id, verified.get(id)])),
+  };
 }

@@ -85,6 +85,16 @@ export async function runtimeShell(c, fence) {
 
 export async function workspaceShell(c, fence) {
   await (c.workspaceReady ??= prepareWorkspace(c, fence.file));
+  if (fence.file === "evals/agent/README.md") {
+    const run = c.run;
+    // The single offline run/recheck smoke test took 26.2 s on Windows
+    // before Vitest startup and teardown. Give its shell the same budget.
+    c = {
+      ...c,
+      run: (args, cwd, env, settings) =>
+        run(args, cwd, env, { timeoutMs: 60000, ...settings }),
+    };
+  }
   return shell(c, fence.body);
 }
 

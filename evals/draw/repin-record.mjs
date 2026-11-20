@@ -259,7 +259,7 @@ export function verifyRecord(record, files, { pin } = {}) {
     sourceVerification,
   };
 }
-export async function readRecord(directory, options) {
+export async function readRecordFiles(directory) {
   const files = new Map();
   const walk = async (path, prefix = "") => {
     for (const e of await readdir(path, { withFileTypes: true })) {
@@ -271,5 +271,10 @@ export async function readRecord(directory, options) {
   };
   await walk(directory);
   const record = strictJsonBytes(files.get("record.json"));
+  return { record, files };
+}
+
+export async function readRecord(directory, options) {
+  const { record, files } = await readRecordFiles(directory);
   return { record, files, ...verifyRecord(record, files, options) };
 }

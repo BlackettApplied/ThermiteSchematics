@@ -116,7 +116,7 @@ describe("Runtime CI and ZIP boundaries", () => {
       expect(job).toContain("os: [macos-15, ubuntu-24.04, windows-2022]");
       expect(job).toContain("timeout-minutes: 90");
       expect(job).toContain(
-        "VITEST_MAX_WORKERS: ${{ matrix.os == 'windows-2022' && '3' || '2' }}",
+        "THERMITE_CI_MAX_WORKERS: ${{ matrix.os == 'ubuntu-24.04' && '2' || '3' }}",
       );
       expect(job).toContain('THERMITE_REQUIRE_BROWSER: "1"');
       expect(job).toContain("persist-credentials: false");

@@ -5,7 +5,6 @@ import {
 import { it, expect } from "vitest";
 import { readFile, writeFile, mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { tmpdir } from "node:os";
 import { recordFixture } from "./repin-record-fixture.mjs";
 import { drawingHash } from "./png-ink.mjs";
@@ -17,22 +16,23 @@ import { payloadBytes, legacyRecord } from "./repin-record-policy.mjs";
 import { hash, json } from "./support.mjs";
 import { gunzipSync } from "node:zlib";
 
-let archivedChain;
 async function d1Chain() {
-  // Verify the archive once, then give each mutation test its own metadata.
-  const { pins, records } = await (archivedChain ??= readRecordChain(
-    fileURLToPath(new URL("./repins", import.meta.url)),
-    fileURLToPath(new URL("./expectations.mjs", import.meta.url)),
-  ));
-  const d1 = records.get("92");
-  return {
-    pins: structuredClone(pins),
-    records: new Map(records).set("92", {
-      ...d1,
-      record: structuredClone(d1.record),
-      files: new Map(d1.files),
-    }),
-  };
+  // These negatives stop at pin metadata checks. The record suite verifies
+  // the complete archive, including the PNGs and receipt, independently.
+  const pins = JSON.parse(
+    await readFile(new URL("./repins/pins.json", import.meta.url)),
+  );
+  const records = new Map();
+  for (const { pr } of pins.records) {
+    const bytes = await readFile(
+      new URL(`./repins/${pr}/record.json`, import.meta.url),
+    );
+    records.set(String(pr), {
+      record: JSON.parse(bytes),
+      files: new Map([["record.json", bytes]]),
+    });
+  }
+  return { pins, records };
 }
 
 function grouped() {

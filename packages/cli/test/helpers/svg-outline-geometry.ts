@@ -108,14 +108,14 @@ export const inside = (a: Box, b: Box) =>
 
 /** Chromium supplies only affine transforms and primitive paths. Never ask it
  * for glyph bounds, advances, character positions or canvas text measurements.
- * All coordinates returned here are in the outer sheet's viewBox (mm). */
+ * Preserve explicit M/L wiring vertices. Coordinates are in the sheet viewBox (mm). */
 export async function svgOutlineGeometry(
   page: Page,
-  svg: string,
+  svg: string | undefined,
   wiringOnly = false,
   legacyFont = false,
 ) {
-  await page.setContent(svg);
+  if (svg !== undefined) await page.setContent(svg);
   const raw = await page.evaluate((wiringOnly) => {
     const root = document.querySelector("svg")!,
       inverse = root.getScreenCTM()!.inverse(),
@@ -241,7 +241,6 @@ export async function svgOutlineGeometry(
         if (wiringOnly && !linear)
           throw Error("Unsupported wiring path in outline test");
         if (linear) {
-          // Wiring emits only explicit M/L vertices. Preserve corners exactly.
           points = tokens
             .filter((_, i) => i % 3 === 0)
             .map((_, i) =>
@@ -313,7 +312,8 @@ export async function svgOutlineGeometry(
         Math.min(box.bottom, b.bottom) > Math.max(box.top, b.top)
       );
     });
-    return { ...t, box, painted, plate: t.plate ? bounds(t.plate) : undefined };
+    const [plate] = (t.plate ? [t.plate] : []).map(bounds);
+    return { ...t, box, painted, plate };
   });
   return { ...raw, texts };
 }

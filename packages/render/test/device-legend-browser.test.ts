@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { dolFixture, actuation } from "./dol-control-junctions-fixture.js";
@@ -28,6 +28,65 @@ beforeAll(async () => {
 afterAll(async () => {
   await browser?.close();
 });
+function hideDistantShapes(legends: Box[]) {
+  const root = document.querySelector("svg")!;
+  const inverse = root.getScreenCTM()!.inverse();
+  for (const e of document.querySelectorAll<SVGGeometryElement>(
+    "line,path,polyline,rect,circle",
+  )) {
+    const css = getComputedStyle(e);
+    if (
+      e.closest("defs") ||
+      css.display === "none" ||
+      css.visibility === "hidden"
+    )
+      continue;
+    const m = inverse.multiply(e.getScreenCTM()!);
+    const b = e.getBBox();
+    const corners = [
+      new DOMPoint(b.x, b.y).matrixTransform(m),
+      new DOMPoint(b.x + b.width, b.y).matrixTransform(m),
+      new DOMPoint(b.x, b.y + b.height).matrixTransform(m),
+      new DOMPoint(b.x + b.width, b.y + b.height).matrixTransform(m),
+    ];
+    const scale = Math.max(Math.hypot(m.a, m.b), Math.hypot(m.c, m.d));
+    const half =
+      css.stroke === "none" ? 0 : (parseFloat(css.strokeWidth) * scale) / 2;
+    // The transformed bbox encloses the full path. Include the oracle's
+    // stroke radius and 0.125 mm legend padding before applying the 3 mm gap.
+    const pad = half + 3.125;
+    const left = Math.min(...corners.map((p) => p.x)) - pad;
+    const right = Math.max(...corners.map((p) => p.x)) + pad;
+    const top = Math.min(...corners.map((p) => p.y)) - pad;
+    const bottom = Math.max(...corners.map((p) => p.y)) + pad;
+    if (
+      legends.every(
+        (box) =>
+          right < box.left ||
+          left > box.right ||
+          bottom < box.top ||
+          top > box.bottom,
+      )
+    )
+      e.style.setProperty("visibility", "hidden", "important");
+  }
+}
+
+it("retains transformed and thick strokes near the legend in the outline audit", async () => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <rect x="0" y="0" width="4" height="4" transform="translate(18 18) rotate(15)"/>
+    <line x1="25" x2="25" y1="18" y2="22" stroke="black" stroke-width="6"/>
+    <path d="M 60 60 C 65 85 85 65 90 90" stroke="black" fill="none"/>
+  </svg>`;
+  const full = await svgOutlineGeometry(page, svg);
+  await page.evaluate(hideDistantShapes, [
+    { left: 17, right: 20, top: 17, bottom: 20 },
+  ]);
+  const nearby = await svgOutlineGeometry(page, undefined);
+  expect(full.shapes).toHaveLength(3);
+  expect(nearby.shapes).toEqual(full.shapes.slice(0, 2));
+});
+
 function clippedBox(box: Box, clips: any[]): Box {
   for (const pts of clips) {
     const b = bounds(pts);
@@ -40,6 +99,20 @@ function clippedBox(box: Box, clips: any[]): Box {
   }
   return box;
 }
+async function legendFrames(): Promise<Box[]> {
+  return page.evaluate(() => {
+    const root = document.querySelector("svg")!,
+      inverse = (root as unknown as SVGSVGElement).getScreenCTM()!.inverse();
+    return [...root.querySelectorAll("rect.device-legend-frame")].map((e) => {
+      const b = (e as SVGGraphicsElement).getBBox(),
+        m = inverse.multiply((e as SVGGraphicsElement).getScreenCTM()!),
+        a = new DOMPoint(b.x, b.y).matrixTransform(m),
+        z = new DOMPoint(b.x + b.width, b.y + b.height).matrixTransform(m);
+      return { left: a.x, top: a.y, right: z.x, bottom: z.y };
+    });
+  });
+}
+
 // The tag checker uses painted text, device and terminal measurements.
 // The outline oracle measures clipped conductor and border ink separately.
 async function audit(svg: string, ir: any, refs: any[]) {
@@ -57,17 +130,7 @@ async function audit(svg: string, ir: any, refs: any[]) {
       ),
     ),
   ).toEqual([]);
-  const legends = await page.evaluate(() => {
-    const root = document.querySelector("svg")!,
-      inverse = (root as unknown as SVGSVGElement).getScreenCTM()!.inverse();
-    return [...root.querySelectorAll("rect.device-legend-frame")].map((e) => {
-      const b = (e as SVGGraphicsElement).getBBox(),
-        m = inverse.multiply((e as SVGGraphicsElement).getScreenCTM()!),
-        a = new DOMPoint(b.x, b.y).matrixTransform(m),
-        z = new DOMPoint(b.x + b.width, b.y + b.height).matrixTransform(m);
-      return { left: a.x, top: a.y, right: z.x, bottom: z.y };
-    });
-  });
+  const legends = await legendFrames();
   expect(legends.length).toBeGreaterThan(0);
   const native = await page.evaluate(() => {
     document
@@ -75,7 +138,9 @@ async function audit(svg: string, ir: any, refs: any[]) {
       .forEach((e) => e.remove());
     return document.querySelector("svg")!.outerHTML;
   });
-  const geometry = await svgOutlineGeometry(page, native),
+  await page.setContent(native);
+  await page.evaluate(hideDistantShapes, legends);
+  const geometry = await svgOutlineGeometry(page, undefined),
     metadata = await page.evaluate(strokeMetadata, true),
     locations = await page.evaluate(() =>
       [...document.querySelectorAll("line,path,polyline,rect,circle")]
@@ -151,40 +216,59 @@ async function audit(svg: string, ir: any, refs: any[]) {
     expect(minimum, closest).toBeGreaterThanOrEqual(2.999);
   }
 }
-// Runner audits exceed 60 s; preserve each complete flow within a 120 s budget.
-it.each(["left-to-right", "top-to-bottom"] as const)(
-  "has at least 3 mm from all final ink and location borders after letter-portrait trim/fold/stack in %s",
-  async (flow) => {
-    const c = await compileProject("examples/motor-starter");
-    if (!c.ok) throw c;
-    const r = await renderSchematicPacket(
-      c.ir,
-      {
-        format: "schematic-packet-request/0.1",
-        layout: "compact",
-        page: { size: "letter", orientation: "portrait" },
-        views: [
-          {
-            format: "schematic-view-request/0.1",
-            root: { by: "designation", value: "M1" },
-            family: "power",
-            flow,
-          },
-          {
-            format: "schematic-view-request/0.1",
-            root: { by: "designation", value: "K1" },
-            family: "control",
-            flow,
-          },
-        ],
+const flows = ["left-to-right", "top-to-bottom"] as const;
+type Flow = (typeof flows)[number];
+
+async function starterPacket(flow: Flow) {
+  const c = await compileProject("examples/motor-starter");
+  if (!c.ok) throw c;
+  const r = await renderSchematicPacket(
+    c.ir,
+    {
+      format: "schematic-packet-request/0.1",
+      layout: "compact",
+      page: { size: "letter", orientation: "portrait" },
+      views: [
+        {
+          format: "schematic-view-request/0.1",
+          root: { by: "designation", value: "M1" },
+          family: "power",
+          flow,
+        },
+        {
+          format: "schematic-view-request/0.1",
+          root: { by: "designation", value: "K1" },
+          family: "control",
+          flow,
+        },
+      ],
+    },
+    c.presentation,
+  );
+  if (!r.ok) throw r;
+  return { ir: c.ir, sheets: r.value.sheets };
+}
+
+for (const flow of flows)
+  describe(`letter-portrait trim/fold/stack in ${flow}`, () => {
+    let packet: ReturnType<typeof starterPacket> | undefined;
+    const load = () => (packet ??= starterPacket(flow));
+    it("renders the compact power and control packet once", async () => {
+      expect((await load()).sheets.length).toBeGreaterThanOrEqual(5);
+    });
+    // The five reviewed sheets have independent outline checks. The final
+    // group also audits any extra sheets produced by a future layout change.
+    it.each([0, 1, 2, 3, 4])(
+      "keeps 3 mm from all final ink and location borders, sheet group %i",
+      async (index) => {
+        const { ir, sheets } = await load();
+        const group = sheets.slice(index, index === 4 ? undefined : index + 1);
+        expect(group.length).toBeGreaterThan(0);
+        for (const s of group) await audit(s.svg, ir, s.references);
       },
-      c.presentation,
     );
-    if (!r.ok) throw r;
-    for (const s of r.value.sheets) await audit(s.svg, c.ir, s.references);
-  },
-  120000,
-);
+  });
+
 async function captionClearance() {
   const captions = await page.evaluate(() => {
     const root = document.querySelector("svg")! as unknown as SVGSVGElement,
@@ -204,7 +288,7 @@ async function captionClearance() {
     for (const other of captions.slice(i + 1))
       expect(distance(caption, other)).toBeGreaterThanOrEqual(0.999);
 }
-it("protects the dense DOL one-sheet packet and PLC1 tags in both flows", async () => {
+async function denseDolPacket() {
   const f = await dolFixture("saved");
   try {
     const r = await renderSchematicPacket(f.ir, {
@@ -213,32 +297,45 @@ it("protects the dense DOL one-sheet packet and PLC1 tags in both flows", async 
       views: [actuation("K1", "top-to-bottom")],
     });
     if (!r.ok) throw r;
-    expect(r.value.sheets).toHaveLength(1);
-    await audit(r.value.sheets[0]!.svg, f.ir, r.value.sheets[0]!.references);
-    await captionClearance();
+    return { ir: f.ir, sheets: r.value.sheets };
   } finally {
     await f.dispose();
   }
-  const c = await compileProject("examples/machine-demo");
+}
+let dol: ReturnType<typeof denseDolPacket> | undefined;
+const loadDol = () => (dol ??= denseDolPacket());
+it("renders the dense DOL one-sheet packet", async () => {
+  expect((await loadDol()).sheets).toHaveLength(1);
+});
+it("checks dense DOL legend ink and continued-location captions", async () => {
+  const { ir, sheets } = await loadDol();
+  const [sheet] = sheets;
+  expect(sheet).toBeDefined();
+  await audit(sheet!.svg, ir, sheet!.references);
+  await captionClearance();
+});
+
+let machine: ReturnType<typeof compileProject> | undefined;
+it.each(flows)("protects machine-demo PLC1 tags in %s", async (flow) => {
+  const c = await (machine ??= compileProject("examples/machine-demo"));
   if (!c.ok) throw c;
-  for (const flow of ["left-to-right", "top-to-bottom"] as const) {
-    const r = await renderSchematicPacket(
-      c.ir,
-      {
-        format: "schematic-packet-request/0.1",
-        layout: "compact",
-        views: [
-          {
-            format: "schematic-view-request/0.1",
-            root: { by: "designation", value: "K1" },
-            family: "control",
-            flow,
-          },
-        ],
-      },
-      c.presentation,
-    );
-    if (!r.ok) throw r;
-    for (const s of r.value.sheets) await audit(s.svg, c.ir, s.references);
-  }
-}, 120000);
+  const r = await renderSchematicPacket(
+    c.ir,
+    {
+      format: "schematic-packet-request/0.1",
+      layout: "compact",
+      views: [
+        {
+          format: "schematic-view-request/0.1",
+          root: { by: "designation", value: "K1" },
+          family: "control",
+          flow,
+        },
+      ],
+    },
+    c.presentation,
+  );
+  if (!r.ok) throw r;
+  expect(r.value.sheets.length).toBeGreaterThan(0);
+  for (const s of r.value.sheets) await audit(s.svg, c.ir, s.references);
+});

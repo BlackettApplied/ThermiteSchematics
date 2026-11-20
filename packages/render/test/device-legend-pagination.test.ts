@@ -70,9 +70,8 @@ const sourceIncidences = (sheets: readonly { svg: string }[]) =>
       ),
     ),
   ].sort();
-it.each(["left-to-right", "top-to-bottom"] as const)(
-  "reserves readable same-sheet tags for about 300 and 765 authored characters in %s without new electrical identities",
-  async (flow) => {
+for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+  async function nativeTags() {
     const native = await renderSchematicPacket(
       compiled.ir,
       request(flow),
@@ -86,7 +85,14 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
       for (const body of measured.devices)
         if (body.tagKind !== "reference") bodyUids.add(body.deviceUid);
     }
-    for (const repetitions of [2, 5]) {
+    return { native: native.value, originalIncidences, bodyUids };
+  }
+  let tags: ReturnType<typeof nativeTags> | undefined;
+  it.each([2, 5])(
+    `reserves readable same-sheet tags with %i copies of the authored note in ${flow} without new electrical identities`,
+    async (repetitions) => {
+      const { native, originalIncidences, bodyUids } = await (tags ??=
+        nativeTags());
       const ir = structuredClone(compiled.ir),
         description = Array(repetitions).fill(note).join(" ");
       expect(description.length).toBeGreaterThan(repetitions === 2 ? 280 : 745);
@@ -106,14 +112,12 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
       expect(rendered.value.sheets.length).toBeLessThanOrEqual(8); // unchanged 2× native four-sheet packet cost
       expect(JSON.stringify(ir)).toBe(before);
       expect(JSON.stringify(ir.nets)).toBe(nets);
-      expect(rendered.value.coverage.counts).toEqual(
-        native.value.coverage.counts,
-      );
+      expect(rendered.value.coverage.counts).toEqual(native.coverage.counts);
       expect(rendered.value.coverage.conductors).toEqual(
-        native.value.coverage.conductors,
+        native.coverage.conductors,
       );
       expect(rendered.value.coverage.functions).toEqual(
-        native.value.coverage.functions,
+        native.coverage.functions,
       );
       expect(sourceIncidences(rendered.value.sheets)).toEqual(
         originalIncidences,
@@ -168,10 +172,10 @@ it.each(["left-to-right", "top-to-bottom"] as const)(
           }
         }
       }
-    }
-  },
-  120000,
-);
+    },
+    120000,
+  );
+}
 
 it("reports the observed plan cap for the all-device 799-character stress without inventing page-cost exhaustion", async () => {
   const ir = structuredClone(compiled.ir),
