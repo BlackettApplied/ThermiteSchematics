@@ -222,9 +222,11 @@ export async function checkSeeds(
           layoutEngine: engine,
         }).render(ir, { ...request, flow });
         const key = JSON.stringify({ ...request, flow });
+        const svg = r.ok ? r.value.svg : null;
+        const svgHash = digest(semanticIdentities(ir, svg));
         const actual = {
           inputs,
-          svg: r.ok ? digest(semanticIdentities(ir, r.value.svg)) : null,
+          svg: svg === null ? null : svgHash,
           outcome: r.ok ? "ok" : r.error.code,
         };
         if (!expected.has(key)) expected.set(key, actual);

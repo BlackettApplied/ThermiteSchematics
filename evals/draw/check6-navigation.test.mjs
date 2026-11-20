@@ -20,45 +20,54 @@ beforeAll(async () => {
   browser = await launch();
   context = await browser.newContext(drawingContextOptions);
   page = await context.newPage();
-  for (const flow of ["left-to-right", "top-to-bottom", "unpacked"]) {
-    let x;
-    if (flow === "unpacked") {
-      const planner = packing.circuitPartRows;
-      const spy = vi
-        .spyOn(packing, "circuitPartRows")
-        .mockImplementation((groups, field) =>
-          planner(groups, { ...field, flow: "left-to-right" }),
-        );
-      try {
-        x = await renderNavigationFixture(project, "top-to-bottom");
-      } finally {
-        spy.mockRestore();
-      }
-    } else x = await renderNavigationFixture(project, flow);
-    x.geometries = [];
-    for (const s of x.packet.sheets)
-      x.geometries.push(await openSheet(page, s.svg));
-    fixtures.set(flow, x);
-    if (process.env.THERMITE_CHECK6_FIXTURE_OUT) {
-      const dest = join(process.env.THERMITE_CHECK6_FIXTURE_OUT, flow);
-      await mkdir(dest, { recursive: true });
-      for (const sheet of x.packet.sheets)
-        await writeFile(
-          join(dest, `sheet-${String(sheet.number).padStart(3, "0")}.svg`),
-          sheet.svg,
-        );
-      for (const key of ["packet", "ir", "request"])
-        await writeFile(
-          join(dest, key + ".json"),
-          JSON.stringify(x[key], null, 2) + "\n",
-        );
-      await writeFile(
-        join(dest, "strict-rows.json"),
-        JSON.stringify(strictRows(x), null, 2) + "\n",
-      );
-    }
-  }
+  if (process.env.THERMITE_CHECK6_FIXTURE_OUT)
+    for (const flow of ["left-to-right", "top-to-bottom", "unpacked"])
+      await fixtureFor(flow);
 });
+async function measureFixture(flow) {
+  let x;
+  if (flow === "unpacked") {
+    const planner = packing.circuitPartRows;
+    const spy = vi
+      .spyOn(packing, "circuitPartRows")
+      .mockImplementation((groups, field) =>
+        planner(groups, { ...field, flow: "left-to-right" }),
+      );
+    try {
+      x = await renderNavigationFixture(project, "top-to-bottom");
+    } finally {
+      spy.mockRestore();
+    }
+  } else x = await renderNavigationFixture(project, flow);
+  x.geometries = [];
+  for (const s of x.packet.sheets)
+    x.geometries.push(await openSheet(page, s.svg));
+  if (process.env.THERMITE_CHECK6_FIXTURE_OUT) {
+    const dest = join(process.env.THERMITE_CHECK6_FIXTURE_OUT, flow);
+    await mkdir(dest, { recursive: true });
+    for (const sheet of x.packet.sheets)
+      await writeFile(
+        join(dest, `sheet-${String(sheet.number).padStart(3, "0")}.svg`),
+        sheet.svg,
+      );
+    for (const key of ["packet", "ir", "request"])
+      await writeFile(
+        join(dest, key + ".json"),
+        JSON.stringify(x[key], null, 2) + "\n",
+      );
+    await writeFile(
+      join(dest, "strict-rows.json"),
+      JSON.stringify(strictRows(x), null, 2) + "\n",
+    );
+  }
+  return x;
+}
+function fixtureFor(flow) {
+  // Render and measure each variant once, in the test that first needs it.
+  // Focused runs also measure every variant their assertions consume.
+  if (!fixtures.has(flow)) fixtures.set(flow, measureFixture(flow));
+  return fixtures.get(flow);
+}
 afterAll(async () => {
   await context?.close();
   await browser?.close();
@@ -76,8 +85,8 @@ function strictRows(x) {
 }
 it.each(["left-to-right", "top-to-bottom"])(
   "CHECK6 adopts both native navigation oracles (%s)",
-  (flow) => {
-    const x = fixtures.get(flow),
+  async (flow) => {
+    const x = await fixtureFor(flow),
       rows = strictRows(x);
     expect([...new Set(rows.map((r) => r.owner))].sort()).toEqual([
       "#396",
@@ -99,36 +108,34 @@ it.each(["left-to-right", "top-to-bottom"])(
   },
 );
 
-it("CHECK6 native parts pack and final element/port destinations renumber", () => {
-  const parts = (flow) =>
-    fixtures.get(flow).packet.sheets.flatMap((s, i) =>
-      fixtures.get(flow).geometries[i].tranche4.circuitParts.map((p) => ({
+it("CHECK6 native parts pack and final element/port destinations renumber", async () => {
+  const packed = await fixtureFor("top-to-bottom");
+  const unpacked = await fixtureFor("unpacked");
+  const parts = (fixture) =>
+    fixture.packet.sheets.flatMap((s, i) =>
+      fixture.geometries[i].tranche4.circuitParts.map((p) => ({
         sheet: s.number,
         part: p.part,
         terminals: p.terminals.map((t) => [t.deviceUid, t.terminal]).sort(),
       })),
     );
-  const before = parts("unpacked"),
-    after = parts("top-to-bottom");
-  expect(
-    strictRows(fixtures.get("unpacked")).every((r) => r.status === "pass"),
-  ).toBe(true);
-  expect(fixtures.get("unpacked").request).toEqual(
-    fixtures.get("top-to-bottom").request,
-  );
-  expect(fixtures.get("unpacked").ir).toEqual(fixtures.get("top-to-bottom").ir);
+  const before = parts(unpacked),
+    after = parts(packed);
+  expect(strictRows(unpacked).every((r) => r.status === "pass")).toBe(true);
+  expect(unpacked.request).toEqual(packed.request);
+  expect(unpacked.ir).toEqual(packed.ir);
   expect(new Set(before.map((p) => p.sheet)).size).toBe(2);
   expect(new Set(after.map((p) => p.sheet)).size).toBe(1);
   expect(after.map(({ sheet, ...p }) => p)).toEqual(
     before.map(({ sheet, ...p }) => p),
   );
   for (const owner of ["#396", "#398"]) {
-    const obligations = (flow) =>
-      strictRows(fixtures.get(flow))
+    const obligations = (fixture) =>
+      strictRows(fixture)
         .filter((r) => r.owner === owner)
         .flatMap((r) => r.evidence.obligations);
-    const old = obligations("unpacked"),
-      current = obligations("top-to-bottom");
+    const old = obligations(unpacked),
+      current = obligations(packed);
     expect(current).toHaveLength(old.length);
     const oldCircuitSheets = new Set(before.map((p) => p.sheet));
     const reduction =
@@ -162,7 +169,7 @@ function strictExit(x, rows) {
   return exitCode(rows);
 }
 async function mutatedFixture(flow, owner, kind) {
-  const x = fixtures.get(flow),
+  const x = await fixtureFor(flow),
     rows = strictRows(x);
   const o = rows
     .filter((r) => r.owner === owner)

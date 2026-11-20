@@ -4,13 +4,15 @@ import { relative, sep } from "node:path";
 
 // Clean CI runners lack Vitest's timing cache. Seed the long end of the queue
 // with Windows check/worktree intervals from run 44691646975 (seconds).
-// For split suites, the estimates come from the same report's assertion times.
+// For split suites, estimate shares from assertion or local flow timings.
+// CHECK6 includes fixture setup measured by the Windows console reporter.
 const durations = {
   "evals/agent/artifacts.test.mjs": 26,
   "evals/agent/shim-safety.test.mjs": 32,
   "evals/agent/task-t07.test.mjs": 32,
   "evals/contributor/tasks/observer.test.mjs": 30,
   "evals/contributor/tasks/r02-probe.test.mjs": 46,
+  "evals/draw/check6-navigation.test.mjs": 53,
   "evals/draw/paired-raster.test.mjs": 35,
   "evals/draw/peer-owner-browser.test.mjs": 126,
   "evals/draw/peer-owner-conveyor.test.mjs": 67,
