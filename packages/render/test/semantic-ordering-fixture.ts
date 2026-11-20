@@ -2,6 +2,11 @@ import { createHash } from "node:crypto";
 import type { ElectricalIr } from "@thermite/compiler";
 import type { SchematicViewRequest } from "../src/types.js";
 import { irSemanticOrder } from "../src/semantic-order.js";
+import { expect } from "vitest";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
+import { createSchematicRendererWithDependencies } from "../src/renderer.js";
+
+export const flows = ["left-to-right", "top-to-bottom"] as const;
 
 /** Reassign every instance identity, net hash and index reference together. Source
  * positions and type/function/terminal keys remain authored. Shuffle IR records
@@ -183,4 +188,49 @@ export function semanticIdentities(ir: ElectricalIr, value: unknown): unknown {
     return v;
   };
   return visit(value);
+}
+
+export const digest = (value: unknown) =>
+  createHash("sha256").update(JSON.stringify(value)).digest("hex");
+
+export async function checkSeeds(
+  name: string,
+  base: ElectricalIr,
+  requests: readonly SchematicViewRequest[],
+  testFlows: readonly (typeof flows)[number][] = flows,
+) {
+  const expected = new Map<
+    string,
+    { inputs: string[]; svg: string | null; outcome: string }
+  >();
+  // An undesignated jumper's fallback label is its authored UID. Changing that
+  // public label can legitimately change exact font metrics; mutate internal
+  // identities while keeping these printed labels fixed in this matrix.
+  const printed = base.jumpers.filter((j) => !j.designation).map((j) => j.uid);
+  for (let seed = 0; seed < 30; seed++) {
+    const ir = reidentify(base, seed, printed);
+    for (const request of requests)
+      for (const flow of testFlows) {
+        const engine = createElkEngine(),
+          layout = engine.layout.bind(engine),
+          inputs: string[] = [];
+        engine.layout = async (...args) => {
+          inputs.push(digest(semanticIdentities(ir, args[0])));
+          return layout(...args);
+        };
+        const r = await createSchematicRendererWithDependencies({
+          layoutEngine: engine,
+        }).render(ir, { ...request, flow });
+        const key = JSON.stringify({ ...request, flow });
+        const actual = {
+          inputs,
+          svg: r.ok ? digest(semanticIdentities(ir, r.value.svg)) : null,
+          outcome: r.ok ? "ok" : r.error.code,
+        };
+        if (!expected.has(key)) expected.set(key, actual);
+        expect(actual, `${name} seed=${seed} ${key}`).toEqual(
+          expected.get(key),
+        );
+      }
+  }
 }

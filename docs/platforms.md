@@ -30,6 +30,10 @@ workflow; contributors still run the local checks before submitting changes.
 Both CI jobs upload a Vitest JSON report with per-test durations when the suite
 finishes. Set `THERMITE_TEST_TIMINGS=1` with a local check to write the same
 report to `coverage/test-timings.json`.
+Both jobs run Vitest with three workers on Windows and two on macOS and Linux.
+On fresh CI checkouts, the sequencer starts expensive files early using
+`vitest.config.mjs`. Refresh those entries from the latest Windows timing
+artifacts as suites move or their costs change.
 Linux network-disabled acceptance uses a matching-architecture container;
 Windows ARM64 and non-glibc Linux systems have not been validated. The packer
 builds for its current OS and architecture; it does not cross-compile.

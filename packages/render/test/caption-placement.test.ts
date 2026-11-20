@@ -1,4 +1,4 @@
-import { beforeAll, expect, it } from "vitest";
+import { afterAll, beforeAll, expect, it, onTestFinished } from "vitest";
 import { compileProject, type ElectricalIr } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { prepareCircuitView } from "../src/circuit.js";
@@ -28,6 +28,16 @@ const must = <T>(x: T | null | undefined): T => {
   return x;
 };
 const flows = ["left-to-right", "top-to-bottom"] as const;
+let browser: Awaited<ReturnType<typeof launchBrowser>> | undefined;
+async function captionPage() {
+  browser ??= await launchBrowser();
+  const page = await browser.newPage();
+  onTestFinished(() => page.close());
+  return page;
+}
+afterAll(async () => {
+  await browser?.close();
+});
 let motor: ElectricalIr;
 beforeAll(async () => {
   const c = await compileProject("examples/motor-starter");
@@ -68,58 +78,52 @@ it("keeps legal anchors and separate terminal-caption spacing, with deterministi
 
 for (const flow of flows) {
   it(`keeps rooted NO/NC ink beside its own contact (${flow})`, async () => {
-    const browser = await launchBrowser(),
-      page = await browser.newPage();
-    try {
-      for (const state of ["open", "closed"]) {
-        const f = await identityProject(
-          "thermite:disconnector",
-          `aux-${state}`,
-          "control",
-          mixedDisconnector,
+    const page = await captionPage();
+    for (const state of ["open", "closed"]) {
+      const f = await identityProject(
+        "thermite:disconnector",
+        `aux-${state}`,
+        "control",
+        mixedDisconnector,
+      );
+      try {
+        const r = await renderSchematicPacket(f.ir, {
+          format: "schematic-packet-request/0.1",
+          layout: "compact",
+          views: [{ ...f.request, flow }],
+        });
+        if (!r.ok) throw Error(r.error.message);
+        const sheet = must(
+          r.value.sheets.find((s) =>
+            s.svg.includes(`>${state === "open" ? "NO" : "NC"}</text>`),
+          ),
         );
-        try {
-          const r = await renderSchematicPacket(f.ir, {
-            format: "schematic-packet-request/0.1",
-            layout: "compact",
-            views: [{ ...f.request, flow }],
-          });
-          if (!r.ok) throw Error(r.error.message);
-          const sheet = must(
-            r.value.sheets.find((s) =>
-              s.svg.includes(`>${state === "open" ? "NO" : "NC"}</text>`),
-            ),
-          );
-          const t = must(
-            (await captionOracle(page, sheet.svg)).find(
-              (t) => t.text === (state === "open" ? "NO" : "NC"),
-            ),
-          );
-          if (flow === "top-to-bottom") {
-            expect(t.wiringGap).toBeGreaterThanOrEqual(1);
-            expect(t.markGap).toBeGreaterThanOrEqual(1);
-            expect(t.textGap).toBeGreaterThanOrEqual(1);
-            expect(t.markDistance).toBeLessThan(5);
-          }
-          expect(r.value.sheets.length).toBeLessThanOrEqual(
-            flow === "top-to-bottom" ? 2 : 1,
-          );
-        } finally {
-          await f.dispose();
+        const t = must(
+          (await captionOracle(page, sheet.svg)).find(
+            (t) => t.text === (state === "open" ? "NO" : "NC"),
+          ),
+        );
+        if (flow === "top-to-bottom") {
+          expect(t.wiringGap).toBeGreaterThanOrEqual(1);
+          expect(t.markGap).toBeGreaterThanOrEqual(1);
+          expect(t.textGap).toBeGreaterThanOrEqual(1);
+          expect(t.markDistance).toBeLessThan(5);
         }
+        expect(r.value.sheets.length).toBeLessThanOrEqual(
+          flow === "top-to-bottom" ? 2 : 1,
+        );
+      } finally {
+        await f.dispose();
       }
-    } finally {
-      await browser.close();
     }
   });
   it(`clears every DUT attachment and source stub (${flow})`, async () => {
     const f = await identityProject(
-        "thermite:disconnector",
-        "aux-open",
-        "control",
-        mixedDisconnector,
-      ),
-      browser = await launchBrowser();
+      "thermite:disconnector",
+      "aux-open",
+      "control",
+      mixedDisconnector,
+    );
     try {
       const r = await renderSchematicPacket(f.ir, {
         format: "schematic-packet-request/0.1",
@@ -129,10 +133,7 @@ for (const flow of flows) {
       if (!r.ok) throw Error(r.error.message);
       const t = must(
         (
-          await captionOracle(
-            await browser.newPage(),
-            must(r.value.sheets[0]).svg,
-          )
+          await captionOracle(await captionPage(), must(r.value.sheets[0]).svg)
         ).find((t) => t.text === "DUT"),
       );
       for (const owner of parseHTML(r.value.html).document.querySelectorAll(
@@ -150,7 +151,6 @@ for (const flow of flows) {
       expect(r.value.sheets).toHaveLength(1);
     } finally {
       await f.dispose();
-      await browser.close();
     }
   });
   it(`keeps the relation footer clear of A2 and after the terminal elements (${flow})`, async () => {
@@ -176,33 +176,28 @@ for (const flow of flows) {
       ],
     });
     if (!r.ok) throw Error(r.error.message);
-    const browser = await launchBrowser();
-    try {
-      const sheet = must(
-          r.value.sheets.find((s) => s.svg.includes("13–14: 300")),
+    const sheet = must(
+        r.value.sheets.find((s) => s.svg.includes("13–14: 300")),
+      ),
+      t = must(
+        (await captionOracle(await captionPage(), sheet.svg)).find(
+          (t) => t.text === "13–14: 300",
         ),
-        t = must(
-          (await captionOracle(await browser.newPage(), sheet.svg)).find(
-            (t) => t.text === "13–14: 300",
-          ),
-        );
-      expect(t.attachmentGap).toBeGreaterThanOrEqual(1);
-      expect(r.value.sheets.length).toBeLessThanOrEqual(
-        flow === "top-to-bottom" ? 3 : 2,
       );
-      const doc = parseHTML(sheet.svg).document,
-        footer = must(
-          [...doc.querySelectorAll("text")].find(
-            (t) => t.textContent === "13–14: 300",
-          ),
+    expect(t.attachmentGap).toBeGreaterThanOrEqual(1);
+    expect(r.value.sheets.length).toBeLessThanOrEqual(
+      flow === "top-to-bottom" ? 3 : 2,
+    );
+    const doc = parseHTML(sheet.svg).document,
+      footer = must(
+        [...doc.querySelectorAll("text")].find(
+          (t) => t.textContent === "13–14: 300",
         ),
-        owner = must(footer.closest("[data-device-uid]"));
-      expect([...owner.querySelectorAll("text")].at(-1)?.textContent).toBe(
-        "13–14: 300",
-      );
-    } finally {
-      await browser.close();
-    }
+      ),
+      owner = must(footer.closest("[data-device-uid]"));
+    expect([...owner.querySelectorAll("text")].at(-1)?.textContent).toBe(
+      "13–14: 300",
+    );
   });
   it(`sizes the 40-contact summary from final lines and the body/pin minimum (${flow})`, async () => {
     const ir = structuredClone(motor),
@@ -278,22 +273,17 @@ for (const flow of flows)
     );
     const r = await renderSchematicPacket(c.ir, request);
     if (!r.ok) throw Error(r.error.message);
-    const browser = await launchBrowser();
-    try {
-      const sheet = must(
-          r.value.sheets.find((s) => s.svg.includes(">SO1</text>")),
+    const sheet = must(
+        r.value.sheets.find((s) => s.svg.includes(">SO1</text>")),
+      ),
+      t = must(
+        (await captionOracle(await captionPage(), sheet.svg)).find(
+          (t) => t.text === "SO1",
         ),
-        t = must(
-          (await captionOracle(await browser.newPage(), sheet.svg)).find(
-            (t) => t.text === "SO1",
-          ),
-        );
-      expect(t.attachmentGap).toBeGreaterThanOrEqual(1);
-      expect(t.size).toBe(2.7);
-      expect(t.length).toBeUndefined();
-    } finally {
-      await browser.close();
-    }
+      );
+    expect(t.attachmentGap).toBeGreaterThanOrEqual(1);
+    expect(t.size).toBe(2.7);
+    expect(t.length).toBeUndefined();
   });
 
 it("rejects a contact caption outside its pre-ELK owner region", async () => {
@@ -417,22 +407,17 @@ it("keeps the pushbutton NC caption beside its owning mark too", async () => {
     ],
   });
   if (!r.ok) throw Error(r.error.message);
-  const uid = must(motor.devices.find((d) => d.designation === "PB1")).uid,
-    browser = await launchBrowser();
+  const uid = must(motor.devices.find((d) => d.designation === "PB1")).uid;
   let checked = 0;
-  try {
-    const page = await browser.newPage();
-    for (const sheet of r.value.sheets)
-      for (const t of await captionOracle(page, sheet.svg))
-        if (t.text === "NC" && t.device === uid) {
-          expect(t.markGap).toBeGreaterThanOrEqual(1);
-          expect(t.wiringGap).toBeGreaterThanOrEqual(1);
-          expect(t.markDistance).toBeLessThan(5);
-          checked++;
-        }
-  } finally {
-    await browser.close();
-  }
+  const page = await captionPage();
+  for (const sheet of r.value.sheets)
+    for (const t of await captionOracle(page, sheet.svg))
+      if (t.text === "NC" && t.device === uid) {
+        expect(t.markGap).toBeGreaterThanOrEqual(1);
+        expect(t.wiringGap).toBeGreaterThanOrEqual(1);
+        expect(t.markDistance).toBeLessThan(5);
+        checked++;
+      }
   expect(checked).toBeGreaterThan(0);
 });
 
@@ -457,23 +442,18 @@ it("keeps card offsets and caption ink in their owning content box", async () =>
   });
   if (!r.ok) throw Error(r.error.message);
   expect(r.value.html).toContain("data-off-view-terminal");
-  const uid = must(ir.devices.find((d) => d.designation === "LS1")).uid,
-    browser = await launchBrowser();
+  const uid = must(ir.devices.find((d) => d.designation === "LS1")).uid;
   let seen = 0;
-  try {
-    const page = await browser.newPage();
-    for (const s of r.value.sheets)
-      for (const t of await captionOracle(page, s.svg))
-        if (t.text === "NO" && t.device === uid) {
-          expect(t.markDistance).toBeLessThan(5);
-          expect(t.markGap).toBeGreaterThanOrEqual(1);
-          expect(t.wiringGap).toBeGreaterThanOrEqual(1);
-          expect(t.cardGap).toBeGreaterThanOrEqual(1);
-          seen++;
-        }
-  } finally {
-    await browser.close();
-  }
+  const page = await captionPage();
+  for (const s of r.value.sheets)
+    for (const t of await captionOracle(page, s.svg))
+      if (t.text === "NO" && t.device === uid) {
+        expect(t.markDistance).toBeLessThan(5);
+        expect(t.markGap).toBeGreaterThanOrEqual(1);
+        expect(t.wiringGap).toBeGreaterThanOrEqual(1);
+        expect(t.cardGap).toBeGreaterThanOrEqual(1);
+        seen++;
+      }
   expect(seen).toBeGreaterThan(0);
 });
 
@@ -550,8 +530,7 @@ it("reserves caption lanes before routing only on failure, with a finite retry l
 for (const flow of flows)
   it(`reserves a side lane for the long terminal-strip designation (${flow})`, async () => {
     const { jumperChainCircuitFixture } = await import("./circuit-fixture.js"),
-      f = await jumperChainCircuitFixture(),
-      browser = await launchBrowser();
+      f = await jumperChainCircuitFixture();
     try {
       const before = JSON.stringify(f.ir),
         r = await renderSchematicPacket(f.ir, {
@@ -563,7 +542,7 @@ for (const flow of flows)
           r.value.sheets.find((s) => s.svg.includes(">XT1-S01</text>")),
         ),
         t = must(
-          (await captionOracle(await browser.newPage(), sheet.svg)).find(
+          (await captionOracle(await captionPage(), sheet.svg)).find(
             (t) => t.text === "XT1-S01",
           ),
         );
@@ -571,7 +550,6 @@ for (const flow of flows)
       expect(JSON.stringify(f.ir)).toBe(before);
     } finally {
       await f.dispose();
-      await browser.close();
     }
   });
 
@@ -610,18 +588,12 @@ for (const flow of flows)
       ],
     });
     if (!r.ok) throw Error(r.error.message);
-    const browser = await launchBrowser();
-    try {
-      const page = await browser.newPage();
-      for (const word of ["T1", "XT1", "R1"]) {
-        const t = must(
-          (await captionOracle(page, must(r.value.sheets[0]).svg)).find(
-            (t) => t.text === word,
-          ),
-        );
-        expect(t.ownerStrokeGap, word).toBeGreaterThanOrEqual(1);
-      }
-    } finally {
-      await browser.close();
+    const text = await captionOracle(
+      await captionPage(),
+      must(r.value.sheets[0]).svg,
+    );
+    for (const word of ["T1", "XT1", "R1"]) {
+      const t = must(text.find((t) => t.text === word));
+      expect(t.ownerStrokeGap, word).toBeGreaterThanOrEqual(1);
     }
   });

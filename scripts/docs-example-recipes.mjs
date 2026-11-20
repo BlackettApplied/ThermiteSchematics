@@ -7,7 +7,6 @@ const run = (name) =>
       return runner[name](context, fence);
     },
     {
-      testFile: "packages/cli/test/docs-examples.test.ts",
       testName: (file, recipe) =>
         `executes Markdown fences in ${file} [${recipe}]`,
     },

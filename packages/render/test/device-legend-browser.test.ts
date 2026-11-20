@@ -3,8 +3,9 @@ import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { dolFixture, actuation } from "./dol-control-junctions-fixture.js";
 import {
+  displaySheet,
+  evaluateSheetGeometry,
   launch,
-  openSheet,
   drawingContextOptions,
 } from "../../../evals/draw/browser.mjs";
 import { deviceTags } from "../../../evals/draw/checks.mjs";
@@ -39,8 +40,11 @@ function clippedBox(box: Box, clips: any[]): Box {
   }
   return box;
 }
+// The tag checker uses painted text, device and terminal measurements.
+// The outline oracle measures clipped conductor and border ink separately.
 async function audit(svg: string, ir: any, refs: any[]) {
-  const measured = await openSheet(page, svg),
+  await displaySheet(page, svg);
+  const measured = await evaluateSheetGeometry(page, { textOnly: true }),
     owned = new Set(
       measured.texts
         .filter((t) => t.tagKind === "legend")
@@ -146,7 +150,6 @@ async function audit(svg: string, ir: any, refs: any[]) {
     }
     expect(minimum, closest).toBeGreaterThanOrEqual(2.999);
   }
-  return { measured, legends };
 }
 // Runner audits exceed 60 s; preserve each complete flow within a 120 s budget.
 it.each(["left-to-right", "top-to-bottom"] as const)(

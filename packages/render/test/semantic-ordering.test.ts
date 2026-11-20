@@ -2,24 +2,20 @@ import {
   irSemanticOrder,
   compareSemanticElementIds,
 } from "../src/semantic-order.js";
-import { renderSchematicSheets } from "../src/sheets.js";
-import { createHash } from "node:crypto";
 import { normalizeSchematicView } from "../src/view-spec.js";
 import { selectLoadsSubgraph } from "../src/selection.js";
 import { buildPresentationGraph } from "../src/presentation.js";
 import { buildElkAdapterGraph } from "../src/layout/elk-adapter.js";
 import { compileCoreFixture } from "./fixtures.js";
-import { b4Round9Fixture } from "./b4-fixtures.js";
 import { afterAll, beforeAll, expect, it } from "vitest";
-import { compileProject, type ElectricalIr } from "@thermite/compiler";
-import { readdir } from "node:fs/promises";
-import { basename, dirname, join } from "node:path";
 import {
+  checkSeeds,
+  digest,
+  flows,
   reidentify,
   rootedRequests,
   semanticIdentities,
 } from "./semantic-ordering-fixture.js";
-import type { SchematicViewRequest } from "../src/types.js";
 import {
   createSchematicRendererWithDependencies,
   renderSchematic,
@@ -37,7 +33,6 @@ beforeAll(async () => {
 afterAll(async () => {
   await fixture.close();
 });
-const flows = ["left-to-right", "top-to-bottom"] as const;
 const loads = {
   format: "schematic-view-request/0.2",
   root: byDesignation("PS1"),
@@ -82,50 +77,6 @@ it.each(["plc3", "plc4", "daisy", "pnp"] as const)(
   },
 );
 
-const digest = (value: unknown) =>
-  createHash("sha256").update(JSON.stringify(value)).digest("hex");
-
-async function checkSeeds(
-  name: string,
-  base: ElectricalIr,
-  requests: readonly SchematicViewRequest[],
-) {
-  const expected = new Map<
-    string,
-    { inputs: string[]; svg: string | null; outcome: string }
-  >();
-  // An undesignated jumper's fallback label is its authored UID. Changing that
-  // public label can legitimately change exact font metrics; mutate internal
-  // identities while keeping these printed labels fixed in this matrix.
-  const printed = base.jumpers.filter((j) => !j.designation).map((j) => j.uid);
-  for (let seed = 0; seed < 30; seed++) {
-    const ir = reidentify(base, seed, printed);
-    for (const request of requests)
-      for (const flow of flows) {
-        const engine = createElkEngine(),
-          layout = engine.layout.bind(engine),
-          inputs: string[] = [];
-        engine.layout = async (...args) => {
-          inputs.push(digest(semanticIdentities(ir, args[0])));
-          return layout(...args);
-        };
-        const r = await createSchematicRendererWithDependencies({
-          layoutEngine: engine,
-        }).render(ir, { ...request, flow });
-        const key = JSON.stringify({ ...request, flow });
-        const actual = {
-          inputs,
-          svg: r.ok ? digest(semanticIdentities(ir, r.value.svg)) : null,
-          outcome: r.ok ? "ok" : r.error.code,
-        };
-        if (!expected.has(key)) expected.set(key, actual);
-        expect(actual, `${name} seed=${seed} ${key}`).toEqual(
-          expected.get(key),
-        );
-      }
-  }
-}
-
 it.each([
   "minimal",
   "min_sameloc",
@@ -161,38 +112,6 @@ it.each([
   120000,
 );
 
-const exampleProjects = [
-  ...new Set(
-    (await readdir("examples", { recursive: true }))
-      .filter((f) => basename(f) === "system.json")
-      .map(dirname),
-  ),
-].sort();
-it("discovers all 14 shipped example projects", () => {
-  expect(exampleProjects).toHaveLength(14);
-});
-it.each(exampleProjects)(
-  "shipped %s rooted views have one ELK input sequence and SVG over 30 internal UID assignments",
-  async (project) => {
-    const compiled = await compileProject(join("examples", project));
-    if (!compiled.ok) throw Error(JSON.stringify(compiled.diagnostics));
-    await checkSeeds(project, compiled.ir, rootedRequests(compiled.ir));
-  },
-  600000,
-);
-
-it("keeps a shared trace fork drawable and UID-independent over 30 assignments", async () => {
-  const ir = b4Round9Fixture(await compileCoreFixture());
-  const trace = {
-    format: "schematic-view-request/0.2",
-    root: byDesignation("LS1"),
-    intent: { kind: "trace", to: byDesignation("PLC1"), includePower: false },
-  } as const;
-  for (const flow of flows)
-    expect((await renderSchematic(ir, { ...trace, flow })).ok).toBe(true);
-  await checkSeeds("shared trace fork", ir, [trace]);
-}, 240000);
-
 it("uses authored source positions for indistinguishable unnamed jumpers", async () => {
   const { ir: base } = await fixture.compile("unnamed_jumpers", 0);
   let expected: unknown;
@@ -221,36 +140,6 @@ it("uses authored source positions for indistinguishable unnamed jumpers", async
     expect(actual).toEqual(expected);
   }
 });
-
-it("keeps paginated rooted SVGs independent of UIDs over 30 assignments", async () => {
-  const base = await compileCoreFixture(),
-    expected = new Map<string, unknown>();
-  for (let seed = 0; seed < 30; seed++) {
-    const ir = reidentify(base, seed);
-    for (const flow of flows) {
-      const r = await renderSchematicSheets(ir, {
-        format: "schematic-view-request/0.2",
-        root: byDesignation("LS1"),
-        intent: {
-          kind: "trace",
-          to: byDesignation("PLC1"),
-          includePower: true,
-        },
-        flow,
-      });
-      const actual = r.ok
-        ? {
-            ok: true,
-            sheets: r.value.sheets.map((s) =>
-              digest(semanticIdentities(ir, s.svg)),
-            ),
-          }
-        : { ok: false, code: r.error.code };
-      if (!expected.has(flow)) expected.set(flow, actual);
-      expect(actual).toEqual(expected.get(flow));
-    }
-  }
-}, 120000);
 
 it("keeps authored keys literal when they equal an instance UID", async () => {
   const ir = await compileCoreFixture(),

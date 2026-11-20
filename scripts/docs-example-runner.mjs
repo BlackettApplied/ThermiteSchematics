@@ -9,6 +9,7 @@ export async function cabinetsShell(c, fence) {
   return shell(c, fence.body);
 }
 export async function repoShell(c, fence) {
+  await (c.repoReady ??= prepareRepo(c, fence.file));
   if (fence.file === "docs/machine-demo.md") {
     const run = c.run;
     // This full packet example reaches 99 s on CI; other examples keep 30 s.
@@ -18,16 +19,22 @@ export async function repoShell(c, fence) {
         run(args, cwd, env, { timeoutMs: 120000, ...settings }),
     };
   }
+  if (fence.body.includes(" watch ")) return watchShell(c, fence);
+  return shell(c, fence.body);
+}
+
+async function prepareRepo(c, file) {
+  // The docs test owns one scratch checkout per document and recipe.
   await c.copy("examples", join(c.work, "examples"));
   if (
-    fence.file.startsWith("libraries/") ||
-    fence.file === "scripts/library-batch/README.md"
+    file.startsWith("libraries/") ||
+    file === "scripts/library-batch/README.md"
   ) {
     await c.copy("libraries", join(c.work, "libraries"));
     await linkDependencies(c);
   }
-  if (fence.file.startsWith("packages/") && fence.file.includes("/fixtures/")) {
-    const fixture = dirname(fence.file);
+  if (file.startsWith("packages/") && file.includes("/fixtures/")) {
+    const fixture = dirname(file);
     await c.copy(fixture, join(c.work, fixture));
   }
   await c.copy(
@@ -42,8 +49,6 @@ export async function repoShell(c, fence) {
   await put(join(c.work, "package.json"), {
     scripts: { "demo:change": "bun scripts/demo-change.mjs" },
   });
-  if (fence.body.includes(" watch ")) return watchShell(c, fence);
-  return shell(c, fence.body);
 }
 function linkDependencies(c) {
   return (c.dependencyLink ??= symlink(

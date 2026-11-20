@@ -40,6 +40,25 @@ function readRevision(cwd, revision, path) {
   }
 }
 
+// Many edges reuse a commit's blob as their next parent, and merge parents and
+// distinct surfaces also share commit subjects. Keep the cache within one audit.
+function revisionReader(cwd) {
+  const blobs = new Map(),
+    subjects = new Map();
+  return {
+    read(revision, path) {
+      const key = `${revision}:${path}`;
+      if (!blobs.has(key)) blobs.set(key, readRevision(cwd, revision, path));
+      return blobs.get(key);
+    },
+    subject(commit) {
+      if (!subjects.has(commit))
+        subjects.set(commit, git(cwd, "show", "-s", "--format=%s", commit));
+      return subjects.get(commit);
+    },
+  };
+}
+
 export function contractInventory(cwd, base, head) {
   const paths = new Set([
     ...git(cwd, "ls-tree", "-r", "--name-only", base).split("\n"),
@@ -121,7 +140,13 @@ function compareContent(kind, before, after, publicNames) {
 }
 
 /** Follow renames newest-to-oldest, then compare every authored edge, not just endpoints. */
-export function followHistory(cwd, base, head, surface) {
+export function followHistory(
+  cwd,
+  base,
+  head,
+  surface,
+  revisions = revisionReader(cwd),
+) {
   const text = git(
     cwd,
     "log",
@@ -155,13 +180,15 @@ export function followHistory(cwd, base, head, surface) {
   return unique
     .reverse()
     .flatMap((entry) =>
-      entry.parents.map((parent) => historyEdge(cwd, surface, entry, parent)),
+      entry.parents.map((parent) =>
+        historyEdge(revisions, surface, entry, parent),
+      ),
     );
 }
 
-function historyEdge(cwd, surface, { commit, current, prior }, parent) {
-  const before = readRevision(cwd, parent, prior),
-    after = readRevision(cwd, commit, current);
+function historyEdge(revisions, surface, { commit, current, prior }, parent) {
+  const before = revisions.read(parent, prior),
+    after = revisions.read(commit, current);
   const publicNames = CONTRACT_BASELINE.transitiveDeclarations[surface.path]
     ? new Set(CONTRACT_BASELINE.transitiveDeclarations[surface.path])
     : surface.kind === "declarations" &&
@@ -169,7 +196,7 @@ function historyEdge(cwd, surface, { commit, current, prior }, parent) {
       ? new Set(
           [parent, commit].flatMap((revision) =>
             publicDeclarations(
-              readRevision(cwd, revision, "packages/agent-tools/src/index.ts"),
+              revisions.read(revision, "packages/agent-tools/src/index.ts"),
               current,
             ),
           ),
@@ -189,7 +216,7 @@ function historyEdge(cwd, surface, { commit, current, prior }, parent) {
     path: current,
     previousPath: prior,
     kind: surface.kind,
-    subject: git(cwd, "show", "-s", "--format=%s", commit),
+    subject: revisions.subject(commit),
     changes,
   };
 }
@@ -201,10 +228,12 @@ export function auditContractHistory(
 ) {
   git(cwd, "merge-base", "--is-ancestor", base, head);
   const inventory = contractInventory(cwd, base, head);
+  const revisions = revisionReader(cwd);
   const history = inventory.flatMap((surface) =>
-    followHistory(cwd, base, head, surface),
+    followHistory(cwd, base, head, surface, revisions),
   );
-  if (head === "HEAD") history.push(...workingTreeEdges(cwd, inventory));
+  if (head === "HEAD")
+    history.push(...workingTreeEdges(cwd, inventory, revisions));
   const violations = history.flatMap((edge) =>
     edge.changes
       .filter((change) => !["additive"].includes(change.classification))
@@ -225,13 +254,13 @@ export function auditContractHistory(
   };
 }
 
-function workingTreeEdges(cwd, inventory) {
+function workingTreeEdges(cwd, inventory, revisions) {
   const disk = (path) =>
     existsSync(resolve(cwd, path))
       ? readFileSync(resolve(cwd, path), "utf8").trimEnd()
       : undefined;
   return inventory.flatMap((surface) => {
-    const before = readRevision(cwd, "HEAD", surface.path),
+    const before = revisions.read("HEAD", surface.path),
       after = disk(surface.path);
     if (before === after) return [];
     const publicNames = CONTRACT_BASELINE.transitiveDeclarations[surface.path]
@@ -240,7 +269,7 @@ function workingTreeEdges(cwd, inventory) {
           surface.path !== "packages/agent-tools/src/index.ts"
         ? new Set(
             [
-              readRevision(cwd, "HEAD", "packages/agent-tools/src/index.ts"),
+              revisions.read("HEAD", "packages/agent-tools/src/index.ts"),
               disk("packages/agent-tools/src/index.ts"),
             ].flatMap((index) => publicDeclarations(index, surface.path)),
           )
