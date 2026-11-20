@@ -24,12 +24,12 @@ import { evalVersion, harnessIdentity, pinCheckpoint } from "./checkpoint.mjs";
 import { readRun } from "./records.mjs";
 import { contributorCommandEnvironment } from "./contributor-commands.mjs";
 import { fileState, fileStateAsync, auditErrors } from "./audit.mjs";
+import { initAudit } from "./audit-files.mjs";
 import { captureProcess } from "./process.mjs";
 import { pinnedCliVersion } from "./cli-protocol.mjs";
 import {
   preflightAuth,
   seedCodexAuth,
-  refreshCodexAuth,
   secretValues,
   redactSecrets,
   credentialKeys,
@@ -51,7 +51,7 @@ import { snapshot, sha256 } from "./snapshot.mjs";
 import { score } from "./score-log.mjs";
 import { normalizeTranscript } from "./transcript.mjs";
 import { visualBroker } from "./visual-capture.mjs";
-import { projectReader } from "./capture-files.mjs";
+import { copyConfinedTree, projectReader } from "./capture-files.mjs";
 import {
   agents,
   agentConfiguration,
@@ -61,6 +61,7 @@ import {
   assertIsolation,
 } from "./launch.mjs";
 import { cli, read, write, documents, uid } from "./task-support.mjs";
+import { assertConfinedProjectPaths } from "./source-files.mjs";
 const here = dirname(fileURLToPath(import.meta.url)),
   root = resolve(here, "../..");
 const git = (cwd, ...args) =>
@@ -161,6 +162,11 @@ export function installShim(runtime) {
   cpSync(join(here, "shim/observe.mjs"), join(runtime, "eval-observe.mjs"));
   cpSync(join(here, "snapshot.mjs"), join(runtime, "eval-snapshot.mjs"));
   cpSync(join(here, "process.mjs"), join(runtime, "eval-process.mjs"));
+  cpSync(
+    join(here, "capture-files.mjs"),
+    join(runtime, "eval-capture-files.mjs"),
+  );
+  cpSync(join(here, "audit-files.mjs"), join(runtime, "eval-audit-files.mjs"));
   for (const [from, to] of [
     ["audit.mjs", "eval-audit.mjs"],
     ["auth.mjs", "eval-auth.mjs"],
@@ -324,13 +330,6 @@ function relabel(line, mode) {
         ? [binary.slice(0, -empty.length - 5), empty]
         : [binary.slice(0, half), binary.slice(half + 5)];
   return `Binary files ${field(from)} and ${field(to)} differ`;
-}
-// Post-run project reads go through the reader pinned before launch. A
-// directory where a file was, or a file where a directory was, is an absent
-// file, so the change diffs as a deletion and an addition. Anything reached
-// through a link is refused by read().
-function projectBytes(source, path) {
-  return source.absentFile(path) ? null : source.read(path);
 }
 // Test seams for filesystem transitions that cannot otherwise be timed.
 export const runHooks = {};
@@ -685,8 +684,8 @@ export async function runOne({
       mkdtempSync(join(homedir(), ".thermite-agent-evidence-")),
     ),
     audit = join(work, "audit");
-  mkdirSync(audit);
-  let authSeed,
+  initAudit(audit);
+  let authSeeded,
     env,
     manifest,
     task,
@@ -697,6 +696,10 @@ export async function runOne({
     guideBytes,
     scratch,
     source,
+    auditSource,
+    runtimeSource,
+    workSource,
+    archiveProject,
     secretList = [];
   const runStarted = Date.now();
   const save = (file, value) =>
@@ -705,6 +708,7 @@ export async function runOne({
       JSON.parse(redactSecrets(JSON.stringify(value), secretList)),
     );
   try {
+    workSource = projectReader(work);
     task = read(join(taskDir, "task.json"));
     assert(
       !task.context || task.context === context,
@@ -713,12 +717,14 @@ export async function runOne({
     await copyRuntime(prepared.path, runtime, task);
     identity.task = task.id;
     identity.runKey = runKey(identity);
+    auditSource = projectReader(audit);
     env = {
       ...freshEnvironment(join(work, "isolated"), process.env, { engineRoots }),
       THERMITE_EVAL_PROJECT: project,
       THERMITE_EVAL_LOG: join(audit, "shim.jsonl"),
       THERMITE_EVAL_ERRORS: join(audit, "shim-errors.jsonl"),
       THERMITE_EVAL_PHASE: "setup",
+      THERMITE_EVAL_AUDIT_ROOT: JSON.stringify(auditSource.identity),
     };
     for (const [key, value] of Object.entries(env))
       if (!credentialKeys.includes(key))
@@ -727,7 +733,7 @@ export async function runOne({
           `Checkout path leaked through ${key}`,
         );
     if (agent === "codex") {
-      authSeed = seedCodexAuth(env, codexAuth);
+      authSeeded = seedCodexAuth(env, codexAuth);
       if (codexAuth) {
         delete env.CODEX_API_KEY;
         delete env.OPENAI_API_KEY;
@@ -821,7 +827,7 @@ export async function runOne({
     );
     const isolation = assertIsolation(project, env, {
       claudeLoader: agent === "claude",
-      codexAuth: !!authSeed,
+      codexAuth: !!authSeeded,
     });
     const authentication =
       agent === "reference"
@@ -844,7 +850,7 @@ export async function runOne({
       snapshot: initial,
       lastHash: null,
     });
-    if (existsSync(env.THERMITE_EVAL_ERRORS)) rmSync(env.THERMITE_EVAL_ERRORS);
+    writeFileSync(env.THERMITE_EVAL_ERRORS, "");
     env.THERMITE_EVAL_PHASE = "agent";
     if (task.contributor)
       Object.assign(env, contributorCommandEnvironment(ctx, join(work, "bin")));
@@ -903,6 +909,7 @@ export async function runOne({
     const before = join(scratch, "before");
     copyRegularFiles(project, before);
     source = projectReader(project);
+    runtimeSource = projectReader(runtime);
     // The guide the agent's CLI loads at launch.
     guideBytes = readFileSync(join(before, "AGENTS.md")).length;
     const started = Date.now();
@@ -935,7 +942,6 @@ export async function runOne({
         await stopCapture();
       }
     }
-    secretList = [...new Set([...secretList, ...secretValues(env)])];
     execution.stdout = redactSecrets(execution.stdout, secretList);
     execution.stderr = redactSecrets(execution.stderr, secretList);
     writeFileSync(join(live, "transcript.jsonl"), execution.stdout);
@@ -958,14 +964,51 @@ export async function runOne({
     // Every project-dependent step below needs a directory at the root's
     // path; without one the run cannot be scored, though its judge packet
     // still records the refusal.
-    if (!lstatSync(project, { throwIfNoEntry: false })?.isDirectory()) {
+    let projectDirectory = false;
+    try {
+      projectDirectory = workSource.inspect("project").isDirectory();
+    } catch {}
+    if (!projectDirectory) {
       rootLost = true;
       runHooks.afterRootLoss?.(project);
       throw new Error(
         "Project root is missing or no longer a directory after the agent exited; the run cannot be scored",
       );
     }
-    const beforeFlush = snapshot(project);
+    const rootIntact = source.intact();
+    const stagedProject = rootIntact
+      ? join(live, "project")
+      : join(scratch, "empty-project");
+    let projectRefusals = [];
+    if (rootIntact) {
+      archiveProject = stagedProject;
+      projectRefusals = copyConfinedTree(source, stagedProject);
+    } else mkdirSync(stagedProject);
+    const beforeFlush = snapshot(stagedProject);
+    assertConfinedProjectPaths(
+      stagedProject,
+      beforeFlush.documents["system.json"],
+    );
+    const flushAudit = join(scratch, "audit"),
+      auditInputErrors = [];
+    initAudit(flushAudit);
+    const flushSource = projectReader(flushAudit);
+    const flushIdentity = flushSource.identity;
+    flushSource.close();
+    for (const file of [
+      "shim.jsonl",
+      "shim-errors.jsonl",
+      "shim.jsonl.state.json",
+    ])
+      try {
+        writeFileSync(join(flushAudit, file), auditSource.read(file));
+      } catch {
+        auditInputErrors.push({
+          kind: "shim-error",
+          stage: "audit-input",
+          file,
+        });
+      }
     // From here on, CLI calls run with harness privileges: never from the
     // agent-writable runtime, never with the project's Bun config or .env
     // files, and only with environment values the harness selects.
@@ -976,12 +1019,15 @@ export async function runOne({
         { PATH: process.env.PATH, TERM: process.env.TERM },
         { engineRoots },
       ),
-      THERMITE_EVAL_PROJECT: project,
-      THERMITE_EVAL_LOG: env.THERMITE_EVAL_LOG,
-      THERMITE_EVAL_ERRORS: env.THERMITE_EVAL_ERRORS,
+      THERMITE_EVAL_PROJECT: stagedProject,
+      THERMITE_EVAL_LOG: join(flushAudit, "shim.jsonl"),
+      THERMITE_EVAL_ERRORS: join(flushAudit, "shim-errors.jsonl"),
       THERMITE_EVAL_PHASE: "flush",
+      THERMITE_EVAL_AUDIT_ROOT: JSON.stringify(flushIdentity),
       THERMITE_EVAL_BUN_CONFIG: trusted.config,
     };
+    ctx.originalProject = project;
+    ctx.project = stagedProject;
     ctx.thermite = join(trusted.runtime, "thermite.mjs");
     const validation = cli(ctx, "validate", ".", "--json");
     writeFileSync(
@@ -993,18 +1039,19 @@ export async function runOne({
       redactSecrets(validation.stderr, secretList),
     );
     const final = fileState(
-        project,
+        stagedProject,
         join(trusted.runtime, "thermite.real.mjs"),
         ctx.env,
       ),
-      calls = parseCalls(env.THERMITE_EVAL_LOG);
-    final.sourceFiles = documents(project).map((doc) => doc.path);
-    const shimErrors = existsSync(env.THERMITE_EVAL_ERRORS)
-      ? parseCalls(env.THERMITE_EVAL_ERRORS)
-      : [];
+      calls = parseCalls(ctx.env.THERMITE_EVAL_LOG);
+    final.sourceFiles = documents(stagedProject).map((doc) => doc.path);
+    const shimErrors = [
+      ...auditInputErrors,
+      ...parseCalls(ctx.env.THERMITE_EVAL_ERRORS),
+    ];
     let head;
     try {
-      head = read(env.THERMITE_EVAL_LOG + ".state.json").lastHash;
+      head = read(ctx.env.THERMITE_EVAL_LOG + ".state.json").lastHash;
     } catch {
       shimErrors.push({ kind: "shim-error", stage: "missing-head" });
     }
@@ -1016,10 +1063,16 @@ export async function runOne({
     ctx.calls = calls;
     ctx.validationDiagnostics = validationDiagnostics(validation);
     ctx.thermite = join(trusted.runtime, "thermite.real.mjs");
-    if (task.contributor) ctx.pinnedTypeScript = prepared.pinnedTypeScript;
+    if (task.contributor) {
+      // Contributor scoring still inspects the live Git worktree/install and
+      // independently runs its submitted code. See the contributor boundary.
+      assert(rootIntact, "Contributor project root was replaced");
+      ctx.project = project;
+      ctx.pinnedTypeScript = prepared.pinnedTypeScript;
+    }
     const paths = [
       ...new Set([
-        ...documents(project).map((d) => d.path),
+        ...final.sourceFiles,
         ...(initial.sourceFiles ?? []),
         "system.json",
         "presentation.json",
@@ -1034,7 +1087,17 @@ export async function runOne({
       before,
       scratch,
       paths,
-      read: (path) => projectBytes(source, path),
+      read(path) {
+        if (
+          !rootIntact ||
+          projectRefusals.some(
+            (refused) => path === refused || path.startsWith(refused + "/"),
+          )
+        )
+          throw new Error("Project snapshot refused the selected path");
+        const staged = join(stagedProject, path);
+        return fileAt(staged) ? readFileSync(staged) : null;
+      },
     });
     ctx.metrics = score({
       calls,
@@ -1079,7 +1142,15 @@ export async function runOne({
       runIdentity.checkerHash,
       "Harness changed during run; result cannot be scored",
     );
-    const runtimeAfter = snapshot(runtime, { documents: false }).hash;
+    let runtimeAfter = null;
+    try {
+      runtimeAfter = snapshot(runtime, {
+        documents: false,
+        reader: runtimeSource,
+      }).hash;
+    } catch {}
+    // An unreadable or replaced runtime is a change for V5.
+    runtimeAfter ??= "refused";
     const metrics = score({
       calls,
       initial,
@@ -1187,8 +1258,9 @@ export async function runOne({
       ...runIdentity,
       checkerTaskTreeHash: snapshot(taskDir, { documents: false }).hash,
       initialProjectHash: initial.hash,
-      logHash: sha256(readFileSync(env.THERMITE_EVAL_LOG)),
+      logHash: sha256(readFileSync(ctx.env.THERMITE_EVAL_LOG)),
       auditHead: head,
+      projectRefusals,
       workspace: keep || status === "checker-error" ? work : null,
     };
     if (status === "checker-error")
@@ -1198,6 +1270,8 @@ export async function runOne({
         project,
         runtime,
         projectRoot: source.identity,
+        workspaceRoot: workSource.identity,
+        projectRefusals,
         guideBytes,
         initial,
         final,
@@ -1213,7 +1287,7 @@ export async function runOne({
     save("score.json", metrics);
     save("check.json", outcome);
     save("shim-errors.json", shimErrors);
-    cpSync(env.THERMITE_EVAL_LOG, join(live, "shim.jsonl"));
+    cpSync(ctx.env.THERMITE_EVAL_LOG, join(live, "shim.jsonl"));
     if (task.rubric)
       save(
         "judge-packet.json",
@@ -1224,9 +1298,9 @@ export async function runOne({
           runtime,
           task,
           source,
+          rootRefused: !rootIntact,
         }),
       );
-    cpSync(project, join(live, "project"), { recursive: true });
     save("manifest.json", manifest);
     return manifest;
   } catch (error) {
@@ -1284,42 +1358,39 @@ export async function runOne({
       message: manifest.infrastructureError,
     });
     save("manifest.json", manifest);
-    if (existsSync(project))
-      cpSync(project, join(live, "project"), { recursive: true });
+    if (!rootLost && !archiveProject)
+      try {
+        // If setup failed before the project was pinned, no agent ran.
+        source ??= projectReader(project);
+        if (source.intact()) copyConfinedTree(source, join(live, "project"));
+      } catch {}
     return manifest;
   } finally {
-    if (authSeed)
-      try {
-        const refresh = refreshCodexAuth(authSeed, env);
-        if (manifest) {
-          manifest.authRefresh = refresh;
-          save("manifest.json", manifest);
-        }
-      } catch (error) {
-        if (manifest) {
-          manifest.status = "infrastructure-failure";
-          manifest.infrastructureKind = "authentication";
-          manifest.infrastructureError = redactSecrets(
-            error.message,
-            secretList,
-          );
-          save("manifest.json", manifest);
-        }
-      }
     try {
+      auditSource?.close();
       source?.close();
+      runtimeSource?.close();
     } finally {
       if (scratch) rmSync(scratch, { recursive: true, force: true });
     }
-    if (manifest?.status === "checker-error" && !keep)
-      rmSync(join(work, "isolated"), { recursive: true, force: true });
     try {
-      cpSync(live, evidence, { recursive: true });
+      if (!keep && manifest?.status === "checker-error")
+        workSource?.remove("isolated");
+      else if (!keep) workSource?.removeRoot();
+    } catch (error) {
+      if (manifest) {
+        manifest.workspace = work;
+        manifest.cleanupError = error.message;
+        save("manifest.json", manifest);
+      }
     } finally {
-      rmSync(live, { recursive: true, force: true });
+      workSource?.close();
+      try {
+        cpSync(live, evidence, { recursive: true });
+      } finally {
+        rmSync(live, { recursive: true, force: true });
+      }
     }
-    if (!keep && manifest?.status !== "checker-error")
-      rmSync(work, { recursive: true, force: true });
   }
 }
 // `prepared` is the checkpoint's prepared context, read from the trusted
@@ -1339,8 +1410,11 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
   const stored = read(join(evidence, "recheck.json")),
     task = read(join(stored.taskDir, "task.json"));
   assert(
-    stored.projectRoot && Number.isInteger(stored.guideBytes),
-    "Recheck needs the project root and guide size recorded since E2 1.20.4",
+    stored.projectRoot &&
+      stored.workspaceRoot &&
+      Array.isArray(stored.projectRefusals) &&
+      Number.isInteger(stored.guideBytes),
+    "Recheck needs a confined project snapshot recorded since E2 1.20.5",
   );
   // Refuses a project root other than the one pinned before the agent started.
   const source = projectReader(stored.project, stored.projectRoot);
@@ -1357,10 +1431,16 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
     );
     const revision = (original.checkerRechecks ?? 0) + 1,
       work = original.workspace;
+    scratch = protectedScratch(".thermite-agent-recheck-");
+    const stagedProject = join(scratch, "project");
+    const refusals = copyConfinedTree(source, stagedProject);
+    const current = snapshot(stagedProject);
     assert(
-      snapshot(stored.project).hash === stored.final.hash,
+      current.hash === stored.final.hash &&
+        JSON.stringify(refusals) === JSON.stringify(stored.projectRefusals),
       "Kept agent sources changed; refusing recheck",
     );
+    assertConfinedProjectPaths(stagedProject, current.documents["system.json"]);
     const transcript = readFileSync(join(evidence, "transcript.jsonl"), "utf8");
     const promptVersion =
       original.taskVersion ??
@@ -1371,7 +1451,6 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
     // The checker's receipts, its configuration and the CLI it runs are staged
     // in protected scratch, never in the kept run directory, which a process
     // the agent left behind can still write.
-    scratch = protectedScratch(".thermite-agent-recheck-");
     const live = join(scratch, "evidence");
     mkdirSync(live);
     const trusted = await protectedRuntime(prepared.path, scratch, task);
@@ -1379,6 +1458,8 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
     const ctx = {
       ...stored,
       task,
+      project: task.contributor ? stored.project : stagedProject,
+      originalProject: stored.project,
       promptVersion,
       ...(task.contributor && { pinnedTypeScript: prepared.pinnedTypeScript }),
       evidence: live,
@@ -1406,7 +1487,7 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
       initial: stored.initial,
       final: stored.final,
       runtimeBefore: original.runtimeHash.before,
-      runtimeAfter: snapshot(stored.runtime, { documents: false }).hash,
+      runtimeAfter: original.runtimeHash.after,
       transcript,
       context: stored.context,
       engineRoots: stored.engineRoots,
@@ -1472,8 +1553,8 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
         judgePacket({
           finalMessage: metrics.finalMessage,
           sourceDiff: ctx.sourceDiff,
-          project: ctx.project,
-          runtime: ctx.runtime,
+          project: stored.project,
+          runtime: stored.runtime,
           task,
           source,
         }),
@@ -1482,7 +1563,16 @@ export async function recheckRun({ evidence, forceRecheck = false, prepared }) {
     write(join(evidence, "score.json"), metrics);
     if (result.status !== "checker-error" && !stored.keep) {
       result.workspace = null;
-      rmSync(work, { recursive: true, force: true });
+      let workspace;
+      try {
+        workspace = projectReader(work, stored.workspaceRoot);
+        workspace.removeRoot();
+      } catch (error) {
+        result.workspace = work;
+        result.cleanupError = error.message;
+      } finally {
+        workspace?.close();
+      }
     }
     write(join(evidence, "manifest.json"), result);
     return result;
@@ -1625,7 +1715,6 @@ async function authOnly(values) {
     console.log(JSON.stringify(status));
     if (!status.ok) process.exitCode = 1;
   } finally {
-    if (seed) refreshCodexAuth(seed, env);
     if (!values.keep) rmSync(work, { recursive: true, force: true });
   }
 }

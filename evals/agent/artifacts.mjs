@@ -1,28 +1,28 @@
-import {
-  cpSync,
-  existsSync,
-  lstatSync,
-  readdirSync,
-  readFileSync,
-  mkdirSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
-import { join, resolve, isAbsolute, relative } from "node:path";
+import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
+import { join, resolve, isAbsolute, relative, sep } from "node:path";
 import { cli, read } from "./task-support.mjs";
-import { canonical, libraryTypes, sourceDocuments } from "./source-files.mjs";
-import { sha256 } from "./snapshot.mjs";
+import {
+  assertConfinedProjectPaths,
+  canonical,
+  libraryTypes,
+  sourceDocuments,
+} from "./source-files.mjs";
+import { copyConfinedTree, projectReader } from "./capture-files.mjs";
 let pdfjs;
 export async function pdfInfo(path) {
   try {
-    if (
-      !existsSync(path) ||
-      readFileSync(path).subarray(0, 5).toString() !== "%PDF-"
-    )
+    return await parsePdf(readFileSync(path));
+  } catch {
+    return { valid: false, pages: 0, text: "" };
+  }
+}
+async function parsePdf(bytes) {
+  try {
+    if (bytes.subarray(0, 5).toString() !== "%PDF-")
       return { valid: false, pages: 0, text: "" };
     pdfjs ??= await import("pdfjs-dist/legacy/build/pdf.mjs");
     const task = pdfjs.getDocument({
-      data: new Uint8Array(readFileSync(path)),
+      data: new Uint8Array(bytes),
       verbosity: 0,
       useSystemFonts: false,
       isEvalSupported: false,
@@ -50,81 +50,132 @@ export async function pdf(path) {
 export function cleanChecker(ctx) {
   if (ctx.clean) return ctx.clean;
   const project = join(ctx.evidence, "checker-input");
-  cpSync(ctx.project, project, {
-    recursive: true,
-    filter: (path) =>
-      ![/[/\\]\.git(?:[/\\]|$)/].some((re) =>
-        re.test(path.slice(ctx.project.length)),
-      ),
-  });
+  const source = projectReader(ctx.project);
+  try {
+    copyConfinedTree(source, project);
+    assertConfinedProjectPaths(project);
+  } finally {
+    source.close();
+  }
   mkdirSync(join(project, "drawings"), { recursive: true });
-  ctx.clean = { ...ctx, project, originalProject: ctx.project };
+  ctx.clean = { ...ctx, project };
   return ctx.clean;
 }
-function outputArg(argv) {
-  const i = argv.findIndex((a) => a === "-o" || a === "--output");
-  return i >= 0 ? argv[i + 1] : null;
+const printSwitches = new Set(["--index", "--json"]);
+const printValues = new Set([
+  "--input",
+  "--project",
+  "-o",
+  "--output",
+  "--paper",
+  "--orientation",
+  "--layout",
+  "--margin",
+]);
+const viewSwitches = new Set([
+  "--power",
+  "--actuation",
+  "--loads",
+  "--conductors",
+  "--include-power",
+]);
+const viewValues = new Set(["--to", "--flow"]);
+
+// Rebuild a view/packet invocation from its allowed options. File arguments
+// are always supplied by the checker or resolved inside its staged copy.
+function parsePrint(argv) {
+  if (
+    !Array.isArray(argv) ||
+    !argv.every((arg) => typeof arg === "string") ||
+    !["view", "packet"].includes(argv[0])
+  )
+    return null;
+  const kind = argv[0],
+    view = kind === "view",
+    options = [],
+    files = {};
+  let root;
+  for (let i = 1; i < argv.length; i++) {
+    const arg = argv[i];
+    if (view && !root && !arg.startsWith("-")) {
+      root = arg;
+      continue;
+    }
+    if (
+      printSwitches.has(arg) ||
+      (view ? viewSwitches.has(arg) : arg === "--strict")
+    ) {
+      options.push(arg);
+      continue;
+    }
+    const equals = arg.indexOf("="),
+      key = equals < 0 ? arg : arg.slice(0, equals);
+    if (!printValues.has(key) && !(view && viewValues.has(key))) return null;
+    const value = equals < 0 ? argv[++i] : arg.slice(equals + 1);
+    if (!value || (value.startsWith("-") && value !== "-")) return null;
+    if (key === "-o" || key === "--output") files.output = value;
+    else if (key === "--project") files.project = value;
+    else if (key === "--input" && !view) files.input = value;
+    else if (key === "--input") return null;
+    else options.push(key, value);
+  }
+  if (view ? !root : !files.input) return null;
+  return { argv: [kind, ...(view ? [root] : []), ...options], ...files };
 }
 function commandFor(ctx, artifact, fallback) {
-  const calls = ctx.calls ?? [];
-  const matches = calls.filter(
-    (c) =>
-      c.phase !== "flush" &&
-      c.exit === 0 &&
-      ["view", "packet"].includes(c.argv?.[0]) &&
-      outputArg(c.argv) &&
-      resolve(ctx.project, outputArg(c.argv)) ===
-        resolve(ctx.project, artifact),
-  );
-  return matches.at(-1)?.argv ?? fallback;
-}
-function remap(argv, ctx, out) {
-  const clean = cleanChecker(ctx),
-    result = [];
-  for (let i = 0; i < argv.length; i++) {
-    const arg = argv[i];
-    if (arg === "-o" || arg === "--output") {
-      result.push(arg, out);
-      i++;
-      continue;
-    }
-    if (arg === "--project") {
-      result.push(arg, clean.project);
-      i++;
-      continue;
-    }
-    if (arg === "--input" || arg.startsWith("--input=")) {
-      const value = arg === "--input" ? argv[++i] : arg.slice(8);
-      const logged = (ctx.calls ?? [])
-        .filter(
-          (c) =>
-            c.exit === 0 &&
-            canonical(c.argv) === canonical(argv) &&
-            typeof c.request === "string",
-        )
-        .at(-1);
-      if (logged) {
-        const path = out + ".request.json";
-        writeFileSync(path, logged.request);
-        result.push("--input", path);
-      } else if (value !== "-")
-        result.push(
-          "--input",
-          value.startsWith(ctx.project)
-            ? clean.project + value.slice(ctx.project.length)
-            : value,
-        );
-      else return null;
-      continue;
-    }
-    result.push(
-      typeof arg === "string" && arg.startsWith(ctx.project)
-        ? clean.project + arg.slice(ctx.project.length)
-        : arg,
-    );
+  const project = ctx.originalProject ?? ctx.project;
+  for (const call of [...(ctx.calls ?? [])].reverse()) {
+    if (call?.phase === "flush" || call?.exit !== 0) continue;
+    const parsed = parsePrint(call.argv);
+    if (
+      parsed?.output &&
+      resolve(project, parsed.output) === resolve(project, artifact)
+    )
+      return { parsed, argv: call.argv, request: call.request };
   }
-  if (!outputArg(result)) result.push("-o", out);
-  return result;
+  return fallback ? { parsed: parsePrint(fallback), argv: fallback } : null;
+}
+function remap(command, ctx, out) {
+  const parsed = command?.parsed;
+  if (!parsed) return null;
+  const project = ctx.originalProject ?? ctx.project,
+    clean = cleanChecker(ctx),
+    result = [...parsed.argv];
+  if (parsed.project && resolve(project, parsed.project) !== project)
+    return null;
+  if (parsed.input) {
+    const path = relative(project, resolve(project, parsed.input));
+    if (
+      !path ||
+      path === ".." ||
+      path.startsWith(".." + sep) ||
+      isAbsolute(path)
+    )
+      return null;
+    if (typeof command.request === "string") {
+      const request = out + ".request.json";
+      writeFileSync(request, command.request);
+      result.push("--input", request);
+    } else if (parsed.input !== "-") {
+      result.push("--input", join(clean.project, path));
+    } else return null;
+  }
+  return [...result, "--project", clean.project, "-o", out];
+}
+function deliveredBytes(ctx, artifact) {
+  const source = projectReader(ctx.project);
+  try {
+    return source.read(artifact);
+  } finally {
+    source.close();
+  }
+}
+export async function deliveredPdf(ctx, artifact) {
+  try {
+    return (await parsePdf(deliveredBytes(ctx, artifact))).valid;
+  } catch {
+    return false;
+  }
 }
 export async function regenerateView(ctx, artifact, fallback, expected = {}) {
   const command = commandFor(ctx, artifact, fallback);
@@ -153,9 +204,9 @@ export async function regenerateView(ctx, artifact, fallback, expected = {}) {
   try {
     packet = metadata?.status === 0 ? read(metaOutput) : null;
   } catch {}
-  const typeMap = new Map(libraryTypes(ctx.project).map((t) => [t.id, t])),
+  const typeMap = new Map(libraryTypes(clean.project).map((t) => [t.id, t])),
     objectMap = new Map(
-      sourceDocuments(ctx.project)
+      sourceDocuments(clean.project)
         .flatMap((d) => d.objects)
         .map((o) => [o.designation, o]),
     );
@@ -202,26 +253,32 @@ export async function regenerateView(ctx, artifact, fallback, expected = {}) {
       exit: metadata?.status ?? null,
     };
   const result = cli(clean, ...mapped);
-  return {
-    pass:
-      result.status === 0 &&
-      (await pdf(join(ctx.project, artifact))) &&
-      (await pdf(output)) &&
-      sha256(readFileSync(join(ctx.project, artifact))) ===
-        sha256(readFileSync(output)),
-    exit: result.status,
-  };
+  let pass = false;
+  if (result.status === 0)
+    try {
+      const delivered = deliveredBytes(ctx, artifact);
+      pass =
+        readFileSync(output).equals(delivered) &&
+        (await parsePdf(delivered)).valid;
+    } catch {}
+  return { pass, exit: result.status };
 }
 // The judge receives delivered files from the top level of drawings/.
 export async function findRegeneratedView(ctx, expected) {
-  const drawings = join(ctx.project, "drawings");
-  if (!lstatSync(drawings, { throwIfNoEntry: false })?.isDirectory())
+  const source = projectReader(ctx.project);
+  let pdfs;
+  try {
+    pdfs = source
+      .list("drawings")
+      .filter((name) => name.endsWith(".pdf"))
+      .sort();
+  } catch {
     return null;
-  const pdfs = readdirSync(drawings, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".pdf"))
-    .map((entry) => `drawings/${entry.name}`)
-    .sort();
-  for (const artifact of pdfs) {
+  } finally {
+    source.close();
+  }
+  for (const name of pdfs) {
+    const artifact = `drawings/${name}`;
     if ((await regenerateView(ctx, artifact, null, expected)).pass)
       return artifact;
   }
@@ -241,14 +298,14 @@ export async function regeneratePacket(
       output = `${prefix}.${ext}`;
     const fallback = ["packet", "--input", request, "-o", artifact];
     const command = commandFor(ctx, artifact, fallback);
-    commands[ext] = command;
+    commands[ext] = command.argv;
     const mapped = remap(command, ctx, output);
     if (!mapped) {
       valid = false;
       continue;
     }
     const result = cli(clean, ...mapped);
-    if (result.status !== 0 || !existsSync(join(ctx.project, artifact))) {
+    if (result.status !== 0) {
       valid = false;
       continue;
     }
@@ -264,13 +321,12 @@ export async function comparePacketArtifacts(
   try {
     for (const ext of ["json", "pdf", "html"]) {
       const output = `${prefix}.${ext}`,
-        artifact = join(ctx.project, `drawings/${name}.${ext}`);
+        artifact = deliveredBytes(ctx, `drawings/${name}.${ext}`);
       if (ext === "json") {
-        if (canonical(read(artifact)) !== canonical(read(output)))
+        if (canonical(JSON.parse(artifact)) !== canonical(read(output)))
           return { pass: false };
       } else {
-        if (!readFileSync(output).equals(readFileSync(artifact)))
-          return { pass: false };
+        if (!readFileSync(output).equals(artifact)) return { pass: false };
         if (ext === "pdf" && !(await pdf(output))) return { pass: false };
       }
     }

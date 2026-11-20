@@ -1,16 +1,7 @@
 import assert from "node:assert/strict";
 import { captureProcess } from "./process.mjs";
-import {
-  readFileSync,
-  writeFileSync,
-  renameSync,
-  openSync,
-  closeSync,
-  fsyncSync,
-  existsSync,
-} from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve, join } from "node:path";
-import { sha256 } from "./snapshot.mjs";
 export const credentialKeys = [
   "ANTHROPIC_API_KEY",
   "ANTHROPIC_AUTH_TOKEN",
@@ -43,39 +34,14 @@ export function validateAuth(bytes) {
   return value;
 }
 export function seedCodexAuth(env, source) {
-  if (!source) return null;
-  const path = resolve(source),
-    bytes = readFileSync(path);
+  if (!source) return false;
+  const bytes = readFileSync(resolve(source));
   validateAuth(bytes);
   writeFileSync(join(env.CODEX_HOME, "auth.json"), bytes, {
     mode: 0o600,
     flag: "wx",
   });
-  return { path, hash: sha256(bytes) };
-}
-export function refreshCodexAuth(seed, env) {
-  if (!seed) return { changed: false };
-  const path = join(env.CODEX_HOME, "auth.json");
-  if (!existsSync(path)) return { changed: false };
-  const bytes = readFileSync(path);
-  validateAuth(bytes);
-  if (sha256(bytes) === seed.hash) return { changed: false };
-  assert(
-    sha256(readFileSync(seed.path)) === seed.hash,
-    "Auth write-back conflict; original changed during run",
-  );
-  const backup = seed.path + `.backup-${Date.now()}-${process.pid}`;
-  writeFileSync(backup, readFileSync(seed.path), { mode: 0o600, flag: "wx" });
-  const temporary = seed.path + `.tmp-${process.pid}-${Date.now()}`;
-  const fd = openSync(temporary, "wx", 0o600);
-  try {
-    writeFileSync(fd, bytes);
-    fsyncSync(fd);
-  } finally {
-    closeSync(fd);
-  }
-  renameSync(temporary, seed.path);
-  return { changed: true, backupCreated: true };
+  return true;
 }
 export function secretValues(env) {
   const values = credentialKeys.map((key) => env[key]).filter(Boolean);

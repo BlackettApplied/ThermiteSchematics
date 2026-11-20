@@ -25,8 +25,8 @@ import { sha256 } from "./snapshot.mjs";
 // Race hooks run between the broker's checks and its reads or writes.
 // - A write race runs `swap` once, just before the first write to a matching
 //   path.
-// - A read race acts like an agent toggling a link: every realpath check of
-//   `path` sees the project entry, and the link is back right after it.
+// - A read race replaces an input after the reader checks its pinned root
+//   and before it opens the descendant.
 const race = vi.hoisted(() => {
   const state = { pending: null, swapped: false, fired: 0, fds: new Map() };
   const matches = (op, path) =>
@@ -337,6 +337,22 @@ if (process.platform !== "win32") {
     ).rejects.toThrow("visual-captures must not exist");
   });
 
+  it("leaves the replacement project alone during broker cleanup", async () => {
+    const { project, evidence, outside } = fixture();
+    const stop = await visualBroker({ visualCapture: true }, project, evidence);
+    const original = project + "-original";
+    const replacementLink = join(outside, "visual-captures");
+    try {
+      renameSync(project, original);
+      link(outside, project);
+      link(join(evidence, "visual-captures"), replacementLink);
+    } finally {
+      await stop();
+    }
+    expect(lstatSync(replacementLink).isSymbolicLink()).toBe(true);
+    expect(existsSync(join(original, "visual-captures"))).toBe(false);
+  });
+
   // M1: the receipt is written only after every PNG matches it.
   it("publishes an error when an earlier PNG changes before the receipt", async () => {
     const { project, evidence, link } = fixture();
@@ -442,7 +458,7 @@ if (process.platform !== "win32") {
         entry === "drawings" ? paths.outside : join(paths.outside, entry);
       race.arm(
         "read",
-        join(paths.project, input),
+        paths.project,
         ...toggle(join(paths.project, entry), target, linkTo),
       );
       const result = await captureHtml(
@@ -473,7 +489,7 @@ if (process.platform !== "win32") {
     hookScreenshots();
     race.arm(
       "read",
-      frame,
+      paths.project,
       ...toggle(frame, join(paths.outside, "page.html"), fileLink),
     );
     const result = await captureHtml(

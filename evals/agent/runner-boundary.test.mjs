@@ -1,7 +1,7 @@
 // The harness reads and runs things after a sandboxed agent exits, with the
 // harness user's privileges. None of it may follow or execute what the agent
 // left in its writable roots.
-import { it, expect } from "vitest";
+import { it, expect, vi } from "vitest";
 import { execFileSync } from "node:child_process";
 import {
   chmodSync,
@@ -10,6 +10,7 @@ import {
   mkdirSync,
   mkdtempSync,
   readFileSync,
+  readdirSync,
   realpathSync,
   renameSync,
   rmSync,
@@ -27,6 +28,7 @@ import {
   runOne,
   selectedDiff,
 } from "./run.mjs";
+import { libraryTypes } from "./source-files.mjs";
 import { projectReader } from "./capture-files.mjs";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
@@ -68,6 +70,255 @@ function fixture(work, task, files) {
 }
 const marker = (path) =>
   `import{writeFileSync as mark}from"node:fs";mark(${JSON.stringify(path)},"ran");`;
+
+it.each(["invalid", "valid"])(
+  "discards %s run-local Codex auth after the agent exits",
+  async (replacement) => {
+    if (!confined) return;
+    const work = temporary("eval-auth-boundary-");
+    const operatorAuth = join(work, "operator.json");
+    const original = JSON.stringify({
+      OPENAI_API_KEY: "synthetic-operator-key",
+    });
+    try {
+      writeFileSync(operatorAuth, original, { mode: 0o600 });
+      writeFileSync(
+        join(work, "codex"),
+        `#!${process.execPath}
+import { join } from "node:path";
+import { writeFileSync } from "node:fs";
+switch (process.argv[2]) {
+  case "--version": console.log("codex-cli 0.164.0"); break;
+  case "login": break;
+  case "exec":
+    writeFileSync(join(process.env.CODEX_HOME, "auth.json"),
+      ${JSON.stringify(
+        replacement === "valid"
+          ? JSON.stringify({ OPENAI_API_KEY: "synthetic-run-key" })
+          : "invalid fixture",
+      )});
+    console.log(JSON.stringify({type:"item.completed",item:{type:"agent_message",text:"Fixture complete"}}));
+    console.log(JSON.stringify({type:"turn.completed",usage:{input_tokens:0,output_tokens:0}}));
+}
+`,
+        { mode: 0o700 },
+      );
+      vi.stubEnv("PATH", work + ":" + process.env.PATH);
+      const { taskDir, context } = fixture(
+        work,
+        { id: "disposable-auth" },
+        {
+          "check.mjs": "export default () => ({ pass: true })",
+        },
+      );
+      const evidence = join(work, "evidence");
+      const result = await runOne({
+        taskDir,
+        prepared: context,
+        evidence,
+        agent: "codex",
+        codexAuth: operatorAuth,
+      });
+      expect(result.status).toBe("complete");
+      expect(readFileSync(operatorAuth, "utf8") === original).toBe(true);
+      expect(result).not.toHaveProperty("authRefresh");
+    } finally {
+      vi.unstubAllEnvs();
+      rmSync(work, { recursive: true, force: true });
+    }
+  },
+  20000,
+);
+
+it.each([false, true])(
+  "confines audit staging and archival when project root is lost: %s",
+  async (loseRoot) => {
+    if (!confined) return;
+    const work = temporary("eval-audit-boundary-");
+    try {
+      const outside = join(work, "outside");
+      mkdirSync(outside);
+      const sentinels = {
+        "shim.jsonl": "",
+        "shim-errors.jsonl": "{}\n",
+        "shim.jsonl.state.json": "{}",
+        "outside.txt": "synthetic outside content",
+      };
+      for (const [name, data] of Object.entries(sentinels))
+        writeFileSync(join(outside, name), data);
+      const { taskDir, context } = fixture(
+        work,
+        { id: "confined-audit" },
+        {
+          "reference.mjs": `
+          import { renameSync, symlinkSync, rmSync } from "node:fs";
+          import { basename, join } from "node:path";
+          export default ({project, env}) => {
+            const outside = ${JSON.stringify(outside)};
+            for (const path of [env.THERMITE_EVAL_LOG, env.THERMITE_EVAL_ERRORS,
+              env.THERMITE_EVAL_LOG + ".state.json"]) {
+              rmSync(path, {force:true});
+              symlinkSync(join(outside, basename(path)), path);
+            }
+            symlinkSync(join(outside, "outside.txt"), join(project, "outside.txt"));
+            if (${loseRoot}) {
+              renameSync(project, project + "-moved");
+              symlinkSync(outside, project);
+            }
+            return "Audit fixture complete";
+          }
+        `,
+          "check.mjs": "export default () => ({ pass: true })",
+        },
+      );
+      const evidence = join(work, "evidence");
+      const result = await runOne({ taskDir, prepared: context, evidence });
+      expect(result.status).toBe("infrastructure-failure");
+      for (const [name, data] of Object.entries(sentinels))
+        expect(readFileSync(join(outside, name), "utf8")).toBe(data);
+      expect(readdirSync(evidence)).not.toContain("outside.txt");
+      if (loseRoot) expect(readdirSync(evidence)).not.toContain("project");
+      else {
+        expect(readdirSync(join(evidence, "project"))).not.toContain(
+          "outside.txt",
+        );
+        expect(result.shimErrors).toContainEqual({
+          kind: "shim-error",
+          stage: "audit-input",
+          file: "shim.jsonl",
+        });
+      }
+    } finally {
+      rmSync(work, { recursive: true, force: true });
+    }
+  },
+  20000,
+);
+
+it("libraryTypes confines manifest and source resolution", () => {
+  if (!confined) return;
+  const work = temporary("eval-library-boundary-");
+  try {
+    const project = join(work, "project"),
+      outside = join(work, "outside");
+    for (const path of [outside, join(project, "libraries", "local")])
+      mkdirSync(path, { recursive: true });
+    writeFileSync(
+      join(outside, "library.json"),
+      JSON.stringify({ sources: ["types.json"] }),
+    );
+    writeFileSync(
+      join(outside, "types.json"),
+      JSON.stringify({ types: [{ id: "outside" }] }),
+    );
+    const local = join(project, "libraries", "local");
+    writeFileSync(
+      join(local, "library.json"),
+      JSON.stringify({ sources: ["*.json"] }),
+    );
+    writeFileSync(
+      join(local, "types.json"),
+      JSON.stringify({ types: [{ id: "local" }] }),
+    );
+    symlinkSync(outside, join(project, "linked"));
+    symlinkSync(join(outside, "types.json"), join(local, "linked.json"));
+    writeFileSync(
+      join(project, "system.json"),
+      JSON.stringify({
+        libraries: [
+          { name: "local" },
+          { name: "linked", path: "linked" },
+          { name: "escape", path: "../outside" },
+          { name: "absolute", path: outside },
+        ],
+      }),
+    );
+    expect(libraryTypes(project)).toEqual([{ id: "local", library: "local" }]);
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
+});
+
+it("privileged validation and checking use the confined project snapshot", async () => {
+  if (!confined) return;
+  const work = temporary("eval-compiler-boundary-");
+  try {
+    const lock = "electrical-system.lock.json";
+    const outside = join(work, "outside-lock.json");
+    const { taskDir, context } = fixture(
+      work,
+      { id: "confined-validation" },
+      {
+        "reference.mjs": `
+        import { renameSync, symlinkSync } from "node:fs";
+        import { join } from "node:path";
+        export default ({project}) => {
+          const path = join(project, ${JSON.stringify(lock)});
+          renameSync(path, ${JSON.stringify(outside)});
+          symlinkSync(${JSON.stringify(outside)}, path);
+          return "Compiler fixture complete";
+        }
+      `,
+        "check.mjs": `
+        import { existsSync } from "node:fs";
+        import { join } from "node:path";
+        import { cli } from ${JSON.stringify(moduleURL("evals/agent/task-support.mjs"))};
+        export default ctx => ({
+          pass: !existsSync(join(ctx.project, ${JSON.stringify(lock)}))
+            && ctx.validationDiagnostics.some(d => d.code === "E105")
+            && cli(ctx, "validate", ".", "--json").status === 1,
+        });
+      `,
+      },
+    );
+    const evidence = join(work, "evidence");
+    const result = await runOne({ taskDir, prepared: context, evidence });
+    expect(result.status).toBe("complete");
+    expect(result.outcome.pass).toBe(true);
+    expect(existsSync(join(evidence, "project", lock))).toBe(false);
+  } finally {
+    rmSync(work, { recursive: true, force: true });
+  }
+}, 20000);
+
+it.each(["library", "glob"])(
+  "privileged validation refuses a %s path outside the snapshot",
+  async (kind) => {
+    if (!confined) return;
+    const work = temporary("eval-manifest-boundary-");
+    try {
+      const { taskDir, context } = fixture(
+        work,
+        { id: "confined-paths" },
+        {
+          "reference.mjs": `
+          import { readFileSync, writeFileSync } from "node:fs";
+          import { join } from "node:path";
+          export default ({project}) => {
+            const path = join(project, "system.json");
+            const manifest = JSON.parse(readFileSync(path));
+            if (${JSON.stringify(kind)} === "library")
+              manifest.libraries[0].path = "../outside";
+            else manifest.sources.push("{devices/equipment.json,../outside/*.json}");
+            writeFileSync(path, JSON.stringify(manifest));
+            return "Path fixture complete";
+          }
+        `,
+          "check.mjs": "export default () => ({ pass: true })",
+        },
+      );
+      const evidence = join(work, "evidence");
+      const result = await runOne({ taskDir, prepared: context, evidence });
+      expect(result.status).toBe("infrastructure-failure");
+      expect(result.infrastructureError).toContain("leaves the eval snapshot");
+      expect(existsSync(join(evidence, "validate.stdout"))).toBe(false);
+      expect(existsSync(join(evidence, "project", "system.json"))).toBe(true);
+    } finally {
+      rmSync(work, { recursive: true, force: true });
+    }
+  },
+  20000,
+);
 
 it("judge packets refuse linked artifacts and traversal instead of following them", () => {
   const work = temporary("eval-judge-links-");

@@ -2,7 +2,8 @@
 // downstream EPIPE reaches the CLI itself, without an intermediate output pipe.
 import { writeFileSync } from "node:fs";
 import { secretValues, redactSecrets } from "./eval-auth.mjs";
-const out = [],
+const values = secretValues(process.env),
+  out = [],
   err = [];
 for (const [stream, buffers] of [
   [process.stdout, out],
@@ -25,17 +26,17 @@ for (const [stream, buffers] of [
 }
 process.on("exit", () => {
   try {
-    const values = secretValues(process.env),
-      stdout = Buffer.concat(out),
+    const stdout = Buffer.concat(out),
       stderr = Buffer.concat(err);
     const sanitize = (bytes) =>
       values.some((v) => bytes.includes(Buffer.from(v)))
         ? Buffer.from(redactSecrets(bytes.toString("utf8"), values))
         : bytes;
-    writeFileSync(process.env.THERMITE_EVAL_CAPTURE + ".out", sanitize(stdout));
-    writeFileSync(process.env.THERMITE_EVAL_CAPTURE + ".err", sanitize(stderr));
+    // The shim checked and opened these descriptors before launch.
+    writeFileSync(3, sanitize(stdout));
+    writeFileSync(4, sanitize(stderr));
     writeFileSync(
-      process.env.THERMITE_EVAL_CAPTURE + ".counts",
+      5,
       JSON.stringify({ stdout: stdout.length, stderr: stderr.length }),
     );
   } catch {

@@ -205,7 +205,8 @@ export async function visualBroker(task, project, evidence) {
   let source, timer, pending, failure;
   const cleanup = () => {
     try {
-      if (linkedOutputs(link, outputs)) unlinkSync(link);
+      if (source) source.unlinkLink("visual-captures", outputs);
+      else if (linkedOutputs(link, outputs)) unlinkSync(link);
     } finally {
       source?.close();
     }

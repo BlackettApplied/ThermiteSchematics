@@ -12,37 +12,45 @@ export const sha256 = (bytes) =>
   createHash("sha256").update(bytes).digest("hex");
 export function snapshot(
   root,
-  { documents = true, includeGit = !documents } = {},
+  { documents = true, includeGit = !documents, reader } = {},
 ) {
   const files = {},
     docs = {},
     invalidJsonFiles = [];
   const walk = (dir, prefix = "") => {
-    for (const name of readdirSync(dir).sort()) {
+    for (const name of (reader
+      ? reader.list(prefix.slice(0, -1))
+      : readdirSync(dir)
+    ).sort()) {
       if (name === ".git" && !includeGit) continue;
       const path = join(dir, name),
-        key = prefix + name,
-        stat = lstatSync(path);
-      if (stat.isSymbolicLink())
-        files[key] = sha256("symlink:" + readlinkSync(path));
-      else if (stat.isDirectory()) {
-        files[key + "/"] = "directory";
-        walk(path, key + "/");
-      } else if (stat.isFile()) {
-        const bytes = readFileSync(path);
-        files[key] = sha256(bytes);
-        if (documents && name.endsWith(".json")) {
-          try {
-            docs[key] = JSON.parse(bytes);
-          } catch {
-            docs[key] = { $invalidJSON: true };
-            invalidJsonFiles.push(key);
+        key = prefix + name;
+      try {
+        const stat = reader ? reader.inspect(key) : lstatSync(path);
+        if (stat.isSymbolicLink())
+          files[key] = sha256("symlink:" + readlinkSync(path));
+        else if (stat.isDirectory()) {
+          files[key + "/"] = "directory";
+          walk(path, key + "/");
+        } else if (stat.isFile()) {
+          const bytes = reader ? reader.read(key) : readFileSync(path);
+          files[key] = sha256(bytes);
+          if (documents && name.endsWith(".json")) {
+            try {
+              docs[key] = JSON.parse(bytes);
+            } catch {
+              docs[key] = { $invalidJSON: true };
+              invalidJsonFiles.push(key);
+            }
           }
-        }
-      } else files[key] = "special:" + stat.mode;
+        } else files[key] = "special:" + stat.mode;
+      } catch (error) {
+        if (!reader) throw error;
+        files[key] = "refused";
+      }
     }
   };
-  if (root && existsSync(root)) walk(root);
+  if (reader || (root && existsSync(root))) walk(root);
   return {
     files,
     documents: docs,

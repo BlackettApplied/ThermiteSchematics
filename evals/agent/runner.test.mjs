@@ -114,6 +114,7 @@ it("reference pipeline rechecks the kept workspace without another agent attempt
       exit: 1,
     });
     expect(original).toMatchObject({
+      evalVersion: "1.20.5",
       model: null,
       effort: null,
       modelPin: null,
@@ -155,6 +156,7 @@ it("reference pipeline rechecks the kept workspace without another agent attempt
     });
     expect(result).toMatchObject({
       attempt: 1,
+      evalVersion: "1.20.5",
       checkerRechecks: 1,
       status: "complete",
       workspace: null,

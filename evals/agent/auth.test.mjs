@@ -2,9 +2,7 @@ import { it, expect } from "vitest";
 import {
   mkdtempSync,
   mkdirSync,
-  readFileSync,
   writeFileSync,
-  readdirSync,
   rmSync,
   existsSync,
 } from "node:fs";
@@ -13,7 +11,6 @@ import { delimiter, join } from "node:path";
 import { freshEnvironment, assertIsolation } from "./launch.mjs";
 import {
   seedCodexAuth,
-  refreshCodexAuth,
   preflightAuth,
   secretValues,
   redactSecrets,
@@ -53,7 +50,7 @@ it("auth allowlist preserves CODEX_API_KEY, excludes config, and removes checkou
     rmSync(w.root, { recursive: true, force: true });
   }
 });
-it("auth-only CODEX_HOME permits exactly auth.json and atomically backs up refreshes", () => {
+it("auth-only CODEX_HOME permits exactly auth.json", () => {
   const w = fixture();
   try {
     const path = join(w.root, "original.json"),
@@ -65,7 +62,7 @@ it("auth-only CODEX_HOME permits exactly auth.json and atomically backs up refre
         },
       });
     writeFileSync(path, before);
-    const seed = seedCodexAuth(w.env, path);
+    expect(seedCodexAuth(w.env, path)).toBe(true);
     expect(
       assertIsolation(w.project, w.env, { codexAuth: true }).asserted,
     ).toBe(true);
@@ -76,30 +73,11 @@ it("auth-only CODEX_HOME permits exactly auth.json and atomically backs up refre
     expect(() =>
       assertIsolation(w.project, w.env, { codexAuth: true }),
     ).toThrow();
-    rmSync(join(w.env.CODEX_HOME, "config.toml"));
-    const after = JSON.stringify({
-      auth_mode: "chatgpt",
-      tokens: {
-        access_token: secret + "-refreshed",
-        refresh_token: "synthetic-refresh-token",
-      },
-    });
-    writeFileSync(join(w.env.CODEX_HOME, "auth.json"), after);
-    expect(refreshCodexAuth(seed, w.env)).toEqual({
-      changed: true,
-      backupCreated: true,
-    });
-    expect(readFileSync(path, "utf8")).toBe(after);
-    const backup = readdirSync(w.root).find((f) =>
-      f.startsWith("original.json.backup-"),
-    );
-    expect(readFileSync(join(w.root, backup), "utf8")).toBe(before);
-    expect(readdirSync(w.root).some((f) => f.includes(".tmp-"))).toBe(false);
   } finally {
     rmSync(w.root, { recursive: true, force: true });
   }
 });
-it("auth rejects instruction data and concurrent write-back changes", () => {
+it("auth rejects instruction data", () => {
   const w = fixture();
   try {
     const path = join(w.root, "auth.json");
@@ -108,14 +86,6 @@ it("auth rejects instruction data and concurrent write-back changes", () => {
       JSON.stringify({ OPENAI_API_KEY: secret, instructions: "not auth" }),
     );
     expect(() => seedCodexAuth(w.env, path)).toThrow(/non-auth/);
-    writeFileSync(path, JSON.stringify({ OPENAI_API_KEY: secret }));
-    const seed = seedCodexAuth(w.env, path);
-    writeFileSync(path, JSON.stringify({ OPENAI_API_KEY: secret + "other" }));
-    writeFileSync(
-      join(w.env.CODEX_HOME, "auth.json"),
-      JSON.stringify({ OPENAI_API_KEY: secret + "refresh" }),
-    );
-    expect(() => refreshCodexAuth(seed, w.env)).toThrow(/conflict/);
   } finally {
     rmSync(w.root, { recursive: true, force: true });
   }

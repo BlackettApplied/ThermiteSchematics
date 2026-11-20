@@ -23,7 +23,7 @@ import {
   device,
   wire,
   ep,
-  pdf,
+  deliveredPdf,
   docView,
   view,
   packet,
@@ -340,7 +340,7 @@ export async function check(id, ctx) {
     const regenerated = await regeneratePacket(ctx);
     const p = regenerated.packet ?? {};
     checks.artifacts = regenerated.pass;
-    checks.pdf = await pdf(join(ctx.project, "drawings/packet.pdf"));
+    checks.pdf = await deliveredPdf(ctx, "drawings/packet.pdf");
     checks.sheets = p.sheets?.length > 0;
     if (id === "T05") {
       checks.terminals = p.sheets?.some((s) => s.view?.kind === "terminals");

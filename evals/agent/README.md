@@ -1,4 +1,4 @@
-# Fresh-agent evaluator (E2 v1.20.4)
+# Fresh-agent evaluator (E2 v1.20.5)
 
 This kit measures task outcomes, workflow violations and context cost. It ports
 the GI prototype shim/scorer/T02 checker. It does not launch models in `check`.
@@ -24,7 +24,7 @@ setup, substitutes the guide, and commits a local Git baseline. It renames the
 launcher to `thermite.real.mjs` and installs the shim. After the agent/reference,
 it flushes a shim `validate`, checks independently with the real CLI, scores and
 copies evidence out. Per-run workspaces are removed after success or failure;
-Only `--keep` retains ordinary workspaces, including command-only runs. An unresolved explicit checker infrastructure error retains its workspace for a checker-only retry; its isolated auth is removed unless `--keep` was requested. `--keep` with keys or `--codex-auth` retains credential-bearing auth.json (0600) in that private workspace. Reference mode uses the
+Only `--keep` retains ordinary workspaces, including command-only runs. An unresolved explicit checker infrastructure error retains its workspace for a checker-only retry; its isolated auth is removed unless `--keep` was requested. `--keep` can retain a disposable, credential-bearing auth.json in the run workspace. Reference mode uses the
 same pipeline without a model or auth requirement.
 
 ## Authentication and command inspection
@@ -82,10 +82,10 @@ bun evals/agent/run.mjs --agent codex --codex-auth "$HOME/.codex/auth.json" --ta
 `--codex-auth` copies **only** `auth.json`; config, memory and instructions are
 rejected. This explicit option suppresses inherited Codex API keys so billing
 follows the supplied auth file. A ChatGPT-login file uses that account's login
-route; an API-key auth file uses API billing. If the CLI refreshes credentials,
-the runner backs up the original and atomically writes the refreshed file back.
-It refuses to overwrite a concurrently changed original; that becomes an infra
-failure. Default concurrency is 1, avoiding shared-token refresh races.
+route; an API-key auth file uses API billing. The supplied file remains the
+operator's authoritative copy. The runner gathers redaction values before
+launch and treats the isolated `auth.json` as disposable. Refresh the
+authoritative credentials through the operator's Codex installation.
 
 `--check-auth` checks local credential presence/readiness, not provider validity; dummy tokens can pass. Invalid tokens surface as structured provider-auth failures on a live run. Codex warns that temporary CODEX_HOME cannot install PATH helper aliases; verify apply_patch availability in the first live smoke run (no model was launched here).
 
@@ -400,7 +400,7 @@ names. A reference run evaluates the task infrastructure without a model.
 
 Contributor checkers run the delivered checkout's tests and build, which is
 agent-written code, with the harness user's privileges. This is a deliberate
-exception to the post-agent boundary; see E2 1.20.4.
+exception to the post-agent boundary; see E2 1.20.5.
 
 - R01 creates a linked Git worktree, runs `bun install --frozen-lockfile` in that
   worktree, runs `bun scripts/test.mjs packages/query/test/views-and-ordering.test.ts`,
@@ -1026,3 +1026,39 @@ Contributor-task checkers are a deliberate exception. They run the delivered
 checkout's own tests and build, which is agent-written code, with the harness
 user's privileges. Holding them to the same boundary would need a sandbox for
 the checker itself.
+
+## E2 1.20.5
+
+The harness pins the audit, project and runtime roots before launch. The
+post-run flush reads the shim log, error log and state through the audit
+descriptor and stages their bytes in the harness home. Refused inputs produce
+`audit-input` errors. The shim locks the audit directory descriptor. Process
+exit releases the lock. Audit writes use no-follow opens of existing regular
+files, and the CLI observer receives the capture files as open descriptors.
+
+The project archive contains the regular files copied through the pinned
+project root. The copy excludes Git metadata, links, special files and
+unreadable entries. Scored run manifests list refusals in `projectRefusals`.
+The runner uses this protected snapshot for validation, final file state,
+source diffs and electrical task checkers. Source and library lookups resolve
+through the confined reader, and manifest dependency paths and expanded glob
+bases must stay within the snapshot before the compiler runs. User-facing
+Thermite CLI and compiler behavior are unchanged.
+
+Checker regeneration copies the captured project into checker evidence.
+It reads delivered artifacts through the confined reader and rebuilds view
+and packet invocations from supported options in the staged audit. It resolves
+request files within the checker copy or uses request bytes captured in the
+audit. The checker chooses the project root and output paths.
+
+A recheck captures the kept project again and verifies its file hash and
+refusals against the original receipts. It reuses the protected audit and the
+original post-run runtime hash. Runs recorded before 1.20.5 cannot be
+rechecked. Workspace cleanup removes entries relative to its pinned directory
+descriptor. A cleanup failure records the workspace and `cleanupError`.
+
+The SEC1 sandbox model still applies. Sandbox enforcement comes from Codex.
+Contributor checkers retain their separate live checkout behavior, including
+Git worktree inspection and running submitted code. A checker sandbox and a
+confined representation of Git worktree and install receipts are separate
+work needed to extend this boundary to those tasks.

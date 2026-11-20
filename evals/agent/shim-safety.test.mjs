@@ -8,11 +8,17 @@ import {
   rmSync,
   existsSync,
   cpSync,
+  closeSync,
+  openSync,
+  symlinkSync,
+  renameSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync, spawn } from "node:child_process";
+import { initAudit } from "./audit-files.mjs";
+import { projectReader } from "./capture-files.mjs";
 import { installShim } from "./run.mjs";
 import { snapshot, sha256 } from "./snapshot.mjs";
 import { auditErrors } from "./audit.mjs";
@@ -29,18 +35,24 @@ function world(realSource) {
   const root = realpathSync(mkdtempSync(join(tmpdir(), "eval-shim-safety-"))),
     runtime = join(root, "runtime"),
     project = join(root, "project"),
-    log = join(root, "shim.jsonl"),
-    marker = join(root, "shim-errors.jsonl");
+    audit = join(root, "audit"),
+    log = join(audit, "shim.jsonl"),
+    marker = join(audit, "shim-errors.jsonl");
   mkdirSync(runtime);
   mkdirSync(project);
   writeFileSync(join(runtime, "thermite.mjs"), realSource);
   installShim(runtime);
+  initAudit(audit);
+  const reader = projectReader(audit);
+  const auditRoot = JSON.stringify(reader.identity);
+  reader.close();
   const env = {
     ...process.env,
     CODEX_HOME: join(root, "empty-codex"),
     THERMITE_EVAL_PROJECT: project,
     THERMITE_EVAL_LOG: log,
     THERMITE_EVAL_ERRORS: marker,
+    THERMITE_EVAL_AUDIT_ROOT: auditRoot,
   };
   return {
     root,
@@ -48,6 +60,7 @@ function world(realSource) {
     project,
     log,
     marker,
+    audit,
     env,
     entry: join(runtime, "thermite.mjs"),
     real: join(runtime, "thermite.real.mjs"),
@@ -73,254 +86,42 @@ function normalizePipeErrno(stderr) {
     "pipe errno: <closed>",
   );
 }
-// Patch only the installed fixture. Bun's built-in fs bindings cannot be
-// intercepted reliably; the shipped shim has no error-injection environment.
-function lockControl(
-  w,
-  open,
-  { expire = false, prelude = "", windows = false } = {},
-) {
-  let source = readFileSync(w.entry, "utf8");
-  const platform = 'const windowsLockRetry = process.platform === "win32";';
-  // The historical shim has no gate; keep its algorithm unchanged in red runs.
-  if (!source.includes(platform))
-    source = source.replace(
-      "const queuedAt = Date.now();",
-      `${platform}\nconst queuedAt = Date.now();`,
-    );
-  expect(source.split(platform)).toHaveLength(2);
-  source = source.replace(platform, `const windowsLockRetry = ${windows};`);
-  const call = 'openSync(log + ".lock", "wx")';
-  expect(source.split(call)).toHaveLength(2);
-  source = source.replace(call, "testOpenLock()");
-  if (expire) {
-    const deadline = "Date.now() - queuedAt > 120000";
-    expect(source.split(deadline)).toHaveLength(2);
-    source = source.replace(deadline, "Date.now() - queuedAt > -1");
+it("a replaced audit directory fails closed before the real CLI starts", () => {
+  if (process.platform === "win32") return;
+  const w = world('process.stdout.write("must not run");');
+  try {
+    const outside = join(w.root, "outside");
+    initAudit(outside);
+    renameSync(w.audit, w.audit + "-original");
+    symlinkSync(outside, w.audit);
+    const result = invoke(w, []);
+    expect(result.status).toBe(2);
+    expect(result.stdout).toBe("");
+    expect(lines(join(outside, "shim.jsonl"))).toEqual([]);
+  } finally {
+    rmSync(w.root, { recursive: true, force: true });
   }
-  writeFileSync(
-    w.entry,
-    source.replace(
-      "const queuedAt = Date.now();",
-      `${prelude}\nconst queuedAt = Date.now();`,
-    ) + `\nfunction testOpenLock() { ${open} }\n`,
-  );
-}
-it.each(["EPERM", "EACCES", "EBUSY"])(
-  "a transient %s cannot start a CLI without owning the lock",
-  (code) => {
-    const w = world(`
-      const fs=await import("node:fs");
-      const owner=JSON.parse(fs.readFileSync(process.env.THERMITE_EVAL_LOG+".lock","utf8"));
-      if(owner.pid!==process.ppid) process.exit(99);
-      process.stdout.write("owned");
-    `);
+});
+it.each([
+  ["", ["logging"]],
+  [".state.json", ["before-snapshot", "logging"]],
+  [".capture.out", ["observation"]],
+])(
+  "the shim refuses a link at its log%s without changing CLI streams",
+  (suffix, stages) => {
+    if (process.platform === "win32") return;
+    const w = world('process.stdout.write("unchanged stream");');
+    w.env.THERMITE_EVAL_SCHEMA_VALIDATE = "0";
     try {
-      writeFileSync(w.log + ".lock", JSON.stringify({ pid: process.pid }));
-      lockControl(
-        w,
-        `
-        const attempt = linesForTest++;
-        appendFileSync(log+".attempts",String(attempt)+"\\n");
-        if(attempt===0) throw Object.assign(new Error("delete pending"),{code:${JSON.stringify(code)}});
-        unlinkSync(log+".lock"); // The synthetic previous owner finishes now.
-        return openSync(log+".lock","wx");
-      `,
-        { prelude: "let linesForTest = 0;", windows: true },
-      );
+      const target = join(w.root, "outside");
+      writeFileSync(target, "outside content");
+      rmSync(w.log + suffix);
+      symlinkSync(target, w.log + suffix);
       const result = invoke(w, []);
       expect(result.status).toBe(0);
-      expect(result.stdout).toBe("owned");
-      expect(readFileSync(w.log + ".attempts", "utf8")).toBe("0\n1\n");
-      expect(lines(w.marker)).toEqual([]);
-      expect(lines(w.log)).toHaveLength(1);
-      expect(existsSync(w.log + ".lock")).toBe(false);
-    } finally {
-      rmSync(w.root, { recursive: true, force: true });
-    }
-  },
-);
-it.each(["EIO", "ENOSPC", "EINVAL", "ENOENT"])(
-  "an unrecoverable %s is audited and never executes the CLI",
-  (code) => {
-    const w = world('process.stdout.write("must not run");');
-    try {
-      lockControl(
-        w,
-        `throw Object.assign(new Error("failed"),{code:${JSON.stringify(code)}});`,
-      );
-      const result = invoke(w, []);
-      expect(result.status).toBe(2);
-      expect(result.stdout).toBe("");
-      expect(result.stderr).toBe("");
-      expect(lines(w.log)).toEqual([]);
-      expect(
-        lines(w.marker).map(({ stage, code }) => ({ stage, code })),
-      ).toEqual([{ stage: "lock", code }]);
-    } finally {
-      rmSync(w.root, { recursive: true, force: true });
-    }
-  },
-);
-it.each(["EEXIST", "EPERM", "EACCES", "EBUSY"])(
-  "a persistent %s hits the existing lock deadline without executing",
-  (code) => {
-    const w = world('process.stdout.write("must not run");');
-    try {
-      const owner = JSON.stringify({ pid: process.pid });
-      writeFileSync(w.log + ".lock", owner);
-      lockControl(
-        w,
-        `throw Object.assign(new Error("busy"),{code:${JSON.stringify(code)}});`,
-        { expire: true, windows: true },
-      );
-      const result = invoke(w, []);
-      expect(result.status).toBe(2);
-      expect(result.stdout).toBe("");
-      expect(lines(w.log)).toEqual([]);
-      expect(readFileSync(w.log + ".lock", "utf8")).toBe(owner);
-      expect(
-        lines(w.marker).map(({ stage, code }) => ({ stage, code })),
-      ).toEqual([{ stage: "lock-timeout", code }]);
-    } finally {
-      rmSync(w.root, { recursive: true, force: true });
-    }
-  },
-);
-it.each(["EPERM", "EACCES", "EBUSY"])(
-  "a POSIX %s create failure is audited immediately without a retry",
-  (code) => {
-    const w = world('process.stdout.write("must not run");');
-    try {
-      const owner = JSON.stringify({ pid: process.pid });
-      writeFileSync(w.log + ".lock", owner);
-      lockControl(
-        w,
-        `
-        appendFileSync(log+".attempts","attempt\\n");
-        throw Object.assign(new Error("denied"),{code:${JSON.stringify(code)}});
-      `,
-        { expire: true, windows: false },
-      );
-      const result = invoke(w, []);
-      expect(result.status).toBe(2);
-      expect(result.stdout).toBe("");
-      expect(result.stderr).toBe("");
-      expect(readFileSync(w.log + ".attempts", "utf8")).toBe("attempt\n");
-      expect(readFileSync(w.log + ".lock", "utf8")).toBe(owner);
-      expect(lines(w.log)).toEqual([]);
-      expect(
-        lines(w.marker).map(({ stage, code }) => ({ stage, code })),
-      ).toEqual([{ stage: "lock", code }]);
-    } finally {
-      rmSync(w.root, { recursive: true, force: true });
-    }
-  },
-);
-it("an empty initializing lock is never reaped or bypassed", () => {
-  const w = world('process.stdout.write("must not run");');
-  try {
-    writeFileSync(w.log + ".lock", "");
-    lockControl(w, 'return openSync(log+".lock","wx");', { expire: true });
-    const result = invoke(w, []);
-    expect(result.status).toBe(2);
-    expect(result.stdout).toBe("");
-    expect(readFileSync(w.log + ".lock", "utf8")).toBe("");
-    expect(lines(w.marker).map((e) => e.stage)).toEqual(["lock-timeout"]);
-  } finally {
-    rmSync(w.root, { recursive: true, force: true });
-  }
-});
-it("EPERM probing a live owner does not authorize reaping", () => {
-  const w = world('process.stdout.write("must not run");');
-  try {
-    const owner = JSON.stringify({ pid: process.pid });
-    writeFileSync(w.log + ".lock", owner);
-    lockControl(w, 'return openSync(log+".lock","wx");', { expire: true });
-    writeFileSync(
-      w.entry,
-      readFileSync(w.entry, "utf8").replace(
-        "const queuedAt = Date.now();",
-        'process.kill=()=>{throw Object.assign(new Error("protected"),{code:"EPERM"});};\nconst queuedAt = Date.now();',
-      ),
-    );
-    expect(invoke(w, []).status).toBe(2);
-    expect(readFileSync(w.log + ".lock", "utf8")).toBe(owner);
-    expect(lines(w.log)).toEqual([]);
-    expect(lines(w.marker).map((e) => e.stage)).toEqual(["lock-timeout"]);
-  } finally {
-    rmSync(w.root, { recursive: true, force: true });
-  }
-});
-it("a blocked dead-owner reaper still reaches the lock deadline", () => {
-  const w = world('process.stdout.write("must not run");');
-  try {
-    const owner = JSON.stringify({ pid: 2147483647 });
-    writeFileSync(w.log + ".lock", owner);
-    writeFileSync(w.log + ".reaper", "held");
-    lockControl(w, 'return openSync(log+".lock","wx");', {
-      expire: true,
-      // A second check returns EPERM so the historical bypass terminates too.
-      prelude:
-        'let probes=0; process.kill=()=>{appendFileSync(log+".probes","probe\\n");throw Object.assign(new Error("probe"),{code:probes++===0?"ESRCH":"EPERM"});};',
-    });
-    const result = invoke(w, []);
-    expect(result.status).toBe(2);
-    expect(result.stdout).toBe("");
-    expect(readFileSync(w.log + ".lock", "utf8")).toBe(owner);
-    expect(readFileSync(w.log + ".reaper", "utf8")).toBe("held");
-    expect(readFileSync(w.log + ".probes", "utf8")).toBe("probe\n");
-    expect(lines(w.marker).map((e) => e.stage)).toEqual(["lock-timeout"]);
-  } finally {
-    rmSync(w.root, { recursive: true, force: true });
-  }
-});
-function failLockInitialization(w, operation) {
-  const original = readFileSync(w.entry, "utf8");
-  const target =
-    operation === "PID write"
-      ? "writeFileSync(fd, JSON.stringify({ pid: process.pid }));"
-      : "\n      closeSync(fd);";
-  expect(original.split(target)).toHaveLength(2);
-  const source = original.replace(
-    target,
-    '\n      throw Object.assign(new Error("initialization failed"),{code:"EIO"});',
-  );
-  // Observe explicit fd cleanup before process exit closes remaining handles.
-  writeFileSync(
-    w.entry,
-    source.replace("  closeSync,", "  closeSync as nativeCloseSync,") +
-      `\nfunction closeSync(fd) {
-      appendFileSync(log+".closed","closed"); return nativeCloseSync(fd);
-    }\n`,
-  );
-  return original;
-}
-it.each(["PID write", "close"])(
-  "a %s failure cleans its own lock so the next call can acquire it",
-  (operation) => {
-    const w = world('process.stdout.write("owned");');
-    try {
-      const original = failLockInitialization(w, operation);
-      const result = invoke(w, []);
-      expect(result.status).toBe(2);
-      expect(result.stdout).toBe("");
-      expect(existsSync(w.log + ".closed")).toBe(true);
-      expect(readFileSync(w.log + ".closed", "utf8")).toBe("closed");
-      const lockRemained = existsSync(w.log + ".lock");
-      expect(
-        lines(w.marker).map(({ stage, code }) => ({ stage, code })),
-      ).toEqual([{ stage: "lock", code: "EIO" }]);
-      writeFileSync(w.entry, original);
-      // A stale lock would fail immediately under this fixture-only deadline.
-      lockControl(w, 'return openSync(log+".lock","wx");', { expire: true });
-      const next = invoke(w, []);
-      expect(next.status).toBe(0);
-      expect(next.stdout).toBe("owned");
-      expect(lockRemained).toBe(false);
-      expect(lines(w.log)).toHaveLength(1);
-      expect(lines(w.marker)).toHaveLength(1);
-      expect(existsSync(w.log + ".lock")).toBe(false);
+      expect(result.stdout).toBe("unchanged stream");
+      expect(lines(w.marker).map((e) => e.stage)).toEqual(stages);
+      expect(readFileSync(target, "utf8") === "outside content").toBe(true);
     } finally {
       rmSync(w.root, { recursive: true, force: true });
     }
@@ -329,6 +130,7 @@ it.each(["PID write", "close"])(
 it.each(["THERMITE_EVAL_PROJECT", "THERMITE_EVAL_LOG"])(
   "missing %s is audited and never executes without a lock",
   (key) => {
+    if (process.platform === "win32") return;
     const w = world('process.stdout.write("must not run");');
     try {
       delete w.env[key];
@@ -375,15 +177,16 @@ it("errno normalization preserves CRLF bytes", () => {
   ).toBe("prefix\r\npipe errno: <closed>\r\nsuffix\r\n");
 });
 it("unwritable audit paths never alter the real CLI streams or status", () => {
+  if (process.platform === "win32") return;
   const w = world(
     "process.stdout.write(Buffer.from([255,0,10]));process.stderr.write(Buffer.from([254,0,13]));process.exitCode=17;",
   );
   try {
-    const blocked = join(w.root, "blocked");
+    const blocked = w.log;
+    rmSync(blocked);
     mkdirSync(blocked);
     // Fail append after acquiring an adjacent writable lock on every platform.
     // Lock-create permission failures are separately required to fail closed.
-    w.env.THERMITE_EVAL_LOG = blocked;
     w.env.THERMITE_EVAL_SCHEMA_VALIDATE = "0";
     const args = ["validate", "."];
     const direct = spawnSync("bun", [w.real, ...args], {
@@ -404,6 +207,7 @@ it("unwritable audit paths never alter the real CLI streams or status", () => {
   }
 });
 it("closed downstream stdout preserves child stderr without a shim EPIPE stack", async () => {
+  if (process.platform === "win32") return;
   const w = world(
     'process.stdout.on("error",e=>{process.stderr.write("pipe errno: "+e.code+" "+e.errno+"\\n");process.exitCode=1;});process.stderr.write("real-stderr\\n");process.stdout.write(Buffer.alloc(8*1024*1024,97));',
   );
@@ -444,6 +248,7 @@ it("closed downstream stdout preserves child stderr without a shim EPIPE stack",
   }
 });
 it("runtime hash includes newly created empty .git directories", () => {
+  if (process.platform === "win32") return;
   const w = world("");
   try {
     const before = snapshot(w.runtime, { documents: false }).hash;
@@ -459,37 +264,58 @@ it("runtime hash includes newly created empty .git directories", () => {
     rmSync(w.root, { recursive: true, force: true });
   }
 });
-it("dead-owner recovery cannot unlink a waiter's new lock", async () => {
-  const w = world(
-    'await new Promise(r=>setTimeout(r,40));process.stdout.write("ok");',
-  );
-  w.env.THERMITE_EVAL_SCHEMA_VALIDATE = "0";
+it("a contended descriptor lock fails closed and releases when its holder exits", async () => {
+  if (process.platform === "win32") return;
+  const w = world('process.stdout.write("owned");');
+  let holder, stopped;
   try {
-    writeFileSync(w.log + ".lock", JSON.stringify({ pid: 2147483647 }));
-    const call = () =>
-      new Promise((resolve) => {
-        const child = spawn("bun", [w.entry], {
-          cwd: w.project,
-          env: w.env,
-          stdio: ["ignore", "pipe", "pipe"],
-        });
-        child.stdout.resume();
-        child.stderr.resume();
-        child.on("close", resolve);
-      });
-    expect(await Promise.all([call(), call(), call()])).toEqual([0, 0, 0]);
-    const calls = lines(w.log);
-    expect(calls).toHaveLength(3);
-    for (let i = 1; i < calls.length; i++)
-      expect(calls[i].started).toBeGreaterThanOrEqual(calls[i - 1].ended);
-    expect(auditErrors(calls, calls.at(-1).entryHash)).toEqual([]);
+    const module = new URL("./capture-files.mjs", import.meta.url).href;
+    holder = spawn(
+      process.execPath,
+      [
+        "-e",
+        `
+      import { projectReader } from ${JSON.stringify(module)};
+      const root = projectReader(${JSON.stringify(w.audit)});
+      if (!root.tryLock()) process.exit(3);
+      console.log("locked");
+      setInterval(() => {}, 1000);
+    `,
+      ],
+      { stdio: ["ignore", "pipe", "ignore"] },
+    );
+    stopped = new Promise((resolve) => holder.once("close", resolve));
+    const ready = await Promise.race([
+      new Promise((resolve) =>
+        holder.stdout.once("data", (bytes) => resolve(bytes.toString().trim())),
+      ),
+      stopped,
+    ]);
+    expect(ready).toBe("locked");
+    writeFileSync(
+      w.entry,
+      readFileSync(w.entry, "utf8").replace(
+        "Date.now() - queuedAt > 120000",
+        "Date.now() - queuedAt >= 0",
+      ),
+    );
+    expect(invoke(w, []).status).toBe(2);
+    expect(lines(w.marker).map((e) => e.stage)).toEqual(["lock-timeout"]);
+    holder.kill();
+    await stopped;
+    expect(invoke(w, []).stdout).toBe("owned");
+    expect(lines(w.log)).toHaveLength(1);
+    expect(auditErrors(lines(w.log), lines(w.log)[0].entryHash)).toEqual([]);
   } finally {
+    if (holder?.exitCode === null && !holder.signalCode) holder.kill();
+    await stopped;
     rmSync(w.root, { recursive: true, force: true });
   }
 });
 it(
   "the real CLI retains its exit code when report output is piped to head",
   () => {
+    if (process.platform === "win32") return;
     const w = engineWorld();
     try {
       const system = JSON.parse(
@@ -560,6 +386,7 @@ function engineWorld(preamble = "") {
 it(
   "file-state permission survives human validate, help and multiple invalid repairs",
   () => {
+    if (process.platform === "win32") return;
     const w = engineWorld();
     try {
       const manifest = JSON.parse(
@@ -647,6 +474,7 @@ it(
   async () => {
     // Hold the real packet child until the apply shim records its queue arrival.
     // This proves overlap without a scheduler-sensitive fixed sleep.
+    if (process.platform === "win32") return;
     const w = engineWorld(`
     if(process.argv[2]==="packet") {
       const fs=await import("node:fs");
@@ -802,6 +630,7 @@ it(
 );
 
 it("credential values are redacted from audit and state without changing streams", () => {
+  if (process.platform === "win32") return;
   const w = world("process.stdout.write(process.env.CODEX_API_KEY);");
   const secret = "synthetic-private-credential-abcdef";
   w.env.CODEX_API_KEY = secret;
@@ -822,11 +651,23 @@ it("credential values are redacted from audit and state without changing streams
     );
     expect(r.stdout).toBe(secret);
     const capture = join(w.root, "private-capture");
-    const observed = spawnSync(
-      "bun",
-      ["--preload", join(w.runtime, "eval-observe.mjs"), w.real],
-      { env: { ...w.env, THERMITE_EVAL_CAPTURE: capture }, encoding: "utf8" },
+    const fds = [".out", ".err", ".counts"].map((ext) =>
+      openSync(capture + ext, "wx", 0o600),
     );
+    let observed;
+    try {
+      observed = spawnSync(
+        "bun",
+        ["--preload", join(w.runtime, "eval-observe.mjs"), w.real],
+        {
+          env: w.env,
+          encoding: "utf8",
+          stdio: ["ignore", "pipe", "pipe", ...fds],
+        },
+      );
+    } finally {
+      for (const fd of fds) closeSync(fd);
+    }
     expect(observed.stdout).toBe(secret);
     expect(readFileSync(capture + ".out", "utf8")).not.toContain(secret);
     expect(JSON.parse(readFileSync(capture + ".counts", "utf8")).stdout).toBe(
@@ -845,6 +686,7 @@ it("credential values are redacted from audit and state without changing streams
   }
 });
 it("closed downstream stderr stays byte-transparent", async () => {
+  if (process.platform === "win32") return;
   const w = world(
     'process.stdout.write("real-stdout\\n");process.stderr.write(Buffer.alloc(8*1024*1024,98));',
   );

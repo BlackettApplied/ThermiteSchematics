@@ -5,6 +5,8 @@ import {
   readFileSync,
   writeFileSync,
   mkdirSync,
+  existsSync,
+  symlinkSync,
   rmSync,
 } from "node:fs";
 import { tmpdir } from "node:os";
@@ -12,11 +14,11 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 import {
+  cleanChecker,
   regeneratePacket,
   comparePacketArtifacts,
   regenerateView,
   pdf,
-  pdfInfo,
 } from "./artifacts.mjs";
 import { locate, documents, objects, read, write } from "./task-support.mjs";
 import { snapshot } from "./snapshot.mjs";
@@ -45,7 +47,55 @@ function fixture(template) {
     validationDiagnostics: [],
   };
 }
+it("checker staging omits linked directories", () => {
+  if (process.platform === "win32") return;
+  const ctx = fixture();
+  try {
+    const target = join(ctx.root, "outside");
+    mkdirSync(target);
+    write(join(target, "marker.txt"), "outside");
+    rmSync(join(ctx.project, "drawings"), { recursive: true, force: true });
+    symlinkSync(target, join(ctx.project, "drawings"));
+    const clean = cleanChecker(ctx);
+    expect(existsSync(join(clean.project, "drawings", "marker.txt"))).toBe(
+      false,
+    );
+  } finally {
+    rmSync(ctx.root, { recursive: true, force: true });
+  }
+});
+it("checker replay refuses a request outside the project", async () => {
+  if (process.platform === "win32") return;
+  const ctx = fixture();
+  try {
+    const outside = join(ctx.root, "outside.json");
+    write(outside, {});
+    ctx.thermite = join(ctx.root, "fixture.mjs");
+    const marker = join(ctx.evidence, "replayed");
+    writeFileSync(
+      ctx.thermite,
+      `
+      import { writeFileSync } from "node:fs";
+      if (process.argv.includes(${JSON.stringify(outside)}))
+        writeFileSync(${JSON.stringify(marker)}, "replayed");
+      process.exitCode = 1;
+    `,
+    );
+    ctx.calls = [
+      {
+        argv: ["packet", "--input", outside, "-o", "drawings/packet.json"],
+        exit: 0,
+      },
+    ];
+    expect((await regeneratePacket(ctx)).pass).toBe(false);
+    expect(existsSync(marker)).toBe(false);
+  } finally {
+    rmSync(ctx.root, { recursive: true, force: true });
+  }
+});
+
 it("regeneration rejects forged packet metadata and a header-only unrelated PDF", async () => {
+  if (process.platform === "win32") return;
   const ctx = fixture("cabinets");
   try {
     const request = {
@@ -76,6 +126,14 @@ it("regeneration rejects forged packet metadata and a header-only unrelated PDF"
       JSON.parse(original).html,
     );
     expect((await comparePacketArtifacts(ctx)).pass).toBe(true);
+    const delivered = join(ctx.project, "drawings/packet.json");
+    const identical = join(ctx.root, "identical.json");
+    writeFileSync(identical, readFileSync(delivered));
+    rmSync(delivered);
+    symlinkSync(identical, delivered);
+    expect((await comparePacketArtifacts(ctx)).pass).toBe(false);
+    rmSync(delivered);
+    writeFileSync(delivered, readFileSync(identical));
     write(join(ctx.project, "drawings/packet.json"), {
       sheets: [
         { view: { kind: "terminals" } },

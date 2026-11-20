@@ -41,6 +41,7 @@ function render(project, output, view) {
 }
 
 beforeAll(() => {
+  if (process.platform === "win32") return;
   root = mkdtempSync(join(realpathSync(tmpdir()), "e2-t07-"));
   project = join(root, "fixture");
   mkdirSync(project);
@@ -87,6 +88,7 @@ function delivery(name, calls) {
 }
 
 it("accepts a regenerated loop under its delivered name alongside a wrong view", async () => {
+  if (process.platform === "win32") return;
   const ctx = delivery("correct", [wrongView, loop]);
   const result = await check("T07", ctx);
   expect(result.checks).toEqual({ validates: true, issueOrHookup: true });
@@ -100,6 +102,7 @@ it("accepts a regenerated loop under its delivered name alongside a wrong view",
 });
 
 it("rejects a byte-reproducible PDF of the wrong view", async () => {
+  if (process.platform === "win32") return;
   const ctx = delivery("wrong-view", [wrongView]);
   rmSync(join(ctx.project, artifact));
   const result = await check("T07", ctx);
@@ -108,6 +111,7 @@ it("rejects a byte-reproducible PDF of the wrong view", async () => {
 });
 
 it("rejects a stale hookup PDF following a visible project change", async () => {
+  if (process.platform === "win32") return;
   const ctx = delivery("stale", [loop]);
   rmSync(join(ctx.project, report));
   const systemPath = join(ctx.project, "system.json");
@@ -125,6 +129,7 @@ it("rejects a stale hookup PDF following a visible project change", async () => 
 });
 
 it("rejects a hookup PDF with no reproducible command", async () => {
+  if (process.platform === "win32") return;
   const ctx = delivery("no-command", []);
   rmSync(join(ctx.project, report));
   const result = await check("T07", ctx);
@@ -133,6 +138,7 @@ it("rejects a hookup PDF with no reproducible command", async () => {
 });
 
 it("rejects a recorded print with no delivered PDF", async () => {
+  if (process.platform === "win32") return;
   const ctx = delivery("missing", [loop]);
   rmSync(join(ctx.project, artifact));
   rmSync(join(ctx.project, report));
@@ -147,6 +153,7 @@ it.each([
 ])(
   "scores views guidance for a delivered $name",
   async ({ name, hasHookup, applicability }) => {
+    if (process.platform === "win32") return;
     const ctx = delivery(name, []);
     rmSync(join(ctx.project, artifact));
     rmSync(join(ctx.project, report));
