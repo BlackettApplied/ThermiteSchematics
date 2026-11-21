@@ -1,4 +1,5 @@
-import { lstat, mkdir, realpath } from "node:fs/promises";
+import { realpath } from "node:fs";
+import { lstat, mkdir } from "node:fs/promises";
 import {
   basename,
   dirname,
@@ -9,6 +10,7 @@ import {
   resolve,
   sep,
 } from "node:path";
+import { promisify } from "node:util";
 import {
   LIBRARY_LOCK_FILE_NAME,
   loadProject,
@@ -16,6 +18,15 @@ import {
   type LoadedProject,
 } from "@thermite/compiler";
 import micromatch from "micromatch";
+
+const nativeRealpath = promisify(realpath.native);
+
+export function samePathSpelling(left: string, right: string): boolean {
+  // Windows lookup can correct the case of a component or drive letter.
+  return process.platform === "win32"
+    ? left.toLowerCase() === right.toLowerCase()
+    : left === right;
+}
 
 /** Reject links in every existing ancestor, including hard-linked output files. */
 export async function assertOrdinaryPath(
@@ -50,7 +61,7 @@ export async function canonicalOutputPath(path: string): Promise<string> {
   const suffix: string[] = [];
   while (true) {
     try {
-      return resolve(await realpath(ancestor), ...suffix);
+      return resolve(await nativeRealpath(ancestor), ...suffix);
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
       suffix.unshift(basename(ancestor));

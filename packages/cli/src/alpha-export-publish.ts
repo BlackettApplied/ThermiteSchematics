@@ -5,6 +5,7 @@ import {
   assertOrdinaryPath,
   canonicalOutputPath,
   guardAlphaOutput,
+  samePathSpelling,
 } from "./alpha-output.js";
 import { ExportInputError, filesystemCode } from "./alpha-export-input.js";
 import { LOCK_NAME } from "./alpha-export-lock.js";
@@ -76,7 +77,7 @@ export async function guardTarget(
     const guarded = await guardAlphaOutput(project, target.file, inputs, {
       allowText: true,
     });
-    if (guarded !== target.file)
+    if (!samePathSpelling(guarded, target.file))
       throw new Error("Output aliases a different path.");
   } catch (error) {
     const code = filesystemCode(error);
@@ -103,15 +104,16 @@ export async function outputDirectory(path: string) {
   const directory = resolve(path);
   try {
     await assertOrdinaryPath(directory, "directory");
-    if ((await canonicalOutputPath(directory)) !== directory)
+    const canonical = await canonicalOutputPath(directory);
+    if (!samePathSpelling(canonical, directory))
       throw new Error("Output directory aliases a different path.");
+    return canonical;
   } catch (error) {
     throw new ExportInputError(
       error instanceof Error ? error.message : "Invalid output directory.",
       2,
     );
   }
-  return directory;
 }
 
 export async function retireMarker(

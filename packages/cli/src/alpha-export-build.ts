@@ -45,6 +45,9 @@ export function exportBuildIdentity() {
     }
   }
 
+  // Bun expects a native filename for the resolver parent. Vitest's module
+  // runner forwards a file URL by default, with spaces encoded as %20.
+  const importer = fileURLToPath(import.meta.url);
   const cliRoot = realpathSync(fileURLToPath(new URL("../", import.meta.url)));
   const parent = dirname(cliRoot);
   const lockRoot = basename(parent) === "@thermite" ? dirname(parent) : parent;
@@ -56,7 +59,10 @@ export function exportBuildIdentity() {
         ? cliRoot
         : realpathSync(
             fileURLToPath(
-              new URL("../", import.meta.resolve(`@thermite/${name}`)),
+              new URL(
+                "../",
+                import.meta.resolve(`@thermite/${name}`, importer),
+              ),
             ),
           );
     include(`${name}/package.json`, readFileSync(join(root, "package.json")));

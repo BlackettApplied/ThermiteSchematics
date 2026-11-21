@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 import { expect, it } from "vitest";
+import { exportBuildIdentity } from "../src/alpha-export-build.js";
 
 function buildAt(cli: string) {
   const entry = pathToFileURL(join(cli, "dist", "alpha-export-build.js")).href;
@@ -29,7 +30,7 @@ function buildAt(cli: string) {
 }
 
 it("binds reachable dist bytes across layouts and excludes orphaned compiler outputs", async () => {
-  const runtime = await mkdtemp(join(tmpdir(), "thermite-build-"));
+  const runtime = await mkdtemp(join(tmpdir(), "thermite build-"));
   try {
     const scope = join(runtime, "node_modules", "@thermite");
     await mkdir(scope, { recursive: true });
@@ -50,6 +51,7 @@ it("binds reachable dist bytes across layouts and excludes orphaned compiler out
     const cli = join(scope, "cli");
     const original = buildAt(resolve("packages/cli"));
     expect(original).toMatch(/^[a-f0-9]{64}$/u);
+    expect(exportBuildIdentity()).toBe(original);
     expect(buildAt(cli)).toBe(original);
     const render = join(scope, "render", "dist");
     await writeFile(

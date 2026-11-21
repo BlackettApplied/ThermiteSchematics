@@ -289,6 +289,18 @@ it("rejects linked output, request and library paths", async () => {
   expect((await f.bundle()).code).toBe(1);
   await rm(target);
   await symlink(join(f.project, "library"), join(f.out, "linked"), "junction");
+  const linkedDirectory = await f.cli(
+    "export",
+    "bundle",
+    "--input",
+    f.input,
+    "--out-dir",
+    join(f.out, "linked"),
+  );
+  expect(linkedDirectory.code, linkedDirectory.stderr).toBe(2);
+  expect(JSON.parse(linkedDirectory.stderr).error.message).toContain(
+    "Refusing linked or non-ordinary path",
+  );
   await f.plan({
     kind: "report",
     report: "bom",
@@ -313,6 +325,24 @@ it("rejects linked output, request and library paths", async () => {
   });
   await expectReason(f, "unverifiable_input");
   expect(await readFile(original, "utf8")).toBe("preserve");
+});
+
+it("replaces an ordinary output, including differently cased paths on Windows", async () => {
+  const f = await fixture();
+  const windows = process.platform === "win32";
+  const artifact = join(f.out, windows ? "BOM.CSV" : "bom.csv");
+  await f.plan(reportJob("bom"));
+  await mkdir(f.out);
+  await writeFile(artifact, "old");
+  const args = [
+    "--input",
+    windows ? join(f.project, "DELIVERY.JSON") : f.input,
+    "--out-dir",
+    windows ? join(f.project, "DRAWINGS") : f.out,
+  ];
+  await mustSucceed(await f.cli("export", "bundle", ...args));
+  await mustSucceed(await f.cli("export", "check", ...args));
+  expect(await readFile(artifact, "utf8")).not.toBe("old");
 });
 
 it("treats a linked lock as unverifiable even when its bytes match", async () => {

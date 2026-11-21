@@ -1,4 +1,5 @@
 import { spawn } from "node:child_process";
+import { realpathSync } from "node:fs";
 import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -22,7 +23,9 @@ export async function readJson(path: string) {
 }
 
 export async function fixture(name = "conveyor-line") {
-  const parent = await mkdtemp(join(tmpdir(), "thermite-fresh-"));
+  const parent = await mkdtemp(
+    join(realpathSync.native(tmpdir()), "thermite-fresh-"),
+  );
   temporary.push(parent);
   const project = join(parent, "project");
   await cp(resolve("examples", name), project, { recursive: true });

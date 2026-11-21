@@ -7,7 +7,11 @@ import {
   type LoadedProject,
 } from "@thermite/compiler";
 import { parseJson, type Diagnostic } from "@thermite/schema";
-import { assertOrdinaryPath, canonicalOutputPath } from "./alpha-output.js";
+import {
+  assertOrdinaryPath,
+  canonicalOutputPath,
+  samePathSpelling,
+} from "./alpha-output.js";
 import { exportBuildIdentity } from "./alpha-export-build.js";
 
 export const THERMITE_VERSION = "0.3.0-alpha.2";
@@ -83,7 +87,7 @@ export async function readExportJson(path: string, label = path) {
 async function readExportBytes(path: string, label: string) {
   try {
     await assertOrdinaryPath(path, "file");
-    if ((await canonicalOutputPath(path)) !== path)
+    if (!samePathSpelling(await canonicalOutputPath(path), path))
       throw new ExportInputError(
         `Input aliases a different path: ${label}.`,
         1,
