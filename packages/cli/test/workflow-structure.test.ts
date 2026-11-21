@@ -135,6 +135,7 @@ describe("Runtime CI and ZIP boundaries", () => {
     expect(text).toContain("release-out/runtime/**/*.zip");
     expect(text).toContain("if-no-files-found: error");
     expect(text).not.toContain("pull_request_target");
+    expect(text).not.toContain("run-vitest-and-audit");
     expect(text).not.toContain("THERMITE_SCHEMATICS_RELEASE_");
   });
 

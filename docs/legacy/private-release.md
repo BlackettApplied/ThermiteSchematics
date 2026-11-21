@@ -95,11 +95,10 @@ self-consistent locally authored evidence set are rejected.
 
 ## Sole publisher and input
 
-Task 9's sole GitHub Release uploader is named
-the former protected publisher. It runs only in the protected
-`m8-private-release` environment with `actions: read` and `contents: write`.
-Its sole operator input is the successful M8 Release Candidate `run_id`, passed as
-`--gate-run-id <validated-unsigned-decimal>`.
+Task 9's sole GitHub Release uploader was the former protected publisher. It ran
+only in the protected `m8-private-release` environment with `actions: read` and
+`contents: write`. Its sole operator input was the successful M8 Release
+Candidate `run_id`, passed as `--gate-run-id <validated-unsigned-decimal>`.
 
 The publisher accepts no tar path, SHA value, commit, tag, candidate artifact selector,
 or environment fallback. It derives the exact receipt name from the selected
