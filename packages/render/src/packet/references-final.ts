@@ -44,7 +44,7 @@ export function reserveFinalIndex(
 export function finalReferenceDrafts(
   ir: Readonly<ElectricalIr>,
   content: readonly Draft[],
-  request: SchematicPacketRequest,
+  request: Pick<SchematicPacketRequest, "references" | "page">,
   devices: ReturnType<typeof resolveDeviceFilter> | undefined,
   presentation: CompiledProjectPresentation | undefined,
   page: PaperPage,

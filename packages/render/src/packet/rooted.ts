@@ -51,9 +51,6 @@ export async function drawingDrafts(
   mode: "standard" | "compact" = "standard",
   referenceOffset = 0,
 ): Promise<RenderOutcome<Draft[]>> {
-  const control = controlPrint.getStore();
-  if (control?.replacement)
-    return { ok: true, value: structuredClone(control.replacement) };
   const qualityRun =
     request?.format === "schematic-view-request/0.1" &&
     request.family === "power" &&
@@ -286,8 +283,8 @@ function offerControlPrint(
         referenceOffset,
       );
       if (proposal) {
-        drawingResult(proposal, native);
-        return proposal.drafts;
+        drawingResult(proposal.selected, native);
+        return proposal;
       }
     };
 }

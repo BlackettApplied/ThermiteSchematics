@@ -22,37 +22,104 @@ import { USEFUL_UTILISATION } from "./rooted-order.js";
 import { hasCompactFrame } from "./frame-profile.js";
 import type { Draft, PaperPage, RenderedPacket } from "./types.js";
 
+export interface ControlPrintProposal {
+  readonly selected: RootedCandidate;
+  readonly original: RootedCandidate;
+  readonly native: RootedCandidate;
+  readonly page: PaperPage;
+  readonly hasJoin: boolean;
+}
+
+export interface ControlPrintAssembly {
+  readonly originalDrafts: readonly Draft[];
+  readonly fit: (
+    drafts: Draft[],
+  ) =>
+    | { drafts: Draft[]; finish: () => RenderOutcome<RenderedPacket> }
+    | undefined;
+}
+
 interface Placement {
-  propose?: () => Promise<Draft[] | undefined>;
-  replacement?: Draft[];
+  propose?: () => Promise<ControlPrintProposal | undefined>;
+  assemble?: ControlPrintAssembly;
 }
 export const controlPrint = new AsyncLocalStorage<Placement>();
 
 export async function selectControlPrint(
   render: () => Promise<RenderOutcome<RenderedPacket>>,
-  eligible: () => boolean,
 ) {
   const placement: Placement = {};
   const original = await controlPrint.run(placement, render);
   if (
     !original.ok ||
     !placement.propose ||
-    hasCompactFrame(original.value.page) ||
-    !eligible()
+    !placement.assemble ||
+    hasCompactFrame(original.value.page)
   )
     return original;
-  const replacement = await placement.propose();
-  if (!replacement) return original;
-  const candidate = await controlPrint.run({ replacement }, render);
-  // A refold can round the same annotation distance at a different origin.
-  return candidate.ok &&
-    circuitPacketGuard(
-      candidate.value,
-      original.value,
-      original.value.navigation?.quantumMm,
+  try {
+    const proposal = await placement.propose();
+    if (!proposal) return original;
+    const fitted = placement.assemble.fit(proposal.selected.drafts);
+    if (!fitted) return original;
+    const scoreBounds = proposal.selected.drafts[0]?.rootedScoreBounds;
+    const finalSelected: RootedCandidate = {
+      ...proposal.selected,
+      drafts: scoreBounds
+        ? fitted.drafts.map((d) =>
+            d.rootedScoreBounds ? d : { ...d, rootedScoreBounds: scoreBounds },
+          )
+        : fitted.drafts,
+    };
+    const finalOriginal: RootedCandidate = {
+      ...proposal.original,
+      drafts: [...placement.assemble.originalDrafts],
+    };
+    if (
+      !acceptsControlPrint(
+        finalSelected,
+        finalOriginal,
+        proposal.native,
+        proposal.page,
+        proposal.hasJoin,
+      )
     )
-    ? candidate
-    : original;
+      return original;
+    const candidate = fitted.finish();
+    // A refold can round the same annotation distance at a different origin.
+    return candidate.ok &&
+      circuitPacketGuard(
+        candidate.value,
+        original.value,
+        original.value.navigation?.quantumMm,
+      )
+      ? candidate
+      : original;
+  } catch {
+    return original;
+  }
+}
+
+export function acceptsControlPrint(
+  selected: RootedCandidate,
+  original: RootedCandidate,
+  native: RootedCandidate,
+  page: PaperPage,
+  hasJoin: boolean,
+) {
+  return (
+    selected.drafts.length <= original.drafts.length &&
+    (hasJoin || selected.drafts.length < original.drafts.length) &&
+    candidateUtilisation(selected, page) >= USEFUL_UTILISATION &&
+    !routeGrowth(selected, original).some(Boolean) &&
+    !routeGrowth(selected, original, false).some(Boolean) &&
+    !localityRegression(selected, original) &&
+    compositionFits(
+      { ...selected, drafts: structuredClone(selected.drafts) },
+      native,
+      page,
+    )
+  );
 }
 
 /** Rebuild the annotated and no-card plans with one shared layout proposal.
@@ -110,17 +177,14 @@ export async function proposeControlPrint(
   if (!printed.ok) return;
   pair.winner.drafts = printed.value;
   const selected = composeRootedWinner(ir, pair.winner, pair.native, page);
-  if (
-    selected.drafts.length > original.drafts.length ||
-    (!join && selected.drafts.length === original.drafts.length) ||
-    candidateUtilisation(selected, page) < USEFUL_UTILISATION ||
-    routeGrowth(selected, original).some(Boolean) ||
-    routeGrowth(selected, original, false).some(Boolean) ||
-    localityRegression(selected, original) ||
-    !compositionFits(selected, native, page)
-  )
-    return;
-  return selected;
+  if (routeGrowth(selected, original, false).some(Boolean)) return;
+  return {
+    selected,
+    original,
+    native,
+    page,
+    hasJoin: !!join,
+  };
 }
 
 function printablePair(
@@ -157,7 +221,7 @@ function printablePair(
   if (winner && native) return { winner, native };
 }
 
-function improvesRoutes(
+export function improvesRoutes(
   original: NormalizedSchematicLayout,
   candidate: NormalizedSchematicLayout,
   returnId: string | undefined,
@@ -171,8 +235,22 @@ function improvesRoutes(
     )
       return false;
   }
-  const crossings = new Set(original.crossings.map(crossingKey));
-  return candidate.crossings.every((c) => crossings.has(crossingKey(c)));
+  if (candidate.crossings.length > original.crossings.length) return false;
+  const counts = crossingCounts(original.crossings);
+  for (const [key, count] of crossingCounts(candidate.crossings))
+    if (count > (counts.get(key) ?? 0)) return false;
+  return true;
+}
+
+function crossingCounts(
+  crossings: readonly { readonly edgeIds: readonly string[] }[],
+) {
+  const counts = new Map<string, number>();
+  for (const crossing of crossings) {
+    const key = crossingKey(crossing);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return counts;
 }
 
 function crossingKey({ edgeIds }: { edgeIds: readonly string[] }) {

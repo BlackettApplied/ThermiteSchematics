@@ -9,7 +9,8 @@ import { actuation } from "../../../render/test/dol-control-junctions-fixture.js
 import { dolProbeFixture } from "../../../render/test/dol-control-probes-fixture.js";
 import { expect } from "vitest";
 import { compileProject } from "@thermite/compiler";
-import { renderSchematicPacket } from "../../../render/src/sheets.js";
+import { renderSchematicPacket } from "@thermite/render";
+import { renderSchematicPacket as ordinaryPacket } from "../../../render/src/sheets.js";
 import { continuationOracle } from "../../../render/test/continuation-oracle.js";
 import { parseSvg } from "../../../render/test/off-view-fixtures.js";
 import { noteJson, type FactModule } from "./harness.js";
@@ -285,6 +286,21 @@ const module: FactModule = {
       claim:
         "Top-down can try tighter spacing once after a label or span refusal. Single control views can reflow at the same print scale.",
       async check() {
+        const sectionScales = (sheets: readonly { readonly svg: string }[]) => {
+          const sections = sheets.flatMap(({ svg }) => [
+            ...parseSvg(svg).querySelectorAll(
+              "svg[data-layout-config-version]",
+            ),
+          ]);
+          expect(sections.length).toBeGreaterThan(0);
+          return sections.map((section) => {
+            const height = Number(section.getAttribute("height"));
+            const nativeHeight = Number(
+              section.getAttribute("viewBox")?.split(" ")[3],
+            );
+            return height / nativeHeight;
+          });
+        };
         const fixture = await dolProbeFixture("p5");
         try {
           const result = await renderSchematicPacket(fixture.ir, {
@@ -298,23 +314,44 @@ const module: FactModule = {
             expect.objectContaining({ code: "I906", severity: "info" }),
           );
           expect(result.value.sheets[0]?.continuations).not.toHaveLength(0);
-          const sections = result.value.sheets.flatMap(({ svg }) => [
-            ...parseSvg(svg).querySelectorAll(
-              "svg[data-layout-config-version]",
-            ),
-          ]);
-          expect(sections.length).toBeGreaterThan(0);
-          for (const section of sections) {
-            const height = Number(section.getAttribute("height"));
-            const nativeHeight = Number(
-              section.getAttribute("viewBox")?.split(" ")[3],
-            );
-            expect(height / nativeHeight).toBeCloseTo(0.25, 3);
-          }
           noteJson({ sheets: result.value.sheets.length });
         } finally {
           await fixture.dispose();
         }
+        const saved = await compileProject(
+          "packages/core-library/test/fixtures/dol-starter",
+        );
+        if (!saved.ok) throw Error(JSON.stringify(saved.diagnostics));
+        const reflowRequest = {
+          format: "schematic-packet-request/0.1" as const,
+          page: {
+            size: "tabloid" as const,
+            orientation: "landscape" as const,
+            marginMm: 10,
+          },
+          index: false,
+          views: [actuation("K1", "left-to-right")],
+        };
+        const before = await ordinaryPacket(
+          saved.ir,
+          reflowRequest,
+          saved.presentation,
+        );
+        const after = await renderSchematicPacket(
+          saved.ir,
+          reflowRequest,
+          saved.presentation,
+        );
+        if (!before.ok) throw Error(JSON.stringify(before.error));
+        if (!after.ok) throw Error(JSON.stringify(after.error));
+        expect(before.value.sheets.length).toBeGreaterThan(1);
+        expect(after.value.sheets.length).toBeLessThan(
+          before.value.sheets.length,
+        );
+        const originalScales = sectionScales(before.value.sheets);
+        const reflowedScales = sectionScales(after.value.sheets);
+        for (const scale of [...originalScales, ...reflowedScales])
+          expect(scale).toBeCloseTo(originalScales[0]!, 3);
       },
     },
   ],
