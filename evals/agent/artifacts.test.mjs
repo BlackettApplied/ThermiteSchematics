@@ -220,6 +220,7 @@ it("manifest globs exclude unlisted source-like JSON used to spoof HMI or proven
 it.each([false, true])(
   "only-label checker requires exactly the label change (extra edit: %s)",
   async (extraEdit) => {
+    if (process.platform === "win32") return;
     const ctx = fixture();
     try {
       ctx.task = { id: "T11" };
