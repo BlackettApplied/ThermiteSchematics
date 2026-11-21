@@ -1,3 +1,4 @@
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { titleFrameContext } from "../internal/title-data/frame-context.js";
 import {
   authorTitleCells,
@@ -85,7 +86,8 @@ function footerRows(draft: Draft, page: PaperPage, number: number) {
   const history = revisionHistoryText(draft);
   const stampPlacement =
     titleFrameContext(page)?.presentation.frame?.generatorStamp ?? "border";
-  const stamp = stampPlacement === "border" ? "Thermite 0.3.0-alpha.2" : "";
+  const stamp =
+    stampPlacement === "border" ? `Thermite ${THERMITE_RELEASE_VERSION}` : "";
   const [noteY, historyY] = footerBaselines(
     frameBottom,
     draft.note,

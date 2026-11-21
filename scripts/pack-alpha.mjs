@@ -3,6 +3,7 @@ import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { THERMITE_RELEASE_VERSION as version } from "../packages/schema/src/release-version.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const git = (...args) =>
@@ -12,7 +13,6 @@ if (git("diff", "HEAD", "--name-only") !== "")
     "Commit tracked alpha changes before creating a source archive.",
   );
 const commit = git("rev-parse", "HEAD");
-const version = "0.4.0-alpha.1";
 const filename = `thermite-${version}-source-${commit.slice(0, 8)}.zip`;
 const archive = execFileSync(
   "git",

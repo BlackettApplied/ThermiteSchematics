@@ -1,3 +1,4 @@
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { plannedTitleContext } from "../internal/title-data/headings.js";
 import type {
   CompiledProjectPresentation,
@@ -15,7 +16,7 @@ export function circuitTitleContext(
       projectName: ir.project.name,
       revision: presentation?.revision ?? "UNSPECIFIED",
       backgroundColor: "#ffffff",
-      toolVersion: "0.3.0-alpha.2",
+      toolVersion: THERMITE_RELEASE_VERSION,
       lines: [
         {
           ownerKind: "view",

@@ -3,6 +3,7 @@ import type {
   CompiledProjectPresentation,
 } from "@thermite/compiler";
 import { buildDocumentation } from "@thermite/query";
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import type { SchematicTitleContext } from "../src/title-block.js";
 import { bounds, normalizePaperPage } from "../src/packet/page.js";
 import {
@@ -78,7 +79,7 @@ export function wireAllocationFixture(
     projectName: ir.project.name,
     revision: presentation?.revision ?? "UNSPECIFIED",
     backgroundColor: "#ffffff",
-    toolVersion: "0.3.0-alpha.2",
+    toolVersion: THERMITE_RELEASE_VERSION,
     lines: [
       {
         ownerKind: "view",

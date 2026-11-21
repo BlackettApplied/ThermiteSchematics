@@ -1,4 +1,7 @@
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { hasCompactFrame } from "./frame-profile.js";
+
+const RELEASE_STAMP = `Thermite ${THERMITE_RELEASE_VERSION}`;
 import { compactFramePlan } from "./frame-plan.js";
 import { compactFrame } from "./frame-compact.js";
 import { legacyFooterNote } from "./legacy-footer.js";
@@ -236,7 +239,7 @@ export function frame(
       `${page.size.toUpperCase()} / ${page.orientation.toUpperCase()}`,
       2.5,
     ),
-    text(page.widthMm - m - 62, bottom - 6, "Thermite 0.3.0-alpha.2", 2.5),
+    text(page.widthMm - m - 62, bottom - 6, RELEASE_STAMP, 2.5),
     text(
       page.widthMm - m - 62,
       bottom - 2.5,

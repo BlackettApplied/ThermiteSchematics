@@ -6,7 +6,11 @@ import {
   loadProject,
   type LoadedProject,
 } from "@thermite/compiler";
-import { parseJson, type Diagnostic } from "@thermite/schema";
+import {
+  THERMITE_RELEASE_VERSION,
+  parseJson,
+  type Diagnostic,
+} from "@thermite/schema";
 import {
   assertOrdinaryPath,
   canonicalOutputPath,
@@ -14,7 +18,7 @@ import {
 } from "./alpha-output.js";
 import { exportBuildIdentity } from "./alpha-export-build.js";
 
-export const THERMITE_VERSION = "0.4.0-alpha.1";
+export const THERMITE_VERSION = THERMITE_RELEASE_VERSION;
 
 export function sha256(bytes: string | Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");

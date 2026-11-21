@@ -1,5 +1,6 @@
 import { expect, it } from "vitest";
 import type { CompiledProjectPresentation } from "@thermite/compiler";
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { stackSections } from "../src/packet/fold-stack.js";
 import { useCompactFrame } from "../src/packet/frame-profile.js";
@@ -13,7 +14,7 @@ import {
 } from "./off-view-fixtures.js";
 
 const foldNote = "Folded circuit sections; follow paired conductor references.";
-const stamp = "Thermite 0.3.0-alpha.2";
+const stamp = `Thermite ${THERMITE_RELEASE_VERSION}`;
 
 function footerInk(svg: string, value: string) {
   const doc = parseSvg(svg).documentElement;

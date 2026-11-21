@@ -112,3 +112,4 @@ export type {
 export type { LibraryType, ProjectObject } from "./source-types.js";
 
 export { PRESENTATION_BYTE_LIMIT as PROJECT_PRESENTATION_BYTE_LIMIT } from "./internal/title-data/presentation.js";
+export { THERMITE_RELEASE_VERSION } from "./release-version.js";

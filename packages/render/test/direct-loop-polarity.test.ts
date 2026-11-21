@@ -139,8 +139,8 @@ it.each(flows)(
       // Pin the reviewed direct-loop output, including its semantic channel caption.
       expect(createHash("sha256").update(reviewedSvg).digest("hex")).toBe(
         flow === "left-to-right"
-          ? "4ea5efcbfbe5e0ce485297c1aa0b5af23d38ed9ab069dd9b98e004aa5e551756"
-          : "105c97823f875e7ed449b887321a27527c76cf046161fe4a67b1d0aa5d5bbac4",
+          ? "b7df2104ef1b223899dbfc3cd7531f4d9e8ee135929f7c3ad8922fdbb29abbf1"
+          : "494b25aebbe51742a1b7311f45999b90b30279e3e495714e50472caf716dea1c",
       );
       // Pin the complete measured-tag drawing independently of ownership metadata.
       expect(
@@ -149,8 +149,8 @@ it.each(flows)(
           .digest("hex"),
       ).toBe(
         flow === "left-to-right"
-          ? "d9c994d0cc68cb8a3da542046c7655be9ee7c54bf0eb160a8a552365d5f4b426"
-          : "25dd1d1c6a8b600ea15d9835ac7de5780f723637b9bc4a82ff10b5387628fe50",
+          ? "5bfc28d39f0ce3da8a9116da39345cac55c8263a289e7767464da44323271792"
+          : "62c421b06c33d1dd91f9fb79701483187825579109956fa8bbde85a01181f814",
       );
     }
     expect(JSON.stringify(ir)).toBe(before);

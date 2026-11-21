@@ -1,4 +1,5 @@
 import { beforeAll, expect, it } from "vitest";
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { compileCoreFixture } from "./fixtures.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import type {
@@ -76,7 +77,7 @@ it.each(["border", "title", "metadata"] as const)(
     expect(svg.includes("Tool: Thermite Schematics")).toBe(
       generatorStamp === "title",
     );
-    expect(svg.includes(">Thermite 0.3.0-alpha.2</text>")).toBe(
+    expect(svg.includes(`>Thermite ${THERMITE_RELEASE_VERSION}</text>`)).toBe(
       generatorStamp === "border",
     );
   },

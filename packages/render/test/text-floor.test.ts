@@ -1,6 +1,7 @@
 import { beforeAll, expect, it } from "vitest";
 import { parseHTML } from "linkedom";
 import type { ElectricalIr } from "@thermite/compiler";
+import { THERMITE_RELEASE_VERSION } from "@thermite/schema";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { compileCoreFixture } from "./fixtures.js";
 import { motorCircuitView, controlCircuitView } from "./circuit-fixture.js";
@@ -24,7 +25,12 @@ for (const flow of ["left-to-right", "top-to-bottom"] as const) {
       ...parseHTML(r.value.html).document.querySelectorAll("text"),
     ];
     expect(nodes.length).toBeGreaterThan(30);
-    for (const value of ["A", "6", "BOUNDARY", "Thermite 0.3.0-alpha.2"])
+    for (const value of [
+      "A",
+      "6",
+      "BOUNDARY",
+      `Thermite ${THERMITE_RELEASE_VERSION}`,
+    ])
       expect(nodes.some((n) => n.textContent === value)).toBe(true);
     const secondary = nodes.filter(
       (n) =>
