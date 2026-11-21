@@ -42,6 +42,15 @@ export const windowsError =
 // Native openat does not apply Node's close-on-exec default.
 const closeOnExec = process.platform === "darwin" ? 0x1000000 : 0x80000;
 const readFlags = O_RDONLY | O_NOFOLLOW | O_NONBLOCK | closeOnExec;
+// Open a directory entry itself without following a final symlink so fstatSync
+// reports the entry's own dev, ino, and type relative to an open directory fd.
+// macOS O_SYMLINK (0x200000) opens symlinks directly (O_NOFOLLOW would reject
+// them); Linux O_PATH (0x200000 on x86_64/arm64) + O_NOFOLLOW opens any entry
+// without following symlinks or blocking on FIFOs.
+const linkStatFlags =
+  process.platform === "darwin"
+    ? O_RDONLY | 0x200000 | O_NONBLOCK | closeOnExec
+    : (constants.O_PATH ?? 0x200000) | O_NOFOLLOW | closeOnExec;
 
 function directoryIdentity(path, expected) {
   const current = stat(path);
@@ -192,6 +201,15 @@ function readLinkAt(dir, name) {
       return buffer.subarray(0, length).toString("utf8");
     size *= 2;
     assert(size <= 65536, "Symbolic link target is too long");
+  }
+}
+function statEntryAt(dir, name) {
+  const { fd } = tryOpen(dir, name, linkStatFlags);
+  if (fd < 0) return null;
+  try {
+    return fdStat(fd);
+  } finally {
+    closeSync(fd);
   }
 }
 function statLinkedDirectory(dir, name) {
@@ -363,27 +381,37 @@ export function projectReader(project, expected) {
           Buffer.from(name + "\0"),
         );
         if (created !== 0) throw syscallError("symlinkat", errno[0], name);
+        const entry = statEntryAt(rootFd, name);
+        assert(
+          entry?.isSymbolicLink(),
+          "Symbolic link identity could not be verified after creation",
+        );
+        return { dev: entry.dev, ino: entry.ino };
       },
-      linkedDirectory(name, expectedIdentity) {
+      linkedDirectory(name, expectedIdentity, expectedLinkIdentity) {
         assert(components(name).length === 1);
+        const entry = statEntryAt(rootFd, name);
+        if (!entry?.isSymbolicLink()) return false;
+        if (expectedLinkIdentity && !sameFile(entry, expectedLinkIdentity))
+          return false;
         if (readLinkAt(rootFd, name) === null) return false;
         const actual = statLinkedDirectory(rootFd, name);
         return !!actual && sameFile(actual, expectedIdentity);
       },
-      unlinkLink(name, target, expectedIdentity) {
+      unlinkLink(name, expectedLinkIdentity) {
         assert(components(name).length === 1);
-        const found = readLinkAt(rootFd, name);
-        if (found === null) return;
-        const targetExists = statSync(target, {
-          bigint: true,
-          throwIfNoEntry: false,
-        });
-        const expected = expectedIdentity ?? targetExists;
-        const actual = statLinkedDirectory(rootFd, name);
-        const matches = actual
-          ? sameFile(actual, expected)
-          : !targetExists && found === target;
-        if (matches) lib().unlinkat(rootFd, Buffer.from(name + "\0"), 0);
+        if (!expectedLinkIdentity) return false;
+        const current = statEntryAt(rootFd, name);
+        if (
+          !current?.isSymbolicLink() ||
+          !sameFile(current, expectedLinkIdentity)
+        )
+          return false;
+        // POSIX has no atomic unlink-by-inode/symlink-only syscall; verifying
+        // the descriptor-relative entry's type and dev/ino immediately before
+        // unlinkat refuses replacement links and regular files while keeping
+        // the residual TOCTOU window as narrow as POSIX permits.
+        return lib().unlinkat(rootFd, Buffer.from(name + "\0"), 0) === 0;
       },
       remove(name) {
         assert(components(name).length === 1);

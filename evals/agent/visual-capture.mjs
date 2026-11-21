@@ -203,17 +203,7 @@ function sameResolvedPath(a, b) {
     : left === right;
 }
 
-function linkedOutputs(link, outputs, outputsIdentity, workspaceIdentity) {
-  if (workspaceIdentity) {
-    const parent = lstatSync(dirname(link), {
-      bigint: true,
-      throwIfNoEntry: false,
-    });
-    if (!parent?.isDirectory() || !sameIdentity(parent, workspaceIdentity))
-      return false;
-  }
-  const current = lstatSync(link, { bigint: true, throwIfNoEntry: false });
-  if (!current?.isSymbolicLink()) return false;
+function linkedOutputsTarget(link, outputs, outputsIdentity) {
   const targetStat = statSync(link, { bigint: true, throwIfNoEntry: false });
   const expectedStat =
     outputsIdentity ??
@@ -227,6 +217,30 @@ function linkedOutputs(link, outputs, outputsIdentity, workspaceIdentity) {
     );
   if (statSync(outputs, { bigint: true, throwIfNoEntry: false })) return false;
   return sameResolvedPath(resolve(dirname(link), readlinkSync(link)), outputs);
+}
+
+function ownsWindowsLink(
+  link,
+  outputs,
+  outputsIdentity,
+  workspaceIdentity,
+  linkIdentity,
+) {
+  if (workspaceIdentity) {
+    const parent = lstatSync(dirname(link), {
+      bigint: true,
+      throwIfNoEntry: false,
+    });
+    if (!parent?.isDirectory() || !sameIdentity(parent, workspaceIdentity))
+      return false;
+  }
+  const current = lstatSync(link, { bigint: true, throwIfNoEntry: false });
+  if (!current?.isSymbolicLink()) return false;
+  if (hasIdentity(linkIdentity)) return sameIdentity(current, linkIdentity);
+  // Residual Windows limit: if a filesystem cannot supply dev/ino for a
+  // junction, user space cannot distinguish a replacement junction pointing to
+  // the same target from the broker's own junction.
+  return linkedOutputsTarget(link, outputs, outputsIdentity);
 }
 
 function verifyPinnedHierarchy(workspaceReader, projectReaderObj, projectPath) {
@@ -277,6 +291,7 @@ export async function visualBroker(
     outputsIdentity,
     outputsCreated = false,
     link,
+    linkIdentity = null,
     workspaceIdentity,
     linkCreated = false,
     timer,
@@ -287,10 +302,19 @@ export async function visualBroker(
       if (linkCreated) {
         linkCreated = false;
         if (workspaceSource)
-          workspaceSource.unlinkLink(outputDirectory, outputs, outputsIdentity);
+          workspaceSource.unlinkLink(outputDirectory, linkIdentity);
         else if (
-          linkedOutputs(link, outputs, outputsIdentity, workspaceIdentity)
+          ownsWindowsLink(
+            link,
+            outputs,
+            outputsIdentity,
+            workspaceIdentity,
+            linkIdentity,
+          )
         )
+          // Residual Windows limit: Node exposes no descriptor-relative
+          // unlinkat on Windows, so unlinkSync still takes a pathname after
+          // verifying parent identity, isSymbolicLink(), and link dev/ino.
           unlinkSync(link);
       }
     } finally {
@@ -356,6 +380,28 @@ export async function visualBroker(
           sameIdentity(projectStat, projectIdentity),
         "Capture directory must be ordinary",
       );
+      const verifyWindowsParent = () => {
+        const currentParent = lstatSync(workspace, {
+          bigint: true,
+          throwIfNoEntry: false,
+        });
+        const currentProject = lstatSync(root, {
+          bigint: true,
+          throwIfNoEntry: false,
+        });
+        const currentInput = lstatSync(project, {
+          bigint: true,
+          throwIfNoEntry: false,
+        });
+        return (
+          currentParent?.isDirectory() &&
+          sameIdentity(currentParent, workspaceIdentity) &&
+          currentProject?.isDirectory() &&
+          sameIdentity(currentProject, projectIdentity) &&
+          currentInput?.isDirectory() &&
+          sameIdentity(currentInput, projectIdentity)
+        );
+      };
       link = join(workspace, outputDirectory);
       assert(
         !lstatSync(link, { throwIfNoEntry: false }),
@@ -365,22 +411,31 @@ export async function visualBroker(
       mkdirSync(outputs);
       outputsCreated = true;
       outputsIdentity = statSync(outputs, { bigint: true });
+      assert(
+        verifyWindowsParent() && !lstatSync(link, { throwIfNoEntry: false }),
+        "Visual capture link changed during setup",
+      );
+      // Residual Windows limit: Node has no descriptor-relative symlinkat on
+      // Windows, so symlinkSync still takes a pathname. Re-verifying the pinned
+      // parent immediately before and after creation blocks swaps before
+      // creation (such as during mkdirSync), but a concurrent parent swap
+      // between those two syscalls cannot be prevented in user space. The E2
+      // evaluator refuses Windows runs before setup, so only direct standalone
+      // visualBroker calls reach this fallback.
       symlinkSync(outputs, link, "junction");
       linkCreated = true;
-      const parentAfter = lstatSync(workspace, {
-        bigint: true,
-        throwIfNoEntry: false,
-      });
-      const projectAfter = lstatSync(root, {
-        bigint: true,
-        throwIfNoEntry: false,
-      });
+      linkIdentity = lstatSync(link, { bigint: true, throwIfNoEntry: false });
       assert(
-        parentAfter?.isDirectory() &&
-          sameIdentity(parentAfter, workspaceIdentity) &&
-          projectAfter?.isDirectory() &&
-          sameIdentity(projectAfter, projectIdentity) &&
-          linkedOutputs(link, outputs, outputsIdentity, workspaceIdentity),
+        verifyWindowsParent() &&
+          linkIdentity?.isSymbolicLink() &&
+          ownsWindowsLink(
+            link,
+            outputs,
+            outputsIdentity,
+            workspaceIdentity,
+            linkIdentity,
+          ) &&
+          linkedOutputsTarget(link, outputs, outputsIdentity),
         "Visual capture link changed during setup",
       );
     } else {
@@ -393,7 +448,7 @@ export async function visualBroker(
       mkdirSync(outputs);
       outputsCreated = true;
       outputsIdentity = statSync(outputs, { bigint: true });
-      workspaceSource.symlinkLink(outputDirectory, outputs);
+      linkIdentity = workspaceSource.symlinkLink(outputDirectory, outputs);
       linkCreated = true;
       verifyPinnedHierarchy(workspaceSource, source, project);
       const linkParent = lstatSync(workspaceSource.identity.path, {
@@ -406,7 +461,11 @@ export async function visualBroker(
         "Workspace root was replaced",
       );
       assert(
-        workspaceSource.linkedDirectory(outputDirectory, outputsIdentity),
+        workspaceSource.linkedDirectory(
+          outputDirectory,
+          outputsIdentity,
+          linkIdentity,
+        ),
         "Visual capture link target changed during setup",
       );
     }

@@ -276,70 +276,205 @@ const darwinTmpAlias =
   process.platform === "darwin" &&
   !!lstatSync("/tmp", { throwIfNoEntry: false })?.isSymbolicLink() &&
   realpathSync("/tmp") === "/private/tmp";
-const canExpressAlternatePath = process.platform === "win32" || darwinTmpAlias;
 
-if (canExpressAlternatePath) {
-  it("cleans up the sibling link by target identity across alternate path spellings", async () => {
-    const base = darwinTmpAlias ? "/private/tmp" : tmpdir();
-    const { project, evidence, outside, link: linkPath } = fixture(red, base);
-    const outputs = join(evidence, "visual-captures");
-    const alternateSpelling = (canonicalPath) => {
-      if (process.platform === "win32") {
-        const parent = dirname(canonicalPath);
-        const dirName = basename(parent);
-        const toggled =
-          dirName === dirName.toUpperCase()
-            ? dirName.toLowerCase()
-            : dirName.toUpperCase();
-        return join(dirname(parent), toggled, basename(canonicalPath));
-      }
-      return canonicalPath.replace(/^\/private\/tmp(?=\/)/, "/tmp");
-    };
+function caseToggledOutputs(canonicalPath) {
+  const parent = dirname(canonicalPath);
+  const dirName = basename(parent);
+  const toggled =
+    dirName === dirName.toUpperCase()
+      ? dirName.toLowerCase()
+      : dirName.toUpperCase();
+  return join(dirname(parent), toggled, basename(canonicalPath));
+}
 
-    // Windows fallback path (native on Windows, simulated via asWindows on macOS).
-    await asWindows(async () => {
-      const stop = await visualBroker(
-        { visualCapture: true },
-        project,
-        evidence,
-      );
-      try {
-        const altOutputs = alternateSpelling(outputs);
-        expect(altOutputs).not.toBe(outputs);
-        expect(statSync(altOutputs, { bigint: true }).ino).toBe(
-          statSync(outputs, { bigint: true }).ino,
-        );
+function sameEntry(a, b) {
+  return a != null && b != null && a.dev === b.dev && a.ino === b.ino;
+}
+
+it("only unlinks the exact link identity it created during Windows fallback and POSIX cleanup", async () => {
+  const base = darwinTmpAlias ? "/private/tmp" : tmpdir();
+  const {
+    workspace,
+    project,
+    evidence,
+    outside,
+    link: linkPath,
+  } = fixture(red, base);
+  const outputs = join(evidence, "visual-captures");
+
+  // 1. Simulated Windows: replacing the broker's link with a new link pointing
+  //    to the exact same outputs directory must leave the replacement alone.
+  //    (Fails on pre-E2LINK 5dab585c, which matches only target path.)
+  await asWindows(async () => {
+    const stop = await visualBroker({ visualCapture: true }, project, evidence);
+    let replacementStat;
+    try {
+      const originalStat = lstatSync(linkPath, { bigint: true });
+      unlinkSync(linkPath);
+      link(outputs, linkPath);
+      replacementStat = lstatSync(linkPath, { bigint: true });
+      expect(sameEntry(replacementStat, originalStat)).toBe(false);
+    } finally {
+      await stop();
+    }
+    const after = lstatSync(linkPath, {
+      bigint: true,
+      throwIfNoEntry: false,
+    });
+    expect(after?.isSymbolicLink()).toBe(true);
+    expect(sameEntry(after, replacementStat)).toBe(true);
+    unlinkSync(linkPath);
+  });
+
+  // 2. Simulated Windows: case-toggled alternate spelling replacement must also
+  //    be left untouched. Skip cleanly on case-sensitive volumes where the
+  //    toggled spelling does not resolve to the same directory.
+  const evidenceCase = join(dirname(evidence), "evidence-case");
+  mkdirSync(evidenceCase);
+  const caseOutputs = join(evidenceCase, "visual-captures");
+  await asWindows(async () => {
+    const stop = await visualBroker(
+      { visualCapture: true },
+      project,
+      evidenceCase,
+    );
+    const altOutputs = caseToggledOutputs(caseOutputs);
+    const outputsStat = statSync(caseOutputs, { bigint: true });
+    const altStat = statSync(altOutputs, {
+      bigint: true,
+      throwIfNoEntry: false,
+    });
+    const caseInsensitiveVolume =
+      altOutputs !== caseOutputs && sameEntry(altStat, outputsStat);
+    let replacementStat = null;
+    try {
+      if (caseInsensitiveVolume) {
         unlinkSync(linkPath);
         link(altOutputs, linkPath);
-        expect(resolve(readlinkSync(linkPath))).not.toBe(resolve(outputs));
-      } finally {
-        await stop();
+        expect(resolve(readlinkSync(linkPath))).not.toBe(resolve(caseOutputs));
+        replacementStat = lstatSync(linkPath, { bigint: true });
       }
+    } finally {
+      await stop();
+    }
+    if (caseInsensitiveVolume) {
+      const after = lstatSync(linkPath, {
+        bigint: true,
+        throwIfNoEntry: false,
+      });
+      expect(after?.isSymbolicLink()).toBe(true);
+      expect(sameEntry(after, replacementStat)).toBe(true);
+      unlinkSync(linkPath);
+    } else {
       expect(lstatSync(linkPath, { throwIfNoEntry: false })).toBeUndefined();
-    });
+    }
+  });
 
-    // Negative control: a link repointed to a different directory is left alone.
-    const evidenceOther = join(dirname(evidence), "evidence-other");
-    mkdirSync(evidenceOther);
+  // 3. Simulated Windows: replacing the link with a link to another directory
+  //    or with a regular file must leave the replacement untouched.
+  for (const kind of ["other-link", "regular-file"]) {
+    const evidenceReplacement = join(dirname(evidence), `evidence-${kind}`);
+    mkdirSync(evidenceReplacement);
     await asWindows(async () => {
       const stop = await visualBroker(
         { visualCapture: true },
         project,
-        evidenceOther,
+        evidenceReplacement,
       );
       try {
         unlinkSync(linkPath);
-        link(outside, linkPath);
+        if (kind === "other-link") link(outside, linkPath);
+        else writeFileSync(linkPath, "keep-regular-file");
       } finally {
         await stop();
       }
-      expect(lstatSync(linkPath).isSymbolicLink()).toBe(true);
+      const after = lstatSync(linkPath, { throwIfNoEntry: false });
+      if (kind === "other-link") {
+        expect(after?.isSymbolicLink()).toBe(true);
+      } else {
+        expect(after?.isFile()).toBe(true);
+        expect(readFileSync(linkPath, "utf8")).toBe("keep-regular-file");
+      }
       unlinkSync(linkPath);
     });
+  }
 
-    // POSIX descriptor-relative cleanup also matches target identity across /tmp vs /private/tmp.
-    if (process.platform !== "win32") {
-      const evidencePosix = join(dirname(evidence), "evidence-posix");
+  // 4. Simulated Windows: swapping the workspace parent before cleanup must
+  //    leave the replacement workspace's entry untouched. (Fails on 5dab585c,
+  //    which follows the replaced workspace path and unlinks outside.)
+  const evidenceSwap = join(dirname(evidence), "evidence-swap");
+  mkdirSync(evidenceSwap);
+  await asWindows(async () => {
+    const stop = await visualBroker(
+      { visualCapture: true },
+      project,
+      evidenceSwap,
+    );
+    const original = workspace + "-original";
+    const replacementLink = join(outside, "visual-captures");
+    try {
+      renameSync(workspace, original);
+      link(outside, workspace);
+      link(join(evidenceSwap, "visual-captures"), replacementLink);
+    } finally {
+      await stop();
+      unlinkSync(workspace);
+      renameSync(original, workspace);
+    }
+    expect(lstatSync(replacementLink).isSymbolicLink()).toBe(true);
+    unlinkSync(replacementLink);
+    // The original link remained inside the moved-aside workspace because
+    // Windows has no open directory descriptor to unlink relative to.
+    expect(lstatSync(linkPath).isSymbolicLink()).toBe(true);
+    unlinkSync(linkPath);
+  });
+
+  // 5. Simulated Windows: a mid-setup parent swap after evidence creation must
+  //    be caught before junction creation so nothing is linked in `outside`.
+  const evidenceMidSwap = join(dirname(evidence), "evidence-mid-swap");
+  mkdirSync(evidenceMidSwap);
+  const midSwapOutputs = join(evidenceMidSwap, "visual-captures");
+  await asWindows(async () => {
+    const original = workspace + "-original";
+    race.arm("mkdir", midSwapOutputs, () => {
+      mkdirSync(join(outside, "project"));
+      renameSync(workspace, original);
+      link(outside, workspace);
+    });
+    try {
+      await expect(
+        visualBroker({ visualCapture: true }, project, evidenceMidSwap),
+      ).rejects.toThrow(/changed during setup/i);
+      expect(race.state.fired).toBe(1);
+      expect(
+        lstatSync(join(outside, "visual-captures"), { throwIfNoEntry: false }),
+      ).toBeUndefined();
+      expect(
+        lstatSync(join(original, "visual-captures"), { throwIfNoEntry: false }),
+      ).toBeUndefined();
+      expect(
+        lstatSync(midSwapOutputs, { throwIfNoEntry: false }),
+      ).toBeUndefined();
+    } finally {
+      unlinkSync(workspace);
+      renameSync(original, workspace);
+      rmSync(join(outside, "project"), { recursive: true, force: true });
+    }
+  });
+
+  // 6. POSIX descriptor-relative cleanup also verifies the link's own dev/ino
+  //    and isSymbolicLink(), leaving replaced symlinks (same path or /tmp alias)
+  //    and regular files untouched.
+  if (process.platform !== "win32") {
+    const posixCases = [
+      ["same-target", (out) => out],
+      ...(darwinTmpAlias
+        ? [["tmp-alias", (out) => out.replace(/^\/private\/tmp(?=\/)/, "/tmp")]]
+        : []),
+      ["regular-file", null],
+    ];
+    for (const [label, targetFor] of posixCases) {
+      const evidencePosix = join(dirname(evidence), `evidence-posix-${label}`);
       mkdirSync(evidencePosix);
       const posixOutputs = join(evidencePosix, "visual-captures");
       const stop = await visualBroker(
@@ -347,19 +482,35 @@ if (canExpressAlternatePath) {
         project,
         evidencePosix,
       );
+      let replacementStat;
       try {
-        const altOutputs = alternateSpelling(posixOutputs);
-        expect(altOutputs).not.toBe(posixOutputs);
         unlinkSync(linkPath);
-        link(altOutputs, linkPath);
-        expect(resolve(readlinkSync(linkPath))).not.toBe(resolve(posixOutputs));
+        if (targetFor) {
+          const target = targetFor(posixOutputs);
+          if (label === "tmp-alias") expect(target).not.toBe(posixOutputs);
+          link(target, linkPath);
+        } else {
+          writeFileSync(linkPath, "keep-posix-file");
+        }
+        replacementStat = lstatSync(linkPath, { bigint: true });
       } finally {
         await stop();
       }
-      expect(lstatSync(linkPath, { throwIfNoEntry: false })).toBeUndefined();
+      const after = lstatSync(linkPath, {
+        bigint: true,
+        throwIfNoEntry: false,
+      });
+      if (targetFor) {
+        expect(after?.isSymbolicLink()).toBe(true);
+        expect(sameEntry(after, replacementStat)).toBe(true);
+      } else {
+        expect(after?.isFile()).toBe(true);
+        expect(readFileSync(linkPath, "utf8")).toBe("keep-posix-file");
+      }
+      unlinkSync(linkPath);
     }
-  });
-}
+  }
+});
 
 // The remaining cases exercise capture itself, which Windows refuses.
 if (process.platform !== "win32") {
@@ -651,6 +802,11 @@ if (process.platform !== "win32") {
     stubScreenshot();
     const workSource = projectReader(workspace);
     const projectSource = projectReader(project);
+    const symlinkSpy = vi.spyOn(workSource, "symlinkLink");
+    const unlinkSpy = vi.spyOn(workSource, "unlinkLink");
+    const workCloseSpy = vi.spyOn(workSource, "close");
+    const projectReadSpy = vi.spyOn(projectSource, "read");
+    const projectCloseSpy = vi.spyOn(projectSource, "close");
     try {
       const stop = await visualBroker(
         { visualCapture: true },
@@ -660,15 +816,20 @@ if (process.platform !== "win32") {
         { workspace: workSource, project: projectSource },
       );
       try {
+        expect(symlinkSpy).toHaveBeenCalledTimes(1);
         expect(lstatSync(linkPath).isSymbolicLink()).toBe(true);
         request(project, { html: ["index.html"] });
         const receipt = await readReceipt(join(linkPath, "result.json"));
         expect(receipt.files[0].sha256).toBe(sha256("synthetic PNG bytes"));
+        expect(projectReadSpy).toHaveBeenCalledWith("index.html");
       } finally {
         await stop();
       }
+      expect(unlinkSpy).toHaveBeenCalledTimes(1);
       expect(lstatSync(linkPath, { throwIfNoEntry: false })).toBeUndefined();
       // Caller-owned pins remain open for post-agent staging and cleanup.
+      expect(workCloseSpy).not.toHaveBeenCalled();
+      expect(projectCloseSpy).not.toHaveBeenCalled();
       expect(workSource.intact()).toBe(true);
       expect(projectSource.intact()).toBe(true);
       expect(projectSource.has("index.html")).toBe(true);
