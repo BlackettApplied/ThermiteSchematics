@@ -283,7 +283,7 @@ const module: FactModule = {
     },
     {
       claim:
-        "Top-down can try tighter spacing once after a label or span refusal.",
+        "Top-down can try tighter spacing once after a label or span refusal. Single control views can reflow at the same print scale.",
       async check() {
         const fixture = await dolProbeFixture("p5");
         try {
@@ -298,6 +298,19 @@ const module: FactModule = {
             expect.objectContaining({ code: "I906", severity: "info" }),
           );
           expect(result.value.sheets[0]?.continuations).not.toHaveLength(0);
+          const sections = result.value.sheets.flatMap(({ svg }) => [
+            ...parseSvg(svg).querySelectorAll(
+              "svg[data-layout-config-version]",
+            ),
+          ]);
+          expect(sections.length).toBeGreaterThan(0);
+          for (const section of sections) {
+            const height = Number(section.getAttribute("height"));
+            const nativeHeight = Number(
+              section.getAttribute("viewBox")?.split(" ")[3],
+            );
+            expect(height / nativeHeight).toBeCloseTo(0.25, 3);
+          }
           noteJson({ sheets: result.value.sheets.length });
         } finally {
           await fixture.dispose();

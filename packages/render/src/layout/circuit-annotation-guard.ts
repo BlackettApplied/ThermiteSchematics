@@ -21,14 +21,14 @@ const same = (a: unknown, b: unknown) =>
 const textContent = (s: string) => s.trim().replace(/\s+/gu, " ");
 // Absorb floating-point drift only; print significance starts at 0.1 mm.
 const ANNOTATION_DISTANCE_DRIFT_MM = 1e-3;
-const notFarther = (a: number | null, b: number | null) =>
+const notFarther = (a: number | null, b: number | null, drift: number) =>
   typeof a === "number" &&
   typeof b === "number" &&
   Number.isFinite(a) &&
   Number.isFinite(b) &&
   a >= 0 &&
   b >= 0 &&
-  a <= b + ANNOTATION_DISTANCE_DRIFT_MM;
+  a <= b + drift;
 
 /** Only two self-located labels may retain absent evidence as unchanged.
  * Absence is never closer: one-sided nulls, local labels and return-owner
@@ -36,6 +36,7 @@ const notFarther = (a: number | null, b: number | null) =>
 function localityNotFarther(
   a: NonNullable<GuardAnnotation["locality"]>,
   b: NonNullable<GuardAnnotation["locality"]>,
+  drift: number,
 ) {
   if (a.distanceMm === null || b.distanceMm === null)
     return (
@@ -44,7 +45,7 @@ function localityNotFarther(
       a.mode === "self-located" &&
       b.mode === "self-located"
     );
-  return notFarther(a.distanceMm, b.distanceMm);
+  return notFarther(a.distanceMm, b.distanceMm, drift);
 }
 
 /** Destinations and located headings follow NAV's final pagination. Source
@@ -67,7 +68,11 @@ function facts(a: GuardAnnotation) {
   ];
 }
 
-function returnDistances(a: GuardAnnotation, b: GuardAnnotation) {
+function returnDistances(
+  a: GuardAnnotation,
+  b: GuardAnnotation,
+  drift: number,
+) {
   const before = b.returnLocality,
     after = a.returnLocality;
   if (!before || !after || !Number.isInteger(after.sheet) || after.sheet < 1)
@@ -83,7 +88,7 @@ function returnDistances(a: GuardAnnotation, b: GuardAnnotation) {
     return false;
   return after.owners.every((o) => {
     const old = owners.get(o.occurrenceId);
-    return !!old && notFarther(o.distanceMm, old.distanceMm);
+    return !!old && notFarther(o.distanceMm, old.distanceMm, drift);
   });
 }
 
@@ -92,6 +97,7 @@ function returnDistances(a: GuardAnnotation, b: GuardAnnotation) {
 export function circuitAnnotationGuard(
   candidate: GuardAnnotation,
   original: GuardAnnotation,
+  drift = ANNOTATION_DISTANCE_DRIFT_MM,
 ) {
   if (!same(facts(candidate), facts(original))) return false;
   const a = candidate.locality,
@@ -100,10 +106,12 @@ export function circuitAnnotationGuard(
   if (
     a &&
     b &&
-    ((b.mode === "local" && a.mode !== "local") || !localityNotFarther(a, b))
+    ((b.mode === "local" && a.mode !== "local") ||
+      !localityNotFarther(a, b, drift))
   )
     return false;
-  if (candidate.role === "return") return returnDistances(candidate, original);
+  if (candidate.role === "return")
+    return returnDistances(candidate, original, drift);
   if (candidate.returnLocality || original.returnLocality) return false;
   if (["mirror", "canonical", "repeat", "mixed"].includes(candidate.role))
     return !!a && !!b;

@@ -20,6 +20,7 @@ import { rootedGangSegments } from "../symbols/rooted-gangs.js";
 import { reservePowerJogSpace } from "./power-jog-space.js";
 import type { ELK as ElkApi } from "elkjs/lib/elk-api.js";
 import type { PaginationSpacing } from "../layout/spacing.js";
+import type { ControlReconvergence } from "../layout/control-reconvergence.js";
 
 export interface DrawingContext {
   ir: Readonly<ElectricalIr>;
@@ -59,11 +60,12 @@ export async function repaginateDrawing(
   p: PreparedSchematicDrawing,
   original: PreparedSchematicDrawing,
   spacing: PaginationSpacing,
+  join?: ControlReconvergence,
 ): Promise<RenderOutcome<PreparedSchematicDrawing>> {
   const c = required(contexts.get(original), "Missing prepared source context");
   const layout = await layoutPresentationGraph(p.graph, {
     ...c.options,
-    paginationRetry: { original: p.layout, spacing },
+    paginationRetry: { original: p.layout, spacing, ...(join ? { join } : {}) },
   });
   if (!layout.ok) return layout;
   const gangs = rootedGangSegments(c.ir, p.graph, layout.value);

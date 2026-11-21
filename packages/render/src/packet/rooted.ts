@@ -39,6 +39,7 @@ import {
 } from "./rooted-power-frame.js";
 import { required } from "../presentation/util.js";
 import type { RootedCandidate } from "./rooted-build.js";
+import { controlPrint, proposeControlPrint } from "./rooted-control-print.js";
 export { cuts } from "./rooted-cuts.js";
 
 /** The legacy path is unchanged; compact planning owns a separate reference page. */
@@ -50,6 +51,9 @@ export async function drawingDrafts(
   mode: "standard" | "compact" = "standard",
   referenceOffset = 0,
 ): Promise<RenderOutcome<Draft[]>> {
+  const control = controlPrint.getStore();
+  if (control?.replacement)
+    return { ok: true, value: structuredClone(control.replacement) };
   const qualityRun =
     request?.format === "schematic-view-request/0.1" &&
     request.family === "power" &&
@@ -255,7 +259,37 @@ async function selectedDrawingDrafts(
   const composed = composeRootedWinner(ir, winner, native, page);
   const selected = selectRootedComposition(winner, composed, page);
   rootedSearches.set(selected, run);
+  offerControlPrint(ir, selected, native, page, referenceOffset);
   return drawingResult(selected, native);
+}
+
+function offerControlPrint(
+  ir: Readonly<ElectricalIr>,
+  selected: RootedCandidate,
+  native: RootedCandidate,
+  page: PaperPage,
+  referenceOffset: number,
+) {
+  const control = controlPrint.getStore();
+  const { view } = selected.prepared.graph;
+  if (
+    control &&
+    view.format === "schematic-view/0.1" &&
+    view.family === "control"
+  )
+    control.propose = async () => {
+      const proposal = await proposeControlPrint(
+        ir,
+        selected,
+        native,
+        page,
+        referenceOffset,
+      );
+      if (proposal) {
+        drawingResult(proposal, native);
+        return proposal.drafts;
+      }
+    };
 }
 
 function drawingResult(

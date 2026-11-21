@@ -38,6 +38,7 @@ function paintedAnnotations(packet: RenderedPacket) {
 export function circuitPacketGuard(
   candidate: RenderedPacket,
   original: RenderedPacket,
+  annotationDriftMm?: number,
 ) {
   if (candidate.sheets.length > original.sheets.length) return false;
   const before = viewCounts(original),
@@ -69,6 +70,6 @@ export function circuitPacketGuard(
     return false;
   return current.every((a) => {
     const b = old.get(a.id);
-    return !!b && circuitAnnotationGuard(a, b);
+    return !!b && circuitAnnotationGuard(a, b, annotationDriftMm);
   });
 }

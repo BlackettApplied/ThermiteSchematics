@@ -96,6 +96,7 @@ Use a short group `lineReference` for circuit captions.
 
 Keep captions clear of wires.
 Top-down can try tighter spacing once after a label or span refusal.
+Single control views can reflow at the same print scale.
 See `thermite guide circuit-views` for rail crossings and terminal marks.
 
 ## Offline project workflows

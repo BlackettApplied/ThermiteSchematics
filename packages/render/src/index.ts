@@ -22,11 +22,13 @@ export type {
   IssuedDocumentRow,
 } from "./packet/document-types.js";
 export { createSchematicRenderer, renderSchematic } from "./renderer.js";
-export { renderSchematicPacket } from "./layout/circuit-packet-entry.js";
+export {
+  renderSchematicPacket,
+  renderSchematicSheets,
+} from "./layout/circuit-packet-entry.js";
 export {
   normalizePaperPage,
   printPacketHtml,
-  renderSchematicSheets,
   type PageSettings,
   type PaperPage,
   type RenderedPacket,

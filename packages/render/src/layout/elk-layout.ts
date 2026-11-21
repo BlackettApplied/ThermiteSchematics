@@ -16,6 +16,11 @@ import { contextForkOrderAlternatives } from "./context-fork-order.js";
 import { rootedRecovery, type RootedRecovery } from "./rooted-recovery.js";
 import { applyLayoutSpacing, type PaginationSpacing } from "./spacing.js";
 import {
+  orderControlArms,
+  placeControlJoin,
+  type ControlReconvergence,
+} from "./control-reconvergence.js";
+import {
   normalizeAndValidateLayout,
   type LayoutValidationOutcome,
 } from "./validate-output.js";
@@ -30,6 +35,7 @@ export interface ElkLayoutRequestOptions {
   readonly paginationRetry?: {
     readonly original: NormalizedSchematicLayout;
     readonly spacing: PaginationSpacing;
+    readonly join?: ControlReconvergence;
   };
 }
 
@@ -37,6 +43,16 @@ const packetLayoutInputs = new WeakMap<
   NormalizedSchematicLayout,
   { graph: Readonly<PresentationGraph>; recovery: RootedRecovery | undefined }
 >();
+
+function keepPacketInput(
+  graph: PresentationGraph,
+  options: ElkLayoutRequestOptions,
+) {
+  return (
+    options.packetContinuations &&
+    (graph.view.flow === "top-to-bottom" || graph.view.family === "control")
+  );
+}
 
 export async function layoutPresentationGraph(
   graph: Readonly<PresentationGraph>,
@@ -48,8 +64,11 @@ export async function layoutPresentationGraph(
     candidate: Readonly<PresentationGraph>,
     recovery?: RootedRecovery,
   ) => {
+    const join = options.paginationRetry?.join;
+    if (join) candidate = orderControlArms(candidate, join);
     if (options.packetContinuations) reserveContinuationSources(candidate);
     const build = buildElkAdapterGraph(candidate, options.selected, recovery);
+    if (join) placeControlJoin(build.graph, join);
     await validateLayoutOptions(build, engine, options.engine);
     const input = structuredClone(build.graph);
     applyLayoutSpacing(input, candidate, {
@@ -65,11 +84,7 @@ export async function layoutPresentationGraph(
       output,
       catalog,
     );
-    if (
-      result.ok &&
-      options.packetContinuations &&
-      candidate.view.flow === "top-to-bottom"
-    )
+    if (result.ok && keepPacketInput(candidate, options))
       packetLayoutInputs.set(result.value, { graph: candidate, recovery });
     return result;
   };

@@ -9,6 +9,7 @@ import { ELK_OPTIONS } from "./options.js";
 export interface PaginationSpacing {
   readonly parentId?: string;
   readonly axes: readonly ("height" | "width")[];
+  readonly layerSpacing?: number;
 }
 
 /** Spacing alternatives leave all fixed ports, ordering and route checks intact. */
@@ -56,11 +57,14 @@ export function applyLayoutSpacing(
     ) {
       const layoutOptions = (node.layoutOptions ??= {});
       for (const axis of pagination.axes) {
-        const [key, dense] =
-          axis === "height"
-            ? [ELK_OPTIONS.nodeNodeBetweenLayersSpacing, 20]
-            : [ELK_OPTIONS.nodeNodeSpacing, 12];
-        if (Number(layoutOptions[key]) > dense)
+        const alongFlow =
+          axis === (graph.view.flow === "left-to-right" ? "width" : "height");
+        const [key, dense] = alongFlow
+          ? [ELK_OPTIONS.nodeNodeBetweenLayersSpacing, 20]
+          : [ELK_OPTIONS.nodeNodeSpacing, 12];
+        if (alongFlow && pagination.layerSpacing !== undefined)
+          layoutOptions[key] = String(pagination.layerSpacing);
+        else if (Number(layoutOptions[key]) > dense)
           layoutOptions[key] = String(dense);
       }
     }

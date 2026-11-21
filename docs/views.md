@@ -301,6 +301,11 @@ packet must also pass its final ink and navigation checks. A rejected placement
 keeps the original R006. Each view that used the tighter placement produces an
 informational I906. The note appears in drawing JSON and on stderr. For
 `export bundle`, stderr and the manifest attach it to the producing job.
+On a single fixed-paper control view, a second placement can tighten the
+layers of a wide horizontal fold or route a two-arm join inside the compound
+that owns its terminal. The placement uses the existing connections and is
+issued only if the final sheet count and print checks accept it at no smaller
+scale.
 The ordinary no-candidate message uses the same
 all-bank measurement. This diagnosis never rejects an
 uncut identity before grid search. Other R006
