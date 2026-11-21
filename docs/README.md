@@ -50,6 +50,7 @@
 - [Semantic selection boundary](render-selection.md)
 - [Source metadata and documentation](source-metadata.md)
 - [Terminal wiring views](terminal-wiring.md)
+- [Thermite Schematics 0.4.0-alpha.1](releases/0.4.0-alpha.1.md)
 
 ## Packages
 

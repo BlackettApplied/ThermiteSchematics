@@ -1,6 +1,6 @@
 # Machine demonstration and first-project pilot
 
-Thermite 0.3.0-alpha.2 generates a repeatable drawing packet, derived schedules,
+Thermite 0.4.0-alpha.1 generates a repeatable drawing packet, derived schedules,
 and a readable review of electrical changes from the same JSON project. This
 example is a synthetic two-cabinet machine documentation demonstration. Its
 equipment and wiring are illustrative and require engineering review before use.

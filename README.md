@@ -24,7 +24,7 @@ below for each workflow.
 
 ### Using a runtime package
 
-Download a versioned runtime ZIP and its SHA-256 sidecar from
+Download the latest versioned runtime ZIP and its SHA-256 sidecar from
 [GitHub Releases](https://github.com/BlackettApplied/ThermiteSchematics/releases).
 Choose the archive for your operating system and CPU architecture. It contains
 the built engine and dependencies; you only need Bun 1.4.2. No dependency
@@ -101,7 +101,7 @@ Do not invent electrical ratings, pinouts, or engineering repairs. Explain
 unresolved assumptions; generated drawings need qualified engineering review.
 ```
 
-**0.3.0-alpha.2 · Public alpha.** Runs locally with
+**0.4.0-alpha.1 · Public alpha** ([release notes](docs/releases/0.4.0-alpha.1.md), [downloads](https://github.com/BlackettApplied/ThermiteSchematics/releases)). Runs locally with
 Bun 1.4.2 (pinned in `.bun-version`) on macOS, Windows, and Linux. See the
 [platform checks](docs/platforms.md) for tested systems and limitations.
 

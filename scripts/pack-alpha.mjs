@@ -12,7 +12,7 @@ if (git("diff", "HEAD", "--name-only") !== "")
     "Commit tracked alpha changes before creating a source archive.",
   );
 const commit = git("rev-parse", "HEAD");
-const version = "0.3.0-alpha.2";
+const version = "0.4.0-alpha.1";
 const filename = `thermite-${version}-source-${commit.slice(0, 8)}.zip`;
 const archive = execFileSync(
   "git",

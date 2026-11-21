@@ -1,6 +1,6 @@
 # Formats and compatibility
 
-Thermite 0.3.0-alpha.2 supports the formats below through its runtime ZIP and
+Thermite 0.4.0-alpha.1 supports the formats below through its runtime ZIP and
 source workflows. Workspace package versions and original `thermite` interfaces
 retain their compatibility identities. These are file and API contracts, not
 separate public registry packages.

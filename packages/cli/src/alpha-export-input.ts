@@ -14,7 +14,7 @@ import {
 } from "./alpha-output.js";
 import { exportBuildIdentity } from "./alpha-export-build.js";
 
-export const THERMITE_VERSION = "0.3.0-alpha.2";
+export const THERMITE_VERSION = "0.4.0-alpha.1";
 
 export function sha256(bytes: string | Uint8Array): string {
   return createHash("sha256").update(bytes).digest("hex");
