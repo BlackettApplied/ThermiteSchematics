@@ -11,6 +11,8 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { isMainModule } from "../../../scripts/entrypoint.mjs";
 import { createRuntimeZip } from "../../../scripts/runtime-package/zip.mjs";
 import {
   readSafeZipArchive,
@@ -412,4 +414,102 @@ it("includes both core versions in the public release-package file boundary", as
       ),
     ).toMatchObject({ name: "core", version });
   }
+});
+
+describe("pack script entrypoints", () => {
+  const packScripts = [
+    {
+      name: "scripts/pack-alpha.mjs",
+      script: "alpha:pack",
+      usage: /Usage: bun run alpha:pack/,
+    },
+    {
+      name: "scripts/runtime-package/pack.mjs",
+      script: "package:pack",
+      usage: /Usage: bun run package:pack \[--preview\]/,
+    },
+  ];
+  const hasNode =
+    spawnSync("node", ["--version"], { encoding: "utf8" }).status === 0;
+
+  it("imports both pack scripts without side effects in Bun and Node", async () => {
+    for (const { name } of packScripts) {
+      const target = resolve(name);
+      await expect(import(pathToFileURL(target).href)).resolves.toBeDefined();
+      if (hasNode) {
+        const result = spawnSync(
+          "node",
+          [
+            "--input-type=module",
+            "-e",
+            `await import(${JSON.stringify(pathToFileURL(target).href)});`,
+          ],
+          { encoding: "utf8" },
+        );
+        expect(result.status, result.stderr).toBe(0);
+        expect(result.stdout).toBe("");
+        expect(result.stderr).toBe("");
+      }
+    }
+  });
+
+  it("evaluates import.meta.main and falls back to realpath equality for symlinks", async () => {
+    const dir = await directory();
+    const real = resolve("scripts/pack-alpha.mjs");
+    const other = resolve("scripts/runtime-package/pack.mjs");
+    const url = pathToFileURL(real).href;
+    expect(isMainModule({ main: true, url }, other)).toBe(true);
+    expect(isMainModule({ main: false, url }, real)).toBe(false);
+    expect(isMainModule({ url }, real)).toBe(true);
+    expect(isMainModule({ url }, other)).toBe(false);
+    expect(isMainModule({ url }, undefined)).toBe(false);
+    expect(isMainModule({ url }, join(dir, "missing.mjs"))).toBe(false);
+    const linkPath = join(dir, "pack-alpha-link.mjs");
+    try {
+      await symlink(real, linkPath, "file");
+    } catch (error) {
+      if (error instanceof Error && "code" in error && error.code === "EPERM")
+        return;
+      throw error;
+    }
+    expect(isMainModule({ url }, linkPath)).toBe(true);
+  });
+
+  it("reaches main via direct, bun-run, and symlinked invocation in Bun and Node", async () => {
+    const dir = await directory();
+    const runtimes = [process.execPath, ...(hasNode ? ["node"] : [])];
+    for (const { name, script, usage } of packScripts) {
+      const target = resolve(name);
+      const bunRun = spawnSync(
+        process.execPath,
+        ["run", script, "--invalid-entrypoint-probe"],
+        { encoding: "utf8" },
+      );
+      expect(bunRun.status).not.toBe(0);
+      expect(bunRun.stderr).toMatch(usage);
+
+      let linkPath: string | null = join(
+        dir,
+        `${script.replace(":", "-")}.mjs`,
+      );
+      try {
+        await symlink(target, linkPath, "file");
+      } catch (error) {
+        if (error instanceof Error && "code" in error && error.code === "EPERM")
+          linkPath = null;
+        else throw error;
+      }
+      for (const runtime of runtimes) {
+        for (const entry of linkPath ? [target, linkPath] : [target]) {
+          const result = spawnSync(
+            runtime,
+            [entry, "--invalid-entrypoint-probe"],
+            { encoding: "utf8" },
+          );
+          expect(result.status, `${runtime} ${entry}`).not.toBe(0);
+          expect(result.stderr, `${runtime} ${entry}`).toMatch(usage);
+        }
+      }
+    }
+  });
 });

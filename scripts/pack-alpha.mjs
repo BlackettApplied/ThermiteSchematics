@@ -2,8 +2,9 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { THERMITE_RELEASE_VERSION as version } from "../packages/schema/src/release-version.ts";
+import { isMainModule } from "./entrypoint.mjs";
 
 export function sourceArchiveDescriptor(commit, digest = "") {
   const filename = `thermite-${version}-source-${commit.slice(0, 8)}.zip`;
@@ -28,10 +29,9 @@ export function sourceArchiveDescriptor(commit, digest = "") {
   };
 }
 
-if (
-  process.argv[1] &&
-  import.meta.url === pathToFileURL(resolve(process.argv[1])).href
-) {
+if (isMainModule(import.meta, process.argv[1])) {
+  if (process.argv.slice(2).length)
+    throw new Error("Usage: bun run alpha:pack");
   const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
   const git = (...args) =>
     execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();

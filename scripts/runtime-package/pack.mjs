@@ -26,6 +26,7 @@ import {
 import { assertRuntimePlatform, currentTarget } from "./platform.mjs";
 import { createRuntimeZip } from "./zip.mjs";
 import { extractSafeZipArchive } from "../safe-zip-reader.mjs";
+import { isMainModule } from "../entrypoint.mjs";
 import { verifyRuntimeArchive } from "./verify.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
@@ -69,10 +70,7 @@ export async function buildRuntimeManifest({
   };
 }
 
-if (
-  process.argv[1] &&
-  import.meta.url === pathToFileURL(resolve(process.argv[1])).href
-) {
+if (isMainModule(import.meta, process.argv[1])) {
   const args = process.argv.slice(2);
   if (args.some((arg) => arg !== "--preview"))
     throw new Error("Usage: bun run package:pack [--preview]");
