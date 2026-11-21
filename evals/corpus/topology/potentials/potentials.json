@@ -1,0 +1,18 @@
+{
+  "objects": [
+    {
+      "uid": "b2ed84a8-01d4-5485-a1d2-42673aaf5464",
+      "kind": "potential",
+      "designation": "P1",
+      "name": "+24V",
+      "at": {
+        "device": "PS1",
+        "terminal": "+"
+      },
+      "electrical": {
+        "nominal_voltage": 24,
+        "voltage_type": "DC"
+      }
+    }
+  ]
+}

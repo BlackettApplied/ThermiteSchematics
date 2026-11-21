@@ -120,9 +120,9 @@ def main():
             metadata["pages"] = len(doc)
             text_path = target.with_suffix(".txt")
             text_path.write_text("\n".join(f"\n=== PHYSICAL PDF PAGE {i + 1} ===\n{page.get_text(sort=True)}" for i, page in enumerate(doc)))
-            metadata["textFile"] = str(text_path.relative_to(ROOT))
+            metadata["textFile"] = text_path.relative_to(ROOT).as_posix()
         target.with_suffix(target.suffix + ".metadata.json").write_text(json.dumps(metadata, indent=2) + "\n")
-        print(json.dumps({"file": str(target.relative_to(ROOT)), **metadata}))
+        print(json.dumps({"file": target.relative_to(ROOT).as_posix(), **metadata}))
     else:
         pages = [int(p) for p in args.pages.split(",")]
         maximum_dpi = 600 if args.clip is not None else 180
@@ -148,8 +148,8 @@ def main():
                     clip=fitz.Rect(rect) if args.clip is not None else None,
                 )
                 pixmap.save(output)
-                metadata = {"source": str(source.relative_to(ROOT)), "page": number,
-                            "image": str(output.relative_to(ROOT)), "rect": rect,
+                metadata = {"source": source.relative_to(ROOT).as_posix(), "page": number,
+                            "image": output.relative_to(ROOT).as_posix(), "rect": rect,
                             "dpi": args.dpi, "clipped": args.clip is not None,
                             "width": pixmap.width, "height": pixmap.height,
                             "pixelUpperBound": width * height}

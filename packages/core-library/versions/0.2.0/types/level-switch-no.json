@@ -1,0 +1,32 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:level-switch-no",
+      "description": "Provisional generic normally open dry-contact level switch.",
+      "terminals": {
+        "13": {
+          "role": "no_contact",
+          "required": true
+        },
+        "14": {
+          "role": "no_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact13": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "symbol": "thermite:level-switch",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: The sole dry-contact pair 13/14 is universally required. Normal state is explicitly open at the authored reference condition; project process meaning must be stated by the author. Optional: none in this interface. Unmodeled: extra contacts, powered electronics, shields and bonding. Ratings, process setpoint, wetted materials and safety performance are unspecified. The author must select hardware and record actuation/reference level and ratings; 13/14 follows the existing core NO contact convention, not a manufacturer pinout."
+      }
+    }
+  ]
+}

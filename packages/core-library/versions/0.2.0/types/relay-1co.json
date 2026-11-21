@@ -1,0 +1,67 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:relay-1co",
+      "description": "Provisional generic control relay with an unrated coil and one changeover contact (11 common, 12 NC, 14 NO).",
+      "terminals": {
+        "A1": {
+          "role": "coil",
+          "required": true
+        },
+        "A2": {
+          "role": "coil_return",
+          "required": true
+        },
+        "11": {
+          "role": "common"
+        },
+        "12": {
+          "role": "nc_contact"
+        },
+        "14": {
+          "role": "no_contact"
+        }
+      },
+      "functions": {
+        "coil": {
+          "kind": "coil",
+          "terminals": ["A1", "A2"]
+        },
+        "contact12": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        },
+        "contact14": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["11", "14"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "contact12"
+        },
+        {
+          "relation": "actuates",
+          "from": "coil",
+          "to": "contact14"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "contact12",
+          "to": "contact14"
+        }
+      ],
+      "symbol": "thermite:relay",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: A1/A2 are required for electrical coil actuation. One changeover is represented by NC 11/12 and NO 11/14 sharing the same physical common 11; states refer to a de-energized coil. Relations associate the contacts without joining nets or simulating transfer timing. Optional: each throw by application; require common and each used throw in project review. Unmodeled: additional contacts, suppressors, electronics and bonding. Author must select hardware and add coil voltage, AC/DC class and contact ratings. No manufacturer pinout is asserted."
+      }
+    }
+  ]
+}

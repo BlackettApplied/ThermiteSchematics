@@ -1,0 +1,142 @@
+{
+  "sizes": {
+    "baseline:m1:left-to-right": [1958.259, 452],
+    "baseline:m1:top-to-bottom": [739.79, 1515],
+    "baseline:k1:left-to-right": [1222.4, 419],
+    "baseline:k1:top-to-bottom": [692, 986],
+    "baseline:conductors:left-to-right": [1070.7, 581],
+    "baseline:conductors:top-to-bottom": [991, 626],
+    "baseline:trace:left-to-right": [1810.2, 562],
+    "baseline:trace:top-to-bottom": [949.4, 1422],
+    "baseline:loads:left-to-right": [880.2, 353],
+    "baseline:loads:top-to-bottom": [530.6, 557],
+    "baseline:signal-only-trace:left-to-right": [1576.4, 285],
+    "baseline:signal-only-trace:top-to-bottom": [444, 1162],
+    "pnp:m1:left-to-right": [1958.259, 452],
+    "pnp:m1:top-to-bottom": [739.79, 1515],
+    "pnp:k1:left-to-right": [1222.4, 419],
+    "pnp:k1:top-to-bottom": [692, 986],
+    "pnp:conductors:left-to-right": [1070.7, 581],
+    "pnp:conductors:top-to-bottom": [1022.6, 626],
+    "pnp:trace:left-to-right": [2404.2, 501],
+    "pnp:trace:top-to-bottom": [732.6, 1750],
+    "pnp:loads:left-to-right": [1931.8, 529],
+    "pnp:loads:top-to-bottom": [809.8, 1478],
+    "pnp:signal-only-trace:left-to-right": [1704.6, 315],
+    "pnp:signal-only-trace:top-to-bottom": [498.6, 1170]
+  },
+  "trace": {
+    "left-to-right": {
+      "routes": {
+        "W-FLD-003": [
+          { "x": 1894, "y": 229 },
+          { "x": 1936, "y": 229 },
+          { "x": 1936, "y": 311 },
+          { "x": 2122, "y": 311 },
+          { "x": 2122, "y": 368 },
+          { "x": 2257.4, "y": 368 }
+        ],
+        "CBL1.1-": [
+          { "x": 2277.4, "y": 368 },
+          { "x": 2388.2, "y": 368 },
+          { "x": 2388.2, "y": 465 },
+          { "x": 16, "y": 465 },
+          { "x": 16, "y": 425 },
+          { "x": 694.2, "y": 425 },
+          { "x": 694.2, "y": 405 },
+          { "x": 823.7, "y": 405 }
+        ]
+      },
+      "node": { "x": 1828, "y": 187 },
+      "port": { "x": 1894, "y": 229 },
+      "label": { "x": 1898, "y": 233 }
+    },
+    "top-to-bottom": {
+      "routes": {
+        "W-FLD-003": [
+          { "x": 547.6, "y": 1374 },
+          { "x": 547.6, "y": 1416 },
+          { "x": 348, "y": 1416 },
+          { "x": 348, "y": 1486 },
+          { "x": 218.4, "y": 1486 },
+          { "x": 218.4, "y": 1620 }
+        ],
+        "CBL1.1-": [
+          { "x": 218.4, "y": 1640 },
+          { "x": 218.4, "y": 1734 },
+          { "x": 715.6, "y": 1734 },
+          { "x": 715.6, "y": 16 },
+          { "x": 567.4, "y": 16 },
+          { "x": 567.4, "y": 351 },
+          { "x": 521, "y": 351 },
+          { "x": 521, "y": 485 }
+        ]
+      },
+      "node": { "x": 443.6, "y": 1304 },
+      "port": { "x": 547.6, "y": 1374 },
+      "label": { "x": 551.6, "y": 1378 }
+    }
+  },
+  "controls": {
+    "left-to-right": {
+      "size": [2384.2, 507],
+      "routes": {
+        "W-FLD-003": [
+          { "x": 2284.2, "y": 308 },
+          { "x": 2326.2, "y": 308 },
+          { "x": 2326.2, "y": 81 },
+          { "x": 1753.4, "y": 81 },
+          { "x": 1753.4, "y": 189 },
+          { "x": 1852.8, "y": 189 }
+        ],
+        "CBL1.1-": [
+          { "x": 1872.8, "y": 189 },
+          { "x": 2368.2, "y": 189 },
+          { "x": 2368.2, "y": 471 },
+          { "x": 16, "y": 471 },
+          { "x": 16, "y": 431 },
+          { "x": 694.2, "y": 431 },
+          { "x": 694.2, "y": 411 },
+          { "x": 823.7, "y": 411 }
+        ]
+      },
+      "intersection": { "x": 2326.2, "y": 189 }
+    },
+    "top-to-bottom": {
+      "size": [948.4, 1730],
+      "routes": {
+        "W-FLD-003": [
+          { "x": 523, "y": 1630 },
+          { "x": 523, "y": 1672 },
+          { "x": 214, "y": 1672 },
+          { "x": 214, "y": 1218 },
+          { "x": 366.4, "y": 1218 },
+          { "x": 366.4, "y": 1316 }
+        ],
+        "CBL1.1-": [
+          { "x": 366.4, "y": 1336 },
+          { "x": 366.4, "y": 1378 },
+          { "x": 353.4, "y": 1378 },
+          { "x": 353.4, "y": 1714 },
+          { "x": 931.4, "y": 1714 },
+          { "x": 931.4, "y": 16 },
+          { "x": 819, "y": 16 },
+          { "x": 819, "y": 351 },
+          { "x": 772.6, "y": 351 },
+          { "x": 772.6, "y": 485 }
+        ]
+      },
+      "intersection": { "x": 353.4, "y": 1672 }
+    }
+  },
+  "sideBranches": {
+    "M1|left-to-right|false": "1ea8670d3559bf1e72155a05da9595d4e8e340b8910714b3ba6a70f571537840",
+    "M1|top-to-bottom|false": "6f2ff21ce1256c452958760a64e75b82a8310b2d7cce7d82bfa979664a8786fe",
+    "SRC1|left-to-right|false": "8cc79265f1593c646892dde17f9f6a6c036521fad70dbc31b429884328dc09f8",
+    "SRC1|top-to-bottom|false": "affb864a4a4cb8f55c339f9cadd6c6e4e2e84f1a08a5abecce191da3d6b8f289",
+    "TB1|left-to-right|false": "e34e601ac7fa8033ccec15e0cb3673c4ff9b2740c9d1d59f4ed04d70f53d1477",
+    "TB1|left-to-right|true": "10f2e94c1bc33bb35870bbe9ce9afa9dd4cded252d399e62d084eac6fec02133",
+    "TB1|top-to-bottom|false": "2c0e49f022f3b2e1479a461a998ee540dd5c82255a347cbc585d2b7c38d8091f",
+    "TB1|top-to-bottom|true": "68c9e2cc0ee7d074f5c83bcefe7e8040b9ccc0d4095f9f7d0cf66acbc02b106e"
+  }
+}

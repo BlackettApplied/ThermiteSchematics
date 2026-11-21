@@ -1,0 +1,47 @@
+{
+  "crops": [
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "32d7a2c4308f28dd29777ef49c20f332fd7678b2a1ed6f1a4089195383e2f56a",
+      "headerLines": [
+        "DQ-15/9b81752681e1f109 | SVG | 300 dpi",
+        "machine-demo-left-to-right | sheet:7 | physical page 7",
+        "Report instance e0956a86f1684c6b85e376c28062aecba04025e41463741a06d9464f94c6e1a2",
+        "Text CBL1"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 48.25,
+        "w": 205.5,
+        "x": 47.37,
+        "y": 112.25
+      },
+      "markerId": "DQ-15/9b81752681e1f109",
+      "path": "evals/out/draw-samples/REP-P1/entry-0531.png",
+      "physicalSheet": 7,
+      "reportSha256": "72fe6e96d473b9e81f66d4c1b153b63963cc7087989259795f747b0dd4450d0e",
+      "retained": "crops/entry-0531.png",
+      "row": "machine-demo-left-to-right/DQ-15/sheet-007",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "sha256": "72a6d1ab67a05f11a2031db8043188180ae0f2e75ae14ee9b08c2d15d0a5bf37",
+      "sourceBbox": {
+        "h": 54.25,
+        "w": 211.5,
+        "x": 44.37,
+        "y": 109.25
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-007.svg",
+        "svgSha256": "63ae05c832c57db91010217370cd100c063de47df73f18e49c9160d28dd4857f"
+      },
+      "text": "CBL1",
+      "token": "e0956a86f1684c6b85e376c28062aecba04025e41463741a06d9464f94c6e1a2"
+    }
+  ],
+  "format": "thermite-draw-crop-index/2.0"
+}

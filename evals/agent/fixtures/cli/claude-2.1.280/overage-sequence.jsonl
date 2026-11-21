@@ -1,0 +1,2 @@
+{"type":"rate_limit_event","rate_limit_info":{"status":"rejected","resetsAt":4102444800,"isUsingOverage":true,"overageStatus":"allowed"}}
+{"type":"result","is_error":true,"subtype":"error_max_turns","errors":["Synthetic maximum turns reached"]}

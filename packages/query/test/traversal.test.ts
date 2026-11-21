@@ -431,10 +431,13 @@ describe("D8 conductive traversal and device trace", () => {
       ok: false,
       error: {
         code: "Q004",
-        message: 'Device "SUB" has no terminal "missing".',
+        message:
+          'Device "SUB" has no terminal "missing". Declared terminal keys: ["ISO", "R1", "R2", "S"].',
         input: "missing",
         deviceDesignation: "SUB",
         terminalKey: "missing",
+        allowed: ["ISO", "R1", "R2", "S"],
+        allowedCount: 4,
       },
     });
     expect(engine.followConductive([])).toEqual({ ok: true, value: [] });

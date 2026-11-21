@@ -1,15 +1,14 @@
+import { sourceRef } from "./source-ref.js";
 import { createHash } from "node:crypto";
 
 import {
   appendJsonPointer,
-  normalizeDiagnosticFile,
   type CableType,
   type Device,
   type DeviceFunction,
   type ValidatedDeviceType,
 } from "@thermite/schema";
 
-import type { LoadedDocument } from "./loader.js";
 import type {
   InstanceTypeResolution,
   LibraryTypeCatalogEntry,
@@ -105,8 +104,10 @@ export interface IrCableType {
 }
 
 export interface IrDevice {
+  nonProcurement?: Device["nonProcurement"];
   connectionReview?: Device["connectionReview"];
   io?: Device["io"];
+  connectorIo?: Device["connectorIo"];
   uid: string;
   designation: string;
   typeId: string;
@@ -213,19 +214,6 @@ function compareSourceRef(left: SourceRef, right: SourceRef): number {
 
 function sameSourceRef(left: SourceRef, right: SourceRef): boolean {
   return compareSourceRef(left, right) === 0;
-}
-
-function sourceRef(
-  document: LoadedDocument<unknown>,
-  jsonPointer: string,
-): SourceRef {
-  const location = document.nodes.get(jsonPointer)?.value;
-  return {
-    file: normalizeDiagnosticFile(document.file),
-    line: location?.line ?? 1,
-    column: location?.column ?? 1,
-    jsonPointer,
-  };
 }
 
 function typePointer(entry: LibraryTypeCatalogEntry): string {
@@ -506,10 +494,16 @@ function materializeDevice(
     uid: instance.uid,
     designation: instance.designation,
     typeId: type.id,
+    ...(instance.nonProcurement === undefined
+      ? {}
+      : { nonProcurement: structuredClone(instance.nonProcurement) }),
     ...(instance.connectionReview === undefined
       ? {}
       : { connectionReview: structuredClone(instance.connectionReview) }),
     ...(instance.io === undefined ? {} : { io: structuredClone(instance.io) }),
+    ...(instance.connectorIo === undefined
+      ? {}
+      : { connectorIo: structuredClone(instance.connectorIo) }),
     ...(instance.description === undefined
       ? {}
       : { description: instance.description }),

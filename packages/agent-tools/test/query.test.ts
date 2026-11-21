@@ -1,3 +1,4 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import { dirname, resolve as resolvePath } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -177,7 +178,7 @@ describe("D6 closed graph-query dispatcher", () => {
       }).query(request(query));
       expect(outcome).toEqual({
         ok: true,
-        diagnostics: [],
+        diagnostics: motorDiagnostics,
         value: directResult.value,
       });
       if (!outcome.ok) throw new Error("Expected graph-query success.");
@@ -341,10 +342,13 @@ describe("D6 query error parity", () => {
           }),
         expected: {
           code: "Q004",
-          message: 'Device "LS1" has no terminal "MISSING".',
+          message:
+            'Device "LS1" has no terminal "MISSING". Declared terminal keys: ["13", "14"].',
           input: "MISSING",
           deviceDesignation: "LS1",
           terminalKey: "MISSING",
+          allowed: ["13", "14"],
+          allowedCount: 2,
         },
       },
     ];
@@ -360,7 +364,7 @@ describe("D6 query error parity", () => {
       }).query(request(query));
       expect(outcome).toEqual({
         ok: false,
-        diagnostics: [],
+        diagnostics: motorDiagnostics,
         error: expected,
         failureClass: "expected",
       });
@@ -449,9 +453,11 @@ describe("D6/D11 request closure and selector validation", () => {
         error: {
           code: "A001",
           message:
-            'A001 Invalid query request at "/query/operation": unsupported value.',
+            'A001 Invalid query request at "/query/operation": unsupported value; allowed values: ["neighbors", "trace", "cable", "net"].',
           field: "/query/operation",
           reason: "unsupported-value",
+          allowed: ["neighbors", "trace", "cable", "net"],
+          allowedCount: 4,
         },
         failureClass: "expected",
       });

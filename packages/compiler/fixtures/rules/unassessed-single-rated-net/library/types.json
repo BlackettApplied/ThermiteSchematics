@@ -1,0 +1,18 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "assessment:node",
+      "terminals": {
+        "A1": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "other": {}
+      },
+      "functions": {}
+    }
+  ]
+}

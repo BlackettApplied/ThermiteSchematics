@@ -1,0 +1,46 @@
+{
+  "codex-cli 0.164.0": [
+    {
+      "id": "usage-plus",
+      "kind": "quota",
+      "code": "usage_limit_reached",
+      "pattern": "^You’ve hit your usage limit\\. Upgrade to Pro \\(https://chatgpt\\.com/explore/pro\\), visit https://chatgpt\\.com/settings/usage to purchase more credits or try again (?:at (?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?:[1-9]|[12][0-9]|3[01])(?:st|nd|rd|th), [0-9]{4} )?(?:[1-9]|1[0-2]):[0-5][0-9] (?:AM|PM)|later)\\.$"
+    },
+    {
+      "id": "usage-pro",
+      "kind": "quota",
+      "code": "usage_limit_reached",
+      "pattern": "^You’ve hit your usage limit\\. Visit https://chatgpt\\.com/settings/usage to purchase more credits or try again (?:at (?:(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?:[1-9]|[12][0-9]|3[01])(?:st|nd|rd|th), [0-9]{4} )?(?:[1-9]|1[0-2]):[0-5][0-9] (?:AM|PM)|later)\\.$"
+    },
+    {
+      "id": "usage-not-included",
+      "kind": "quota",
+      "code": "usage_not_included",
+      "pattern": "^To use Codex with your ChatGPT plan, upgrade to Plus: https://chatgpt\\.com/explore/plus\\.$"
+    },
+    {
+      "id": "billing",
+      "kind": "billing",
+      "code": "insufficient_quota",
+      "pattern": "^Quota exceeded\\. Check your plan and billing details\\.$"
+    },
+    {
+      "id": "stream-closed",
+      "kind": "network",
+      "code": "stream_disconnected",
+      "pattern": "^stream disconnected before completion: stream closed before response\\.completed$"
+    },
+    {
+      "id": "content-filter",
+      "kind": "agent",
+      "code": "content_filter",
+      "pattern": "^stream disconnected before completion: Incomplete response returned, reason: content_filter$"
+    },
+    {
+      "id": "http-429",
+      "kind": "rate-limit",
+      "code": "rate_limit_exceeded",
+      "pattern": "^exceeded retry limit, last status: 429 Too Many Requests(?:, request id: [A-Za-z0-9_-]{1,256})?$"
+    }
+  ]
+}

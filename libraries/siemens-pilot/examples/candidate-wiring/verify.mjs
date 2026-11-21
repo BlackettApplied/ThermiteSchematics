@@ -8,10 +8,19 @@ import { renderSchematicPacket } from "@thermite/render";
 
 const project = dirname(fileURLToPath(import.meta.url));
 const compiled = await compileProject(project);
-assert.equal(compiled.ok, true);
+assert.equal(compiled.ok, true, JSON.stringify(compiled.diagnostics));
 assert.deepEqual(
-  compiled.diagnostics.map((d) => d.code).sort(),
-  Array(5).fill("W904"),
+  compiled.diagnostics
+    .filter((d) => d.severity !== "info")
+    .map((d) => `${d.severity}:${d.code}`),
+  Array(5).fill("warning:W904"),
+);
+assert.deepEqual(
+  compiled.diagnostics
+    .filter((d) => d.severity === "info")
+    .map((d) => d.code)
+    .sort(),
+  ["I304", "I305"],
 );
 for (const [tag, terminalCount, portCount] of [
   ["CPU", 38, 2],
@@ -49,9 +58,13 @@ const packet = await renderSchematicPacket(
   JSON.parse(await readFile(join(project, "packet.json"), "utf8")),
 );
 assert.equal(packet.ok, true);
-assert.equal(packet.value.sheets.length, 2);
-assert(packet.value.sheets[1].svg.includes("X10.4"));
-assert(packet.value.sheets[1].svg.includes("X10.5"));
+const [power, thermocouple, ...companions] = packet.value.sheets;
+assert.equal(power?.view.kind, "wiring");
+assert.equal(thermocouple?.view.kind, "wiring");
+assert.equal(companions.length, 5);
+assert(companions.every((sheet) => sheet.view.kind === "terminals"));
+assert(thermocouple.svg.includes("X10.4"));
+assert(thermocouple.svg.includes("X10.5"));
 
 const scratch = await mkdtemp(join(tmpdir(), "thermite-siemens-candidates-"));
 try {
@@ -79,5 +92,5 @@ try {
   await rm(scratch, { recursive: true, force: true });
 }
 console.log(
-  "Verified three candidate inventories, distinct physical nets, two rendered sheets, required-power diagnostics and library-byte lock enforcement.",
+  "Verified three candidate inventories, distinct physical nets, two wiring sheets with terminal inventories, required-power diagnostics and library-byte lock enforcement.",
 );

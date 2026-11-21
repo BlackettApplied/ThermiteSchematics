@@ -1,0 +1,124 @@
+{
+  "objects": [
+    {
+      "uid": "20000000-0000-4000-8000-000000000129",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000130",
+      "kind": "device",
+      "designation": "K1",
+      "type": "core:contactor-3p-1no"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000131",
+      "kind": "device",
+      "designation": "F1",
+      "type": "core:fuse-1p"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000132",
+      "kind": "device",
+      "designation": "S1",
+      "type": "core:pushbutton-nc"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000133",
+      "kind": "device",
+      "designation": "S2",
+      "type": "core:pushbutton-nc"
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000134",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "F1",
+          "terminal": "1/L1"
+        }
+      ]
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000135",
+      "kind": "wire",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "F1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "K1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000136",
+      "kind": "wire",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "S1",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000137",
+      "kind": "wire",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "S1",
+          "terminal": "12"
+        },
+        {
+          "device": "S2",
+          "terminal": "11"
+        }
+      ]
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000138",
+      "kind": "wire",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "S2",
+          "terminal": "12"
+        },
+        {
+          "device": "K1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "20000000-0000-4000-8000-000000000139",
+      "kind": "wire",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "A2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "-"
+        }
+      ]
+    }
+  ]
+}

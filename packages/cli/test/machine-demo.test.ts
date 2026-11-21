@@ -1,11 +1,19 @@
 import { spawn, execFile as execCallback } from "node:child_process";
 import { promisify } from "node:util";
+import { readFileSync } from "node:fs";
 import { mkdtemp, cp, readFile, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import vm from "node:vm";
 import { parseHTML } from "linkedom";
-import { afterEach, describe, expect, it } from "vitest";
+import {
+  afterEach,
+  describe,
+  expect,
+  it,
+  onTestFailed,
+  onTestFinished,
+} from "vitest";
 import { compileProject, lockProject } from "@thermite/compiler";
 import {
   buildDocumentation,
@@ -56,11 +64,13 @@ describe("Machine documentation pilot", () => {
     const io = buildDocumentation(ir, request("io"));
     expect(io.rows).toHaveLength(32);
     expect(
-      io.rows.find((r) => r.cells[0] === "PLC1" && r.cells[1] === "di0")?.cells,
+      io.rows.find(
+        (r) => r.cells[0] === "PLC1" && JSON.parse(r.key)[1] === "di0",
+      )?.cells,
     ).toContain("I0.0");
     expect(
       io.rows
-        .find((r) => r.cells[0] === "RIO2" && r.cells[1] === "do7")
+        .find((r) => r.cells[0] === "RIO2" && JSON.parse(r.key)[1] === "do7")
         ?.cells.at(-1),
     ).toBe("spare; unconnected");
     expect(buildDocumentation(ir, request("terminals")).rows).toHaveLength(16);
@@ -168,7 +178,7 @@ describe("Machine documentation pilot", () => {
     expect(csv).toContain('"a,""b""\nc"');
     expect(row.cells[0]).toBe("=1+1");
   });
-  it("reduces page count with complete function references and paired continuations, deterministically", async () => {
+  it("composes cards with complete function references and paired continuations, deterministically", async () => {
     const c = await compile();
     const packet = {
       format: "schematic-packet-request/0.1" as const,
@@ -182,7 +192,7 @@ describe("Machine documentation pilot", () => {
       );
     if (!baseline.ok || !compact.ok)
       throw new Error(JSON.stringify({ baseline, compact }));
-    expect(compact.value.sheets.length).toBeLessThan(
+    expect(compact.value.sheets.length).toBeLessThanOrEqual(
       baseline.value.sheets.length,
     );
     const refs = (s: typeof baseline.value.sheets) =>
@@ -194,7 +204,11 @@ describe("Machine documentation pilot", () => {
         ),
       ].sort();
     expect(refs(compact.value.sheets)).toEqual(refs(baseline.value.sheets));
-    expect(compact.value.sheets[0]!.svg).toContain("Folded circuit sections");
+    expect(
+      compact.value.sheets.every((s) =>
+        s.svg.includes("data-selected-view-notice"),
+      ),
+    ).toBe(true);
     const links = compact.value.sheets.flatMap((p) => p.continuations);
     for (const l of links)
       expect(links.filter((x) => x.id === l.id)).toHaveLength(2);
@@ -208,22 +222,21 @@ describe("Machine documentation pilot", () => {
       ),
     ).toEqual(compact);
   });
-  it("recovers a vertical continuation collision without changing flow or dropping functions", async () => {
+  it("keeps vertical card layouts complete in standard and compact mode", async () => {
     const c = await compile();
     const packet = {
       format: "schematic-packet-request/0.1" as const,
       views: [{ ...power, flow: "top-to-bottom" as const }],
     };
     const baseline = await renderSchematicPacket(c.ir, packet, c.presentation);
-    expect(baseline.ok).toBe(false);
-    if (!baseline.ok) expect(baseline.error.code).toBe("R006");
+    expect(baseline.ok, JSON.stringify(baseline)).toBe(true);
     const result = await renderSchematicPacket(
       c.ir,
       { ...packet, layout: "compact" },
       c.presentation,
     );
     if (!result.ok) throw new Error(result.error.message);
-    expect(result.value.sheets).toHaveLength(2);
+    expect(result.value.sheets).toHaveLength(1);
     const designations = new Set(
       result.value.sheets.flatMap((s) =>
         s.references.map((r) => r.designation),
@@ -347,7 +360,10 @@ describe("Machine documentation pilot", () => {
       "-o",
       csv,
     ]);
-    expect(JSON.parse(out.stderr).diagnostics).toEqual([]);
+    expect(JSON.parse(out.stderr).diagnostics).toMatchObject([
+      { code: "I304", severity: "info" },
+      { code: "I305", severity: "info" },
+    ]);
     expect(await readFile(csv, "utf8")).toContain("I0.0");
     await exec(process.execPath, [
       cli,
@@ -395,21 +411,60 @@ describe("Machine documentation pilot", () => {
       ],
       { stdio: ["ignore", "pipe", "pipe"] },
     );
+    const stop = async () => {
+      if (
+        child.exitCode !== null ||
+        child.signalCode !== null ||
+        child.pid === undefined
+      )
+        return;
+      const exited = new Promise<void>((resolveExit) =>
+        child.once("exit", () => resolveExit()),
+      );
+      child.kill("SIGTERM");
+      await exited;
+    };
+    // The test body's finally does not run when Vitest times out a pending wait.
+    onTestFinished(stop);
     let log = "";
+    onTestFailed(() => console.error(`Watch child stdout/stderr:\n${log}`));
     child.stdout.on("data", (c) => {
       log += c;
     });
     child.stderr.on("data", (c) => {
       log += c;
     });
-    const waitFor = async (predicate: () => boolean) => {
-      const deadline = Date.now() + 15000;
-      while (!predicate()) {
-        if (child.exitCode !== null || Date.now() > deadline)
-          throw new Error(log);
-        await new Promise((r) => setTimeout(r, 30));
-      }
-    };
+    // Output events acknowledge completed render/validation work. The outer
+    // Vitest timeout is the sole watchdog, shared with other integration tests.
+    const waitFor = (predicate: () => boolean) =>
+      new Promise<void>((resolveWait, reject) => {
+        const cleanup = () => {
+          child.stdout.off("data", check);
+          child.stderr.off("data", check);
+          child.off("close", closed);
+          child.off("error", failed);
+        };
+        const check = () => {
+          if (predicate()) {
+            cleanup();
+            resolveWait();
+          }
+        };
+        const closed = () => {
+          cleanup();
+          reject(new Error(`Watch exited before acknowledgement:\n${log}`));
+        };
+        const failed = (error: Error) => {
+          cleanup();
+          reject(error);
+        };
+        child.stdout.on("data", check);
+        child.stderr.on("data", check);
+        child.once("close", closed);
+        child.once("error", failed);
+        check();
+        if (child.exitCode !== null || child.signalCode !== null) closed();
+      });
     try {
       await waitFor(() => log.includes("Wrote"));
       const first = await readFile(output),
@@ -417,20 +472,23 @@ describe("Machine documentation pilot", () => {
         original = await readFile(source, "utf8");
       await writeFile(source, "{");
       await waitFor(() => log.includes('"E002"'));
-      expect(await readFile(output)).toEqual(first);
+      expect(Buffer.compare(await readFile(output), first)).toBe(0);
       const data = JSON.parse(original);
       data.objects.find(
         (o: any) => o.designation === "PLC1",
       ).io.channels.di0.signal = "Updated watch signal";
       await writeFile(source, JSON.stringify(data));
-      await waitFor(() => (log.match(/Wrote/g) ?? []).length >= 2);
-      expect(await readFile(output, "utf8")).toContain("Updated watch signal");
+      // Watch can report another successful render before observing this edit.
+      // Wait for the actual edited content, not an incidental write count.
+      await waitFor(() =>
+        readFileSync(output, "utf8").includes("Updated watch signal"),
+      );
+      expect(
+        (await readFile(output, "utf8")).includes("Updated watch signal"),
+        log,
+      ).toBe(true);
     } finally {
-      child.kill("SIGTERM");
-      await new Promise<void>((r) => {
-        if (child.exitCode !== null) r();
-        else child.once("exit", () => r());
-      });
+      await stop();
     }
   });
 });

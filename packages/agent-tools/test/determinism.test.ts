@@ -1,5 +1,5 @@
 import { execFile } from "node:child_process";
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import { promisify } from "node:util";
@@ -227,7 +227,37 @@ describe("D12 complete read-tool determinism", () => {
         experiment.baselineProjectFiles,
       );
       const shuffled = await runSequentially(tools, READ_TOOL_ORDER);
-      expect(shuffled).toEqual(baseline);
+      // Reordering manifest keys moves the authored /project location. Derive
+      // that new position from the source bytes, while keeping every result,
+      // summary, net ID and related rating location byte-identical.
+      const manifest = await readFile(
+        join(experiment.projectRoot, "system.json"),
+        "utf8",
+      );
+      const projectKey = /"project":\s*/u.exec(manifest)!;
+      const prefix = manifest
+        .slice(0, projectKey.index + projectKey[0].length)
+        .split("\n");
+      const expected = new Map(
+        [...baseline].map(([tool, bytes]) => {
+          const boundary = bytes.indexOf("\n{") + 1;
+          expect(boundary).toBeGreaterThan(0);
+          const report = JSON.parse(bytes.slice(boundary));
+          expect(report.diagnostics).toHaveLength(1);
+          expect(report.diagnostics[0]).toMatchObject({
+            code: "I305",
+            file: "system.json",
+            jsonPointer: "/project",
+          });
+          report.diagnostics[0].line = prefix.length;
+          report.diagnostics[0].column = prefix.at(-1)!.length + 1;
+          return [
+            tool,
+            bytes.slice(0, boundary) + JSON.stringify(report, null, 2) + "\n",
+          ] as const;
+        }),
+      );
+      expect(shuffled).toEqual(expected);
 
       const allBytes = [...baseline.values(), ...shuffled.values()].join("");
       expect(allBytes).not.toContain(experiment.root);

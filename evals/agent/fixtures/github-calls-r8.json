@@ -1,0 +1,1109 @@
+[
+  {
+    "label": "r8 review 1",
+    "event": {
+      "name": "command_execution",
+      "input": "npx degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read",
+    "reviewerInput": 1
+  },
+  {
+    "label": "r8 review 2",
+    "event": {
+      "name": "command_execution",
+      "input": "bun x degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read",
+    "reviewerInput": 2
+  },
+  {
+    "label": "r8 review 3",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --yes degit github:BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read",
+    "reviewerInput": 3
+  },
+  {
+    "label": "r8 review 4",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\").then(r=>r.text()).then(console.log)'"
+    },
+    "class": "source-read",
+    "reviewerInput": 4
+  },
+  {
+    "label": "r8 review 5",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; print(requests.get(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\").text)'"
+    },
+    "class": "source-read",
+    "reviewerInput": 5
+  },
+  {
+    "label": "r8 review 6",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api --help"
+    },
+    "class": "other",
+    "reviewerInput": 6
+  },
+  {
+    "label": "r8 review 7",
+    "event": {
+      "name": "command_execution",
+      "input": "gh help issue view"
+    },
+    "class": "other",
+    "reviewerInput": 7
+  },
+  {
+    "label": "r8 review 8",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive HEAD -o /tmp/project-snapshot.tar"
+    },
+    "class": "other",
+    "reviewerInput": 8
+  },
+  {
+    "label": "r8 acquisition degit",
+    "event": {
+      "name": "command_execution",
+      "input": "degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition npx --yes degit",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --yes degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bunx degit",
+    "event": {
+      "name": "command_execution",
+      "input": "bunx degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bun x degit",
+    "event": {
+      "name": "command_execution",
+      "input": "bun x degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition pnpm dlx degit",
+    "event": {
+      "name": "command_execution",
+      "input": "pnpm dlx degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition yarn dlx degit",
+    "event": {
+      "name": "command_execution",
+      "input": "yarn dlx degit BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition npx --yes tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --yes tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bunx tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "bunx tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bun x tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "bun x tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition pnpm dlx tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "pnpm dlx tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition yarn dlx tiged",
+    "event": {
+      "name": "command_execution",
+      "input": "yarn dlx tiged BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition giget",
+    "event": {
+      "name": "command_execution",
+      "input": "giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition npx --yes giget",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --yes giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bunx giget",
+    "event": {
+      "name": "command_execution",
+      "input": "bunx giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition bun x giget",
+    "event": {
+      "name": "command_execution",
+      "input": "bun x giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition pnpm dlx giget",
+    "event": {
+      "name": "command_execution",
+      "input": "pnpm dlx giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 acquisition yarn dlx giget",
+    "event": {
+      "name": "command_execution",
+      "input": "yarn dlx giget BlackettApplied/ThermiteSchematics /tmp/engine-copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target github:o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged github:o/r evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target gh:o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged gh:o/r evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target gitlab:o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged gitlab:o/r evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target https://gitlab.com/o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged https://gitlab.com/o/r evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target https://github.com/o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged https://github.com/o/r evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository target git@github.com:o/r.git",
+    "event": {
+      "name": "command_execution",
+      "input": "tiged git@github.com:o/r.git evidence/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural npx --package degit degit o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --package degit degit o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural npx --package=degit degit o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --package=degit degit o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural bunx --bun degit@latest o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "bunx --bun degit@latest o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural giget gh:o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "giget gh:o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural gh repo clone o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "gh repo clone o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural git clone https://github.com/o/r /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "git clone https://github.com/o/r /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural git clone git@gitlab.com:o/r.git /tmp/copy",
+    "event": {
+      "name": "command_execution",
+      "input": "git clone git@gitlab.com:o/r.git /tmp/copy"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository natural git -C /tmp clone https://github.com/o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "git -C /tmp clone https://github.com/o/r"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 repository local degit --help",
+    "event": {
+      "name": "command_execution",
+      "input": "degit --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local npx --yes degit --help",
+    "event": {
+      "name": "command_execution",
+      "input": "npx --yes degit --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local bunx --version",
+    "event": {
+      "name": "command_execution",
+      "input": "bunx --version"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local git status --short",
+    "event": {
+      "name": "command_execution",
+      "input": "git status --short"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local git diff -- archive",
+    "event": {
+      "name": "command_execution",
+      "input": "git diff -- archive"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local echo npx degit o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "echo npx degit o/r"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 repository local bun evidence/setup.ts",
+    "event": {
+      "name": "command_execution",
+      "input": "bun evidence/setup.ts"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://gitlab.com/o/r/-/raw/main/src/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/src/x.ts"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://example.com/source.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://example.com/source.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://example.com/source.ts"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367?plain=1"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://api.github.com/repos/o/r/issues/1/comments\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://api.github.com/repos/o/r/issues/1/comments\")'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0,
+    "curlEquivalent": "https://api.github.com/repos/o/r/issues/1/comments"
+  },
+  {
+    "label": "r8 literal node fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 literal bun await fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'await fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 literal deno await fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "deno eval 'await fetch(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 literal python3 import requests; requests.get(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import requests; requests.get(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 literal python3 import urllib.request; urllib.request.urlopen(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 -c 'import urllib.request; urllib.request.urlopen(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 literal node require(\"https\").get(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"https\").get(\"https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1,
+    "curlEquivalent": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/libraries/field-interfaces/library.json"
+  },
+  {
+    "label": "r8 heredoc bun",
+    "event": {
+      "name": "command_execution",
+      "input": "bun - <<'PY'\nconsole.log(await (await fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")).text())\nPY"
+    },
+    "class": "issue-lookup",
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 heredoc node",
+    "event": {
+      "name": "command_execution",
+      "input": "node - <<'PY'\nfetch(\"https://gitlab.com/o/r/-/raw/main/x.ts\")\nPY"
+    },
+    "class": "source-read",
+    "curlEquivalent": "https://gitlab.com/o/r/-/raw/main/x.ts"
+  },
+  {
+    "label": "r8 heredoc python3",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 - <<'PY'\nimport requests\nprint(requests.get(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\").text)\nPY"
+    },
+    "class": "issue-lookup",
+    "curlEquivalent": "https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+  },
+  {
+    "label": "r8 dynamic or options fetch(process.env.URL)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(process.env.URL)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(\"https://raw.github\"+\"usercontent.com/o/r/main/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://raw.github\"+\"usercontent.com/o/r/main/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\" + \"/../blob\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\" + \"/../blob\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\"); fetch(target)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\"); fetch(target)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\", {headers:{Accept:\"application/vnd.github.diff\"}})",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\", {headers:{Accept:\"application/vnd.github.diff\"}})'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options requests.post(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'requests.post(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(`https://${host}/source`)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(`https://${host}/source`)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 dynamic or options fetch(\"https://example.com/\" + name)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://example.com/\" + name)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 mixed issue and source APIs",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://github.com/3MUl0R/ThermiteSchematics/issues/367\"); fetch(\"https://gitlab.com/o/r/-/raw/main/x.ts\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r8 local help or archive gh --help",
+    "event": {
+      "name": "command_execution",
+      "input": "gh --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh -h",
+    "event": {
+      "name": "command_execution",
+      "input": "gh -h"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh api -h",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -h"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh issue view --help",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh repo clone --help",
+    "event": {
+      "name": "command_execution",
+      "input": "gh repo clone --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh api https://github.com/o/r/contents/src --help",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api https://github.com/o/r/contents/src --help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive /opt/bin/gh help api",
+    "event": {
+      "name": "command_execution",
+      "input": "/opt/bin/gh help api"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive gh help issue view",
+    "event": {
+      "name": "command_execution",
+      "input": "gh help issue view"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git help",
+    "event": {
+      "name": "command_execution",
+      "input": "git help"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git help archive",
+    "event": {
+      "name": "command_execution",
+      "input": "git help archive"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git -C /tmp help clone",
+    "event": {
+      "name": "command_execution",
+      "input": "git -C /tmp help clone"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git archive HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive HEAD"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git archive --format=zip -o evidence/local.zip HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive --format=zip -o evidence/local.zip HEAD"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git -C /tmp archive HEAD -o /tmp/out.tar",
+    "event": {
+      "name": "command_execution",
+      "input": "git -C /tmp archive HEAD -o /tmp/out.tar"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 local help or archive git archive HEAD --output=github.com.tar",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive HEAD --output=github.com.tar"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r8 remote stays closed git archive --remote=https://github.com/o/r.git HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive --remote=https://github.com/o/r.git HEAD"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 remote stays closed git archive --remote git@github.com:o/r.git HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive --remote git@github.com:o/r.git HEAD"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 remote stays closed git -C /tmp archive --remote=ssh://git@gitlab.com/o/r HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git -C /tmp archive --remote=ssh://git@gitlab.com/o/r HEAD"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 remote stays closed gh api repos/o/r/contents/src",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/o/r/contents/src"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 remote stays closed gh issue view 1 -R o/r",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view 1 -R o/r"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r8 remote stays closed gh api -- https://github.com/o/r/contents/--help",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -- https://github.com/o/r/contents/--help"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r8 literal module or canonical host require(\"node:https\").get(\"https://github.com/o/r/issues/1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'require(\"node:https\").get(\"https://github.com/o/r/issues/1\")'"
+    },
+    "class": "issue-lookup",
+    "curlEquivalent": "https://github.com/o/r/issues/1"
+  },
+  {
+    "label": "r8 literal module or canonical host import https from \"node:https\"; https.get(\"https://github.com/o/r/pull/1\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'import https from \"node:https\"; https.get(\"https://github.com/o/r/pull/1\")'"
+    },
+    "class": "issue-lookup",
+    "curlEquivalent": "https://github.com/o/r/pull/1"
+  },
+  {
+    "label": "r8 literal module or canonical host fetch(\"https://raw.git\thubusercontent.com/o/r/main/x.ts\")",
+    "event": {
+      "name": "command_execution",
+      "input": "node -e 'fetch(\"https://raw.git\thubusercontent.com/o/r/main/x.ts\")'"
+    },
+    "class": "source-read",
+    "curlEquivalent": "https://raw.git\thubusercontent.com/o/r/main/x.ts"
+  }
+]

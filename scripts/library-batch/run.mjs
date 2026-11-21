@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 import {
   closeSync,
   existsSync,
@@ -17,8 +17,8 @@ import { spawn } from "node:child_process";
 import { createHash, randomUUID } from "node:crypto";
 import { isAbsolute, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { setTimeout as delay } from "node:timers/promises";
 import { createAjv2020, parseJson } from "@thermite/schema";
+import { createChildProcessGroup, groupAlive } from "./process-group.mjs";
 
 const terminalSuccess = new Set(["completed", "needs-evidence"]);
 const artifactNames = [
@@ -124,16 +124,66 @@ function readLimits(path) {
   return { claude: limits.claude, codex: limits.codex };
 }
 
-function atomicJson(path, value) {
+function refreshLimits(path, status, save) {
+  let next;
+  try {
+    next = readLimits(path);
+  } catch (error) {
+    const message = `Ignoring invalid limits file; retaining last valid limits: ${error.message}`;
+    if (status.limitsFile.warning?.message !== message) {
+      status.limitsFile.warning = { message, at: now() };
+      process.stderr.write(`library-batch: ${message}\n`);
+      save();
+    }
+    return;
+  }
+  if (
+    next.claude !== status.concurrency.claude ||
+    next.codex !== status.concurrency.codex ||
+    status.limitsFile.warning
+  ) {
+    status.concurrency = next;
+    status.limitsFile.updatedAt = now();
+    status.limitsFile.warning = null;
+    save();
+  }
+}
+
+function atomicJson(
+  path,
+  value,
+  { renameStatus = renameSync, statusPlatform = process.platform } = {},
+) {
   const temporary = `${path}.${process.pid}.${randomUUID()}.tmp`;
   const fd = openSync(temporary, "wx", 0o600);
   try {
-    writeFileSync(fd, `${JSON.stringify(value, null, 2)}\n`);
-    fsyncSync(fd);
-  } finally {
-    closeSync(fd);
+    try {
+      writeFileSync(fd, `${JSON.stringify(value, null, 2)}\n`);
+      fsyncSync(fd);
+    } finally {
+      closeSync(fd);
+    }
+    for (let attempt = 0; ; attempt++) {
+      try {
+        renameStatus(temporary, path);
+        return;
+      } catch (error) {
+        // Windows readers and scanners can briefly block atomic replacement.
+        if (
+          statusPlatform !== "win32" ||
+          !["EACCES", "EBUSY", "EPERM"].includes(error.code) ||
+          attempt === 9
+        )
+          throw error;
+        Bun.sleepSync(Math.min(25 * (attempt + 1), 100));
+      }
+    }
+  } catch (error) {
+    try {
+      unlinkSync(temporary);
+    } catch {}
+    throw error;
   }
-  renameSync(temporary, path);
 }
 
 function alive(pid) {
@@ -372,22 +422,13 @@ function archivePrevious(job, previousAttempt) {
   return destination;
 }
 
-function groupAlive(pid) {
-  try {
-    process.kill(process.platform === "win32" ? pid : -pid, 0);
-    return true;
-  } catch (error) {
-    return error.code !== "ESRCH";
-  }
-}
-
-function signalGroup(pid, signal) {
-  if (!pid) return;
-  try {
-    process.kill(process.platform === "win32" ? pid : -pid, signal);
-  } catch (error) {
-    if (error.code !== "ESRCH") throw error;
-  }
+function failureDiagnostics(error, group) {
+  return [
+    ...new Set([
+      ...[error, ...(group?.errors ?? [])].map((item) => item.message),
+      ...(group?.notes ?? []),
+    ]),
+  ];
 }
 
 async function runJob(job, record, options, save, control) {
@@ -417,17 +458,15 @@ async function runJob(job, record, options, save, control) {
   };
   save();
   let child;
+  let group;
   let timedOut = false;
   let stopped = false;
-  let killTimer;
   let timeout;
   const fds = [];
   const stop = (reason) => {
     if (reason === "timed-out") timedOut = true;
     else stopped = true;
-    if (!child?.pid) return;
-    signalGroup(child.pid, "SIGTERM");
-    killTimer ??= setTimeout(() => signalGroup(child.pid, "SIGKILL"), 1500);
+    group?.stop();
   };
   control.cancel = stop;
   try {
@@ -440,6 +479,7 @@ async function runJob(job, record, options, save, control) {
       detached: process.platform !== "win32",
       stdio: fds,
     });
+    group = createChildProcessGroup(child.pid, control.groupDependencies);
     const completion = new Promise((resolveCompletion) => {
       child.once("error", (error) =>
         resolveCompletion({ code: null, signal: null, error: error.message }),
@@ -454,15 +494,12 @@ async function runJob(job, record, options, save, control) {
       () => stop("timed-out"),
       options.timeoutMinutes * 60_000,
     );
-    const outcome = await completion;
+    const outcome = await Promise.race([completion, group.failure]);
     clearTimeout(timeout);
     // A worker may have exited while leaving its own descendants behind.
-    if (child.pid && groupAlive(child.pid)) {
-      signalGroup(child.pid, "SIGTERM");
-      await delay(1000);
-      signalGroup(child.pid, "SIGKILL");
-    }
-    clearTimeout(killTimer);
+    await group.drain();
+    group.clear();
+    if (group.errors.length) throw group.errors[0];
     const result = inspectResult(job);
     const stdout = tail(attempt.stdoutFile);
     const backendOutcome = terminalOutcome(stdout);
@@ -492,6 +529,7 @@ async function runJob(job, record, options, save, control) {
       result,
       backendOutcome,
       diagnostics: [
+        ...new Set(group.notes),
         ...(outcome.error ? [outcome.error] : []),
         ...(rateLimit ? [rateLimit] : []),
         ...(!rateLimit && backendOutcome?.diagnostic
@@ -502,29 +540,25 @@ async function runJob(job, record, options, save, control) {
     });
     return { state, rateLimit };
   } catch (error) {
-    if (child?.pid) {
-      signalGroup(child.pid, "SIGTERM");
-      await delay(1000);
-      signalGroup(child.pid, "SIGKILL");
-    }
+    await group?.terminate();
     update({
-      state: stopped ? "interrupted" : "failed",
+      state: stopped ? "interrupted" : timedOut ? "timed-out" : "failed",
       endedAt: now(),
-      diagnostics: [error.message],
+      diagnostics: failureDiagnostics(error, group),
     });
     return { state: record.state, rateLimit: null };
   } finally {
     clearTimeout(timeout);
-    clearTimeout(killTimer);
+    group?.clear();
     for (const fd of fds) closeSync(fd);
     control.cancel = null;
   }
 }
 
-export async function runBatch(options) {
+export async function runBatch(options, dependencies = {}) {
   const batch = realpathSync(options.batch);
   const { queue, integrity } = readQueue(batch);
-  let limits = options.limitsFile
+  const limits = options.limitsFile
     ? readLimits(options.limitsFile)
     : { claude: options.claude, codex: options.codex };
   if (options.dryRun) {
@@ -549,7 +583,7 @@ export async function runBatch(options) {
   let wakeScheduler;
   const save = () => {
     status.updatedAt = now();
-    atomicJson(statusPath, status);
+    atomicJson(statusPath, status, dependencies);
   };
   const onSignal = (signal) => {
     interrupted = true;
@@ -644,42 +678,21 @@ export async function runBatch(options) {
     const counts = { claude: 0, codex: 0 };
     const records = new Map(status.jobs.map((record) => [record.id, record]));
     while (pending.length || active.size) {
-      if (options.limitsFile && !interrupted) {
-        try {
-          const next = readLimits(options.limitsFile);
-          if (
-            next.claude !== limits.claude ||
-            next.codex !== limits.codex ||
-            status.limitsFile.warning
-          ) {
-            limits = next;
-            status.concurrency = limits;
-            status.limitsFile.updatedAt = now();
-            status.limitsFile.warning = null;
-            save();
-          }
-        } catch (error) {
-          const message = `Ignoring invalid limits file; retaining last valid limits: ${error.message}`;
-          if (status.limitsFile.warning?.message !== message) {
-            status.limitsFile.warning = { message, at: now() };
-            process.stderr.write(`library-batch: ${message}\n`);
-            save();
-          }
-        }
-      }
+      if (options.limitsFile && !interrupted)
+        refreshLimits(options.limitsFile, status, save);
       if (!interrupted) {
         for (let index = 0; index < pending.length;) {
           const job = pending[index];
           if (
             status.pausedBackends[job.backend] ||
-            counts[job.backend] >= limits[job.backend]
+            counts[job.backend] >= status.concurrency[job.backend]
           ) {
             index++;
             continue;
           }
           pending.splice(index, 1);
           counts[job.backend]++;
-          const control = {};
+          const control = { groupDependencies: dependencies };
           active.set(job.id, control);
           control.promise = runJob(
             job,
@@ -761,7 +774,7 @@ if (
     const options = parseArgs(process.argv.slice(2));
     if (options.help)
       process.stdout.write(
-        "Usage: node scripts/library-batch/run.mjs --batch <absolute directory> [--claude <count>] [--codex <count>] [--limits-file <absolute JSON path>] [--timeout-minutes <minutes>] [--dry-run] [--resume]\nDefaults: one process per backend, 25 minutes per job, no automatic retries.\nA limits file overrides process counts and reloads every 500ms; decreases drain existing workers. Invalid edits retain the last valid limits. Backend rate-limit pauses still require an explicit resume.\nCompleted means candidate output is ready for review; it never means accepted or integrated.\n",
+        "Usage: bun scripts/library-batch/run.mjs --batch <absolute directory> [--claude <count>] [--codex <count>] [--limits-file <absolute JSON path>] [--timeout-minutes <minutes>] [--dry-run] [--resume]\nDefaults: one process per backend, 25 minutes per job, no automatic retries.\nA limits file overrides process counts and reloads every 500ms; decreases drain existing workers. Invalid edits retain the last valid limits. Backend rate-limit pauses still require an explicit resume.\nCompleted means candidate output is ready for review; it never means accepted or integrated.\n",
       );
     else process.exitCode = await runBatch(options);
   } catch (error) {

@@ -1,0 +1,73 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000000001",
+      "designation": "D1",
+      "type": "coinc-repro:module"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000000002",
+      "designation": "X1",
+      "type": "coinc-repro:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000000003",
+      "designation": "X2",
+      "type": "coinc-repro:boundary"
+    },
+    {
+      "kind": "device",
+      "uid": "00000000-0000-4000-8000-000000000004",
+      "designation": "X3",
+      "type": "coinc-repro:boundary"
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000000005",
+      "designation": "W1",
+      "endpoints": [
+        { "device": "X1", "terminal": "1" },
+        { "device": "D1", "terminal": "A" }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000000006",
+      "designation": "W2",
+      "endpoints": [
+        { "device": "X2", "terminal": "1" },
+        { "device": "D1", "terminal": "B" }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "00000000-0000-4000-8000-000000000007",
+      "designation": "W3",
+      "endpoints": [
+        { "device": "X3", "terminal": "1" },
+        { "device": "D1", "terminal": "C" }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "00000000-0000-4000-8000-000000000008",
+      "designation": "FIXED1",
+      "endpoints": [
+        { "device": "D1", "terminal": "A" },
+        { "device": "D1", "terminal": "B" }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "00000000-0000-4000-8000-000000000009",
+      "designation": "FIXED2",
+      "endpoints": [
+        { "device": "D1", "terminal": "A" },
+        { "device": "D1", "terminal": "B" }
+      ]
+    }
+  ]
+}

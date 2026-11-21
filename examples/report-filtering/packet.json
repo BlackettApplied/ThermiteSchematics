@@ -1,0 +1,43 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "index": true,
+  "references": {
+    "appearances": "drawings",
+    "filter": {
+      "excludeTypes": ["filter-fixture:documentary"]
+    }
+  },
+  "views": [
+    {
+      "format": "communication-view-request/0.1",
+      "medium": "ethernet"
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "terminals",
+      "filter": {
+        "devices": ["TB1"]
+      }
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "network",
+      "filter": {
+        "locations": ["Main"],
+        "excludeTypes": ["filter-fixture:documentary"]
+      }
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "bom",
+      "filter": {
+        "locations": ["Main"],
+        "excludeTypes": ["filter-fixture:documentary"]
+      }
+    }
+  ]
+}

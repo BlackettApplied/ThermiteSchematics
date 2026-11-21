@@ -1,9 +1,6 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import type { ObjectSelector } from "@thermite/query";
-import type {
-  RenderedSchematic,
-  SchematicFlow,
-  SchematicViewRequest,
-} from "@thermite/render";
+import type { SchematicFlow, SchematicViewRequest } from "@thermite/render";
 
 import type { AgentToolRequestBase, JsonValue } from "./common/contracts.js";
 import { detachAndFreezePlainJson } from "./common/plain-json.js";
@@ -30,15 +27,24 @@ const INTENT_SPEC_FIELDS = new Set(["format", "root", "intent", "flow"]);
 const SELECTOR_FIELDS = new Set(["by", "value"]);
 const TRACE_INTENT_FIELDS = new Set(["kind", "to", "includePower"]);
 const SIMPLE_INTENT_FIELDS = new Set(["kind"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
-const SPEC_FORMATS = new Set([
-  "schematic-view-request/0.1",
-  "schematic-view-request/0.2",
-]);
-const FAMILIES = new Set(["control", "power"]);
-const FLOWS = new Set(["left-to-right", "top-to-bottom"]);
-const SELECTOR_KINDS = new Set(["uid", "designation"]);
-const INTENT_KINDS = new Set(["trace", "conductors", "loads"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/format"],
+);
+const SPEC_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/spec/format"],
+);
+const FAMILIES = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/spec/family (0.1)"],
+);
+const FLOWS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/spec/flow"],
+);
+const SELECTOR_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/spec/root/by"],
+);
+const INTENT_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["create-view"]["/spec/intent/kind (0.2)"],
+);
 
 function validateSelector(
   record: JsonRecord,

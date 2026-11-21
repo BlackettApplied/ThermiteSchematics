@@ -20,14 +20,14 @@ one for the socket's partial physical inventory and one for each test boundary.
 After batch integration and intentional lock generation:
 
 ```sh
-node thermite.mjs lock libraries/stahl-pilot/examples/8570-11-407
-node libraries/stahl-pilot/examples/8570-11-407/verify.mjs
+bun thermite.mjs lock libraries/stahl-pilot/examples/8570-11-407
+bun libraries/stahl-pilot/examples/8570-11-407/verify.mjs
 ```
 
 To verify this part independently while other library files are being added:
 
 ```sh
-node libraries/stahl-pilot/examples/8570-11-407/verify.mjs --isolated
+bun libraries/stahl-pilot/examples/8570-11-407/verify.mjs --isolated
 ```
 
 The isolated mode copies only this exact type and fixture into a temporary

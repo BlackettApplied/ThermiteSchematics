@@ -1,8 +1,11 @@
+import { sourceRef } from "./source-ref.js";
 import {
   DIAGNOSTIC_CATALOG,
   appendJsonPointer,
-  normalizeDiagnosticFile,
+  boundedAlternatives,
+  formatAllowedValues,
   normalizeDiagnostics,
+  type DiagnosticAlternatives,
   type Cable,
   type CableType,
   type Device,
@@ -19,6 +22,10 @@ import type {
   LoadedProject,
   LoadedProjectSourceFile,
 } from "./loader.js";
+import {
+  describeLibraryFile,
+  openableLibraryFile,
+} from "./library-location.js";
 
 export interface SourceRef {
   file: string;
@@ -106,19 +113,6 @@ interface AuthoredDeviceReference {
 
 interface AuthoredTerminalReference extends AuthoredDeviceReference {
   terminal: string;
-}
-
-function sourceRef(
-  document: LoadedDocument<unknown>,
-  jsonPointer: string,
-): SourceRef {
-  const location = document.nodes.get(jsonPointer)?.value;
-  return {
-    file: normalizeDiagnosticFile(document.file),
-    line: location?.line ?? 1,
-    column: location?.column ?? 1,
-    jsonPointer,
-  };
 }
 
 function projectObjectPointer(index: number): string {
@@ -281,8 +275,54 @@ function incompatibleTypeDiagnostic(
   };
 }
 
+function compareText(left: string, right: string): number {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
+interface AvailableTypes {
+  readonly idsByKind: Readonly<Record<LibraryType["kind"], readonly string[]>>;
+  /** Exact location of every resolved type ID of a kind, also when untruncated. */
+  readonly lookupByKind: Readonly<Record<LibraryType["kind"], string>>;
+}
+
+function availableTypes(
+  project: LoadedProject,
+  catalogs: ProjectCatalogs,
+): AvailableTypes {
+  const idsByKind: Record<LibraryType["kind"], string[]> = {
+    device_type: [],
+    cable_type: [],
+  };
+
+  for (const entry of catalogs.libraryTypesById.values()) {
+    idsByKind[entry.type.kind].push(entry.type.id);
+  }
+
+  idsByKind.device_type.sort(compareText);
+  idsByKind.cable_type.sort(compareText);
+  const manifests = project.libraries
+    .map(({ resolutionKind, manifest }) =>
+      describeLibraryFile(openableLibraryFile(resolutionKind, manifest.file)),
+    )
+    .join(" and ");
+  const lookup = (kind: LibraryType["kind"]): string =>
+    manifests === ""
+      ? 'the "libraries" of the project manifest, which declares none'
+      : `the "id" of each "types" entry whose "kind" is ${JSON.stringify(kind)} in the "sources" files of ${manifests}`;
+  return {
+    idsByKind,
+    lookupByKind: {
+      device_type: lookup("device_type"),
+      cable_type: lookup("cable_type"),
+    },
+  };
+}
+
 function unknownTypeDiagnostic(
   instanceEntry: ProjectObjectCatalogEntry,
+  available: AvailableTypes,
 ): Diagnostic {
   const instance = instanceEntry.object as Device | Cable;
   const pointer = appendJsonPointer(
@@ -290,24 +330,39 @@ function unknownTypeDiagnostic(
     "type",
   );
   const source = sourceRef(instanceEntry.document, pointer);
+  const expectedKind = instance.kind === "device" ? "device" : "cable";
+  const typeKind = `${expectedKind}_type` as const;
+  const alternatives: DiagnosticAlternatives = {
+    ...boundedAlternatives(available.idsByKind[typeKind]),
+    allowedLookup: available.lookupByKind[typeKind],
+  };
+  const availableText =
+    alternatives.allowedCount === 0
+      ? `No ${expectedKind} type IDs are available; see ${alternatives.allowedLookup}.`
+      : `Available ${expectedKind} type IDs: ${formatAllowedValues(alternatives)}.`;
   return {
     code: "E103",
     severity: DIAGNOSTIC_CATALOG.E103.severity,
-    message: `${instance.kind === "device" ? "Device" : "Cable"} ${JSON.stringify(instance.designation)} references unknown type ${JSON.stringify(instance.type)}.`,
+    message: `${instance.kind === "device" ? "Device" : "Cable"} ${JSON.stringify(instance.designation)} references unknown type ${JSON.stringify(instance.type)}. ${availableText}`,
     file: source.file,
     line: source.line,
     column: source.column,
     jsonPointer: pointer,
     uid: instance.uid,
+    ...alternatives,
   };
 }
 
-function resolveInstanceTypes(catalogs: ProjectCatalogs): {
+function resolveInstanceTypes(
+  project: LoadedProject,
+  catalogs: ProjectCatalogs,
+): {
   diagnostics: Diagnostic[];
   instanceTypesByUid: Map<string, InstanceTypeResolution>;
 } {
   const diagnostics: Diagnostic[] = [];
   const instanceTypesByUid = new Map<string, InstanceTypeResolution>();
+  let available: AvailableTypes | undefined;
 
   for (const entry of catalogs.projectObjectsByUid.values()) {
     if (entry.object.kind !== "device" && entry.object.kind !== "cable") {
@@ -317,7 +372,8 @@ function resolveInstanceTypes(catalogs: ProjectCatalogs): {
     const typeEntry = catalogs.libraryTypesById.get(entry.object.type);
 
     if (typeEntry === undefined) {
-      diagnostics.push(unknownTypeDiagnostic(entry));
+      available ??= availableTypes(project, catalogs);
+      diagnostics.push(unknownTypeDiagnostic(entry, available));
       continue;
     }
 
@@ -444,10 +500,14 @@ function unknownTerminalDiagnostic(
 ): Diagnostic {
   const pointer = appendJsonPointer(reference.pointer, "terminal");
   const source = sourceRef(reference.owner.document, pointer);
+  const alternatives = boundedAlternatives(
+    Object.keys(typeEntry.type.terminals).sort(compareText),
+    `the keys at JSON pointer ${JSON.stringify(appendJsonPointer(typeEntry.source.jsonPointer, "terminals"))} in ${describeLibraryFile(openableLibraryFile(typeEntry.library.resolutionKind, typeEntry.source.file))}`,
+  );
   return {
     code: "E102",
     severity: DIAGNOSTIC_CATALOG.E102.severity,
-    message: `Device ${JSON.stringify(reference.device)} of type ${JSON.stringify(typeEntry.type.id)} has no terminal ${JSON.stringify(reference.terminal)}.`,
+    message: `Device ${JSON.stringify(reference.device)} of type ${JSON.stringify(typeEntry.type.id)} has no terminal ${JSON.stringify(reference.terminal)}. Declared terminal keys: ${formatAllowedValues(alternatives)}.`,
     file: source.file,
     line: source.line,
     column: source.column,
@@ -461,6 +521,7 @@ function unknownTerminalDiagnostic(
         note: `Resolved device type ${JSON.stringify(typeEntry.type.id)} is declared here.`,
       },
     ],
+    ...alternatives,
   };
 }
 
@@ -579,7 +640,7 @@ export function resolveLoadedProject(
   project: LoadedProject,
 ): ResolveLoadedProjectResult {
   const catalogResult = buildProjectCatalogs(project);
-  const typeResult = resolveInstanceTypes(catalogResult.catalogs);
+  const typeResult = resolveInstanceTypes(project, catalogResult.catalogs);
   const referenceResult = resolveAuthoredReferences(
     catalogResult.catalogs,
     catalogResult.duplicateDesignations,

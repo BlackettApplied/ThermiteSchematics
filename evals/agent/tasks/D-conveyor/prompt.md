@@ -1,0 +1,88 @@
+You are a fresh runtime-package user. Use the supplied launcher and project guide. The frozen brief follows verbatim.
+
+## Frozen brief
+
+```text
+conveyor starter: 480 VAC 3-phase supply; main 3-pole breaker; contactor K1 with overload OL1 feeding a 2 HP 480 V conveyor motor M1; 24 VDC PSU fed from the 480 V side; a compact PLC; start pushbutton (NO) and stop pushbutton (NC) as PLC inputs; a PNP 3-wire photo/prox sensor at the conveyor discharge wired via a multi-core field cable to a junction box, then to a terminal block in the main panel, then to a PLC input; one cable core left explicitly spare; the PLC output drives the K1 coil through the OL1 aux contact; a stack light or indicator if the library supports it. Where the core library lacks a part, decide between authoring a local library type and substitution; log how hard that was and what docs you lacked.
+3. Produce: zero-error validation; power view of M1; actuation view of K1; loads view of PS1; a printable packet (HTML, and PDF) with index, I/O report, terminal report, BOM, wire and cable schedules; `diagnostics` completeness output; a cable listing. Then make one realistic change via the guarded agent workflow (`thermite agent apply-source-patch`, dry-run first then apply) — e.g. move the sensor to a different PLC input — with `snapshot` before and `review` after.
+4. Visually check at least two outputs: screenshot the HTML packet with playwright-cli (see `playwright-cli --help`) and look at the images yourself; note readability problems.
+```
+
+## Deliverable format
+
+Use the already initialized project and supplied launcher; the historical path is provenance only. Save views in drawings/ (motor-power.pdf, contactor-actuation.pdf, ps1-loads.pdf); packet.request.json and generated drawings/packet.{json,html,pdf}; drawings/<kind>.csv reports; drawings/{diagnostics,cable,before,review}.json; friction.md. After the guarded change, validate the final source and regenerate every final output. Keep pre-change outputs elsewhere.
+
+Write requirement-matrix.json as an array with each ID exactly once, case-insensitive. Fixed statuses: satisfied, substituted, deferred. Shape:
+
+```json
+{
+  "id": "C-MOTOR",
+  "status": "satisfied",
+  "designations": ["M1"],
+  "evidence": { "summary": "Source and schematic evidence" }
+}
+```
+
+Satisfied/substituted names must resolve in manifest-listed validated sources and appear on a non-report drawing. Start/stop require the pushbutton profile with NO/NC sense respectively; level requires a level-family profile; indicator requires a lamp profile. The plc and analog-input roles may share a designation when the PLC has its own analog-input function. Every other pair of different roles needs distinct designations; the same role may be shared by rows such as PLC and coil drive. Explain substitutions. A deferred must row needs its own non-empty designations, a substantive summary, and a final diagnostic on its own appropriate modeled device. Core 0.2.0 supplies the capabilities required by these rows; no library-capability gaps are declared in this task. Existing unrelated objects cannot stand in for a missing component. A deferred may row needs a reason. Draw all modeled non-terminal devices and any designed PSU feed; defer the undesigned feed on the PSU's own diagnostic. Judges assess adequacy, not electrical approval.
+
+- **C-SUPPLY (must)**: “480 VAC 3-phase supply”. Roles/gap: supply.
+- **C-BREAKER (must)**: “main 3-pole breaker”. Roles/gap: breaker.
+- **C-STARTER (must)**: “contactor K1 with overload OL1”. Roles/gap: contactor, overload.
+- **C-MOTOR (must)**: “a 2 HP 480 V conveyor motor M1”. Roles/gap: motor.
+- **C-PSU (must)**: “24 VDC PSU fed from the 480 V side”. Roles/gap: psu.
+- **C-PLC (must)**: “a compact PLC”. Roles/gap: plc.
+- **C-TERMINALS (must)**: “a terminal block in the main panel”. Roles/gap: terminal.
+- **C-CABLE (must)**: “via a multi-core field cable”. Roles/gap: cable.
+- **C-START (must)**: “start pushbutton (NO)”. Roles/gap: start-button; normal state: open.
+- **C-STOP (must)**: “stop pushbutton (NC) as PLC inputs”. Roles/gap: stop-button.
+- **C-COIL (must)**: “the PLC output drives the K1 coil through the OL1 aux contact”. Roles/gap: plc, contactor, overload.
+- **C-SENSOR (must)**: “a PNP 3-wire photo/prox sensor at the conveyor discharge”. Roles/gap: pnp-sensor.
+- **C-JUNCTION (must)**: “to a junction box”. Roles/gap: junction.
+- **C-SPARE (must)**: “one cable core left explicitly spare”. Roles/gap: cable.
+- **C-INDICATOR (may)**: “a stack light or indicator if the library supports it”. Roles/gap: indicator.
+- **C-OUTPUTS (must)**: “zero-error validation; power view of M1; actuation view of K1; loads view of PS1; a printable packet (HTML, and PDF) with index, I/O report, terminal report, BOM, wire and cable schedules; `diagnostics` completeness output; a cable listing.”. Roles/gap: deliverable observation.
+- **C-CHANGE (must)**: “Then make one realistic change via the guarded agent workflow (`thermite agent apply-source-patch`, dry-run first then apply)”. Roles/gap: deliverable observation.
+
+Visual inspection is rubric-only: “Visually check at least two outputs: screenshot the HTML packet with playwright-cli (see `playwright-cli --help`) and look at the images yourself; note readability problems.” PDF V1/V5 remain pending without E3 or judges.
+
+### Evidence subjects and outward actions
+
+List the actual source designations supported by each row. For the guarded
+change row, cite the saved snapshot, dry-run, apply and semantic review in
+the summary. A changed wire can be listed when its path is visible on a
+schematic sheet. A wire schedule or a label alone does not establish this.
+The output row may use an empty designation list. The change row must name
+at least one subject. Each listed wire must have been changed by the
+applied patch. Drawn-device coverage and the matrix are checked
+separately and both are required.
+
+Draft issues locally. Do not post or attempt external writes during a run.
+The counts check includes attempted GitHub writes, including denied calls.
+
+### Undesigned PSU input feed
+
+If the PSU input feed is undesigned, do not invent wiring, input ratings or branch protection. Preserve the final diagnostic on the PSU itself and mark the PSU requirement row **deferred**, even when the DC supply and its loads are modeled and drawn. A source-level connectionReview deferral alone does not provide the matrix exception. Use the actual PSU designation and actual final code; the shape below illustrates a final W905 on PS1:
+
+```json
+{
+  "id": "C-PSU",
+  "status": "deferred",
+  "designations": ["PS1"],
+  "evidence": {
+    "summary": "DC loads are drawn; the undesigned AC input feed requires reviewed engineering facts.",
+    "diagnostic": { "code": "W905", "designation": "PS1" }
+  }
+}
+```
+
+An unrelated device or a diagnostic absent from final validation does not justify this exception. Draw any feed that is actually designed.
+
+### Sandbox visual capture
+
+The quoted Playwright instruction is historical. The harness provides a Playwright broker outside the agent sandbox, without a listening daemon. Render two actual final outputs to HTML (including drawings/packet.html), then write visual-capture.request.json:
+
+```json
+{ "html": ["drawings/packet.html", "drawings/motor-power.html"] }
+```
+
+Wait for visual-captures/result.json to appear. visual-captures links to a directory the harness owns: don’t write there, and save crops or other files in work/. The receipt is absent while a capture runs. It lists only the images that capture produced and records input and PNG hashes or an explicit error. Open and inspect both visual-captures/01.png and 02.png yourself with the image viewer and describe readability findings in friction.md. Capturing images alone is not visual inspection. Only project .html files and inline data: URLs load; separate CSS, SVG, image and font files, network resources and JavaScript are blocked. Refer to project HTML with relative paths or paths from the project root, such as /drawings/packet.html. Rewriting the request with a nonce requests a fresh capture after changes; wait for the new receipt before opening the new images. Capture is unavailable on Windows, and the receipt reports that. A failed capture remains an explicit gap; never claim it passed. PDF V1/V5 still need independent evidence or judges.

@@ -1,6 +1,9 @@
+import { SYMBOL_PROFILES } from "@thermite/schema";
+import { type IrDeviceType } from "@thermite/compiler";
 import type { PresentationClass } from "../ordering.js";
 import type { SchematicViewFamily } from "../types.js";
 import type { SymbolDefinition, SymbolPortBinding } from "./types.js";
+import { projectDeviceTypeSymbolMapping } from "./project-mappings.js";
 
 export type { SchematicViewFamily } from "../types.js";
 
@@ -749,135 +752,47 @@ export function findDeviceTypeSymbolMapping(
   return mappings.find((mapping) => mapping.typeId === typeId);
 }
 
-/** Explicit reusable library profiles. Unknown types never acquire behavior by name. */
+/** Cataloged rooted capabilities. Traversal remains the selection engine's job. */
+export const ROOTED_SYMBOL_PROFILES = Object.freeze(
+  SYMBOL_PROFILES.filter((p) =>
+    p.support.some(
+      (s) =>
+        s.family === "power" || s.family === "control" || s.family === "loads",
+    ),
+  ).map((p) => p.id),
+);
+
+function compareText(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/** IR is already admitted. Preserve authored function order independently of
+ * collection storage order, while leaving each function's terminal order intact. */
+function orderedFunctions(type: IrDeviceType): IrDeviceType["functions"] {
+  return [...type.functions].sort(
+    (a, b) =>
+      a.source.line - b.source.line ||
+      a.source.column - b.source.column ||
+      compareText(a.key, b.key),
+  );
+}
+
+/** Bind authored functions, terminal order and roles through a single profile path.
+ * The exported core table above remains a compatibility reference for callers
+ * supplying explicit mappings; production never selects it by type ID.
+ */
 export function projectDeviceTypeSymbolMappings(
   ir: Readonly<import("@thermite/compiler").ElectricalIr>,
 ): readonly DeviceTypeSymbolMapping[] {
-  const mappings: DeviceTypeSymbolMapping[] = [
-    ...CORE_DEVICE_TYPE_SYMBOL_MAPPINGS,
-  ];
-  for (const type of ir.deviceTypes) {
-    if (
-      mappings.some((m) => m.typeId === type.id) ||
-      ![
-        "thermite:io-module",
-        "thermite:terminal-strip",
-        "thermite:dc-supply",
-      ].includes(type.symbol ?? "")
-    )
-      continue;
-    const functions: FunctionSymbolRule[] = [],
-      omissions: ExplicitFunctionOmissionRule[] = [],
-      boundaryTerminals: BoundaryTerminalRule[] = [];
-    for (const f of type.functions) {
-      const terminals = f.terminalKeys;
-      let rule: FunctionSymbolRule | undefined;
-      if (
-        f.kind === "channel" &&
-        terminals.length === 1 &&
-        type.symbol === "thermite:io-module"
-      ) {
-        const input = f.direction === "input";
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: input ? "ais:plc-di" : "ais:plc-do",
-          bindings: [
-            { portId: input ? "DI" : "DO", terminalKey: terminals[0]! },
-          ],
-          classification: input ? "plc-input" : "plc-output",
-          traversalRole: "channel-boundary",
-        };
-      } else if (f.kind === "bus" && terminals.length === 1) {
-        rule = {
-          functionKey: f.key,
-          families: BOTH_FAMILIES,
-          symbolId: "ais:terminal",
-          bindings: [
-            { portId: "in", terminalKey: terminals[0]! },
-            { portId: "out", terminalKey: terminals[0]! },
-          ],
-          classification: "terminal",
-          traversalRole: "terminal-display",
-        };
-      } else if (
-        f.kind === "load" &&
-        terminals.length === 2 &&
-        type.terminals.find((t) => t.key === terminals[0])?.rating
-          ?.voltage_type === "DC"
-      ) {
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: "ais:dc-load",
-          bindings: [
-            { portId: "positive", terminalKey: terminals[0]! },
-            { portId: "return", terminalKey: terminals[1]! },
-          ],
-          classification: "load",
-          traversalRole: "load-boundary",
-        };
-      } else if (
-        f.kind === "source" &&
-        terminals.length === 2 &&
-        type.terminals.find((t) => t.key === terminals[0])?.role ===
-          "dc_positive_output" &&
-        type.terminals.find((t) => t.key === terminals[1])?.role ===
-          "dc_return_output"
-      ) {
-        rule = {
-          functionKey: f.key,
-          families: CONTROL,
-          symbolId: "ais:power-source-dc",
-          bindings: [
-            { portId: "positive", terminalKey: terminals[0]! },
-            { portId: "return", terminalKey: terminals[1]! },
-          ],
-          classification: "source",
-          traversalRole: "source-boundary",
-        };
-        boundaryTerminals.push(
-          {
-            functionKey: f.key,
-            terminalKey: terminals[0]!,
-            families: CONTROL,
-            boundaryKind: "control-source",
-            requiredRole: "dc_positive_output",
-          },
-          {
-            functionKey: f.key,
-            terminalKey: terminals[1]!,
-            families: CONTROL,
-            boundaryKind: "control-return",
-            requiredRole: "dc_return_output",
-          },
-        );
-      }
-      if (rule) {
-        functions.push(rule);
-        if (!rule.families.includes("power"))
-          omissions.push({
-            functionKey: f.key,
-            families: POWER,
-            reason: "outside-family",
-          });
-      } else
-        omissions.push({
-          functionKey: f.key,
-          families: BOTH_FAMILIES,
-          reason:
-            f.kind === "mechanism"
-              ? "metadata-only-mechanism"
-              : "unsupported-v0.1",
-        });
-    }
-    mappings.push({
-      typeId: type.id,
-      functions,
-      aggregates: [],
-      omissions,
-      boundaryTerminals,
+  return [...ir.deviceTypes]
+    .sort((a, b) => compareText(a.id, b.id))
+    .flatMap((type) => {
+      return projectDeviceTypeSymbolMapping(
+        type,
+        orderedFunctions(type),
+        BOTH_FAMILIES,
+        POWER,
+        ROOTED_SYMBOL_PROFILES,
+      );
     });
-  }
-  return mappings;
 }

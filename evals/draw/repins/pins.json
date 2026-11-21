@@ -1,0 +1,60 @@
+{
+  "format": "thermite-draw-repin-pins/1.0",
+  "records": [
+    {
+      "pr": 92,
+      "recordSha256": "c01537abb5a0e2091b5126b53ede2e723068fd7bf5906e11f02c775d266e1ae5",
+      "baseCommit": "b1e4038895d0a40bc308cf9c4a8c646e2da4c2e8"
+    },
+    {
+      "pr": 61,
+      "recordSha256": "9481c336656ba215f9021129007e1aec65d845325e8653f66a1810fc538a0b48",
+      "baseCommit": "b0a6063284881e55955a9bdf4071169b19c23f8d"
+    },
+    {
+      "pr": 84,
+      "baseCommit": "0580de8b405cafa4760b2c3450b5fe408e5edf3b",
+      "recordSha256": "c203083bfc3e4198008459787137111ea294004ca0afa1055f8f83dd16e52987"
+    },
+    {
+      "pr": 154,
+      "baseCommit": "ca42f8b54f5eba32843efaa3589a121a90512a1d",
+      "recordSha256": "31be7aa1feb594008d617bbc2a133fc2a0b80d829d4828c58a504a0e61e3b766"
+    },
+    {
+      "pr": 202,
+      "baseCommit": "a9e758fdc8dd9a3507e2056025ea984dea5cc0c0",
+      "recordSha256": "7026c88a7442a1977cdd080dadcca8027042b1bd32b910dc1c0227e925a80992"
+    },
+    {
+      "baseCommit": "5d01d49a6e3e14e2434ab4e14056901dda5aabea",
+      "pr": 334,
+      "recordSha256": "758e6fe74a2fa8a78d70412d950f2c800e59a19675b6dabc035493b9acb41fa8"
+    },
+    {
+      "pr": 381,
+      "baseCommit": "834a69d7e48790ec30a720ae3246fb24c8dffe69",
+      "recordSha256": "b6fca2e8025414b3b22319a73bb71e730d302307361786602f2a11dbaf5c11ba"
+    },
+    {
+      "pr": 408,
+      "baseCommit": "eac90ebf6e5411f63d691f6439e8a5c6ac73f2a0",
+      "recordSha256": "e86c5aadd3100bac02b02206f93fc9c3cc7b395326ff20421adff28bfe4c2396"
+    },
+    {
+      "pr": 421,
+      "baseCommit": "fb9299d01c65cb9637a3c3778d18ee8698f4bf0f",
+      "recordSha256": "d6fd21cc0a896068d0a05f83a8e61d21d79f5e53ac969efca8411e71d1ebb11f"
+    },
+    {
+      "pr": 454,
+      "baseCommit": "70530dd11e42dc5a27108e4052ec28692b2ed412",
+      "recordSha256": "24238b170b951e84450a9f720060f2a33e7c0a155f2b3ab0c219284ac9328e62"
+    },
+    {
+      "pr": "TEXTM1",
+      "baseCommit": "aaaa6b6ad576cab56d77d5e05b4b397b060378c1",
+      "recordSha256": "dbed0a7b9714adb323a8af51a9bf2eeddbc17b40a430c47d2f6840ac9fe132f5"
+    }
+  ]
+}

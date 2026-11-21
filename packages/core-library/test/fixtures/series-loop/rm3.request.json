@@ -1,0 +1,33 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "index": false,
+  "page": {
+    "size": "tabloid",
+    "orientation": "portrait"
+  },
+  "views": [
+    {
+      "format": "signal-loop-view-request/0.1",
+      "from": {
+        "device": "TX1",
+        "function": "signal"
+      },
+      "to": {
+        "device": "PLC1",
+        "function": "ai0"
+      },
+      "loopPower": {
+        "device": "PS1",
+        "function": "dc_output"
+      },
+      "flow": "top-to-bottom",
+      "cableAssemblies": [
+        {
+          "cable": "CBL3",
+          "connector": "PAIR",
+          "description": "Synthetic single-pair cable; hardware unspecified"
+        }
+      ]
+    }
+  ]
+}

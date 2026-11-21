@@ -1,0 +1,37 @@
+{
+  "code": "R006",
+  "root": "packet",
+  "reason": "unprintable-layout",
+  "message": "Packet view[0] \"R1 / control\": The retry with presentation-only boundary segments kept whole failed. Continuation labels are too close to print clearly (14.45 mm apart, 18 mm required). Change flow, use a larger sheet, or narrow the view. The original grid also failed. A candidate cut crosses presentation-only boundary segment \"[\\\"boundary-segment\\\",\\\"[\\\\\\\"junction\\\\\\\",\\\\\\\"net:sha256:8601e5d40a2072cea4725f9772ce88ba51ea3eafb57a05c8ae4f0191dd2354b2\\\\\\\",\\\\\\\"10000000-0000-4000-8000-000000000012\\\\\\\",\\\\\\\"A1\\\\\\\"]\\\",\\\"[\\\\\\\"function\\\\\\\",\\\\\\\"10000000-0000-4000-8000-000000000012\\\\\\\",\\\\\\\"coil\\\\\\\"]\\\"]\", which has no unique authored conductor identity and must remain uncut. Change paper or flow so the segment stays on one sheet.",
+  "details": {
+    "continuationIdentity": "[\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:8601e5d40a2072cea4725f9772ce88ba51ea3eafb57a05c8ae4f0191dd2354b2\\\",\\\"10000000-0000-4000-8000-000000000012\\\",\\\"A1\\\"]\",\"[\\\"function\\\",\\\"10000000-0000-4000-8000-000000000012\\\",\\\"coil\\\"]\"]",
+    "boundaryCutRetry": {
+      "conductorIds": [
+        {
+          "kind": "wire",
+          "uid": "10000000-0000-4000-8000-000000000034"
+        },
+        {
+          "kind": "wire",
+          "uid": "10000000-0000-4000-8000-000000000035"
+        }
+      ],
+      "continuationSpacing": {
+        "actualMm": 14.449999999999989,
+        "minimumMm": 18
+      }
+    },
+    "views": [
+      {
+        "viewIndex": 0,
+        "title": "R1 / control"
+      }
+    ],
+    "view": {
+      "viewIndex": 0,
+      "title": "R1 / control"
+    },
+    "viewIndex": 0,
+    "viewTitle": "R1 / control"
+  }
+}

@@ -1,6 +1,7 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import type {
-  ProjectObjectView,
+  ProjectObjectView as QueryProjectObjectView,
   QueryEngine,
   QueryResult,
 } from "@thermite/query";
@@ -14,10 +15,17 @@ import {
   requiredString,
   type FieldValidationResult,
 } from "./common/request-validation.js";
+import {
+  validateSourceInclude,
+  type SourceAnnotated,
+  type SourceMetadataRequest,
+  type SourceMetadataResult,
+} from "./source-metadata.js";
 
-export type { ProjectObjectView } from "@thermite/query";
+export type ProjectObjectView = SourceAnnotated<QueryProjectObjectView>;
 
-export interface ResolveObjectsRequest extends AgentToolRequestBase {
+export interface ResolveObjectsRequest
+  extends AgentToolRequestBase, SourceMetadataRequest {
   readonly target:
     | { readonly by: "uid" | "designation"; readonly value: string }
     | { readonly by: "type" | "text"; readonly value: string };
@@ -36,9 +44,10 @@ export interface SearchMatch {
   };
 }
 
-export type ResolveObjectsValue =
+export type ResolveObjectsValue = SourceMetadataResult<
   | { readonly mode: "resolve"; readonly object: ProjectObjectView }
-  | { readonly mode: "search"; readonly matches: readonly SearchMatch[] };
+  | { readonly mode: "search"; readonly matches: readonly SearchMatch[] }
+>;
 
 type ResolveTarget = ResolveObjectsRequest["target"];
 
@@ -58,10 +67,14 @@ interface RankedCandidate {
   readonly text: string;
 }
 
-const REQUEST_FIELDS = new Set(["format", "project", "target"]);
+const REQUEST_FIELDS = new Set(["format", "project", "target", "include"]);
 const TARGET_FIELDS = new Set(["by", "value"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
-const TARGET_KINDS = new Set(["uid", "designation", "type", "text"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["resolve"]["/format"],
+);
+const TARGET_KINDS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["resolve"]["/target/by"],
+);
 
 const MATCH_KIND_RANK: Readonly<Record<SearchMatchKind, number>> = {
   exact: 0,
@@ -264,6 +277,8 @@ export function validateResolveRequest(
   if (targetAdditional !== undefined) {
     return { ok: false, error: targetAdditional };
   }
+  const include = validateSourceInclude("resolve", root.value);
+  if (!include.ok) return include;
   const additional = firstAdditionalProperty(
     "resolve",
     root.value,

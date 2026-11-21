@@ -1,0 +1,182 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "portrait"
+  },
+  "views": [
+    {
+      "format": "circuit-view-request/0.1",
+      "title": "Functional symbol demonstration",
+      "flow": "top-to-bottom",
+      "groups": [
+        {
+          "id": "transformer",
+          "label": "Transformer",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "AC1"
+              },
+              "key": "source"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "T1"
+              },
+              "key": "primary1"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "T1"
+              },
+              "key": "primary2"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "T1"
+              },
+              "key": "secondary"
+            }
+          ],
+          "conductors": ["W1", "W2", "J1"]
+        },
+        {
+          "id": "conversion",
+          "label": "Conversion",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "PS1"
+              },
+              "key": "input"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "PS1"
+              },
+              "key": "output"
+            }
+          ],
+          "conductors": ["W3", "W4"]
+        },
+        {
+          "id": "pressure-and-float",
+          "label": "Pressure And Float",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "SP1"
+              },
+              "key": "contact"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "SL1"
+              },
+              "key": "contact"
+            }
+          ],
+          "conductors": ["W5", "W6", "W7"]
+        },
+        {
+          "id": "level-sensor",
+          "label": "Level Sensor",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "LS1"
+              },
+              "key": "sensor"
+            }
+          ],
+          "conductors": ["W8", "W9", "W10"]
+        },
+        {
+          "id": "conductivity-probe",
+          "label": "Conductivity Probe",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "CP1"
+              },
+              "key": "probe"
+            }
+          ],
+          "conductors": ["W11", "W12"]
+        },
+        {
+          "id": "receptacle",
+          "label": "Receptacle",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "SO1"
+              },
+              "key": "power"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "SO1"
+              },
+              "key": "bond"
+            }
+          ],
+          "conductors": ["W13", "W14"]
+        },
+        {
+          "id": "full-interface",
+          "label": "Full Interface",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "X1"
+              },
+              "key": "connector"
+            }
+          ],
+          "conductors": []
+        },
+        {
+          "id": "level-output",
+          "label": "Level signal with channel meaning",
+          "functions": [
+            {
+              "device": {
+                "by": "designation",
+                "value": "LD1"
+              },
+              "key": "supply"
+            },
+            {
+              "device": {
+                "by": "designation",
+                "value": "LD1"
+              },
+              "key": "output"
+            }
+          ],
+          "conductors": []
+        }
+      ]
+    },
+    {
+      "format": "documentation-view-request/0.1",
+      "kind": "terminals"
+    }
+  ],
+  "index": true
+}

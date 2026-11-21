@@ -63,8 +63,8 @@ No manufacturer manuals or source-machine drawings are redistributed here.
 After the repository source build:
 
 ```sh
-node thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
-node libraries/phoenix-terminal-pilot/examples/terminal-wiring/verify.mjs
+bun thermite.mjs validate libraries/phoenix-terminal-pilot/examples/terminal-wiring
+bun libraries/phoenix-terminal-pilot/examples/terminal-wiring/verify.mjs
 ```
 
 The checks exercise 13 catalog wire points, 13 synthetic external leads, eight

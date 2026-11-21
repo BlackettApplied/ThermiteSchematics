@@ -1,6 +1,48 @@
 {
   "format": "agent-tool-report/0.1",
   "tool": "validate",
-  "diagnostics": [],
+  "diagnostics": [
+    {
+      "file": "system.json",
+      "line": 4,
+      "column": 14,
+      "jsonPointer": "/project",
+      "code": "I305",
+      "severity": "info",
+      "message": "Voltage compatibility is unassessed on connected nets with one comparable voltage-rated terminal and no voltage facts in potentials (5 nets: [\"K1.A1 rating {\\\"nominal_voltage\\\":24,\\\"voltage_type\\\":\\\"DC\\\"} [net:sha256:de8cd0d0a2b62f2b540a39b338e9701f6e5b5e9479a2b7dc96ab8e90fc998ce5]\", \"PLC1.X1.0 rating {\\\"nominal_voltage\\\":24,\\\"voltage_type\\\":\\\"DC\\\"} [net:sha256:af8c9ba2461a98df6aae2bc32934bfb43e00d202ef9d6a0b4f8c8be8409877b9]\", \"PLC1.X2.0 rating {\\\"nominal_voltage\\\":24,\\\"voltage_type\\\":\\\"DC\\\"} [net:sha256:dd7c3227e6124826bed08e1861e49edce66b7aae83bef5d189698fe69b978e23]\", \"SRC1.L2 rating {\\\"nominal_voltage\\\":480,\\\"voltage_type\\\":\\\"AC\\\"} [net:sha256:52ba7a062565b174f4600a3a6abed4b7579246a66e0a5e76b194ad71484cae44]\", \"SRC1.L3 rating {\\\"nominal_voltage\\\":480,\\\"voltage_type\\\":\\\"AC\\\"} [net:sha256:8d49f43674cfa3024bc2fffb6f58c15075c10943067b114959872ab5324a499d]\"]). Ratings describe equipment capability; potentials declare net intent. No supply path was assessed.",
+      "related": [
+        {
+          "file": "@thermite/core-library/types/contactor-3p-1no.json",
+          "line": 9,
+          "column": 15,
+          "note": "Terminal \"K1.A1\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+        },
+        {
+          "file": "@thermite/core-library/types/plc-compact.json",
+          "line": 17,
+          "column": 17,
+          "note": "Terminal \"PLC1.X1.0\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+        },
+        {
+          "file": "@thermite/core-library/types/plc-compact.json",
+          "line": 27,
+          "column": 17,
+          "note": "Terminal \"PLC1.X2.0\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+        },
+        {
+          "file": "@thermite/core-library/types/supply-480v-3ph.json",
+          "line": 13,
+          "column": 15,
+          "note": "Terminal \"SRC1.L2\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+        },
+        {
+          "file": "@thermite/core-library/types/supply-480v-3ph.json",
+          "line": 17,
+          "column": 15,
+          "note": "Terminal \"SRC1.L3\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+        }
+      ]
+    }
+  ],
   "error": null
 }

@@ -366,3 +366,15 @@ test("duplicate JSON keys fail strict parsing", async (t) => {
     ),
   );
 });
+
+test("malformed HTTPS evidence retains the current Invalid URL rejection", async (t) => {
+  const options = await setup(t, ({ result }) => {
+    result.sources[0].url = "https://exa mple.com/x";
+  });
+  const report = await verifyJob(options);
+  assert.equal(report.status, "failed");
+  assert.equal(report.error, "Invalid URL");
+  assert.equal(report.checks.at(-1).name, "candidate-schema");
+  assert.equal(report.checks.at(-1).status, "failed");
+  assert.equal(report.outputs.fixture, undefined);
+});

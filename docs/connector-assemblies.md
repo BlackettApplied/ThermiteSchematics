@@ -83,19 +83,48 @@ Selectors are exact unique device or relation designations/UIDs:
 
 - No selectors: all assemblies and declared connector devices.
 - `devices` alone: their incident assemblies and endpoint devices; all ports on explicitly selected devices remain visible.
-- `assemblies` alone: exactly those assemblies and their endpoints; other endpoint ports are summarized as a count pointing to the schedule.
+- `assemblies` alone: exactly those assemblies and their endpoints; other endpoint ports retain native status destinations, with a precise sheet.zone pointer to sufficient schedule rows.
 - Both: `assemblies` remains the exact link set; `devices` additionally includes the named devices and all their ports. Link selection is not intersected with device selection.
 
 An occupied port whose assembly is omitted is labeled `outside view`; a port with no assembly is labeled `unoccupied`. Disconnected selected devices remain visible. Selection does not invent caps or automatically traverse a splitter's other branches.
 
 ELK places blocks, ports and paths. Visible labels preserve device names/descriptions, connector names, cable specifications, authored assembly lifecycle status and mapping status. Notes and the assembly schedule retain mapping explanations. Paths represent complete assemblies and have no electrical junction dots. Independent assemblies may cross with a visual gap, but coincident segments are rejected because they could imply a false cable branch.
 
-Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and overlaps are checked. Oversized views fail explicitly; select fewer assemblies or larger paper. Page count is secondary to readable source coverage.
+Text begins at 2.7 mm, with a 2.5 mm minimum after limited sheet fit. Bounds and overlaps are checked. Page count is secondary to readable source coverage.
 
-Run `node thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
+Assembly notes wrap at their printed 2.5 mm text size, including wide glyphs and long tokens. Existing line breaks remain when they fit. If notes would extend past the drawing bounds, packet composition reserves their height and applies only the existing limited diagram scaling. All selected assemblies, ports, labels and mapping explanations remain present. A diagram and its notes that cannot fit without taking diagram text below 2.5 mm still fail with R006; shorten notes, narrow the selection or use larger paper. Notes are not moved onto separate sheets. See the [assembly note bounds example](../examples/assembly-note-bounds/README.md).
+
+Packets automatically split an oversized view containing at least two assemblies when every selected assembly is a protective cap. Each part keeps complete assemblies with both named endpoints. Every originally visible port appears exactly once, including unoccupied ports, ports whose assemblies are outside the view, and ports on disconnected selected devices. Device bodies may repeat with different ports: captions distinguish ports on other parts from ports omitted by the original selector and listed in the schedule. Part headings and topology coverage retain the original source identities. Authored notes print once, on the final part.
+
+Views that fit keep their existing layout. Pagination checks actual sheet bounds and readable text sizes, including headings and notes. A complete assembly or the notes must fit a part; otherwise rendering fails with R006. Invalid layouts also fail, without retrying through pagination. Oversized cable, direct-mating or mixed assembly views still require narrower selectors or larger paper. The single-drawing `prepareConnectorAssemblyDrawing` API remains unpaginated; packet rendering performs this split. See the [cap pagination example](../examples/cap-pagination/README.md).
+
+Packets reuse sufficient issued assembly schedules for selected-assembly reasons
+and connector-port statuses. Missing native details first try an inline inventory
+on existing graphical sheets, with headers, complete rows and notes measured at
+the retained text size. If those rows cannot fit inline, a generated schedule on
+the same paper supplies them. This can add pages for source details previously
+omitted by the selection; it does not discard rows or reduce text size. All pages
+count toward the packet's 100-sheet limit. A fitting inline request retains its
+page count.
+
+Each omitted connector's caption names its precise schedule-row region. A port
+already drawn elsewhere in the packet instead gets a named pointer to that
+port's own sheet.zone. An unoccupied port stays unoccupied, and a cap keeps its
+native reason without acquiring electrical pin tuples.
+
+Run `bun thermite.mjs report assemblies --project <project> -o output/assemblies.csv` for a schedule, or add `{ "format": "documentation-view-request/0.1", "kind": "assemblies" }` to a packet. Cable assemblies also appear in the BOM; caps/splitters are counted as device instances. Communication reports exclude assemblies. Electrical wire/cable-core schedules remain reserved for modeled conductors.
+
+For I/O modules described by sockets rather than terminal channels, see the
+[connector I/O schedule](connector-io.md). It combines socket assignments with
+these assembly records while preserving unresolved mappings.
 
 The query API `buildConnectorAssemblyInventory(ir)` returns `connector-assembly-inventory/0.1` with `assemblies` and `ports`. Device inspection includes `connectorPorts`; relation and incident-relation inspection includes `assembly`.
 
 SVG audit attributes are `data-connector-assembly` (relation UID), `data-assembly-designation`, `data-assembly-endpoints` (`[{deviceUid,portKey}, ...]`), `data-pin-mapping`, `data-device-uid`, `data-connector-port` and `data-port-occupancy`. Generated SVG remains an artifact, never electrical source.
 
 This version has no resolved assembly-to-conductor mapping. Manufacturer pin tables cannot supply an installed cordset's missing wiring. Explicit electrical wire/cable-core source remains necessary where verified evidence exists. Connector compatibility, safety suitability, ratings, shielding and installation correctness are not inferred.
+
+Packet JSON also includes [`coverage.topology`](topology-coverage.md), retaining
+assembly identity, named connector endpoints, mapping status/reason and
+individually drawn port appearances. Summary counts do not claim coverage of
+individual omitted ports.

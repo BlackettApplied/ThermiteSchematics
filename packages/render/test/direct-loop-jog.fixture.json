@@ -1,0 +1,271 @@
+{
+  "id": "loop",
+  "children": [
+    {
+      "id": "n0",
+      "width": 116,
+      "height": 42.1691,
+      "layoutOptions": {
+        "elk.portConstraints": "FIXED_POS"
+      },
+      "ports": [
+        {
+          "id": "n0_out_0",
+          "x": 59,
+          "y": 42.1691,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        },
+        {
+          "id": "n0_out_1",
+          "x": 73,
+          "y": 42.1691,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "n1",
+      "width": 110,
+      "height": 35,
+      "layoutOptions": {
+        "elk.portConstraints": "FIXED_POS"
+      },
+      "ports": [
+        {
+          "id": "n1_out_0",
+          "x": 53,
+          "y": 35,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        },
+        {
+          "id": "n1_in_1",
+          "x": 67,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n1_out_1",
+          "x": 67,
+          "y": 35,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        },
+        {
+          "id": "n1_out_2",
+          "x": 81,
+          "y": 35,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        },
+        {
+          "id": "n1_in_3",
+          "x": 95,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n1_out_3",
+          "x": 95,
+          "y": 35,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "width": 110,
+      "height": 35,
+      "layoutOptions": {
+        "elk.portConstraints": "FIXED_POS"
+      },
+      "ports": [
+        {
+          "id": "n2_in_0",
+          "x": 53,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n2_in_1",
+          "x": 67,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n2_in_2",
+          "x": 81,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n2_in_3",
+          "x": 95,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        },
+        {
+          "id": "n2_out_assembly",
+          "x": 74,
+          "y": 35,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "SOUTH"
+          }
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "width": 116,
+      "height": 42.462024,
+      "layoutOptions": {
+        "elk.portConstraints": "FIXED_POS"
+      },
+      "ports": [
+        {
+          "id": "n3_in_assembly",
+          "x": 80,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "layoutOptions": {
+            "elk.port.side": "NORTH"
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "sources": ["n0_out_0"],
+      "targets": ["n1_in_1"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W1"
+        }
+      ]
+    },
+    {
+      "id": "e1",
+      "sources": ["n1_out_1"],
+      "targets": ["n2_in_1"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W3"
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "sources": ["n0_out_1"],
+      "targets": ["n1_in_3"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W2"
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "sources": ["n1_out_3"],
+      "targets": ["n2_in_3"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W4"
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "sources": ["n1_out_0"],
+      "targets": ["n2_in_0"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W5"
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "sources": ["n1_out_2"],
+      "targets": ["n2_in_2"],
+      "labels": [
+        {
+          "width": 6.8573,
+          "height": 4.8,
+          "text": "W6"
+        }
+      ]
+    },
+    {
+      "id": "e6",
+      "sources": ["n2_out_assembly"],
+      "targets": ["n3_in_assembly"],
+      "labels": [
+        {
+          "width": 45.79346,
+          "height": 20,
+          "text": "Synthetic assembly"
+        }
+      ]
+    }
+  ]
+}

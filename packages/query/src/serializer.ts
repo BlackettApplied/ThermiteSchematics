@@ -95,6 +95,9 @@ function preferredFields(record: JsonRecord): readonly string[] {
       "actualKind",
       "deviceDesignation",
       "terminalKey",
+      "allowed",
+      "allowedCount",
+      "allowedLookup",
     ];
   }
   if (

@@ -2,3 +2,10 @@
 
 # Byte-sensitive test fixtures: no EOL conversion ever
 packages/schema/fixtures/invalid/** -text
+
+# Preserve guide link provenance when a source archive has no Git metadata.
+scripts/source-commit.txt export-subst
+
+# Font source bytes are part of deterministic SVG/PDF delivery.
+*.ttf -text
+*.woff -text

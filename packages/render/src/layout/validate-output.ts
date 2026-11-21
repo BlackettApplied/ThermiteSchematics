@@ -1,3 +1,22 @@
+import { validateContextInk } from "./context-reference-validation.js";
+import { symbolRectangles } from "./symbol-rectangles.js";
+import {
+  validateLeafSize,
+  validateReferenceInput,
+  contextReferenceLayouts,
+} from "./context-reference-layout.js";
+import { validateCompoundRegions } from "./compound-regions.js";
+import { contextJunctionInk } from "./context-reference-ink.js";
+import "../terminal-context-reference.js";
+import { presentationDeviceNames } from "./topology-conservation.js";
+import { graphSemanticOrder } from "../semantic-order.js";
+import { layoutLabelInk } from "./label-bounds.js";
+import {
+  netLabelOverlaps,
+  segmentIntersectsInterior,
+  type NetLabelOverlap,
+  type Segment,
+} from "./label-overlaps.js";
 import type {
   ElkExtendedEdge,
   ElkLabel,
@@ -16,6 +35,7 @@ import {
 import type { SymbolDefinition, SymbolPrimitive } from "../symbols/types.js";
 import type {
   LayoutCrossing,
+  LayoutContextReference,
   LayoutEdge,
   LayoutEdgeSection,
   LayoutLabel,
@@ -29,23 +49,20 @@ import type {
   PresentationLabel,
   PresentationNode,
   PresentationPort,
-  RenderOutcome,
 } from "../types.js";
 import { MAX_SVG_MAGNITUDE } from "../svg/numbers.js";
-import {
-  DEVICE_PADDING,
-  LABEL_PORT_HORIZONTAL_SPACING,
-  LABEL_PORT_VERTICAL_SPACING,
-  LOCATION_PADDING,
-  ROOT_PADDING,
-} from "./options.js";
 
 export { MAX_SVG_MAGNITUDE } from "../svg/numbers.js";
 
 class LayoutContractViolation extends Error {
   readonly netId: string | undefined;
 
-  constructor(message: string, netId?: string) {
+  constructor(
+    message: string,
+    netId?: string,
+    readonly failureKind: LayoutFailureKind = "contract-violation",
+    readonly netLabelOverlaps?: readonly NetLabelOverlap[],
+  ) {
     super(message);
     this.name = "LayoutContractViolation";
     this.netId = netId;
@@ -84,49 +101,121 @@ interface PresentationIndex {
   readonly edges: ReadonlyMap<string, PresentationEdge>;
 }
 
-interface GeometryIndex {
+export interface GeometryIndex {
   readonly nodes: Map<string, LayoutNode>;
   readonly ports: Map<string, LayoutPort>;
   readonly labels: Map<string, LayoutLabel>;
   readonly edges: Map<string, LayoutEdge>;
 }
 
-interface Bounds {
+export interface Bounds {
   readonly left: number;
   readonly top: number;
   readonly right: number;
   readonly bottom: number;
 }
 
-interface Padding {
+export interface Padding {
   readonly top: number;
   readonly left: number;
   readonly bottom: number;
   readonly right: number;
-}
-
-interface Segment {
-  readonly edge: LayoutEdge;
-  readonly start: LayoutPoint;
-  readonly end: LayoutPoint;
-  readonly horizontal: boolean;
 }
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(`Layout input invariant: ${message}`);
 }
 
-function reject(message: string, netId?: string): never {
-  throw new LayoutContractViolation(message, netId);
+export type LayoutFailureKind =
+  | "contract-violation"
+  | "ambiguous-intersection"
+  | "net-label-intersection"
+  | "collinear-overlap"
+  | "symbol-intersection";
+export type LayoutValidationOutcome =
+  | { readonly ok: true; readonly value: NormalizedSchematicLayout }
+  | {
+      readonly ok: false;
+      readonly error: InvalidLayoutError;
+      readonly failureKind: LayoutFailureKind;
+      readonly netLabelOverlaps?: readonly NetLabelOverlap[];
+    };
+
+function reject(
+  message: string,
+  netId?: string,
+  failureKind?: LayoutFailureKind,
+  netLabelOverlaps?: readonly NetLabelOverlap[],
+): never {
+  throw new LayoutContractViolation(
+    message,
+    netId,
+    failureKind,
+    netLabelOverlaps,
+  );
 }
 
 function invalidLayoutError(
   graph: Readonly<PresentationGraph>,
   violation: LayoutContractViolation,
 ): InvalidLayoutError {
+  const names = presentationDeviceNames(graph);
+  const terminal = (t: import("@thermite/compiler").TerminalId) => ({
+    ...t,
+    designation: names.get(t.deviceUid) ?? t.deviceUid,
+    functionKeys: [
+      ...new Set(
+        graph.nodes.flatMap((node) =>
+          "deviceUid" in node && node.deviceUid === t.deviceUid
+            ? node.ports
+                .filter((p) => p.terminal.terminalKey === t.terminalKey)
+                .flatMap((p) =>
+                  p.memberFunctionId
+                    ? [p.memberFunctionId.functionKey]
+                    : node.functionIds.map((f) => f.functionKey),
+                )
+            : [],
+        ),
+      ),
+    ],
+  });
+  const edges = graph.edges
+    .filter((e) => violation.message.includes(e.id))
+    .map((e) => ({
+      id: e.id,
+      designation: e.conductor
+        ? e.conductor.kind === "cable-conductor"
+          ? `${e.conductor.cableDesignation}/${e.conductor.conductorId}`
+          : e.conductor.designation
+        : "boundary segment",
+      // Diagnostic companions keep their historical structural terminal tuple.
+      // This ordering never reaches the adapter or drawing.
+      terminals: [...e.endpoints]
+        .sort(
+          (a, b) =>
+            compareText(a.deviceUid, b.deviceUid) ||
+            compareText(a.terminalKey, b.terminalKey),
+        )
+        .map(terminal),
+    }));
+  let message = violation.message;
+  for (const edge of edges)
+    message = message.replaceAll(
+      edge.id,
+      `${edge.designation} (${edge.terminals.map((t) => `${t.designation}.${t.terminalKey}${t.functionKeys.length ? ` / ${[...new Set(t.functionKeys)].join(", ")}` : ""}`).join(" → ")})`,
+    );
+  for (const [uid, name] of names) message = message.replaceAll(uid, name);
   return Object.freeze({
     code: "R004",
-    message: `Invalid layout: ${violation.message}.`,
+    message: `Invalid layout: ${message}.`,
+    ...(message === violation.message
+      ? {}
+      : {
+          details: {
+            originalMessage: `Invalid layout: ${violation.message}.`,
+            conductors: edges,
+          },
+        }),
     family: graph.view.family,
     ...(violation.netId === undefined ? {} : { netId: violation.netId }),
     root: graph.view.root.designation,
@@ -362,6 +451,7 @@ function normalizeNodes(
   input: Readonly<InputIndex>,
   presentation: Readonly<PresentationIndex>,
   geometry: GeometryIndex,
+  graphForReferences: Readonly<PresentationGraph>,
 ): void {
   if (output.id !== "root") reject("returned root ID changed");
   const rootWidth = dimension(output.width, "root.width");
@@ -405,16 +495,7 @@ function normalizeNodes(
       const kind = presentation.nodeKind.get(id);
       if (kind === undefined) reject(`node ${id} has no presentation owner`);
       const semanticNode = presentation.nodes.get(id);
-      if (
-        semanticNode !== undefined &&
-        semanticNode.kind !== "junction" &&
-        (width !== semanticNode.width || height !== semanticNode.height)
-      ) {
-        reject(`leaf node ${id} dimensions changed`);
-      }
-      if (semanticNode?.kind === "junction" && (width !== 6 || height !== 6)) {
-        reject(`junction node ${id} dimensions changed`, semanticNode.netId);
-      }
+      validateLeafSize(graphForReferences, semanticNode, width, height, reject);
       const primitiveOrigin =
         semanticNode === undefined || semanticNode.kind === "junction"
           ? undefined
@@ -814,136 +895,6 @@ function positiveAreaIntersection(left: Bounds, right: Bounds): boolean {
   );
 }
 
-function validateCompoundRegions(
-  graph: Readonly<PresentationGraph>,
-  geometry: Readonly<GeometryIndex>,
-  rootWidth: number,
-  rootHeight: number,
-): void {
-  const parentContract = new Map<
-    string,
-    Readonly<{ bounds: Bounds; padding: Padding }>
-  >();
-  parentContract.set("root", {
-    bounds: { left: 0, top: 0, right: rootWidth, bottom: rootHeight },
-    padding: ROOT_PADDING,
-  });
-  for (const group of graph.locationGroups) {
-    const layout = geometry.nodes.get(group.id);
-    if (layout === undefined) reject(`location ${group.id} is missing`);
-    if (
-      layout.width < Math.max(32, group.label.width + 16) ||
-      layout.height < 54
-    ) {
-      reject(`location ${group.id} violates its minimum size`);
-    }
-    parentContract.set(group.id, {
-      bounds: boundsOf(layout),
-      padding: LOCATION_PADDING,
-    });
-  }
-  for (const group of graph.deviceGroups) {
-    const layout = geometry.nodes.get(group.id);
-    if (layout === undefined) reject(`device ${group.id} is missing`);
-    if (
-      layout.width < Math.max(16, group.label.width + 16) ||
-      layout.height < 38
-    ) {
-      reject(`device ${group.id} violates its minimum size`);
-    }
-    parentContract.set(group.id, {
-      bounds: boundsOf(layout),
-      padding: DEVICE_PADDING,
-    });
-  }
-  for (const node of geometry.nodes.values()) {
-    const parent = parentContract.get(node.parentId);
-    if (parent === undefined) reject(`node ${node.id} has no layout parent`);
-    const content: Bounds = {
-      left: quantizeLayoutNumber(
-        parent.bounds.left + parent.padding.left,
-        `parent ${node.parentId} content left`,
-      ),
-      top: quantizeLayoutNumber(
-        parent.bounds.top + parent.padding.top,
-        `parent ${node.parentId} content top`,
-      ),
-      right: quantizeLayoutNumber(
-        parent.bounds.right - parent.padding.right,
-        `parent ${node.parentId} content right`,
-      ),
-      bottom: quantizeLayoutNumber(
-        parent.bounds.bottom - parent.padding.bottom,
-        `parent ${node.parentId} content bottom`,
-      ),
-    };
-    if (!inside(boundsOf(node), content))
-      reject(`node ${node.id} escapes its parent padding`);
-  }
-  for (const label of geometry.labels.values()) {
-    const box = boundsOf(label);
-    if (label.role === "location" || label.role === "device") {
-      const owner = geometry.nodes.get(label.ownerId);
-      if (owner === undefined)
-        reject(`label ${label.id} has no compound owner`);
-      const headerBottom = owner.y + (label.role === "location" ? 38 : 30);
-      if (
-        !inside(box, boundsOf(owner)) ||
-        label.y < owner.y ||
-        label.y + label.height > headerBottom
-      ) {
-        reject(`label ${label.id} escapes its compound header`);
-      }
-    } else if (
-      label.role === "function" ||
-      label.role === "aggregate" ||
-      label.role === "rail"
-    ) {
-      const owner = geometry.nodes.get(label.ownerId);
-      if (owner === undefined) reject(`label ${label.id} has no leaf owner`);
-      if (
-        label.x < owner.x ||
-        label.x + label.width > owner.x + owner.width ||
-        label.y < owner.y ||
-        label.y + label.height > owner.y + 22
-      ) {
-        reject(`label ${label.id} escapes its leaf header`);
-      }
-    } else if (label.role === "terminal") {
-      const port = geometry.ports.get(label.ownerId);
-      if (port === undefined) reject(`label ${label.id} has no port owner`);
-      const expected =
-        port.side === "west"
-          ? {
-              x: port.x - label.width - LABEL_PORT_HORIZONTAL_SPACING,
-              y: port.y + LABEL_PORT_VERTICAL_SPACING,
-            }
-          : port.side === "east"
-            ? {
-                x: port.x + LABEL_PORT_HORIZONTAL_SPACING,
-                y: port.y + LABEL_PORT_VERTICAL_SPACING,
-              }
-            : port.side === "north"
-              ? {
-                  x: port.x + LABEL_PORT_VERTICAL_SPACING,
-                  y: port.y - label.height - LABEL_PORT_HORIZONTAL_SPACING,
-                }
-              : {
-                  x: port.x + LABEL_PORT_VERTICAL_SPACING,
-                  y: port.y + LABEL_PORT_HORIZONTAL_SPACING,
-                };
-      if (
-        label.x !==
-          quantizeLayoutNumber(expected.x, `label ${label.id} expected x`) ||
-        label.y !==
-          quantizeLayoutNumber(expected.y, `label ${label.id} expected y`)
-      ) {
-        reject(`terminal label ${label.id} is outside its ELK port placement`);
-      }
-    }
-  }
-}
-
 function normalizedAngle(value: number): number {
   const fullTurn = 2 * Math.PI;
   const normalized = value % fullTurn;
@@ -1113,57 +1064,31 @@ function edgeSegments(edge: LayoutEdge): readonly Segment[] {
   return result;
 }
 
-function segmentIntersectsInterior(segment: Segment, bounds: Bounds): boolean {
-  if (segment.horizontal) {
-    const left = Math.min(segment.start.x, segment.end.x);
-    const right = Math.max(segment.start.x, segment.end.x);
-    return (
-      segment.start.y > bounds.top &&
-      segment.start.y < bounds.bottom &&
-      Math.min(right, bounds.right) > Math.max(left, bounds.left)
-    );
-  }
-  const top = Math.min(segment.start.y, segment.end.y);
-  const bottom = Math.max(segment.start.y, segment.end.y);
-  return (
-    segment.start.x > bounds.left &&
-    segment.start.x < bounds.right &&
-    Math.min(bottom, bounds.bottom) > Math.max(top, bounds.top)
-  );
-}
-
 function validateNodeAndLabelCollisions(
   graph: Readonly<PresentationGraph>,
   geometry: Readonly<GeometryIndex>,
   catalog: readonly SymbolDefinition[],
   segments: readonly Segment[],
+  references: readonly LayoutContextReference[],
+  captions: ReadonlyMap<string, PresentationLabel>,
 ): void {
   const primitiveBounds = translatedPrimitiveBounds(graph, geometry, catalog);
-  const symbolRectangles = new Map<string, Bounds>();
-  for (const node of graph.nodes) {
-    if (node.kind === "junction") continue;
-    const layout = geometry.nodes.get(node.id);
-    if (layout?.primitiveOrigin === undefined)
-      reject(`node ${node.id} has no primitive origin`);
-    symbolRectangles.set(node.id, {
-      left: layout.primitiveOrigin.x,
-      top: layout.primitiveOrigin.y,
-      right: layout.primitiveOrigin.x + node.symbolSize.width,
-      bottom: layout.primitiveOrigin.y + node.symbolSize.height,
-    });
-  }
+  const rectangles = symbolRectangles(graph, geometry, reject);
   for (const segment of segments) {
-    for (const [nodeId, bounds] of symbolRectangles) {
+    for (const [nodeId, bounds] of rectangles) {
       if (segmentIntersectsInterior(segment, bounds))
         reject(
           `edge ${segment.edge.id} crosses symbol ${nodeId}`,
           segment.edge.netId,
+          "symbol-intersection",
         );
     }
   }
   const labels = [...geometry.labels.values()];
+  const inkBounds = (label: LayoutLabel) =>
+    layoutLabelInk(label, captions, geometry.edges, reject);
   for (const label of labels) {
-    const labelBounds = boundsOf(label);
+    const labelBounds = inkBounds(label);
     for (const [nodeId, boundsList] of primitiveBounds) {
       if (
         boundsList.some((bounds) =>
@@ -1178,9 +1103,21 @@ function validateNodeAndLabelCollisions(
       reject(
         `label ${label.id} overlaps edge ${segment.edge.id}`,
         segment.edge.netId,
+        label.role === "net" ? "net-label-intersection" : undefined,
+        netLabelOverlaps(graph.view, label, labels, segments, inkBounds),
       );
     }
   }
+  if (references.length)
+    validateContextInk(
+      graph,
+      geometry,
+      references,
+      primitiveBounds,
+      segments,
+      inkBounds,
+      reject,
+    );
   for (let leftIndex = 0; leftIndex < labels.length; leftIndex++) {
     for (
       let rightIndex = leftIndex + 1;
@@ -1189,7 +1126,7 @@ function validateNodeAndLabelCollisions(
     ) {
       const left = labels[leftIndex]!;
       const right = labels[rightIndex]!;
-      if (positiveAreaIntersection(boundsOf(left), boundsOf(right)))
+      if (positiveAreaIntersection(inkBounds(left), inkBounds(right)))
         reject(`labels ${left.id} and ${right.id} overlap`);
     }
   }
@@ -1273,13 +1210,24 @@ function allowedConnectionPoints(
 function validateJunctions(
   graph: Readonly<PresentationGraph>,
   geometry: Readonly<GeometryIndex>,
+  references: readonly LayoutContextReference[],
 ): void {
   for (const node of graph.nodes) {
     if (node.kind !== "junction") continue;
     const layout = geometry.nodes.get(node.id);
     if (layout === undefined)
       reject(`junction ${node.id} is missing`, node.netId);
-    const center = { x: layout.x + 3, y: layout.y + 3 };
+    const ink = contextJunctionInk(graph, node);
+    const center = {
+      x: quantizeLayoutNumber(
+        layout.x + ink.anchor.x,
+        `junction ${node.id} center x`,
+      ),
+      y: quantizeLayoutNumber(
+        layout.y + ink.anchor.y,
+        `junction ${node.id} center y`,
+      ),
+    };
     for (const port of node.ports) {
       const portLayout = geometry.ports.get(port.id);
       if (
@@ -1293,8 +1241,18 @@ function validateJunctions(
         (edge) =>
           edge.sourcePortId === port.id || edge.targetPortId === port.id,
       );
-      if (incident.length !== 1)
+      const reference = references.filter(
+        (r) => r.sourcePortId === port.id || r.targetPortId === port.id,
+      );
+      if (incident.length + reference.length !== 1)
         reject(`junction ${node.id} port incidence changed`, node.netId);
+      const r = reference[0];
+      if (r) {
+        const origin = r.leaders[r.sourcePortId === port.id ? 0 : 1][0];
+        if (!origin || !samePoint(origin, center))
+          reject(`junction ${node.id} reference is off-center`, node.netId);
+        continue;
+      }
       const edge = incident[0]!;
       const endpoint =
         edge.sourcePortId === port.id
@@ -1328,6 +1286,7 @@ function validateRouteInteractions(
         reject(
           `edges ${left.edge.id} and ${right.edge.id} overlap collinearly`,
           left.edge.netId,
+          "collinear-overlap",
         );
       const pointValue = intersection.point;
       const leftEdgeEndpoint = edgeEndpoint(left.edge, pointValue);
@@ -1364,6 +1323,7 @@ function validateRouteInteractions(
       reject(
         `edges ${left.edge.id} and ${right.edge.id} form an ambiguous intersection`,
         left.edge.netId,
+        "ambiguous-intersection",
       );
     }
   }
@@ -1500,17 +1460,35 @@ function freezeLayout(
   }
   Object.freeze(layout.edges);
   Object.freeze(layout.crossings);
+  if (layout.contextReferences) {
+    for (const reference of layout.contextReferences) {
+      for (const leader of reference.leaders) Object.freeze(leader);
+      Object.freeze(reference.leaders);
+      Object.freeze(reference);
+    }
+    Object.freeze(layout.contextReferences);
+  }
   return Object.freeze(layout);
 }
 
-export function normalizeAndValidateLayout(
-  graph: Readonly<PresentationGraph>,
-  adapterInput: Readonly<ElkNode>,
-  elkOutput: Readonly<ElkNode>,
-  catalog: readonly SymbolDefinition[],
-): RenderOutcome<NormalizedSchematicLayout> {
-  const input = inputIndex(adapterInput);
-  const presentation = presentationIndex(graph);
+function validateLayoutRegions(
+  graph: PresentationGraph,
+  geometry: GeometryIndex,
+  width: number,
+  height: number,
+) {
+  validateCompoundRegions(graph, geometry, width, height, {
+    boundsOf,
+    inside,
+    quantizeLayoutNumber,
+    reject,
+  });
+}
+
+function validateInputCounts(
+  input: InputIndex,
+  presentation: PresentationIndex,
+) {
   invariant(
     input.nodes.size === presentation.nodeKind.size,
     "adapter nodes do not match presentation nodes",
@@ -1523,10 +1501,18 @@ export function normalizeAndValidateLayout(
     input.labels.size === presentation.labels.size,
     "adapter labels do not match presentation labels",
   );
-  invariant(
-    input.edges.size === presentation.edges.size,
-    "adapter edges do not match presentation edges",
-  );
+}
+
+export function normalizeAndValidateLayout(
+  graph: Readonly<PresentationGraph>,
+  adapterInput: Readonly<ElkNode>,
+  elkOutput: Readonly<ElkNode>,
+  catalog: readonly SymbolDefinition[],
+): LayoutValidationOutcome {
+  const input = inputIndex(adapterInput);
+  const presentation = presentationIndex(graph);
+  validateInputCounts(input, presentation);
+  validateReferenceInput(graph, input.edges, input.labels, invariant);
   try {
     const geometry: GeometryIndex = {
       nodes: new Map(),
@@ -1534,24 +1520,33 @@ export function normalizeAndValidateLayout(
       labels: new Map(),
       edges: new Map(),
     };
-    normalizeNodes(elkOutput, input, presentation, geometry);
+    normalizeNodes(elkOutput, input, presentation, geometry, graph);
     normalizeEdges(elkOutput, input, presentation, geometry);
     sameIds(input.labels, geometry.labels, "label");
     const rootWidth = dimension(elkOutput.width, "root.width");
     const rootHeight = dimension(elkOutput.height, "root.height");
-    validateCompoundRegions(graph, geometry, rootWidth, rootHeight);
+    validateLayoutRegions(graph, geometry, rootWidth, rootHeight);
     const edges = input.edgeOrder.map((id) => {
       const edge = geometry.edges.get(id);
       if (edge === undefined) reject(`edge ${id} is missing`);
       return edge;
     });
     const segments = edges.flatMap(edgeSegments);
-    validateJunctions(graph, geometry);
-    validateNodeAndLabelCollisions(graph, geometry, catalog, segments);
+    const references = contextReferenceLayouts(graph, geometry.ports, reject);
+    validateJunctions(graph, geometry, references);
+    validateNodeAndLabelCollisions(
+      graph,
+      geometry,
+      catalog,
+      segments,
+      references,
+      presentation.labels,
+    );
     const crossings = validateRouteInteractions(graph, geometry, segments);
     validateFinalBounds(graph, geometry, rootWidth, rootHeight, catalog);
+    const order = graphSemanticOrder(graph);
     const labels = [...presentation.labels.values()]
-      .sort(comparePresentationLabel)
+      .sort((a, b) => comparePresentationLabel(a, b, order.key))
       .map((label) => geometry.labels.get(label.id)!);
     return {
       ok: true,
@@ -1569,12 +1564,26 @@ export function normalizeAndValidateLayout(
         labels,
         edges,
         crossings,
+        ...(references.length ? { contextReferences: references } : {}),
       }),
     };
   } catch (error) {
-    if (error instanceof LayoutContractViolation) {
-      return { ok: false, error: invalidLayoutError(graph, error) };
-    }
+    if (error instanceof LayoutContractViolation)
+      return layoutFailure(error, invalidLayoutError(graph, error));
     throw error;
   }
+}
+
+function layoutFailure(
+  violation: LayoutContractViolation,
+  error: InvalidLayoutError,
+): LayoutValidationOutcome {
+  return {
+    ok: false,
+    error,
+    failureKind: violation.failureKind,
+    ...(violation.netLabelOverlaps
+      ? { netLabelOverlaps: violation.netLabelOverlaps }
+      : {}),
+  };
 }

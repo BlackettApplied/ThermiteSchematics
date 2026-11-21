@@ -1,0 +1,56 @@
+{
+  "issue": 473,
+  "checker": "5.36",
+  "base": "508258e1e41a8eb6b4da715219a23c3692c6e217",
+  "originalCases": 124,
+  "originalSheets": 746,
+  "addedCases": 0,
+  "addedSheets": 1,
+  "cases": [
+    {
+      "case": "motor-starter-documentation-left-to-right",
+      "beforeSheets": 7,
+      "afterSheets": 7,
+      "symbolSheet": 1,
+      "symbol": "circuit:motor",
+      "selection": "M1.motor_load",
+      "addedConductors": []
+    },
+    {
+      "case": "p03-conveyor-line-tabloid-landscape-standard-top-to-bottom",
+      "beforeSheets": 2,
+      "afterSheets": 3,
+      "symbolSheet": 3,
+      "symbol": "ais:ac-load",
+      "selection": "PS1 AC input in rooted power view",
+      "addedConductors": [],
+      "displayLabelsUseDesignations": [
+        "W-PWR-004",
+        "W-PWR-005",
+        "W-PWR-007",
+        "W-PWR-008"
+      ]
+    }
+  ],
+  "followUps": [
+    {
+      "issue": 501,
+      "case": "motor-starter-documentation-top-to-bottom",
+      "beforeSheets": 7,
+      "afterSheets": 7,
+      "symbolSheet": 1,
+      "symbol": "circuit:motor",
+      "selection": "M1.motor_load",
+      "addedConductors": [],
+      "paper": "tabloid",
+      "beforeOrientation": "landscape",
+      "afterOrientation": "portrait",
+      "splitGroupCoverage": {
+        "case": "circuit-pagination-top-to-bottom",
+        "paper": "tabloid",
+        "orientation": "landscape",
+        "group": "chain"
+      }
+    }
+  ]
+}

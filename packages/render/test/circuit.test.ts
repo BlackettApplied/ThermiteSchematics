@@ -1,9 +1,15 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { parseHTML } from "linkedom";
 import type { ElectricalIr } from "@thermite/compiler";
-import { prepareCircuitView, type CircuitViewRequest } from "../src/circuit.js";
+import {
+  circuitFunctionAppearances,
+  prepareCircuitView,
+  type CircuitViewRequest,
+} from "../src/circuit.js";
+import { deviceTagFitDetails } from "../src/packet/device-tag-fit.js";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { circuitMark } from "../src/symbols/circuit.js";
+import { printableTextMetrics } from "../src/text-metrics.js";
 import { compileCoreFixture } from "./fixtures.js";
 import {
   controlCircuitView,
@@ -17,7 +23,111 @@ beforeAll(async () => {
   ir = await compileCoreFixture();
 });
 
+it.each([
+  ["Contactor command and interlocks", "Contactor command and interlocks"],
+  [undefined, "Motor control"],
+])(
+  "projects a related-function destination using the authored label %s",
+  async (label, caption) => {
+    const view = controlCircuitView();
+    const control = {
+      ...view,
+      groups: view.groups.map(
+        ({ lineReference: _reference, label: _label, ...group }) => ({
+          ...group,
+          ...(label ? { label } : {}),
+        }),
+      ),
+    };
+    const packet = await renderSchematicPacket(ir, {
+      format: "schematic-packet-request/0.1",
+      views: [motorCircuitView(), control],
+    });
+    if (!packet.ok) throw Error(JSON.stringify(packet.error));
+    const motor = parseHTML(packet.value.sheets[0]!.svg).document;
+    const footers = [
+      ...motor.querySelectorAll("[data-related-functions] > text"),
+    ]
+      .map((t) => t.textContent)
+      .join(" ");
+    expect(footers).toContain(`coil: ${caption}`);
+    expect(footers).not.toContain("coil: motor-control");
+    const controlSheet = packet.value.sheets.find(
+      (sheet) => "title" in sheet.view && sheet.view.title === view.title,
+    )!;
+    expect(controlSheet.svg).not.toContain(">motor-control</text>");
+  },
+);
+
 describe("source-selected circuit views", () => {
+  it("wraps the full authored related-function label without widening the vertical symbol body", async () => {
+    const flow = "top-to-bottom";
+    const view = {
+      ...controlCircuitView(),
+      flow,
+      groups: [
+        {
+          id: "coil",
+          functions: [
+            { device: { by: "designation", value: "K1" }, key: "coil" },
+          ],
+          conductors: [],
+        },
+      ],
+    } satisfies CircuitViewRequest;
+    const label =
+      "Contactor auxiliary feedback to the operator station after completion of the starter command";
+    const peer = {
+      ...view,
+      title: label,
+      groups: [
+        {
+          ...view.groups[0]!,
+          id: "aux",
+          label,
+          functions: [
+            { device: { by: "designation", value: "K1" }, key: "aux13" },
+          ],
+        },
+      ],
+    } satisfies CircuitViewRequest;
+    const draw = async (destination: CircuitViewRequest) =>
+      (
+        await prepareCircuitView(
+          ir,
+          view,
+          circuitFunctionAppearances(ir, [view, destination]),
+        )
+      ).groups[0]!;
+    const compact = await draw(peer);
+    const plain = await prepareCircuitView(ir, view);
+    const doc = parseHTML(compact.content).document;
+    const owner = doc.querySelector("[data-circuit-tag-lane]")!;
+    const captions = [...owner.querySelectorAll(":scope > text")];
+    expect(captions.length).toBeGreaterThan(1);
+    expect(captions.map((t) => t.textContent).join(" ")).toBe(
+      `13–14: ${label}`,
+    );
+    expect(owner.getAttribute("data-circuit-body-width")).toBe(
+      parseHTML(plain.groups[0]!.content)
+        .document.querySelector("[data-circuit-tag-lane]")!
+        .getAttribute("data-circuit-body-width"),
+    );
+    expect(compact.width).toBe(plain.groups[0]!.width);
+
+    const widerLine = await draw({
+      ...peer,
+      groups: [{ ...peer.groups[0]!, lineReference: "Separate interlock row" }],
+    });
+    const fit = deviceTagFitDetails(widerLine, 20, 200);
+    expect(fit.relatedCaption).toMatchObject({
+      designation: "K1",
+      text: "13–14: Separate interlock row",
+    });
+    expect(fit.message).toContain("A shorter group lineReference");
+    expect(fit.message).not.toContain("largest tag reservation");
+  });
+
   it("keeps external jumper labels beside their own ELK routes and clear of module return wiring", async () => {
     const f = await jumperChainCircuitFixture();
     try {
@@ -151,6 +261,57 @@ describe("source-selected circuit views", () => {
       expect(ir.wires.some((w) => w.uid === id)).toBe(true);
   });
 
+  it.each([
+    ["left-to-right", true],
+    ["top-to-bottom", true],
+    ["top-to-bottom", false],
+  ] as const)(
+    "prints three-phase lanes in reading order in %s flow (motor selected: %s)",
+    async (flow, motor) => {
+      const { groups } = await prepareCircuitView(ir, {
+        ...motorCircuitView(motor),
+        flow,
+      });
+      const doc = parseHTML(groups[0]!.content).document;
+      const axis = flow === "top-to-bottom" ? "x" : "y";
+      const lanes: [string, string[]][] = [
+        ["SRC1", ["L1", "L2", "L3"]],
+        ["CB1", ["1/L1", "3/L2", "5/L3"]],
+        ["CB1", ["2/T1", "4/T2", "6/T3"]],
+        ["K1", ["1/L1", "3/L2", "5/L3"]],
+        ["K1", ["2/T1", "4/T2", "6/T3"]],
+        ["OL1", ["1/L1", "3/L2", "5/L3"]],
+        ["OL1", ["2/T1", "4/T2", "6/T3"]],
+      ];
+      if (motor) lanes.push(["M1", ["U", "V", "W"]]);
+      for (const [designation, keys] of lanes) {
+        const device = ir.devices.find((d) => d.designation === designation)!;
+        const ports = keys.map((terminal) => {
+          const id = JSON.stringify([device.uid, terminal]);
+          return doc.querySelector(`[data-terminal-id='${id}']`)!;
+        });
+        const markers = ports.map((p) =>
+          Number(p.querySelector("circle")!.getAttribute(`c${axis}`)),
+        );
+        expect(markers[0], designation).toBeLessThan(markers[1]!);
+        expect(markers[1], designation).toBeLessThan(markers[2]!);
+        if (designation === "M1") {
+          expect(
+            ports.map((p) => p.querySelector("text")!.textContent),
+          ).toEqual(keys);
+        }
+      }
+      for (const path of doc.querySelectorAll("[data-circuit-conductor]")) {
+        const wire = ir.wires.find(
+          (w) => w.uid === path.getAttribute("data-circuit-conductor"),
+        )!;
+        expect(JSON.parse(path.getAttribute("data-endpoints")!)).toEqual(
+          wire.endpoints.map((endpoint) => endpoint.terminal),
+        );
+      }
+    },
+  );
+
   it("shows exact source wire labels and source-backed outside-view endpoints", async () => {
     const result = await prepareCircuitView(ir, controlCircuitView());
     const group = result.groups[0]!;
@@ -208,11 +369,24 @@ describe("source-selected circuit views", () => {
         "[data-wire-label] text, [data-terminal-id] text, [data-function-key=do0] text",
       ))
         expect(Number(t.getAttribute("font-size"))).toBeGreaterThanOrEqual(2.5);
-      const rect = label(first.uid).querySelector("rect")!;
-      const bottom =
-        Number(rect.getAttribute("y")) + Number(rect.getAttribute("height"));
-      expect(Number(text.at(-1)!.getAttribute("y"))).toBeLessThan(bottom);
-      expect(Number(rect.getAttribute("height"))).toBeGreaterThan(6);
+      const rect = label(first.uid).querySelector("rect"),
+        left = Number(rect?.getAttribute("x")),
+        top = Number(rect?.getAttribute("y")),
+        right = left + Number(rect?.getAttribute("width")),
+        bottom = top + Number(rect?.getAttribute("height"));
+      expect(rect).not.toBeNull();
+      for (const t of text) {
+        const x = Number(t.getAttribute("x")),
+          baseline = Number(t.getAttribute("y")),
+          ink = printableTextMetrics(
+            t.textContent ?? "",
+            Number(t.getAttribute("font-size")),
+          );
+        expect(x + ink.left).toBeGreaterThanOrEqual(left - 0.01);
+        expect(x + ink.right).toBeLessThanOrEqual(right + 0.01);
+        expect(baseline - ink.top).toBeGreaterThanOrEqual(top - 0.01);
+        expect(baseline - ink.bottom).toBeLessThanOrEqual(bottom + 0.01);
+      }
       expect(label(first.uid).getAttribute("data-wire-label")).toBe(first.uid);
     }
   });
@@ -225,7 +399,10 @@ describe("source-selected circuit views", () => {
     expect(result.ok).toBe(true);
     if (!result.ok) throw new Error(result.error.message);
     expect(result.value.sheets[0]!.svg).toContain("coil: 200");
-    expect(result.value.sheets[1]!.svg).toContain("3 functions: 100");
+    expect(result.value.sheets[0]!.svg).not.toContain("aux13:");
+    expect(result.value.sheets.map((s) => s.svg).join("")).toContain(
+      "1/L1–2/T1, 3/L2–4/T2, 5/L3–6/T3: 100",
+    );
     expect(
       result.value.sheets
         .flatMap((s) => s.references)

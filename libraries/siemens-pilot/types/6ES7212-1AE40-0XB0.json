@@ -7,6 +7,10 @@
       "description": "S7-1200 CPU 1212C DC/DC/DC",
       "category": "controller",
       "symbol": "thermite:io-module",
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "CPU field connector pins, supply, returns, functional earth and I/O channels are represented. Ethernet and programming interfaces are omitted; this is not a complete physical connection inventory. Review catalog.modelingNotes and the cited V20 connector table before use."
+      },
       "catalog": {
         "manufacturer": "Siemens",
         "orderNumber": "6ES7212-1AE40-0XB0",

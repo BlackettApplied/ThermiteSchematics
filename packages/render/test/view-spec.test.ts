@@ -7,6 +7,7 @@ import {
   classifyRuntimeInput,
   normalizeSchematicView,
 } from "../src/view-spec.js";
+import { projectDeviceTypeSymbolMappings } from "../src/symbols/mappings.js";
 import { compileCoreFixture } from "./fixtures.js";
 
 let coreIr: ElectricalIr;
@@ -503,13 +504,15 @@ describe("descriptor-only hostile request inspection", () => {
       [rootTarget.by, "by"],
       [rootTarget.value, "value"],
     ]);
+    // Keep catalog shape matching outside the request-classification spy.
+    const mappings = projectDeviceTypeSymbolMappings(coreIr);
     const original = Array.isArray;
     Array.isArray = ((value: unknown) => {
       events.push(`classify:${labels.get(value) ?? "unknown"}`);
       return original(value);
     }) as typeof Array.isArray;
     try {
-      const result = normalizeSchematicView(coreIr, request);
+      const result = normalizeSchematicView(coreIr, request, { mappings });
       expect(result.ok).toBe(true);
     } finally {
       Array.isArray = original;
@@ -1061,8 +1064,9 @@ describe("schematic-view-request/0.2 normalization", () => {
         { ...validTraceRequest, root: { by: "designation", value: "K1" } },
         {
           code: "R001",
-          message:
-            "Invalid trace root: expected one supported mapped trace-root rule.",
+          message: expect.stringContaining(
+            "Accepted trace profiles and shapes:",
+          ),
           family: "control",
           root: "K1",
         },
@@ -1106,8 +1110,11 @@ describe("schematic-view-request/0.2 normalization", () => {
         },
         {
           code: "R001",
-          message:
+          message: expect.stringContaining(
             "Invalid trace target: expected at least one mapped input channel.",
+          ),
+          reason: "target-not-accepted",
+          targetDesignation: "K1",
           root: "LS1",
         },
       ],
@@ -1123,8 +1130,11 @@ describe("schematic-view-request/0.2 normalization", () => {
         { ...validLoadsRequest, root: { by: "designation", value: "K1" } },
         {
           code: "R001",
-          message:
+          reason: "root-not-accepted",
+          message: expect.stringContaining(
             "Invalid loads root: expected exactly one mapped control source with a source/return terminal pair.",
+          ),
+          details: { reason: "root-not-accepted", rootFamilies: ["control"] },
           root: "K1",
         },
       ],

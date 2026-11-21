@@ -1,7 +1,14 @@
+import { createVerificationContext } from "./verify-context.mjs";
+import {
+  readJobContract,
+  readCandidateContract,
+  readResearchNote,
+} from "./verify-contracts.mjs";
+import { verifyCandidate } from "./verify-candidate.mjs";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, relative, resolve } from "node:path";
+import { readFile, writeFile } from "node:fs/promises";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { compileProject, lockProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "@thermite/render";
@@ -235,475 +242,35 @@ export function assertPacketCoverage(packet, ir, request, renderKind) {
   }
 }
 
+const verificationSupport = {
+  here,
+  readStrict,
+  digest,
+  json,
+  same,
+  uid,
+  circuitRequest,
+  assertNetPartition,
+  assertPacketCoverage,
+  createAjv2020,
+  compileProject,
+  lockProject,
+  renderSchematicPacket,
+};
 export async function verifyJob({ job: jobPath, output: outputPath }) {
-  const jobDir = resolve(jobPath),
-    output = resolve(outputPath);
-  assert(
-    jobDir !== output &&
-      !relative(output, jobDir)
-        .split(/[\\/]/)
-        .every((part) => part !== ".."),
-    "Output must not be the job folder or an ancestor of it",
+  const context = await createVerificationContext(
+    jobPath,
+    outputPath,
+    verificationSupport,
   );
-  await mkdir(output, { recursive: true });
-  const report = {
-    status: "failed",
-    checks: [],
-    diagnostics: [],
-    outputs: {},
-    reviewFlags: [
-      {
-        code: "manufacturer-review-required",
-        message:
-          "Automatic structural/topology checks do not approve manufacturer facts, engineering suitability or installation safety.",
-      },
-      {
-        code: "visual-review-required",
-        message:
-          "Generated geometry and selection are checked structurally; a human must review the packet at its intended print size.",
-      },
-    ],
-    inputs: {},
-  };
-  const check = async (name, action) => {
-    try {
-      const value = await action();
-      report.checks.push({ name, status: "passed" });
-      return value;
-    } catch (error) {
-      report.checks.push({ name, status: "failed", message: error.message });
-      throw error;
-    }
-  };
-  const flag = (code, message) => report.reviewFlags.push({ code, message });
-  const diagnostic = (stage, result) => {
-    report.diagnostics.push({
-      stage,
-      diagnostics: result.diagnostics ?? [],
-      ...(result.error ? { error: result.error } : {}),
-    });
-  };
-  const snapshots = new Map();
-  const read = async (name) => {
-    const data = await readStrict(join(jobDir, name));
-    snapshots.set(name, data.bytes);
-    report.inputs[name] = digest(data.bytes);
-    return data.value;
-  };
+  const { check, report, output, snapshots, jobDir } = context;
   try {
-    const job = await check("job-contract", async () => {
-      const value = await read("job.json");
-      for (const key of [
-        "id",
-        "expectedTypeId",
-        "expectedManufacturer",
-        "expectedOrderNumber",
-      ])
-        assert.equal(
-          typeof value[key],
-          "string",
-          `job.${key} must be a string`,
-        );
-      for (const key of [
-        "id",
-        "expectedTypeId",
-        "expectedManufacturer",
-        "expectedOrderNumber",
-      ])
-        assert(value[key].trim(), `job.${key} must not be empty`);
-      return value;
-    });
-    const result = await check("candidate-schema", async () => {
-      const value = await read("result.json");
-      const schema = (await readStrict(join(here, "candidate.schema.json")))
-        .value;
-      const validate = createAjv2020().compile(schema);
-      assert(validate(value), json(validate.errors));
-      assert.equal(
-        value.sourcePartId,
-        job.id,
-        "Candidate sourcePartId does not match job identity",
-      );
-      same(
-        value.sources.map((source) => source.id),
-        new Set(value.sources.map((source) => source.id)),
-        "Duplicate source evidence IDs",
-      );
-      for (const source of value.sources)
-        assert.equal(
-          new URL(source.url).protocol,
-          "https:",
-          "Evidence URL must be a valid HTTPS URL",
-        );
-      return value;
-    });
-    await check("research-note", async () => {
-      const bytes = await readFile(join(jobDir, "research.md"));
-      assert(
-        new TextDecoder("utf-8", { fatal: true }).decode(bytes).trim(),
-        "Empty research.md",
-      );
-      snapshots.set("research.md", bytes);
-      report.inputs["research.md"] = digest(bytes);
-    });
-    for (const unresolved of result.unresolved)
-      flag("unresolved-evidence", unresolved);
-    if (result.decision === "needs-evidence") {
-      report.status = "needs-evidence";
-      flag("needs-evidence", result.summary);
-    } else {
-      const type = await check("identity-and-conformance", async () => {
-        const document = await read("type.json");
-        same(
-          Object.keys(document),
-          ["types"],
-          "type.json must contain only types",
-        );
-        assert.equal(
-          document.types.length,
-          1,
-          "Exactly one device type is required",
-        );
-        const value = document.types[0];
-        assert.equal(value.kind, "device_type");
-        assert.equal(value.id, job.expectedTypeId, "Type identity drift");
-        assert.equal(
-          value.catalog?.manufacturer,
-          job.expectedManufacturer,
-          "Manufacturer identity drift",
-        );
-        assert.equal(
-          value.catalog?.orderNumber,
-          job.expectedOrderNumber,
-          "Order number identity drift",
-        );
-        assert(
-          result.sources.length > 0,
-          "At least one primary manufacturer source is required",
-        );
-        assert(result.conformance, "Candidate conformance is required");
-        assert(
-          ["partial", "complete"].includes(value.connectionCoverage?.status),
-          "Explicit partial/complete connectionCoverage is required",
-        );
-        assert(
-          value.connectionCoverage.notes?.trim(),
-          "Connection coverage review notes are required",
-        );
-        const keys = Object.keys(value.terminals);
-        same(
-          keys,
-          result.conformance.terminalKeys,
-          "Terminal conformance inventory drift",
-        );
-        same(
-          Object.entries(value.terminals)
-            .filter(([, terminal]) => terminal.required === true)
-            .map(([key]) => key),
-          result.conformance.requiredTerminalKeys,
-          "Required-terminal conformance drift",
-        );
-        const sourceIds = new Set(result.sources.map((source) => source.id));
-        for (const link of result.conformance.fixedLinks) {
-          assert(
-            keys.includes(link.from) && keys.includes(link.to),
-            "Fixed link refers to an unknown terminal",
-          );
-          assert.notEqual(
-            link.from,
-            link.to,
-            "Fixed link must join distinct terminals",
-          );
-          assert(
-            sourceIds.has(link.sourceId),
-            "Fixed link evidence ID is unknown",
-          );
-        }
-        if (result.conformance.renderKind === "accessory") {
-          assert.equal(
-            keys.length,
-            0,
-            "Accessory rendering requires zero terminals",
-          );
-          assert.equal(
-            Object.keys(value.functions).length,
-            0,
-            "Accessory rendering requires zero circuit functions",
-          );
-        }
-        if (!keys.length)
-          assert.notEqual(
-            result.conformance.renderKind,
-            "circuit",
-            "Zero-terminal types require accessory or overview rendering",
-          );
-        return value;
-      });
-      const {
-        terminalKeys: keys,
-        fixedLinks: links,
-        requiredTerminalKeys: required,
-        renderKind,
-      } = result.conformance;
-      if (type.connectionCoverage.status === "partial")
-        flag("partial-model", type.connectionCoverage.notes);
-      if (
-        keys.length &&
-        !result.sources.some((source) => source.diagramReviewed)
-      )
-        flag(
-          "diagram-not-reviewed",
-          "No electrical source records a reviewed manufacturer connection diagram.",
-        );
-      for (const source of result.sources.filter(
-        (source) => !source.diagramReviewed,
-      ))
-        flag(
-          "source-diagram-not-reviewed",
-          `${source.id}: manufacturer diagram review is not recorded.`,
-        );
-      flag(
-        "identity-document-review",
-        "Exact order identity and declared document revision require comparison with the manufacturer source.",
-      );
-      if (keys.length)
-        flag(
-          "ratings-review",
-          "Review every declared voltage/current unit and operating limit; missing ratings and ratings applicability are not inferred by this fixture.",
-        );
-      const unrated = keys.filter((key) => !type.terminals[key].rating);
-      if (unrated.length)
-        flag(
-          "terminals-without-ratings",
-          `No terminal rating declared for: ${unrated.join(", ")}. Review applicability against the source.`,
-        );
-      if (
-        !result.sources.some(
-          (source) => source.url === type.catalog.document?.url,
-        )
-      )
-        flag(
-          "catalog-document-evidence",
-          "Catalog document URL is missing or does not match a listed manufacturer source.",
-        );
-      if (renderKind !== "circuit")
-        flag(
-          "no-circuit-coverage",
-          "The generated packet is an inventory overview; it does not establish circuit-symbol coverage.",
-        );
-
-      const fixture = await mkdtemp(join(output, "fixture-"));
-      report.outputs.fixture = fixture;
-      const library = join(fixture, "candidate"),
-        boundary = join(fixture, "boundary");
-      await mkdir(library);
-      await mkdir(boundary);
-      const libraryName = type.id.split(":")[0];
-      const boundaryName =
-        libraryName === "batch-boundary"
-          ? "batch-test-boundary"
-          : "batch-boundary";
-      const objects = [
-        { kind: "device", uid: uid(1), designation: "D1", type: type.id },
-      ];
-      keys.forEach((key, index) => {
-        objects.push({
-          kind: "device",
-          uid: uid(1000 + index),
-          designation: `B${index + 1}`,
-          type: `${boundaryName}:endpoint-${index + 1}`,
-        });
-        objects.push({
-          kind: "wire",
-          uid: uid(100000 + index),
-          designation: `W${index + 1}`,
-          endpoints: [
-            { device: "D1", terminal: key },
-            { device: `B${index + 1}`, terminal: "1" },
-          ],
-        });
-      });
-      links.forEach((link, index) =>
-        objects.push({
-          kind: "jumper",
-          uid: uid(200000 + index),
-          designation: `FIXED${index + 1}`,
-          description: `${link.sourceId}: ${link.reason}`,
-          endpoints: [
-            { device: "D1", terminal: link.from },
-            { device: "D1", terminal: link.to },
-          ],
-        }),
-      );
-      const sourcePath = join(fixture, "source.json"),
-        typePath = join(library, "type.json");
-      await writeFile(typePath, snapshots.get("type.json"));
-      await writeFile(
-        join(library, "library.json"),
-        json({ name: libraryName, version: "0.1.0", sources: ["type.json"] }),
-      );
-      await writeFile(
-        join(boundary, "library.json"),
-        json({ name: boundaryName, version: "0.1.0", sources: ["types.json"] }),
-      );
-      await writeFile(
-        join(boundary, "types.json"),
-        json({
-          types: keys.map((key, index) => ({
-            kind: "device_type",
-            id: `${boundaryName}:endpoint-${index + 1}`,
-            description:
-              "Synthetic unenergized test endpoint; no installed source or load",
-            symbol: "thermite:terminal-strip",
-            terminals: { 1: { role: type.terminals[key].role ?? "passive" } },
-            functions: {},
-            connectionCoverage: {
-              status: "partial",
-              notes:
-                "Invented test boundary only. No installed supply, load, protection, conductor size or bonding is specified.",
-            },
-          })),
-        }),
-      );
-      await writeFile(
-        join(fixture, "system.json"),
-        json({
-          format: "electrical-system/0.1",
-          project: {
-            name: `${job.expectedOrderNumber} component verification`,
-          },
-          sources: ["source.json"],
-          libraries: [
-            { name: libraryName, version: "0.1.0", path: "candidate" },
-            ...(keys.length
-              ? [{ name: boundaryName, version: "0.1.0", path: "boundary" }]
-              : []),
-          ],
-        }),
-      );
-      await writeFile(sourcePath, json({ objects }));
-      const compile = async (stage, nextObjects = objects) => {
-        await writeFile(sourcePath, json({ objects: nextObjects }));
-        const value = await compileProject(fixture);
-        diagnostic(stage, value);
-        assert.equal(value.ok, true, json(value.diagnostics));
-        return value;
-      };
-      const baseline = await check("compile-and-lock", async () => {
-        const locked = await lockProject(fixture);
-        diagnostic("lock", locked);
-        assert.equal(locked.ok, true, json(locked.diagnostics));
-        return compile("baseline");
-      });
-      for (const entry of baseline.diagnostics)
-        flag("compiler-diagnostic", `${entry.code}: ${entry.message}`);
-      await check("physical-net-partition", () =>
-        assertNetPartition(baseline.ir, keys, links),
-      );
-      try {
-        for (let index = 0; index < links.length; index++) {
-          await check(`remove-fixed-link-${index + 1}`, async () => {
-            const remaining = links.filter((_, position) => position !== index);
-            const variant = await compile(
-              `remove-fixed-link-${index + 1}`,
-              objects.filter(
-                (object) => object.designation !== `FIXED${index + 1}`,
-              ),
-            );
-            assertNetPartition(variant.ir, keys, remaining);
-          });
-        }
-        await check("remove-all-fixed-links", async () => {
-          const value = await compile(
-            "remove-all-fixed-links",
-            objects.filter((object) => object.kind !== "jumper"),
-          );
-          assertNetPartition(value.ir, keys, []);
-        });
-        for (const key of required) {
-          await check(`required-terminal-${key}`, async () => {
-            const remaining = links.filter(
-              (link) => link.from !== key && link.to !== key,
-            );
-            const value = await compile(
-              `required-terminal-${key}`,
-              objects.filter(
-                (object) =>
-                  !object.endpoints?.some(
-                    (end) => end.device === "D1" && end.terminal === key,
-                  ),
-              ),
-            );
-            assertNetPartition(value.ir, keys, remaining, [key]);
-            assert(
-              value.diagnostics.some(
-                (entry) =>
-                  entry.code === "W903" &&
-                  entry.message.startsWith("D1:") &&
-                  entry.message.includes(key),
-              ),
-              `Disconnected required terminal ${key} did not produce W903`,
-            );
-          });
-        }
-        await check("stale-library-bytes", async () => {
-          await writeFile(
-            typePath,
-            Buffer.concat([snapshots.get("type.json"), Buffer.from("\n")]),
-          );
-          const stale = await compileProject(fixture);
-          diagnostic("stale-library", stale);
-          assert.equal(stale.ok, false, "A stale byte lock was accepted");
-          assert(
-            stale.diagnostics.some((entry) => entry.code === "E108"),
-            "Stale library bytes did not produce E108",
-          );
-        });
-      } finally {
-        await writeFile(typePath, snapshots.get("type.json"));
-        await writeFile(sourcePath, json({ objects }));
-      }
-      const request =
-        renderKind === "circuit"
-          ? circuitRequest(type, keys, links, objects)
-          : {
-              format: "schematic-packet-request/0.1",
-              page: { size: "tabloid" },
-              views: [
-                { format: "documentation-view-request/0.1", kind: "bom" },
-                ...(keys.length
-                  ? [
-                      {
-                        format: "documentation-view-request/0.1",
-                        kind: "terminals",
-                        device: "D1",
-                      },
-                    ]
-                  : []),
-              ],
-            };
-      await writeFile(join(fixture, "packet.request.json"), json(request));
-      const packet = await check("render-packet", async () => {
-        const value = await renderSchematicPacket(baseline.ir, request);
-        diagnostic("render", value);
-        assert.equal(value.ok, true, json(value.error));
-        return value.value;
-      });
-      report.outputs.packet = join(output, "packet.json");
-      report.outputs.html = join(output, "packet.html");
-      report.outputs.svgs = [];
-      await writeFile(report.outputs.packet, json(packet));
-      await writeFile(report.outputs.html, packet.html);
-      for (const sheet of packet.sheets) {
-        const path = join(output, `sheet-${sheet.number}.svg`);
-        await writeFile(path, sheet.svg);
-        report.outputs.svgs.push(path);
-      }
-      await check("render-selection-and-manifest", () =>
-        assertPacketCoverage(packet, baseline.ir, request, renderKind),
-      );
-      report.status = "verified-candidate";
-    }
+    const job = await check("job-contract", () => readJobContract(context));
+    const result = await check("candidate-schema", () =>
+      readCandidateContract({ ...context, job }),
+    );
+    await check("research-note", () => readResearchNote(context));
+    await verifyCandidate(context, job, result);
     await check("input-snapshot-unchanged", async () => {
       for (const [name, bytes] of snapshots)
         assert(
@@ -728,7 +295,7 @@ if (
     assert.equal(
       args.length,
       4,
-      "Usage: node scripts/library-batch/verify.mjs --job <jobdir> --output <checkdir>",
+      "Usage: bun scripts/library-batch/verify.mjs --job <jobdir> --output <checkdir>",
     );
     const options = new Map([
       [args[0], args[1]],

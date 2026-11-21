@@ -6,6 +6,10 @@
       "description": "A1 temperature BaseUnit - extends load group",
       "terminals": {},
       "functions": {},
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Inventory-only BaseUnit. No physical terminals or backplane mating contacts are declared here; field landing positions are represented under the installed I/O module. Backplane bridges and power-group continuity are not modeled. This entry cannot establish assembly connection completeness."
+      },
       "catalog": {
         "manufacturer": "Siemens",
         "orderNumber": "6ES7193-6BP00-0BA1",

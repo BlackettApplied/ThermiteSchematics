@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:estop-nc",
+      "description": "Provisional generic maintained/latching emergency-stop operator with one NC contact; manual reset releases the latch. No safety performance claim.",
+      "terminals": {
+        "11": {
+          "role": "nc_contact",
+          "required": true
+        },
+        "12": {
+          "role": "nc_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact11": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:estop",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Single NC pair 11/12, closed in the released/reset state and open while the operator is latched; both ends are required. Maintained/latching behavior is descriptive, not simulated. Optional: none in this interface. Unmodeled: redundant channels, monitoring, illumination, extra contacts and bonding. Select hardware and add applicable ratings; no safety category, stop category or manufacturer pinout is established."
+      }
+    }
+  ]
+}

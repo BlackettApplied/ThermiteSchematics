@@ -1,0 +1,44 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:motor-3ph",
+      "description": "Three-phase induction motor load with protective earth",
+      "terminals": {
+        "U": {
+          "role": "phase_u_input",
+          "required": true
+        },
+        "V": {
+          "role": "phase_v_input",
+          "required": true
+        },
+        "W": {
+          "role": "phase_w_input",
+          "required": true
+        },
+        "PE": {
+          "role": "protective_earth",
+          "required": true
+        }
+      },
+      "functions": {
+        "motor_load": {
+          "kind": "load",
+          "terminals": ["U", "V", "W"]
+        },
+        "protective_earth": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:motor-3ph",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: The three-phase load U/V/W and separate protective earth PE are modeled and required. No optional points in this interface. Unmodeled: winding links, thermal sensors, brakes, heaters, shields and additional bonding of actual motors; no winding configuration or manufacturer pinout is asserted."
+      }
+    }
+  ]
+}

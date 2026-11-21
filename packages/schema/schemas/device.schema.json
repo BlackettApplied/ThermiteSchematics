@@ -21,6 +21,18 @@
     "description": {
       "type": "string"
     },
+    "nonProcurement": {
+      "description": "Explicit authored exclusion from purchasing. The device remains in the BOM with this reason; never inferred from its type or profile.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason"],
+      "properties": {
+        "reason": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      }
+    },
     "aliases": {
       "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/aliases"
     },
@@ -99,6 +111,43 @@
           "patternProperties": {
             "^.+$": {
               "$ref": "#/$defs/connectionReviewEntry"
+            }
+          }
+        }
+      }
+    },
+    "connectorIo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ports"],
+      "properties": {
+        "addressSpace": {
+          "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+        },
+        "ports": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+          },
+          "additionalProperties": false,
+          "patternProperties": {
+            "^.+$": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "direction": {
+                  "enum": ["input", "output", "bidirectional"]
+                },
+                "address": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                },
+                "signal": {
+                  "$ref": "https://thermiteschematics.com/schemas/0.1/common.schema.json#/$defs/designation"
+                },
+                "usage": {
+                  "enum": ["in-use", "spare"]
+                }
+              }
             }
           }
         }

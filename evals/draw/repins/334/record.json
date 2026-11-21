@@ -1,0 +1,24 @@
+{
+  "baseCommit": "5d01d49a6e3e14e2434ab4e14056901dda5aabea",
+  "countersignMode": "sidecar",
+  "cropIndex": "crop-index.json",
+  "cropIndexSha256": "3928d478637b46edff9319bdd074b3a482472da0f1ace22d0ea7ac499646adc5",
+  "files": {
+    "crop-index.json": "3928d478637b46edff9319bdd074b3a482472da0f1ace22d0ea7ac499646adc5",
+    "crops/entry-0531.png": "72a6d1ab67a05f11a2031db8043188180ae0f2e75ae14ee9b08c2d15d0a5bf37",
+    "decisions.signed.gz": "17bd9d4ad4e5e042ad2be05a896494223573e30c091a6d315c1297664e66b8ae",
+    "receipt.json.gz": "414e0056f1d5d764fa4697af7a0e0c6f8b327f8e702a01f8b3cd073e26c16186",
+    "verification/5641da71466940869548f4be704d6706c128f795408acf6d6d25e51320c7a758.png": "5641da71466940869548f4be704d6706c128f795408acf6d6d25e51320c7a758"
+  },
+  "format": "thermite-draw-repin-record/1.0",
+  "pathMap": {
+    "evals/out/draw-samples/REP-P1/entry-0531.png": "crops/entry-0531.png"
+  },
+  "pr": 334,
+  "receipt": "receipt.json.gz",
+  "receiptSha256": "7d81ea616bb776aba3d0f186af08370ecc2d792f8854f4d47c8e3b8d0506a1a7",
+  "registryAfterSha256": "0d62de0a15a8fd854250a16eafff175073e0ee2465a9ce57cc0720dbfbd4dd91",
+  "registryBeforeSha256": "cd97a9f4d4de724e658b10660384e2c105d583bc4278468dfc750f6002291d7e",
+  "signedDecisions": "decisions.signed.gz",
+  "signedDecisionsSha256": "9a1b0ed1a95ceddece3448a7a1afd64e3389796375c98e9c5581b01136708f7c"
+}

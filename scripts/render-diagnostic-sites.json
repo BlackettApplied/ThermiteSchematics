@@ -1,0 +1,3220 @@
+{
+  "sites": [
+    {
+      "id": "packages/cli/src/alpha-export-artifact.ts:drawingArtifact:factory-call:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "drawingArtifact",
+      "kind": "factory-call",
+      "factory": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError:constructor:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "multipleSheetError",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:circuitPartFitError:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "circuitPartFitError",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:draw:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "draw",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:layoutGroup",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:layoutGroup:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "layoutGroup",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:2",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:3",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:prepareCircuitView:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "prepareCircuitView",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:prepareCircuitView:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "prepareCircuitView",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:prepareCircuitView:factory-call:2",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "prepareCircuitView",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:layoutGroup",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:columnFailure:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "columnFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:drawingAreaFailure:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "drawingAreaFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:legendFailure:constructor:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "legendFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:plannedTags:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "plannedTags",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:plannedTags:factory-call:2",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "plannedTags",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:unfitLegend:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "unfitLegend",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-tag-svg.ts:drawingDeviceTag:factory-call:1",
+      "path": "packages/render/src/device-tag-svg.ts",
+      "owner": "drawingDeviceTag",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-tags.ts:planDeviceTag:constructor:1",
+      "path": "packages/render/src/device-tags.ts",
+      "owner": "planDeviceTag",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteConductorsPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteConductorsPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteControlPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteControlPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteLoadsPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteLoadsPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompletePowerPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompletePowerPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteTracePathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteTracePathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:invalidViewRequestError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "invalidViewRequestError",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:unsupportedSymbolMappingError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "unsupportedSymbolMappingError",
+      "kind": "constructor",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/internal.ts:withStoppedTerminals:constructor:1",
+      "path": "packages/render/src/internal.ts",
+      "owner": "withStoppedTerminals",
+      "kind": "constructor",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:1",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:2",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:3",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:renderTitlePacket:factory-call:1",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "renderTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/errors.ts:titleFailure:constructor:1",
+      "path": "packages/render/src/internal/title-data/errors.ts",
+      "owner": "titleFailure",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/errors.ts:titleFailure:factory-call:1",
+      "path": "packages/render/src/internal/title-data/errors.ts",
+      "owner": "titleFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/finalize.ts:finalizeTitleData:factory-call:1",
+      "path": "packages/render/src/internal/title-data/finalize.ts",
+      "owner": "finalizeTitleData",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/finalize.ts:finalizeTitleData:factory-call:2",
+      "path": "packages/render/src/internal/title-data/finalize.ts",
+      "owner": "finalizeTitleData",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/headings.ts:headingCapacity:factory-call:1",
+      "path": "packages/render/src/internal/title-data/headings.ts",
+      "owner": "headingCapacity",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/parse.ts:checkPacketEnvelope:code-argument:1",
+      "path": "packages/render/src/internal/title-data/parse.ts",
+      "owner": "checkPacketEnvelope",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/parse.ts:checkPacketEnvelope:code-argument:2",
+      "path": "packages/render/src/internal/title-data/parse.ts",
+      "owner": "checkPacketEnvelope",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateOwners:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateOwners",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateOwners:code-argument:2",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateOwners",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateResolved:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateResolved",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:2",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:3",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:4",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:5",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:6",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkText:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkText",
+      "kind": "code-argument",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleData:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleData",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleData:code-argument:2",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleData",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleRecord:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleRecord",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/layout/caption-diagnostic.ts:captionPlacementDiagnostic:constructor:1",
+      "path": "packages/render/src/layout/caption-diagnostic.ts",
+      "owner": "captionPlacementDiagnostic",
+      "kind": "constructor",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/layout/validate-output.ts:invalidLayoutError:constructor:1",
+      "path": "packages/render/src/layout/validate-output.ts",
+      "owner": "invalidLayoutError",
+      "kind": "constructor",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/layout/validate-output.ts:normalizeAndValidateLayout:factory-call:1",
+      "path": "packages/render/src/layout/validate-output.ts",
+      "owner": "normalizeAndValidateLayout",
+      "kind": "factory-call",
+      "factory": "packages/render/src/layout/validate-output.ts:invalidLayoutError",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/layout/wiring-label-support.ts:wiringLabelLeaders:factory-call:1",
+      "path": "packages/render/src/layout/wiring-label-support.ts",
+      "owner": "wiringLabelLeaders",
+      "kind": "factory-call",
+      "factory": "packages/render/src/layout/caption-diagnostic.ts:captionPlacementDiagnostic",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/off-view/prepared.ts:relayoutDrawing:factory-call:1",
+      "path": "packages/render/src/off-view/prepared.ts",
+      "owner": "relayoutDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/prepared.ts:repositionDrawing:factory-call:1",
+      "path": "packages/render/src/off-view/prepared.ts",
+      "owner": "repositionDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:addOffViewCards:factory-call:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "addOffViewCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:addOffViewCards:factory-call:2",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "addOffViewCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewRefusal",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewLayoutFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewPacketFailure:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewPacketFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewPacketFailure:factory-call:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewPacketFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewRefusal:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewRefusal",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-annotations.ts:cableEndpointCards:factory-call:1",
+      "path": "packages/render/src/packet/cable-annotations.ts",
+      "owner": "cableEndpointCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-reference-tags.ts:cableCorePages:factory-call:1",
+      "path": "packages/render/src/packet/cable-reference-tags.ts",
+      "owner": "cableCorePages",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-reference-tags.ts:referenceBlocks:factory-call:1",
+      "path": "packages/render/src/packet/cable-reference-tags.ts",
+      "owner": "referenceBlocks",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-row-plan.ts:cableRowPlan:factory-call:1",
+      "path": "packages/render/src/packet/cable-row-plan.ts",
+      "owner": "cableRowPlan",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable.ts:cableDrafts:factory-call:1",
+      "path": "packages/render/src/packet/cable.ts",
+      "owner": "cableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable.ts:cableDrafts:factory-call:2",
+      "path": "packages/render/src/packet/cable.ts",
+      "owner": "cableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:appendCircuitNotes:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "appendCircuitNotes",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDrafts:constructor:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDrafts",
+      "kind": "constructor",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDrafts:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDrafts:factory-call:2",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:prepareCircuitView",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:2",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:3",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:4",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/composition-fit.ts:draftCompositionFits:factory-call:1",
+      "path": "packages/render/src/packet/composition-fit.ts",
+      "owner": "draftCompositionFits",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/conductor-context.ts:continuationErrorContext:constructor:1",
+      "path": "packages/render/src/packet/conductor-context.ts",
+      "owner": "continuationErrorContext",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/device-legend.ts:fitLegendDrafts:factory-call:1",
+      "path": "packages/render/src/packet/device-legend.ts",
+      "owner": "fitLegendDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/legend-bound-failure.ts:legendBoundFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/device-legend.ts:legendCandidateLimited:factory-call:1",
+      "path": "packages/render/src/packet/device-legend.ts",
+      "owner": "legendCandidateLimited",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/dispatch.ts:dispatchView:factory-call:1",
+      "path": "packages/render/src/packet/dispatch.ts",
+      "owner": "dispatchView",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/circuit.ts:circuitDrafts",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/packet/document-companions.ts:appendDocumentCompanions:factory-call:1",
+      "path": "packages/render/src/packet/document-companions.ts",
+      "owner": "appendDocumentCompanions",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/errors.ts:composedPacketFailure:factory-call:1",
+      "path": "packages/render/src/packet/errors.ts",
+      "owner": "composedPacketFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/errors.ts:failure:constructor:1",
+      "path": "packages/render/src/packet/errors.ts",
+      "owner": "failure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/frame-legacy-placement.ts:legacyFramePlacement:factory-call:1",
+      "path": "packages/render/src/packet/frame-legacy-placement.ts",
+      "owner": "legacyFramePlacement",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/legend-bound-failure.ts:legendBoundFailure:constructor:1",
+      "path": "packages/render/src/packet/legend-bound-failure.ts",
+      "owner": "legendBoundFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/legend-pagination.ts:legendPagination:factory-call:1",
+      "path": "packages/render/src/packet/legend-pagination.ts",
+      "owner": "legendPagination",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/navigation-finalize.ts:allocateSheetRequests:factory-call:1",
+      "path": "packages/render/src/packet/navigation-finalize.ts",
+      "owner": "allocateSheetRequests",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/navigation-finalize.ts:finalizeNavigation:factory-call:1",
+      "path": "packages/render/src/packet/navigation-finalize.ts",
+      "owner": "finalizeNavigation",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/page.ts:normalizePaperPage:factory-call:1",
+      "path": "packages/render/src/packet/page.ts",
+      "owner": "normalizePaperPage",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/page.ts:normalizePaperPage:factory-call:2",
+      "path": "packages/render/src/packet/page.ts",
+      "owner": "normalizePaperPage",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/references-final.ts:reserveFinalIndex:factory-call:1",
+      "path": "packages/render/src/packet/references-final.ts",
+      "owner": "reserveFinalIndex",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:documentationDrafts:factory-call:1",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "documentationDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:prepareReport:factory-call:1",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "prepareReport",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:prepareReport:factory-call:2",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "prepareReport",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:prepareReport:factory-call:3",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "prepareReport",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:1",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:2",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:3",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:4",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-bank-grids.ts:rootedBankGrids:factory-call:1",
+      "path": "packages/render/src/packet/rooted-bank-grids.ts",
+      "owner": "rootedBankGrids",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bank-grids.ts:withBoundaryRetry",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-bank-grids.ts:withBoundaryRetry:constructor:1",
+      "path": "packages/render/src/packet/rooted-bank-grids.ts",
+      "owner": "withBoundaryRetry",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure:constructor:1",
+      "path": "packages/render/src/packet/rooted-bound.ts",
+      "owner": "rootedPageCostFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:buildRootedCandidates:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "buildRootedCandidates",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:failedBuild:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "failedBuild",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:materializeRootedCandidate:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "materializeRootedCandidate",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-constraint.ts:rootedDiagnosticError:constructor:1",
+      "path": "packages/render/src/packet/rooted-constraint.ts",
+      "owner": "rootedDiagnosticError",
+      "kind": "constructor",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-constraint.ts:rootedDiagnosticError:factory-call:1",
+      "path": "packages/render/src/packet/rooted-constraint.ts",
+      "owner": "rootedDiagnosticError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-constraint.ts:withRootedConstraint",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-constraint.ts:withRootedConstraint:constructor:1",
+      "path": "packages/render/src/packet/rooted-constraint.ts",
+      "owner": "withRootedConstraint",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-economy.ts:validateEconomyCandidate:factory-call:1",
+      "path": "packages/render/src/packet/rooted-economy.ts",
+      "owner": "validateEconomyCandidate",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-links.ts:drawingContinuations:factory-call:1",
+      "path": "packages/render/src/packet/rooted-links.ts",
+      "owner": "drawingContinuations",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-links.ts:drawingContinuations:factory-call:2",
+      "path": "packages/render/src/packet/rooted-links.ts",
+      "owner": "drawingContinuations",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-search.ts:initial:factory-call:1",
+      "path": "packages/render/src/packet/rooted-search.ts",
+      "owner": "initial",
+      "kind": "factory-call",
+      "factory": "packages/render/src/renderer.ts:prepareSchematicDrawing",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-search.ts:initial:factory-call:2",
+      "path": "packages/render/src/packet/rooted-search.ts",
+      "owner": "initial",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-search.ts:initial:factory-call:3",
+      "path": "packages/render/src/packet/rooted-search.ts",
+      "owner": "initial",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted.ts:selectedDrawingDrafts:factory-call:1",
+      "path": "packages/render/src/packet/rooted.ts",
+      "owner": "selectedDrawingDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-constraint.ts:rootedDiagnosticError",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:compose:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "compose",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:topologyFailure:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "topologyFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:topologyFitFailure:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "topologyFitFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/preflight.ts:preflightRootedProfiles:constructor:1",
+      "path": "packages/render/src/preflight.ts",
+      "owner": "preflightRootedProfiles",
+      "kind": "constructor",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/preflight.ts:preflightRootedProfiles:factory-call:1",
+      "path": "packages/render/src/preflight.ts",
+      "owner": "preflightRootedProfiles",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/preflight.ts:unsupportedProfileError:constructor:1",
+      "path": "packages/render/src/preflight.ts",
+      "owner": "unsupportedProfileError",
+      "kind": "constructor",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/presentation/context.ts:createContext:factory-call:1",
+      "path": "packages/render/src/presentation/context.ts",
+      "owner": "createContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/render-diagnostic-context.ts:contextualRenderOutcome:factory-call:1",
+      "path": "packages/render/src/render-diagnostic-context.ts",
+      "owner": "contextualRenderOutcome",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-diagnostic-context.ts:renderDiagnosticContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/render-diagnostic-context.ts:renderDiagnosticContext:code-argument:1",
+      "path": "packages/render/src/render-diagnostic-context.ts",
+      "owner": "renderDiagnosticContext",
+      "kind": "code-argument",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/render-diagnostic-context.ts:renderDiagnosticContext:constructor:1",
+      "path": "packages/render/src/render-diagnostic-context.ts",
+      "owner": "renderDiagnosticContext",
+      "kind": "constructor",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/render-error-context.ts:renderErrorContext:constructor:1",
+      "path": "packages/render/src/render-error-context.ts",
+      "owner": "renderErrorContext",
+      "kind": "constructor",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/render-error-context.ts:renderErrorContext:factory-call:1",
+      "path": "packages/render/src/render-error-context.ts",
+      "owner": "renderErrorContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-text-context.ts:renderInputErrorContext",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/render-error-context.ts:renderErrorContext:factory-call:2",
+      "path": "packages/render/src/render-error-context.ts",
+      "owner": "renderErrorContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/conductor-context.ts:continuationErrorContext",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/render-error-context.ts:renderErrorContext:factory-call:3",
+      "path": "packages/render/src/render-error-context.ts",
+      "owner": "renderErrorContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/render-text-context.ts:renderInputErrorContext:constructor:1",
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "renderInputErrorContext",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/render-text-context.ts:renderInputErrorContext:factory-call:1",
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "renderInputErrorContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-text-context.ts:renderTextErrorContext",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/render-text-context.ts:renderTextErrorContext:constructor:1",
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "renderTextErrorContext",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:diagnose:factory-call:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "diagnose",
+      "kind": "factory-call",
+      "factory": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:finishSchematic:factory-call:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "finishSchematic",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:finishSchematic:factory-call:2",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "finishSchematic",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:constructor:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "constructor",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:2",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/renderer.ts:diagnose",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:3",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/renderer.ts:diagnose",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:4",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:5",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:6",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:render:constructor:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "render",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:render:factory-call:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "render",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:render:factory-call:2",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "render",
+      "kind": "factory-call",
+      "factory": "packages/render/src/renderer.ts:prepareSchematicDrawing",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:render:factory-call:3",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "render",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-diagnostic-context.ts:renderDiagnosticContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:constructor:1",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "constructor",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:1",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:2",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:preflightRootedProfiles",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:3",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:4",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:5",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:6",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/selection/actuation.ts:selectControlPaths:factory-call:1",
+      "path": "packages/render/src/selection/actuation.ts",
+      "owner": "selectControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal.ts:withStoppedTerminals",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/selection/actuation.ts:selectControlPaths:factory-call:2",
+      "path": "packages/render/src/selection/actuation.ts",
+      "owner": "selectControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteControlPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:incompleteCableConductorSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "incompleteCableConductorSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteConductorsPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:selectCableConductors:factory-call:1",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "selectCableConductors",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/conductors.ts:incompleteCableConductorSelectionError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:unsupportedCableEndpoint:factory-call:1",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "unsupportedCableEndpoint",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal.ts:withStoppedTerminals",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:unsupportedCableEndpoint:factory-call:2",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "unsupportedCableEndpoint",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/conservation.ts:pathTerminalDisplayFunctionIds:factory-call:1",
+      "path": "packages/render/src/selection/conservation.ts",
+      "owner": "pathTerminalDisplayFunctionIds",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/conservation.ts:unrepresentedTerminalError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/conservation.ts:unrepresentedTerminalError:constructor:1",
+      "path": "packages/render/src/selection/conservation.ts",
+      "owner": "unrepresentedTerminalError",
+      "kind": "constructor",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/conservation.ts:unrepresentedTerminalError:factory-call:1",
+      "path": "packages/render/src/selection/conservation.ts",
+      "owner": "unrepresentedTerminalError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/context.ts:buildFunctionAdjacency:factory-call:1",
+      "path": "packages/render/src/selection/context.ts",
+      "owner": "buildFunctionAdjacency",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/context.ts:unsupportedRoot:factory-call:1",
+      "path": "packages/render/src/selection/context.ts",
+      "owner": "unsupportedRoot",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/loads.ts:incompleteLoadsSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/loads.ts",
+      "owner": "incompleteLoadsSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteLoadsPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/loads.ts:selectLoadsSubgraph:factory-call:1",
+      "path": "packages/render/src/selection/loads.ts",
+      "owner": "selectLoadsSubgraph",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/loads.ts:incompleteLoadsSelectionError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/power.ts:selectPowerPaths:factory-call:1",
+      "path": "packages/render/src/selection/power.ts",
+      "owner": "selectPowerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal.ts:withStoppedTerminals",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/selection/power.ts:selectPowerPaths:factory-call:2",
+      "path": "packages/render/src/selection/power.ts",
+      "owner": "selectPowerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompletePowerPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/trace.ts:incompleteTraceSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/trace.ts",
+      "owner": "incompleteTraceSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal.ts:withStoppedTerminals",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/selection/trace.ts:incompleteTraceSelectionError:factory-call:2",
+      "path": "packages/render/src/selection/trace.ts",
+      "owner": "incompleteTraceSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteTracePathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/trace.ts:selectTraceSubgraph:factory-call:1",
+      "path": "packages/render/src/selection/trace.ts",
+      "owner": "selectTraceSubgraph",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/trace.ts:incompleteTraceSelectionError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/trace.ts:selectTraceSubgraph:factory-call:2",
+      "path": "packages/render/src/selection/trace.ts",
+      "owner": "selectTraceSubgraph",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/trace.ts:incompleteTraceSelectionError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:baseControlPaths:factory-call:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "baseControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal.ts:withStoppedTerminals",
+      "codes": ["R002", "R003"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:baseControlPaths:factory-call:2",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "baseControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteControlPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairError:constructor:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:2",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:3",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:assemblyError:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "assemblyError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:checkedPageCost:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "checkedPageCost",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:checkedPageCost:factory-call:2",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "checkedPageCost",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:withPacketViews",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:invalidCircuitFailure:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "invalidCircuitFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:2",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:3",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:4",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:5",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/render-error-context.ts:renderErrorContext",
+      "codes": ["R001", "R002", "R003", "R004", "R005", "R006"]
+    },
+    {
+      "id": "packages/render/src/svg/emitter.ts:emitSchematicSvg:factory-call:1",
+      "path": "packages/render/src/svg/emitter.ts",
+      "owner": "emitSchematicSvg",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:rootedGangEmission",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:invalidRenderTextError:constructor:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "invalidRenderTextError",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightOffViewSources:constructor:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightOffViewSources",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightRenderText:factory-call:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightRenderText",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightSources:factory-call:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightSources",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:invalidRenderTextError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/label-ink.ts:emitLabelInk:factory-call:1",
+      "path": "packages/render/src/svg/label-ink.ts",
+      "owner": "emitLabelInk",
+      "kind": "factory-call",
+      "factory": "packages/render/src/layout/caption-diagnostic.ts:captionPlacementDiagnostic",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:gangFailure:constructor:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "gangFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:2",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:3",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:4",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:rootedGangEmission:constructor:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "rootedGangEmission",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/validate.ts:unsupportedSelected:factory-call:1",
+      "path": "packages/render/src/symbols/validate.ts",
+      "owner": "unsupportedSelected",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:prepareSchematicTitleContext:factory-call:1",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "prepareSchematicTitleContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/title-block.ts:projectNameError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:prepareSchematicTitleContext:factory-call:2",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "prepareSchematicTitleContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/title-block.ts:projectNameError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:projectNameError:constructor:1",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "projectNameError",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:diagnoseRoot:constructor:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseRoot",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:diagnoseRoot:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseRoot",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:diagnoseTraceTarget:constructor:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseTraceTarget",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:diagnoseTraceTarget:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseTraceTarget",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:unsupportedProfileError",
+      "codes": ["R001", "R002", "R003", "R004", "R005"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:normalizeLegacy:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "normalizeLegacy",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:rejectRoot",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:normalizeLoads:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "normalizeLoads",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:rejectRoot",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:normalizeTrace:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "normalizeTrace",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:rejectRoot",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:normalizeTrace:factory-call:2",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "normalizeTrace",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:rejectTraceTarget",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:rejectRoot:constructor:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectRoot",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:rejectRoot:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectRoot",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:diagnoseRoot",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:rejectTraceTarget:constructor:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectTraceTarget",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-normalization.ts:rejectTraceTarget:factory-call:1",
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectTraceTarget",
+      "kind": "factory-call",
+      "factory": "packages/render/src/view-normalization.ts:diagnoseTraceTarget",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/view-request-errors.ts:invalid:factory-call:1",
+      "path": "packages/render/src/view-request-errors.ts",
+      "owner": "invalid",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:invalidViewRequestError",
+      "codes": ["R001"]
+    }
+  ],
+  "wrappers": [
+    {
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "columnFailure"
+    },
+    {
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "drawingAreaFailure"
+    },
+    {
+      "path": "packages/render/src/internal.ts",
+      "owner": "withStoppedTerminals"
+    },
+    {
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDrafts"
+    },
+    {
+      "path": "packages/render/src/packet/conductor-context.ts",
+      "owner": "continuationErrorContext"
+    },
+    {
+      "path": "packages/render/src/packet/errors.ts",
+      "owner": "withPacketViews"
+    },
+    {
+      "path": "packages/render/src/packet/legend-bound-failure.ts",
+      "owner": "legendBoundFailure"
+    },
+    {
+      "path": "packages/render/src/packet/rooted-bank-grids.ts",
+      "owner": "withBoundaryRetry"
+    },
+    {
+      "path": "packages/render/src/packet/rooted-constraint.ts",
+      "owner": "rootedDiagnosticError"
+    },
+    {
+      "path": "packages/render/src/packet/rooted-constraint.ts",
+      "owner": "withRootedConstraint"
+    },
+    {
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "topologyUnfit"
+    },
+    {
+      "path": "packages/render/src/preflight.ts",
+      "owner": "unsupportedProfileError"
+    },
+    {
+      "path": "packages/render/src/render-diagnostic-context.ts",
+      "owner": "renderDiagnosticContext"
+    },
+    {
+      "path": "packages/render/src/render-error-context.ts",
+      "owner": "renderErrorContext"
+    },
+    {
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "preflightNamedTitle"
+    },
+    {
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "renderInputErrorContext"
+    },
+    {
+      "path": "packages/render/src/render-text-context.ts",
+      "owner": "renderTextErrorContext"
+    },
+    {
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing"
+    },
+    {
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted"
+    },
+    {
+      "path": "packages/render/src/selection/conservation.ts",
+      "owner": "unrepresentedTerminalError"
+    },
+    {
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacketWithAdvice"
+    },
+    {
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseRoot"
+    },
+    {
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "diagnoseTraceTarget"
+    },
+    {
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectRoot"
+    },
+    {
+      "path": "packages/render/src/view-normalization.ts",
+      "owner": "rejectTraceTarget"
+    }
+  ],
+  "scopes": {
+    "packages/cli/src/alpha-export-artifact.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/circuit.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/device-legend.ts": {
+      "category": "packet-budget"
+    },
+    "packages/render/src/device-tag-svg.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/device-tags.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/errors.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal.ts": {
+      "category": "native-context",
+      "facts": "Stopped-terminal wrappers retain native terminal tuples; public renderErrorContext resolves their device UIDs to designations and functions without changing the selected diagnostic."
+    },
+    "packages/render/src/internal/title-data/entry.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/errors.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/finalize.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/headings.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/parse.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/resolve.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/internal/title-data/validation.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/layout/validate-output.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/off-view/prepared.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/off-view/presentation.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/cable-annotations.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/cable-reference-tags.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/cable-row-plan.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/cable.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/circuit.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/composition-fit.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/conductor-context.ts": {
+      "category": "native-context",
+      "facts": "Continuation identities resolve through IR wires, jumpers and cable cores to endpoint terminal keys and native device designations; packet-global failures retain authored view scope."
+    },
+    "packages/render/src/packet/device-legend.ts": {
+      "category": "packet-budget",
+      "facts": "Native legend-entry UIDs/designations survive tail, original-failure and sheet-limit fallback paths. legendCandidateLimited delegates unchanged page-cost construction, with public authored view scope for packet-global budget failures."
+    },
+    "packages/render/src/packet/dispatch.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/document-companions.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/errors.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/frame-legacy-placement.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/legend-bound-failure.ts": {
+      "category": "packet-budget",
+      "facts": "Measured tail or original fallback retains native legendEntries deviceUid/designation; the message names each owner and viewTitle. Page-cost-only fallback retains authored view identities at the public packet boundary."
+    },
+    "packages/render/src/packet/legend-pagination.ts": {
+      "category": "packet-budget",
+      "facts": "Measured tail failures retain native legend entries; observed search caps change the explanation only. Page-cost failure construction retains caller view scope."
+    },
+    "packages/render/src/packet/navigation-finalize.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/page.ts": {
+      "category": "page-utility"
+    },
+    "packages/render/src/packet/references-final.ts": {
+      "category": "packet-budget"
+    },
+    "packages/render/src/packet/reports.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/rooted-bank-grids.ts": {
+      "category": "public-boundary",
+      "facts": "Leads with a measured boundary-cut retry failure and retains the original boundary identity."
+    },
+    "packages/render/src/packet/rooted-bound.ts": {
+      "category": "packet-budget"
+    },
+    "packages/render/src/packet/rooted-build.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/rooted-constraint.ts": {
+      "category": "public-boundary",
+      "facts": "Adds measured span constraints to the existing error without removing native identity details; public view context remains attached for packet-level bounds."
+    },
+    "packages/render/src/packet/rooted-economy.ts": {
+      "category": "packet-budget"
+    },
+    "packages/render/src/packet/rooted-links.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/rooted-search.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/rooted.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/packet/topology.ts": {
+      "category": "public-boundary",
+      "facts": "Drawing fit refusals retain native referenced device names. Cached fallback projection/selection errors recover native UID-selected devices/functions from IR through topologySelectionContext."
+    },
+    "packages/render/src/preflight.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/presentation/context.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/render-diagnostic-context.ts": {
+      "category": "public-boundary",
+      "facts": "Native designation/function/view details take precedence. Descriptor-only single-view context derives authored UID selections through IR; absent view identity is omitted. Only valid project names are included; guarded lookup failures mark scopeUnavailable without replacing the error."
+    },
+    "packages/render/src/render-error-context.ts": {
+      "category": "native-context",
+      "facts": "IR lookup supplies native device/cable designations, functions, stopped terminals and trace-target names while preserving stable IDs."
+    },
+    "packages/render/src/render-text-context.ts": {
+      "category": "native-context",
+      "facts": "Native text owner and conductor endpoints resolve to IR designations; invalid XML characters remain visibly escaped. Unlocatable project/title failures carry public caller view scope."
+    },
+    "packages/render/src/renderer.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/rooted-diagnostics.ts": {
+      "category": "native-context",
+      "facts": "Preserves contextual rooted failures and adds the actual unsupported device designation/profile from IR; transformer endpoint failures retain their native boundary identities."
+    },
+    "packages/render/src/selection/actuation.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/conductors.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/conservation.ts": {
+      "category": "native-context",
+      "facts": "Unrepresented-terminal R003 retains native device designation/terminal key, conductor identities and an authored circuit alternative; downstream context preserves these facts."
+    },
+    "packages/render/src/selection/context.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/loads.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/power.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/trace.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/selection/transformer.ts": {
+      "category": "native-context"
+    },
+    "packages/render/src/sheets.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/svg/emitter.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/svg/escape.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/symbols/rooted-gangs.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/symbols/validate.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/title-block.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/view-normalization.ts": {
+      "category": "native-context",
+      "facts": "Root and trace-target UIDs resolve through IR to native designations; rejected targets retain targetDeviceUid and targetDesignation. Malformed selectors retain authored request identity."
+    },
+    "packages/render/src/view-request-errors.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/layout/caption-diagnostic.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/layout/wiring-label-support.ts": {
+      "category": "public-boundary"
+    },
+    "packages/render/src/svg/label-ink.ts": {
+      "category": "public-boundary"
+    }
+  },
+  "legacySites": [
+    {
+      "id": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError:constructor:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "multipleSheetError",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/cli/src/alpha-export-artifact.ts:drawingArtifact:factory-call:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "drawingArtifact",
+      "kind": "factory-call",
+      "factory": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:circuitPartFitError:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "circuitPartFitError",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:draw:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "draw",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:layoutGroup",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:layoutGroup:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "layoutGroup",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:2",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:paginateCircuitGroup:factory-call:3",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "paginateCircuitGroup",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:circuitPartFitError",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:prepareCircuitView:constructor:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "prepareCircuitView",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/circuit.ts:prepareCircuitView:factory-call:1",
+      "path": "packages/render/src/circuit.ts",
+      "owner": "prepareCircuitView",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:layoutGroup",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:columnFailure:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "columnFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:drawingAreaFailure:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "drawingAreaFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:legendFailure:constructor:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "legendFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:plannedTags:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "plannedTags",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:plannedTags:factory-call:2",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "plannedTags",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-legend.ts:unfitLegend:factory-call:1",
+      "path": "packages/render/src/device-legend.ts",
+      "owner": "unfitLegend",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-legend.ts:legendFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-tag-svg.ts:drawingDeviceTag:factory-call:1",
+      "path": "packages/render/src/device-tag-svg.ts",
+      "owner": "drawingDeviceTag",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/device-tags.ts:planDeviceTag:constructor:1",
+      "path": "packages/render/src/device-tags.ts",
+      "owner": "planDeviceTag",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteConductorsPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteConductorsPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteControlPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteControlPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteLoadsPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteLoadsPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompletePowerPathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompletePowerPathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:incompleteTracePathError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "incompleteTracePathError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:invalidViewRequestError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "invalidViewRequestError",
+      "kind": "constructor",
+      "codes": ["R001"]
+    },
+    {
+      "id": "packages/render/src/errors.ts:unsupportedSymbolMappingError:constructor:1",
+      "path": "packages/render/src/errors.ts",
+      "owner": "unsupportedSymbolMappingError",
+      "kind": "constructor",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:1",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:2",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:prepareTitlePacket:factory-call:3",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "prepareTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/entry.ts:renderTitlePacket:factory-call:1",
+      "path": "packages/render/src/internal/title-data/entry.ts",
+      "owner": "renderTitlePacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/errors.ts:titleFailure:constructor:1",
+      "path": "packages/render/src/internal/title-data/errors.ts",
+      "owner": "titleFailure",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/errors.ts:titleFailure:factory-call:1",
+      "path": "packages/render/src/internal/title-data/errors.ts",
+      "owner": "titleFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/finalize.ts:finalizeTitleData:factory-call:1",
+      "path": "packages/render/src/internal/title-data/finalize.ts",
+      "owner": "finalizeTitleData",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/finalize.ts:finalizeTitleData:factory-call:2",
+      "path": "packages/render/src/internal/title-data/finalize.ts",
+      "owner": "finalizeTitleData",
+      "kind": "factory-call",
+      "factory": "packages/render/src/internal/title-data/errors.ts:titleFailure",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/headings.ts:headingCapacity:factory-call:1",
+      "path": "packages/render/src/internal/title-data/headings.ts",
+      "owner": "headingCapacity",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/parse.ts:checkPacketEnvelope:code-argument:1",
+      "path": "packages/render/src/internal/title-data/parse.ts",
+      "owner": "checkPacketEnvelope",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/parse.ts:checkPacketEnvelope:code-argument:2",
+      "path": "packages/render/src/internal/title-data/parse.ts",
+      "owner": "checkPacketEnvelope",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateOwners:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateOwners",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateOwners:code-argument:2",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateOwners",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateResolved:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateResolved",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:1",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:2",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:3",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:4",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:5",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/resolve.ts:validateSheets:code-argument:6",
+      "path": "packages/render/src/internal/title-data/resolve.ts",
+      "owner": "validateSheets",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkText:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkText",
+      "kind": "code-argument",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleData:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleData",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleData:code-argument:2",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleData",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/internal/title-data/validation.ts:checkTitleRecord:code-argument:1",
+      "path": "packages/render/src/internal/title-data/validation.ts",
+      "owner": "checkTitleRecord",
+      "kind": "code-argument",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/layout/validate-output.ts:invalidLayoutError:constructor:1",
+      "path": "packages/render/src/layout/validate-output.ts",
+      "owner": "invalidLayoutError",
+      "kind": "constructor",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/layout/validate-output.ts:normalizeAndValidateLayout:factory-call:1",
+      "path": "packages/render/src/layout/validate-output.ts",
+      "owner": "normalizeAndValidateLayout",
+      "kind": "factory-call",
+      "factory": "packages/render/src/layout/validate-output.ts:invalidLayoutError",
+      "codes": ["R004"]
+    },
+    {
+      "id": "packages/render/src/off-view/prepared.ts:relayoutDrawing:factory-call:1",
+      "path": "packages/render/src/off-view/prepared.ts",
+      "owner": "relayoutDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/prepared.ts:repositionDrawing:factory-call:1",
+      "path": "packages/render/src/off-view/prepared.ts",
+      "owner": "repositionDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:addOffViewCards:factory-call:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "addOffViewCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:addOffViewCards:factory-call:2",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "addOffViewCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewRefusal",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewLayoutFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewPacketFailure:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewPacketFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewPacketFailure:factory-call:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewPacketFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/off-view/presentation.ts:offViewRefusal:constructor:1",
+      "path": "packages/render/src/off-view/presentation.ts",
+      "owner": "offViewRefusal",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-annotations.ts:cableEndpointCards:factory-call:1",
+      "path": "packages/render/src/packet/cable-annotations.ts",
+      "owner": "cableEndpointCards",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-reference-tags.ts:cableCorePages:factory-call:1",
+      "path": "packages/render/src/packet/cable-reference-tags.ts",
+      "owner": "cableCorePages",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-reference-tags.ts:referenceBlocks:factory-call:1",
+      "path": "packages/render/src/packet/cable-reference-tags.ts",
+      "owner": "referenceBlocks",
+      "kind": "factory-call",
+      "factory": "packages/render/src/device-tags.ts:planDeviceTag",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable-row-plan.ts:cableRowPlan:factory-call:1",
+      "path": "packages/render/src/packet/cable-row-plan.ts",
+      "owner": "cableRowPlan",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable.ts:cableDrafts:factory-call:1",
+      "path": "packages/render/src/packet/cable.ts",
+      "owner": "cableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/cable.ts:cableDrafts:factory-call:2",
+      "path": "packages/render/src/packet/cable.ts",
+      "owner": "cableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:appendCircuitNotes:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "appendCircuitNotes",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDrafts:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:1",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/circuit.ts:prepareCircuitView",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:2",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:3",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/circuit.ts:circuitDraftsUnchecked:factory-call:4",
+      "path": "packages/render/src/packet/circuit.ts",
+      "owner": "circuitDraftsUnchecked",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/composition-fit.ts:draftCompositionFits:factory-call:1",
+      "path": "packages/render/src/packet/composition-fit.ts",
+      "owner": "draftCompositionFits",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/device-legend.ts:legendCandidateLimited:factory-call:1",
+      "path": "packages/render/src/packet/device-legend.ts",
+      "owner": "legendCandidateLimited",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/document-companions.ts:appendDocumentCompanions:factory-call:1",
+      "path": "packages/render/src/packet/document-companions.ts",
+      "owner": "appendDocumentCompanions",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/errors.ts:composedPacketFailure:factory-call:1",
+      "path": "packages/render/src/packet/errors.ts",
+      "owner": "composedPacketFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/errors.ts:failure:constructor:1",
+      "path": "packages/render/src/packet/errors.ts",
+      "owner": "failure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/frame-legacy-placement.ts:legacyFramePlacement:factory-call:1",
+      "path": "packages/render/src/packet/frame-legacy-placement.ts",
+      "owner": "legacyFramePlacement",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/legend-pagination.ts:legendPagination:factory-call:1",
+      "path": "packages/render/src/packet/legend-pagination.ts",
+      "owner": "legendPagination",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/navigation-finalize.ts:allocateSheetRequests:factory-call:1",
+      "path": "packages/render/src/packet/navigation-finalize.ts",
+      "owner": "allocateSheetRequests",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/navigation-finalize.ts:finalizeNavigation:factory-call:1",
+      "path": "packages/render/src/packet/navigation-finalize.ts",
+      "owner": "finalizeNavigation",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/page.ts:normalizePaperPage:factory-call:1",
+      "path": "packages/render/src/packet/page.ts",
+      "owner": "normalizePaperPage",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/page.ts:normalizePaperPage:factory-call:2",
+      "path": "packages/render/src/packet/page.ts",
+      "owner": "normalizePaperPage",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:documentationDrafts:factory-call:1",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "documentationDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:1",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:2",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:3",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:4",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:5",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:6",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/reports.ts:tableDrafts:factory-call:7",
+      "path": "packages/render/src/packet/reports.ts",
+      "owner": "tableDrafts",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure:constructor:1",
+      "path": "packages/render/src/packet/rooted-bound.ts",
+      "owner": "rootedPageCostFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:buildRootedCandidates:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "buildRootedCandidates",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:failedBuild:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "failedBuild",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-build.ts:materializeRootedCandidate:factory-call:1",
+      "path": "packages/render/src/packet/rooted-build.ts",
+      "owner": "materializeRootedCandidate",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-economy.ts:validateEconomyCandidate:factory-call:1",
+      "path": "packages/render/src/packet/rooted-economy.ts",
+      "owner": "validateEconomyCandidate",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-links.ts:drawingContinuations:factory-call:1",
+      "path": "packages/render/src/packet/rooted-links.ts",
+      "owner": "drawingContinuations",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-links.ts:drawingContinuations:factory-call:2",
+      "path": "packages/render/src/packet/rooted-links.ts",
+      "owner": "drawingContinuations",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-search.ts:initial:factory-call:1",
+      "path": "packages/render/src/packet/rooted-search.ts",
+      "owner": "initial",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/rooted-search.ts:initial:factory-call:2",
+      "path": "packages/render/src/packet/rooted-search.ts",
+      "owner": "initial",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewPacketFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:compose:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "compose",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:topologyFailure:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "topologyFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/packet/topology.ts:topologyFitFailure:factory-call:1",
+      "path": "packages/render/src/packet/topology.ts",
+      "owner": "topologyFitFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/preflight.ts:preflightRootedProfiles:constructor:1",
+      "path": "packages/render/src/preflight.ts",
+      "owner": "preflightRootedProfiles",
+      "kind": "constructor",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/presentation/context.ts:createContext:factory-call:1",
+      "path": "packages/render/src/presentation/context.ts",
+      "owner": "createContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:prepareSchematicDrawing:factory-call:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "prepareSchematicDrawing",
+      "kind": "factory-call",
+      "factory": "packages/render/src/off-view/presentation.ts:offViewLayoutFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/renderer.ts:render:constructor:1",
+      "path": "packages/render/src/renderer.ts",
+      "owner": "render",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/rooted-diagnostics.ts:diagnoseRooted:factory-call:1",
+      "path": "packages/render/src/rooted-diagnostics.ts",
+      "owner": "diagnoseRooted",
+      "kind": "factory-call",
+      "factory": "packages/render/src/preflight.ts:preflightRootedProfiles",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/actuation.ts:selectControlPaths:factory-call:1",
+      "path": "packages/render/src/selection/actuation.ts",
+      "owner": "selectControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteControlPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:incompleteCableConductorSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "incompleteCableConductorSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteConductorsPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/conductors.ts:unsupportedCableEndpoint:factory-call:1",
+      "path": "packages/render/src/selection/conductors.ts",
+      "owner": "unsupportedCableEndpoint",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/conservation.ts:unrepresentedTerminalError:factory-call:1",
+      "path": "packages/render/src/selection/conservation.ts",
+      "owner": "unrepresentedTerminalError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/context.ts:buildFunctionAdjacency:factory-call:1",
+      "path": "packages/render/src/selection/context.ts",
+      "owner": "buildFunctionAdjacency",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/context.ts:unsupportedRoot:factory-call:1",
+      "path": "packages/render/src/selection/context.ts",
+      "owner": "unsupportedRoot",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/selection/loads.ts:incompleteLoadsSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/loads.ts",
+      "owner": "incompleteLoadsSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteLoadsPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/power.ts:selectPowerPaths:factory-call:1",
+      "path": "packages/render/src/selection/power.ts",
+      "owner": "selectPowerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompletePowerPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/trace.ts:incompleteTraceSelectionError:factory-call:1",
+      "path": "packages/render/src/selection/trace.ts",
+      "owner": "incompleteTraceSelectionError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteTracePathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:baseControlPaths:factory-call:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "baseControlPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:incompleteControlPathError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairError:constructor:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairError",
+      "kind": "constructor",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:1",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:2",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/selection/transformer.ts:pairTransformerPaths:factory-call:3",
+      "path": "packages/render/src/selection/transformer.ts",
+      "owner": "pairTransformerPaths",
+      "kind": "factory-call",
+      "factory": "packages/render/src/selection/transformer.ts:pairError",
+      "codes": ["R002"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:assemblyError:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "assemblyError",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:checkedPageCost:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "checkedPageCost",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/rooted-bound.ts:rootedPageCostFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:invalidCircuitFailure:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "invalidCircuitFailure",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:1",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:2",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:3",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/sheets.ts:renderPacket:factory-call:4",
+      "path": "packages/render/src/sheets.ts",
+      "owner": "renderPacket",
+      "kind": "factory-call",
+      "factory": "packages/render/src/packet/errors.ts:failure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/svg/emitter.ts:emitSchematicSvg:factory-call:1",
+      "path": "packages/render/src/svg/emitter.ts",
+      "owner": "emitSchematicSvg",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:rootedGangEmission",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:invalidRenderTextError:constructor:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "invalidRenderTextError",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightOffViewSources:constructor:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightOffViewSources",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightRenderText:factory-call:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightRenderText",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:preflightOffViewSources",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/svg/escape.ts:preflightSources:factory-call:1",
+      "path": "packages/render/src/svg/escape.ts",
+      "owner": "preflightSources",
+      "kind": "factory-call",
+      "factory": "packages/render/src/svg/escape.ts:invalidRenderTextError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:gangFailure:constructor:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "gangFailure",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:2",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:3",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:placeGang:factory-call:4",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "placeGang",
+      "kind": "factory-call",
+      "factory": "packages/render/src/symbols/rooted-gangs.ts:gangFailure",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/rooted-gangs.ts:rootedGangEmission:constructor:1",
+      "path": "packages/render/src/symbols/rooted-gangs.ts",
+      "owner": "rootedGangEmission",
+      "kind": "constructor",
+      "codes": ["R006"]
+    },
+    {
+      "id": "packages/render/src/symbols/validate.ts:unsupportedSelected:factory-call:1",
+      "path": "packages/render/src/symbols/validate.ts",
+      "owner": "unsupportedSelected",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:unsupportedSymbolMappingError",
+      "codes": ["R003"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:prepareSchematicTitleContext:factory-call:1",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "prepareSchematicTitleContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/title-block.ts:projectNameError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:prepareSchematicTitleContext:factory-call:2",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "prepareSchematicTitleContext",
+      "kind": "factory-call",
+      "factory": "packages/render/src/title-block.ts:projectNameError",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/title-block.ts:projectNameError:constructor:1",
+      "path": "packages/render/src/title-block.ts",
+      "owner": "projectNameError",
+      "kind": "constructor",
+      "codes": ["R005"]
+    },
+    {
+      "id": "packages/render/src/view-request-errors.ts:invalid:factory-call:1",
+      "path": "packages/render/src/view-request-errors.ts",
+      "owner": "invalid",
+      "kind": "factory-call",
+      "factory": "packages/render/src/errors.ts:invalidViewRequestError",
+      "codes": ["R001"]
+    }
+  ],
+  "policies": {
+    "public-boundary": {
+      "description": "Review checklist: these paths report through the public boundary. Native details take precedence; otherwise only inspectable authored view scope is added. Per-code probes cover the boundary, not every individual branch.",
+      "probes": [
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R001 maps an authored UID selector to the device designation",
+          "codes": ["R001"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R002 retains the involved transformer and both stopped terminals",
+          "codes": ["R002"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R003 names the actual unsupported device instead of just its UID",
+          "codes": ["R003"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R004 global layout failure names its view through the public %s API",
+          "codes": ["R004"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R005 project title failures retain the authored view scope",
+          "codes": ["R005"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R006 invalid page names the authored packet view, without changing the message",
+          "codes": ["R006"]
+        }
+      ]
+    },
+    "native-context": {
+      "description": "Review checklist: native selection/conductor/terminal context survives the boundary. The linked probes sample each code; this is not per-site execution coverage.",
+      "probes": [
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R001 maps an authored UID selector to the device designation",
+          "codes": ["R001"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R002 retains the involved transformer and both stopped terminals",
+          "codes": ["R002"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R003 names the actual unsupported device instead of just its UID",
+          "codes": ["R003"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R004 global layout failure names its view through the public %s API",
+          "codes": ["R004"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R005 project title failures retain the authored view scope",
+          "codes": ["R005"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R006 invalid page names the authored packet view, without changing the message",
+          "codes": ["R006"]
+        }
+      ]
+    },
+    "packet-budget": {
+      "description": "Review checklist: packet-global constraints use authored view indices/titles; device legend constraints retain native owners.",
+      "probes": [
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "R006 invalid page names the authored packet view, without changing the message",
+          "codes": ["R006"]
+        },
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "YIELD moved page-cost factory keeps the native authored views through a public failure",
+          "codes": ["R006"]
+        }
+      ]
+    },
+    "page-utility": {
+      "description": "Standalone page validation has no IR/view: it identifies authored page fields. The public packet boundary adds issued request scope.",
+      "probes": [
+        {
+          "file": "packages/render/test/r-code-designation-audit.test.ts",
+          "title": "the standalone page normalizer identifies its authored fields without inventing a view",
+          "codes": ["R006"]
+        }
+      ]
+    }
+  }
+}

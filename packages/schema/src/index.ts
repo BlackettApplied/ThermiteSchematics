@@ -9,13 +9,36 @@ export {
   type MappedAjvKeyword,
 } from "./ajv-validation.js";
 export {
+  DIAGNOSTIC_ALLOWED_LIMIT,
+  DIAGNOSTIC_MESSAGE_ALLOWED_LIMIT,
+  boundedAlternatives,
+  formatAllowedValues,
+  type DiagnosticAllowedValue,
+  type DiagnosticAlternatives,
+} from "./diagnostic-alternatives.js";
+export {
   DIAGNOSTIC_CATALOG,
   DIAGNOSTIC_CODES,
+  DIAGNOSTIC_CATALOG_CODES,
+  isDiagnosticCatalogCode,
+  type DiagnosticCatalogCode,
   isDiagnosticCode,
   type DiagnosticCatalogEntry,
   type DiagnosticCode,
   type DiagnosticProducer,
 } from "./diagnostic-catalog.js";
+export {
+  CORE_SYMBOL_BINDINGS,
+  symbolProfile,
+  resolveSensorSupply,
+  type SensorSupplyResolution,
+  SYMBOL_PROFILES,
+  type CoreSymbolBinding,
+  type SymbolProfile,
+  type SymbolFamilySupport,
+  type SymbolFunctionShape,
+  type SymbolRendererFamily,
+} from "./symbol-profiles.js";
 export {
   compareDiagnostics,
   normalizeDiagnosticFile,
@@ -87,3 +110,5 @@ export type {
   Wire,
 } from "./generated/index.js";
 export type { LibraryType, ProjectObject } from "./source-types.js";
+
+export { PRESENTATION_BYTE_LIMIT as PROJECT_PRESENTATION_BYTE_LIMIT } from "./internal/title-data/presentation.js";

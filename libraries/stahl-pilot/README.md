@@ -74,7 +74,7 @@ mechanical attachment. It renders five circuit/assembly views and preserves six
 W904 warnings, including its two synthetic test boundaries.
 
 ```sh
-node libraries/stahl-pilot/examples/component-check/verify.mjs
+bun libraries/stahl-pilot/examples/component-check/verify.mjs
 ```
 
 Verification covers pole separation, absent optional terminals, required PE

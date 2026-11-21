@@ -17,10 +17,11 @@ import {
   compileProject,
   generateLibraryLock,
   serializeLibraryLock,
-  SHIPPED_CORE_FILE_INVENTORY,
+  SHIPPED_CORE_VERSIONS,
   resolveShippedCoreLibrary,
   writeFileAtomically,
 } from "../packages/compiler/dist/index.js";
+
 import {
   DEFAULT_STARTER_PROJECT_NAME,
   DEFAULT_STARTER_REVISION,
@@ -31,6 +32,9 @@ import {
   prepareStarterScaffoldFromAssets,
 } from "../packages/cli/dist/index.js";
 
+const STARTER_CORE = SHIPPED_CORE_VERSIONS["0.2.0"];
+const SHIPPED_CORE_FILE_INVENTORY = STARTER_CORE.fileInventory;
+
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const templateRoot = join(
   repositoryRoot,
@@ -39,7 +43,13 @@ const templateRoot = join(
   "templates",
   "starter-default",
 );
-const rootAgentGuide = join(repositoryRoot, "AGENTS.md");
+const frozenAgentGuide = join(
+  repositoryRoot,
+  "packages",
+  "cli",
+  "assets",
+  "AGENTS.md",
+);
 const STARTER_IDENTITIES = Object.freeze({
   ps1: "33a15867-296b-40e4-a56b-15282f131b4c",
   plc1: "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
@@ -136,7 +146,7 @@ async function generateOwnedBytes() {
   );
   prepareStarterScaffoldFromAssets(
     {
-      agentGuide: await readFile(rootAgentGuide),
+      agentGuide: await readFile(frozenAgentGuide),
       templates: ordered,
       shippedCore,
     },

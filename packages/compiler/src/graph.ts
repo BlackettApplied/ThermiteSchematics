@@ -1,6 +1,7 @@
+import { sourceRef } from "./source-ref.js";
+import { compareConductiveElementId } from "./ordering.js";
 import {
   appendJsonPointer,
-  normalizeDiagnosticFile,
   type Potential,
   type ProjectObject,
   type Relation,
@@ -8,7 +9,6 @@ import {
 } from "@thermite/schema";
 
 import type { ExpansionResult, IrCableTypeConductor } from "./expansion.js";
-import type { LoadedDocument } from "./loader.js";
 import type {
   ProjectObjectCatalogEntry,
   ResolveLoadedProjectResult,
@@ -177,57 +177,10 @@ function compareCableConductorId(
   );
 }
 
-const conductiveKindOrder: Record<ConductiveElementId["kind"], number> = {
-  wire: 0,
-  jumper: 1,
-  cable_conductor: 2,
-};
-
-function compareConductiveElementId(
-  left: ConductiveElementId,
-  right: ConductiveElementId,
-): number {
-  const kindOrder =
-    conductiveKindOrder[left.kind] - conductiveKindOrder[right.kind];
-
-  if (kindOrder !== 0) {
-    return kindOrder;
-  }
-
-  if (left.kind === "cable_conductor") {
-    const rightConductor = right as Extract<
-      ConductiveElementId,
-      { kind: "cable_conductor" }
-    >;
-    return (
-      compareText(left.cableUid, rightConductor.cableUid) ||
-      compareText(left.conductorId, rightConductor.conductorId)
-    );
-  }
-
-  return compareText(
-    left.uid,
-    (right as Extract<ConductiveElementId, { kind: typeof left.kind }>).uid,
-  );
-}
-
 function compareInstanceRef(left: InstanceRef, right: InstanceRef): number {
   const kindOrder =
     (left.kind === "device" ? 0 : 1) - (right.kind === "device" ? 0 : 1);
   return kindOrder || compareText(left.uid, right.uid);
-}
-
-function sourceRef(
-  document: LoadedDocument<unknown>,
-  jsonPointer: string,
-): SourceRef {
-  const location = document.nodes.get(jsonPointer)?.value;
-  return {
-    file: normalizeDiagnosticFile(document.file),
-    line: location?.line ?? 1,
-    column: location?.column ?? 1,
-    jsonPointer,
-  };
 }
 
 function objectPointer(entry: ProjectObjectCatalogEntry): string {

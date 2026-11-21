@@ -11,13 +11,14 @@ import {
   stat,
   writeFile,
 } from "node:fs/promises";
-import { isAbsolute, join, relative, resolve, sep } from "node:path";
+import { basename, isAbsolute, join, relative, resolve, sep } from "node:path";
 
 import {
   computeFileIntegrity,
   LIBRARY_LOCK_FILE_NAME,
+  PROJECT_WRITE_LOCK_FILE_NAME,
   type LoadedDocument,
-  type LoadedProject,
+  type SourcePatchProject,
 } from "@thermite/compiler";
 
 import { createA004Error, type A004Error } from "./common/errors.js";
@@ -414,6 +415,33 @@ async function readPresentFile(
   }
 }
 
+// Compiler atomic writer runtime entries; ordinary authored .tmp files remain scanned.
+function isAtomicTemporaryName(name: string): boolean {
+  return /^\..+\.[0-9]+\.[0-9]+\.tmp$/u.test(name);
+}
+
+async function projectEntryStatus(
+  path: string,
+  dependencies: PatchFilesystemDependencies,
+): Promise<FileStatus | undefined> {
+  try {
+    return await dependencies.lstat(path);
+  } catch (error) {
+    // The atomic writer may unlink or rename its regular temporary between
+    // enumeration and inspection. Existing directories and links are inspected.
+    if (
+      isAtomicTemporaryName(basename(path)) &&
+      sanitizedErrorCode(error) === "ENOENT"
+    )
+      return undefined;
+    throw error;
+  }
+}
+
+export function isSourceChainMismatchError(error: unknown): boolean {
+  return ["ENOENT", "ENOTDIR", "ELOOP"].includes(sanitizedErrorCode(error));
+}
+
 export async function scanOrdinaryProjectTree(
   root: string,
   dependencies: PatchFilesystemDependencies = defaultPatchFilesystemDependencies,
@@ -423,14 +451,21 @@ export async function scanOrdinaryProjectTree(
   if (!rootStatus.isDirectory()) {
     throw new TypeError("The project root is not an ordinary directory.");
   }
-  const rootNames = [...(await dependencies.readdir(root))].sort(
-    compareCodeUnits,
-  );
+  // Coordination state can disappear when another writer releases it between
+  // readdir and lstat. It is not part of the authored tree we scan.
+  const rootNames = [...(await dependencies.readdir(root))]
+    .filter((name) => name !== PROJECT_WRITE_LOCK_FILE_NAME)
+    .sort(compareCodeUnits);
   const pending = rootNames.map((name) => join(root, name)).reverse();
   while (pending.length > 0) {
     const path = pending.pop()!;
     const relativePath = normalizedRelativePath(root, path);
-    const status = await dependencies.lstat(path);
+    const status = await projectEntryStatus(path, dependencies);
+    if (
+      status === undefined ||
+      (status.isFile() && isAtomicTemporaryName(basename(path)))
+    )
+      continue;
     if (status.isSymbolicLink()) return relativePath;
     if (status.isDirectory()) {
       const names = [...(await dependencies.readdir(path))].sort(
@@ -453,14 +488,19 @@ export async function copyOrdinaryProjectTree(
   destinationRoot: string,
   dependencies: PatchFilesystemDependencies = defaultPatchFilesystemDependencies,
 ): Promise<void> {
-  const rootNames = [...(await dependencies.readdir(sourceRoot))].sort(
-    compareCodeUnits,
-  );
+  const rootNames = [...(await dependencies.readdir(sourceRoot))]
+    .filter((name) => name !== PROJECT_WRITE_LOCK_FILE_NAME)
+    .sort(compareCodeUnits);
   const pending = rootNames.map((name) => join(sourceRoot, name)).reverse();
   while (pending.length > 0) {
     const source = pending.pop()!;
     const destination = join(destinationRoot, relative(sourceRoot, source));
-    const status = await dependencies.lstat(source);
+    const status = await projectEntryStatus(source, dependencies);
+    if (
+      status === undefined ||
+      (status.isFile() && isAtomicTemporaryName(basename(source)))
+    )
+      continue;
     if (status.isSymbolicLink()) {
       throw new TypeError(
         "The project tree changed to contain a reparse point.",
@@ -484,7 +524,7 @@ export async function copyOrdinaryProjectTree(
 }
 
 function presentationSnapshotFile(
-  project: LoadedProject,
+  project: SourcePatchProject,
   document: LoadedDocument<unknown>,
 ): string {
   const file = safeSnapshotFile(project.logicalRootPath, document.logicalPath);
@@ -497,7 +537,7 @@ function presentationSnapshotFile(
 }
 
 function snapshotDocuments(
-  project: LoadedProject,
+  project: SourcePatchProject,
 ): readonly SnapshotDocument[] {
   const documents: SnapshotDocument[] = [
     {
@@ -554,7 +594,7 @@ function snapshotDocuments(
   );
 }
 
-function snapshotItems(project: LoadedProject): readonly SnapshotItem[] {
+function snapshotItems(project: SourcePatchProject): readonly SnapshotItem[] {
   const items: SnapshotItem[] = [
     ...snapshotDocuments(project),
     {
@@ -579,7 +619,7 @@ export interface ProjectControlledSnapshotPlanEntry {
 }
 
 export function projectControlledSnapshotPlan(
-  project: LoadedProject,
+  project: SourcePatchProject,
 ): readonly ProjectControlledSnapshotPlanEntry[] {
   return Object.freeze(
     snapshotItems(project).map(({ role, dependencyIndex, file }) => ({
@@ -597,7 +637,7 @@ export function projectControlledSnapshotPlan(
 }
 
 export async function captureProjectControlledSnapshot(
-  project: LoadedProject,
+  project: SourcePatchProject,
   dependencies: PatchFilesystemDependencies = defaultPatchFilesystemDependencies,
 ): Promise<ProjectControlledSnapshotResult> {
   const entries: ProjectControlledSnapshotEntry[] = [];
@@ -771,9 +811,10 @@ async function ordinaryStatus(
 }
 
 export async function validateProjectSourceChain(
-  project: LoadedProject,
+  project: SourcePatchProject,
   document: LoadedDocument<unknown>,
   dependencies: PatchFilesystemDependencies = defaultPatchFilesystemDependencies,
+  propagateIoErrors = false,
 ): Promise<boolean> {
   try {
     if (
@@ -822,7 +863,9 @@ export async function validateProjectSourceChain(
       }
     }
     return true;
-  } catch {
+  } catch (error) {
+    if (isSourceChainMismatchError(error)) return false;
+    if (propagateIoErrors) throw error;
     return false;
   }
 }

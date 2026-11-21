@@ -60,6 +60,7 @@ describe("circuit packet CLI", () => {
       document.querySelectorAll('[data-circuit-mark="coil"]'),
     ).toHaveLength(1);
     expect(packet.sheets[0].svg).toContain("coil: 200");
+    expect(packet.sheets[0].svg).not.toContain("aux13:");
 
     request.views[0] = {
       ...request.views[0]!,

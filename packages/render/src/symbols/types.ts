@@ -1,7 +1,7 @@
 export type SymbolSide = "west" | "north" | "east" | "south";
 
 export type SymbolStyle =
-  "body" | "operator" | "actuator" | "terminal" | "annotation";
+  "body" | "operator" | "actuator" | "terminal" | "annotation" | "enclosure";
 
 export interface SymbolPoint {
   readonly x: number;
@@ -15,12 +15,23 @@ export interface SymbolPortDefinition {
   readonly order: number;
 }
 
+/** Owned annotation ink. The centre follows the port's symbol orientation;
+ * stroke offsets about it remain in page axes, independently of conductor ink. */
+export interface SymbolPolarityQualifier {
+  readonly polarity: "positive" | "negative";
+  readonly portId: string;
+  readonly center: SymbolPoint;
+}
+
 export type SymbolPrimitive =
   | {
       readonly kind: "line";
       readonly from: SymbolPoint;
       readonly to: SymbolPoint;
       readonly style: SymbolStyle;
+      readonly qualifier?: SymbolPolarityQualifier;
+      /** This origin follows the symbol, while stroke offsets stay in page axes. */
+      readonly uprightOrigin?: SymbolPoint;
     }
   | {
       readonly kind: "polyline";
@@ -80,4 +91,5 @@ export const SYMBOL_STYLES = Object.freeze([
   "actuator",
   "terminal",
   "annotation",
+  "enclosure",
 ] as const satisfies readonly SymbolStyle[]);

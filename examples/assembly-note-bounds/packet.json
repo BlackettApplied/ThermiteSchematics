@@ -1,0 +1,18 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "connector-assembly-view-request/0.1",
+      "title": "Assembly diagram and source notes",
+      "devices": ["R1"],
+      "assemblies": ["CBL1"],
+      "notes": [
+        "Review the complete connector inventory; retain all unresolved mapping notes."
+      ]
+    }
+  ]
+}

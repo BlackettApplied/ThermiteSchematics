@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic shared circuit loops"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "coinc-repro",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

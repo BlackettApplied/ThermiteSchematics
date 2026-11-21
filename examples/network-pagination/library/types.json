@@ -1,0 +1,66 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "network-page-fixture:node",
+      "description": "Generic Ethernet interface",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "IN": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        },
+        "OUT": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        },
+        "B1": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        },
+        "B2": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        },
+        "B3": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        },
+        "SPARE": {
+          "medium": "ethernet",
+          "connector": "Generic test socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original topology test model; electrical supply and physical pinout are not specified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "network-page-fixture:heater",
+      "description": "Generic heater bus interface",
+      "terminals": {},
+      "functions": {},
+      "ports": {
+        "IN": {
+          "medium": "nrg-bus",
+          "connector": "Generic test socket"
+        },
+        "OUT": {
+          "medium": "nrg-bus",
+          "connector": "Generic test socket"
+        },
+        "SPARE": {
+          "medium": "nrg-bus",
+          "connector": "Generic test socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original topology test model; electrical supply and physical pinout are not specified."
+      }
+    }
+  ]
+}

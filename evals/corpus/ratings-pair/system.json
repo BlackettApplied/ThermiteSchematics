@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic conflicting ratings without a potential"
+  },
+  "sources": ["objects.json"],
+  "libraries": [
+    {
+      "name": "eval",
+      "version": "1.0.0",
+      "path": "library"
+    }
+  ]
+}

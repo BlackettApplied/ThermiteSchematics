@@ -1,0 +1,50 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "coinc-repro:module",
+      "symbol": "thermite:io-module",
+      "terminals": {
+        "A": {
+          "connection_policy": "shared"
+        },
+        "B": {
+          "connection_policy": "shared"
+        },
+        "C": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "A": {
+          "kind": "bus",
+          "terminals": ["A"]
+        },
+        "B": {
+          "kind": "bus",
+          "terminals": ["B"]
+        },
+        "C": {
+          "kind": "bus",
+          "terminals": ["C"]
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "coinc-repro:boundary",
+      "symbol": "thermite:terminal-strip",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "test": {
+          "kind": "bus",
+          "terminals": ["1"]
+        }
+      }
+    }
+  ]
+}

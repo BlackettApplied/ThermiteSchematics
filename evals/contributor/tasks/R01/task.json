@@ -1,0 +1,20 @@
+{
+  "id": "R01",
+  "version": "2.0.1",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Create a linked Git worktree at worktree/ from the supplied engine/ source repository. In worktree/, install its own dependencies with bun install --frozen-lockfile. Then run bun scripts/test.mjs packages/query/test/views-and-ordering.test.ts and bun run build in that worktree. Leave engine and worktree source unchanged. Record the commands, their results and any friction in contributor-friction.md at the project root. Do not edit the electrical project or the supplied runtime. Do not push or publish.",
+  "requiredTopics": [],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "guideCopy": {
+    "from": "engine",
+    "to": "worktree"
+  },
+  "context": "source",
+  "contributor": {
+    "checkout": "worktree",
+    "focused": "packages/query/test/views-and-ordering.test.ts"
+  },
+  "preserveSource": true
+}

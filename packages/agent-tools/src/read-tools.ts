@@ -1,14 +1,16 @@
 import { resolve as resolvePath } from "node:path";
 
 import {
+  compileLoadedProject,
   compileProject,
+  loadProject,
   type CompiledProjectPresentation,
   type CompileResult,
   type ElectricalIr,
+  type LoadedProject,
 } from "@thermite/compiler";
 import {
   createQueryEngine,
-  type InspectResult,
   type QueryEngine,
   type QueryError,
   type QueryResult,
@@ -42,6 +44,7 @@ import {
   inspectCompiledProject,
   validateInspectRequest,
   type InspectObjectRequest,
+  type InspectResult,
 } from "./inspect.js";
 import {
   executeGraphQuery,
@@ -55,6 +58,7 @@ import {
   type ResolveObjectsRequest,
   type ResolveObjectsValue,
 } from "./resolve.js";
+import { withSourceMetadata } from "./source-metadata.js";
 import {
   validateValidateProjectRequest,
   type ValidateProjectRequest,
@@ -62,6 +66,8 @@ import {
 } from "./validate.js";
 
 export interface ReadToolDependencies {
+  readonly loadProject?: typeof loadProject;
+  readonly compileLoadedProject?: typeof compileLoadedProject;
   readonly compileProject: (
     inputPath: string | undefined,
     cwd: string,
@@ -105,6 +111,8 @@ export interface InternalReadTools {
 
 const defaultReadToolDependencies: ReadToolDependencies = Object.freeze({
   compileProject,
+  compileLoadedProject,
+  loadProject,
   createQueryEngine,
   renderSchematic,
 });
@@ -176,10 +184,23 @@ async function runCompiledRead<Value>(
     ir: Readonly<ElectricalIr>,
     engine: QueryEngine,
   ) => QueryResult<Value>,
+  includeSource = false,
 ): Promise<AgentToolOutcome<Value, ReadFailure>> {
   let compiled: CompileResult;
+  let snapshot: LoadedProject | undefined;
   try {
-    compiled = await dependencies.compileProject(project, cwd);
+    if (includeSource) {
+      const loaded = await (dependencies.loadProject ?? loadProject)(
+        project,
+        cwd,
+      );
+      if (loaded.ok) {
+        snapshot = loaded.project;
+        compiled = (dependencies.compileLoadedProject ?? compileLoadedProject)(
+          snapshot,
+        );
+      } else compiled = loaded;
+    } else compiled = await dependencies.compileProject(project, cwd);
   } catch (error) {
     return finish(tool, toolExceptionOutcome<Value>(tool, "compile", error));
   }
@@ -206,7 +227,15 @@ async function runCompiledRead<Value>(
         failureOutcome<Value>(compiled.diagnostics, result.error, "expected"),
       );
     }
-    return finish(tool, successOutcome(compiled.diagnostics, result.value));
+    return finish(
+      tool,
+      successOutcome(
+        compiled.diagnostics,
+        snapshot === undefined
+          ? result.value
+          : (withSourceMetadata(result.value, compiled.ir, snapshot) as Value),
+      ),
+    );
   } catch (error) {
     return finish(
       tool,
@@ -360,6 +389,7 @@ export function createInternalReadTools(
           dependencies,
           (ir, engine) =>
             resolveCompiledProject(ir, engine, validated.value.target),
+          validated.value.include?.includes("source"),
         );
       } catch (error) {
         return finish(
@@ -389,6 +419,7 @@ export function createInternalReadTools(
           dependencies,
           (_ir, engine) =>
             inspectCompiledProject(engine, validated.value.selector),
+          validated.value.include?.includes("source"),
         );
       } catch (error) {
         return finish(

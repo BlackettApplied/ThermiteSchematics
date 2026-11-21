@@ -1,0 +1,1153 @@
+[
+  {
+    "label": "r2/r3 exact search 1",
+    "event": {
+      "name": "web_search",
+      "input": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 2",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 3",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues/12 ssh://git@github.com/3MUl0R/ThermiteSchematics"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 4",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues git@github.com:3MUl0R/ThermiteSchematics.git"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 5",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues OR site:raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 6",
+    "event": {
+      "name": "web_search",
+      "input": "site:raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 7",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues https://api.github.com/repos/3MUl0R/ThermiteSchematics/contents/packages"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 8",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues github.com/3MUl0R/ThermiteSchematics/blob/main/packages/x.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 9",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues sourcegraph.com/github.com/3MUl0R/ThermiteSchematics/-/blob/packages/x.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 10",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues OR https:raw%2Egithubusercontent%2Ecom/3MUl0R/%54hermiteSchematics/dev/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r2/r3 exact search 11",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues OR inurl:blob \"compileProject\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 gh Accept diff",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.diff' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 gh Accept patch",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.patch' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 gh Accept raw+json",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.raw+json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 gh Accept diff+json",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.diff+json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 gh Accept patch+json",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.patch+json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' /files",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' /files",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' /files",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' /files",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' /files",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' /commits",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372/commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' /commits",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372/commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' /commits",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372/commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' /commits",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372/commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' /commits",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372/commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' .diff",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372.diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' .diff",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372.diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' .diff",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372.diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' .diff",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372.diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' .diff",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372.diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' .patch",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372.patch"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' .patch",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372.patch"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' .patch",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372.patch"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' .patch",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372.patch"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' .patch",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372.patch"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' ?diff=unified",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372?diff=unified"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' ?diff=unified",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372?diff=unified"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' ?diff=unified",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372?diff=unified"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' ?diff=unified",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372?diff=unified"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' ?diff=unified",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372?diff=unified"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' ?plain=1",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372?plain=1"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' ?plain=1",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372?plain=1"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' ?plain=1",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372?plain=1"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' ?plain=1",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372?plain=1"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' ?plain=1",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372?plain=1"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '.' ?raw",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/3MUl0R/ThermiteSchematics/pull/372?raw"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '．' ?raw",
+    "event": {
+      "name": "open_page",
+      "input": "https://github．com/3MUl0R/ThermiteSchematics/pull/372?raw"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '。' ?raw",
+    "event": {
+      "name": "open_page",
+      "input": "https://github。com/3MUl0R/ThermiteSchematics/pull/372?raw"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '｡' ?raw",
+    "event": {
+      "name": "open_page",
+      "input": "https://github｡com/3MUl0R/ThermiteSchematics/pull/372?raw"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 host '%252E' ?raw",
+    "event": {
+      "name": "open_page",
+      "input": "https://github%252Ecom/3MUl0R/ThermiteSchematics/pull/372?raw"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r4 exact WebFetch with prompt",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367",
+        "prompt": "Summarize this issue and its comments"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "prompt contains source URL but fetch is issue",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367",
+        "prompt": "Compare with https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "prompt cannot exempt a source URL",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts",
+        "prompt": "Summarize https://github.com/BlackettApplied/ThermiteSchematics/issues/367"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed github.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://github.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed GITHUB．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://GITHUB．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed api.github.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://api.github.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed API．GITHUB．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://API．GITHUB．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed raw.githubusercontent.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://raw.githubusercontent.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed RAW．GITHUBUSERCONTENT．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://RAW．GITHUBUSERCONTENT．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed codeload.github.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://codeload.github.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed CODELOAD．GITHUB．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://CODELOAD．GITHUB．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed codeload.githubusercontent.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://codeload.githubusercontent.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed CODELOAD．GITHUBUSERCONTENT．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://CODELOAD．GITHUBUSERCONTENT．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed objects.githubusercontent.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://objects.githubusercontent.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed OBJECTS．GITHUBUSERCONTENT．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://OBJECTS．GITHUBUSERCONTENT．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed user-images.githubusercontent.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://user-images.githubusercontent.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed USER-IMAGES．GITHUBUSERCONTENT．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://USER-IMAGES．GITHUBUSERCONTENT．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed gist.github.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://gist.github.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed GIST．GITHUB．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://GIST．GITHUB．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed gist.githubusercontent.com",
+    "event": {
+      "name": "open_page",
+      "input": "https://gist.githubusercontent.com/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "fail-closed GIST．GITHUBUSERCONTENT．COM",
+    "event": {
+      "name": "open_page",
+      "input": "https://GIST．GITHUBUSERCONTENT．COM/unrecognized/path"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "positive gh api repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api -H 'Accept: application/json' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api --header='Accept: application/vnd.github+json' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api --header='Accept: application/vnd.github+json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api -H'Accept: application/json' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H'Accept: application/json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh issue view 367 --repo BlackettApplied/ThermiteSchematics --comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view 367 --repo BlackettApplied/ThermiteSchematics --comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh issue view 367 -R BlackettApplied/ThermiteSchematics --json title,body,comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view 367 -R BlackettApplied/ThermiteSchematics --json title,body,comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api repos/3MUl0R/ThermiteSchematics/issues",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api repos/3MUl0R/ThermiteSchematics/issues/367/comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues/367/comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive gh api repos/3MUl0R/ThermiteSchematics/issues/comments/123",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues/comments/123"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive curl -fsSL 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl -fsSL 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367'"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "positive wget --quiet --header='Accept: application/json' 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' -O /tmp/issue.html",
+    "event": {
+      "name": "command_execution",
+      "input": "wget --quiet --header='Accept: application/json' 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' -O /tmp/issue.html"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "negative curl -H 'Accept: application/vnd.github.diff' 'https://github.com/3MUl0R/ThermiteSchematics/pull/372'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl -H 'Accept: application/vnd.github.diff' 'https://github.com/3MUl0R/ThermiteSchematics/pull/372'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative wget --header='Accept: application/vnd.github.patch' 'https://github.com/3MUl0R/ThermiteSchematics/pull/372'",
+    "event": {
+      "name": "command_execution",
+      "input": "wget --header='Accept: application/vnd.github.patch' 'https://github.com/3MUl0R/ThermiteSchematics/pull/372'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api -H 'Accept: application/json, application/vnd.github.diff' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/json, application/vnd.github.diff' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api -H 'Accept: application/json' -H 'Accept: application/vnd.github.patch' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/json' -H 'Accept: application/vnd.github.patch' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api -H 'Accept: application/vnd.github.raw+json' repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.raw+json' repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api --hostname evil.example repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api --hostname evil.example repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api repos/3MUl0R/ThermiteSchematics/pulls/372/files",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/pulls/372/files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh api -X POST repos/3MUl0R/ThermiteSchematics/pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -X POST repos/3MUl0R/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative curl -K /tmp/config 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl -K /tmp/config 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' && gh api repos/o/r/contents/source",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' && gh api repos/o/r/contents/source"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' -o /engine/source.ts",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/BlackettApplied/ThermiteSchematics/issues/367' -o /engine/source.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "negative gh issue view 367 --repo 3MUl0R/ThermiteSchematics && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts'",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view 367 --repo 3MUl0R/ThermiteSchematics && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical positive HTTPS://GITHUB.COM/BLACKETTAPPLIED/THERMITESCHEMATICS/ISSUES/367",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "HTTPS://GITHUB.COM/BLACKETTAPPLIED/THERMITESCHEMATICS/ISSUES/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "canonical positive https://github．com/BlackettApplied/ThermiteSchematics/issues/367",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github．com/BlackettApplied/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "canonical positive https://github.com/BlackettApplied/ThermiteSchematics/blob/../issues/367",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/blob/../issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "canonical positive https://github.com/o/r/issues/1",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/o/r/issues/1",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "canonical positive https://api.github.com/repos/o/r/issues/1/comments",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://api.github.com/repos/o/r/issues/1/comments",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "canonical negative https://github.com/BlackettApplied/ThermiteSchematics/issues/367%zz",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367%zz",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/BlackettApplied/ThermiteSchematics/issues/367/../contents",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367/../contents",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/BlackettApplied/ThermiteSchematics/issues/367#diff-123",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367#diff-123",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/BlackettApplied/ThermiteSchematics/issues/367?raw=1",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/BlackettApplied/ThermiteSchematics/issues/367?raw=1",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/3MUl0R/ThermiteSchematics/pull/372?view=files",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/pull/372?view=files",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/3MUl0R/ThermiteSchematics/pull/372/files/../files",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/pull/372/files/../files",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "canonical negative https://github.com/3MUl0R/ThermiteSchematics/pull/372/files%252f..%252ffiles",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/pull/372/files%252f..%252ffiles",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "D-task/query positive site:github.com/3MUl0R/ThermiteSchematics/issues Thermite",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/3MUl0R/ThermiteSchematics/issues Thermite"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "D-task/query positive site:github.com/BlackettApplied/ThermiteSchematics/issues Thermite",
+    "event": {
+      "name": "web_search",
+      "input": "site:github.com/BlackettApplied/ThermiteSchematics/issues Thermite"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "D-task/query positive repo:3MUl0R/ThermiteSchematics is:issue in:title,body,comments Thermite",
+    "event": {
+      "name": "web_search",
+      "input": "repo:3MUl0R/ThermiteSchematics is:issue in:title,body,comments Thermite"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "ordinary search",
+    "event": {
+      "name": "WebSearch",
+      "input": {
+        "query": "ELK layout research"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "ordinary fetch",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://example.com/docs",
+        "prompt": "https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/main/packages/compiler/src/index.ts"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "ordinary local command",
+    "event": {
+      "name": "Bash",
+      "input": {
+        "command": "cat /tmp/result.json"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "D-pump recorded MCP query ignores sort metadata",
+    "event": {
+      "name": "codex_apps.github.search_issues",
+      "input": {
+        "query": "repo:BlackettApplied/ThermiteSchematics is:issue",
+        "sort": "updated",
+        "topn": 10
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "unknown GitHub tool fails closed without a URL",
+    "event": {
+      "name": "codex_apps.github.search_code",
+      "input": {
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "D-pump second retained search",
+    "event": {
+      "name": "codex_apps.github.search_issues",
+      "input": {
+        "query": "repo:BlackettApplied/ThermiteSchematics is:issue \"notes\" \"sheet\"",
+        "topn": 4
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "T07 retained repository field",
+    "event": {
+      "name": "codex_apps.github.search_issues",
+      "input": {
+        "repository_full_name": "BlackettApplied/ThermiteSchematics",
+        "query": "is:issue",
+        "sort": "updated",
+        "order": "desc"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "T07 retained MCP fetch with prompt",
+    "event": {
+      "name": "codex_apps.github.fetch",
+      "input": {
+        "url": "https://api.github.com/repos/BlackettApplied/ThermiteSchematics/issues?state=open&per_page=100",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "D-conveyor retained unqualified repo query fails the fixed grammar",
+    "event": {
+      "name": "codex_apps.github.search_issues",
+      "input": {
+        "query": "repo:BlackettApplied/ThermiteSchematics",
+        "topn": 10,
+        "sort": "updated"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "client discovery does not access GitHub",
+    "event": {
+      "name": "command_execution",
+      "input": "/bin/zsh -lc 'bun --version && command -v gh && command -v curl'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "T07 raw JSON scope libraries/field-interfaces/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.raw+json' repos/BlackettApplied/ThermiteSchematics/contents/libraries/field-interfaces/library.json"
+    },
+    "class": "other"
+  },
+  {
+    "label": "T07 raw JSON scope packages/compiler/src/index.ts",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.raw+json' repos/BlackettApplied/ThermiteSchematics/contents/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "T07 raw JSON scope pulls/372",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api -H 'Accept: application/vnd.github.raw+json' repos/BlackettApplied/ThermiteSchematics/pulls/372"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "bad path encoding cannot hide encoded host in search",
+    "event": {
+      "name": "web_search",
+      "input": "site:%67%69%74%68%75%62.com/o/r/issues OR %zz"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "multiline implicit-host gh request fails closed",
+    "event": {
+      "name": "Bash",
+      "input": {
+        "command": "echo ready\ngh api graphql -f query=x"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "absolute gh path fails closed",
+    "event": {
+      "name": "Bash",
+      "input": {
+        "command": "/opt/homebrew/bin/gh api graphql -f query=x"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "absolute gh path issue lookup",
+    "event": {
+      "name": "Bash",
+      "input": {
+        "command": "/opt/homebrew/bin/gh issue view 367 -R BlackettApplied/ThermiteSchematics"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "PR JSON fields outside conversation: files",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "PR JSON fields outside conversation: commits",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "PR JSON fields outside conversation: diff",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json diff"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "PR JSON fields outside conversation: title,files",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json title,files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "PR JSON fields outside conversation: body,commits",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json body,commits"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "PR JSON conversation fields",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view 372 -R 3MUl0R/ThermiteSchematics --json title,body,comments"
+    },
+    "class": "issue-lookup"
+  }
+]

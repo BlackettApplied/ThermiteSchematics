@@ -1,9 +1,9 @@
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import {
   evaluateRules,
   type CompiledProjectPresentation,
   type ElectricalIr,
 } from "@thermite/compiler";
-import Elk from "elkjs/lib/elk.bundled.js";
 import type { ELK } from "elkjs/lib/elk-api.js";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 
@@ -21,6 +21,7 @@ import {
   incompleteLoadsPathError,
   incompleteTracePathError,
 } from "../src/errors.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { createSchematicRendererWithDependencies } from "../src/renderer.js";
 import { buildPresentationGraph } from "../src/presentation.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
@@ -234,7 +235,7 @@ describe("integrated renderer", () => {
 
   it("attempts layout for the compiler-valid equal-shortest PNP regression deterministically", async () => {
     const ir = pnpParallelTraceFixture(coreIr);
-    expect(evaluateRules(ir)).toEqual([]);
+    expect(evaluateRules(ir)).toEqual(motorDiagnostics);
     const reordered = structuredClone(ir);
     for (const collection of [
       reordered.devices,
@@ -278,7 +279,7 @@ describe("integrated renderer", () => {
 
   it("locks the v23 compiled-context N=2 RIGHT failure and DOWN success across two production runs", async () => {
     const ir = b4CompiledContextN2Fixture(coreIr);
-    expect(evaluateRules(ir)).toEqual([]);
+    expect(evaluateRules(ir)).toEqual(motorDiagnostics);
 
     const plcInput = b4Terminal(ir, "PLC1", "X1.0");
     expect(
@@ -360,7 +361,7 @@ describe("integrated renderer", () => {
       const rawSizes: (readonly [number | undefined, number | undefined])[] =
         [];
       const canonicalOutputs: string[] = [];
-      const delegate = new Elk();
+      const delegate = createElkEngine();
       const renderer = createSchematicRendererWithDependencies({
         layoutEngine: {
           knownLayoutOptions: () => delegate.knownLayoutOptions(),
@@ -395,14 +396,17 @@ describe("integrated renderer", () => {
 
       if (flow === "left-to-right") {
         expect(rawSizes).toEqual([
-          [1082.6, 377],
-          [1082.6, 377],
+          [1387, 431],
+          [1387, 431],
         ]);
-        expect(first).toEqual({
+        expect(first).toMatchObject({
           ok: false,
           error: {
             code: "R004",
-            message: `Invalid layout: edges ${boundaryId} and ${wireId} form an ambiguous intersection.`,
+            details: {
+              originalMessage: `Invalid layout: edges ${boundaryId} and ${wireId} form an ambiguous intersection.`,
+            },
+            message: expect.stringContaining("W-FLD-001 (TB1.3"),
             family: "control",
             netId,
             root: "LS1",
@@ -410,8 +414,8 @@ describe("integrated renderer", () => {
         });
       } else {
         expect(rawSizes).toEqual([
-          [543.6, 828],
-          [543.6, 828],
+          [655.8, 832],
+          [655.8, 832],
         ]);
         expect(first.ok, first.ok ? "" : JSON.stringify(first.error)).toBe(
           true,
@@ -492,6 +496,18 @@ describe("integrated renderer", () => {
           field,
           reason,
           root: "K1",
+          details:
+            field === "device.location"
+              ? { designation: "K1" }
+              : {
+                  designation: "W-CTL-007",
+                  terminals: selectedWire(ir, "W-CTL-007").endpoints.map(
+                    (e, i) => ({
+                      ...e.terminal,
+                      designation: ["OL1", "K1"][i],
+                    }),
+                  ),
+                },
         },
       });
       expect(spy.knownLayoutOptions).not.toHaveBeenCalled();
@@ -516,12 +532,13 @@ describe("integrated renderer", () => {
       mappings,
       layoutEngine: spy.engine,
     }).render(coreIr, conductorsRequest);
-    expect(result).toEqual({
+    expect(result).toMatchObject({
       ok: false,
       error: {
         code: "R003",
-        message:
-          'Unsupported symbol mapping: type "core:junction-box-8" has no valid control binding.',
+        message: expect.stringContaining(
+          'Unsupported symbol mapping: function "terminal1" on type "core:junction-box-8" has no valid control binding. Device "JB1", function "terminal1".',
+        ),
         family: "control",
         deviceUid: jb1.uid,
         typeId: "core:junction-box-8",
@@ -608,7 +625,13 @@ describe("integrated renderer", () => {
       const result = await createSchematicRendererWithDependencies({
         layoutEngine: spy.engine,
       }).render(ir, testCase.request);
-      expect(result).toEqual({ ok: false, error: expected });
+      expect(result).toMatchObject({
+        ok: false,
+        error: {
+          ...expected,
+          message: expect.stringContaining(expected.message),
+        },
+      });
       if (!result.ok) expect(Object.isFrozen(result.error)).toBe(true);
       expect(spy.knownLayoutOptions).not.toHaveBeenCalled();
       expect(spy.layout).not.toHaveBeenCalled();
@@ -616,7 +639,7 @@ describe("integrated renderer", () => {
   });
 
   it("returns exact v0.2 R004 without emitting an artifact", async () => {
-    const delegate = new Elk();
+    const delegate = createElkEngine();
     const layout = vi.fn(async () => ({ id: "root" }));
     const result = await createSchematicRendererWithDependencies({
       layoutEngine: {
@@ -710,6 +733,19 @@ describe("integrated renderer", () => {
           ...expectedOwner,
           reason,
           root: field === "cable.designation" ? value : "CBL1",
+          ...(field === "cable.designation"
+            ? { details: { designation: "\\ud800" } }
+            : {
+                details: {
+                  designation: "CBL1",
+                  conductorId:
+                    field === "cable.conductor.id" ? "\\ufffe" : "1+",
+                  terminals: conductor.endpoints.map((e, i) => ({
+                    ...e.terminal,
+                    designation: ["TB1", "JB1"][i],
+                  })),
+                },
+              }),
         },
       });
       expect(spy.knownLayoutOptions).not.toHaveBeenCalled();
@@ -736,6 +772,7 @@ describe("integrated renderer", () => {
           ownerId: svgSemanticId("device", [device.uid]),
           field: "device.designation" as const,
           reason: "unpaired-surrogate" as const,
+          details: { designation: "PS1\\ud800" },
         };
       },
     },
@@ -755,6 +792,13 @@ describe("integrated renderer", () => {
           ownerId: svgSemanticId("wire", [wire.uid]),
           field: "wire.designation" as const,
           reason: "xml-illegal-code-point" as const,
+          details: {
+            designation: "WIRE\\ufffe",
+            terminals: wire.endpoints.map((e, i) => ({
+              ...e.terminal,
+              designation: ["OL1", "K1"][i],
+            })),
+          },
         };
       },
     },
@@ -818,6 +862,7 @@ describe("integrated renderer", () => {
           field: "device.type",
           reason,
           root: "K1",
+          details: { designation: "K1" },
         },
       });
       expect(spy.knownLayoutOptions).not.toHaveBeenCalled();
@@ -1012,7 +1057,9 @@ describe("M8 opaque canvas and deterministic title block", () => {
       )) {
         expect(attribute(titleLine, "fill")).toBe("#101828");
         expect(attribute(titleLine, "dominant-baseline")).toBe("hanging");
-        expect(attribute(titleLine, "lengthAdjust")).toBe("spacingAndGlyphs");
+        if (titleLine.includes("textLength="))
+          expect(attribute(titleLine, "lengthAdjust")).toBe("spacingAndGlyphs");
+        else expect(titleLine).not.toContain("lengthAdjust=");
         expect(titleLine).not.toMatch(/opacity|filter|mask/u);
       }
       expect(contrast("#101828", "#ffffff")).toBeGreaterThanOrEqual(4.5);
@@ -1058,6 +1105,9 @@ describe("M8 complete title R005 preflight", () => {
       "device.designation",
       "device.type",
       "device.location",
+      "device.description",
+      "type.description",
+      "type.catalog.orderNumber",
       "function.key",
       "aggregate.key",
       "terminal.key",
@@ -1079,7 +1129,7 @@ describe("M8 complete title R005 preflight", () => {
       "xml-illegal-code-point",
     ];
     expect(owners).toHaveLength(14);
-    expect(fields).toHaveLength(21);
+    expect(fields).toHaveLength(24);
     expect(reasons).toHaveLength(5);
   });
 
@@ -1211,6 +1261,11 @@ describe("M8 complete title R005 preflight", () => {
         field: "title.view-line",
         reason: "forbidden-single-line-code-point",
         root: root.designation,
+        details: {
+          designation: which === "root" ? "REJECTED-CONTENT\\u2028" : "LS1",
+          targetDesignation:
+            which === "target" ? "REJECTED-CONTENT\\u2029" : "PLC1",
+        },
       });
     },
   );

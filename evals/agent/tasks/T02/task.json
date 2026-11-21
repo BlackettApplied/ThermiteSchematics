@@ -1,0 +1,21 @@
+{
+  "id": "T02",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Add contactor K1 using the core contactor type. PLC1's first digital output drives its coil; the coil returns to PS1's 0 V side. Produce drawings/k1-control.pdf.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent",
+      "before": "source-change"
+    },
+    {
+      "topic": "agent-requests",
+      "beforeCommand": "agent",
+      "before": "guarded-patch"
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

@@ -34,5 +34,14 @@
         "note": "Selected cable type \"rules:cable\" is declared here. Available conductor IDs: [\"1\", \"2\"]."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E200 topology gate: skipped E300, E301, E302, W902, W303, I304, I305 on 1 net: [\"LEFT.T, RIGHT.T [net:sha256:9ac7f6d628d599bbc431fdce4450725a13b7c2cb0a0a07abcf5481f0933acb42]\"]."
   }
 ]

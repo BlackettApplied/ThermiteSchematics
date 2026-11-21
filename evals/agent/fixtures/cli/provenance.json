@@ -1,0 +1,201 @@
+{
+  "date": "2026-11-05",
+  "codexVersion": "codex-cli 0.164.0",
+  "claudeVersion": "2.1.280 (Claude Code)",
+  "captureTool": "evals/agent/capture-cli.mjs",
+  "auth": "fresh homes/configs; dummy environment keys only; no user auth files or tokens",
+  "cases": [
+    {
+      "file": "claude-2.1.280/account_on_hold.jsonl",
+      "sha256": "1a511331eacb3da84e28d2bb777ebfbbbd8d5f536b772e31e0bda8a2ce5841a7",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/cloud_credential_error.jsonl",
+      "sha256": "48dae0eee02be83a01f20713fbf7ce370edd36289363980fbe2b3ebdb8894c6f",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/oauth_org_not_allowed.jsonl",
+      "sha256": "623e672d9386cdd7a43791593fc8e949f4a827dabe580fdd28a8ff53e52f9c6a",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/overloaded.jsonl",
+      "sha256": "343ec18365b9380468aa68d7c307d7332fda928e2d01fb764727161a851bb8f2",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/server-overload.jsonl",
+      "sha256": "65dd2ab506160ab93c3fb24f60f771a0dd685132fe120c1732de9e658409a43b",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/verification_required.jsonl",
+      "sha256": "4ba919c449cd4c076c9388bf09893fb84e084ede0c436ade2114d6cf2dae28fd",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/content-filter.jsonl",
+      "sha256": "aa73c458920fdccfd0ff4189245fb7f3d29d4ad4b1a8fe668055cbd70cfdfd14",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/disconnect.jsonl",
+      "sha256": "c639474d2743cbe3472d3570f3b317dd14b3d3831b94ae938c343222cc889b26",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/insufficient_quota.jsonl",
+      "sha256": "ae8f6107da3d6722715ec15ae6a2b35c11703ed6718fcaa7de7ef8bc2adb94ba",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/rate-limit-no-id.jsonl",
+      "sha256": "0ce5fe474e1d6bf7ec46901299e36f2ff049f079cb2b98c51bb053905070cc10",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/rate-limit.jsonl",
+      "sha256": "635b8f1652c03d07284ba5bb1524966ca3c321a7b01565d237744f9d4197ad34",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage-no-reset.jsonl",
+      "sha256": "88f65a59906b9e59c12b999d5ccd1a1ef1e796f7977e96132dd28c2b6d2d5d5a",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage-pro-no-reset.jsonl",
+      "sha256": "963071d907a81df006e32fde8a698cd2209dccca4cdd769706c1327905513851",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage-pro.jsonl",
+      "sha256": "5783f9cfb128bee70919ec405c9916d2659ffbc1e466af78aa62590b54eab2bf",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage-today.jsonl",
+      "sha256": "e78c63b846898c77e54403785250c3108a258fd94a1f51bd40b0b4888ccbca72",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage_limit_reached.jsonl",
+      "sha256": "a70dc6990ce6dca3cd82f9df08ca932b6ad39adc3091f86ecf26a3d7083b6ddf",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "codex-0.164.0/usage_not_included.jsonl",
+      "sha256": "f192c98addb6ff4ed00619d8c4d2bfa23214b3b9509c846bdbda4dc53813aef8",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/quota-sequence.jsonl",
+      "sha256": "7d5f3dad6fa4c7ad33a609756ea4ec8d52ed5929836169b2ffea1debba91f29e",
+      "provenance": "synthetic installed-schema/order compatibility",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/overage-sequence.jsonl",
+      "sha256": "a4699898aa3aa7c273dc4657cf15ee00542eec2cfc76a1ecdf53f14dc4e753ba",
+      "provenance": "synthetic installed-schema/order compatibility",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/unknown-400.jsonl",
+      "sha256": "ceb2ca74c6479dff16b50b52977efd10b7edda5b7052c2e6f1f97b023dcabca9",
+      "provenance": "real installed CLI / local HTTP stub",
+      "dummyAuth": true,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    },
+    {
+      "file": "claude-2.1.280/invalid_request-enum.jsonl",
+      "sha256": "981696c0dfcb430a75a0aa6e5746eb0d5a2fff4b866a01cf05a2e11e8fab5204",
+      "provenance": "synthetic installed-schema enum",
+      "dummyAuth": false,
+      "externalServices": false,
+      "modelCalls": 0,
+      "requestHeadersLogged": false
+    }
+  ],
+  "claudeAuthMode": "API-key mode: dummy ANTHROPIC_API_KEY and loopback ANTHROPIC_BASE_URL",
+  "claudeOAuthVerified": false,
+  "codexCaptureNormalization": "UTC; identifiers fixture-<field>; relative reset time canonicalized to 12:00 PM, retaining a date prefix when the CLI emitted one"
+}

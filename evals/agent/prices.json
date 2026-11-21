@@ -1,0 +1,22 @@
+{
+  "version": "1.1.0",
+  "currency": "USD",
+  "basis": "API-equivalent operator planning estimates per million tokens, not a vendor quote or a statement of subscription charges. Cache creation is conservatively charged as input.",
+  "models": {
+    "claude-opus-4-6": {
+      "input": 5,
+      "cachedInput": 0.5,
+      "output": 25
+    },
+    "gpt-5.4": {
+      "input": 2.5,
+      "cachedInput": 0.25,
+      "output": 15
+    },
+    "claude-haiku-4-5": {
+      "input": 1,
+      "cachedInput": 0.1,
+      "output": 5
+    }
+  }
+}

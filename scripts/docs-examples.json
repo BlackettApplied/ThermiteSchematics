@@ -1,0 +1,1452 @@
+{
+  "version": 1,
+  "bindings": {
+    "topic-circuit-symbols": {
+      "file": "docs/circuit-symbols.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'circuit-symbols'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "c6a62354e8c7c07e2e3e42d9e3a9d7c5727ef2f30aa015c92bee6f7b076e2b94"
+      ]
+    },
+    "topic-circuit-views": {
+      "file": "docs/circuit-views.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'circuit-views'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "e6e39668067c723f28b5bf239ad8d42c0fa9076600f4b09c6e70ac995ac2c71b",
+        "44116775927065c381addfdd729b4881afea480b3a04fbbabd991a0a56000b4d",
+        "a367cc42c24199c19b076b1b9d3937a476e7613d6c1fb773c105634592ee253f"
+      ]
+    },
+    "topic-completeness": {
+      "file": "docs/completeness.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'completeness'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "fc74a75bbaf971dcad5cb5b4da8031993429b0b0e72c24629f0739662b755c1b",
+        "5439aafd418cd153cbc6fa2d3fd1cf9f1133b9e1a62cbe71e9bf4af9c818828d",
+        "847090804730054d19331a7961a80c278c02f485db1f10344178564e064f7280"
+      ]
+    },
+    "topic-modeling": {
+      "file": "docs/data-model.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'modeling'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "9a851fde5d66bdd643023eaf98e3e7253c2294d49215e44910211bd2597e99f1",
+        "9112980ee28867bf9e4ab0add400f218369b897b920414f6f447c96d35fb983a",
+        "ce11358eb8872b3bc05983f027b2a8b24064ee78bafd7fb28bc62be29b00a3a4",
+        "5fa5a2beb74f7b5d38d29ceba01b25f44fd4c8c3d09d6d929a523d1b9d79c7dc",
+        "244cc983eb64b805512f94178b9bdf3d4fb0c5df63aef358209127994312441d",
+        "5a0f729b720ab513c5b8129933f57b6a3036eeb36cf1650a9f8032fba292af21",
+        "5568f7112af348e6b7145bf04c69c2c1d3d8a6f5c8b77ceaae45749f9f92b1c8",
+        "615df203c9f450ab01b5468e29ac6e37deddf4b26c6ceb44949a99f2ead10d58",
+        "eca2b75762715213af5e5c7daa7e349fbe67dda7ea76516ab398754bea1d96a5",
+        "c5c7e0d35797266841732dc74d7f3e9e2ca0916c3565862213fc16da82d04ca6"
+      ]
+    },
+    "topic-libraries": {
+      "file": "docs/libraries.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'libraries'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "73aac4a32ba7a2adee8a27cdddc295292f901b8f1a5e9c64f6bdbe1665475563",
+        "b85ccd30c72d2d99dcf8c203f39c63b83e400cd65fc50341091efbc0e8c030a6",
+        "e635e5dad0d2cfee3a137bc88bb0ce260e00fe03cced5a3fdb68801570b76ae9"
+      ]
+    },
+    "topic-report-filtering": {
+      "file": "docs/report-filtering.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'report-filtering'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "31ffe79fe892c16c125a375416522d990268f80bb62e6d0ae3f7210dedc6721a",
+        "0f67c6e9349a96176424413e00094b6b0a0f2704f44615fe661bad0930bd505a",
+        "b7cd6f55534082fa68488aa699550fc51c9b95c28c6bd08b28ea10c4940fe0e1",
+        "3456b7570892ae809deb5ae493bae17ee5049b876b8da396060be5807c82f75b"
+      ]
+    },
+    "topic-review": {
+      "file": "docs/review.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'review'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "5f456f5940d272c3a3bab614092dc3afe0d6ebcab91c6dcf783522c8d856de73"
+      ]
+    },
+    "topic-signal-loops": {
+      "file": "docs/signal-loops.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'signal-loops'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "b2b3d1b82aa1456fef73ad8e838fcacac8af6cbcaa2baec9dde1fe65ead8d476",
+        "0eacea81184fdaad19fe84bfcebb5526182e0e46c3f3d9ef91e93d3a1a2703ff",
+        "dedae19ebe03f60533580cfefef579c0f9cd547bfe9f1b94af5ceed2d2e74041",
+        "2b835085eefac43b6fa1c7b6660b5ee8f1599c152c5a55268520fa61623949ea",
+        "386fa2464850f9ddfd084a852c96b5a190f54361bd33b19139f0c4c4efc8da65"
+      ]
+    },
+    "topic-views": {
+      "file": "docs/views.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'views'",
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521",
+      "consumedHashes": [
+        "e07a4a200aa591311550195895677746eb622360fc723b8ae0da91854c87dd63",
+        "33d7163fb82854b11e9d1802b453d3bafdc592d9c9560b694a818c963485ec8a",
+        "a9b8ee675b87c0a9ba3386f949c6d071f9a50efc25511279a5e312b7526e318d",
+        "bdfbb417e7be3a191ef1b8d55560c4ac09543b55931a2a3f0b1d04d663ec8210"
+      ]
+    },
+    "topic-drawing-frames": {
+      "file": "docs/drawing-frames.md",
+      "testFile": "packages/cli/test/guide.test.ts",
+      "testName": "executes every json/sh fence in 'drawing-frames'",
+      "consumedHashes": [
+        "2ae31439296ba38a03dc4629d10e03507115c6dff6473f091440117e8ae2b4a8",
+        "f4876a92553ce84d9ce5b46a4a6fcaca9d69bc3569905c61d57820ef4ed60e81"
+      ],
+      "testHash": "6cf1fd10e2a03500f70d641e98cf469dde63cc4d612bc099348aa7e32a0fe521"
+    },
+    "project-guide": {
+      "file": "packages/cli/assets/THERMITE_AGENTS.md",
+      "testFile": "packages/cli/test/project-guide.test.ts",
+      "testName": "generated project guide executes every fenced project-guide block",
+      "testHash": "5295ef82074d9aa563aaf1416e48be9b89dd5a110dd11a8972a4edfe61a19f27",
+      "consumedHashes": [
+        "00950de8f913d37ea13ec1d87c29d5a3d30aa30538a06e90966d1f79a4274e29",
+        "14cc0742fd3f27238f71c8bd0a9e26075e81445d861d670a84d37d522f5009fc"
+      ]
+    },
+    "topic-project-workflows": {
+      "file": "docs/project-workflows.md",
+      "testFile": "packages/cli/test/project-guide.test.ts",
+      "testName": "executes every offline project workflow fence",
+      "consumedHashes": [
+        "453956110a35a2d6afbf5e1664e72d9356a35f58defa7e3f804e4eb14fdd9ddf",
+        "383b1b43e3aea581cb6f9d69f9e220eee5ae66ebf7a92228284021283876d231",
+        "50cee6a6415dc2613003cc50ea9232d05b24740989a768527d674ddb1b2e56a7",
+        "f4e2ed412782ee5e7fd502ec4f48338bd3aed99a24d1a02d4227fed8cbbb08d9",
+        "b74abfd7a2710245a5ef678668345e635d32551f35ac0dfc96d041ad798def09",
+        "dcd0b79a4ec07ab6b89a740b58cbac71a8fc6d552de3ee5d74bc9cc2f8e98ab9",
+        "36ec9de513c842215654e7898f9ae6388308ac1338eab64dde1d751255510572"
+      ],
+      "testHash": "5295ef82074d9aa563aaf1416e48be9b89dd5a110dd11a8972a4edfe61a19f27"
+    }
+  },
+  "entries": [
+    {
+      "file": "CLA.md",
+      "hash": "371b8b627923c7df361d7a9ccf1004c2cb08f75eee3ab67c9d8cb7fef0c5389d",
+      "kind": "executed",
+      "recipe": "signoff-shell"
+    },
+    {
+      "file": "README.md",
+      "hash": "4946835f19fa321a750c8e06833d5da1ca221f43889a2f59a193dc81264d1778",
+      "kind": "illustrative",
+      "reason": "Natural-language agent prompt, not a shell program."
+    },
+    {
+      "file": "README.md",
+      "hash": "fd88d61afb3af66214be006e24090b20129fdf6a2cec9e87427efc021d1c1f64",
+      "kind": "illustrative",
+      "reason": "Natural-language agent prompt, not a shell program."
+    },
+    {
+      "file": "README.md",
+      "hash": "e7960f2662a7cd5ecb97135bd408d2b418aa0f66673a0279659652932bf6b250",
+      "kind": "platform-only",
+      "setup": "Networked fresh source checkout with Git and Bun",
+      "reason": "Clones upstream, installs dependencies and builds the engine before creating an electrical project; not nested inside the ordinary test suite."
+    },
+    {
+      "file": "README.md",
+      "hash": "c6889029b4a015cd2269baa000b56a5753c41d5034a20645e9262948db27751d",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "README.md",
+      "hash": "c72c967c649d1085b9a36b0db9d9dada5eca22349ce17f4a60b5fe350c8ead3e",
+      "kind": "executed",
+      "recipe": "cabinets-shell"
+    },
+    {
+      "file": "README.md",
+      "hash": "0c54bb6537c2f88d5e97dbd70a6e1da9537565a2636162500f29ceaccab27a3b",
+      "kind": "platform-only",
+      "setup": "Complete contributor checkout with Bun and Python",
+      "reason": "Runs the full source test suite and check; recursive execution from that same suite is not appropriate."
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "b665c6518e548dcbef4a3b7ad86145da8c488ea2d44de619c7774bb1bcd92565",
+      "kind": "illustrative",
+      "reason": "File-tree, workflow or resolved-value notation, not executable input."
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "60c272f2f94aedfbb10741600b8e7887caff367a7f55162b252d4f96fc3c6b0f",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "3b93ce448fbfe63dad3687fdddda80311476d7204b37d941861a3dc1636393dc",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "9ef34eb3d09666d0a13bfdc2596a519a55c01f43d8631eb811f93f72f16c3890",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "7da0d27b486d0350a3b17985053197d89b147b17534786bbd97abc5e7db2a6e5",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "2aebabd7ed3a35fedc8b7cf4eaf7f03e767acc5bc0338f21dcba28116611dd11",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "dc70d9790ed71754c8f28297486b3e12e3d12066cbd7f529d0ee8490bffb8e98",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "91034101818ac2a29554ef3686685bfaac0c28ac0713f52fa3c091299929ef6e",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "70e66fd0931300269f857c7ec4617ae6e8f641498c1719704d76d4c5225e5dbf",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "393d932c9b5fcdece480cd10138c5d1068898aeafaff494536123a107284dbe2",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "7064b1da6cf7ec4d5cb8603bb0b7a22023fac8f31ba4b87a7050561375e1302a",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "a2e300f148fa6142fe2db77b1d7ae853e37d7d7ad42a5c490ea0663528a88963",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "23d40caa7e40ee07de8d1963b5f2ab079ee70ab63fb3009a02f4b3d1ffba49a9",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "4d291e7fc0276babb1dff1d04d13e604d505e455bcb547a5f0bc472d380e33b7",
+      "kind": "illustrative",
+      "reason": "Reference patch contains an example byte digest; prose requires replacing it with the current inspection guard. The executable workflow tests that replacement separately."
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "03f07e1a50ffa059559651a94dfcaa1e03576fe2c42efb869bd312ad00a83089",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "f79f65b452f744173ba428361d4c885a57cc5bcfad54266764f1a34a1b759cbf",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "6deb0a3f481b8c69d4926fa5047993c1b755c46f8b75d01e4157b1b7fef9ba94",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "fa61da03c65984b02666efac2b2daf4321580bd35a474df4d498a319d302a3d2",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "fb66c83d839eddca2396ce9c60d4aef59eee3b15c7b11e7a25d94a0a1cab4076",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "d6af3e39bd12635acaae779db373230fcbc585908992cc3260bfea8c731e677b",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/agent-requests.md",
+      "hash": "ab37f9c6c57164b7e2381a222b8e6cc1d5445771c95f4208164bd497ca43999e",
+      "kind": "executed",
+      "recipe": "agent-workflow"
+    },
+    {
+      "file": "docs/architecture.md",
+      "hash": "4fb5ba7c503eaac8a7953bda853e3647a5b6ffac6cb6173994f404584f04ec2e",
+      "kind": "illustrative",
+      "reason": "Architecture diagram, not program input."
+    },
+    {
+      "file": "docs/architecture.md",
+      "hash": "f68a2e815d504b25d7ec2c53e99c26852baf7f37ecdb1994883ed675ef131f36",
+      "kind": "illustrative",
+      "reason": "File-tree, workflow or resolved-value notation, not executable input."
+    },
+    {
+      "file": "docs/architecture.md",
+      "hash": "09959bc01ffcaa97a5a80e91bbe0e3bacb8dc6b48b7c54d13b51fc2c78eb2665",
+      "kind": "executed",
+      "recipe": "json-project"
+    },
+    {
+      "file": "docs/circuit-symbols.md",
+      "hash": "c6a62354e8c7c07e2e3e42d9e3a9d7c5727ef2f30aa015c92bee6f7b076e2b94",
+      "kind": "executed",
+      "recipe": "topic-circuit-symbols"
+    },
+    {
+      "file": "docs/circuit-views.md",
+      "hash": "e6e39668067c723f28b5bf239ad8d42c0fa9076600f4b09c6e70ac995ac2c71b",
+      "kind": "executed",
+      "recipe": "topic-circuit-views"
+    },
+    {
+      "file": "docs/circuit-views.md",
+      "hash": "44116775927065c381addfdd729b4881afea480b3a04fbbabd991a0a56000b4d",
+      "kind": "executed",
+      "recipe": "topic-circuit-views"
+    },
+    {
+      "file": "docs/circuit-views.md",
+      "hash": "a367cc42c24199c19b076b1b9d3937a476e7613d6c1fb773c105634592ee253f",
+      "kind": "executed",
+      "recipe": "topic-circuit-views"
+    },
+    {
+      "file": "docs/communication-ports.md",
+      "hash": "b43a9075e76fddc3d2d74b7cce23cf0893d8bec54399f85f61fc924b15d292cd",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/communication-ports.md",
+      "hash": "9084d55bf75b619339a8ab226284aa174db9ccc831a4cc9c4f6a6692b23b6336",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/communication-ports.md",
+      "hash": "306a5525d5d12fb6ec59c239ee4b303c27c6ff41207c1bced08e02e65a039cad",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/completeness.md",
+      "hash": "fc74a75bbaf971dcad5cb5b4da8031993429b0b0e72c24629f0739662b755c1b",
+      "kind": "executed",
+      "recipe": "topic-completeness"
+    },
+    {
+      "file": "docs/completeness.md",
+      "hash": "5439aafd418cd153cbc6fa2d3fd1cf9f1133b9e1a62cbe71e9bf4af9c818828d",
+      "kind": "executed",
+      "recipe": "topic-completeness"
+    },
+    {
+      "file": "docs/completeness.md",
+      "hash": "847090804730054d19331a7961a80c278c02f485db1f10344178564e064f7280",
+      "kind": "executed",
+      "recipe": "topic-completeness"
+    },
+    {
+      "file": "docs/connector-assemblies.md",
+      "hash": "6a313fc5d3702c76f4e0f4b90d3c2924cead37ca67561f9dda75ef95fe5ec428",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/connector-assemblies.md",
+      "hash": "6438bb6dfc687a3736dc1a98952ac65fdee8ee27441f9653e7dde2032fa17ad0",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/connector-assemblies.md",
+      "hash": "89a9dd0ac8c11348acaefe228d2ea0ff19ce8e90fc3bd1922529a1c6ca4227d1",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/connector-io.md",
+      "hash": "ce859fd1fede60cbfb8babdf5898e76e6471f15f5f1dc73f4ecb35615a96c639",
+      "kind": "executed",
+      "recipe": "json-source"
+    },
+    {
+      "file": "docs/connector-io.md",
+      "hash": "473d4e6def1fbe8f20c1c7f3598c416efd02897304fdbf0a0ce5ccdcdfe89fda",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/continuity-checks.md",
+      "hash": "b655c77bba16f8e27a4e0dfe29bf891c2269396bcabf4f4ba9cd9a0cc999ac3a",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/continuity-checks.md",
+      "hash": "e5573c25d00d8cb751e786ed6fe3128ec1ecbd8acab7935f8080843234a5cbb8",
+      "kind": "executed",
+      "recipe": "json-packet"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "f68a2e815d504b25d7ec2c53e99c26852baf7f37ecdb1994883ed675ef131f36",
+      "kind": "illustrative",
+      "reason": "File-tree, workflow or resolved-value notation, not executable input."
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "615df203c9f450ab01b5468e29ac6e37deddf4b26c6ceb44949a99f2ead10d58",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "9a851fde5d66bdd643023eaf98e3e7253c2294d49215e44910211bd2597e99f1",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "9112980ee28867bf9e4ab0add400f218369b897b920414f6f447c96d35fb983a",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "5fa5a2beb74f7b5d38d29ceba01b25f44fd4c8c3d09d6d929a523d1b9d79c7dc",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "ce11358eb8872b3bc05983f027b2a8b24064ee78bafd7fb28bc62be29b00a3a4",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "244cc983eb64b805512f94178b9bdf3d4fb0c5df63aef358209127994312441d",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "eca2b75762715213af5e5c7daa7e349fbe67dda7ea76516ab398754bea1d96a5",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "5a0f729b720ab513c5b8129933f57b6a3036eeb36cf1650a9f8032fba292af21",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "c5c7e0d35797266841732dc74d7f3e9e2ca0916c3565862213fc16da82d04ca6",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "5568f7112af348e6b7145bf04c69c2c1d3d8a6f5c8b77ceaae45749f9f92b1c8",
+      "kind": "executed",
+      "recipe": "topic-modeling"
+    },
+    {
+      "file": "docs/data-model.md",
+      "hash": "06b27fea9886a40d08183a422d7ee8519b7b74265d0664becbec8594673b5a3a",
+      "kind": "illustrative",
+      "reason": "File-tree, workflow or resolved-value notation, not executable input."
+    },
+    {
+      "file": "docs/drawing-frames.md",
+      "hash": "2ae31439296ba38a03dc4629d10e03507115c6dff6473f091440117e8ae2b4a8",
+      "kind": "executed",
+      "recipe": "topic-drawing-frames"
+    },
+    {
+      "file": "docs/drawing-frames.md",
+      "hash": "f4876a92553ce84d9ce5b46a4a6fcaca9d69bc3569905c61d57820ef4ed60e81",
+      "kind": "executed",
+      "recipe": "topic-drawing-frames"
+    },
+    {
+      "file": "docs/libraries.md",
+      "hash": "73aac4a32ba7a2adee8a27cdddc295292f901b8f1a5e9c64f6bdbe1665475563",
+      "kind": "executed",
+      "recipe": "topic-libraries"
+    },
+    {
+      "file": "docs/libraries.md",
+      "hash": "b85ccd30c72d2d99dcf8c203f39c63b83e400cd65fc50341091efbc0e8c030a6",
+      "kind": "executed",
+      "recipe": "topic-libraries"
+    },
+    {
+      "file": "docs/libraries.md",
+      "hash": "e635e5dad0d2cfee3a137bc88bb0ce260e00fe03cced5a3fdb68801570b76ae9",
+      "kind": "executed",
+      "recipe": "topic-libraries"
+    },
+    {
+      "file": "docs/libraries.md",
+      "hash": "dfeb71124cd35839c4aac907c06a33216593bc08da40b3c4eb951ddb1ca12a40",
+      "kind": "illustrative",
+      "reason": "Literal GET template for a pinned public dependency. Executing it requires external network access and a task-authorized revision."
+    },
+    {
+      "file": "docs/machine-demo.md",
+      "hash": "f8ed7467d0e6bff4f561fbb55d98fa06acbb683b92d8b0b1823661b55a885789",
+      "kind": "platform-only",
+      "setup": "Fresh contributor checkout with installed Bun dependencies",
+      "reason": "Installs and builds the entire engine before running the demonstration; requires a separate source setup rather than an electrical-project fixture."
+    },
+    {
+      "file": "docs/machine-demo.md",
+      "hash": "cc25371af4ccb4a0be6ffe66f3bdacc9e4c3a0dc073732445d870e974b71f30c",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/machine-demo.md",
+      "hash": "2f66e4e23c813360c22701a1674f30ae436b94193b4033a6de07ab14dd7644bb",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/machine-demo.md",
+      "hash": "c48f515b838114c196e48650312b16ad2f45143b1a69ee6f16ad25b388e52978",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/platforms.md",
+      "hash": "a3f632ffbcf2a515ef4dfdc17b7478479c4506f584d6972c41fb2003978a1798",
+      "kind": "platform-only",
+      "setup": "Native release-verification host with Bun, Python and package acceptance prerequisites",
+      "reason": "Builds and verifies the entire source/runtime, including networked dependency installation; the Linux commands require Docker and target-architecture support."
+    },
+    {
+      "file": "docs/platforms.md",
+      "hash": "c17ce0d22a346713fc01fc5846512261fe328070823e97820961935d4dfb07d6",
+      "kind": "platform-only",
+      "setup": "Docker Engine with matching Linux architecture",
+      "reason": "Builds and verifies the entire source/runtime, including networked dependency installation; the Linux commands require Docker and target-architecture support."
+    },
+    {
+      "file": "docs/platforms.md",
+      "hash": "3509bcfdc566f276fb62e3f025e1ffeb057161a1b7a39b33a53d8af77dfc42f5",
+      "kind": "platform-only",
+      "setup": "Docker Engine with matching Linux architecture",
+      "reason": "Builds and verifies the entire source/runtime, including networked dependency installation; the Linux commands require Docker and target-architecture support."
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "453956110a35a2d6afbf5e1664e72d9356a35f58defa7e3f804e4eb14fdd9ddf",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "383b1b43e3aea581cb6f9d69f9e220eee5ae66ebf7a92228284021283876d231",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "50cee6a6415dc2613003cc50ea9232d05b24740989a768527d674ddb1b2e56a7",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "f4e2ed412782ee5e7fd502ec4f48338bd3aed99a24d1a02d4227fed8cbbb08d9",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "b74abfd7a2710245a5ef678668345e635d32551f35ac0dfc96d041ad798def09",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "dcd0b79a4ec07ab6b89a740b58cbac71a8fc6d552de3ee5d74bc9cc2f8e98ab9",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/project-workflows.md",
+      "hash": "36ec9de513c842215654e7898f9ae6388308ac1338eab64dde1d751255510572",
+      "kind": "executed",
+      "recipe": "topic-project-workflows"
+    },
+    {
+      "file": "docs/report-filtering.md",
+      "hash": "31ffe79fe892c16c125a375416522d990268f80bb62e6d0ae3f7210dedc6721a",
+      "kind": "executed",
+      "recipe": "topic-report-filtering"
+    },
+    {
+      "file": "docs/report-filtering.md",
+      "hash": "0f67c6e9349a96176424413e00094b6b0a0f2704f44615fe661bad0930bd505a",
+      "kind": "executed",
+      "recipe": "topic-report-filtering"
+    },
+    {
+      "file": "docs/report-filtering.md",
+      "hash": "b7cd6f55534082fa68488aa699550fc51c9b95c28c6bd08b28ea10c4940fe0e1",
+      "kind": "executed",
+      "recipe": "topic-report-filtering"
+    },
+    {
+      "file": "docs/report-filtering.md",
+      "hash": "3456b7570892ae809deb5ae493bae17ee5049b876b8da396060be5807c82f75b",
+      "kind": "executed",
+      "recipe": "topic-report-filtering"
+    },
+    {
+      "file": "docs/review.md",
+      "hash": "5f456f5940d272c3a3bab614092dc3afe0d6ebcab91c6dcf783522c8d856de73",
+      "kind": "executed",
+      "recipe": "topic-review"
+    },
+    {
+      "file": "docs/runtime-package.md",
+      "hash": "95df1d078479de83d382182ead45a7571b7d9a9c1dbf81b9ef4a6c10db1a4cb3",
+      "kind": "platform-only",
+      "setup": "Runtime-package verification host with Bun, Python, archive tools and platform acceptance prerequisites",
+      "reason": "Builds and accepts a complete source/runtime archive; run explicitly rather than recursively in every source test."
+    },
+    {
+      "file": "docs/runtime-package.md",
+      "hash": "280782afcb23871d1aad3639e33fe245731b49c0f8b46b69eb9655b758feafad",
+      "kind": "platform-only",
+      "setup": "Runtime-package verification host with Bun, Python, archive tools and platform acceptance prerequisites",
+      "reason": "Builds and accepts a complete source/runtime archive; run explicitly rather than recursively in every source test."
+    },
+    {
+      "file": "docs/runtime-package.md",
+      "hash": "8c74110e7dc0d5b00675e07f80f4d328f1862980ae4967e83ef08379298b8dc2",
+      "kind": "platform-only",
+      "setup": "Runtime-package verification host with Bun, Python, archive tools and platform acceptance prerequisites",
+      "reason": "Full packaging/acceptance job, not an electrical-project example; verification also requires replacing the explicitly shown archive path."
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "b2b3d1b82aa1456fef73ad8e838fcacac8af6cbcaa2baec9dde1fe65ead8d476",
+      "kind": "executed",
+      "recipe": "topic-signal-loops"
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "0eacea81184fdaad19fe84bfcebb5526182e0e46c3f3d9ef91e93d3a1a2703ff",
+      "kind": "executed",
+      "recipe": "topic-signal-loops"
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "dedae19ebe03f60533580cfefef579c0f9cd547bfe9f1b94af5ceed2d2e74041",
+      "kind": "executed",
+      "recipe": "topic-signal-loops"
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "8c742b53fc265452096bb8c39395faa86bd48405df1fd2ea2e5345afff354df0",
+      "kind": "illustrative",
+      "reason": "Generated engine-note template with a variable-length authored power reference; output notation, not executable input."
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "09de3fe79f9bbd9f9717dac393bb6f81643d8668238c7943907cf895d43cd371",
+      "kind": "illustrative",
+      "reason": "Generated distribution-note format with terminal/count placeholders and optional repeated entries [; ...]; output notation, not executable input."
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "2b835085eefac43b6fa1c7b6660b5ee8f1599c152c5a55268520fa61623949ea",
+      "kind": "executed",
+      "recipe": "topic-signal-loops"
+    },
+    {
+      "file": "docs/signal-loops.md",
+      "hash": "386fa2464850f9ddfd084a852c96b5a190f54361bd33b19139f0c4c4efc8da65",
+      "kind": "executed",
+      "recipe": "topic-signal-loops"
+    },
+    {
+      "file": "docs/terminal-wiring.md",
+      "hash": "6d3593578413198c555255723bef30ac7783e2a14c8a1af08c6ab76792ba616d",
+      "kind": "executed",
+      "recipe": "json-packet"
+    },
+    {
+      "file": "docs/terminal-wiring.md",
+      "hash": "b9dc81aa8c6e7061d91dbca82d3baa527aa59199403d0f974538bd5bac351794",
+      "kind": "illustrative",
+      "reason": "Named cable property fragment, deliberately missing the enclosing relation object; not a complete JSON document."
+    },
+    {
+      "file": "docs/topology-coverage.md",
+      "hash": "4fafd9e3f234d5ef86a6711446156b4bffced7e0d5e53a05a4e7907939797e6e",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "docs/views.md",
+      "hash": "e07a4a200aa591311550195895677746eb622360fc723b8ae0da91854c87dd63",
+      "kind": "executed",
+      "recipe": "topic-views"
+    },
+    {
+      "file": "docs/views.md",
+      "hash": "33d7163fb82854b11e9d1802b453d3bafdc592d9c9560b694a818c963485ec8a",
+      "kind": "executed",
+      "recipe": "topic-views"
+    },
+    {
+      "file": "docs/views.md",
+      "hash": "a9b8ee675b87c0a9ba3386f949c6d071f9a50efc25511279a5e312b7526e318d",
+      "kind": "executed",
+      "recipe": "topic-views"
+    },
+    {
+      "file": "docs/views.md",
+      "hash": "bdfbb417e7be3a191ef1b8d55560c4ac09543b55931a2a3f0b1d04d663ec8210",
+      "kind": "executed",
+      "recipe": "topic-views"
+    },
+    {
+      "file": "evals/README.md",
+      "hash": "161089d8f687b5b5486a84a27f740a363d2ba5d7a21a715082099f9826ed6a66",
+      "kind": "platform-only",
+      "setup": "Fresh Bun checkout with a registry or populated package cache",
+      "reason": "Installs frozen dependencies before building."
+    },
+    {
+      "file": "evals/README.md",
+      "hash": "6d57d33ca6e0850b21cf9f296a9feb27247a661939f47738429fdfa70f588ee8",
+      "kind": "executed",
+      "recipe": "workspace-shell"
+    },
+    {
+      "file": "evals/README.md",
+      "hash": "b54e632645bfdd19634a1aa75aca68334c14e3f5f981eb405a330754f1c6b8e1",
+      "kind": "platform-only",
+      "setup": "Built checkout and quiet timing host",
+      "reason": "Runs a full checkpoint with 100 conflict pairs, process grids and performance measurements."
+    },
+    {
+      "file": "evals/README.md",
+      "hash": "67d1dbd2d4582b95e12de6cc6d2ffacb8114acd090daa486ab0cc73138521bb4",
+      "kind": "executed",
+      "recipe": "workspace-shell"
+    },
+    {
+      "file": "evals/README.md",
+      "hash": "b6e13c1cc62c56cc35552d1d9e5de911ecaa2a838d355edebf0783bc4d894a9c",
+      "kind": "platform-only",
+      "setup": "Git history and dependencies for revision b3e24c6",
+      "reason": "Clones and builds a historical checkout and then runs the full contract, validation and timing checkpoint."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "4a5072636a7e60c9968c5203fa8335fd2bee282a7f3515f194e90211a52d052c",
+      "kind": "platform-only",
+      "setup": "Pinned Git revisions with dependencies for runtime packaging and historical source builds",
+      "reason": "The first two reference runs pack and verify a runtime. The historical source run needs the installation matching the lock at 38720de."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "feefdfa2f86c1414d0ec10a52b046142b7b03109a49b3fd9401d0678b62f8b7b",
+      "kind": "platform-only",
+      "setup": "Installed Claude and Codex CLIs with configured authentication",
+      "reason": "Checks real CLI readiness and prepares a runtime for command inspection."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "e8027322e801dac367fe57798389f11c6dc3152cc3dde15a17e0ad47e5fd6cbc",
+      "kind": "platform-only",
+      "setup": "Interactive Claude subscription session",
+      "reason": "Obtains and reads a user-supplied OAuth token, then checks Claude authentication."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "3d4bd5c321c5b464cbba5ca98315e47e5ae5d306f6714301d5473e1cdacf852d",
+      "kind": "platform-only",
+      "setup": "Interactive terminal and a Codex API key",
+      "reason": "Reads the caller's API key and checks Codex authentication through the CLI."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "a83022f5d7fc3e2dd3fae8f06a3642934e18288ffbf80e775523e6ba7cbb8aec",
+      "kind": "platform-only",
+      "setup": "Installed Codex CLI and caller-supplied ChatGPT auth file",
+      "reason": "Imports the credential file and prepares a runtime for command inspection."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "505e7d4d0eb918d6f33b1b348b092fc38339443df6c4345cc10adc412077a573",
+      "kind": "platform-only",
+      "setup": "Installed Codex CLI and caller-supplied auth file",
+      "reason": "Exercises model override inspection through an authenticated task setup."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "d0c94496520f671c6aeec62cb57070ad99fc666205371984b44ad45bbaaf1734",
+      "kind": "illustrative",
+      "reason": "Visual-evidence payload with placeholder drawing hashes and independently reviewed V1 and V5 results."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "d454ddd7c3e4d94d19d509b49a9159834d1e00338f56a9fc68e254be36209141",
+      "kind": "illustrative",
+      "reason": "Example judge decisions for a recorded adjudication."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "656f1887374d9d3bc5b5346c3e774ae588de70a415c226f4d25ab05e39fde697",
+      "kind": "platform-only",
+      "setup": "Two completed agent checkpoint directories",
+      "reason": "The paths stand for captured A/B checkpoint manifests and evidence."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "d845363535dd9e1ddca1e9ba737a418993dfe5777a9bc57883bc20f91b81ad10",
+      "kind": "platform-only",
+      "setup": "A source checkout at the chosen commit and its frozen dependencies",
+      "reason": "Runs both contributor references with fresh installs, focused tests and build verification."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "d85c6fdda8680877e78a9310920e858f628170e300380b67aaa7a6d79f14d001",
+      "kind": "platform-only",
+      "setup": "Full contributor environment, prepared runtime and local Codex CLI",
+      "reason": "Invokes the full check recursively, runs the reference catalog and probes the Codex workspace sandbox."
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "e543862a094c621180b057eb1523d378e8b56823202c893f991975ba41d1e67b",
+      "kind": "executed",
+      "recipe": "workspace-shell"
+    },
+    {
+      "file": "evals/agent/README.md",
+      "hash": "c893e44553462d9800020c20a40e4b4d0856d061c579b986896dbe81c1799863",
+      "kind": "platform-only",
+      "setup": "An unresolved recorded attempt and a human reviewer",
+      "reason": "Registers a reviewer decision on existing infrastructure evidence."
+    },
+    {
+      "file": "evals/agent/fixtures/cli/README.md",
+      "hash": "0ca0d647c7e8aa95d3ee7e88693a5cd57bb2b7e9f622b90446201c1ca01cafec",
+      "kind": "platform-only",
+      "setup": "Version-matched Codex and Claude binaries",
+      "reason": "Captures real CLI diagnostics against a local mock service using the pinned client versions."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "204cda997ebd47c1636da326268a19868ae65f019ecf444149f6b33a46afb253",
+      "kind": "platform-only",
+      "setup": "Drawing-capture host with dependencies and calibrated Chromium",
+      "reason": "Installs and builds, then collects a full multi-minute drawing checkpoint and a separate quick capture."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "800f497beeaf66a13bdf6dc06e0f16cab89a83eadb4742486f96320178f61c90",
+      "kind": "illustrative",
+      "reason": "The two checkpoint paths and built baseline checkout come from the exact draw pair being reviewed."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "ec268c78ec6a1180da04a674a755abafbfe64b4751c12fff00af680086606f2f",
+      "kind": "platform-only",
+      "setup": "Completed terminal-strip drawing capture and Chromium",
+      "reason": "Measures strip exposure against captured sheets and their native identities."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "517704abc125855f09a335b6e88236b8c9b5f6e03eb00b48eefc3b145998e00d",
+      "kind": "platform-only",
+      "setup": "Completed navigation drawing capture and Chromium",
+      "reason": "Measures element and port navigation exposure from captured SVGs and native facts."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "ad367e4fd8f9d729a99ff08c2d84d4d838aae2af07d43d30bf34744645aa6b29",
+      "kind": "platform-only",
+      "setup": "Current and reference drawing checkpoint directories",
+      "reason": "Compares per-conductor routes from two recorded runs."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "05926578ad1329285ed5741eb03038474a636def4b5a9b71f6f8c8a9434ff7e5",
+      "kind": "illustrative",
+      "reason": "Replace CHECKPOINT with the name of an existing drawing capture before reading a case member."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "6b3276d2f118948d23dd7fcffb3cc1f065b8430c716e5d3ec751894b7ef6fe7d",
+      "kind": "platform-only",
+      "setup": "Captured C1 sheets, browser and calibration fonts",
+      "reason": "Renders baseline and proportional text calibration samples against already captured sheets."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "8fb73ac727009f08d8a31cd35a3140a0a95a719638563d75e64f7247e927606b",
+      "kind": "platform-only",
+      "setup": "Completed C1 drawing checkpoint",
+      "reason": "Builds review samples from recorded drawing artifacts."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "36842f676a75b64aca911cbc57aba4d6d3cf5942deabf400bdadfc4360c10546",
+      "kind": "platform-only",
+      "setup": "Historical Git revision 865ca55^1 and a drawing-capture host",
+      "reason": "Builds the selected historical revision before a browser-backed drawing replay."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "ad1da15a0509fe8a875955320a870f580852127feaafbf9acd235833b250dbc6",
+      "kind": "platform-only",
+      "setup": "Drawing-capture host and previous compatible C1 report",
+      "reason": "Collects a full target checkpoint and compares it with a prior report for re-pinning."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "e959b3dc6a3bd19aa7e63b1642f93e4734ea0cb342b6dd0110ac8fb083b9038f",
+      "kind": "illustrative",
+      "reason": "Historical decision schema with placeholders for report, registry, checker and corpus hashes."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "1b0354ac21752eafb4df8830d1e1f609a8f04e6ea162b0ca1ca1248077afa495",
+      "kind": "platform-only",
+      "setup": "Full target and compatible baseline reports",
+      "reason": "Checks report preparation and runs negative controls against captured inputs."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "f30870c2b3433f950375df6b5389235b0c8bf7aa7d3062c6dd2a25771eaa6d2c",
+      "kind": "platform-only",
+      "setup": "Prepared re-pin inventory",
+      "reason": "Drafts decisions from the inventory produced by the preceding capture and comparison."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "89fa474963ef15a98675ac057d6ea6a7c0f7f24b33924bda286297900bed385c",
+      "kind": "platform-only",
+      "setup": "Target and baseline reports, draft decisions and review samples",
+      "reason": "Builds and binds a crop index to existing report and reviewer-sample bytes."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "86eb6c91728cb118e3ae689c895b18bdca5be2acfdade3c77977501a69027c12",
+      "kind": "platform-only",
+      "setup": "Captured PDF artifacts and a drawing evidence host",
+      "reason": "Checks PDF evidence and runs repeat capture and byte-swap controls against a full report."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "599d3ff59e16bf12c5329775675f487c22bb9c081a11e890315b572a9f7e92b8",
+      "kind": "platform-only",
+      "setup": "Full drawing report and frozen crop verification inputs",
+      "reason": "Audits binding and performs crop swaps using captured evidence."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "d4a4b55af3b15f8283c676d0bc1783af3c6793a4eec0996a4d6ab71348dabedd",
+      "kind": "platform-only",
+      "setup": "Completed drawing report and calibrated Chromium",
+      "reason": "Replays capture and launches a separate baseline with GPU rasterization disabled."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "a3e7198908737195322dbcb1c0737de2c6d7b72059746b7802841ac9d0410beb",
+      "kind": "platform-only",
+      "setup": "Two completed drawing reports and compatible raster inputs",
+      "reason": "Compares paired base and head checkpoint rasters."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "018727d4c91811240f9bdf13436f172d1d33c2b4a200d1afdcde03f8a6413d6c",
+      "kind": "platform-only",
+      "setup": "Two completed drawing reports and compatible raster inputs",
+      "reason": "Compares ten raster samples per selected scenario."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "819b965e8865482a9b763377f201ced278322c783dbf95ab2e6f72376b9945d4",
+      "kind": "platform-only",
+      "setup": "Calibrated browser and host for repeat drawing captures",
+      "reason": "Creates sample input and collects ten repeated captures for four drawing cases."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "d25d5673b03440fff935b8c1b2f3df26831980f426f3a983921e4653d2f60dc6",
+      "kind": "platform-only",
+      "setup": "Full drawing checkpoint and Chromium evidence environment",
+      "reason": "Runs crop audit and replay, fresh-capture acceptance, and a separate checker mutation suite."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "f15103d2830b86a21f752909f561af0531df8f827e84b0c38ee2ef28b73595e0",
+      "kind": "platform-only",
+      "setup": "Reviewed re-pin decisions and prepared target and baseline reports",
+      "reason": "Previews and applies a reviewed registry change and then runs a fresh full drawing checkpoint."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "335649fe1b745fd4ba45b641c48a005a3f3353648baa024c8d42d55b2eef6299",
+      "kind": "illustrative",
+      "reason": "Record-writing template with placeholder issue and commit identity. The writer needs the actual signed decisions, receipt and indexed crop bytes."
+    },
+    {
+      "file": "evals/draw/README.md",
+      "hash": "1a21b1d58a9d7b05ba3d6a2277d57c8880e45aec64400a94f11992bb2b73e537",
+      "kind": "illustrative",
+      "reason": "Countersignature payload with placeholders for the signed file hash and human reviewer identity."
+    },
+    {
+      "file": "examples/assembly-note-bounds/README.md",
+      "hash": "98fcfb0b5a4f9cd73cb9d8ce6e860516c8063af0ea562176a71b261f91144bdf",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/cap-pagination/README.md",
+      "hash": "6976cc45b9ebccc79dfa5424dc07ce6d8604b008c86aedeb350c4f21976f91f3",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/circuit-pagination/README.md",
+      "hash": "d22194f7e8a59e5108d432ee97970a292f847c89abdcc61e8901967f749ded49",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/connector-io/README.md",
+      "hash": "a8c0f0f122c188069d9971d412a4e7bef9dfe8058e02ac85c916046920833e6c",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/functional-symbols/README.md",
+      "hash": "116ad0181ce9332cfb7d429d0be8c81ee00f4a920f8ea34609543322e2730936",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/network-pagination/README.md",
+      "hash": "f63e8bd7c5e3c06df05c52ed52abcddc4b0220f59d4d8f4e30d5b18efe7c9c39",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/report-filtering/README.md",
+      "hash": "f70e3c9307f82f9b93f3d74fcb5657357be8ab79d93057b8ab738e94cb63f605",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/self-loop-labels/README.md",
+      "hash": "682c2a53dfdf669a81400a26e5a6ae5c193e6ca09f60d495b818d55b7d03f570",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "examples/topology-coverage/README.md",
+      "hash": "57fd7b422f7bb76eeb9714037ec3ef48980f1dba3e0a9a52217a15dc95e8ab51",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/COMPONENT_EXAMPLES.md",
+      "hash": "48a19db047c5a66074fd458cf61a9d7cc4c3255aca70c2f71f3ecd11cdc046c7",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/COMPONENT_EXAMPLES.md",
+      "hash": "d92d92994ff686848afff74c6de9bb96efe9f73f24c63de2591cd19ac76de48b",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/phoenix-terminal-pilot/README.md",
+      "hash": "9617f1b2a7074ff540cece7bc73fa571783150fce9c491cc0385944a1b77c9b1",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/phoenix-terminal-pilot/examples/terminal-wiring/README.md",
+      "hash": "2aab371ff55c5f056343a58d8330e986a146e1286fde67adc85cc82d9fef3d17",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/phoenix-terminal-pilot/examples/terminal-wiring/README.md",
+      "hash": "53986835761904f1f14fb89fe85240d25505201c2af55fa717c8e327f950771f",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/siemens-et200pro-pilot/examples/connector-wiring/README.md",
+      "hash": "9bb107e963b5fbb210f20e2afe5c6c069c018425763baa207737bc4ab7ac6d45",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/siemens-et200pro-pilot/examples/connector-wiring/README.md",
+      "hash": "6b5765c2f86e2bd7d075421f12d2b84507878c9da499c7d9626f988995a24bf5",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/siemens-pilot/examples/candidate-wiring/README.md",
+      "hash": "ddb0e3c1685c57802083d4332387bfe6c0c16f43b0e1ada736b7f09aee61fc22",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/README.md",
+      "hash": "c5b8bcda99510dc4c0d9dbd5e4f5939fca779a9141a0413cd139cf916dfab34f",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/23d01ba05/README.md",
+      "hash": "13b8956f3213fceaa94399a7bee4ee977661bc24284999d2d470ce8933cf11d9",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/23d01ba05/README.md",
+      "hash": "a21d1c999eeb38d73a16244b15f7fa2e4922b1a47eee7979a6d9ae3f09dcd443",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/8570-11-407/README.md",
+      "hash": "9feb04e911a477390474a34ccde47d9b58f2bb8c80e3c70f1d70d15cb0525606",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/8570-11-407/README.md",
+      "hash": "810555ce60b8715d0c088c19a4c348ba43eb1b0b735d128e1da44a3ad19cde4a",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/8570-12-407/README.md",
+      "hash": "ad0013fae3b00c67cb62fe88df5cab75ac2a6f25d9cdbe2b0d4a24b7e69f0f77",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/8570-12-407/README.md",
+      "hash": "7ace77c7309c71ba8b18ffe14f3a4df12be0d0e50628f6b42f84562fa5fe2f96",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/component-check/README.md",
+      "hash": "068fdaafa7ef5ab8361dd0a76df45cb4c61f36d66a8cf260a711c85c49e116c1",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "libraries/stahl-pilot/examples/component-check/README.md",
+      "hash": "76d490f18538650f74069b2cef78d9a036049447dc47823b61de4979411c2efc",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/agent-tools/README.md",
+      "hash": "3e1906b5fa1b48f63344a21db5fb56aac3b61d238b129387284cfaeb14a23731",
+      "kind": "executed",
+      "recipe": "sdk-example"
+    },
+    {
+      "file": "packages/agent-tools/README.md",
+      "hash": "4ca43f15caed56e1b6bcafe8f25fc2437ae19129a214657a40e0af1fb1b1f923",
+      "kind": "illustrative",
+      "reason": "JSON input to a surrounding inspect call with source metadata."
+    },
+    {
+      "file": "packages/agent-tools/README.md",
+      "hash": "a5ac3040a815ce3bdeaefd30f246017e4cfb6b9257c71cd0cb28e7c16acc9130",
+      "kind": "illustrative",
+      "reason": "Guarded patch continuation uses the tools and base request from the preceding SDK example."
+    },
+    {
+      "file": "packages/agent-tools/README.md",
+      "hash": "205ec6a89a62a5ec6ac3ec6f4cd3f0bb0cc65881a7ae198044846e804d4be407",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/agent-tools/README.md",
+      "hash": "9289eadf53d92027f1bdd5d3f20758b2186f83db75a027d0320bf4b5102d3929",
+      "kind": "illustrative",
+      "reason": "Patch payload requires the current integrity hash of the caller's presentation file."
+    },
+    {
+      "file": "packages/cli/README.md",
+      "hash": "ad042bccb11e6de10a61254eca936e6c593b76ee9ec933da81b22cb2620ca8d2",
+      "kind": "platform-only",
+      "setup": "Fresh checkout with Bun and a package registry or a populated package cache",
+      "reason": "Installs pinned dependencies. A fresh offline checkout cannot acquire missing dependencies."
+    },
+    {
+      "file": "packages/cli/README.md",
+      "hash": "fe409026cdcf591fdf130e338f5e4854d7557e044f7b3ae87d5baa740467f02e",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/cli/README.md",
+      "hash": "154e57d4706edae8dac3e770d6acb1b4ea60aa9e77f3dfcbca4c89f56a625a3f",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/cli/README.md",
+      "hash": "ae581b6b7333943b06c71996241d39536358da3060416375788953c0fe257593",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/cli/README.md",
+      "hash": "83147326c3308e56d38d4350a2dae5b7957294b1cf2efba0c59441d86ec0e9be",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/cli/assets/THERMITE_AGENTS.md",
+      "hash": "00950de8f913d37ea13ec1d87c29d5a3d30aa30538a06e90966d1f79a4274e29",
+      "kind": "executed",
+      "recipe": "project-guide"
+    },
+    {
+      "file": "packages/cli/assets/THERMITE_AGENTS.md",
+      "hash": "14cc0742fd3f27238f71c8bd0a9e26075e81445d861d670a84d37d522f5009fc",
+      "kind": "executed",
+      "recipe": "project-guide"
+    },
+    {
+      "file": "packages/cli/assets/fonts/README.md",
+      "hash": "35207032d1e2d16fad6fb25be1a38d3c4a946941d970a2274bb934e11c7231a6",
+      "kind": "illustrative",
+      "reason": "Reference checksums for the bundled regular, bold, math and license files."
+    },
+    {
+      "file": "packages/cli/assets/fonts/README.md",
+      "hash": "25a828885c01e87856220f4f8947d5ee3fee3acd20f59a0ca0f480437d82181d",
+      "kind": "illustrative",
+      "reason": "Reference checksum for the bundled Mono TrueType font."
+    },
+    {
+      "file": "packages/cli/assets/fonts/README.md",
+      "hash": "44c7e232cc71f03a628a396999aeea0e0f0c48a0179866d442326508dc491daa",
+      "kind": "illustrative",
+      "reason": "Code-point ranges describing the pinned font subset."
+    },
+    {
+      "file": "packages/cli/fixtures/completeness/README.md",
+      "hash": "9401dd9c8b805b7d5f5ff812531f91b9eba2c7cfdaebecbe6c5432fea67362cd",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/compiler/README.md",
+      "hash": "e5bc9735389bca124e9c7d4e9c27115016e8767d93b952ca4f449086b9921af8",
+      "kind": "executed",
+      "recipe": "sdk-example"
+    },
+    {
+      "file": "packages/compiler/README.md",
+      "hash": "35c177f024d5fc35d0dea72ae51bae1483cf1a2bf6ae90b2c6468ec348bf41f7",
+      "kind": "illustrative",
+      "reason": "Type declaration for accepted library dependencies."
+    },
+    {
+      "file": "packages/core-library/README.md",
+      "hash": "10756f0d4a137156854ef744e1ad1dba621a5cf9f591b0eb5854cdb17d77ba25",
+      "kind": "illustrative",
+      "reason": "Library dependency entry to insert into a project manifest."
+    },
+    {
+      "file": "packages/core-library/test/fixtures/rm1/README.md",
+      "hash": "e20587312b405afab669065ae77002bd5303798dad7c9a4482bbae7f98a09979",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "packages/query/README.md",
+      "hash": "174db0d4cd180f199fffd629b1246627706447f9fff5e63a768c73421304d691",
+      "kind": "executed",
+      "recipe": "sdk-example"
+    },
+    {
+      "file": "packages/query/README.md",
+      "hash": "523975184b32e3bdded78b4833baa6ff4e24d8a8da81bbf5a229f6da49835345",
+      "kind": "executed",
+      "recipe": "workspace-shell"
+    },
+    {
+      "file": "packages/render/README.md",
+      "hash": "58a4c9922a9f8b6d88de3d0a73faa90bcdb1452a25b25bad7c922c7375072bd6",
+      "kind": "illustrative",
+      "reason": "Renderer request and invocation fragments require the caller's compiled IR and presentation."
+    },
+    {
+      "file": "packages/render/README.md",
+      "hash": "b9ca84117fb76f7dee16963dab4ac9db7c40bfa6dcfddfce7dcaaa6377a8282d",
+      "kind": "illustrative",
+      "reason": "Type declarations for renderer request and result contracts."
+    },
+    {
+      "file": "packages/render/README.md",
+      "hash": "40cefe4583b26e01c3387f0559b86de0ab115a0773dfdcea4d71de7fe9240092",
+      "kind": "illustrative",
+      "reason": "Worked calculation for the layout pitch constraint."
+    },
+    {
+      "file": "packages/render/README.md",
+      "hash": "4d6e42b297a66218a6f16839e2ce686f684eed5299ede77f2854f7c311df1d2c",
+      "kind": "executed",
+      "recipe": "workspace-shell"
+    },
+    {
+      "file": "packages/render/README.md",
+      "hash": "960242c3d34d7421c6920ec4111bdd4556da20d4e5329a5ec1397913bb4b2065",
+      "kind": "illustrative",
+      "reason": "Reference mapping of source owners to render text fields and diagnostics."
+    },
+    {
+      "file": "packages/schema/README.md",
+      "hash": "5fb0eda556f168e35784ff75a297009f4409361c7c3a579f9f312dec1f2e9fbe",
+      "kind": "illustrative",
+      "reason": "Project manifest shape with source globs and a separate presentation file."
+    },
+    {
+      "file": "packages/schema/README.md",
+      "hash": "615df203c9f450ab01b5468e29ac6e37deddf4b26c6ceb44949a99f2ead10d58",
+      "kind": "illustrative",
+      "reason": "Presentation payload to attach to a project manifest."
+    },
+    {
+      "file": "packages/schema/README.md",
+      "hash": "d1cdf24ddaf11632046a2068aada109806faaf9432654e24a4d0b3781f860d07",
+      "kind": "illustrative",
+      "reason": "Reference JSON illustrating deviceRef and terminalRef values in source documents."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "16e678d009895b1dccd828c86bafad83d120ba1b620dd46ebc938f62c1d84598",
+      "kind": "illustrative",
+      "reason": "Selection input shape for the batch preparation command."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "86f6584e770cfd6bf1c266bfa40ae0bc9038755eadf220c657e6814db0bc6ca4",
+      "kind": "illustrative",
+      "reason": "The absolute paths stand for a contributor's inventory, selection, new batch and installed worker executables."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "2ab03302d153845448238480d37eb446445578ecc8359142c9d9f6cef27d717f",
+      "kind": "illustrative",
+      "reason": "Requires a selected source manual, its page geometry and a Python interpreter path. The page and crop coordinates are example inputs."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "ddcd9ce5b3bf9193a751893c65ae3e066b40e9fafee8cc2237d058a7048e4c3e",
+      "kind": "platform-only",
+      "setup": "Prepared research batch, review limits and authenticated model workers",
+      "reason": "The block previews and starts a model-worker batch from caller-supplied research inputs."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "9c68adee194dc7b7434c9f794531b5c1a14730a5da1ef484a3cc3f368012dc42",
+      "kind": "illustrative",
+      "reason": "The job path stands for an already prepared research job with source evidence and candidates."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "5eb0092ca11a533bee74d0f570e21b212a3e9d925677ed4abeac28c241ff83f7",
+      "kind": "illustrative",
+      "reason": "Reviewed promotion record with placeholder evidence hashes."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "d63dc90672ed6bc0be45f968b58710de5567b171d60a1caf3eb1cf3491a5cda7",
+      "kind": "illustrative",
+      "reason": "The paths stand for a completed research job, verifier result and human review for an intentional catalog promotion."
+    },
+    {
+      "file": "scripts/library-batch/README.md",
+      "hash": "d92d92994ff686848afff74c6de9bb96efe9f73f24c63de2591cd19ac76de48b",
+      "kind": "executed",
+      "recipe": "repo-shell"
+    },
+    {
+      "file": "scripts/runtime-package/README.md",
+      "hash": "2fd47ca4f93d04fe689833e218a732161c64d5f75172965244e42ec1ab874cac",
+      "kind": "executed",
+      "recipe": "runtime-shell"
+    }
+  ]
+}

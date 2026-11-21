@@ -7,6 +7,34 @@ import type {
 import { analyzePotentialDeclarations } from "./potential-analysis.js";
 
 type IrTerminal = RuleContext["ir"]["terminals"][number];
+type VoltageFacts = NonNullable<IrTerminal["rating"]>;
+
+/** Shared declared-fact comparisons; neither helper infers a voltage. */
+export function declaredVoltageTypeMismatch(
+  a: VoltageFacts,
+  b: VoltageFacts,
+): boolean {
+  return (
+    Object.hasOwn(a, "voltage_type") &&
+    Object.hasOwn(b, "voltage_type") &&
+    a.voltage_type !== b.voltage_type
+  );
+}
+
+export function positiveNominalVoltageMismatch(
+  a: VoltageFacts,
+  b: VoltageFacts,
+): boolean {
+  return (
+    Object.hasOwn(a, "nominal_voltage") &&
+    Object.hasOwn(b, "nominal_voltage") &&
+    a.nominal_voltage !== undefined &&
+    b.nominal_voltage !== undefined &&
+    a.nominal_voltage > 0 &&
+    b.nominal_voltage > 0 &&
+    a.nominal_voltage !== b.nominal_voltage
+  );
+}
 
 export interface IncompatibleRatedTerminal {
   readonly terminal: IrTerminal;
@@ -95,15 +123,10 @@ export function analyzeTerminalCompatibility(
         continue;
       }
 
-      const effectiveHasVoltageType = Object.hasOwn(
+      const voltageTypeMismatch = declaredVoltageTypeMismatch(
         effective.electrical,
-        "voltage_type",
+        rating,
       );
-      const ratingHasVoltageType = Object.hasOwn(rating, "voltage_type");
-      const voltageTypeMismatch =
-        effectiveHasVoltageType &&
-        ratingHasVoltageType &&
-        effective.electrical.voltage_type !== rating.voltage_type;
       const displayed = {
         terminal,
         display: context.displayTerminal(terminal.id),
@@ -114,23 +137,7 @@ export function analyzeTerminalCompatibility(
         continue;
       }
 
-      const effectiveHasNominalVoltage = Object.hasOwn(
-        effective.electrical,
-        "nominal_voltage",
-      );
-      const ratingHasNominalVoltage = Object.hasOwn(rating, "nominal_voltage");
-      const effectiveNominalVoltage = effective.electrical.nominal_voltage;
-      const ratedNominalVoltage = rating.nominal_voltage;
-
-      if (
-        effectiveHasNominalVoltage &&
-        ratingHasNominalVoltage &&
-        effectiveNominalVoltage !== undefined &&
-        ratedNominalVoltage !== undefined &&
-        effectiveNominalVoltage > 0 &&
-        ratedNominalVoltage > 0 &&
-        effectiveNominalVoltage !== ratedNominalVoltage
-      ) {
+      if (positiveNominalVoltageMismatch(effective.electrical, rating)) {
         incompatibleNominalVoltages.push(displayed);
       }
     }

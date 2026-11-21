@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -272,10 +272,17 @@ describe("query ownership and reuse", () => {
 
   it("keeps selection on compiler/query public boundaries", () => {
     const testDirectory = dirname(fileURLToPath(import.meta.url));
-    const source = readFileSync(
+    const selectionDirectory = resolve(testDirectory, "../src/selection");
+    const source = [
       resolve(testDirectory, "../src/selection.ts"),
-      "utf8",
-    );
+      resolve(testDirectory, "../src/internal.ts"),
+      ...readdirSync(selectionDirectory, { recursive: true })
+        .filter((file) => file.endsWith(".ts"))
+        .sort()
+        .map((file) => resolve(selectionDirectory, file)),
+    ]
+      .map((file) => readFileSync(file, "utf8"))
+      .join("\n");
     expect(source).not.toMatch(/@thermite\/query\//u);
     expect(source).not.toMatch(/packages\/query\/src/u);
     expect(source).not.toMatch(/loader|loadProject|glob/u);

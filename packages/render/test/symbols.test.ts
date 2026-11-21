@@ -17,6 +17,7 @@ import type {
   SymbolPortDefinition,
 } from "../src/symbols/types.js";
 import { validateSymbolCatalog } from "../src/symbols/validate.js";
+import { orientedSide } from "../src/presentation/util.js";
 
 interface ExpectedSymbol {
   readonly id: SymbolDefinition["id"];
@@ -109,6 +110,42 @@ const EXPECTED_SYMBOLS: readonly ExpectedSymbol[] = [
     id: "ais:pushbutton-nc",
     width: 40,
     height: 28,
+    ports: [
+      ["in", "west", 1 / 2, 0],
+      ["out", "east", 1 / 2, 1],
+    ],
+  },
+  {
+    id: "ais:estop-no",
+    width: 40,
+    height: 28,
+    ports: [
+      ["in", "west", 1 / 2, 0],
+      ["out", "east", 1 / 2, 1],
+    ],
+  },
+  {
+    id: "ais:estop-nc",
+    width: 40,
+    height: 28,
+    ports: [
+      ["in", "west", 1 / 2, 0],
+      ["out", "east", 1 / 2, 1],
+    ],
+  },
+  {
+    id: "ais:selector-no",
+    width: 40,
+    height: 24,
+    ports: [
+      ["in", "west", 1 / 2, 0],
+      ["out", "east", 1 / 2, 1],
+    ],
+  },
+  {
+    id: "ais:selector-nc",
+    width: 40,
+    height: 24,
     ports: [
       ["in", "west", 1 / 2, 0],
       ["out", "east", 1 / 2, 1],
@@ -255,9 +292,24 @@ describe("D3 original symbol catalog", () => {
       DEVICE_GROUP_SIDE_PADDING: 8,
       OUTER_SVG_PADDING: 20,
     });
-    expect(SYMBOL_CATALOG).toHaveLength(EXPECTED_SYMBOLS.length);
+    expect(SYMBOL_CATALOG).toHaveLength(32);
     expect(
-      SYMBOL_CATALOG.map((definition) => ({
+      SYMBOL_CATALOG.filter(
+        (s) => !EXPECTED_SYMBOLS.some((e) => e.id === s.id),
+      ).map((s) => s.id),
+    ).toEqual([
+      "ais:source-winding",
+      "ais:disconnector",
+      "ais:motor-3ph-unbonded",
+      "ais:power-source-3wire",
+      "ais:ac-load",
+      "ais:motor",
+      "ais:lamp",
+    ]);
+    expect(
+      SYMBOL_CATALOG.filter((s) =>
+        EXPECTED_SYMBOLS.some((e) => e.id === s.id),
+      ).map((definition) => ({
         id: definition.id,
         width: definition.size.width,
         height: definition.size.height,
@@ -268,11 +320,17 @@ describe("D3 original symbol catalog", () => {
           order,
         ]),
       })),
-    ).toEqual(EXPECTED_SYMBOLS);
+    ).toEqual(
+      [...EXPECTED_SYMBOLS].sort(
+        (a, b) =>
+          SYMBOL_CATALOG.findIndex((s) => s.id === a.id) -
+          SYMBOL_CATALOG.findIndex((s) => s.id === b.id),
+      ),
+    );
     expect(validateSymbolCatalog(SYMBOL_CATALOG)).toBe(SYMBOL_CATALOG);
   });
 
-  it("uses all five typed primitives with finite integer in-bounds geometry", () => {
+  it("uses finite integer in-bounds geometry with finite integer in-bounds geometry", () => {
     const kinds = new Set<string>();
     for (const definition of SYMBOL_CATALOG) {
       expect(definition.format).toBe("ais-symbol/0.1");
@@ -287,122 +345,51 @@ describe("D3 original symbol catalog", () => {
         expect(values.every(Number.isFinite)).toBe(true);
       }
     }
-    expect([...kinds].sort()).toEqual([
-      "arc",
-      "circle",
-      "line",
-      "polyline",
-      "rect",
-    ]);
+    expect([...kinds].sort()).toEqual(["circle", "line", "polyline", "rect"]);
   });
 
-  it("freezes every B1 DC source/load primitive at the exact 64-high anchors", () => {
-    expect(
-      SYMBOL_CATALOG.filter(
-        ({ id }) => id === "ais:power-source-dc" || id === "ais:dc-load",
-      ),
-    ).toEqual([
-      {
-        format: "ais-symbol/0.1",
-        id: "ais:power-source-dc",
-        size: { width: 36, height: 64 },
-        ports: [
-          { id: "positive", side: "east", offset: 1 / 8, order: 0 },
-          { id: "return", side: "east", offset: 7 / 8, order: 1 },
-        ],
-        primitives: [
-          {
-            kind: "line",
-            from: { x: 8, y: 4 },
-            to: { x: 8, y: 60 },
-            style: "body",
-          },
-          {
-            kind: "line",
-            from: { x: 8, y: 8 },
-            to: { x: 36, y: 8 },
-            style: "body",
-          },
-          {
-            kind: "line",
-            from: { x: 8, y: 56 },
-            to: { x: 36, y: 56 },
-            style: "body",
-          },
-          {
-            kind: "line",
-            from: { x: 13, y: 8 },
-            to: { x: 21, y: 8 },
-            style: "annotation",
-          },
-          {
-            kind: "line",
-            from: { x: 17, y: 4 },
-            to: { x: 17, y: 12 },
-            style: "annotation",
-          },
-          {
-            kind: "line",
-            from: { x: 13, y: 56 },
-            to: { x: 21, y: 56 },
-            style: "annotation",
-          },
-        ],
-      },
-      {
-        format: "ais-symbol/0.1",
-        id: "ais:dc-load",
-        size: { width: 40, height: 64 },
-        ports: [
-          { id: "positive", side: "west", offset: 1 / 8, order: 0 },
-          { id: "return", side: "west", offset: 7 / 8, order: 1 },
-        ],
-        primitives: [
-          {
-            kind: "line",
-            from: { x: 0, y: 8 },
-            to: { x: 8, y: 8 },
-            style: "body",
-          },
-          {
-            kind: "line",
-            from: { x: 0, y: 56 },
-            to: { x: 8, y: 56 },
-            style: "body",
-          },
-          {
-            kind: "rect",
-            x: 8,
-            y: 4,
-            width: 24,
-            height: 56,
-            radius: 2,
-            style: "body",
-          },
-          {
-            kind: "line",
-            from: { x: 13, y: 8 },
-            to: { x: 19, y: 8 },
-            style: "annotation",
-          },
-          {
-            kind: "line",
-            from: { x: 16, y: 5 },
-            to: { x: 16, y: 11 },
-            style: "annotation",
-          },
-          {
-            kind: "line",
-            from: { x: 13, y: 56 },
-            to: { x: 19, y: 56 },
-            style: "annotation",
-          },
-        ],
-      },
-    ]);
+  it("keeps B1 DC anchors and reserves detached qualifier ink within the existing sizes", () => {
+    for (const [id, width, side] of [
+      ["ais:power-source-dc", 36, "east"],
+      ["ais:dc-load", 40, "west"],
+    ] as const) {
+      const definition = SYMBOL_CATALOG.find((s) => s.id === id)!;
+      expect(definition.size).toEqual({ width, height: 64 });
+      expect(definition.ports).toEqual([
+        { id: "positive", side, offset: 1 / 8, order: 0 },
+        { id: "return", side, offset: 7 / 8, order: 1 },
+      ]);
+      const leads = definition.primitives.filter(
+        (p) => p.kind === "line" && p.style === "body",
+      );
+      expect(leads).toEqual(
+        [8, 56].map((y) => ({
+          kind: "line",
+          from: { x: side === "east" ? 8 : 0, y },
+          to: { x: side === "east" ? 36 : 7, y },
+          style: "body",
+        })),
+      );
+      expect(
+        definition.primitives
+          .filter((p) => p.kind === "line" && p.qualifier)
+          .map(
+            (p) =>
+              p.kind === "line" && [p.qualifier!.polarity, p.qualifier!.portId],
+          ),
+      ).toEqual([
+        ["positive", "positive"],
+        ["positive", "positive"],
+        ["negative", "return"],
+      ]);
+      if (side === "east")
+        expect(
+          definition.primitives.filter((p) => p.style === "enclosure"),
+        ).toHaveLength(6);
+    }
   });
 
-  it("connects every three-phase motor lead to the motor outline", () => {
+  it("keeps the three-phase motor port anchors and separates the leads from the face", () => {
     const motor = SYMBOL_CATALOG.find(({ id }) => id === "ais:motor-3ph")!;
     const circle = motor.primitives.find(
       (primitive) => primitive.kind === "circle" && primitive.style === "body",
@@ -416,41 +403,53 @@ describe("D3 original symbol catalog", () => {
       { x: 0, y: 36 },
       { x: 0, y: 60 },
     ];
-    const epsilon = 1e-9;
     for (const [index, lead] of leads.entries()) {
       if (lead?.kind !== "polyline") continue;
       expect(lead.points[0]).toEqual(anchors[index]);
-      const intersections = lead.points.slice(1).flatMap((to, pointIndex) => {
+      const clearance = lead.points.slice(1).map((to, pointIndex) => {
         const from = lead.points[pointIndex]!;
         const dx = to.x - from.x;
         const dy = to.y - from.y;
         const fx = from.x - circle.center.x;
         const fy = from.y - circle.center.y;
-        const a = dx * dx + dy * dy;
-        const b = 2 * (fx * dx + fy * dy);
-        const c = fx * fx + fy * fy - circle.radius * circle.radius;
-        const discriminant = b * b - 4 * a * c;
-        if (discriminant < -epsilon) return [];
-        const root = Math.sqrt(Math.max(0, discriminant));
-        return [(-b - root) / (2 * a), (-b + root) / (2 * a)]
-          .filter((value) => value >= -epsilon && value <= 1 + epsilon)
-          .map((value) => ({
-            x: from.x + value * dx,
-            y: from.y + value * dy,
-          }));
+        const t = Math.min(
+          1,
+          Math.max(0, -(fx * dx + fy * dy) / (dx * dx + dy * dy)),
+        );
+        return Math.hypot(fx + t * dx, fy + t * dy) - circle.radius;
       });
-      expect(intersections.length).toBeGreaterThan(0);
-      expect(
-        intersections.some(
-          ({ x, y }) =>
-            Math.abs(
-              Math.hypot(x - circle.center.x, y - circle.center.y) -
-                circle.radius,
-            ) <= epsilon,
-        ),
-      ).toBe(true);
+      expect(Math.min(...clearance)).toBeGreaterThanOrEqual(2.8);
+      expect(Math.min(...clearance)).toBeLessThanOrEqual(3);
     }
   });
+
+  it.each(["ais:motor", "ais:lamp"] as const)(
+    "leaves an ink gap at both poles of %s in both flows",
+    (id) => {
+      const symbol = SYMBOL_CATALOG.find((definition) => definition.id === id)!;
+      for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+        const { primitives } = orientSymbolDefinition(symbol, flow);
+        const [first, second, face] = [
+          primitives[1],
+          primitives[3],
+          primitives[4],
+        ];
+        if (
+          first?.kind !== "line" ||
+          second?.kind !== "line" ||
+          face?.kind !== "circle"
+        )
+          throw Error("Expected two lead tips and a circular face.");
+        expect(first.to.x + second.to.x).toBe(2 * face.center.x);
+        expect(first.to.y + second.to.y).toBe(2 * face.center.y);
+        for (const { to } of [first, second])
+          expect(
+            Math.hypot(to.x - face.center.x, to.y - face.center.y) -
+              face.radius,
+          ).toBe(3);
+      }
+    },
+  );
 
   it("deep-freezes built-ins and returns frozen independent orientations", () => {
     expectDeepFrozen(SYMBOL_CATALOG);
@@ -470,9 +469,9 @@ describe("D3 original symbol catalog", () => {
     expect(vertical.primitives[2]).toEqual({
       kind: "rect",
       x: 4,
-      y: 8,
+      y: 11,
       width: 32,
-      height: 30,
+      height: 27,
       radius: 2,
       style: "body",
     });
@@ -482,7 +481,22 @@ describe("D3 original symbol catalog", () => {
 
   it("rotates points and asymmetric arc radii exactly clockwise", () => {
     const coil = SYMBOL_CATALOG.find(({ id }) => id === "ais:coil")!;
-    const vertical = orientSymbolDefinition(coil, "top-to-bottom");
+    const synthetic = {
+      ...coil,
+      primitives: [
+        ...coil.primitives,
+        {
+          kind: "arc" as const,
+          from: { x: 12, y: 12 },
+          to: { x: 20, y: 12 },
+          radiusX: 4,
+          radiusY: 6,
+          clockwise: true,
+          style: "operator" as const,
+        },
+      ],
+    };
+    const vertical = orientSymbolDefinition(synthetic, "top-to-bottom");
     const firstArc = vertical.primitives.find(({ kind }) => kind === "arc");
     expect(firstArc).toEqual({
       kind: "arc",
@@ -497,6 +511,67 @@ describe("D3 original symbol catalog", () => {
       { id: "A1", side: "north", offset: 1 / 2, order: 0 },
       { id: "A2", side: "south", offset: 1 / 2, order: 1 },
     ]);
+  });
+
+  it.each([
+    ["ais:power-source-3ph", ["L1", "L2", "L3", "PE"], "south"],
+    ["ais:power-source-3wire", ["L1", "L2", "L3"], "south"],
+    ["ais:motor-3ph", ["U", "V", "W", "PE"], "north"],
+    ["ais:motor-3ph-unbonded", ["U", "V", "W"], "north"],
+  ] as const)(
+    "preserves physical phase lanes and glyph landings for %s",
+    (id, ids, side) => {
+      const original = SYMBOL_CATALOG.find((s) => s.id === id)!;
+      expect(orientSymbolDefinition(original, "left-to-right")).toEqual(
+        original,
+      );
+      const vertical = orientSymbolDefinition(original, "top-to-bottom");
+      expect(vertical.ports.map((p) => p.id)).toEqual(ids);
+      for (const [i, port] of vertical.ports.entries()) {
+        expect(port).toEqual({ ...original.ports[i], side });
+        const landing = {
+          x: port.offset * vertical.size.width,
+          y: side === "north" ? 0 : vertical.size.height,
+        };
+        // Physical ink reaches the port; reversing captions alone cannot pass.
+        expect(
+          vertical.primitives.some((p) =>
+            p.kind === "line"
+              ? [p.from, p.to].some(
+                  (v) => v.x === landing.x && v.y === landing.y,
+                )
+              : p.kind === "polyline" &&
+                p.points.some((v) => v.x === landing.x && v.y === landing.y),
+          ),
+        ).toBe(true);
+      }
+      expectDeepFrozen(vertical);
+    },
+  );
+
+  it("keeps presentation ports aligned with catalog geometry for every symbol and flow", () => {
+    for (const symbol of SYMBOL_CATALOG) {
+      for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+        const oriented = orientSymbolDefinition(symbol, flow);
+        expect(
+          symbol.ports.map((p) => ({
+            ...p,
+            ...orientedSide(p.side, p.offset, flow, symbol.id),
+          })),
+        ).toEqual(oriented.ports);
+      }
+    }
+    // Other multi-port and asymmetric symbols keep their original handedness.
+    for (const id of [
+      "ais:power-source-dc",
+      "ais:dc-load",
+      "ais:switch-sensor-pnp",
+    ] as const) {
+      const symbol = SYMBOL_CATALOG.find((s) => s.id === id)!;
+      expect(
+        orientSymbolDefinition(symbol, "top-to-bottom").ports[0]!.offset,
+      ).toBe(1 - symbol.ports[0]!.offset);
+    }
   });
 
   it("contains no free-form drawing fragment or external artwork reference", () => {
@@ -557,14 +632,22 @@ describe("D3 original symbol catalog", () => {
       (catalog: SymbolDefinition[]) =>
         (catalog
           .find(({ id }) => id === "ais:coil")!
-          .primitives.find(({ kind }) => kind === "rect")!.radius = 9),
+          .primitives.find(({ kind }) => kind === "rect")!.radius = 13),
     ],
     [
       "invalid arc radii",
       (catalog: SymbolDefinition[]) =>
-        (catalog
-          .find(({ id }) => id === "ais:coil")!
-          .primitives.find(({ kind }) => kind === "arc")!.radiusX = 0),
+        catalog
+          .find((s) => s.id === "ais:coil")!
+          .primitives.push({
+            kind: "arc",
+            from: { x: 12, y: 12 },
+            to: { x: 20, y: 12 },
+            radiusX: 0,
+            radiusY: 6,
+            clockwise: true,
+            style: "operator",
+          }),
     ],
     [
       "illegal offsets",
@@ -574,7 +657,7 @@ describe("D3 original symbol catalog", () => {
       "insufficient polyline points",
       (catalog: SymbolDefinition[]) =>
         (catalog
-          .find(({ id }) => id === "ais:breaker-pole")!
+          .find(({ id }) => id === "ais:motor-3ph")!
           .primitives.find(({ kind }) => kind === "polyline")!.points = [
           { x: 1, y: 1 },
         ]),

@@ -1,0 +1,45 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "eval:node",
+      "description": "Synthetic rated test terminals; no equipment claim",
+      "terminals": {
+        "a": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "b": {
+          "rating": {
+            "nominal_voltage": 48,
+            "voltage_type": "AC"
+          }
+        },
+        "c": {},
+        "d": {
+          "connection_policy": "exclusive"
+        },
+        "e": {},
+        "f": {}
+      },
+      "functions": {
+        "contact": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["a", "b"]
+        },
+        "isolatedBus": {
+          "kind": "other",
+          "terminals": ["c", "e", "f"]
+        }
+      },
+      "circuitSymbols": {
+        "isolatedBus": "interface"
+      },
+      "internal_relations": [],
+      "symbol": "thermite:switch"
+    }
+  ]
+}

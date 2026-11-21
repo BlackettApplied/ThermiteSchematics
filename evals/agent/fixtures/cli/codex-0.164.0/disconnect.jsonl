@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"fixture-thread_id"}
+{"type":"turn.started"}
+{"type":"error","message":"stream disconnected before completion: stream closed before response.completed"}
+{"type":"turn.failed","error":{"message":"stream disconnected before completion: stream closed before response.completed"}}

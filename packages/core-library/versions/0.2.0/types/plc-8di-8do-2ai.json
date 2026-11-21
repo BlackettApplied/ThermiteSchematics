@@ -1,0 +1,329 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:plc-8di-8do-2ai",
+      "description": "Provisional generic PLC: 8 DI, 8 DO, 2 AI, Ethernet; DC supply; voltage not specified.",
+      "terminals": {
+        "L+": {
+          "role": "supply_positive",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "M": {
+          "role": "supply_return",
+          "required": true,
+          "rating": {
+            "voltage_type": "DC"
+          }
+        },
+        "DI0": {
+          "role": "digital_input_0",
+          "connection_policy": "exclusive"
+        },
+        "DI1": {
+          "role": "digital_input_1",
+          "connection_policy": "exclusive"
+        },
+        "DI2": {
+          "role": "digital_input_2",
+          "connection_policy": "exclusive"
+        },
+        "DI3": {
+          "role": "digital_input_3",
+          "connection_policy": "exclusive"
+        },
+        "DI4": {
+          "role": "digital_input_4",
+          "connection_policy": "exclusive"
+        },
+        "DI5": {
+          "role": "digital_input_5",
+          "connection_policy": "exclusive"
+        },
+        "DI6": {
+          "role": "digital_input_6",
+          "connection_policy": "exclusive"
+        },
+        "DI7": {
+          "role": "digital_input_7",
+          "connection_policy": "exclusive"
+        },
+        "DO0": {
+          "role": "digital_output_0",
+          "connection_policy": "exclusive"
+        },
+        "DO1": {
+          "role": "digital_output_1",
+          "connection_policy": "exclusive"
+        },
+        "DO2": {
+          "role": "digital_output_2",
+          "connection_policy": "exclusive"
+        },
+        "DO3": {
+          "role": "digital_output_3",
+          "connection_policy": "exclusive"
+        },
+        "DO4": {
+          "role": "digital_output_4",
+          "connection_policy": "exclusive"
+        },
+        "DO5": {
+          "role": "digital_output_5",
+          "connection_policy": "exclusive"
+        },
+        "DO6": {
+          "role": "digital_output_6",
+          "connection_policy": "exclusive"
+        },
+        "DO7": {
+          "role": "digital_output_7",
+          "connection_policy": "exclusive"
+        },
+        "AI0+": {
+          "role": "analog_input_0_positive",
+          "connection_policy": "exclusive"
+        },
+        "AI0-": {
+          "role": "analog_input_0_negative",
+          "connection_policy": "exclusive"
+        },
+        "AI1+": {
+          "role": "analog_input_1_positive",
+          "connection_policy": "exclusive"
+        },
+        "AI1-": {
+          "role": "analog_input_1_negative",
+          "connection_policy": "exclusive"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["L+", "M"]
+        },
+        "di0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI0"]
+        },
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI1"]
+        },
+        "di2": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI2"]
+        },
+        "di3": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI3"]
+        },
+        "di4": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI4"]
+        },
+        "di5": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI5"]
+        },
+        "di6": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI6"]
+        },
+        "di7": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["DI7"]
+        },
+        "do0": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO0"]
+        },
+        "do1": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO1"]
+        },
+        "do2": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO2"]
+        },
+        "do3": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO3"]
+        },
+        "do4": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO4"]
+        },
+        "do5": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO5"]
+        },
+        "do6": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO6"]
+        },
+        "do7": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["DO7"]
+        },
+        "ai0": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["AI0+", "AI0-"]
+        },
+        "ai1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["AI1+", "AI1-"]
+        }
+      },
+      "symbol": "thermite:io-module",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Supply L+/M is universally required. DC supply; voltage not specified. DI0-DI7 and DO0-DO7 are single-terminal logical channels; AI0+/AI0- and AI1+/AI1- are separate paired inputs; isolation and shared returns unspecified. Optional: every I/O channel and ETH port by application; require used points in project review. Unmodeled: separate I/O commons, output-group supplies, isolation, shields, bonding and extra ports. DI/DO electrical technology, analog mode/range, supply magnitude, other ratings and Ethernet connector are unspecified. The author must select hardware, add its required commons/power, ratings and channel configuration, and review loop compatibility; no current shunt, internal return bond or manufacturer pinout is implied. ETH is a logical communication port, not conductive terminals. Generic DI/DO/AI and L+/M markings follow the documented core scheme."
+      },
+      "ports": {
+        "ETH": {
+          "medium": "ethernet",
+          "connector": "unspecified"
+        }
+      },
+      "terminalOrder": [
+        "L+",
+        "M",
+        "DI0",
+        "DI1",
+        "DI2",
+        "DI3",
+        "DI4",
+        "DI5",
+        "DI6",
+        "DI7",
+        "DO0",
+        "DO1",
+        "DO2",
+        "DO3",
+        "DO4",
+        "DO5",
+        "DO6",
+        "DO7",
+        "AI0+",
+        "AI0-",
+        "AI1+",
+        "AI1-"
+      ],
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di2"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di3"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di4"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di5"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di6"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "di7"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do1"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do2"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do3"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do4"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do5"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do6"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "do7"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "ai0"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "ai1"
+        }
+      ]
+    }
+  ]
+}

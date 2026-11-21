@@ -1,0 +1,15 @@
+[
+  {
+    "code": "W111",
+    "severity": "warning",
+    "message": "Device \"PLC1\" type \"site:plc-clone\" symbol \"iec:plc\". Functions with no cataloged family: \"unsupported\" (bus/2). Give these functions an explicit circuitSymbols mark (E206 checks it), or move them to a separate device type. Declared functions fit: control, loads, circuit. 1 function still needs an explicit circuitSymbols mark or a separate type.",
+    "allowed": ["thermite:io-module"],
+    "allowedCount": 1,
+    "allowedLookup": "W111.allowed in `thermite validate <project> --json` (complete profile IDs)",
+    "file": "library/types/plc.json",
+    "line": 108,
+    "column": 17,
+    "jsonPointer": "/types/0/symbol",
+    "uid": "ce33b8c4-b8b2-42ae-a39b-34f06a8312d6"
+  }
+]

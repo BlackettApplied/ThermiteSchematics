@@ -23,6 +23,9 @@ on whose behalf a Contribution is submitted. For a legal entity, the entity and
 all other entities that control, are controlled by, or are under common control
 with that entity are treated as a single Contributor.
 
+**"Work"** means the Thermite Schematics software, documentation, and other
+project material to which a Contribution is submitted.
+
 **"Contribution"** means any original work of authorship, including any
 modification of or addition to an existing work, that is intentionally submitted
 by You to the Project Owner for inclusion in, or documentation of, any of the
@@ -108,7 +111,7 @@ contributions:
 I have read the CLA document and I hereby sign the CLA.
 ```
 
-Also sign your commits with a real name and email:
+Also add a commit sign-off with your real name and email:
 
 ```sh
 git commit -s -m "your message"
@@ -116,7 +119,8 @@ git commit -s -m "your message"
 
 **Entities.** If you are contributing on behalf of a company, and that company
 holds rights in the work, contact the Project Owner before submitting so a
-Corporate CLA can be put in place. Do not rely on the individual form above.
+Corporate CLA can be put in place. Do not rely on the individual form above. The
+[contribution guide](CONTRIBUTING.md) describes how to request maintainer contact.
 
 Contributions submitted before this agreement was adopted remain licensed under
 the project's [Apache License 2.0](LICENSE), as provided by section 5 of that

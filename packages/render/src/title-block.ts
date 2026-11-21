@@ -1,8 +1,13 @@
+import {
+  plannedTitleContext,
+  headingCapacity,
+} from "./internal/title-data/headings.js";
+import { titlePresentationContext } from "./internal/title-data/frame-context.js";
 import type { CompiledProjectPresentation } from "@thermite/compiler";
 
 import type { InvalidRenderTextError } from "./errors.js";
 import { THERMITE_SCHEMATICS_PRODUCT_VERSION } from "./product-version.js";
-import { preflightTitleRenderText } from "./svg/escape.js";
+import { preflightNamedTitle } from "./render-text-context.js";
 import {
   RENDERER_VERSION,
   type NormalizedSchematicView,
@@ -19,6 +24,7 @@ const DEFAULT_PRESENTATION = Object.freeze({
 
 export interface SchematicTitleContext {
   readonly projectName: string;
+  readonly titleCandidates?: readonly string[];
   readonly revision: string;
   readonly backgroundColor: string;
   readonly toolVersion: string;
@@ -54,23 +60,12 @@ function viewIdentity(view: Readonly<NormalizedSchematicView>): string {
   return `${view.root.designation} | ${view.family}/${view.intent}`;
 }
 
-export function prepareSchematicTitleContext(
+function titleSources(
   projectName: string,
   view: Readonly<NormalizedSchematicView>,
-  presentation?: Readonly<CompiledProjectPresentation>,
-): RenderOutcome<SchematicTitleContext> {
-  if (projectName.length === 0) {
-    return { ok: false, error: projectNameError(view, "empty-string") };
-  }
-  if ([...projectName].length > 160) {
-    return {
-      ok: false,
-      error: projectNameError(view, "over-160-code-points"),
-    };
-  }
-
-  const resolved = presentation ?? DEFAULT_PRESENTATION;
-  const lines: RenderTextSource[] = [
+  resolved: Pick<CompiledProjectPresentation, "revision" | "titleBlockLines">,
+): RenderTextSource[] {
+  return [
     {
       ownerKind: "project",
       ownerId: "project",
@@ -102,18 +97,49 @@ export function prepareSchematicTitleContext(
       value,
     })),
   ];
+}
 
-  const preflight = preflightTitleRenderText(view, lines);
+export function prepareSchematicTitleContext(
+  projectName: string,
+  view: Readonly<NormalizedSchematicView>,
+  presentation?: Readonly<CompiledProjectPresentation>,
+): RenderOutcome<SchematicTitleContext> {
+  if (projectName.length === 0 && !titlePresentationContext(presentation)) {
+    return { ok: false, error: projectNameError(view, "empty-string") };
+  }
+  if (
+    [...projectName].length > 160 &&
+    !titlePresentationContext(presentation)
+  ) {
+    return {
+      ok: false,
+      error: projectNameError(view, "over-160-code-points"),
+    };
+  }
+
+  const resolved = presentation ?? DEFAULT_PRESENTATION;
+  const lines = titleSources(projectName, view, resolved);
+
+  const planned = plannedTitleContext(
+    {
+      projectName,
+      revision: resolved.revision,
+      backgroundColor: resolved.backgroundColor,
+      toolVersion: THERMITE_SCHEMATICS_PRODUCT_VERSION,
+      lines,
+    },
+    presentation,
+  );
+  const capacity = headingCapacity(planned, presentation);
+  if (capacity) return capacity;
+  const preflight = preflightNamedTitle(view, planned.lines);
   if (!preflight.ok) return preflight;
 
   return {
     ok: true,
     value: Object.freeze({
-      projectName,
-      revision: resolved.revision,
-      backgroundColor: resolved.backgroundColor,
-      toolVersion: THERMITE_SCHEMATICS_PRODUCT_VERSION,
-      lines: Object.freeze(lines.map((line) => Object.freeze(line))),
+      ...planned,
+      lines: Object.freeze(planned.lines.map((line) => Object.freeze(line))),
     }),
   };
 }

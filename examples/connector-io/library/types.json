@@ -1,0 +1,124 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "connector-fixture:rack",
+      "description": "rack",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "X1": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Pressure input"
+        },
+        "X2": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Capped input"
+        },
+        "X3": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Unoccupied input"
+        },
+        "X4": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Splitter input"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Connector occupancy does not document cable pin wiring."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "connector-fixture:sensor",
+      "description": "sensor",
+      "terminals": {
+        "P": {
+          "required": true
+        },
+        "M": {
+          "required": true
+        }
+      },
+      "functions": {
+        "power": {
+          "kind": "load",
+          "terminals": ["P", "M"]
+        }
+      },
+      "connectorPorts": {
+        "M12": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Power and signal",
+          "pins": {
+            "1": {
+              "terminal": "P",
+              "description": "24 V"
+            },
+            "3": {
+              "terminal": "M",
+              "description": "0 V"
+            },
+            "5": {
+              "terminal": "M",
+              "description": "Documented shared return"
+            }
+          }
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Connector occupancy does not document cable pin wiring."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "connector-fixture:cap",
+      "description": "Protective dust cap",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "M12 cap"
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "connector-fixture:splitter",
+      "description": "Y splitter",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "IN": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Trunk"
+        },
+        "A": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Branch A"
+        },
+        "B": {
+          "connector": "M12 A-coded, 5-pin",
+          "description": "Branch B"
+        }
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "connector-fixture:cpu",
+      "description": "Synthetic CPU input",
+      "terminals": {
+        "I0": {}
+      },
+      "functions": {
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["I0"]
+        }
+      }
+    }
+  ]
+}

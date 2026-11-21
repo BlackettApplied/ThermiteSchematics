@@ -1,0 +1,9 @@
+{
+  "remove": ["W31"],
+  "endpoints": {
+    "W30": [
+      { "device": "PS1", "terminal": "+" },
+      { "device": "S0", "terminal": "11" }
+    ]
+  }
+}

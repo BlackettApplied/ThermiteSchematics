@@ -33,6 +33,19 @@ describe("restricted SVG XML checker", () => {
     });
   });
 
+  it("permits only literal tag whitespace attributes, without expanding CSS", () => {
+    const row = `${declaration}<svg xmlns="http://www.w3.org/2000/svg" version="1.1"><text xml:space="preserve" style="white-space:pre">A </text></svg>\n`;
+    expect(() => checkRestrictedSvgXml(row)).not.toThrow();
+    expect(() =>
+      checkRestrictedSvgXml(row.replace("white-space:pre", "filter:blur(1px)")),
+    ).toThrow();
+    expect(() =>
+      checkRestrictedSvgXml(
+        row.replace('xml:space="preserve"', 'xml:space="default"'),
+      ),
+    ).toThrow();
+  });
+
   it.each([
     [
       "unquoted attribute",

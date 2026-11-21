@@ -1,0 +1,30 @@
+{
+  "format": "schematic-packet-request/0.1",
+  "layout": "compact",
+  "page": {
+    "size": "tabloid",
+    "orientation": "landscape"
+  },
+  "views": [
+    {
+      "format": "schematic-view-request/0.1",
+      "root": {
+        "by": "designation",
+        "value": "K1"
+      },
+      "family": "control",
+      "flow": "left-to-right"
+    },
+    {
+      "format": "schematic-view-request/0.2",
+      "root": {
+        "by": "designation",
+        "value": "CBL1"
+      },
+      "intent": {
+        "kind": "conductors"
+      },
+      "flow": "left-to-right"
+    }
+  ]
+}

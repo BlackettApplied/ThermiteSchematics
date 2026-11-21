@@ -7,8 +7,8 @@ library or runs the whole repository test suite.
 
 ## Capacity and runtime
 
-Use Node 24 on Apple Silicon macOS, with repository dependencies installed and
-`npm run build` completed. Both CLIs need working authentication. The PDF helper
+Use Bun 1.4.2 on Apple Silicon macOS, with `bun install --frozen-lockfile` and
+`bun run build` completed. Both CLIs need working authentication. The PDF helper
 uses a Python installation with PyMuPDF; `--pdf-module-path` can point to an
 existing matching-architecture module installation.
 
@@ -72,7 +72,7 @@ paths). A seed document is evidence to inspect, not permission to copy another
 part's terminals.
 
 ```sh
-node scripts/library-batch/prepare.mjs \
+bun scripts/library-batch/prepare.mjs \
   --inventory /absolute/project/evidence/library-coverage.json \
   --selection /absolute/selection.json \
   --batch /absolute/new-batch \
@@ -117,9 +117,9 @@ Helper updates apply to newly prepared jobs; do not replace active job copies.
 Write `limits.json` containing `{"claude":6,"codex":6}`, then:
 
 ```sh
-node scripts/library-batch/run.mjs --batch /absolute/new-batch \
+bun scripts/library-batch/run.mjs --batch /absolute/new-batch \
   --limits-file /absolute/new-batch/limits.json --dry-run
-node scripts/library-batch/run.mjs --batch /absolute/new-batch \
+bun scripts/library-batch/run.mjs --batch /absolute/new-batch \
   --limits-file /absolute/new-batch/limits.json
 ```
 
@@ -138,6 +138,15 @@ attempt artifacts and retries eligible jobs. Completed and needs-evidence jobs
 are retained. Do not edit the queue to retry or append items; create a new batch
 for a different selection. Ctrl-C stops this runner's own worker groups and
 records interrupted work. A worker has a default 25-minute execution timeout.
+On POSIX, an `EPERM` group signal falls back to the leader PID only for groups
+spawned by this runner; leader permission failures remain job diagnostics.
+This lets macOS zombie-only groups finish cleanup without crashing a signal
+timer. If a fallback finds the leader gone, or a group probe treats the group as
+finished, the job and attempt diagnostics retain a note without changing the
+outcome. Such a group may still contain descendants the runner cannot signal.
+Signalling errors during timeout cleanup retain `timed-out`; an interruption
+retains `interrupted`, including when both occur. Resume checks remain
+conservative for process groups from an earlier run.
 
 ## Verify, review and integrate
 
@@ -145,7 +154,7 @@ Format final proposal files before verification so later formatting cannot
 invalidate the recorded source hashes. Never edit an active worker's files.
 
 ```sh
-node scripts/library-batch/verify.mjs \
+bun scripts/library-batch/verify.mjs \
   --job /absolute/new-batch/jobs/PART-0063 \
   --output /absolute/new-batch/checks/PART-0063
 ```
@@ -193,7 +202,7 @@ includes these files. Promotion uses the existing manifest version and does not
 create or rewrite the manifest.
 
 ```sh
-node scripts/library-batch/promote.mjs \
+bun scripts/library-batch/promote.mjs \
   --job /absolute/new-batch/jobs/PART-0063 \
   --report /absolute/new-batch/checks/PART-0063/report.json \
   --review /absolute/new-batch/reviews/PART-0063.json \
@@ -215,8 +224,8 @@ example, but adding another type changes the library bytes for every example
 that references it. Refresh and validate each affected project:
 
 ```sh
-node thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
-node thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs lock libraries/abb-pilot/examples/2cds271001r0044
+bun thermite.mjs validate libraries/abb-pilot/examples/2cds271001r0044
 ```
 
 Then regenerate the reference project's coverage inventory and run the shared

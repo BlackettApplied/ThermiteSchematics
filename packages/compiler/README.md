@@ -2,7 +2,7 @@
 
 The compiler turns one locked `electrical-system/0.1` project into deterministic
 `electrical-ir/0.1`, evaluates the fixed engineering rules, and returns detached
-compiled `project-presentation/0.1` context beside the IR.
+compiled presentation context beside the IR.
 
 ```ts
 import { compileProject, evaluateRules, serializeIr } from "@thermite/compiler";
@@ -23,28 +23,16 @@ authoritative input or persistent cache.
 
 ## Successful result
 
-A successful `CompileResult` contains:
-
-```ts
-interface CompiledProjectPresentation {
-  readonly format: "project-presentation/0.1";
-  readonly revision: string;
-  readonly backgroundColor: string;
-  readonly titleBlockLines: readonly string[];
-}
-
-interface CompileSuccess {
-  readonly ok: true;
-  readonly diagnostics: Diagnostic[];
-  readonly ir: ElectricalIr;
-  readonly presentation: CompiledProjectPresentation;
-}
-```
+A successful `CompileResult` contains `ok: true`, `diagnostics`, `ir`, and
+`presentation`. The exported `CompiledProjectPresentation` includes the
+effective format, revision, background color and title lines, plus page
+settings and compact frame data when authored.
 
 Presentation stays beside `electrical-ir/0.1` because canvas and title policy are not
 electrical topology. When `system.json` omits a presentation reference, compilation
-returns revision `UNSPECIFIED`, background `#ffffff`, and an empty title-line
-array. Successful IR and presentation values are detached and frozen.
+returns format `project-presentation/0.1`, revision `UNSPECIFIED`, background
+`#ffffff`, and an empty title-line array. Successful IR and presentation values
+are detached and frozen.
 
 ## Compiler pipeline
 
@@ -74,24 +62,28 @@ type ProjectLibraryDependency =
 ```
 
 An explicit `path` always selects the existing local-library loader. A dependency
-without `path` resolves only the shipped pair `core@0.1.0` from
+without `path` resolves the exact shipped pair `core@0.1.0` or `core@0.2.0` from
 `@thermite/core-library`. Any other name/version-only request produces E032;
 the compiler never consults npm, `NODE_PATH`, cwd ancestors, environment variables,
 a user cache, or the network.
+The loader's optional `resolveShippedCoreLibrary(version)` test override applies
+to both supported shipped versions and receives the selected version. Local and
+unavailable dependencies never invoke it; production uses the package registry.
 
 Loaded libraries and `IrLibrary` records carry required
 `resolutionKind: "local" | "shipped"`. The v1 lock schema accepts the field as
 optional for compatibility; absence normalizes to `local` only after successful
 schema validation. Every canonical lock writer emits the field. Local entries retain
 their authored path; shipped core uses internal provenance locator
-`ais-shipped:core@0.1.0`. Stable shipped diagnostic/source paths begin
+`ais-shipped:core@<version>`. Core 0.1.0 retains its existing bytes and paths;
+0.2.0 lives in `versions/0.2.0/` inside the core package. Stable shipped diagnostic/source paths begin
 `@thermite/core-library/` and never reveal an install prefix.
 
 ## Presentation loading
 
 The optional manifest `presentation` member names one safe project-contained file.
-The loader gives it owner `project`, kind `project_presentation`, stable
-project-relative provenance, and schema `project-presentation/0.1`. If a source glob
+The loader gives it owner `project`, kind `project_presentation`, and stable
+project-relative provenance. It validates versions 0.1, 0.2 and 0.3. If a source glob
 also matches the same canonical file, that one file is validated only as
 presentation. Aliases, reparse escapes, unsafe paths, missing files, and structural
 errors are rejected deterministically.
@@ -115,6 +107,13 @@ E200/E201-affected nets do not produce dependent potential or rating findings. E
 suppresses E301/E302 on its net, and E301 suppresses E302 only for the same terminal.
 Missing policies, declarations, and ratings remain unknown rather than diagnostic.
 CLI strictness is an exit policy and does not change warning severity.
+Coverage `generic` describes a reviewed abstract interface. Its I005 completeness
+finding retains notes and actual-part limitations, like I003's audit information;
+it is not a compiler warning. Partial coverage still emits W904. Schema validation
+rejects generic types with exact-part catalog facts (E014). Core 0.2.0 uses generic
+coverage, so a fully connected project can pass strict validation; the starter's
+required, deferred PSU feed retains W905 and fails strict, while cabinets
+passes. See [connection completeness](../../docs/completeness.md).
 
 ## Canonical outputs and downstream consumers
 

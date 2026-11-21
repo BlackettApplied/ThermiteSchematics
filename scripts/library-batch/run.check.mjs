@@ -1,130 +1,19 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
+import { readFileSync, writeFileSync, existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import {
-  mkdtempSync,
-  mkdirSync,
-  readFileSync,
-  writeFileSync,
-  existsSync,
-  readdirSync,
-  rmSync,
-} from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { setTimeout as delay } from "node:timers/promises";
-import { parseArgs, rateLimitDiagnostic, terminalOutcome } from "./run.mjs";
-
-const runner = join(dirname(fileURLToPath(import.meta.url)), "run.mjs");
-const fakeSource = `
-import { readFileSync, writeFileSync, appendFileSync, existsSync } from 'node:fs';
-import { spawn } from 'node:child_process';
-const config = JSON.parse(process.argv[2]);
-const candidate = {format:'thermite-component-candidate/0.1', sourcePartId:config.mode === 'wrong-id' ? 'different' : config.id, decision:config.mode.startsWith('blocked') ? 'needs-evidence' : 'candidate', summary:'Synthetic local test', sources:[], unresolved:[], conformance:null, ...config.resultOverrides};
-const prompt = readFileSync(0, 'utf8');
-if (prompt !== 'Research ' + config.id + '\\n') throw new Error('Prompt stdin mismatch');
-const trace = (event) => appendFileSync(config.trace, JSON.stringify({event, id:config.id, backend:config.backend, pid:process.pid}) + '\\n');
-trace('start');
-console.log(JSON.stringify({type:'progress', message:config.id}));
-console.error('diagnostic for ' + config.id);
-if (config.mode === 'descendant') {
-  const child = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], {stdio:'ignore'});
-  writeFileSync('descendant.pid', String(child.pid));
-}
-await new Promise(resolve => setTimeout(resolve, config.delay ?? 60));
-if (config.mode === 'rate') {
-  console.log(JSON.stringify({type:'turn.failed', error:{message:'HTTP 429 rate limit exceeded'}}));
-  trace('end');
-  process.exit(1);
-}
-if (config.mode === 'once' && !existsSync('first-attempt')) {
-  writeFileSync('first-attempt', 'yes');
-  writeFileSync('result.json', JSON.stringify({format:'thermite-component-candidate/0.1', sourcePartId:config.id, decision:'candidate'}));
-  console.error('first attempt failed');
-  trace('end');
-  process.exit(1);
-}
-if (config.mode !== 'missing') {
-  writeFileSync('result.json', config.mode === 'duplicate-result' ? JSON.stringify(candidate).replace('{', '{"summary":"duplicate",') : config.mode === 'bare-result' ? JSON.stringify({format:candidate.format, sourcePartId:candidate.sourcePartId, decision:candidate.decision}) : JSON.stringify(candidate));
-  if (!config.mode.startsWith('blocked') && config.mode !== 'no-artifacts') {
-    writeFileSync('type.json', config.mode === 'duplicate-type' ? '{"id":"first","id":"second"}' : JSON.stringify({format:'synthetic-test-only', id:config.id}));
-  }
-  if (config.mode !== 'no-artifacts' && config.mode !== 'blocked-no-research') {
-    writeFileSync('research.md', config.mode === 'blocked-empty-research' ? '  \\n' : 'Synthetic evidence for ' + config.id + '\\n');
-  }
-}
-for (const event of config.events ?? []) console.log(JSON.stringify(event));
-trace('end');
-`;
-
-function fixture(t, definitions) {
-  const batch = mkdtempSync(join(tmpdir(), "thermite-batch-test-"));
-  const fake = join(batch, "fake.mjs");
-  const trace = join(batch, "trace.jsonl");
-  writeFileSync(fake, fakeSource);
-  const jobs = definitions.map((definition, index) => {
-    const config = {
-      id: `part-${index}`,
-      backend: "claude",
-      mode: "candidate",
-      ...definition,
-      trace,
-    };
-    const directory = join(batch, config.id);
-    mkdirSync(directory);
-    const promptFile = join(directory, "prompt.txt");
-    writeFileSync(promptFile, `Research ${config.id}\n`);
-    return {
-      id: config.id,
-      backend: config.backend,
-      directory,
-      promptFile,
-      command: [process.execPath, fake, JSON.stringify(config)],
-    };
-  });
-  writeFileSync(
-    join(batch, "queue.json"),
-    JSON.stringify({ format: "thermite-component-queue/0.1", jobs }),
-  );
-  t.after(() => rmSync(batch, { recursive: true, force: true }));
-  return {
-    batch,
-    jobs,
-    trace,
-    status: () => JSON.parse(readFileSync(join(batch, "status.json"), "utf8")),
-  };
-}
-
-function launch(batch, args = []) {
-  const child = spawn(process.execPath, [runner, "--batch", batch, ...args], {
-    stdio: ["ignore", "pipe", "pipe"],
-  });
-  let stdout = "";
-  let stderr = "";
-  child.stdout.on("data", (data) => {
-    stdout += data;
-  });
-  child.stderr.on("data", (data) => {
-    stderr += data;
-  });
-  const done = new Promise((resolve, reject) => {
-    child.on("error", reject);
-    child.on("close", (code, signal) =>
-      resolve({ code, signal, stdout, stderr }),
-    );
-  });
-  return { child, done };
-}
-
-async function until(predicate, timeout = 5000) {
-  const deadline = Date.now() + timeout;
-  while (Date.now() < deadline) {
-    if (predicate()) return;
-    await delay(20);
-  }
-  assert.fail("Timed out waiting for local test process");
-}
+  parseArgs,
+  rateLimitDiagnostic,
+  runBatch,
+  terminalOutcome,
+} from "./run.mjs";
+import {
+  createChildProcessGroup,
+  groupAlive,
+  signalGroup,
+} from "./process-group.mjs";
+import { fixture, launch, until } from "./run-fixture.mjs";
 
 function processAlive(pid) {
   try {
@@ -134,6 +23,332 @@ function processAlive(pid) {
     return error.code !== "ESRCH";
   }
 }
+
+test("owned POSIX groups fall back to the leader on EPERM without hiding permission failures", () => {
+  const denied = Object.assign(new Error("kill EPERM"), { code: "EPERM" });
+  const missing = Object.assign(new Error("kill ESRCH"), { code: "ESRCH" });
+  const unexpected = Object.assign(new Error("kill EIO"), { code: "EIO" });
+  for (const signal of ["SIGTERM", "SIGKILL"]) {
+    for (const leaderError of [null, missing, denied, unexpected]) {
+      const calls = [];
+      const options = {
+        owned: true,
+        platform: "darwin",
+        kill(pid, value) {
+          calls.push([pid, value]);
+          if (pid < 0) throw denied;
+          if (leaderError) throw leaderError;
+        },
+      };
+      if (leaderError && leaderError !== missing)
+        assert.throws(() => signalGroup(42, signal, options), leaderError);
+      else assert.doesNotThrow(() => signalGroup(42, signal, options));
+      assert.deepEqual(calls, [
+        [-42, signal],
+        [42, signal],
+      ]);
+    }
+  }
+  for (const options of [
+    { platform: "darwin" },
+    { owned: true, platform: "win32" },
+  ]) {
+    const calls = [];
+    assert.throws(
+      () =>
+        signalGroup(42, "SIGTERM", {
+          ...options,
+          kill(pid) {
+            calls.push(pid);
+            throw denied;
+          },
+        }),
+      denied,
+    );
+    assert.deepEqual(calls, [options.platform === "win32" ? 42 : -42]);
+  }
+  for (const error of [missing, unexpected]) {
+    const call = () =>
+      signalGroup(42, "SIGKILL", {
+        owned: true,
+        platform: "darwin",
+        kill() {
+          throw error;
+        },
+      });
+    if (error === missing) assert.doesNotThrow(call);
+    else assert.throws(call, error);
+  }
+});
+
+test("owned zombie groups finish draining while unknown or denied groups remain alive", async () => {
+  const denied = Object.assign(new Error("kill EPERM"), { code: "EPERM" });
+  const missing = Object.assign(new Error("kill ESRCH"), { code: "ESRCH" });
+  for (const leaderError of [null, missing, denied]) {
+    const calls = [];
+    const options = {
+      platform: "darwin",
+      kill(pid, signal) {
+        calls.push([pid, signal]);
+        if (pid < 0) throw denied;
+        if (leaderError) throw leaderError;
+      },
+    };
+    assert.equal(
+      groupAlive(42, { ...options, owned: true }),
+      leaderError === denied,
+    );
+    assert.deepEqual(calls, [
+      [-42, 0],
+      [42, 0],
+    ]);
+    calls.length = 0;
+    assert.equal(groupAlive(42, options), true);
+    assert.deepEqual(calls, [[-42, 0]]);
+    if (leaderError !== denied) {
+      calls.length = 0;
+      const group = createChildProcessGroup(42, options);
+      await group.drain();
+      assert.deepEqual(calls, [
+        [-42, 0],
+        [42, 0],
+      ]);
+      assert.deepEqual(group.errors, []);
+      group.clear();
+    }
+  }
+  const calls = [];
+  assert.equal(
+    groupAlive(42, {
+      owned: true,
+      platform: "darwin",
+      kill(pid, signal) {
+        calls.push([pid, signal]);
+      },
+    }),
+    true,
+  );
+  // A reaped leader must not hide descendants that still accept group signals.
+  assert.deepEqual(calls, [[-42, 0]]);
+  assert.equal(
+    groupAlive(42, {
+      kill() {
+        throw missing;
+      },
+    }),
+    false,
+  );
+});
+
+test("escalation timer reports unexpected signal errors through its awaited failure", async () => {
+  const unexpected = Object.assign(new Error("synthetic kill EIO"), {
+    code: "EIO",
+  });
+  const calls = [];
+  const group = createChildProcessGroup(42, {
+    platform: "darwin",
+    kill(pid, signal) {
+      calls.push([pid, signal]);
+      if (signal === "SIGKILL") throw unexpected;
+    },
+  });
+  try {
+    const failure = assert.rejects(group.failure, unexpected);
+    assert.doesNotThrow(() => group.stop());
+    await failure;
+    assert.deepEqual(calls, [
+      [-42, "SIGTERM"],
+      [-42, "SIGKILL"],
+    ]);
+    assert.deepEqual(group.errors, [unexpected]);
+  } finally {
+    group.clear();
+  }
+});
+
+test("owned-group fallbacks record non-fatal notes when the leader is gone or the probe finishes", async () => {
+  const denied = Object.assign(new Error("kill EPERM"), { code: "EPERM" });
+  const missing = Object.assign(new Error("kill ESRCH"), { code: "ESRCH" });
+  for (const leaderError of [null, missing]) {
+    const group = createChildProcessGroup(42, {
+      platform: "darwin",
+      kill(pid) {
+        if (pid < 0) throw denied;
+        if (leaderError) throw leaderError;
+      },
+    });
+    try {
+      await group.drain();
+      assert.deepEqual(group.errors, []);
+      assert.equal(group.notes.length, 1);
+      assert.match(group.notes[0], /42.*probe.*EPERM.*leader.*finished/);
+      if (leaderError) assert.match(group.notes[0], /ESRCH/);
+      else assert.match(group.notes[0], /succeeded/);
+    } finally {
+      group.clear();
+    }
+  }
+  for (const signal of ["SIGTERM", "SIGKILL"]) {
+    const notes = [];
+    assert.doesNotThrow(() =>
+      signalGroup(42, signal, {
+        owned: true,
+        platform: "darwin",
+        notes,
+        kill(pid) {
+          throw pid < 0 ? denied : missing;
+        },
+      }),
+    );
+    assert.equal(notes.length, 1);
+    assert.match(notes[0], /42.*EPERM.*leader.*ESRCH/);
+    assert.ok(notes[0].includes(signal));
+  }
+});
+
+test("finished owned-group probe notes reach job and attempt diagnostics without changing outcomes", async (t) => {
+  for (const leaderGone of [false, true]) {
+    const f = fixture(t, [{}, { mode: "blocked" }, { mode: "missing" }]);
+    const calls = [];
+    const code = await runBatch(parseArgs(["--batch", f.batch]), {
+      platform: "darwin",
+      kill(pid, signal) {
+        calls.push([pid, signal]);
+        assert.equal(signal, 0);
+        if (pid < 0)
+          throw Object.assign(new Error("kill EPERM"), { code: "EPERM" });
+        if (leaderGone)
+          throw Object.assign(new Error("kill ESRCH"), { code: "ESRCH" });
+      },
+    });
+    assert.equal(code, 1);
+    const records = f.status().jobs;
+    assert.deepEqual(
+      records.map((record) => record.state),
+      ["completed", "needs-evidence", "failed"],
+    );
+    assert.equal(calls.length, 6);
+    for (const record of records) {
+      assert.match(
+        record.diagnostics.join(" "),
+        /probe.*EPERM.*leader.*finished/,
+      );
+      assert.deepEqual(record.attempts[0].diagnostics, record.diagnostics);
+      assert.equal(record.attempts[0].state, record.state);
+    }
+    assert.equal(records[0].result.usable, true);
+    assert.equal(records[1].result.usable, true);
+    assert.match(records[2].diagnostics.join(" "), /result.json/);
+    assert.equal(existsSync(join(f.batch, ".runner.lock.json")), false);
+  }
+});
+
+test("signalling errors preserve every combination of timeout and interruption flags", async (t) => {
+  for (const [timedOut, stopped, state] of [
+    [false, false, "failed"],
+    [false, true, "interrupted"],
+    [true, true, "interrupted"],
+    [true, false, "timed-out"],
+  ]) {
+    const f = fixture(t, [{ waitForRelease: timedOut }]);
+    const unexpected = Object.assign(new Error("synthetic stop EIO"), {
+      code: "EIO",
+    });
+    let interrupted = false;
+    const code = await runBatch(
+      parseArgs([
+        "--batch",
+        f.batch,
+        "--timeout-minutes",
+        timedOut ? "0.001" : "25",
+      ]),
+      {
+        kill(pid, signal) {
+          if (signal === 0) return;
+          if (stopped && !interrupted) {
+            interrupted = true;
+            process.emit("SIGINT");
+          }
+          try {
+            process.kill(pid, signal);
+          } catch (error) {
+            if (error.code !== "ESRCH") throw error;
+          }
+          throw unexpected;
+        },
+      },
+    );
+    assert.equal(code, stopped ? 130 : 1);
+    const record = f.status().jobs[0];
+    assert.equal(record.state, state, JSON.stringify({ timedOut, stopped }));
+    assert.equal(record.attempts[0].state, state);
+    assert.deepEqual(record.diagnostics, [unexpected.message]);
+    assert.deepEqual(record.attempts[0].diagnostics, record.diagnostics);
+    assert.equal(interrupted, stopped);
+    await until(() => !processAlive(record.pid));
+    assert.equal(existsSync(join(f.batch, ".runner.lock.json")), false);
+  }
+});
+
+test("owned-group signal fallback notes survive the timed-out catch path", async (t) => {
+  const f = fixture(t, [{ waitForRelease: true }]);
+  const unexpected = Object.assign(new Error("synthetic escalation EIO"), {
+    code: "EIO",
+  });
+  const code = await runBatch(
+    parseArgs(["--batch", f.batch, "--timeout-minutes", "0.001"]),
+    {
+      platform: "darwin",
+      kill(pid, signal) {
+        if (signal === "SIGTERM")
+          throw Object.assign(
+            new Error(`kill ${pid < 0 ? "EPERM" : "ESRCH"}`),
+            {
+              code: pid < 0 ? "EPERM" : "ESRCH",
+            },
+          );
+        try {
+          process.kill(
+            process.platform === "win32" ? Math.abs(pid) : pid,
+            signal,
+          );
+        } catch (error) {
+          if (error.code !== "ESRCH") throw error;
+        }
+        if (signal === "SIGKILL") throw unexpected;
+      },
+    },
+  );
+  assert.equal(code, 1);
+  const record = f.status().jobs[0];
+  assert.ok(record.diagnostics.includes(unexpected.message));
+  assert.match(record.diagnostics.join(" "), /SIGTERM.*EPERM.*leader.*ESRCH/);
+  assert.equal(record.state, "timed-out");
+  assert.equal(record.attempts[0].state, "timed-out");
+  assert.deepEqual(record.attempts[0].diagnostics, record.diagnostics);
+  await until(() => !processAlive(record.pid));
+  assert.equal(existsSync(join(f.batch, ".runner.lock.json")), false);
+});
+
+test("cleanup escalation errors become failed-job diagnostics without escaping the runner", async (t) => {
+  const f = fixture(t, [{}]);
+  const unexpected = Object.assign(new Error("synthetic escalation EIO"), {
+    code: "EIO",
+  });
+  const code = await runBatch(parseArgs(["--batch", f.batch]), {
+    kill(pid, signal) {
+      // Force final cleanup after normal completion, without either stop flag.
+      if (signal === 0) return;
+      if (signal === "SIGTERM") return;
+      if (signal === "SIGKILL") throw unexpected;
+    },
+  });
+  assert.equal(code, 1);
+  assert.equal(f.status().jobs[0].state, "failed");
+  assert.deepEqual(f.status().jobs[0].diagnostics, [unexpected.message]);
+  await until(() => !processAlive(f.status().jobs[0].pid));
+  assert.equal(existsSync(join(f.batch, ".runner.lock.json")), false);
+});
 
 test("argument validation and conservative rate-limit detection", () => {
   assert.equal(parseArgs(["--batch", "/tmp/test"]).timeoutMinutes, 25);
@@ -487,7 +702,7 @@ test("rate limit pauses only the affected backend without automatically retrying
 });
 
 test("active runner lock rejects duplicate execution", async (t) => {
-  const f = fixture(t, [{ delay: 600 }]);
+  const f = fixture(t, [{ waitForRelease: true }]);
   const first = launch(f.batch);
   t.after(() => {
     if (first.child.exitCode === null) first.child.kill("SIGTERM");
@@ -496,6 +711,7 @@ test("active runner lock rejects duplicate execution", async (t) => {
   const duplicate = await launch(f.batch, ["--resume"]).done;
   assert.equal(duplicate.code, 2);
   assert.match(duplicate.stderr, /active runner/);
+  writeFileSync(join(f.jobs[0].directory, "release-worker"), "release");
   assert.equal((await first.done).code, 0);
   assert.equal(f.status().jobs[0].attempts.length, 1);
 });
@@ -514,7 +730,7 @@ test(
   "interrupt terminates the worker process group and preserves interrupted status",
   { skip: process.platform === "win32" },
   async (t) => {
-    const f = fixture(t, [{ mode: "descendant", delay: 10_000 }, {}]);
+    const f = fixture(t, [{ mode: "descendant", waitForRelease: true }, {}]);
     const running = launch(f.batch);
     t.after(() => {
       if (running.child.exitCode === null) running.child.kill("SIGTERM");
@@ -540,7 +756,7 @@ test(
   "resume refuses a live orphan after a runner crash",
   { skip: process.platform === "win32" },
   async (t) => {
-    const f = fixture(t, [{ delay: 10_000 }]);
+    const f = fixture(t, [{ waitForRelease: true }]);
     const running = launch(f.batch);
     await until(() => existsSync(f.trace));
     const pid = f.status().jobs[0].pid;
@@ -558,112 +774,3 @@ test(
     assert.equal(readdirSync(f.jobs[0].directory).includes("attempts"), false);
   },
 );
-
-test("live limits keep a zero-capacity queue alive and activate it after a valid edit", async (t) => {
-  const f = fixture(t, [{ delay: 120 }, { delay: 120 }]);
-  const limitsFile = join(f.batch, "limits.json");
-  writeFileSync(limitsFile, JSON.stringify({ claude: 0, codex: 0 }));
-  const running = launch(f.batch, [
-    "--claude",
-    "0",
-    "--codex",
-    "0",
-    "--limits-file",
-    limitsFile,
-  ]);
-  t.after(() => {
-    if (running.child.exitCode === null) running.child.kill("SIGTERM");
-  });
-  await until(() => existsSync(join(f.batch, "status.json")));
-  assert.equal(running.child.exitCode, null);
-  assert.equal(existsSync(f.trace), false);
-  writeFileSync(limitsFile, "{");
-  await until(() => Boolean(f.status().limitsFile.warning));
-  assert.deepEqual(f.status().concurrency, { claude: 0, codex: 0 });
-  assert.equal(existsSync(f.trace), false);
-  writeFileSync(limitsFile, JSON.stringify({ claude: 1, codex: 0 }));
-  const outcome = await running.done;
-  assert.equal(outcome.code, 0, outcome.stderr);
-  assert.match(outcome.stderr, /Ignoring invalid limits file/);
-  assert.deepEqual(f.status().concurrency, { claude: 1, codex: 0 });
-  assert.equal(f.status().limitsFile.warning, null);
-  const trace = readFileSync(f.trace, "utf8")
-    .trim()
-    .split("\n")
-    .map(JSON.parse);
-  assert.deepEqual(
-    trace.map((event) => event.event),
-    ["start", "end", "start", "end"],
-  );
-});
-
-test("decreasing live limits drains workers, and invalid edits retain the last valid count", async (t) => {
-  const f = fixture(t, [{ delay: 1100 }, { delay: 1700 }, {}, {}]);
-  const limitsFile = join(f.batch, "limits.json");
-  writeFileSync(limitsFile, JSON.stringify({ claude: 2, codex: 0 }));
-  const running = launch(f.batch, ["--limits-file", limitsFile]);
-  t.after(() => {
-    if (running.child.exitCode === null) running.child.kill("SIGTERM");
-  });
-  await until(
-    () =>
-      existsSync(f.trace) &&
-      readFileSync(f.trace, "utf8").trim().split("\n").length === 2,
-  );
-  writeFileSync(limitsFile, JSON.stringify({ claude: 1, codex: 0 }));
-  await until(() => f.status().concurrency.claude === 1);
-  writeFileSync(limitsFile, JSON.stringify({ claude: -1, codex: 3 }));
-  await until(() => Boolean(f.status().limitsFile.warning));
-  assert.deepEqual(f.status().concurrency, { claude: 1, codex: 0 });
-  const outcome = await running.done;
-  assert.equal(outcome.code, 0, outcome.stderr);
-  assert.deepEqual(
-    f.status().jobs.map((job) => job.state),
-    ["completed", "completed", "completed", "completed"],
-  );
-  const trace = readFileSync(f.trace, "utf8")
-    .trim()
-    .split("\n")
-    .map(JSON.parse);
-  const thirdStart = trace.findIndex(
-    (event) => event.event === "start" && event.id === f.jobs[2].id,
-  );
-  assert.ok(
-    trace.slice(0, thirdStart).filter((event) => event.event === "end")
-      .length === 2,
-  );
-  assert.deepEqual(
-    trace.slice(thirdStart).map((event) => event.event),
-    ["start", "end", "start", "end"],
-  );
-  assert.equal(
-    outcome.stderr.split("Ignoring invalid limits file").length - 1,
-    1,
-  );
-});
-
-test("raising live limits cannot clear a backend rate-limit pause", async (t) => {
-  const f = fixture(t, [
-    { mode: "rate" },
-    {},
-    { backend: "codex", delay: 1200 },
-  ]);
-  const limitsFile = join(f.batch, "limits.json");
-  writeFileSync(limitsFile, JSON.stringify({ claude: 1, codex: 1 }));
-  const running = launch(f.batch, ["--limits-file", limitsFile]);
-  t.after(() => {
-    if (running.child.exitCode === null) running.child.kill("SIGTERM");
-  });
-  await until(
-    () =>
-      existsSync(join(f.batch, "status.json")) &&
-      Boolean(f.status().pausedBackends.claude),
-  );
-  writeFileSync(limitsFile, JSON.stringify({ claude: 6, codex: 6 }));
-  await until(() => f.status().concurrency.claude === 6);
-  assert.equal(f.status().jobs[1].state, "queued");
-  const outcome = await running.done;
-  assert.equal(outcome.code, 1, outcome.stderr);
-  assert.equal(f.status().jobs[1].attempts.length, 0);
-  assert.equal(f.status().runner.state, "paused");
-});

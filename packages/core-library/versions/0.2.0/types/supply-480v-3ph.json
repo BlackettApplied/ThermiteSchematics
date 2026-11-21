@@ -1,0 +1,53 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:supply-480v-3ph",
+      "description": "480 VAC three-phase source with protective earth",
+      "terminals": {
+        "L1": {
+          "role": "phase_1_source",
+          "rating": {
+            "nominal_voltage": 480,
+            "voltage_type": "AC"
+          }
+        },
+        "L2": {
+          "role": "phase_2_source",
+          "rating": {
+            "nominal_voltage": 480,
+            "voltage_type": "AC"
+          }
+        },
+        "L3": {
+          "role": "phase_3_source",
+          "rating": {
+            "nominal_voltage": 480,
+            "voltage_type": "AC"
+          }
+        },
+        "PE": {
+          "role": "protective_earth",
+          "required": true
+        }
+      },
+      "functions": {
+        "three_phase_source": {
+          "kind": "source",
+          "terminals": ["L1", "L2", "L3"]
+        },
+        "protective_earth": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:power-source",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Three source phases L1/L2/L3 and separate protective earth PE are modeled. PE is required; which phase outputs are used is application-dependent and must be required in the project. Unmodeled: neutral, upstream source equipment, disconnects, protection and additional bonding; no source capacity or manufacturer pinout is asserted."
+      }
+    }
+  ]
+}

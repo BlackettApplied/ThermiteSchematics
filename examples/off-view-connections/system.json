@@ -1,0 +1,13 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Off-view authored connection inventory"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

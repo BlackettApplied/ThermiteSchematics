@@ -1,7 +1,7 @@
-import ELK from "elkjs/lib/elk.bundled.js";
 import { describe, expect, it } from "vitest";
 
 import * as render from "../src/index.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 
 describe("render public API", () => {
   it("exports the frozen renderer version constants", () => {
@@ -10,11 +10,14 @@ describe("render public API", () => {
       "RENDERER_VERSION",
       "SYMBOL_CATALOG_VERSION",
       "createSchematicRenderer",
+      "describeCodePoint",
       "normalizePaperPage",
       "printPacketHtml",
       "renderSchematic",
       "renderSchematicPacket",
       "renderSchematicSheets",
+      "supportsGlyph",
+      "unshapedPrintableFont",
     ]);
     expect(render.RENDERER_VERSION).toBe("render/0.3");
     expect(render.SYMBOL_CATALOG_VERSION).toBe("ais-symbols/0.3");
@@ -24,7 +27,7 @@ describe("render public API", () => {
   });
 
   it("loads the bundled ELK implementation without worker configuration", async () => {
-    const elk = new ELK();
+    const elk = createElkEngine();
     const graph = await elk.layout({
       id: "root",
       layoutOptions: { "elk.algorithm": "layered" },

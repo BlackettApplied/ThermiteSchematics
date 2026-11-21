@@ -5,14 +5,19 @@
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
-    "node": "^22.12.0 || >=24"
+    "bun": ">=1.4.2"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./schemas/*": "./schemas/*"
+    "./schemas/*": "./schemas/*",
+    "./internal/title-data/presentation-validation": null,
+    "./internal/title-data/*": {
+      "types": "./dist/internal/title-data/*.d.ts",
+      "import": "./dist/internal/title-data/*.js"
+    }
   },
   "files": [
     "dist",
@@ -27,7 +32,7 @@
     "json-schema-to-typescript": "15.0.4"
   },
   "scripts": {
-    "generate:types": "node scripts/generate-types.mjs",
-    "generate:types:check": "node scripts/generate-types.mjs --check"
+    "generate:types": "bun scripts/generate-types.mjs",
+    "generate:types:check": "bun scripts/generate-types.mjs --check"
   }
 }

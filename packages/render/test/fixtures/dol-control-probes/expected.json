@@ -1,0 +1,223 @@
+{
+  "saved": {
+    "K1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W39", "W40", "W42"],
+      "omittedFunctions": [
+        "H1.lamp",
+        "PS1.ac_input",
+        "R1.coil",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W40 \u2192 R1.A2", "W42 \u2192 H1.X2"]
+        }
+      ]
+    },
+    "R1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W38", "W39", "W41", "W42"],
+      "omittedFunctions": [
+        "H1.lamp",
+        "K1.coil",
+        "PS1.ac_input",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "PS1.-",
+          "rows": ["W41 \u2192 K1.A2", "W42 \u2192 H1.X2"]
+        },
+        {
+          "terminal": "R1.A1",
+          "rows": ["W38 \u2192 K1.A1"]
+        }
+      ]
+    }
+  },
+  "p4": {
+    "K1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W39", "W40", "W42"],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "PS1.ac_input",
+        "R1.coil",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W40 \u2192 R1.A2", "W42 \u2192 H1.X2"]
+        }
+      ]
+    },
+    "R1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W38", "W39", "W41", "W42"],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "K1.coil",
+        "PS1.ac_input",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "PS1.-",
+          "rows": ["W41 \u2192 K1.A2", "W42 \u2192 H1.X2"]
+        },
+        {
+          "terminal": "R1.A1",
+          "rows": ["W38 \u2192 K1.A1"]
+        }
+      ]
+    }
+  },
+  "p5": {
+    "K1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W38", "W39", "W40", "W42"],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "PS1.ac_input",
+        "R1.coil",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W38 \u2192 R1.A1", "W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W40 \u2192 R1.A2", "W42 \u2192 H1.X2"]
+        }
+      ]
+    },
+    "R1": {
+      "omittedWires": ["W26", "W27", "W28", "W29", "W39", "W41", "W42"],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "K1.coil",
+        "PS1.ac_input",
+        "R1.contact12",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W41 \u2192 K1.A2", "W42 \u2192 H1.X2"]
+        }
+      ]
+    }
+  },
+  "p6": {
+    "K1": {
+      "omittedWires": [
+        "W26",
+        "W27",
+        "W28",
+        "W29",
+        "W35",
+        "W37",
+        "W38",
+        "W39",
+        "W40",
+        "W42"
+      ],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "PS1.ac_input",
+        "R1.coil",
+        "R1.contact12",
+        "R1.contact14",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W38 \u2192 R1.A1", "W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "OL1.96",
+          "rows": ["W35 \u2192 R1.11"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W40 \u2192 R1.A2", "W42 \u2192 H1.X2"]
+        },
+        {
+          "terminal": "S2.14",
+          "rows": ["W37 \u2192 R1.14"]
+        }
+      ]
+    },
+    "R1": {
+      "omittedWires": [
+        "W26",
+        "W27",
+        "W28",
+        "W29",
+        "W35",
+        "W37",
+        "W39",
+        "W41",
+        "W42"
+      ],
+      "omittedFunctions": [
+        "F1.pole1",
+        "H1.lamp",
+        "K1.coil",
+        "PS1.ac_input",
+        "R1.contact12",
+        "R1.contact14",
+        "T1.primary",
+        "T1.secondary"
+      ],
+      "disclosures": [
+        {
+          "terminal": "K1.A1",
+          "rows": ["W39 \u2192 H1.X1"]
+        },
+        {
+          "terminal": "OL1.96",
+          "rows": ["W35 \u2192 R1.11"]
+        },
+        {
+          "terminal": "PS1.-",
+          "rows": ["W41 \u2192 K1.A2", "W42 \u2192 H1.X2"]
+        },
+        {
+          "terminal": "S2.14",
+          "rows": ["W37 \u2192 R1.14"]
+        }
+      ]
+    }
+  }
+}

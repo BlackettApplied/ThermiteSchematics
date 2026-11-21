@@ -7,6 +7,146 @@ or mutate compiler IR. Pass it the `ir` and detached `presentation` from a
 successful `CompileResult` (`ok === true`). Malformed or partial IR is an invariant
 violation, not a supported render input.
 
+Packet signal-loop views can explicitly select `loopPower: {device, function}`
+to draw three conductor-only series legs using the existing DC-source profile.
+The series-only path preserves terminal, conductor and net identities, prints
+mandatory assessment/distribution notes and refuses incomplete, ambiguous or
+unprintable selections with R006. Input mode, isolation, bonding suitability and
+loop voltage budget are not assessed. Requests without `loopPower` retain their
+existing output. See [signal-loop requests and measured limits](../../docs/signal-loops.md#series-loop-power).
+
+Rooted views disclose direct authored connections omitted at a drawn terminal in
+adjacent, lightly bordered, unfilled **Off-view at D.T** cards. Rows use conductor
+IDs and authored opposite endpoints (`W5 → H1.X1`); they infer no logic, potential,
+function or routing direction. The whole logical view's drawn conductor identities
+are subtracted, including continuations; other packet views and context-reference
+leaders do not suppress local disclosures. Wires, jumpers and assigned spare cores
+participate; loose/unassigned cores add no incidence at a nonexistent endpoint.
+Cable sheets reserve endpoint-card space alongside every core/spare row.
+
+Same-terminal context associations remain in the semantic graph with their
+ports and provenance, but have no ELK edge or normalized routed edge. A measured
+junction envelope reserves the explicit “reference, no wire” caption and local
+2 mm leaders. Normalization validates the node-carried label and both real port
+anchors; clearance checks cover nearby symbols, routes and text at 1 mm, allowing
+the intentional attachment at each leader origin. Ordinary boundary attachments
+and authored conductors still route through ELK.
+
+Only graphs with a detached context reference can try control-fork recovery.
+The existing fast path runs first. For at most two two-arm forks, authored port
+incidence orders a fixed set of straight/turned assignments (at most 15 additional
+candidates). The incoming attachment stays fixed, ELK routes every candidate,
+and the unchanged topology/intersection guards must pass. No names or function
+heuristics, phantom edges or edited conductor paths choose a route. This cleanup
+does not promise the one-sheet/short-holding-loop goal tracked separately.
+
+`off-view/*` owns incidence, measurement, reservation, validation and annotation
+emission. The presentation graph reserves card bounds before ELK, and sheet cuts
+keep the terminal and card together. Pinned regular/bold/math ink and advance
+metrics reserve natural 3 mm text with 4 mm baseline pitch, padding and a white
+gap. Text wraps without ellipsis, clipping, compression or shrinking. Unprintable content returns contextual R006;
+invalid authored fields retain R005. Every rooted sheet repeats a selected-path
+(or selected-cable) notice in a reserved band above the drawing, even with no cards.
+Gang reservations share only Y in top-to-bottom flow and X in left-to-right flow;
+each card stays on its owning pole. Paging retains the successful greedy grid and
+uses bounded safe-gap alternatives when needed, preserving protected bounds,
+continuation spacing and the 40-cut/80-sheet limits. Card alternatives re-run ELK
+against the same validated selection. Candidates prefer no new interior jogs under
+3 mm and no new detours beyond `2 × Manhattan + 20 mm`, fewer pages,
+equal-sheet card locality, soft 15 mm excess and clipped median utilisation,
+with stable ties. A
+complete packet exceeding twice its native comparison page count returns R006.
+The no-card baseline uses the same safe-cut fallback. Empty enclosure-only cells
+are removed with destination remapping; a remaining conductor-only page refuses.
+Geometry envelopes are clipped to each strip when scoring. A guarded original
+placement exits before the bounded placement search only when it uses no more
+pages than its native no-card view; the 2× limit remains a packet refusal bound.
+Standard spacing may use the same validated strip composition as compact mode;
+compact additionally compares its original spacing profiles. After search,
+TB views may compose the selected winner's existing single-column vertical
+strips horizontally, in order, with the same 14 mm gap. Only the original and
+one composed materialized state are compared through the D2 order; this adds no
+ELK run, placement alternative or cut. Each constituent must have a device,
+terminal or card, independently of page totals. Final ink, reciprocal labels,
+physical zones and page cost are checked before acceptance; a failed alternative
+retains the original. Unrelated errors propagate. Strip envelopes
+include strokes, terminal markers, cards and pinned heading ink, expanding any
+partly intersected heading to a bounded fixed point. Rebuilt captions and wrapped
+notices are checked after trimming/stacking, with conservative untrimmed fallback.
+Raw and clipped route populations use exact authored wire/jumper UIDs or cable
+UID plus core, comparing positive count and severity growth per identity against
+the logical view's native population in both early exit and scoring. The cache
+includes grid, final viewports, scale and composition state. Official route
+thresholds have no added epsilon. Four extra standard economy placements begin
+only after materialization, final ink/peer checks and sufficient page-cost
+eligibility; failed recovery keeps its original budget, and exhaustion never
+means settled. The first route-safe printable candidate fixes the locality
+reference, keyed by physical terminal and owner. Route safety precedes physical
+sheet count; equal-sheet replacements cannot grow any card distance by more than
+0.1 mm against that reference. A sheet-saving candidate is never vetoed for
+locality. The soft summed positive excess over 15 mm precedes utilisation and the
+exact tie key. Ranking and early exit share this rule; it introduces no refusal
+or search budget. Useful utilisation is exactly >=0.40, without rounding across
+that boundary. Ordering quantizes distance to 0.001 mm and utilisation to 0.000001, then
+uses an exact profile/placement/grid/composition key. Each rooted-view search
+reuses exact pinned-font metrics in an isolated async scope, capped at 4,096
+entries. Outside that scope, measurement stays uncached; no result is rescaled.
+Compact mode compares its original spacing profiles first. Displayed terminal
+order constrains card stacks,
+and local candidates prefer the nearest clear position. Every changed reservation
+still runs ELK and the full validation guards.
+The continued-location caption has a separate measured lane between the notice
+and continuation text. A continued-location caption replaces its original
+heading only when that heading is wholly outside every nested viewport of the
+view. The renderer omits that text consistently from the shared drawing source;
+headings painted by any section, including partly visible headings, stay. Frames,
+backgrounds and layout are unchanged.
+
+Rooted continuation banks print the authored wire number (`properties.label`
+when present, else `designation`), qualified cable core ID, or jumper designation.
+An undesignated jumper prints exactly `JUMPER` followed by its full authored UID
+with a space or row break. Source text is
+measured in pinned faces before ELK; discovery cuts determine the crossed sides
+and serial envelope, then complete banks are reserved before selecting the paper
+layout. Natural 2.5 mm text uses 3.5 mm pitch and 1 mm ink clearance. Bounded
+identity wrapping prefers literal `-`, `.`, `/` and space separators, including
+UUID groups, without discarding doubled or trailing spaces. Oversized segments
+use balanced grapheme splits rather than one- or two-character orphan rows when
+a legal alternative fits. The formatter considers at most 64 breaks per state,
+memoizes up to 8192 widths, and stores suffix backpointers. At a fitting 64-cluster
+prefix it tries deterministic greedy rows once (at most 32 binary calls to the
+memoized width function and 64 separator checks per row, plus five balancing
+width calls); if orphans remain, the capped search continues. These limits bound
+measurement calls, not total string-processing work: a probe can join and measure
+the remaining input. A fitting whole
+identity takes one width measurement. The bank planner compares at most four
+deduplicated forms, including the measured longest literal token.
+Bounded packing moves text by at most one row pitch; anchors, conductor paths and their
+order stay intact. Caption, notice, bank and card ink are checked after folding.
+Final packet assembly resolves the reciprocal endpoint's actual `sheet.zone`,
+including same-sheet folds and omitted cells. Reservation precedes layout using
+the real preceding-view serial offset, at most 39 cuts per orthogonal segment,
+and destination width through sheet 100. This conservative monotone digit ceiling
+covers C999/C1000 and sheet 99/100 without optimistic bank tightening; final
+assembly assigns real serials/zones and rechecks their pinned ink. Metadata retains the printed
+`conductor` and adds `designation`, `toZone`, source-element `provenance` and
+reciprocal `end`. The no-card baseline uses the same continuation policy.
+Cable usage text reserves complete measured rows at 2.5 mm before paging/cards.
+Unprintable labels refuse with contextual R006, without clipping or truncation.
+
+These annotations add no electrical edges or device/function appearances. Coverage,
+W906 and strict packet behavior are unchanged. See [view rules](../../docs/views.md).
+
+## Runtime
+
+The source workflow runs on Bun 1.4.2. The renderer loads the pinned ELK 0.12.0
+worker source in a CommonJS scope with `self` shadowed, then supplies its
+in-process worker through ELK's `workerFactory` option. This avoids mistaking
+Bun's global `self` for a browser worker, without changing that global or the
+upstream library. ELK must be installed on disk; this source workflow does not
+produce a standalone executable. The byte-exact drawing regressions remain the
+rendering authority.
+
 ## Public API
 
 The package root exports only the renderer entry points, version constants, and the
@@ -299,10 +439,18 @@ a stop. Potential UID is the final tie-breaker for duplicate declarations.
 
 ### Control
 
-A control root is one mapped two-terminal coil. The input side searches for, in
-order, a PLC output channel, an exact positive-potential anchor, or a mapped DC source.
-The return side searches for an exact return-potential anchor, a mapped source-return,
-or an exact-role mapped fallback. Only `control-contact`, `command-contact`,
+The [durable DOL probes](test/fixtures/dol-control-probes/README.md) preserve
+measured requests, inventories and scope mutation gates.
+
+A control root is one mapped two-terminal coil. The input side searches, in order,
+for a PLC output channel, an exact positive-potential anchor, or a mapped control
+source. The return side searches, in order, for an exact return-potential anchor,
+a mapped source-return boundary, or an exact-role mapped fallback.
+Transformer-source candidates are paired across both arms using distinct
+terminals/nets of one source function; incompatible, mixed or equally ranked
+ambiguous pairs refuse with R002. See the
+[source-pairing policy](../../docs/circuit-symbols.md#transformer-control-sources).
+Only `control-contact`, `command-contact`,
 `permissive-contact`, and `protection-contact` functions are traversable.
 
 The K1 reference view is exactly PLC1 DO0 -> `W-CTL-005` -> PB1 NC ->
@@ -405,26 +553,30 @@ not claim that each terminal belongs to every member.
 `breaker-pole`, `overload-pole`, `terminal-display`, and `non-traversable`. Visual
 class never grants path adjacency.
 
-The core mapping surface is:
+The following core 0.1.0 rows describe projected production bindings from
+`projectDeviceTypeSymbolMappings` (the internal compatibility table in
+`symbols/mappings.ts` is maintained separately):
 
-| Core type                                      | Rendered function or aggregate                           | Family behavior                                                                                  |
-| ---------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `core:supply-480v-3ph`                         | `three-phase-source` aggregate -> `ais:power-source-3ph` | Power source with ordered L1/L2/L3/PE; control omitted.                                          |
-| `core:breaker-3p`                              | `pole1..3` -> `ais:breaker-pole`                         | Power only; `trip` is metadata-only in both families.                                            |
-| `core:contactor-3p-1no`                        | `coil`, `pole1..3`, `aux13`                              | Control selects coil or aux; power selects poles; other functions are explicitly outside-family. |
-| `core:overload-3p-1nc`                         | `pole1..3`, `aux95`                                      | Control selects aux; power selects poles; `trip` is metadata-only.                               |
-| `core:motor-3ph`                               | `motor` aggregate -> `ais:motor-3ph`                     | Power load U/V/W/PE; control omitted.                                                            |
-| `core:pushbutton-nc`                           | `contact11` -> `ais:pushbutton-nc`                       | Control only.                                                                                    |
-| `core:limit-switch-2wire`                      | `contact13` -> `ais:switch-no`                           | Control only.                                                                                    |
-| `core:prox-pnp-3wire`                          | `pnp-sensor` aggregate -> `ais:switch-sensor-pnp`        | Control mapping for the M6 source-edit seam; power omitted.                                      |
-| `core:plc-compact`                             | `di0`, `di1`, `do0`, `do1`, `supply`                     | Selected control channel or `supply` via `ais:dc-load`; power omitted.                           |
-| `core:psu-24vdc`                               | `dc_output` -> `ais:power-source-dc`                     | Control boundary; power omitted; `ac_input` is unsupported in v0.1.                              |
-| `core:terminal-block-8`, `core:junction-box-8` | each `terminal1..8` -> `ais:terminal`                    | Selected positions render in either family.                                                      |
+| Core type                                      | Rendered function or aggregate                           | Family behavior                                                                                              |
+| ---------------------------------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `core:supply-480v-3ph`                         | `three-phase-source` aggregate -> `ais:power-source-3ph` | Power source with ordered L1/L2/L3/PE; control omitted.                                                      |
+| `core:breaker-3p`                              | `pole1..3` -> `ais:breaker-pole`                         | Power poles and control protection contacts; `trip` is metadata-only in both families.                       |
+| `core:contactor-3p-1no`                        | `coil`, `pole1..3`, `aux13`                              | Control selects coil or aux; power selects poles; other functions are explicitly outside-family.             |
+| `core:overload-3p-1nc`                         | `pole1..3`, `aux95`                                      | Control selects aux; power selects poles; `trip` is metadata-only.                                           |
+| `core:motor-3ph`                               | `motor` aggregate -> `ais:motor-3ph`                     | Power load U/V/W/PE; control omitted.                                                                        |
+| `core:pushbutton-nc`                           | `contact11` -> `ais:pushbutton-nc`                       | Control only.                                                                                                |
+| `core:limit-switch-2wire`                      | `contact13` -> `ais:switch-no`                           | Control only.                                                                                                |
+| `core:prox-pnp-3wire`                          | `pnp-sensor` aggregate -> `ais:switch-sensor-pnp`        | Control mapping for the M6 source-edit seam; power omitted.                                                  |
+| `core:plc-compact`                             | `di0`, `di1`, `do0`, `do1`, `supply`                     | Selected control channel or `supply` via `ais:dc-load`; power omitted.                                       |
+| `core:psu-24vdc`                               | `dc_output` -> `ais:power-source-dc`, `ac_input`         | DC output is a control boundary; the AC input can root power when its authored feed reaches a mapped source. |
+| `core:terminal-block-8`, `core:junction-box-8` | each `terminal1..8` -> `ais:terminal`                    | Selected positions render in either family.                                                                  |
 
 Omission reasons are exactly `metadata-only-mechanism`, `boundary-metadata-only`,
 `outside-family`, and `unsupported-v0.1`. The cable type is not a device mapping; a
-selected cable conductor is an edge. `ais:fuse` is catalog vocabulary, but no current
-core fuse type exists. An unknown selected type/function returns R003; no generic
+selected cable conductor is an edge. `ais:fuse` is catalog vocabulary; core 0.2.0
+ships `core:fuse-1p`, `core:fuse-2p` and `core:fuse-3p`, each declaring
+`thermite:fuse`. See the [core inventory](../core-library/README.md) for their
+generic-model scope. An unknown selected type/function returns R003; no generic
 symbol is guessed.
 
 Selected devices group under the exact authored location tuple or the separately
@@ -435,6 +587,58 @@ provenance on that rail and omits empty location/device groups. Groups add no
 electrical connectivity. Two conductors plus one semantic attachment create an
 explicit junction; an isolated perpendicular crossing has neither a dot nor shared
 connectivity.
+
+Printable rooted and circuit families use the shared vocabulary in
+`symbols/printable-policy.ts`: rectangular coils, breaker blades with a cross,
+stepped thermal overload elements, and distinct NO/NC contact marks (NC has a
+stroke). Overload power elements resolve from authored power-input/output roles;
+auxiliary contacts resolve from their own contact state. Protection marks never
+inherit NC/NO captions. Coil AC/DC text comes only from its terminal ratings;
+motors carry M and carry 3~ only for a three-phase profile/function shape.
+`thermite:estop` and `thermite:selector` retain their parent pushbutton/switch
+support and add mushroom/latch and rotary/detent operator marks. Identity is
+never inferred from names, descriptions or designations. `thermite:disconnector`
+uses an open blade, gap and fixed-contact bar, without an operator linkage or
+trip element. It has power contact traversal and switch-parity control traversal;
+closed states, loads and signal loops are unsupported. See the
+[identity and suitability limits](../../docs/circuit-symbols.md#shared-printable-vocabulary).
+Rooted gang ink uses only authored same-device breaker or disconnector associations, with aligned poles and a clear
+corridor; unaligned or obstructed associations are omitted. This changes no
+symbol bounds, port positions, ELK placement, nets or conductor accounting.
+
+All printable families use `Thermite Sans, Thermite Math, sans-serif`. The render
+package bundles the original Noto faces for exact advances and ink bounds. Labels
+print at natural width; compression is limited to 9%, and wider text widens its
+reservation. Conductor-facing ink stays inside its existing reserved clip, including the padding when needed after semantic reordering;
+text moves inside the existing clip, without moving a route or port. Serializable render/agent results contain family references only.
+CLI SVG file exports embed a deterministic document subset; HTML embeds one
+shared subset block in the head. Fontkit 2.0.4 selects glyphs and composite
+closure. OpenType layout tables (GPOS, GSUB, GDEF and legacy/AAT variants) are
+removed because the shared glyph model does not model those features. Exact
+metrics, browser delivery and PDFKit use the same feature-free faces; outlines,
+advances and hinting stay original. Pako 0.2.9 performs platform-independent JS
+compression. Each standalone SVG has a 61,440-byte font-block limit, checked at
+file delivery, across shipped examples and independently by E3. PDFKit embeds
+subsets of the feature-free source faces. The font parity test pins subset bytes and compares browser
+and PDF ink. No host font installation or network is required for file exports.
+
+Report identifier values, including BOM order numbers, occupy one physical line.
+The explicit [report column policy](src/packet/report-identifiers.ts) identifies
+scalar fields and individual members of lists; punctuation never selects a field
+or creates a break inside its identifier. Columns first reserve the longest
+identifier at 2.6 mm em. If the required widths cannot fit, the entire report
+retries at the allowed 2.5 mm em, then refuses with R006 naming the row, column,
+identifier and required/available width. Select larger paper or landscape when
+needed; identifiers are never shortened, elided or compressed. An authored line
+separator inside a scalar identifier also refuses. CSV values are unchanged.
+The whole “Order number” header is preferred only when no body cell gains a line
+and the header does not become taller; narrow layouts can retain its word wrap.
+Terminal-report connection lists protect each complete peer endpoint from the
+authored wires, jumpers and cable cores, including its terminal key and punctuation.
+Lists can wrap between endpoints. Printed arrows and semicolons do not determine
+identifier boundaries. Registry headers are pinned against the real query tables,
+including packet-only wire reference columns. Body layout uses explicit source
+row keys, so copying a row's cells retains its identifier protection.
 
 No IEC 60617 artwork is copied, embedded, redistributed, or claimed. Existing
 `iec:*` library strings are semantic hints only, and this package makes no standards
@@ -503,6 +707,60 @@ ELK graph sizes `2171 x 501`/`732.6 x 1742` for PNP trace and
 label, and route coordinate returned by ELK is normalized and emitted verbatim; there
 is no authored coordinate, UID patch, post-layout repair, or collision exemption.
 
+All rooted views compare authored device designations, terminal/function keys and
+semantic net membership. Nested presentation IDs remain identity; their comparison
+keys recursively substitute authored names. Equal-distance selected steps use a
+semantic order before path ranking, junction arms, and the first PNP signal edge
+reach ELK. SVG labels and endpoint tuples use the same order. Unnamed jumpers use
+their endpoint tuple and authored source file/JSON pointer to break ties.
+
+At a two-arm source fork, an external load gets the straight port before a load
+inside the source's location; reverse designation order (then reverse terminal-key
+order) breaks ties. The turned branch uses the outside of its catalog source port
+(positive above, return below in right flow). The reviewed pair geometry is kept;
+its SVG label/metadata order is now semantic too. Pair recovery retains its limit
+of 16 straight/turned port-side combinations.
+
+Larger loads forks use distinct sides on a four-way junction. Higher degrees use
+a chain of junctions at that exact compiler terminal, linked by presentation-only
+segments with no physical element IDs. Looped supplies keep each incoming and
+outgoing conductor and give the continuing branch an outward arm. Recovery first
+tries six coordinated side permutations on each of at most two supply nets (36
+layouts including the original), then at most 255 independent component choices.
+Repeated side assignments are skipped; with one junction per net the second stage
+is identical and omitted (36 layouts total). The general cap remains 291 layouts,
+independent of load count. Existing PNP shared
+trace forks also admit at most 279 validated side choices so migration of branch
+order preserves their drawable topology. Every attempt runs the
+complete geometry and topology validator. No conductor is clipped, merged or
+removed. Recovery reads the validator's structured failure kind, independently of
+message wording. Every R004 in a loads view triggers the bounded recovery,
+including label collisions; an exhausted search retains the load advice and
+`details.loads`. In other views, invalid ELK contracts do not trigger recovery.
+
+The plc3, plc4, daisy, PNP mixed-load and machine-demo loads drawings render in both
+flows as continuous SVGs. Sheet composition still enforces the existing print-size
+rules and may return R006. Exhaustion returns the original R004 and unchanged load
+advice: build a circuit view from the source function, `details.loads[].functionIds`
+and the authored conductors connecting those devices, put it in the `views` array
+of a `schematic-packet-request/0.1` file, and run `thermite packet --input <file>`.
+Trace advice names only loads whose catalog mapping accepts a trace root, such as
+B1; choose its connected input target with `--to` and add `--include-power`.
+
+Test-only SVG snapshots cover external/same-location pairs and N=3/looped supplies
+in both flows. RB's exact diagnostic snapshots remain forced-exhaustion controls.
+Update and inspect diffs with:
+
+```sh
+VITEST_MAX_WORKERS=2 bun run test -- packages/render/test/render-robustness.test.ts -t 'direct pair golden|#60' --update --no-cache --configLoader=native
+VITEST_MAX_WORKERS=2 bun run test -- packages/render/test/load-layout.test.ts --update --no-cache --configLoader=native
+bun scripts/update-render-ordering-goldens.mjs --write
+```
+
+The final script requires a build and owns only the existing adapter hash golden
+and `test/snapshots/semantic-ordering/layout-metrics.json`. Use `--check` to verify
+those bytes. The closed historical golden inventory is unchanged.
+
 Target-sensitive options are attached to their legal effective target. Port-label
 placement targets the leaf, while horizontal/vertical port-label spacing `4` targets
 the effective device/root parent. Function/aggregate/rail label placement targets its
@@ -518,6 +776,8 @@ Four-lane three-phase source and motor ports use a frozen `24`-unit pitch. In
 left-to-right flow a leaf keeps the centered top header; in top-to-bottom flow its
 upright label occupies a left header column and the rotated symbol begins at
 `label width + 16`, leaving an `8`-unit gap between label and symbol/lead corridor.
+Vertical NO/NC captions instead use a measured slot beside their contact, inside
+that same leaf envelope; their primitive origin and port anchors stay fixed.
 
 The normalizer matches ELK output by stable ID rather than return-array order. Node,
 port, and node-label positions accumulate parent offsets. Root-owned edge sections and
@@ -525,9 +785,10 @@ edge-label coordinates are already global under `json.edgeCoords=ROOT`, so no ow
 offset is added. Missing, non-finite, out-of-range, non-orthogonal, disconnected,
 ambiguous, overlapping, T-intersecting, or colliding geometry returns R004 before SVG.
 
-Text boxes are computed without platform font measurement. Every text element carries
-deterministic `textLength` and the `spacingAndGlyphs` `lengthAdjust` to reserve inline
-advance and a stable per-label `clipPath` whose rectangle hard-bounds ink. SVG bytes,
+Text boxes are computed without platform font measurement. Rooted labels print
+at natural advance; only text that needs bounded compression gets `textLength`
+and `spacingAndGlyphs`. A stable per-label clip retains the reservation, while
+its opaque plate and validation use the same exact ink bounds. SVG bytes,
 not platform-identical glyph rasterization, are guaranteed.
 
 ## Text preflight and semantic IDs
@@ -608,8 +869,19 @@ literal tab/CR, and exactly one final LF.
 
 ## Expected errors
 
+See the complete [diagnostic catalog](../schema/src/diagnostic-catalog.ts),
+including R006 and R007, for current printable errors.
+
 All R-errors include `code`, `message`, and string `root`. Optional fields are omitted
 when inapplicable.
+
+Observed-geometry witness values such as `details.originalMessage` and
+`details.conductors` follow the actual layout; code, family, root, net identity,
+field names/types and serialization remain contractual, and every other existing
+field keeps its dev value with additive diagnostics, including byte-identical
+`message` text for unchanged geometry. Historical Tier 2 payloads
+remain exact serialization controls under injected refusals, while separately
+named snapshots pin the live semantic-layout witnesses.
 
 | Code / public type                     | Expected failure                                                       | Additional fields and policy                                                                                                 |
 | -------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -620,6 +892,34 @@ when inapplicable.
 | R004 / `InvalidLayoutError`            | Returned geometry violates the layout/SVG contract.                    | `family` and optional implicated `netId`; no SVG.                                                                            |
 | R005 / `InvalidRenderTextError`        | Project/title/graph text violates the fixed renderability contract.    | `family`, closed `ownerKind`, safe `ownerId`, closed `field`, and one of five closed reasons; never echoes rejected text.    |
 
+Control, power, trace and loads selection check intermediate conductor terminals
+for a selected function, mapped terminal-display symbol or selected boundary.
+Rooted control input paths additionally admit terminal-only context owned by an
+unselected supported coil/2. Its presentation and reference function lists stay
+empty. This does not select the coil or broaden other path families; ineligible
+terminals retain R003. See the
+[bounded DOL example and coverage distinction](../../docs/views.md#bounded-dol-selection).
+Invalid profiles retain their existing binding diagnostic. Otherwise, a supported
+function terminal without a selected owner returns R003 with
+`details.reason: "unrepresented-terminal"`, the real device/terminal and incident
+conductor identities. For example, a K1 coil return through PLC1.M cannot display
+the PLC supply function as an individual M terminal. A circuit view selecting
+K1's coil and the same conductors can show those real terminal boundaries.
+`details.alternative` contains that source-selected `circuit-view-request/0.1`:
+put it in the `views` array of a `schematic-packet-request/0.1` file and run
+`thermite packet --input <file>`; passing the circuit view alone is not a packet.
+Its functions and conductors are drawn from the actual selection. Cable
+conductor views retain their existing endpoint-binding rules. Selection does
+not change wiring or declare an electrical repair. Presentation's missing-owner
+throw remains an invariant for selection/mapping programming errors.
+An independent unsupported profile on another path device remains in
+`unsupported`, `details.profileNote` and an "Additional profile limitation"
+sentence alongside the terminal diagnosis.
+
+When R002 retains an incomplete-path explanation alongside an unsupported profile
+note, its message appends a sentence naming that device and profile. The existing
+message remains a prefix and the structured fields stay the same.
+
 Catalog corruption, impossible-after-validation presentation state, a thrown ELK
 error, or an emitter programming failure rejects the promise as an unexpected tool
 failure. It does not add a new R-code. The CLI converts those failures to E001/exit 2.
@@ -627,23 +927,28 @@ failure. It does not add a new R-code. The CLI converts those failures to E001/e
 ## Determinism and future seams
 
 The source and IR contracts remain `electrical-system/0.1` and
-`electrical-ir/0.1`. Presentation is the separate compatible
-`project-presentation/0.1` context. Request/view formats remain
+`electrical-ir/0.1`. Presentation is a separate compiled context. Continuous
+request and view formats remain
 `schematic-view-request/0.1`, `schematic-view-request/0.2`,
 `schematic-view/0.1`, and its `0.2` revision; symbol and layout versions remain
 `ais-symbols/0.3` and `elk-layered/0.4+elkjs-0.12.0`.
 
 For equivalent IR semantics, compiled presentation, normalized view, supported
-Node/ELK runtime, and exported versions, the SVG string is byte-identical. Title
+Bun/ELK runtime, and exported versions, the SVG string is byte-identical. Title
 content uses only project name, declared/default revision, normalized view identity,
-authored lines, and fixed product/renderer versions. Title measurement uses fixed
-code-point arithmetic; no platform font API participates.
+authored lines, and fixed product/renderer versions. Title measurement uses shared deterministic metrics within its existing
+code-point reservation; no platform font API participates.
 
 All consumed collections cross semantic boundaries as freshly sorted arrays. ELK
 receives a fresh deep DTO; results and summaries do not alias later renders. No
 mutable singleton, layout array order, path, clock, Git state, locale, timezone,
 process ID, random value, environment value, or output filename enters SVG. ELK is
-0.12.0, seed is `1`, both merge options are false, and no cache exists.
+0.12.0, seed is `1`, and both merge options are false. Packet and standalone
+rooted searches can reuse exact ELK inputs within the current render.
+Semantic IR keys are rebuilt for each render, outside selection comparators;
+editing an IR in place gives the same result as rendering its fresh clone.
+Ordered paths and graph comparison keys belong to that render's objects;
+no module-level memo table retains them.
 
 The checked-in K1 control, M1 power, LS1-to-PLC1 trace, CBL1 conductors, and PS1 loads
 SVGs are reviewed byte goldens from the same unchanged motor-starter IR.
@@ -651,7 +956,38 @@ Semantic/provenance/layout/XML assertions are authoritative; the goldens supplem
 them and are not auto-updated or platform-specific. No saved-view or cache format is
 committed yet.
 
+Caption placement uses bundled font ink and measured stroke bounds. Vertical
+rooted NO/NC captions have a compact owner-nearest slot inside the existing leaf
+envelope, checked before ELK and again in the returned layout. Circuit vertical
+designations and relation footers use deterministic candidates inside their
+owner, with 1 mm clearance to attachment/stub ink and the existing spacing to
+unrelated terminal text. Moving a caption preserves element order and port
+anchors. A measured side lane is added before ELK only when the existing
+owner cannot print a required caption, with a bounded retry. Final relation-summary lines determine the reserved width, together
+with the body/pin minimum. Required captions refuse with `R006` when no clear
+position fits. Independent renderer tests measure every emitted terminal
+attachment, including strokes not inventoried by the drawing checker.
+
 [`@thermite/agent-tools`](../agent-tools/README.md) passes the existing public
 `SchematicViewRequest` union and compiler-owned presentation through to this
 renderer, then returns the renderer DTOs and R-errors unchanged. It does not add
 agent-owned view syntax, selection, layout, geometry, or another R-code.
+
+Nonempty requested terminal plans include a graphical schematic strip and the
+original connection inventory. Each terminal keeps its native device UID/terminal
+key and every bridge keeps its native jumper UID. Tn/Rn references appear on both the strip and its
+inventory row. Authored order is preserved; missing order, dimensions and
+hardware stay visibly unspecified. Location groups do not assign installation
+sides. Requested strips paginate at device boundaries and split oversized devices between
+terminals. Reciprocal device/terminal markers and explicit jumper stubs name the
+final sheet.zone. The measured strip can span sheets, with text of at least
+2.5 mm. Generated supplementary inventories retain their native tables.
+
+Standalone terminal reports use the same strip pagination as packets. HTML, PDF
+and JSON retain the strip and reciprocal Tn/Rn references. A single-sheet SVG
+export retains the original one-sheet inventory without strip references when
+the appended strip is the only reason for additional sheets; inventories that
+already need multiple sheets keep the existing multi-sheet export diagnostic.
+
+Terminal strips use the inventory cable schedule, including physical cable cores
+and authored single-ended/spare assignments, once per native core identity.

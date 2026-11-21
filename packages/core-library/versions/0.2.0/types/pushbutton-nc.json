@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:pushbutton-nc",
+      "description": "Normally closed momentary pushbutton for a stop circuit",
+      "terminals": {
+        "11": {
+          "role": "nc_contact",
+          "required": true
+        },
+        "12": {
+          "role": "nc_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact11": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["11", "12"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:pushbutton",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: The single normally closed momentary contact pair 11/12 is modeled and both ends are required for its stop circuit. No optional points in this interface. Unmodeled: illumination, extra contacts and bonding of actual buttons. This generic contact does not establish safety function or manufacturer pinout."
+      }
+    }
+  ]
+}

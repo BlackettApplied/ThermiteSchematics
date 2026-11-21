@@ -66,6 +66,7 @@ function crossingGraph(): PresentationGraph {
   ];
   return {
     format: "schematic-presentation/0.1",
+    directLoadPair: false,
     view: {
       format: "schematic-view/0.1",
       family: "control",

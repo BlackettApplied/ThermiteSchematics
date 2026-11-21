@@ -1,0 +1,162 @@
+{
+  "objects": [
+    {
+      "uid": "62000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "XT1",
+      "type": "core:terminal-block-8",
+      "connectionReview": {
+        "terminals": {
+          "3": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          },
+          "4": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          },
+          "5": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          },
+          "6": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          },
+          "7": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          },
+          "8": {
+            "status": "intentionally-unused",
+            "reason": "Outside this synthetic two-terminal primary interface."
+          }
+        }
+      }
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000002",
+      "kind": "device",
+      "designation": "T1",
+      "type": "core:control-transformer"
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000003",
+      "kind": "device",
+      "designation": "R1",
+      "type": "core:relay-1co",
+      "connectionReview": {
+        "terminals": {
+          "11": {
+            "status": "intentionally-unused",
+            "reason": "Only the unrated coil is used by this synthetic drawing fixture."
+          },
+          "12": {
+            "status": "intentionally-unused",
+            "reason": "Only the unrated coil is used by this synthetic drawing fixture."
+          },
+          "14": {
+            "status": "intentionally-unused",
+            "reason": "Only the unrated coil is used by this synthetic drawing fixture."
+          }
+        }
+      }
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000004",
+      "kind": "device",
+      "designation": "H1",
+      "type": "core:pilot-light"
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000005",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "1"
+        },
+        {
+          "device": "T1",
+          "terminal": "H1"
+        }
+      ]
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000006",
+      "kind": "wire",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "XT1",
+          "terminal": "2"
+        },
+        {
+          "device": "T1",
+          "terminal": "H2"
+        }
+      ]
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000007",
+      "kind": "wire",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X1"
+        },
+        {
+          "device": "R1",
+          "terminal": "A1"
+        }
+      ]
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000008",
+      "kind": "wire",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X2"
+        },
+        {
+          "device": "R1",
+          "terminal": "A2"
+        }
+      ]
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000009",
+      "kind": "wire",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X1"
+        },
+        {
+          "device": "H1",
+          "terminal": "X1"
+        }
+      ]
+    },
+    {
+      "uid": "62000000-0000-4000-8000-000000000010",
+      "kind": "wire",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X2"
+        },
+        {
+          "device": "H1",
+          "terminal": "X2"
+        }
+      ]
+    }
+  ]
+}

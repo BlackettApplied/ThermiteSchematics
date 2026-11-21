@@ -12,7 +12,7 @@ import { dirname, join, parse, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
-  SHIPPED_CORE_FILE_INVENTORY,
+  SHIPPED_CORE_VERSIONS,
   resolveShippedCoreLibrary,
 } from "@thermite/compiler";
 
@@ -29,6 +29,9 @@ import {
   type StarterOutputFilePath,
   type StarterTemplatePath,
 } from "./starter.js";
+
+const STARTER_CORE = SHIPPED_CORE_VERSIONS["0.2.0"]!;
+const SHIPPED_CORE_FILE_INVENTORY = STARTER_CORE.fileInventory;
 
 export type InitExitCode = 0 | 1 | 2;
 export type InitFailureCode =
