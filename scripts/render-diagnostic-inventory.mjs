@@ -54,7 +54,8 @@ export function diagnosticInventory(root = resolve(".")) {
     (path) =>
       path.endsWith(".ts") &&
       (path.startsWith("packages/render/src/") ||
-        path === "packages/cli/src/alpha.ts"),
+        path === "packages/cli/src/alpha.ts" ||
+        path === "packages/cli/src/alpha-export-artifact.ts"),
   );
   const program = ts.createProgram(
     paths.map((path) => resolve(root, path)),

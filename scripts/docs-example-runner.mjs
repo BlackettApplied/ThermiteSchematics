@@ -120,6 +120,7 @@ async function prepareWorkspace(c, file) {
     "examples",
     "thermite.mjs",
     "package.json",
+    "bun.lock",
     "tsconfig.json",
     "tsconfig.base.json",
     "vitest.config.mjs",

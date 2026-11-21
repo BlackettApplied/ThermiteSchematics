@@ -31,6 +31,9 @@ criteria and returns selected/outside device UIDs with a copy of the filter.
 Reports and packet references share this resolver; private path helpers remain
 outside the public query API.
 
+A [delivery request](project-workflows.md#export-a-delivery) can supply the
+same named filter to a CSV report and verify its freshness alongside the drawings.
+
 ## Report columns and authored meaning
 
 Reports list physical facts. Terminal rows group immediate connections by known

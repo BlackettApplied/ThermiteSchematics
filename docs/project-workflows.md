@@ -117,6 +117,117 @@ judgment. UIDs identify devices; page numbers may change.
 `.pdf` is direct vector PDF with physical paper dimensions and fonts.
 Unsupported PDF glyphs fail; use supported labels or SVG/HTML.
 
+## Export a delivery
+
+After the final edit, validate the project, generate the files together, and
+inspect the drawings. Check freshness again just before handoff.
+
+```sh
+thermite validate .
+thermite export bundle --project . --input delivery.request.json --out-dir drawings
+thermite export check --project . --input delivery.request.json --out-dir drawings --json
+```
+
+Save a strict `export-delivery-request/1` JSON file with a nonempty `jobs` array.
+Each job declares its output formats and filenames. Resolve command-line paths
+from the working directory, job inputs from the project directory, and output
+filenames from the delivery directory. Use forward slashes for nested paths.
+
+```json
+{
+  "format": "export-delivery-request/1",
+  "jobs": [
+    {
+      "kind": "packet",
+      "input": "packet.request.json",
+      "index": true,
+      "strict": false,
+      "outputs": {
+        "json": "packet.json",
+        "html": "packet.html",
+        "pdf": "packet.pdf"
+      }
+    },
+    {
+      "kind": "view",
+      "designation": "M1",
+      "intent": "power",
+      "flow": "top-to-bottom",
+      "outputs": { "html": "motor-power.html", "pdf": "motor-power.pdf" }
+    },
+    {
+      "kind": "view",
+      "designation": "K1",
+      "intent": "actuation",
+      "outputs": { "pdf": "actuation.pdf" }
+    },
+    { "kind": "report", "report": "bom", "outputs": { "csv": "bom.csv" } },
+    {
+      "kind": "report",
+      "report": "terminals",
+      "filter": "cabinet.filter.json",
+      "outputs": { "csv": "terminals.csv" }
+    },
+    { "kind": "diagnostics", "outputs": { "json": "completeness.json" } },
+    {
+      "kind": "cable",
+      "designation": "CBL1",
+      "outputs": { "json": "cable.json" }
+    },
+    {
+      "kind": "review",
+      "before": "before.json",
+      "outputs": { "json": "review.json" }
+    }
+  ]
+}
+```
+
+- **Packet.** Use an existing packet request. Optional `page` (`size`,
+  `orientation`, `marginMm`), `layout` and `index: true` apply the same overrides
+  as packet flags. `strict: true` rejects compiler or packet coverage warnings.
+- **View.** Choose `power`, `actuation`, `loads`, `conductors` or `trace`.
+  Trace also takes `to` and optional `includePower`. Use either drawing flow
+  and the same page, layout and index settings as `view`. Packet and view
+  jobs also support `svg` for a single sheet. Use HTML, PDF or JSON for
+  multiple sheets.
+- **Report.** Use any `thermite report <kind>` kind. Use `filter` for a named filter
+  or `device` where the standalone report accepts it. CSV uses the same
+  columns, selection and row policy as `thermite report <kind> -o <file>.csv`. A report job
+  can also issue printable formats with the same page, layout and index
+  settings as a standalone report.
+- **Diagnostics.** The completeness inventory supports optional `device`
+  or exact `location` scope and the standalone JSON, CSV and TXT formats.
+- **Cable and review.** Cable uses a designation. Review uses the JSON
+  baseline saved with the snapshot command before the edit.
+
+The bundle compiles once. It stages the requested files, rechecks the source
+and request bytes, and publishes `export-manifest.json` last. The manifest
+records the expected files, their hashes, the effective export options and
+warning scopes. The CLI reports compiler diagnostics once and reports packet
+coverage on the packet job.
+
+A failure before publication preserves the previous generation. Check that
+generation against current inputs before relying on it. If publication stops
+partway, rerun the bundle to replace the incomplete delivery. A concurrent
+writer can reserve an output directory. Retry after that writer exits. After
+a forced termination, verify that no publisher is using the delivery before
+removing any empty `.thermite-export.lock` directories left in the output
+folders, then rerun the bundle.
+
+For a custom delivery, opt in to sidecars as in
+`thermite view M1 --power -o <file>.pdf --receipt`. The same flag is available
+for named report, packet, diagnostics, cable and review exports. Keep each
+receipt sidecar beside its artifact. List the expected options and
+files in a delivery request and run
+`thermite export check --input <file> --out-dir <dir> --receipts`.
+
+The check hashes inputs and files without laying out drawings. Exit 0 means
+fresh, 1 means stale or invalid, and 2 means usage or infrastructure failure.
+JSON output includes machine-readable reason codes and paths. Format-only
+source and request edits count as changes. A timestamp edit with identical
+bytes preserves freshness.
+
 ## Communication links
 
 Types may declare `ports` with `medium: "ethernet"|"nrg-bus"` and a `connector`.

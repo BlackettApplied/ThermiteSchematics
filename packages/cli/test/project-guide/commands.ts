@@ -103,25 +103,74 @@ function checkOptions(
   }
   return problems;
 }
+interface HelpInvocation {
+  spec: HelpSpec;
+  words: string[];
+  where: string;
+}
+
+interface ResolvedCommand {
+  problems: string[];
+  invocations: HelpInvocation[];
+}
+
+function resolveAgent(words: string[], where: string): ResolvedCommand {
+  const [tool, ...options] = words;
+  // A bare `thermite agent` names the command group.
+  if (tool === undefined) return { problems: [], invocations: [] };
+  if (tool === "<tool>")
+    return {
+      problems: [],
+      invocations: [...ctx.tree.tools].map(([name, spec]) => ({
+        spec,
+        words: options,
+        where: `${where} (${name})`,
+      })),
+    };
+  const spec = ctx.tree.tools.get(tool);
+  return spec
+    ? { problems: [], invocations: [{ spec, words: options, where }] }
+    : { problems: [`${where}: unknown agent tool ${tool}`], invocations: [] };
+}
+
+function resolveCommand(
+  words: readonly string[],
+  where: string,
+): ResolvedCommand {
+  const [name, ...rest] = words;
+  const command = name === undefined ? undefined : ctx.tree.commands.get(name);
+  if (!command)
+    return { problems: [`${where}: unknown command ${name}`], invocations: [] };
+  if (name === "agent") return resolveAgent(rest, where);
+  const [verb, ...options] = rest;
+  if (name === "export" && verb && !verb.startsWith("-")) {
+    const spec = ctx.tree.commands.get(`export ${verb}`);
+    return spec
+      ? { problems: [], invocations: [{ spec, words: options, where }] }
+      : {
+          problems: [`${where}: unknown export command ${verb}`],
+          invocations: [],
+        };
+  }
+  return { problems: [], invocations: [{ spec: command, words: rest, where }] };
+}
+
 /** Problems with a `thermite ...` word list against the real command tree. */
 export function checkCommand(
   words: readonly string[],
   where: string,
   fragment = false,
 ): string[] {
-  const [name, ...rest] = words;
-  const command = name === undefined ? undefined : ctx.tree.commands.get(name);
-  if (command === undefined) return [`${where}: unknown command ${name}`];
-  if (name !== "agent") return checkOptions(rest, command, where, fragment);
-  const [tool, ...options] = rest;
-  // A bare `thermite agent` names the command group, not an invocation.
-  if (tool === undefined) return [];
-  if (tool === "<tool>")
-    return [...ctx.tree.tools].flatMap(([n, spec]) =>
-      checkOptions(options, spec, `${where} (${n})`, fragment),
-    );
-  const spec = ctx.tree.tools.get(tool);
-  return spec === undefined
-    ? [`${where}: unknown agent tool ${tool}`]
-    : checkOptions(options, spec, where, fragment);
+  const { problems, invocations } = resolveCommand(words, where);
+  return [
+    ...problems,
+    ...invocations.flatMap((invocation) =>
+      checkOptions(
+        invocation.words,
+        invocation.spec,
+        invocation.where,
+        fragment,
+      ),
+    ),
+  ];
 }

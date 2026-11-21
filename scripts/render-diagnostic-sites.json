@@ -1,18 +1,18 @@
 {
   "sites": [
     {
-      "id": "packages/cli/src/alpha.ts:multipleSheetError:constructor:1",
-      "path": "packages/cli/src/alpha.ts",
-      "owner": "multipleSheetError",
-      "kind": "constructor",
+      "id": "packages/cli/src/alpha-export-artifact.ts:drawingArtifact:factory-call:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "drawingArtifact",
+      "kind": "factory-call",
+      "factory": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError",
       "codes": ["R006"]
     },
     {
-      "id": "packages/cli/src/alpha.ts:producePacket:factory-call:1",
-      "path": "packages/cli/src/alpha.ts",
-      "owner": "producePacket",
-      "kind": "factory-call",
-      "factory": "packages/cli/src/alpha.ts:multipleSheetError",
+      "id": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError:constructor:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "multipleSheetError",
+      "kind": "constructor",
       "codes": ["R006"]
     },
     {
@@ -1784,7 +1784,7 @@
     }
   ],
   "scopes": {
-    "packages/cli/src/alpha.ts": {
+    "packages/cli/src/alpha-export-artifact.ts": {
       "category": "public-boundary"
     },
     "packages/render/src/circuit.ts": {
@@ -2011,18 +2011,18 @@
   },
   "legacySites": [
     {
-      "id": "packages/cli/src/alpha.ts:multipleSheetError:constructor:1",
-      "path": "packages/cli/src/alpha.ts",
+      "id": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError:constructor:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
       "owner": "multipleSheetError",
       "kind": "constructor",
       "codes": ["R006"]
     },
     {
-      "id": "packages/cli/src/alpha.ts:producePacket:factory-call:1",
-      "path": "packages/cli/src/alpha.ts",
-      "owner": "producePacket",
+      "id": "packages/cli/src/alpha-export-artifact.ts:drawingArtifact:factory-call:1",
+      "path": "packages/cli/src/alpha-export-artifact.ts",
+      "owner": "drawingArtifact",
       "kind": "factory-call",
-      "factory": "packages/cli/src/alpha.ts:multipleSheetError",
+      "factory": "packages/cli/src/alpha-export-artifact.ts:multipleSheetError",
       "codes": ["R006"]
     },
     {

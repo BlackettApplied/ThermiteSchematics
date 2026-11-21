@@ -567,6 +567,7 @@ export interface HelpSpec {
 export interface CliTree {
   readonly root: HelpSpec;
   readonly alpha: readonly string[];
+  readonly alphaLeaves: readonly string[];
   readonly commands: ReadonlyMap<string, HelpSpec>;
   readonly tools: ReadonlyMap<string, HelpSpec>;
 }
@@ -627,11 +628,22 @@ export async function buildTree(cwd: string): Promise<CliTree> {
   const commands = new Map(
     await Promise.all(names.map(async (n) => [n, await help([n])] as const)),
   );
+  const exportNames =
+    commands.get("export")?.commands.filter((n) => n !== "help") ?? [];
+  for (const [name, spec] of await Promise.all(
+    exportNames.map(
+      async (name) => [`export ${name}`, await help(["export", name])] as const,
+    ),
+  ))
+    commands.set(name, spec);
   const toolNames = commands.get("agent")!.commands.filter((n) => n !== "help");
   const tools = new Map(
     await Promise.all(
       toolNames.map(async (n) => [n, await help(["agent", n])] as const),
     ),
   );
-  return { root, alpha, commands, tools };
+  const alphaLeaves = alpha.flatMap((name) =>
+    name === "export" ? exportNames.map((verb) => `export ${verb}`) : [name],
+  );
+  return { root, alpha, alphaLeaves, commands, tools };
 }

@@ -1174,7 +1174,7 @@ const module: FactModule = {
       claim:
         "Commands default to the current project. `validate`/`lock` accept a positional path or `--project <path>`. If supplied together, both must resolve to the same path.",
       async check() {
-        for (const name of ctx.tree.alpha.filter(
+        for (const name of ctx.tree.alphaLeaves.filter(
           (n) => !["init", "guide"].includes(n),
         )) {
           const option = ctx.tree.commands

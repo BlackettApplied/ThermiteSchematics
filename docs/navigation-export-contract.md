@@ -45,6 +45,36 @@ distinguishes the occurrences; every occurrence retains its own required facts
 and printed caption. Duplicates within one source part still refuse. Repeated independent requests retain separate view
 keys. Inserting earlier content changes locations without changing a note's id.
 
+## Export freshness receipts
+
+The CLI's `export-input/1` fingerprint hashes raw bytes by logical path and
+role. It covers the project manifest, resolved source and glob membership,
+presentation, the lock, and resolved local and shipped library manifests and
+sources. It records presentation and lock absence. Absolute filesystem paths
+and timestamps are excluded. The separate producer binding identifies the
+Thermite version and compiled build with its bundled assets. Existing issued
+document snapshot and presentation digests retain their meanings.
+
+An `export-manifest/1` binds the exact delivery request bytes and the list of
+requested artifacts to one source and producer. An opted-in `export-receipt/1`
+sidecar binds the effective options, artifact filename and exact file bytes to
+its source and producer. Its name is the artifact filename plus `.receipt.json`. Both record named packet requests, report filters and
+review baselines by project-relative path and byte hash. A report can include
+its filter selection. A review binds its historical baseline as well as the
+current source.
+
+The checker reads the inventory from the delivery request. By default it
+requires the bundle manifest. With `--receipts` it requires a sidecar beside
+each planned file. Findings use `missing_manifest`, `missing_receipt`,
+`missing_file`, `source_changed`, `request_changed`, `byte_mismatch`,
+`producer_mismatch` and `unverifiable_input`.
+
+These local hashes establish freshness against the declared inputs. Validate
+the electrical project independently, inspect the issued drawings, and keep
+approval with the responsible human reviewer. Screenshot evidence requires a
+separate binding to the exact captured HTML and PNG bytes. See the
+[delivery workflow](project-workflows.md#export-a-delivery).
+
 ## Typed facts and semantic columns
 
 Each dependency has `need`, `requiredFacts`, `requiredColumns`, human-facing

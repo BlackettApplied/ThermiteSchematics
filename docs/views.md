@@ -3,6 +3,9 @@
 This reference extracts the printable format contract and the render package's
 semantic-selection rules. `thermite` means the launcher from the project guide.
 
+To issue multiple formats from a shared compile and verify them at handoff, see
+[export a delivery](project-workflows.md#export-a-delivery).
+
 ## Intents and roots
 
 | CLI intent | Required root and behavior |
