@@ -52,8 +52,11 @@ role. It covers the project manifest, resolved source and glob membership,
 presentation, the lock, and resolved local and shipped library manifests and
 sources. It records presentation and lock absence. Absolute filesystem paths
 and timestamps are excluded. The separate producer binding identifies the
-Thermite version and compiled build with its bundled assets. Existing issued
-document snapshot and presentation digests retain their meanings.
+Thermite version and hashes the runtime modules reachable from the compiled CLI,
+the bundled export assets, workspace package metadata, and the dependency
+lockfile. It reads the emitted modules at export and check time, so incremental
+compiles count immediately. Existing issued document snapshot and presentation
+digests retain their meanings.
 
 An `export-manifest/1` binds the exact delivery request bytes and the list of
 requested artifacts to one source and producer. An opted-in `export-receipt/1`

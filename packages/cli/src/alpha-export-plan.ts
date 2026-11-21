@@ -3,7 +3,7 @@ import type { LoadedProject } from "@thermite/compiler";
 import {
   parseProjectSnapshot,
   REPORT_KINDS,
-  resolveDeviceFilter,
+  type DeviceFilter,
   type DocumentationRequest,
 } from "@thermite/query";
 import {
@@ -148,16 +148,47 @@ function outputs(value: unknown, allowed: readonly ArtifactFormat[]): Output[] {
 export function documentationRequest(
   kind: DocumentationRequest["kind"],
   device?: string,
-  filter?: unknown,
+  filter?: DeviceFilter,
 ): DocumentationRequest {
   return {
     format: "documentation-view-request/0.1",
     kind,
     ...(device === undefined ? {} : { device }),
-    ...(filter === undefined
-      ? {}
-      : { filter: resolveDeviceFilter(undefined, filter) }),
+    ...(filter === undefined ? {} : { filter }),
   };
+}
+
+function isDeliveryFilter(value: unknown): value is DeviceFilter {
+  const keys = [
+    "devices",
+    "excludeDevices",
+    "types",
+    "excludeTypes",
+    "locations",
+    "excludeLocations",
+  ];
+  // Delivery checks have no compiled IR. Validate only authored selector shape here.
+  const entries = isJsonObject(value) ? Object.entries(value) : [];
+  return (
+    entries.length > 0 &&
+    entries.every(
+      ([key, items]) =>
+        keys.includes(key) &&
+        Array.isArray(items) &&
+        items.length > 0 &&
+        items.length <= 1000 &&
+        items.every((item) => typeof item === "string" && item.trim()) &&
+        new Set(items).size === items.length,
+    )
+  );
+}
+
+function deliveryFilter(value: unknown): DeviceFilter {
+  if (!isDeliveryFilter(value))
+    throw new ExportInputError(
+      "Invalid device filter. Use nonempty unique arrays of exact devices, types or locations and their exclusions.",
+    );
+  return value;
 }
 
 export interface DeliveryJob {
@@ -256,18 +287,14 @@ async function reportJob(
   if (device && filter)
     throw new ExportInputError("Choose either a report device or a filter.");
   const kind = option(job.report, REPORT_KINDS, "report kind");
-  let request;
-  try {
-    request = documentationRequest(kind, device, filter?.value);
-  } catch (error) {
-    throw new ExportInputError(
-      error instanceof Error ? error.message : "Invalid device filter.",
-    );
-  }
   return {
     recipe: {
       kind: "report",
-      request,
+      request: documentationRequest(
+        kind,
+        device,
+        filter && deliveryFilter(filter.value),
+      ),
       drawing: printing(job),
       inputs: filter ? [filter.binding] : [],
     },

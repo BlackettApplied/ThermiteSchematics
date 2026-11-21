@@ -22,8 +22,8 @@ import {
   guardTargets,
   publishArtifact,
   retireMarker,
-  withExportReservations,
 } from "./alpha-export-publish.js";
+import { withExportReservations } from "./alpha-export-lock.js";
 import {
   equalJson,
   RECEIPT_FORMAT,
@@ -92,7 +92,7 @@ export async function writeStandaloneArtifact(
   if (!target || !sidecar) throw new Error("Missing planned receipt target.");
   const targets = [target, sidecar];
   await guardTargets(snapshot.project, targets, protectedInputs);
-  const producer = await exportProducer();
+  const producer = exportProducer();
   const receipt: ReceiptRecord = {
     format: RECEIPT_FORMAT,
     producer,

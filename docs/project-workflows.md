@@ -209,11 +209,12 @@ coverage on the packet job.
 
 A failure before publication preserves the previous generation. Check that
 generation against current inputs before relying on it. If publication stops
-partway, rerun the bundle to replace the incomplete delivery. A concurrent
-writer can reserve an output directory. Retry after that writer exits. After
-a forced termination, verify that no publisher is using the delivery before
-removing any empty `.thermite-export.lock` directories left in the output
-folders, then rerun the bundle.
+partway, rerun the bundle to replace the incomplete delivery. The bundle checks
+its output directories for publication locks before compiling. It automatically
+clears a lock when the recorded host is local and the owner PID no longer
+exists. If a lock remains after the writer exits, verify that no publisher
+is using the delivery, remove the `.thermite-export.lock` directory and its
+owner metadata at the path reported by the CLI, then rerun the bundle.
 
 For a custom delivery, opt in to sidecars as in
 `thermite view M1 --power -o <file>.pdf --receipt`. The same flag is available

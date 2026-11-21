@@ -1,15 +1,30 @@
-import { appendFile, readFile, rm } from "node:fs/promises";
-import { basename, join } from "node:path";
+import { spawn, spawnSync } from "node:child_process";
+import { randomUUID } from "node:crypto";
+import { once } from "node:events";
+import {
+  appendFile,
+  lstat,
+  mkdir,
+  readdir,
+  readFile,
+  rm,
+  writeFile,
+} from "node:fs/promises";
+import { hostname } from "node:os";
+import { basename, join, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 import { compileLoadedProject, writeFileAtomically } from "@thermite/compiler";
 import { renderSchematicPacket, renderSchematicSheets } from "@thermite/render";
 import { runThermite } from "../src/alpha.js";
+import { LOCK_NAME } from "../src/alpha-export-lock.js";
 import { initializeAlphaProject } from "../src/alpha-init.js";
 import {
   fixture,
   manifestName,
   motorPacket,
   mustSucceed,
+  readJson,
   reportJob,
   reportView,
   writeJson,
@@ -62,6 +77,146 @@ const packetJob = {
   input: "packet.json",
   outputs: { html: "packet.html", json: "packet.json" },
 };
+
+it("rejects a malformed delivery filter without compiling or rendering", async () => {
+  const f = await fixture();
+  await writeJson(join(f.project, "bad-filter.json"), { devices: [] });
+  await f.plan(reportJob("bom", "bad-filter.json"));
+  expect(await run(f)).toBe(1);
+  expect(compileLoadedProject).not.toHaveBeenCalled();
+  expect(renderSchematicSheets).not.toHaveBeenCalled();
+  expect((await f.check()).findings.reasons).toContainEqual(
+    expect.objectContaining({ code: "unverifiable_input" }),
+  );
+});
+
+it.each([
+  "foreign host",
+  "malformed metadata",
+  "duplicate owner field",
+  "missing metadata",
+])(
+  "leaves a nested reservation with %s intact and fails before compile",
+  async (caseName) => {
+    const f = await fixture();
+    const dryJob = { ...packetJob, outputs: { html: "nested/packet.html" } };
+    await motorPacket(f.project);
+    await f.plan(dryJob);
+    const path = join(f.out, "nested", LOCK_NAME);
+    await mkdir(path, { recursive: true });
+    const entries = [];
+    if (caseName !== "missing metadata") {
+      const name = `owner-${randomUUID()}.json`;
+      entries.push(name);
+      const child = spawnSync(process.execPath, ["-e", ""]);
+      expect(child.status).toBe(0);
+      const owner = {
+        pid: child.pid,
+        hostname:
+          caseName === "foreign host" ? `${hostname()}-other` : hostname(),
+        startedAt: new Date().toISOString(),
+      };
+      if (caseName === "duplicate owner field")
+        await writeFile(
+          join(path, name),
+          `{"hostname":"other",${JSON.stringify(owner).slice(1)}`,
+        );
+      else
+        await writeJson(
+          join(path, name),
+          caseName === "malformed metadata"
+            ? { ...owner, pid: "unknown" }
+            : owner,
+        );
+    }
+    expect(await run(f)).toBe(2);
+    expect(compileLoadedProject).not.toHaveBeenCalled();
+    expect(renderSchematicPacket).not.toHaveBeenCalled();
+    expect(await readdir(path)).toEqual(entries);
+    const failure = await f.bundle();
+    expect(failure.code).toBe(2);
+    const { error } = JSON.parse(failure.stderr);
+    expect(error.message).toContain(path);
+    expect(error.message).toContain(
+      "remove the lock and its owner metadata by hand",
+    );
+  },
+);
+
+it("reclaims a local reservation with a dead owner and publishes normally", async () => {
+  const f = await fixture();
+  await f.plan(reportJob("bom"));
+  const child = spawnSync(process.execPath, ["-e", ""]);
+  expect(child.status).toBe(0);
+  const path = join(f.out, LOCK_NAME);
+  await mkdir(path, { recursive: true });
+  await writeJson(join(path, `owner-${randomUUID()}.json`), {
+    pid: child.pid,
+    hostname: hostname(),
+    startedAt: new Date().toISOString(),
+  });
+  expect(await run(f)).toBe(0);
+  expect(compileLoadedProject).toHaveBeenCalledTimes(1);
+  await expect(lstat(path)).rejects.toMatchObject({ code: "ENOENT" });
+  expect((await f.check()).code).toBe(0);
+});
+
+it.each([
+  { signal: "SIGINT", exit: 130 },
+  { signal: "SIGTERM", exit: 143 },
+] as const)(
+  "makes all held reservations reusable after $signal",
+  async ({ signal, exit }) => {
+    const f = await fixture();
+    const lockModule = pathToFileURL(
+      resolve("packages/cli/dist/alpha-export-lock.js"),
+    ).href;
+    const directories = [f.out, join(f.out, "nested")];
+    const targets = directories.map((path) => ({
+      file: join(path, "bom.csv"),
+    }));
+    const code = `
+    import { withExportReservations } from ${JSON.stringify(lockModule)};
+    await withExportReservations(${JSON.stringify(targets)}, async () => {
+      process.stdout.write("ready\\n");
+      setInterval(() => {}, 1000);
+      await new Promise(() => {});
+    });
+  `;
+    const child = spawn(process.execPath, ["-e", code], {
+      stdio: ["ignore", "pipe", "inherit"],
+    });
+    const closed = once(child, "close");
+    try {
+      const ready = once(child.stdout, "data", {
+        signal: AbortSignal.timeout(10000),
+      });
+      expect(
+        await Promise.race([ready.then(([bytes]) => String(bytes)), closed]),
+      ).toBe("ready\n");
+      expect(child.kill(signal)).toBe(true);
+      const result = await closed;
+      if (process.platform === "win32") {
+        // Windows may terminate the child before it can run the signal handler.
+        await f.plan(reportJob("bom"), {
+          ...reportJob("terminals"),
+          outputs: { csv: "nested/terminals.csv" },
+        });
+        expect(await run(f)).toBe(0);
+      } else {
+        expect(result).toEqual([exit, null]);
+      }
+      for (const path of directories)
+        await expect(lstat(join(path, LOCK_NAME))).rejects.toMatchObject({
+          code: "ENOENT",
+        });
+    } finally {
+      if (child.exitCode === null && child.signalCode === null)
+        child.kill("SIGKILL");
+      await closed;
+    }
+  },
+);
 
 it("compiles once and renders each distinct drawing once across jobs and formats", async () => {
   const f = await fixture();
@@ -176,6 +331,14 @@ it("serializes concurrent publishers and keeps the marker absent until the last 
         throw new Error("Publisher did not reach its first write.");
       }),
     ]);
+    const path = join(f.out, LOCK_NAME);
+    const owners = await readdir(path);
+    expect(owners).toHaveLength(1);
+    const owner = await readJson(join(path, owners[0]!));
+    expect(owner).toMatchObject({ pid: process.pid, hostname: hostname() });
+    expect(Number.isFinite(Date.parse(owner.startedAt))).toBe(true);
+    expect(await run(f)).toBe(2);
+    expect(compileLoadedProject).toHaveBeenCalledTimes(1);
     const other = await f.bundle();
     expect(other.code).toBe(2);
     expect(other.stderr).toContain("Export destination is reserved");

@@ -16,6 +16,37 @@ import {
 } from "./helpers/export-fixture.js";
 
 const reportKinds = ["io", "bom", "cables", "terminals", "wires"];
+
+it.each([
+  { format: "html", receipt: false, exit: 1, code: "R006" },
+  { format: "html", receipt: true, exit: 1, code: "R006" },
+  { format: "csv", receipt: false, exit: 2, code: "T001" },
+])(
+  "keeps the invalid standalone $format filter diagnostic with receipt=$receipt",
+  async ({ format, receipt, exit, code }) => {
+    const f = await fixture();
+    const filter = join(f.project, "bad-filter.json");
+    await writeJson(filter, { devices: [] });
+    const result = await f.cli(
+      "report",
+      "bom",
+      "--filter",
+      filter,
+      "-o",
+      join(f.out, `bom.${format}`),
+      ...(receipt ? ["--receipt"] : []),
+    );
+    expect(result.code).toBe(exit);
+    expect(result.stdout).toBe("");
+    const { error } = JSON.parse(result.stderr);
+    expect(error).toMatchObject({
+      code,
+      message: expect.stringContaining("Invalid device filter"),
+    });
+    if (code === "R006") expect(error.reason).toBe("invalid-packet");
+  },
+);
+
 const packetOutputs = {
   json: "packet.json",
   html: "packet.html",

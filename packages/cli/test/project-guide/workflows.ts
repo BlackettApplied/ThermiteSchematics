@@ -261,10 +261,16 @@ const deliveryAdvice: [string, string][] = [
     "If publication stops partway, rerun the bundle to replace the incomplete delivery.",
     publicationAdvice,
   ],
-  ["A concurrent writer can reserve an output directory.", publicationAdvice],
-  ["Retry after that writer exits.", "Reservations are held for publication."],
   [
-    "After a forced termination, verify that no publisher is using the delivery before removing any empty `.thermite-export.lock` directories left in the output folders, then rerun the bundle.",
+    "The bundle checks its output directories for publication locks before compiling.",
+    publicationAdvice,
+  ],
+  [
+    "It automatically clears a lock when the recorded host is local and the owner PID no longer exists.",
+    publicationAdvice,
+  ],
+  [
+    "If a lock remains after the writer exits, verify that no publisher is using the delivery, remove the `.thermite-export.lock` directory and its owner metadata at the path reported by the CLI, then rerun the bundle.",
     "Operator recovery for an abandoned reservation.",
   ],
   [

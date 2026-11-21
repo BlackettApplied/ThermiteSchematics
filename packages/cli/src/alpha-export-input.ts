@@ -8,6 +8,7 @@ import {
 } from "@thermite/compiler";
 import { parseJson, type Diagnostic } from "@thermite/schema";
 import { assertOrdinaryPath, canonicalOutputPath } from "./alpha-output.js";
+import { exportBuildIdentity } from "./alpha-export-build.js";
 
 export const THERMITE_VERSION = "0.3.0-alpha.2";
 
@@ -43,13 +44,8 @@ export interface Producer {
   build: string;
 }
 
-export async function exportProducer(): Promise<Producer> {
-  const build = (
-    await readFile(new URL("../dist/export-build.txt", import.meta.url), "utf8")
-  ).trim();
-  if (!/^[a-f0-9]{64}$/.test(build))
-    throw new Error("Invalid export build identity. Rebuild Thermite.");
-  return { version: THERMITE_VERSION, build };
+export function exportProducer(): Producer {
+  return { version: THERMITE_VERSION, build: exportBuildIdentity() };
 }
 
 function decode(bytes: Uint8Array, path: string): string {

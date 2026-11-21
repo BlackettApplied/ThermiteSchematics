@@ -1,4 +1,4 @@
-import { lstat, mkdir, rmdir, unlink } from "node:fs/promises";
+import { unlink } from "node:fs/promises";
 import { dirname, resolve, sep } from "node:path";
 import { writeFileAtomically, type LoadedProject } from "@thermite/compiler";
 import {
@@ -7,6 +7,7 @@ import {
   guardAlphaOutput,
 } from "./alpha-output.js";
 import { ExportInputError, filesystemCode } from "./alpha-export-input.js";
+import { LOCK_NAME } from "./alpha-export-lock.js";
 import { MANIFEST_PATH, RECEIPT_SUFFIX } from "./alpha-export-plan.js";
 
 export interface ExportTarget {
@@ -14,7 +15,6 @@ export interface ExportTarget {
   file: string;
 }
 
-const LOCK_NAME = ".thermite-export.lock";
 function normalized(path: string) {
   return path.normalize("NFC").toLocaleLowerCase("en-US");
 }
@@ -112,58 +112,6 @@ export async function outputDirectory(path: string) {
     );
   }
   return directory;
-}
-
-async function reserveDirectory(directory: string) {
-  await assertOrdinaryPath(directory, "directory");
-  await mkdir(directory, { recursive: true });
-  await assertOrdinaryPath(directory, "directory");
-  const lock = resolve(directory, LOCK_NAME);
-  try {
-    await mkdir(lock);
-  } catch (error) {
-    if (filesystemCode(error) !== "EEXIST") throw error;
-    throw new Error(
-      `Export destination is reserved: ${lock}. Retry after the writer exits.`,
-    );
-  }
-  const identity = await lstat(lock, { bigint: true });
-  async function assertHeld() {
-    await assertOrdinaryPath(lock, "directory");
-    const current = await lstat(lock, { bigint: true });
-    if (current.dev !== identity.dev || current.ino !== identity.ino)
-      throw new Error("Export destination reservation changed.");
-  }
-  return {
-    assertHeld,
-    async release() {
-      await assertHeld();
-      await rmdir(lock);
-    },
-  };
-}
-
-export async function withExportReservations<T>(
-  targets: ExportTarget[],
-  run: (assertHeld: () => Promise<void>) => Promise<T>,
-): Promise<T> {
-  const directories = [
-    ...new Set(targets.map(({ file }) => dirname(file))),
-  ].sort();
-  const locks: Awaited<ReturnType<typeof reserveDirectory>>[] = [];
-  try {
-    for (const directory of directories)
-      locks.push(await reserveDirectory(directory));
-    return await run(async () => {
-      for (const lock of locks) await lock.assertHeld();
-    });
-  } finally {
-    const released = await Promise.allSettled(
-      locks.map((lock) => lock.release()),
-    );
-    const failed = released.find((result) => result.status === "rejected");
-    if (failed?.status === "rejected") throw failed.reason;
-  }
 }
 
 export async function retireMarker(

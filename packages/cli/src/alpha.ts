@@ -6,6 +6,7 @@ import {
   createProjectSnapshot,
   parseProjectSnapshot,
   auditContinuity,
+  type DeviceFilter,
 } from "@thermite/query";
 import {
   renderSchematicPacket,
@@ -631,7 +632,7 @@ async function produceReport(
   const request = documentationRequest(
     report,
     flags.device || undefined,
-    filter,
+    filter as DeviceFilter | undefined,
   );
   const recipe = {
     kind: "report" as const,

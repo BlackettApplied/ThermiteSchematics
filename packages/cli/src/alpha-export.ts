@@ -45,9 +45,12 @@ import {
   outputDirectory,
   publishArtifact,
   retireMarker,
-  withExportReservations,
   type ExportTarget,
 } from "./alpha-export-publish.js";
+import {
+  checkExportReservations,
+  withExportReservations,
+} from "./alpha-export-lock.js";
 import {
   equalJson,
   MANIFEST_FORMAT,
@@ -86,7 +89,7 @@ async function runCheck(flags: ExportFlags): Promise<number> {
     );
     const expected = {
       source: snapshot.fingerprint,
-      producer: await exportProducer(),
+      producer: exportProducer(),
     };
     if (flags.receipts)
       await checkSidecars(check, directory, artifacts, expected);
@@ -289,10 +292,11 @@ async function runBundle(
   let failure: { code: string; message: string } | null = null;
   try {
     const prepared = await prepare(flags);
+    checkExportReservations(prepared.targets);
     const compiled = compileLoadedProject(prepared.snapshot.project);
     diagnostics = compiled.diagnostics;
     if (!compiled.ok) return compiled.toolFailure ? 2 : 1;
-    const producer = await exportProducer();
+    const producer = exportProducer();
     staged = await mkdtemp(join(await realpath(tmpdir()), "thermite-export-"));
     const artifacts = await stageBundle(
       staged,

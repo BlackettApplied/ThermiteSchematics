@@ -14,55 +14,39 @@ export interface DeviceFilterSelection {
   readonly deviceUids: readonly string[];
   readonly outsideDeviceUids: readonly string[];
 }
-const filterKeys = [
-  "devices",
-  "excludeDevices",
-  "types",
-  "excludeTypes",
-  "locations",
-  "excludeLocations",
-];
-
-function isDeviceFilter(value: unknown): value is DeviceFilter {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
-  const entries = Object.entries(value);
-  return (
-    entries.length > 0 &&
-    entries.every(
-      ([key, items]) =>
-        filterKeys.includes(key) &&
-        Array.isArray(items) &&
-        items.length > 0 &&
-        items.length <= 1000 &&
-        items.every((item) => typeof item === "string" && item.trim()) &&
-        new Set(items).size === items.length,
+export function resolveDeviceFilter(
+  ir: Readonly<ElectricalIr>,
+  value: DeviceFilter,
+): DeviceFilterSelection {
+  const keys = [
+    "devices",
+    "excludeDevices",
+    "types",
+    "excludeTypes",
+    "locations",
+    "excludeLocations",
+  ] as const;
+  if (
+    !value ||
+    typeof value !== "object" ||
+    Array.isArray(value) ||
+    !Object.keys(value).length ||
+    Object.keys(value).some(
+      (k) => !keys.includes(k as (typeof keys)[number]),
+    ) ||
+    keys.some(
+      (k) =>
+        Object.hasOwn(value, k) &&
+        (!Array.isArray(value[k]) ||
+          !value[k]!.length ||
+          value[k]!.length > 1000 ||
+          value[k]!.some((s) => typeof s !== "string" || !s.trim()) ||
+          new Set(value[k]).size !== value[k]!.length),
     )
-  );
-}
-
-function parseDeviceFilter(value: unknown): DeviceFilter {
-  if (!isDeviceFilter(value))
+  )
     throw new Error(
       "Invalid device filter. Use nonempty unique arrays of exact devices, types or locations and their exclusions.",
     );
-  return value;
-}
-
-/** Without an IR, validate and return the authored filter. */
-export function resolveDeviceFilter(
-  ir: undefined,
-  input: unknown,
-): DeviceFilter;
-export function resolveDeviceFilter(
-  ir: Readonly<ElectricalIr>,
-  input: DeviceFilter,
-): DeviceFilterSelection;
-export function resolveDeviceFilter(
-  ir: Readonly<ElectricalIr> | undefined,
-  input: unknown,
-): DeviceFilter | DeviceFilterSelection {
-  const value = parseDeviceFilter(input);
-  if (ir === undefined) return value;
   const resolveDevices = (items: readonly string[] | undefined) => {
     if (!items) return undefined;
     const ids = items.map((name) => {
