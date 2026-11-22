@@ -195,20 +195,43 @@ const entryType = (entry) => Number(entry.mode & 0o170000n);
 function snapshotWindowsLink(link) {
   const entry = lstatSync(link, { bigint: true, throwIfNoEntry: false });
   if (!entry?.isSymbolicLink()) return null;
-  let target;
+  let targetBytes;
   try {
-    target = readlinkSync(link);
+    targetBytes = readlinkSync(link, { encoding: "buffer" });
   } catch {
     return null;
   }
+  if (!Buffer.isBuffer(targetBytes)) return null;
   return {
     dev: entry.dev,
     ino: entry.ino,
     type: entryType(entry),
     ctimeNs: typeof entry.ctimeNs === "bigint" ? entry.ctimeNs : 0n,
     birthtimeNs: typeof entry.birthtimeNs === "bigint" ? entry.birthtimeNs : 0n,
-    target,
+    targetBytes,
   };
+}
+
+function sameWindowsTarget(current, expected) {
+  if (expected?.targetBytes !== undefined)
+    return (
+      Buffer.isBuffer(current?.targetBytes) &&
+      Buffer.isBuffer(expected.targetBytes) &&
+      current.targetBytes.equals(expected.targetBytes)
+    );
+  if (expected?.target !== undefined) {
+    const expectedBytes = Buffer.isBuffer(expected.target)
+      ? expected.target
+      : typeof expected.target === "string"
+        ? Buffer.from(expected.target, "utf8")
+        : null;
+    return (
+      Buffer.isBuffer(current?.targetBytes) &&
+      expectedBytes !== null &&
+      current.targetBytes.equals(expectedBytes)
+    );
+  }
+  return true;
 }
 
 function sameResolvedPath(a, b) {
@@ -258,21 +281,20 @@ function ownsWindowsLink(
   }
   const current = snapshotWindowsLink(link);
   if (!current) return false;
+  if (!sameWindowsTarget(current, linkIdentity)) return false;
+  if (linkIdentity?.type !== undefined && current.type !== linkIdentity.type)
+    return false;
   if (
-    linkIdentity?.target !== undefined &&
-    current.target !== linkIdentity.target
+    linkIdentity != null &&
+    (!sameTimestamp(current.ctimeNs, linkIdentity.ctimeNs) ||
+      !sameTimestamp(current.birthtimeNs, linkIdentity.birthtimeNs))
   )
     return false;
-  if (hasIdentity(linkIdentity))
-    return (
-      sameIdentity(current, linkIdentity) &&
-      (linkIdentity.type === undefined || current.type === linkIdentity.type) &&
-      sameTimestamp(current.ctimeNs, linkIdentity.ctimeNs) &&
-      sameTimestamp(current.birthtimeNs, linkIdentity.birthtimeNs)
-    );
+  if (hasIdentity(linkIdentity) || hasIdentity(current))
+    return sameIdentity(current, linkIdentity);
   // Residual Windows limit: if a filesystem cannot supply dev/ino for a
   // junction, user space cannot distinguish a replacement junction with the
-  // same target string from the broker's own junction.
+  // same target bytes and timestamps from the broker's own junction.
   return linkedOutputsTarget(link, outputs, outputsIdentity);
 }
 
@@ -347,7 +369,7 @@ export async function visualBroker(
         )
           // Residual Windows limit: Node exposes no descriptor-relative
           // unlinkat on Windows, so unlinkSync still takes a pathname after
-          // verifying parent identity, isSymbolicLink(), target text,
+          // verifying parent identity, isSymbolicLink(), target bytes,
           // timestamps, and link dev/ino.
           unlinkSync(link);
       }

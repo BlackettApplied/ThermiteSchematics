@@ -34,7 +34,13 @@ import { sha256 } from "./snapshot.mjs";
 // - A read race replaces an input after the reader checks its pinned root
 //   and before it opens the descendant.
 const race = vi.hoisted(() => {
-  const state = { pending: null, swapped: false, fired: 0, fds: new Map() };
+  const state = {
+    pending: null,
+    swapped: false,
+    fired: 0,
+    fds: new Map(),
+    lstatOverride: null,
+  };
   const matches = (op, path) =>
     state.pending?.op === op &&
     (typeof state.pending.path === "function"
@@ -88,6 +94,13 @@ vi.mock("node:fs", async (importOriginal) => {
     { native: fs.realpathSync.native },
   );
   const hooked = {
+    lstatSync(path, ...rest) {
+      const entry = fs.lstatSync(path, ...rest);
+      if (entry && race.state.lstatOverride) {
+        return race.state.lstatOverride(String(path), entry, ...rest) ?? entry;
+      }
+      return entry;
+    },
     realpathSync,
     mkdirSync(path, ...rest) {
       const result = fs.mkdirSync(path, ...rest);
@@ -126,6 +139,7 @@ const work = [];
 afterEach(() => {
   race.state.pending = null;
   race.state.closeError = false;
+  race.state.lstatOverride = null;
   vi.restoreAllMocks();
   for (const root of work.splice(0))
     rmSync(root, { recursive: true, force: true });
@@ -543,6 +557,211 @@ it("only unlinks the exact link identity it created during Windows fallback and 
       unlinkSync(linkPath);
       if (label === "alias-target") unlinkSync(posixAlias);
     }
+  }
+});
+
+it("detects symlink replacements whose distinct invalid-UTF-8 targets decode to the same string", async () => {
+  if (process.platform !== "darwin" && process.platform !== "linux") {
+    // scripts/health-ratchet.mjs enforces a monotonic global skippedTests ceiling,
+    // so skip with an explicit log message instead of a Vitest skip call.
+    console.info(
+      `Skipped raw-byte symlink target test on ${process.platform}: distinct invalid-UTF-8 symlink target byte sequences are a POSIX filename-bytes property (Windows reparse targets are UTF-16).`,
+    );
+    return;
+  }
+  const { workspace, project, evidence, link: linkPath } = fixture();
+  const root = dirname(evidence);
+  const outputs = join(evidence, "visual-captures");
+  mkdirSync(outputs);
+  const outputsIdentity = statSync(outputs, { bigint: true });
+  const prefix = Buffer.from(join(root, "target-"), "utf8");
+  const invalidFirst = Buffer.concat([prefix, Buffer.from([0xfe])]);
+  const invalidSecond = Buffer.concat([prefix, Buffer.from([0xff])]);
+  expect(invalidFirst.equals(invalidSecond)).toBe(false);
+  expect(invalidFirst.toString("utf8")).toBe(invalidSecond.toString("utf8"));
+
+  const workSource = projectReader(workspace);
+  try {
+    // 1. Two distinct invalid-UTF-8 target byte sequences that decode to the
+    //    same UTF-8 string must be distinguished by capture-files.mjs even if
+    //    dev/ino and timestamps match (simulated inode reuse).
+    const rawSnapshot = workSource.symlinkLink("visual-captures", invalidFirst);
+    expect(rawSnapshot.targetBytes.equals(invalidFirst)).toBe(true);
+    unlinkSync(linkPath);
+    symlinkSync(invalidSecond, linkPath);
+    const secondStat = lstatSync(linkPath, { bigint: true });
+    const reusedRawSnapshot = {
+      dev: secondStat.dev,
+      ino: secondStat.ino,
+      type: Number(secondStat.mode & 0o170000n),
+      ctimeNs: secondStat.ctimeNs,
+      birthtimeNs: secondStat.birthtimeNs,
+      targetBytes: rawSnapshot.targetBytes,
+    };
+    expect(
+      workSource.linkedDirectory(
+        "visual-captures",
+        outputsIdentity,
+        reusedRawSnapshot,
+      ),
+    ).toBe(false);
+    expect(workSource.unlinkLink("visual-captures", reusedRawSnapshot)).toBe(
+      false,
+    );
+    expect(
+      readlinkSync(linkPath, { encoding: "buffer" }).equals(invalidSecond),
+    ).toBe(true);
+    expect(
+      workSource.unlinkLink("visual-captures", {
+        ...reusedRawSnapshot,
+        targetBytes: invalidSecond,
+      }),
+    ).toBe(true);
+    expect(lstatSync(linkPath, { throwIfNoEntry: false })).toBeUndefined();
+
+    // 2. Broker-created UTF-8 target containing U+FFFD (\xef\xbf\xbd) vs a
+    //    replacement symlink with invalid byte \xff decoding to the same string.
+    const utf8Evidence = join(root, "evidence-\ufffd");
+    mkdirSync(utf8Evidence);
+    const utf8Outputs = join(utf8Evidence, "visual-captures");
+    mkdirSync(utf8Outputs);
+    const utf8OutputsIdentity = statSync(utf8Outputs, { bigint: true });
+    const utf8Snapshot = workSource.symlinkLink("visual-captures", utf8Outputs);
+    const invalidReplacement = Buffer.concat([
+      Buffer.from(join(root, "evidence-"), "utf8"),
+      Buffer.from([0xff]),
+      Buffer.from("/visual-captures", "utf8"),
+    ]);
+    expect(utf8Snapshot.targetBytes.equals(invalidReplacement)).toBe(false);
+    expect(utf8Snapshot.targetBytes.toString("utf8")).toBe(
+      invalidReplacement.toString("utf8"),
+    );
+    unlinkSync(linkPath);
+    symlinkSync(invalidReplacement, linkPath);
+    const utf8ReplacementStat = lstatSync(linkPath, { bigint: true });
+    const reusedUtf8Snapshot = {
+      dev: utf8ReplacementStat.dev,
+      ino: utf8ReplacementStat.ino,
+      type: Number(utf8ReplacementStat.mode & 0o170000n),
+      ctimeNs: utf8ReplacementStat.ctimeNs,
+      birthtimeNs: utf8ReplacementStat.birthtimeNs,
+      targetBytes: utf8Snapshot.targetBytes,
+    };
+    expect(
+      workSource.linkedDirectory(
+        "visual-captures",
+        utf8OutputsIdentity,
+        reusedUtf8Snapshot,
+      ),
+    ).toBe(false);
+    expect(workSource.unlinkLink("visual-captures", reusedUtf8Snapshot)).toBe(
+      false,
+    );
+    expect(
+      readlinkSync(linkPath, { encoding: "buffer" }).equals(invalidReplacement),
+    ).toBe(true);
+    unlinkSync(linkPath);
+  } finally {
+    workSource.close();
+  }
+
+  // 3. visual-capture.mjs Windows fallback also compares raw readlink bytes,
+  //    leaving a replacement whose invalid-UTF-8 bytes decode to the same
+  //    string untouched even when stat identity and timestamps match.
+  const fallbackEvidence = join(root, "fallback-\ufffd");
+  mkdirSync(fallbackEvidence);
+  const fallbackInvalid = Buffer.concat([
+    Buffer.from(join(root, "fallback-"), "utf8"),
+    Buffer.from([0xff]),
+    Buffer.from("/visual-captures", "utf8"),
+  ]);
+  const pinnedStat = {
+    dev: 42n,
+    ino: 4242n,
+    ctimeNs: 1_000_000_000n,
+    birthtimeNs: 1_000_000_000n,
+  };
+  race.state.lstatOverride = (path, entry) => {
+    if (path === linkPath && typeof entry.ino === "bigint")
+      return Object.assign(entry, pinnedStat);
+  };
+  await asWindows(async () => {
+    const stop = await visualBroker(
+      { visualCapture: true },
+      project,
+      fallbackEvidence,
+    );
+    try {
+      const createdBytes = readlinkSync(linkPath, { encoding: "buffer" });
+      expect(createdBytes.equals(fallbackInvalid)).toBe(false);
+      expect(createdBytes.toString("utf8")).toBe(
+        fallbackInvalid.toString("utf8"),
+      );
+      unlinkSync(linkPath);
+      symlinkSync(fallbackInvalid, linkPath);
+    } finally {
+      await stop();
+    }
+    expect(
+      readlinkSync(linkPath, { encoding: "buffer" }).equals(fallbackInvalid),
+    ).toBe(true);
+    unlinkSync(linkPath);
+  });
+});
+
+it("compares available nonzero timestamps in the Windows fallback when file IDs are zero", async () => {
+  const { project, evidence, link: linkPath } = fixture();
+  const root = dirname(evidence);
+  const cases = [
+    {
+      label: "ctime-diff",
+      initial: { ctimeNs: 1_000_000_000n, birthtimeNs: 0n },
+      after: { ctimeNs: 1_000_000_001n, birthtimeNs: 0n },
+      expectUnlinked: false,
+    },
+    {
+      label: "birthtime-diff",
+      initial: { ctimeNs: 0n, birthtimeNs: 2_000_000_000n },
+      after: { ctimeNs: 0n, birthtimeNs: 2_000_000_001n },
+      expectUnlinked: false,
+    },
+    {
+      label: "timestamps-match",
+      initial: { ctimeNs: 3_000_000_000n, birthtimeNs: 3_000_000_000n },
+      after: { ctimeNs: 3_000_000_000n, birthtimeNs: 3_000_000_000n },
+      expectUnlinked: true,
+    },
+  ];
+  for (const { label, initial, after, expectUnlinked } of cases) {
+    const caseEvidence = join(root, `evidence-zero-id-${label}`);
+    mkdirSync(caseEvidence);
+    let currentTimes = initial;
+    race.state.lstatOverride = (path, entry) => {
+      if (path === linkPath && typeof entry.ino === "bigint") {
+        return Object.assign(entry, {
+          dev: 0n,
+          ino: 0n,
+          ctimeNs: currentTimes.ctimeNs,
+          birthtimeNs: currentTimes.birthtimeNs,
+        });
+      }
+    };
+    await asWindows(async () => {
+      const stop = await visualBroker(
+        { visualCapture: true },
+        project,
+        caseEvidence,
+      );
+      currentTimes = after;
+      await stop();
+      const remaining = lstatSync(linkPath, { throwIfNoEntry: false });
+      if (expectUnlinked) {
+        expect(remaining).toBeUndefined();
+      } else {
+        expect(remaining?.isSymbolicLink()).toBe(true);
+        unlinkSync(linkPath);
+      }
+    });
   }
 });
 
@@ -965,15 +1184,25 @@ if (process.platform !== "win32") {
     const workSource = projectReader(workspace);
     const projectSource = projectReader(project);
     try {
-      // Verify symlinkLink snapshots dev/ino, type, timestamps, and target.
+      // Verify symlinkLink snapshots dev/ino, type, timestamps, and target bytes.
       const snapshot = workSource.symlinkLink("visual-captures", outputs);
       const created = lstatSync(linkPath, { bigint: true });
       expect(sameEntry(snapshot, created)).toBe(true);
       expect(snapshot.type).toBe(Number(created.mode & 0o170000n));
       expect(snapshot.target).toBe(outputs);
+      expect(snapshot.targetBytes.equals(Buffer.from(outputs, "utf8"))).toBe(
+        true,
+      );
+      expect(created.ctimeNs).toBeGreaterThan(0n);
       expect(snapshot.ctimeNs).toBe(created.ctimeNs);
-      if (snapshot.birthtimeNs > 0n && created.birthtimeNs > 0n)
+      if (process.platform === "darwin") {
+        // macOS struct stat provides st_birthtimespec; assert unconditionally
+        // so a wrong or null birthtimeOffset fails rather than skipping.
+        expect(created.birthtimeNs).toBeGreaterThan(0n);
         expect(snapshot.birthtimeNs).toBe(created.birthtimeNs);
+      } else if (process.arch === "x64" || process.arch === "arm64") {
+        expect(snapshot.birthtimeNs).toBe(0n);
+      }
 
       // A timestamp mismatch on the same dev/ino/target is refused.
       const shiftedCtime = { ...snapshot, ctimeNs: snapshot.ctimeNs + 1n };
@@ -987,7 +1216,7 @@ if (process.platform !== "win32") {
       expect(workSource.unlinkLink("visual-captures", shiftedCtime)).toBe(
         false,
       );
-      if (snapshot.birthtimeNs > 0n) {
+      if (process.platform === "darwin" || snapshot.birthtimeNs > 0n) {
         const shiftedBirth = {
           ...snapshot,
           birthtimeNs: snapshot.birthtimeNs + 1n,

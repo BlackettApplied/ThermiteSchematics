@@ -29,6 +29,26 @@ const sameLinkStat = (actual, expected) =>
   (expected.type === undefined || actual.type === expected.type) &&
   sameTimestamp(actual.ctimeNs, expected.ctimeNs) &&
   sameTimestamp(actual.birthtimeNs, expected.birthtimeNs);
+const targetBytesOf = (value) =>
+  Buffer.isBuffer(value)
+    ? value
+    : typeof value === "string"
+      ? Buffer.from(value, "utf8")
+      : null;
+const hasExpectedTarget = (expected) =>
+  expected?.targetBytes !== undefined || expected?.target !== undefined;
+const sameLinkTarget = (actual, expected) => {
+  if (!hasExpectedTarget(expected)) return true;
+  const expectedBytes =
+    expected.targetBytes !== undefined
+      ? targetBytesOf(expected.targetBytes)
+      : targetBytesOf(expected.target);
+  return (
+    Buffer.isBuffer(actual) &&
+    expectedBytes !== null &&
+    actual.equals(expectedBytes)
+  );
+};
 const errnoName = (number) =>
   Object.entries(osConstants.errno).find(([, value]) => value === number)?.[0];
 function syscallError(syscall, number, path) {
@@ -260,8 +280,7 @@ function readLinkAt(dir, name) {
     const buffer = Buffer.alloc(size);
     const length = Number(lib().readlinkat(dir, path, buffer, buffer.length));
     if (length < 0) return null;
-    if (length < buffer.length)
-      return buffer.subarray(0, length).toString("utf8");
+    if (length < buffer.length) return Buffer.from(buffer.subarray(0, length));
     size *= 2;
     assert(size <= 65536, "Symbolic link target is too long");
   }
@@ -477,9 +496,18 @@ export function projectReader(project, expected) {
       },
       symlinkLink(name, target) {
         assert(components(name).length === 1);
-        assert(typeof target === "string" && target && !target.includes("\0"));
+        const targetBytes = Buffer.isBuffer(target)
+          ? Buffer.from(target)
+          : typeof target === "string"
+            ? Buffer.from(target, "utf8")
+            : null;
+        assert(
+          targetBytes !== null &&
+            targetBytes.length > 0 &&
+            !targetBytes.includes(0),
+        );
         directoryIdentity(root, identity);
-        const targetBuf = Buffer.from(target + "\0");
+        const targetBuf = Buffer.concat([targetBytes, Buffer.from([0])]);
         const nameBuf = Buffer.from(name + "\0");
         const errno = nativeErrno();
         errno[0] = 0;
@@ -489,9 +517,10 @@ export function projectReader(project, expected) {
         // same pinned dirfd right after symlinkat, before any other operation.
         // Residual accepted POSIX limit: symlinkat returns no fd or inode, so
         // a concurrent swap in the narrow window between symlinkat and fstatat
-        // cannot be prevented in user space. Verifying the link target and
-        // re-checking dev/ino rejects any replacement pointing elsewhere before
-        // claiming ownership, so setup rollback will not unlink it.
+        // cannot be prevented in user space. Verifying the raw link target
+        // bytes and re-checking dev/ino rejects any replacement pointing
+        // elsewhere before claiming ownership, so setup rollback will not
+        // unlink it.
         const entry = statEntryAt(rootFd, nameBuf);
         assert(
           entry?.isSymbolicLink(),
@@ -500,7 +529,8 @@ export function projectReader(project, expected) {
         const linkTarget = readLinkAt(rootFd, nameBuf);
         const confirmed = statEntryAt(rootFd, nameBuf);
         assert(
-          linkTarget === target &&
+          linkTarget !== null &&
+            linkTarget.equals(targetBytes) &&
             confirmed?.isSymbolicLink() &&
             sameLinkStat(confirmed, entry),
           "Symbolic link changed during creation",
@@ -511,7 +541,8 @@ export function projectReader(project, expected) {
           type: entry.type,
           ctimeNs: entry.ctimeNs,
           birthtimeNs: entry.birthtimeNs,
-          target,
+          ...(typeof target === "string" ? { target } : {}),
+          targetBytes,
         };
       },
       linkedDirectory(name, expectedIdentity, expectedLinkIdentity) {
@@ -523,11 +554,7 @@ export function projectReader(project, expected) {
           return false;
         const linkTarget = readLinkAt(rootFd, nameBuf);
         if (linkTarget === null) return false;
-        if (
-          expectedLinkIdentity?.target !== undefined &&
-          linkTarget !== expectedLinkIdentity.target
-        )
-          return false;
+        if (!sameLinkTarget(linkTarget, expectedLinkIdentity)) return false;
         const actual = statLinkedDirectory(rootFd, name);
         return !!actual && sameFile(actual, expectedIdentity);
       },
@@ -535,15 +562,15 @@ export function projectReader(project, expected) {
         assert(components(name).length === 1);
         if (!expectedLinkIdentity) return false;
         const nameBuf = Buffer.from(name + "\0");
-        // Verify the exact symlink target via readlinkat, then immediately
-        // re-verify entry type, dev/ino, and nonzero ctime/birthtime via
-        // fstatat(AT_SYMLINK_NOFOLLOW) on the pinned dirfd right before
-        // unlinkat, with no intervening syscalls (only statEntryAt's small
-        // result object and closure).
+        // Verify the exact raw symlink target bytes via readlinkat, then
+        // immediately re-verify entry type, dev/ino, and nonzero
+        // ctime/birthtime via fstatat(AT_SYMLINK_NOFOLLOW) on the pinned dirfd
+        // right before unlinkat, with no intervening syscalls (only
+        // statEntryAt's small result object and closure).
         // Ambiguous inode-reuse note: on filesystems that immediately reuse
         // freed inode numbers (e.g. Linux ext4), a replacement symlink created
         // in the same timestamp tick with the same dev/ino, entry type,
-        // timestamps, and exact target text is indistinguishable in user
+        // timestamps, and exact target bytes is indistinguishable in user
         // space. Unlinking an entry that is byte-for-byte equivalent and
         // points to the broker's exact target is acceptable because it carries
         // no distinct target or user content.
@@ -552,8 +579,8 @@ export function projectReader(project, expected) {
         // window between readlinkat/fstatat and unlinkat cannot be eliminated
         // in user space.
         if (
-          expectedLinkIdentity.target !== undefined &&
-          readLinkAt(rootFd, nameBuf) !== expectedLinkIdentity.target
+          hasExpectedTarget(expectedLinkIdentity) &&
+          !sameLinkTarget(readLinkAt(rootFd, nameBuf), expectedLinkIdentity)
         )
           return false;
         const current = statEntryAt(rootFd, nameBuf);
