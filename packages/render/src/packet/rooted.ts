@@ -51,6 +51,9 @@ export async function drawingDrafts(
   mode: "standard" | "compact" = "standard",
   referenceOffset = 0,
 ): Promise<RenderOutcome<Draft[]>> {
+  const control = controlPrint.getStore();
+  if (control?.replacement)
+    return { ok: true, value: structuredClone(control.replacement) };
   const qualityRun =
     request?.format === "schematic-view-request/0.1" &&
     request.family === "power" &&
@@ -271,6 +274,7 @@ function offerControlPrint(
   const { view } = selected.prepared.graph;
   if (
     control &&
+    !control.replacement &&
     view.format === "schematic-view/0.1" &&
     view.family === "control"
   )

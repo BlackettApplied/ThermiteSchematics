@@ -5,7 +5,10 @@ import { join } from "node:path";
 import { compileProject, lockProject } from "@thermite/compiler";
 import { afterEach, expect, it, vi } from "vitest";
 import { renderSchematicPacket, renderSchematicSheets } from "../src/index.js";
-import { renderSchematicPacket as ordinaryPacket } from "../src/sheets.js";
+import {
+  renderSchematicPacket as ordinaryPacket,
+  renderSchematicSheets as ordinarySheets,
+} from "../src/sheets.js";
 import * as elkRuntime from "../src/layout/elk-runtime.js";
 import * as deviceLegend from "../src/packet/device-legend.js";
 import * as clippedRoutes from "../src/packet/rooted-clipped-routes.js";
@@ -270,72 +273,398 @@ it("returns the ordinary packet byte-identical when the alternate ELK layout rej
   }
 });
 
-it("reads one-shot request getters once and reuses validated values", async () => {
+function callPacket(
+  fn: typeof renderSchematicPacket,
+  ir: Parameters<typeof renderSchematicPacket>[0],
+  request: unknown,
+  presentation?: Parameters<typeof renderSchematicPacket>[2],
+): ReturnType<typeof renderSchematicPacket> {
+  return Reflect.apply(fn, undefined, [ir, request, presentation]);
+}
+
+it("ignores custom views Symbol.iterator yielding 0 or 41 views and skips alternate", async () => {
   const c = await controlFixture();
   try {
     const view = controlView("Y1", "left-to-right");
+    const ordinary = await ordinaryPacket(c.ir, {
+      format: "schematic-packet-request/0.1",
+      page,
+      views: [view],
+      index: false,
+    });
+    assert.ok(ordinary.ok);
 
-    let standaloneIndexReads = 0;
-    let standaloneLayoutReads = 0;
-    const standaloneOptions = {
-      get index() {
-        if (++standaloneIndexReads > 1) throw new Error("index read twice");
-        return false;
+    for (const count of [0, 41]) {
+      let iterCalls = 0;
+      const views = [view];
+      Object.defineProperty(views, Symbol.iterator, {
+        value: function* () {
+          iterCalls++;
+          for (let i = 0; i < count; i++) yield view;
+        },
+      });
+      const result = await renderSchematicPacket(c.ir, {
+        format: "schematic-packet-request/0.1",
+        page,
+        views,
+        index: false,
+      });
+      assert.ok(result.ok);
+      expect(iterCalls).toBe(0);
+      expect(result.value.sheets).toHaveLength(1);
+      expect(result.value.sheets).toEqual(ordinary.value.sheets);
+      expect(result.value.html).toBe(ordinary.value.html);
+    }
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("ignores custom views Symbol.iterator swapping an invalid view for a valid one", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    let swapIterCalls = 0;
+    const swapViews: unknown[] = [{ format: "invalid-view/0.1" }];
+    Object.defineProperty(swapViews, Symbol.iterator, {
+      value: function* () {
+        swapIterCalls++;
+        yield view;
       },
+    });
+    const req = {
+      format: "schematic-packet-request/0.1",
+      page,
+      views: swapViews,
+      index: false,
+    };
+    const swapOrdinary = await callPacket(ordinaryPacket, c.ir, req);
+    const swapResult = await callPacket(renderSchematicPacket, c.ir, req);
+    expect(swapIterCalls).toBe(0);
+    expect(swapResult).toEqual(swapOrdinary);
+    assert.ok(!swapResult.ok);
+    expect(swapResult.error.code).toBe("R001");
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("gives dev's R006 for invalid reference options alongside a throwing views iterator", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    let iterCalls = 0;
+    const views = [view];
+    Object.defineProperty(views, Symbol.iterator, {
+      value() {
+        iterCalls++;
+        throw new Error("views iterator should not run");
+      },
+    });
+    const request = {
+      format: "schematic-packet-request/0.1" as const,
+      page,
+      views,
+      index: false,
+      references: false as const,
+    };
+    const ordinary = await ordinaryPacket(c.ir, request);
+    const result = await renderSchematicPacket(c.ir, request);
+    expect(iterCalls).toBe(0);
+    expect(result).toEqual(ordinary);
+    assert.ok(!result.ok);
+    expect(result.error.code).toBe("R006");
+    expect(result.error.reason).toBe("invalid-packet");
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("preserves dev validation order: invalid index short-circuits before throwing layout getter", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    let layoutReads = 0;
+    const request = {
+      format: "schematic-packet-request/0.1",
+      page,
+      views: [view],
+      index: "bad",
       get layout() {
-        if (++standaloneLayoutReads > 1) throw new Error("layout read twice");
-        return "standard" as const;
+        layoutReads++;
+        throw new Error("layout getter should not run");
       },
     };
+    const ordinary = await callPacket(ordinaryPacket, c.ir, request);
+    const result = await callPacket(renderSchematicPacket, c.ir, request);
+    expect(layoutReads).toBe(0);
+    expect(result).toEqual(ordinary);
+    assert.ok(!result.ok);
+    expect(result.error.code).toBe("R006");
+    expect(result.error.reason).toBe("invalid-packet");
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("preserves compact dispatch rejection before reading format and single prototype check on missing format", async () => {
+  const c = await controlFixture();
+  try {
+    let formatReads = 0;
+    const nonPlain = Object.create({ custom: true });
+    Object.defineProperty(nonPlain, "format", {
+      enumerable: true,
+      get() {
+        formatReads++;
+        throw new Error("format getter should not run");
+      },
+    });
+    const presentation = {
+      format: "project-presentation/0.3" as const,
+      revision: "A",
+      backgroundColor: "#ffffff",
+      titleBlockLines: [],
+    };
+    const ordinary = await callPacket(
+      ordinaryPacket,
+      c.ir,
+      nonPlain,
+      presentation,
+    );
+    const result = await callPacket(
+      renderSchematicPacket,
+      c.ir,
+      nonPlain,
+      presentation,
+    );
+    expect(formatReads).toBe(0);
+    expect(result).toEqual(ordinary);
+    assert.ok(!result.ok);
+    expect(result.error.code).toBe("R006");
+    expect(result.error.reason).toBe("invalid-packet");
+
+    let devProtoChecks = 0;
+    const makeMissingFormat = (onProto: () => void) =>
+      new Proxy(
+        { views: [controlView("Y1", "left-to-right")] },
+        {
+          getPrototypeOf(target) {
+            onProto();
+            return Reflect.getPrototypeOf(target);
+          },
+        },
+      );
+    const devMissing = await callPacket(
+      ordinaryPacket,
+      c.ir,
+      makeMissingFormat(() => {
+        devProtoChecks++;
+      }),
+    );
+    let publicProtoChecks = 0;
+    const publicMissing = await callPacket(
+      renderSchematicPacket,
+      c.ir,
+      makeMissingFormat(() => {
+        publicProtoChecks++;
+      }),
+    );
+    expect(publicProtoChecks).toBe(devProtoChecks);
+    expect(publicMissing).toEqual(devMissing);
+    assert.ok(!publicMissing.ok);
+    expect(publicMissing.error.code).toBe("R006");
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("gives dev's R006 when a reference-options proxy exposes an invalid filter through get", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    const references = new Proxy(
+      { appearances: "all" as const },
+      {
+        get(target, prop, receiver) {
+          if (prop === "filter") return { unknown: true };
+          return Reflect.get(target, prop, receiver);
+        },
+      },
+    );
+    const request = {
+      format: "schematic-packet-request/0.1" as const,
+      page,
+      views: [view],
+      index: true,
+      references,
+    };
+    const ordinary = await ordinaryPacket(c.ir, request);
+    const result = await renderSchematicPacket(c.ir, request);
+    expect(result).toEqual(ordinary);
+    assert.ok(!result.ok);
+    expect(result.error.code).toBe("R006");
+    expect(result.error.reason).toBe("invalid-packet");
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("skips the alternate for a one-shot index getter on renderSchematicSheets", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    const ordinaryStandalone = await ordinarySheets(
+      c.ir,
+      view,
+      undefined,
+      page,
+      { index: false },
+    );
+    assert.ok(ordinaryStandalone.ok);
+
+    let standaloneIndexReads = 0;
     const standalone = await renderSchematicSheets(
       c.ir,
       view,
       undefined,
       page,
-      standaloneOptions,
+      {
+        get index() {
+          if (++standaloneIndexReads > 1) throw new Error("index read twice");
+          return false;
+        },
+      },
     );
     assert.ok(standalone.ok);
     expect(standaloneIndexReads).toBe(1);
-    expect(standaloneLayoutReads).toBe(1);
+    expect(standalone.value.sheets).toEqual(ordinaryStandalone.value.sheets);
+    expect(standalone.value.html).toBe(ordinaryStandalone.value.html);
     expect(
       wires(standalone.value.sheets[0]?.svg ?? "").get(uid(107))?.geometry,
-    ).toMatch(/^M [\d.]+ [\d.]+ H [\d.]+$/);
+    ).toMatch(/ [VH] .* [VH] .* [VH] /);
+  } finally {
+    await c.dispose();
+  }
+});
 
-    for (const indexValue of [false, true] as const) {
-      let formatReads = 0;
-      let indexReads = 0;
-      let layoutReads = 0;
-      let pageReads = 0;
-      const request = {
-        get format() {
-          if (++formatReads > 1) throw new Error("format read twice");
-          return "schematic-packet-request/0.1" as const;
-        },
-        get index() {
-          if (++indexReads > 1) throw new Error("index read twice");
-          return indexValue;
-        },
-        get layout() {
-          if (++layoutReads > 1) throw new Error("layout read twice");
-          return "standard" as const;
-        },
-        get page() {
-          if (++pageReads > 1) throw new Error("page read twice");
-          return page;
-        },
+it("skips the alternate for a one-shot index getter or transparent proxy on renderSchematicPacket", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    const plainRequest = {
+      format: "schematic-packet-request/0.1" as const,
+      page,
+      views: [view],
+      index: false,
+    };
+    const ordinary = await ordinaryPacket(c.ir, plainRequest);
+    assert.ok(ordinary.ok);
+
+    let ordinaryReads = 0;
+    const makeOneShotRequest = (onRead: () => void) => {
+      let calls = 0;
+      return {
+        format: "schematic-packet-request/0.1" as const,
+        page,
         views: [view],
+        get index() {
+          onRead();
+          return ++calls === 1 ? undefined : false;
+        },
       };
-      const result = await renderSchematicPacket(c.ir, request);
-      assert.ok(result.ok);
-      expect(formatReads).toBe(1);
-      expect(indexReads).toBe(1);
-      expect(layoutReads).toBe(1);
-      expect(pageReads).toBe(1);
-      expect(
-        wires(result.value.sheets[0]?.svg ?? "").get(uid(107))?.geometry,
-      ).toMatch(/^M [\d.]+ [\d.]+ H [\d.]+$/);
-      if (indexValue) expect(result.value.sheets.length).toBeGreaterThan(1);
-    }
+    };
+    const devOneShot = await ordinaryPacket(
+      c.ir,
+      makeOneShotRequest(() => {
+        ordinaryReads++;
+      }),
+    );
+    assert.ok(devOneShot.ok);
+    let publicReads = 0;
+    const publicOneShot = await renderSchematicPacket(
+      c.ir,
+      makeOneShotRequest(() => {
+        publicReads++;
+      }),
+    );
+    assert.ok(publicOneShot.ok);
+    expect(publicReads).toBe(ordinaryReads);
+    expect(publicOneShot.value.sheets).toEqual(devOneShot.value.sheets);
+    expect(publicOneShot.value.html).toBe(devOneShot.value.html);
+    expect(
+      wires(publicOneShot.value.sheets[0]?.svg ?? "").get(uid(107))?.geometry,
+    ).toMatch(/ [VH] .* [VH] .* [VH] /);
+
+    const proxyResult = await renderSchematicPacket(
+      c.ir,
+      new Proxy(plainRequest, {}),
+    );
+    assert.ok(proxyResult.ok);
+    expect(proxyResult.value.sheets).toEqual(ordinary.value.sheets);
+    expect(proxyResult.value.html).toBe(ordinary.value.html);
+  } finally {
+    await c.dispose();
+  }
+});
+
+it("returns the ordinary packet when an injected failure occurs in the optional draft snapshot", async () => {
+  const c = await controlFixture();
+  try {
+    const view = controlView("Y1", "left-to-right");
+    const request = {
+      format: "schematic-packet-request/0.1" as const,
+      page,
+      views: [view],
+      index: false,
+    };
+    const baseline = await ordinaryPacket(c.ir, request);
+    assert.ok(baseline.ok);
+
+    const realFit = deviceLegend.fitLegendDrafts;
+    const realClone = globalThis.structuredClone;
+    const runWithInjection = async (
+      fn: () => ReturnType<typeof renderSchematicPacket>,
+    ) => {
+      let fittedDrafts: unknown;
+      let injected = 0;
+      const fitSpy = vi
+        .spyOn(deviceLegend, "fitLegendDrafts")
+        .mockImplementation((...args) => {
+          const fitted = realFit(...args);
+          if (fitted.ok) fittedDrafts = fitted.value;
+          return fitted;
+        });
+      const cloneSpy = vi
+        .spyOn(globalThis, "structuredClone")
+        .mockImplementation((value, options) => {
+          if (fittedDrafts !== undefined && value === fittedDrafts) {
+            injected++;
+            throw new Error("injected draft snapshot failure");
+          }
+          return realClone(value, options);
+        });
+      try {
+        const outcome = await fn();
+        return { outcome, injected };
+      } finally {
+        fitSpy.mockRestore();
+        cloneSpy.mockRestore();
+      }
+    };
+
+    const ordinaryRun = await runWithInjection(() =>
+      ordinaryPacket(c.ir, request),
+    );
+    assert.ok(ordinaryRun.outcome.ok);
+    expect(ordinaryRun.outcome.value.sheets).toEqual(baseline.value.sheets);
+
+    const publicRun = await runWithInjection(() =>
+      renderSchematicPacket(c.ir, request),
+    );
+    assert.ok(publicRun.outcome.ok);
+    expect(publicRun.injected).toBe(1);
+    expect(publicRun.outcome.value.sheets).toEqual(baseline.value.sheets);
+    expect(publicRun.outcome.value.html).toBe(baseline.value.html);
   } finally {
     await c.dispose();
   }

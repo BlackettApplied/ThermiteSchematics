@@ -30,62 +30,66 @@ export interface ControlPrintProposal {
   readonly hasJoin: boolean;
 }
 
-export interface ControlPrintAssembly {
-  readonly originalDrafts: readonly Draft[];
-  readonly fit: (
-    drafts: Draft[],
-  ) =>
-    | { drafts: Draft[]; finish: () => RenderOutcome<RenderedPacket> }
-    | undefined;
-}
-
 interface Placement {
   propose?: () => Promise<ControlPrintProposal | undefined>;
-  assemble?: ControlPrintAssembly;
+  originalDrafts?: readonly Draft[];
+  snapshotFailed?: boolean;
+  replacement?: Draft[];
+  gate?: (fittedDrafts: readonly Draft[]) => boolean;
 }
 export const controlPrint = new AsyncLocalStorage<Placement>();
 
-export async function selectControlPrint(
+export async function selectControlPrint<T>(
   render: () => Promise<RenderOutcome<RenderedPacket>>,
+  snapshotInputs: () => T | undefined,
+  renderAlternate: (snapshot: T) => Promise<RenderOutcome<RenderedPacket>>,
 ) {
   const placement: Placement = {};
   const original = await controlPrint.run(placement, render);
   if (
     !original.ok ||
     !placement.propose ||
-    !placement.assemble ||
+    !placement.originalDrafts ||
+    placement.snapshotFailed ||
     hasCompactFrame(original.value.page)
   )
     return original;
   try {
+    const snapshot = snapshotInputs();
+    if (!snapshot) return original;
     const proposal = await placement.propose();
     if (!proposal) return original;
-    const fitted = placement.assemble.fit(proposal.selected.drafts);
-    if (!fitted) return original;
+    const originalDrafts = placement.originalDrafts;
     const scoreBounds = proposal.selected.drafts[0]?.rootedScoreBounds;
-    const finalSelected: RootedCandidate = {
-      ...proposal.selected,
-      drafts: scoreBounds
-        ? fitted.drafts.map((d) =>
-            d.rootedScoreBounds ? d : { ...d, rootedScoreBounds: scoreBounds },
-          )
-        : fitted.drafts,
-    };
-    const finalOriginal: RootedCandidate = {
-      ...proposal.original,
-      drafts: [...placement.assemble.originalDrafts],
-    };
-    if (
-      !acceptsControlPrint(
-        finalSelected,
-        finalOriginal,
-        proposal.native,
-        proposal.page,
-        proposal.hasJoin,
-      )
-    )
-      return original;
-    const candidate = fitted.finish();
+    const candidate = await controlPrint.run(
+      {
+        replacement: proposal.selected.drafts,
+        gate(fittedDrafts) {
+          const finalSelected: RootedCandidate = {
+            ...proposal.selected,
+            drafts: scoreBounds
+              ? fittedDrafts.map((d) =>
+                  d.rootedScoreBounds
+                    ? d
+                    : { ...d, rootedScoreBounds: scoreBounds },
+                )
+              : [...fittedDrafts],
+          };
+          const finalOriginal: RootedCandidate = {
+            ...proposal.original,
+            drafts: [...originalDrafts],
+          };
+          return acceptsControlPrint(
+            finalSelected,
+            finalOriginal,
+            proposal.native,
+            proposal.page,
+            proposal.hasJoin,
+          );
+        },
+      },
+      () => renderAlternate(snapshot),
+    );
     // A refold can round the same annotation distance at a different origin.
     return candidate.ok &&
       circuitPacketGuard(

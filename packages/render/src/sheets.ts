@@ -73,19 +73,13 @@ import {
   PacketDraftError,
   composedPacketFailure,
 } from "./packet/errors.js";
-import { sheetLabel } from "./packet/page.js";
+import { normalizePaperPage, sheetLabel } from "./packet/page.js";
 export { normalizePaperPage, sheetLabel } from "./packet/page.js";
 import { printPacketHtml } from "./packet/html.js";
 export { printPacketHtml } from "./packet/html.js";
 
 import { hasCompactFrame } from "./packet/frame-profile.js";
 import { controlPrint } from "./packet/rooted-control-print.js";
-import {
-  packetPaperPage,
-  parsePacketFields,
-  parsePacketReferences,
-  readPacketPage,
-} from "./packet/validate-request.js";
 import { contextualRenderOutcome } from "./render-diagnostic-context.js";
 
 function packetDiagnostics(
@@ -123,7 +117,6 @@ async function renderPacketPreservingRetry(
   presentation: Readonly<CompiledProjectPresentation> | undefined,
   explicitPacket: boolean,
   configurePage?: (page: import("./packet/types.js").PaperPage) => void,
-  requestFormat?: unknown,
 ): Promise<RenderOutcome<RenderedPacket>> {
   const paginationFailures = new Map<PacketViewContext, RenderFailure>();
   const result = await renderPacket(
@@ -133,7 +126,6 @@ async function renderPacketPreservingRetry(
     explicitPacket,
     paginationFailures,
     configurePage,
-    requestFormat,
   );
   const original = paginationFailures.values().next().value;
   return result.ok || !original ? result : { ok: false, error: original };
@@ -146,58 +138,75 @@ async function renderPacket(
   explicitPacket: boolean,
   paginationFailures: Map<PacketViewContext, RenderFailure>,
   configurePage?: (page: import("./packet/types.js").PaperPage) => void,
-  requestFormat?: unknown,
 ): Promise<RenderOutcome<RenderedPacket>> {
   const contextError: typeof withPacketViews = (error, views) =>
     explicitPacket ? withPacketViews(error, views) : error;
-  const parsed = parsePacketFields(request, requestFormat);
-  if (!parsed.ok)
+  if (
+    !record(request) ||
+    request.format !== "schematic-packet-request/0.1" ||
+    Object.keys(request).some(
+      (key) =>
+        !["format", "page", "views", "layout", "index", "references"].includes(
+          key,
+        ),
+    ) ||
+    (request.index !== undefined && typeof request.index !== "boolean") ||
+    (request.layout !== undefined &&
+      !["standard", "compact"].includes(request.layout)) ||
+    !Array.isArray(request.views) ||
+    request.views.length < 1 ||
+    request.views.length > 40
+  )
     return failure(
       "invalid-packet",
       "A packet requires format schematic-packet-request/0.1 and 1–40 views, with an optional shared page.",
     );
-  const { index, layout, views, rawReferences } = parsed.value;
-  const parsedReferences = parsePacketReferences(rawReferences, index);
-  if (!parsedReferences.ok)
+  if (
+    request.references !== undefined &&
+    (request.index !== true ||
+      (request.references !== false &&
+        (!record(request.references) ||
+          !Object.keys(request.references).length ||
+          Object.keys(request.references).some(
+            (k) => !["filter", "appearances"].includes(k),
+          ) ||
+          (Object.hasOwn(request.references, "appearances") &&
+            !["all", "drawings"].includes(request.references.appearances!)) ||
+          (Object.hasOwn(request.references, "filter") &&
+            request.references.filter === undefined))))
+  )
     return failure(
       "invalid-packet",
       "Reference options require index: true and either false or filter/appearances settings.",
     );
-  const references = parsedReferences.value;
   let referenceDevices: ReturnType<typeof resolveDeviceFilter> | undefined;
   try {
-    if (references && references.filter !== undefined)
-      referenceDevices = resolveDeviceFilter(ir, references.filter);
+    if (request.references && request.references.filter !== undefined)
+      referenceDevices = resolveDeviceFilter(ir, request.references.filter);
   } catch (e) {
     return failure(
       "invalid-packet",
       e instanceof Error ? e.message : "Invalid reference filter.",
     );
   }
-  const { hasPage, pageCopy } = readPacketPage(request);
-  const paperResult = packetPaperPage(
-    hasPage,
-    pageCopy,
-    presentation,
-    configurePage,
-  );
-  if (!paperResult.ok) return paperResult;
-  const paper = paperResult.value;
-  const refRequest: Pick<SchematicPacketRequest, "references" | "page"> = {
-    ...(hasPage && pageCopy !== undefined ? { page: pageCopy } : {}),
-    ...(references !== undefined ? { references } : {}),
-  };
+  const paper = packetPaperPage(request, presentation, configurePage);
+  if (!paper.ok) return paper;
   let drafts: Draft[] = [];
   const legendViews: LegendViewDrafts[] = [];
   const composedFailure = (message: string) =>
     composedPacketFailure(message, drafts, contextError);
   const documentationSelections: (DocumentationSelection & { view: number })[] =
     [];
+  let referenceSelection: ReferenceSelection | undefined;
   let referenceNumber = 0;
-  const appearances = collectCircuitAppearances(ir, views, contextError);
+  const appearances = collectCircuitAppearances(
+    ir,
+    request.views,
+    contextError,
+  );
   if (!appearances.ok) return appearances;
   const navigationDuplicates = new Map<string, number>();
-  for (const [viewIndex, view] of views.entries()) {
+  for (const [viewIndex, view] of request.views.entries()) {
     const context = packetViewContext(view, viewIndex, ir);
     if (record(view) && Object.hasOwn(view, "page")) {
       const failed = failure(
@@ -212,12 +221,12 @@ async function renderPacket(
       view,
       authoredTitlePresentation(
         presentation,
-        paper,
+        paper.value,
         viewIndex,
         drafts.length + 1,
       ),
-      paper,
-      layout,
+      paper.value,
+      request.layout,
       appearances.value,
       referenceNumber,
     );
@@ -256,7 +265,7 @@ async function renderPacket(
       drafts,
       result.value,
       viewIndex,
-      layout,
+      request.layout,
       referenceNumber,
       context,
       navigationView,
@@ -270,8 +279,8 @@ async function renderPacket(
     ir,
     drafts,
     legendViews,
-    paper,
-    layout,
+    paper.value,
+    request.layout,
     contextError,
   );
   if (!legendFit.ok)
@@ -282,84 +291,42 @@ async function renderPacket(
         drafts.flatMap((d) => d.views ?? []),
       ),
     };
-  const finish = (fittedDrafts: Draft[]) =>
-    finishPacket(
-      ir,
-      fittedDrafts,
-      paper,
-      index,
-      refRequest,
-      referenceDevices,
-      presentation,
-      explicitPacket,
-      documentationSelections,
-      paginationFailures,
-      contextError,
-    );
-  attachControlAssembly(
-    ir,
-    legendFit.value,
-    views.length === 1 ? legendViews[0] : undefined,
-    paper,
-    layout,
-    contextError,
-    finish,
-  );
-  return finish(legendFit.value);
-}
-
-function finishPacket(
-  ir: Readonly<ElectricalIr>,
-  fittedDrafts: Draft[],
-  paper: import("./packet/types.js").PaperPage,
-  index: boolean | undefined,
-  refRequest: Pick<SchematicPacketRequest, "references" | "page">,
-  referenceDevices: ReturnType<typeof resolveDeviceFilter> | undefined,
-  presentation: Readonly<CompiledProjectPresentation> | undefined,
-  explicitPacket: boolean,
-  documentationSelections: readonly (DocumentationSelection & {
-    view: number;
-  })[],
-  paginationFailures: ReadonlyMap<PacketViewContext, RenderFailure>,
-  contextError: typeof withPacketViews,
-): RenderOutcome<RenderedPacket> {
-  const pageCost = checkedPageCost(fittedDrafts, contextError);
+  drafts = legendFit.value;
+  applyControlPrint(drafts, legendViews.length, paper.value);
+  const pageCost = checkedPageCost(drafts, contextError);
   if (!pageCost.ok) return pageCost;
   const companions = packetCompanions(
     ir,
-    fittedDrafts,
-    paper,
+    drafts,
+    paper.value,
     presentation,
     explicitPacket,
     contextError,
   );
   if (!companions.ok) return companions;
-  let finalDrafts = companions.value;
-  let referenceSelection: ReferenceSelection | undefined;
-  if (index) {
+  drafts = companions.value;
+  if (request.index) {
     const indexes = packetReferences(
       ir,
-      finalDrafts,
-      refRequest,
+      drafts,
+      request,
       referenceDevices,
       presentation,
-      paper,
+      paper.value,
       contextError,
     );
     if (!indexes.ok) return indexes;
     referenceSelection = indexes.value.referenceSelection;
-    finalDrafts = indexes.value.drafts;
+    drafts = indexes.value.drafts;
   }
-  if (finalDrafts.length > 100 /* Backstop after composition. */)
-    return composedPacketFailure(
+  if (drafts.length > 100 /* Backstop after composition. */)
+    return composedFailure(
       "Packet exceeds the 100-sheet limit including indexes.",
-      finalDrafts,
-      contextError,
     );
   return assemblePacket(
     ir,
-    finalDrafts,
-    paper,
+    drafts,
+    paper.value,
     explicitPacket,
     documentationSelections,
     referenceSelection,
@@ -368,57 +335,25 @@ function finishPacket(
   );
 }
 
-function attachControlAssembly(
-  ir: Readonly<ElectricalIr>,
-  originalFitted: readonly Draft[],
-  singleView: LegendViewDrafts | undefined,
-  paper: import("./packet/types.js").PaperPage,
-  layout: "standard" | "compact" | undefined,
-  contextError: typeof withPacketViews,
-  finish: (fittedDrafts: Draft[]) => RenderOutcome<RenderedPacket>,
-) {
+function applyControlPrint(
+  drafts: readonly Draft[],
+  viewCount: number,
+  page: import("./packet/types.js").PaperPage,
+): void {
   const control = controlPrint.getStore();
-  if (!control?.propose || !singleView || hasCompactFrame(paper)) return;
-  const originalDrafts = structuredClone(originalFitted);
-  control.assemble = {
-    originalDrafts,
-    fit(replacement) {
-      const candidateDrafts: Draft[] = [];
-      const candidateLegendViews: LegendViewDrafts[] = [
-        {
-          drafts: structuredClone(replacement),
-          viewIndex: singleView.viewIndex,
-          context: singleView.context,
-          ...(singleView.navigationView
-            ? { navigationView: singleView.navigationView }
-            : {}),
-        },
-      ];
-      appendViewDrafts(
-        candidateDrafts,
-        structuredClone(replacement),
-        singleView.viewIndex,
-        layout,
-        0,
-        singleView.context,
-        singleView.navigationView,
-      );
-      if (candidateDrafts.length > 100) return undefined;
-      const fitted = fitPacketLegends(
-        ir,
-        candidateDrafts,
-        candidateLegendViews,
-        paper,
-        layout,
-        contextError,
-      );
-      if (!fitted.ok) return undefined;
-      return {
-        drafts: fitted.value,
-        finish: () => finish(fitted.value),
-      };
-    },
-  };
+  if (!control) return;
+  if (control.replacement) {
+    if (control.gate && !control.gate(drafts))
+      throw new Error("Control print gate rejected alternate.");
+    return;
+  }
+  if (control.propose && viewCount === 1 && !hasCompactFrame(page)) {
+    try {
+      control.originalDrafts = structuredClone(drafts);
+    } catch {
+      control.snapshotFailed = true;
+    }
+  }
 }
 
 function collectCircuitAppearances(
@@ -468,7 +403,7 @@ function packetNavigationView(
 function packetReferences(
   ir: Readonly<ElectricalIr>,
   drafts: Draft[],
-  request: Pick<SchematicPacketRequest, "references" | "page">,
+  request: SchematicPacketRequest,
   referenceDevices: ReturnType<typeof resolveDeviceFilter> | undefined,
   presentation: CompiledProjectPresentation | undefined,
   page: import("./packet/types.js").PaperPage,
@@ -688,10 +623,9 @@ export async function renderPacketWithAdvice(
   configurePage?: (page: import("./packet/types.js").PaperPage) => void,
   options?: import("./packet/types.js").PacketRenderOptions,
 ): Promise<RenderOutcome<RenderedPacket>> {
-  const format = request?.format;
   if (
     presentation?.format === "project-presentation/0.3" ||
-    format === "schematic-packet-request/0.2"
+    request?.format === "schematic-packet-request/0.2"
   ) {
     const { renderTitlePacket } =
       await import("./internal/title-data/entry.js");
@@ -710,10 +644,10 @@ export async function renderPacketWithAdvice(
     presentation,
     explicitPacket,
     configurePage,
-    format,
   );
   if (
     result.ok ||
+    controlPrint.getStore()?.replacement ||
     result.error.code !== "R006" ||
     result.error.reason !== "unprintable-layout" ||
     result.error.details?.navigationInvariant ||
@@ -795,4 +729,21 @@ export function renderSchematicSheets(
       ),
     ),
   );
+}
+
+function packetPaperPage(
+  request: SchematicPacketRequest,
+  presentation: Readonly<CompiledProjectPresentation> | undefined,
+  configurePage:
+    ((page: import("./packet/types.js").PaperPage) => void) | undefined,
+) {
+  const paper = normalizePaperPage(
+    Object.hasOwn(request, "page")
+      ? record(request.page)
+        ? { ...presentation?.page, ...request.page }
+        : request.page
+      : (presentation?.page ?? {}),
+  );
+  if (paper.ok) configurePage?.(paper.value);
+  return paper;
 }
