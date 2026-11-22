@@ -22,6 +22,13 @@ const stat = (path) => lstatSync(path, { bigint: true, throwIfNoEntry: false });
 const fdStat = (fd) => fstatSync(fd, { bigint: true });
 const sameFile = (a, b) =>
   a != null && b != null && a.dev === b.dev && a.ino === b.ino;
+const hasTimestamp = (value) => typeof value === "bigint" && value !== 0n;
+const sameTimestamp = (a, b) => !hasTimestamp(a) || !hasTimestamp(b) || a === b;
+const sameLinkStat = (actual, expected) =>
+  sameFile(actual, expected) &&
+  (expected.type === undefined || actual.type === expected.type) &&
+  sameTimestamp(actual.ctimeNs, expected.ctimeNs) &&
+  sameTimestamp(actual.birthtimeNs, expected.birthtimeNs);
 const errnoName = (number) =>
   Object.entries(osConstants.errno).find(([, value]) => value === number)?.[0];
 function syscallError(syscall, number, path) {
@@ -71,9 +78,11 @@ const S_IFMT = 0o170000;
 const S_IFLNK = 0o120000;
 // struct stat offsets for fstatat(AT_SYMLINK_NOFOLLOW):
 // - macOS (arm64 and x64 via fstatat$INODE64): 144 B; st_dev i32 @ 0,
-//   st_mode u16 @ 4, st_ino u64 @ 8.
-// - Linux x64: 144 B; st_dev u64 @ 0, st_ino u64 @ 8, st_mode u32 @ 24.
-// - Linux arm64: 128 B; st_dev u64 @ 0, st_ino u64 @ 8, st_mode u32 @ 16.
+//   st_mode u16 @ 4, st_ino u64 @ 8, st_ctimespec @ 64, st_birthtimespec @ 80.
+// - Linux x64: 144 B; st_dev u64 @ 0, st_ino u64 @ 8, st_mode u32 @ 24,
+//   st_ctim @ 104 (no birthtime in struct stat).
+// - Linux arm64: 128 B; st_dev u64 @ 0, st_ino u64 @ 8, st_mode u32 @ 16,
+//   st_ctim @ 104 (no birthtime in struct stat).
 const fstatatLayout = darwin
   ? {
       size: 144,
@@ -82,6 +91,8 @@ const fstatatLayout = darwin
       modeOffset: 4,
       modeSize: 2,
       inoOffset: 8,
+      ctimeOffset: 64,
+      birthtimeOffset: 80,
     }
   : process.arch === "x64"
     ? {
@@ -91,6 +102,8 @@ const fstatatLayout = darwin
         modeOffset: 24,
         modeSize: 4,
         inoOffset: 8,
+        ctimeOffset: 104,
+        birthtimeOffset: null,
       }
     : process.arch === "arm64"
       ? {
@@ -100,6 +113,8 @@ const fstatatLayout = darwin
           modeOffset: 16,
           modeSize: 4,
           inoOffset: 8,
+          ctimeOffset: 104,
+          birthtimeOffset: null,
         }
       : null;
 const fstatatSymbol = "fstatat" + inode64;
@@ -251,6 +266,13 @@ function readLinkAt(dir, name) {
     assert(size <= 65536, "Symbolic link target is too long");
   }
 }
+function readTimespecNs(view, offset) {
+  if (offset == null) return 0n;
+  const sec = view.getBigInt64(offset, true);
+  const nsec = view.getBigInt64(offset + 8, true);
+  if (sec <= 0n && nsec <= 0n) return 0n;
+  return sec * 1_000_000_000n + nsec;
+}
 function statEntryAt(dir, name) {
   if (fstatatLayout) {
     const path = Buffer.isBuffer(name) ? name : Buffer.from(name + "\0");
@@ -265,10 +287,14 @@ function statEntryAt(dir, name) {
         ? statView.getUint16(fstatatLayout.modeOffset, true)
         : statView.getUint32(fstatatLayout.modeOffset, true);
     const ino = statView.getBigUint64(fstatatLayout.inoOffset, true);
+    const type = mode & S_IFMT;
     return {
       dev,
       ino,
-      isSymbolicLink: () => (mode & S_IFMT) === S_IFLNK,
+      type,
+      ctimeNs: readTimespecNs(statView, fstatatLayout.ctimeOffset),
+      birthtimeNs: readTimespecNs(statView, fstatatLayout.birthtimeOffset),
+      isSymbolicLink: () => type === S_IFLNK,
     };
   }
   const entryName = Buffer.isBuffer(name)
@@ -277,7 +303,17 @@ function statEntryAt(dir, name) {
   const { fd } = tryOpen(dir, entryName, linkStatFlags);
   if (fd < 0) return null;
   try {
-    return fdStat(fd);
+    const entry = fdStat(fd);
+    const type = Number(entry.mode & BigInt(S_IFMT));
+    return {
+      dev: entry.dev,
+      ino: entry.ino,
+      type,
+      ctimeNs: typeof entry.ctimeNs === "bigint" ? entry.ctimeNs : 0n,
+      birthtimeNs:
+        typeof entry.birthtimeNs === "bigint" ? entry.birthtimeNs : 0n,
+      isSymbolicLink: () => entry.isSymbolicLink(),
+    };
   } finally {
     closeSync(fd);
   }
@@ -466,19 +502,32 @@ export function projectReader(project, expected) {
         assert(
           linkTarget === target &&
             confirmed?.isSymbolicLink() &&
-            sameFile(confirmed, entry),
+            sameLinkStat(confirmed, entry),
           "Symbolic link changed during creation",
         );
-        return { dev: entry.dev, ino: entry.ino };
+        return {
+          dev: entry.dev,
+          ino: entry.ino,
+          type: entry.type,
+          ctimeNs: entry.ctimeNs,
+          birthtimeNs: entry.birthtimeNs,
+          target,
+        };
       },
       linkedDirectory(name, expectedIdentity, expectedLinkIdentity) {
         assert(components(name).length === 1);
         const nameBuf = Buffer.from(name + "\0");
         const entry = statEntryAt(rootFd, nameBuf);
         if (!entry?.isSymbolicLink()) return false;
-        if (expectedLinkIdentity && !sameFile(entry, expectedLinkIdentity))
+        if (expectedLinkIdentity && !sameLinkStat(entry, expectedLinkIdentity))
           return false;
-        if (readLinkAt(rootFd, nameBuf) === null) return false;
+        const linkTarget = readLinkAt(rootFd, nameBuf);
+        if (linkTarget === null) return false;
+        if (
+          expectedLinkIdentity?.target !== undefined &&
+          linkTarget !== expectedLinkIdentity.target
+        )
+          return false;
         const actual = statLinkedDirectory(rootFd, name);
         return !!actual && sameFile(actual, expectedIdentity);
       },
@@ -486,16 +535,31 @@ export function projectReader(project, expected) {
         assert(components(name).length === 1);
         if (!expectedLinkIdentity) return false;
         const nameBuf = Buffer.from(name + "\0");
-        // Re-verify symlink type and dev/ino via fstatat(AT_SYMLINK_NOFOLLOW)
-        // on the pinned dirfd immediately before unlinkat, with no intervening
-        // syscalls (only statEntryAt's small result object and closure).
-        // Residual accepted POSIX limit: POSIX has no atomic unlink-by-fd/inode
-        // syscall, so a concurrent swap in the narrow window between fstatat
-        // and unlinkat cannot be eliminated in user space.
+        // Verify the exact symlink target via readlinkat, then immediately
+        // re-verify entry type, dev/ino, and nonzero ctime/birthtime via
+        // fstatat(AT_SYMLINK_NOFOLLOW) on the pinned dirfd right before
+        // unlinkat, with no intervening syscalls (only statEntryAt's small
+        // result object and closure).
+        // Ambiguous inode-reuse note: on filesystems that immediately reuse
+        // freed inode numbers (e.g. Linux ext4), a replacement symlink created
+        // in the same timestamp tick with the same dev/ino, entry type,
+        // timestamps, and exact target text is indistinguishable in user
+        // space. Unlinking an entry that is byte-for-byte equivalent and
+        // points to the broker's exact target is acceptable because it carries
+        // no distinct target or user content.
+        // Residual accepted POSIX limit: POSIX has no atomic
+        // unlink-by-fd/inode syscall, so a concurrent swap in the narrow
+        // window between readlinkat/fstatat and unlinkat cannot be eliminated
+        // in user space.
+        if (
+          expectedLinkIdentity.target !== undefined &&
+          readLinkAt(rootFd, nameBuf) !== expectedLinkIdentity.target
+        )
+          return false;
         const current = statEntryAt(rootFd, nameBuf);
         if (
           !current?.isSymbolicLink() ||
-          !sameFile(current, expectedLinkIdentity)
+          !sameLinkStat(current, expectedLinkIdentity)
         )
           return false;
         return lib().unlinkat(rootFd, nameBuf, 0) === 0;

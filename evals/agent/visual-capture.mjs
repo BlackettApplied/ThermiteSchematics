@@ -188,6 +188,28 @@ const hasIdentity = (entry) =>
   entry != null && (entry.dev !== 0n || entry.ino !== 0n);
 const sameIdentity = (a, b) =>
   hasIdentity(a) && hasIdentity(b) && a.dev === b.dev && a.ino === b.ino;
+const hasTimestamp = (value) => typeof value === "bigint" && value !== 0n;
+const sameTimestamp = (a, b) => !hasTimestamp(a) || !hasTimestamp(b) || a === b;
+const entryType = (entry) => Number(entry.mode & 0o170000n);
+
+function snapshotWindowsLink(link) {
+  const entry = lstatSync(link, { bigint: true, throwIfNoEntry: false });
+  if (!entry?.isSymbolicLink()) return null;
+  let target;
+  try {
+    target = readlinkSync(link);
+  } catch {
+    return null;
+  }
+  return {
+    dev: entry.dev,
+    ino: entry.ino,
+    type: entryType(entry),
+    ctimeNs: typeof entry.ctimeNs === "bigint" ? entry.ctimeNs : 0n,
+    birthtimeNs: typeof entry.birthtimeNs === "bigint" ? entry.birthtimeNs : 0n,
+    target,
+  };
+}
 
 function sameResolvedPath(a, b) {
   let left = resolve(a),
@@ -234,12 +256,23 @@ function ownsWindowsLink(
     if (!parent?.isDirectory() || !sameIdentity(parent, workspaceIdentity))
       return false;
   }
-  const current = lstatSync(link, { bigint: true, throwIfNoEntry: false });
-  if (!current?.isSymbolicLink()) return false;
-  if (hasIdentity(linkIdentity)) return sameIdentity(current, linkIdentity);
+  const current = snapshotWindowsLink(link);
+  if (!current) return false;
+  if (
+    linkIdentity?.target !== undefined &&
+    current.target !== linkIdentity.target
+  )
+    return false;
+  if (hasIdentity(linkIdentity))
+    return (
+      sameIdentity(current, linkIdentity) &&
+      (linkIdentity.type === undefined || current.type === linkIdentity.type) &&
+      sameTimestamp(current.ctimeNs, linkIdentity.ctimeNs) &&
+      sameTimestamp(current.birthtimeNs, linkIdentity.birthtimeNs)
+    );
   // Residual Windows limit: if a filesystem cannot supply dev/ino for a
-  // junction, user space cannot distinguish a replacement junction pointing to
-  // the same target from the broker's own junction.
+  // junction, user space cannot distinguish a replacement junction with the
+  // same target string from the broker's own junction.
   return linkedOutputsTarget(link, outputs, outputsIdentity);
 }
 
@@ -314,7 +347,8 @@ export async function visualBroker(
         )
           // Residual Windows limit: Node exposes no descriptor-relative
           // unlinkat on Windows, so unlinkSync still takes a pathname after
-          // verifying parent identity, isSymbolicLink(), and link dev/ino.
+          // verifying parent identity, isSymbolicLink(), target text,
+          // timestamps, and link dev/ino.
           unlinkSync(link);
       }
     } finally {
@@ -424,10 +458,10 @@ export async function visualBroker(
       // visualBroker calls reach this fallback.
       symlinkSync(outputs, link, "junction");
       linkCreated = true;
-      linkIdentity = lstatSync(link, { bigint: true, throwIfNoEntry: false });
+      linkIdentity = snapshotWindowsLink(link);
       assert(
         verifyWindowsParent() &&
-          linkIdentity?.isSymbolicLink() &&
+          linkIdentity != null &&
           ownsWindowsLink(
             link,
             outputs,
