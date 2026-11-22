@@ -488,10 +488,10 @@ export function projectReader(project, expected) {
         const nameBuf = Buffer.from(name + "\0");
         // Re-verify symlink type and dev/ino via fstatat(AT_SYMLINK_NOFOLLOW)
         // on the pinned dirfd immediately before unlinkat, with no intervening
-        // allocations or operations. Residual accepted POSIX limit: POSIX has
-        // no atomic unlink-by-fd/inode syscall, so a concurrent swap in the
-        // narrow window between fstatat and unlinkat cannot be eliminated in
-        // user space.
+        // syscalls (only statEntryAt's small result object and closure).
+        // Residual accepted POSIX limit: POSIX has no atomic unlink-by-fd/inode
+        // syscall, so a concurrent swap in the narrow window between fstatat
+        // and unlinkat cannot be eliminated in user space.
         const current = statEntryAt(rootFd, nameBuf);
         if (
           !current?.isSymbolicLink() ||

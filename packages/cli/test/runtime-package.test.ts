@@ -422,20 +422,69 @@ describe("pack script entrypoints", () => {
     "scripts/pack-alpha.mjs",
     "scripts/runtime-package/pack.mjs",
   ];
-  const nodeProbe = spawnSync("node", ["--version"], { encoding: "utf8" });
-  const nodeVersion = nodeProbe.status === 0 ? nodeProbe.stdout.trim() : null;
-  function nodeSupportsTypeStripping(version: string | null): boolean {
-    const match = version?.match(/^v(\d+)\.(\d+)\./);
-    if (!match) return false;
-    const major = Number(match[1]);
-    const minor = Number(match[2]);
-    return major > 22 || (major === 22 && minor >= 18);
+  const nodeImportEvalScript =
+    "import { pathToFileURL } from 'node:url'; await import(pathToFileURL(process.argv[1]).href);";
+  const nodeProbe = spawnSync(
+    "node",
+    [
+      "-e",
+      "process.stdout.write(JSON.stringify({ version: process.version, typescript: Boolean(process.features?.typescript) }))",
+    ],
+    { encoding: "utf8" },
+  );
+  function nodeTypeStrippingSkipReason(probe: {
+    status: number | null;
+    stdout?: string | Buffer | null;
+  }): string | null {
+    if (probe.status !== 0) {
+      return "Node with default TypeScript stripping is not available on PATH";
+    }
+    try {
+      const info: unknown = JSON.parse(String(probe.stdout ?? ""));
+      if (
+        typeof info === "object" &&
+        info !== null &&
+        "typescript" in info &&
+        info.typescript === true
+      ) {
+        return null;
+      }
+      const version =
+        typeof info === "object" &&
+        info !== null &&
+        "version" in info &&
+        typeof info.version === "string"
+          ? info.version
+          : "unknown";
+      return `Node ${version} on PATH does not enable process.features.typescript by default`;
+    } catch {
+      return "Node capability probe returned unreadable output";
+    }
   }
-  const nodeSkipReason = nodeSupportsTypeStripping(nodeVersion)
-    ? null
-    : nodeVersion
-      ? `Node ${nodeVersion} on PATH is older than v22.18.0 (required for TypeScript stripping)`
-      : "Node >= v22.18.0 is not available on PATH";
+  function stripNodeTypeStrippingWarning(stderr: string): string {
+    let sawTypeStrippingWarning = false;
+    const kept: string[] = [];
+    for (const line of stderr.split(/\r?\n/)) {
+      if (
+        /^\(node:\d+\) ExperimentalWarning: Type Stripping is an experimental feature\b/.test(
+          line,
+        )
+      ) {
+        sawTypeStrippingWarning = true;
+        continue;
+      }
+      if (
+        sawTypeStrippingWarning &&
+        line ===
+          "(Use `node --trace-warnings ...` to show where the warning was created)"
+      ) {
+        continue;
+      }
+      kept.push(line);
+    }
+    return sawTypeStrippingWarning ? kept.join("\n") : stderr;
+  }
+  const nodeSkipReason = nodeTypeStrippingSkipReason(nodeProbe);
 
   async function tryFileSymlink(
     target: string,
@@ -521,33 +570,59 @@ describe("pack script entrypoints", () => {
       const target = resolve(name);
       const linkPath = await tryFileSymlink(
         target,
-        join(dir, `${name.replace(/[/\\]/g, "-")}`),
+        join(dir, `link#${name.replace(/[/\\]/g, "-")}`),
       );
       for (const entry of linkPath ? [target, linkPath] : [target]) {
         const result = spawnSync(
           "node",
-          [
-            "--input-type=module",
-            "-e",
-            "await import(new URL(process.argv[1], 'file:').href);",
-            entry,
-          ],
+          ["--input-type=module", "-e", nodeImportEvalScript, entry],
           { encoding: "utf8" },
         );
         expect(result.status, result.stderr).toBe(0);
         expect(result.stdout).toBe("");
-        expect(result.stderr).toBe("");
+        expect(stripNodeTypeStrippingWarning(result.stderr)).toBe("");
       }
     }
   });
 
-  it("gates Node subprocess tests on Node >= 22.18.0 for TypeScript stripping", () => {
-    expect(nodeSupportsTypeStripping(null)).toBe(false);
-    expect(nodeSupportsTypeStripping("v20.19.5")).toBe(false);
-    expect(nodeSupportsTypeStripping("v22.17.1")).toBe(false);
-    expect(nodeSupportsTypeStripping("v22.18.0")).toBe(true);
-    expect(nodeSupportsTypeStripping("v24.0.0")).toBe(true);
-    expect(nodeSupportsTypeStripping("v25.6.0")).toBe(true);
+  it("gates Node subprocess tests on process.features.typescript and filters only type-stripping warnings", () => {
+    expect(nodeTypeStrippingSkipReason({ status: null, stdout: "" })).toMatch(
+      /not available/,
+    );
+    expect(
+      nodeTypeStrippingSkipReason({
+        status: 0,
+        stdout: JSON.stringify({ version: "v20.19.5", typescript: false }),
+      }),
+    ).toMatch(/v20\.19\.5/);
+    expect(
+      nodeTypeStrippingSkipReason({
+        status: 0,
+        stdout: JSON.stringify({ version: "v23.5.0", typescript: false }),
+      }),
+    ).toMatch(/v23\.5\.0/);
+    expect(
+      nodeTypeStrippingSkipReason({
+        status: 0,
+        stdout: JSON.stringify({ version: "v24.2.0", typescript: true }),
+      }),
+    ).toBeNull();
+    expect(stripNodeTypeStrippingWarning("")).toBe("");
+    expect(
+      stripNodeTypeStrippingWarning(
+        "(node:44965) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      ),
+    ).toBe("");
+    expect(
+      stripNodeTypeStrippingWarning(
+        "(node:44965) ExperimentalWarning: SQLite is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n",
+      ),
+    ).toContain("SQLite");
+    expect(
+      stripNodeTypeStrippingWarning(
+        "(node:44965) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nunexpected stderr\n",
+      ),
+    ).toBe("unexpected stderr\n");
   });
 
   it("evaluates import.meta.main and falls back to realpath equality except under eval/print", async () => {
@@ -577,7 +652,7 @@ describe("pack script entrypoints", () => {
         "--experimental-strip-types",
         "--input-type=module",
         "-e",
-        "await import(new URL(process.argv[1], 'file:').href)",
+        nodeImportEvalScript,
       ],
     ]) {
       expect(isMainModule({ url }, real, evalArgv), evalArgv.join(" ")).toBe(
@@ -595,7 +670,7 @@ describe("pack script entrypoints", () => {
         "--experimental-strip-types",
         "--input-type=module",
         "-e",
-        "await import(new URL(process.argv[1], 'file:').href)",
+        nodeImportEvalScript,
       ]),
     ).toBe(false);
   });
