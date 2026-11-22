@@ -2,7 +2,48 @@
   "diagnostics": [],
   "error": {
     "code": "R004",
-    "message": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"] and [\"wire\",\"00000000-0000-4000-8000-000000000302\"] overlap collinearly.",
+    "message": "Invalid layout: edges boundary segment (JB1.X1.6 / terminal6 → JB1.X1.6 / terminal6) and S-A (JB1.X1.6 / terminal6 → JB1.X1.7 / terminal7) overlap collinearly.",
+    "details": {
+      "originalMessage": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"] and [\"wire\",\"00000000-0000-4000-8000-000000000302\"] overlap collinearly.",
+      "conductors": [
+        {
+          "id": "[\"wire\",\"00000000-0000-4000-8000-000000000302\"]",
+          "designation": "S-A",
+          "terminals": [
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.6",
+              "designation": "JB1",
+              "functionKeys": ["terminal6"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.7",
+              "designation": "JB1",
+              "functionKeys": ["terminal7"]
+            }
+          ]
+        },
+        {
+          "id": "[\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.6\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal6\\\"]\"]",
+          "designation": "boundary segment",
+          "terminals": [
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.6",
+              "designation": "JB1",
+              "functionKeys": ["terminal6"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.6",
+              "designation": "JB1",
+              "functionKeys": ["terminal6"]
+            }
+          ]
+        }
+      ]
+    },
     "family": "control",
     "netId": "net:sha256:c55a63c4fc47d3f27ef4b2b375c57112c9256428728f69ebf96505ce12560308",
     "root": "LS1"

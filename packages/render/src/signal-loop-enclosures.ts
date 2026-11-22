@@ -1,3 +1,4 @@
+import { printableTextWidth } from "./text-metrics.js";
 import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { SignalLoopViewRequest, selectSignalLoop } from "./signal-loop.js";
 import { escapeXmlText, escapeXmlAttribute } from "./svg/escape.js";
@@ -104,7 +105,7 @@ export function drawEnclosures(
       ![x, y, width, height].every(Number.isFinite) ||
       width <= 0 ||
       height <= 0 ||
-      [...spec.label].length * 2.4 > width - 8
+      printableTextWidth(spec.label, 3.1, true) > width - 8
     )
       throw new Error(
         "Enclosure label or boundary cannot fit without clipping.",
@@ -162,7 +163,7 @@ export function drawEnclosures(
           b,
         ) => `<g data-enclosure="${escapeXmlAttribute(b.label)}" data-member-uids="${escapeXmlAttribute(JSON.stringify(b.members))}"${b.wall ? ` data-wall-device-uid="${escapeXmlAttribute(b.wall)}"` : ""}>
 <rect x="${n(b.x)}" y="${n(b.y)}" width="${n(b.width)}" height="${n(b.height)}" rx="1.5" fill="#f7f9fc" stroke="#7b899a" stroke-width="0.4" stroke-dasharray="3 2"/>
-<text x="${n(b.x + 4)}" y="${n(b.labelAtBottom ? b.y + b.height - 5 : b.y + 6)}" font-family="Arial, Helvetica, sans-serif" font-size="3.1" font-weight="700" fill="#344054">${escapeXmlText(b.label)}</text></g>`,
+<text x="${n(b.x + 4)}" y="${n(b.labelAtBottom ? b.y + b.height - 5 : b.y + 6)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="3.1" font-weight="700" fill="#344054">${escapeXmlText(b.label)}</text></g>`,
       )
       .join("\n"),
   };

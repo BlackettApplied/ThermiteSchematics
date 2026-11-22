@@ -664,9 +664,11 @@ describe("D11 Layer 1 structural validation", () => {
         error: {
           code: "A001",
           message:
-            'A001 Invalid apply-source-patch request at "/files/0/operations/0/op": unsupported value.',
+            'A001 Invalid apply-source-patch request at "/files/0/operations/0/op": unsupported value; allowed values: ["test", "add", "remove", "replace"].',
           field: "/files/0/operations/0/op",
           reason: "unsupported-value",
+          allowed: ["test", "add", "remove", "replace"],
+          allowedCount: 4,
         },
       });
     }
@@ -696,12 +698,19 @@ describe("D11 exhaustive wrong-literal inventory", () => {
   it("maps every non-empty wrong literal to unsupported-value", () => {
     const patchOp = validPatchRequest();
     operationsOf(filesOf(patchOp)[0]!)[0]!.op = "move";
-    const cases: readonly [string, () => unknown, string, string][] = [
+    const cases: readonly [
+      string,
+      () => unknown,
+      string,
+      string,
+      readonly string[],
+    ][] = [
       [
         "outer format",
         () => validateValidateProjectRequest({ format: "wrong", project: "." }),
         "/format",
         "validate",
+        ["agent-tool-request/0.1"],
       ],
       [
         "resolve by",
@@ -713,6 +722,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/target/by",
         "resolve",
+        ["uid", "designation", "type", "text"],
       ],
       [
         "inspect by",
@@ -724,6 +734,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/selector/by",
         "inspect",
+        ["uid", "designation"],
       ],
       [
         "query operation",
@@ -738,6 +749,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/query/operation",
         "query",
+        ["neighbors", "trace", "cable", "net"],
       ],
       [
         "query object by",
@@ -752,6 +764,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/query/selector/by",
         "query",
+        ["uid", "designation"],
       ],
       [
         "query terminal by",
@@ -763,6 +776,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/query/selector/by",
         "query",
+        ["id", "parts", "display"],
       ],
       [
         "spec format",
@@ -777,6 +791,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/format",
         "create-view",
+        ["schematic-view-request/0.1", "schematic-view-request/0.2"],
       ],
       [
         "family",
@@ -792,6 +807,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/family",
         "create-view",
+        ["control", "power"],
       ],
       [
         "flow",
@@ -808,6 +824,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/flow",
         "create-view",
+        ["left-to-right", "top-to-bottom"],
       ],
       [
         "view root by",
@@ -823,6 +840,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/root/by",
         "create-view",
+        ["uid", "designation"],
       ],
       [
         "intent kind",
@@ -838,6 +856,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/intent/kind",
         "create-view",
+        ["trace", "conductors", "loads"],
       ],
       [
         "trace to by",
@@ -857,6 +876,7 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/spec/intent/to/by",
         "create-view",
+        ["uid", "designation"],
       ],
       [
         "patch format",
@@ -867,15 +887,17 @@ describe("D11 exhaustive wrong-literal inventory", () => {
           }),
         "/patchFormat",
         "apply-source-patch",
+        ["json-patch/0.1"],
       ],
       [
         "patch op",
         () => validateApplySourcePatchRequest(patchOp),
         "/files/0/operations/0/op",
         "apply-source-patch",
+        ["test", "add", "remove", "replace"],
       ],
     ];
-    for (const [name, validate, field, tool] of cases) {
+    for (const [name, validate, field, tool, allowed] of cases) {
       expect(validate(), name).toEqual({
         ok: false,
         error: {
@@ -885,9 +907,13 @@ describe("D11 exhaustive wrong-literal inventory", () => {
             tool +
             " request at " +
             JSON.stringify(field) +
-            ": unsupported value.",
+            ": unsupported value; allowed values: [" +
+            allowed.map((value) => JSON.stringify(value)).join(", ") +
+            "].",
           field,
           reason: "unsupported-value",
+          allowed,
+          allowedCount: allowed.length,
         },
       });
     }

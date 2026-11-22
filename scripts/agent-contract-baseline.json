@@ -1,0 +1,66 @@
+{
+  "base": "b3e24c658f80dc3d8036b12b1e718138595e3bd9",
+  "goldenRoot": "packages/cli/test/goldens/",
+  "schemaNames": ["agent-tool-result", "agent-tool-report", "diagnostic"],
+  "examples": ["packages/cli/assets/AGENTS.md", "docs/agent-requests.md"],
+  "declarations": [
+    "packages/agent-tools/src/common/contracts.ts",
+    "packages/agent-tools/src/common/serializer.ts",
+    "packages/agent-tools/src/common/errors.ts",
+    "packages/agent-tools/src/resolve.ts",
+    "packages/agent-tools/src/inspect.ts",
+    "packages/agent-tools/src/query.ts",
+    "packages/agent-tools/src/validate.ts",
+    "packages/agent-tools/src/create-view.ts",
+    "packages/agent-tools/src/source-patch-request.ts",
+    "packages/agent-tools/src/apply-source-patch.ts",
+    "packages/agent-tools/src/source-metadata.ts",
+    "packages/agent-tools/src/source-serializer.ts",
+    "packages/agent-tools/src/toolbox.ts",
+    "packages/agent-tools/src/index.ts"
+  ],
+  "helpSources": [
+    "packages/cli/src/agent-help.ts",
+    "packages/agent-tools/src/request-vocabulary.ts"
+  ],
+  "transitiveDeclarations": {
+    "packages/render/src/types.ts": [
+      "SchematicFlow",
+      "SchematicViewFamily",
+      "LegacySchematicViewRequest",
+      "IntentSchematicViewRequest",
+      "DemonstrationViewIntent",
+      "SchematicViewRequest",
+      "NormalizedLegacySchematicView",
+      "NormalizedIntentSchematicView",
+      "NormalizedSchematicView",
+      "RenderSummary",
+      "RenderedSchematic",
+      "RenderOutcome",
+      "RenderFailure"
+    ],
+    "packages/query/src/types.ts": [
+      "ObjectSelector",
+      "TerminalSelector",
+      "QueryResult",
+      "QueryErrorCode",
+      "QueryError",
+      "ProjectObjectView",
+      "ProjectObjectKind",
+      "DeviceView",
+      "TerminalView",
+      "PotentialView",
+      "InspectResult",
+      "NeighborsResult",
+      "NetResult",
+      "CableResult",
+      "TraceResult"
+    ],
+    "packages/compiler/src/compiler.ts": [
+      "CompileResult",
+      "CompiledProjectPresentation"
+    ],
+    "packages/compiler/src/ir.ts": ["ElectricalIr", "IrProject"]
+  },
+  "validatorSources": ["packages/agent-tools/src/common/request-validation.ts"]
+}

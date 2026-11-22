@@ -56,7 +56,7 @@ nets, infers PoE or shield bonds, or replaces individual conductor modeling.
 
 ## Generate output
 
-`node thermite.mjs report network --project <project> -o network.csv`
+`bun thermite.mjs report network --project <project> -o network.csv`
 
 The schedule lists each link once, including endpoint locations and status, plus
 every unconnected port. Unconnected does not mean spare or available for a given
@@ -84,11 +84,42 @@ outside the view; the complete network schedule remains authoritative.
 
 ELK places boxes and routes orthogonal links. Ports shown in boxes are connected
 ports; the schedule also includes unconnected ports. Device index references
-work across these sheets and the rest of the packet. Views that cannot fit at
-readable print size return R006; select a smaller group or larger paper. These
-drawings have no electrical junction dots or net highlighting. The legacy
+work across these sheets and the rest of the packet. Oversized valid drawings
+automatically split into numbered parts in normal packets. Every selected link
+stays whole with both named ports and appears once across the parts. Original
+boundary devices and isolated selected bodies stay represented. A repeated
+body shows different ports of the same physical device; captions identify
+ports on other parts, and reciprocal references give P (view part) and S
+(actual packet sheet) plus its final zone. Each omitted drawn port also has a named port-to-sheet.zone pointer; a device summary does not stand in for port identity. Locator widths are reserved before native part trials. The additive `communicationContinuations` sheet metadata
+records the authored packet view number, source/destination parts, destination
+sheet and device UID. Independent repeated views keep separate references.
+
+Unconnected ports remain in the schedule. Pagination does not expand the
+original selector beyond its incident links or infer internal forwarding,
+electrical continuity or protocol operation. Fitting views keep their output,
+and `prepareCommunicationDrawing` remains a single-drawing API. Invalid
+original or projected layouts fail explicitly; they cannot trigger retries.
+A complete link/device and its reference text that cannot fit with at least
+2.5 mm printed diagram text still return R006; use a smaller selection, shorter
+labels or larger paper. Existing 80-device and 100-sheet packet limits remain.
+See the [bounded network example](../examples/network-pagination/README.md).
+These drawings have no electrical junction dots or net highlighting. The legacy
 electrical renderer and its contracts are unchanged.
 
 Compact packets place consecutive short diagrams of the same medium on one
 sheet when they fit, retaining device references and a separate caption for
 each section.
+Paginated communication parts keep separate sheets so their reciprocal
+references remain unambiguous in both standard and compact packets.
+
+Visible communication port captions and network schedule endpoints preserve the
+port's authored key: `KEY`, or `KEY — description` when a description is authored.
+A description that exactly repeats the key is omitted. Repeated descriptions or
+connector metadata never collapse distinct port identities. Endpoints are prefixed
+by the device designation with a colon, for example `PLC1: X1P1 — Ethernet`;
+qualified selectors such as `PLC1.X1P1` remain in metadata and CSV only.
+
+Port keys have the same standing as authored terminal markings. No connector name
+or terminal mapping is inferred. Port keys stay on one line; descriptions wrap in
+reserved space. Longer descriptions can change diagram height, pagination and
+sheet references. An identity that cannot fit at readable size returns R006.

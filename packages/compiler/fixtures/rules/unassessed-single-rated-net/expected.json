@@ -1,0 +1,19 @@
+[
+  {
+    "file": "system.json",
+    "line": 3,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I305",
+    "severity": "info",
+    "message": "Voltage compatibility is unassessed on connected nets with one comparable voltage-rated terminal and no voltage facts in potentials (1 net: [\"K1.A1 rating {\\\"nominal_voltage\\\":24,\\\"voltage_type\\\":\\\"DC\\\"} [net:sha256:7eef4032c55a32497e758007e578d1ffd4f217d1654a543e048868810b9fec4c]\"]). Ratings describe equipment capability; potentials declare net intent. No supply path was assessed.",
+    "related": [
+      {
+        "file": "library/types.json",
+        "line": 7,
+        "column": 15,
+        "note": "Terminal \"K1.A1\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+      }
+    ]
+  }
+]

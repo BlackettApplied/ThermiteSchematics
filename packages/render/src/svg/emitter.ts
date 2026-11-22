@@ -1,8 +1,26 @@
-import type { ConductiveElementId, TerminalId } from "@thermite/compiler";
-
-import { comparePresentationLabel, compareText } from "../ordering.js";
+import { emitMechanicalGangs } from "./mechanical-gangs.js";
+import { tagLabelAttributes } from "./tag-label-attributes.js";
+import { emitLabelInk } from "./label-ink.js";
+import { offViewCardSvg } from "../off-view/svg.js";
+import { duplicateTerminalCaptionIds } from "./terminal-captions.js";
+import { redundantNetLabelIds } from "./net-labels.js";
+import { rootedNoticeLines, rootedNoticeSvg } from "../off-view/notice.js";
+import { SvgWriter, type SvgAttributes } from "./writer.js";
+import { orthogonalPathData } from "./edge-path.js";
+export { orthogonalPathData } from "./edge-path.js";
+import { terminalContextAttachment } from "../terminal-context-reference.js";
+import { contextJunctionInk } from "../layout/context-reference-ink.js";
+import { graphSemanticOrder } from "../semantic-order.js";
+import { rootedGangEmission } from "../symbols/rooted-gangs.js";
 import {
-  DEFAULT_SYMBOL_STROKE,
+  boundedPrintableAdvance,
+  continuousLabelSlot,
+  printableFitAttributes,
+} from "../text-metrics.js";
+import type { ElectricalIr, TerminalId } from "@thermite/compiler";
+
+import { comparePresentationLabel } from "../ordering.js";
+import {
   OUTER_SVG_PADDING,
   SYMBOL_CATALOG,
   orientSymbolDefinition,
@@ -12,9 +30,14 @@ import type {
   SymbolPrimitive,
   SymbolStyle,
 } from "../symbols/types.js";
+import {
+  PRINTABLE_SYMBOL_POLICY,
+  sourceEnclosureInk,
+  coilQualifier,
+  motorLegend,
+} from "../symbols/printable-policy.js";
 import type { SchematicTitleContext } from "../title-block.js";
 import type {
-  LayoutEdge,
   LayoutLabel,
   LayoutNode,
   LayoutPoint,
@@ -34,8 +57,6 @@ import {
 } from "../types.js";
 import {
   decodeSvgSemanticId,
-  escapeXmlAttribute,
-  escapeXmlText,
   preflightRenderText,
   preflightTitleRenderText,
   svgSemanticId,
@@ -46,226 +67,8 @@ import {
   type RenderSourceRegistry,
 } from "./source-registry.js";
 
-type SvgElementName =
-  | "circle"
-  | "clipPath"
-  | "defs"
-  | "desc"
-  | "g"
-  | "line"
-  | "path"
-  | "polyline"
-  | "rect"
-  | "style"
-  | "svg"
-  | "text"
-  | "title";
-
-type SvgAttributeName =
-  | "aria-label"
-  | "class"
-  | "clip-path"
-  | "clipPathUnits"
-  | "cx"
-  | "cy"
-  | "d"
-  | `data-${string}`
-  | "dominant-baseline"
-  | "fill"
-  | "font-family"
-  | "font-size"
-  | "height"
-  | "id"
-  | "lengthAdjust"
-  | "points"
-  | "r"
-  | "role"
-  | "rx"
-  | "ry"
-  | "stroke"
-  | "stroke-linecap"
-  | "stroke-linejoin"
-  | "stroke-width"
-  | "text-anchor"
-  | "textLength"
-  | "transform"
-  | "version"
-  | "viewBox"
-  | "width"
-  | "x"
-  | "x1"
-  | "x2"
-  | "xmlns"
-  | "y"
-  | "y1"
-  | "y2";
-
-type SvgAttributeValue = string | number | undefined;
-type SvgAttributes = Readonly<
-  Partial<Record<SvgAttributeName, SvgAttributeValue>>
->;
-
-const FIXED_ATTRIBUTE_ORDER = Object.freeze([
-  "xmlns",
-  "version",
-  "viewBox",
-  "width",
-  "height",
-  "id",
-  "class",
-  "clipPathUnits",
-  "clip-path",
-  "x",
-  "y",
-  "x1",
-  "y1",
-  "x2",
-  "y2",
-  "cx",
-  "cy",
-  "r",
-  "rx",
-  "ry",
-  "d",
-  "points",
-  "transform",
-  "fill",
-  "stroke",
-  "stroke-width",
-  "stroke-linecap",
-  "stroke-linejoin",
-  "font-family",
-  "font-size",
-  "text-anchor",
-  "dominant-baseline",
-  "textLength",
-  "lengthAdjust",
-  "role",
-  "aria-label",
-] as const satisfies readonly Exclude<SvgAttributeName, `data-${string}`>[]);
-
-const FIXED_DATA_ATTRIBUTE_ORDER = Object.freeze([
-  "data-location",
-  "data-virtual-location",
-  "data-boundary-kind",
-  "data-device-uid",
-  "data-designation",
-  "data-type-id",
-  "data-function-key",
-  "data-aggregate-key",
-  "data-terminal-key",
-  "data-member-function-key",
-  "data-net-id",
-  "data-potential-uid",
-  "data-potential-name",
-  "data-wire-uid",
-  "data-jumper-uid",
-  "data-cable-uid",
-  "data-conductor-id",
-  "data-presentation-only",
-] as const);
-
-const PREFIXED_DATA_ATTRIBUTE_ORDER = Object.freeze([
-  "data-project-name",
-  "data-project-revision",
-  "data-tool-version",
-  "data-view-format",
-  "data-view-family",
-  "data-view-intent",
-  "data-view-flow",
-  "data-renderer-version",
-  "data-symbol-catalog-version",
-] as const);
-
 const BUILT_IN_STYLE =
   ".location-frame{fill:#f7f8fa;stroke:#667085;stroke-width:1.5}.device-frame{fill:#fff;stroke:#98a2b3;stroke-width:1.5}.net-path{fill:none;stroke:#101828;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}.boundary-path{fill:none;stroke:#475467;stroke-width:1.5;stroke-linecap:square;stroke-linejoin:miter}.symbol-body,.symbol-operator,.symbol-actuator,.symbol-annotation{fill:none;stroke:#101828;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.symbol-terminal{fill:#fff;stroke:#101828;stroke-width:1.5}.terminal-marker{fill:#fff;stroke:#101828;stroke-width:1.5}.junction-dot{fill:#101828;stroke:none}.label-background{fill:#fff;stroke:none}.label-text{fill:#101828;stroke:none}";
-
-function dataAttributeRank(name: string): number {
-  if (name.startsWith("data-view-")) return 0;
-  if (name.startsWith("data-renderer-")) return 1;
-  if (name.startsWith("data-symbol-")) return 2;
-  const fixed = FIXED_DATA_ATTRIBUTE_ORDER.indexOf(
-    name as (typeof FIXED_DATA_ATTRIBUTE_ORDER)[number],
-  );
-  return fixed < 0 ? 100 : fixed + 3;
-}
-
-function compareAttributeNames(left: string, right: string): number {
-  const leftFixed = FIXED_ATTRIBUTE_ORDER.indexOf(
-    left as (typeof FIXED_ATTRIBUTE_ORDER)[number],
-  );
-  const rightFixed = FIXED_ATTRIBUTE_ORDER.indexOf(
-    right as (typeof FIXED_ATTRIBUTE_ORDER)[number],
-  );
-  if (leftFixed >= 0 || rightFixed >= 0) {
-    return (
-      (leftFixed < 0 ? 1_000 : leftFixed) -
-      (rightFixed < 0 ? 1_000 : rightFixed)
-    );
-  }
-  const leftPrefixed = PREFIXED_DATA_ATTRIBUTE_ORDER.indexOf(left as never);
-  const rightPrefixed = PREFIXED_DATA_ATTRIBUTE_ORDER.indexOf(right as never);
-  if (leftPrefixed >= 0 && rightPrefixed >= 0)
-    return leftPrefixed - rightPrefixed;
-  const rank = dataAttributeRank(left) - dataAttributeRank(right);
-  return rank || compareText(left, right);
-}
-
-function serializedAttributes(attributes: SvgAttributes): string {
-  return Object.entries(attributes)
-    .filter(
-      (entry): entry is [string, string | number] => entry[1] !== undefined,
-    )
-    .sort(([left], [right]) => compareAttributeNames(left, right))
-    .map(([name, raw]) => {
-      if (
-        !name.startsWith("data-") &&
-        !FIXED_ATTRIBUTE_ORDER.includes(name as never)
-      ) {
-        throw new Error(`SVG emitter rejected attribute ${name}.`);
-      }
-      const value = typeof raw === "number" ? formatSvgNumber(raw) : raw;
-      return ` ${name}="${escapeXmlAttribute(value)}"`;
-    })
-    .join("");
-}
-
-class SvgWriter {
-  readonly lines: string[] = [];
-
-  element(
-    indent: number,
-    name: SvgElementName,
-    attributes: SvgAttributes = {},
-    text?: string,
-  ): void {
-    const prefix = "  ".repeat(indent);
-    const attrs = serializedAttributes(attributes);
-    this.lines.push(
-      text === undefined
-        ? `${prefix}<${name}${attrs}/>`
-        : `${prefix}<${name}${attrs}>${escapeXmlText(text)}</${name}>`,
-    );
-  }
-
-  open(
-    indent: number,
-    name: SvgElementName,
-    attributes: SvgAttributes = {},
-  ): void {
-    this.lines.push(
-      `${"  ".repeat(indent)}<${name}${serializedAttributes(attributes)}>`,
-    );
-  }
-
-  close(indent: number, name: SvgElementName): void {
-    this.lines.push(`${"  ".repeat(indent)}</${name}>`);
-  }
-
-  finish(): string {
-    return `${this.lines.join("\n")}\n`;
-  }
-}
 
 function indexById<Value extends { readonly id: string }>(
   values: readonly Value[],
@@ -298,56 +101,6 @@ function global(value: number): number {
   return value + OUTER_SVG_PADDING;
 }
 
-function samePoint(left: LayoutPoint, right: LayoutPoint): boolean {
-  return left.x === right.x && left.y === right.y;
-}
-
-function simplifiedPoints(
-  points: readonly LayoutPoint[],
-): readonly LayoutPoint[] {
-  const unique: LayoutPoint[] = [];
-  for (const point of points) {
-    if (unique.length === 0 || !samePoint(unique[unique.length - 1]!, point)) {
-      unique.push(point);
-    }
-  }
-  const simplified: LayoutPoint[] = [];
-  for (const point of unique) {
-    while (simplified.length >= 2) {
-      const first = simplified[simplified.length - 2]!;
-      const second = simplified[simplified.length - 1]!;
-      if (!(
-        (first.x === second.x && second.x === point.x) ||
-        (first.y === second.y && second.y === point.y)
-      ))
-        break;
-      simplified.pop();
-    }
-    simplified.push(point);
-  }
-  return simplified;
-}
-
-export function orthogonalPathData(points: readonly LayoutPoint[]): string {
-  const values = simplifiedPoints(points);
-  if (values.length < 2)
-    throw new Error("An SVG edge path requires two points.");
-  const first = values[0]!;
-  const commands = [
-    `M ${formatSvgNumber(global(first.x))} ${formatSvgNumber(global(first.y))}`,
-  ];
-  for (let index = 1; index < values.length; index++) {
-    const previous = values[index - 1]!;
-    const point = values[index]!;
-    if (point.y === previous.y)
-      commands.push(`H ${formatSvgNumber(global(point.x))}`);
-    else if (point.x === previous.x)
-      commands.push(`V ${formatSvgNumber(global(point.y))}`);
-    else throw new Error("SVG emitter received a diagonal edge segment.");
-  }
-  return commands.join(" ");
-}
-
 function primitiveClass(style: SymbolStyle): string {
   return `symbol-${style}`;
 }
@@ -374,12 +127,31 @@ function emitPrimitive(
   writer: SvgWriter,
   primitive: SymbolPrimitive,
   indent: number,
+  mmPerUnit: number,
 ): void {
-  const className = primitiveClass(primitive.style);
+  const ink = sourceEnclosureInk(mmPerUnit);
+  const attributes: SvgAttributes = {
+    class: primitiveClass(primitive.style),
+    ...(primitive.style === "enclosure"
+      ? {
+          fill: "none",
+          stroke: ink.color,
+          "stroke-width": ink.strokeWidth,
+          "stroke-dasharray": ink.dash,
+        }
+      : {}),
+  };
   switch (primitive.kind) {
     case "line":
       writer.element(indent, "line", {
-        class: className,
+        ...attributes,
+        ...(primitive.qualifier
+          ? {
+              "data-symbol-qualifier": "polarity",
+              "data-polarity": primitive.qualifier.polarity,
+              "data-symbol-port-id": primitive.qualifier.portId,
+            }
+          : {}),
         x1: primitive.from.x,
         y1: primitive.from.y,
         x2: primitive.to.x,
@@ -388,7 +160,7 @@ function emitPrimitive(
       return;
     case "polyline":
       writer.element(indent, "polyline", {
-        class: className,
+        ...attributes,
         points: primitive.points
           .map(({ x, y }) => `${formatSvgNumber(x)},${formatSvgNumber(y)}`)
           .join(" "),
@@ -396,7 +168,7 @@ function emitPrimitive(
       return;
     case "rect":
       writer.element(indent, "rect", {
-        class: className,
+        ...attributes,
         x: primitive.x,
         y: primitive.y,
         width: primitive.width,
@@ -407,7 +179,7 @@ function emitPrimitive(
       return;
     case "circle":
       writer.element(indent, "circle", {
-        class: className,
+        ...attributes,
         cx: primitive.center.x,
         cy: primitive.center.y,
         r: primitive.radius,
@@ -415,7 +187,7 @@ function emitPrimitive(
       return;
     case "arc":
       writer.element(indent, "path", {
-        class: className,
+        ...attributes,
         d: primitivePath(primitive),
       });
   }
@@ -583,21 +355,29 @@ function edgeAttributes(
   edge: Readonly<PresentationEdge>,
   registry: RenderSourceRegistry,
 ): SvgAttributes {
-  return edge.kind === "boundary-segment"
-    ? {
-        id: svgSemanticId("boundary", [edge.id]),
-        class: "boundary-path",
-        "data-net-id": edge.netId,
-        "data-presentation-only": "true",
-        ...endpointAttributes(edge.endpoints, registry),
-      }
-    : conductorAttributes(edge, registry);
+  const attributes =
+    edge.kind === "boundary-segment"
+      ? {
+          id: svgSemanticId("boundary", [edge.id]),
+          class: "boundary-path",
+          "data-net-id": edge.netId,
+          "data-presentation-only": "true",
+          ...endpointAttributes(edge.endpoints, registry),
+        }
+      : conductorAttributes(edge, registry);
+  return {
+    ...attributes,
+    "data-edge-key": svgSemanticId("edge", [edge.id]),
+    "data-route-source-port-key": svgSemanticId("port", [edge.sourcePortId]),
+    "data-route-target-port-key": svgSemanticId("port", [edge.targetPortId]),
+  };
 }
 
 function canonicalLabels(
   graph: Readonly<PresentationGraph>,
   layout: Readonly<NormalizedSchematicLayout>,
 ): readonly LayoutLabel[] {
+  const order = graphSemanticOrder(graph);
   const semantic = indexById(
     [
       ...graph.locationGroups.map(({ label }) => label),
@@ -622,6 +402,7 @@ function canonicalLabels(
         semantic.get(right.id),
         `Layout label ${right.id} has no presentation label.`,
       ),
+      order.key,
     ),
   );
 }
@@ -629,18 +410,24 @@ function canonicalLabels(
 function emitDefinitions(
   writer: SvgWriter,
   labels: readonly LayoutLabel[],
+  mmPerUnit: number,
+  pixels: number,
 ): void {
+  // Paged drawing transforms also need one pixel for raster-origin rounding.
+  // Keep the antialias fringe and one clear 300 dpi pixel at any page phase.
+  // Clip padding does not participate in placement or validated ink.
+  const padding = (pixels * 25.4) / 300 / mmPerUnit + 0.001;
   writer.open(1, "defs");
-  for (const label of labels) {
+  for (const label of labels.filter((l) => l.role !== "off-view")) {
     writer.open(2, "clipPath", {
       id: svgSemanticId("clip", [label.id]),
       clipPathUnits: "userSpaceOnUse",
     });
     writer.element(3, "rect", {
-      x: global(label.x),
-      y: global(label.y),
-      width: label.width,
-      height: label.height,
+      x: global(label.x - padding),
+      y: global(label.y - padding),
+      width: label.width + 2 * padding,
+      height: label.height + 2 * padding,
     });
     writer.close(2, "clipPath");
   }
@@ -739,9 +526,11 @@ function emitFrames(
 function emitEdges(
   writer: SvgWriter,
   graph: Readonly<PresentationGraph>,
-  edgeLayouts: ReadonlyMap<string, LayoutEdge>,
+  layout: Readonly<NormalizedSchematicLayout>,
   registry: RenderSourceRegistry,
 ): void {
+  const edgeLayouts = indexById(layout.edges, "layout edge"),
+    references = indexById(layout.contextReferences ?? [], "context reference");
   const grouped = new Map<string, PresentationEdge[]>();
   for (const edge of graph.edges) {
     grouped.set(edge.netId, [...(grouped.get(edge.netId) ?? []), edge]);
@@ -764,14 +553,33 @@ function emitEdges(
             ),
     });
     for (const edge of edges) {
-      const layout = required(
-        edgeLayouts.get(edge.id),
-        `Edge ${edge.id} has no layout.`,
-      );
-      writer.element(2, "path", {
-        ...edgeAttributes(edge, registry),
-        d: orthogonalPathData(layout.points),
-      });
+      const context = terminalContextAttachment(graph, edge);
+      if (context) {
+        const reference = required(
+          references.get(edge.id),
+          `Reference ${edge.id} has no ink.`,
+        );
+        writer.open(2, "g", {
+          ...edgeAttributes(edge, registry),
+          class: "context-attachment",
+        });
+        for (const leader of reference.leaders)
+          writer.element(3, "path", {
+            class: "context-reference-leader",
+            fill: "none",
+            stroke: "#475467",
+            "stroke-width": 0.5,
+            d: orthogonalPathData(leader),
+          });
+        writer.close(2, "g");
+      } else
+        writer.element(2, "path", {
+          ...edgeAttributes(edge, registry),
+          d: orthogonalPathData(
+            required(edgeLayouts.get(edge.id), `Edge ${edge.id} has no layout.`)
+              .points,
+          ),
+        });
     }
     writer.close(1, "g");
   }
@@ -789,11 +597,12 @@ function emitJunctions(
       nodeLayouts.get(node.id),
       `Junction ${node.id} has no layout.`,
     );
+    const ink = contextJunctionInk(graph, node);
     writer.element(1, "circle", {
       id: svgSemanticId("junction", [node.id]),
       class: "junction-dot",
-      cx: global(layout.x + layout.width / 2),
-      cy: global(layout.y + layout.height / 2),
+      cx: global(layout.x + ink.anchor.x),
+      cy: global(layout.y + ink.anchor.y),
       r: 3,
       "data-device-uid": node.terminal.deviceUid,
       "data-terminal-key": sourceValue(
@@ -855,37 +664,37 @@ function symbolGroupAttributes(
             ),
     };
   }
-  if (node.representation === "function") {
-    const key = required(
-      node.functionIds[0],
-      `Function ${node.id} has no function ID.`,
-    ).functionKey;
-    return {
-      id: svgSemanticId("function", [node.deviceUid, key]),
-      class: `symbol function-symbol ${node.classification}`,
-      transform: `translate(${formatSvgNumber(global(origin.x))} ${formatSvgNumber(global(origin.y))})`,
-      "data-symbol-id": node.symbolId,
-      "data-device-uid": node.deviceUid,
-      "data-function-key": sourceValue(
-        registry,
-        "function.key",
-        key,
-        `function ${node.id} key`,
-      ),
-    };
-  }
-  const key = aggregateKey(node);
+  const terminal = node.representation === "terminal";
+  const kind = node.representation;
+  const key = terminal
+    ? required(node.ports[0], "Terminal context has no port").terminal
+        .terminalKey
+    : kind === "function"
+      ? required(node.functionIds[0], `Function ${node.id} has no function ID.`)
+          .functionKey
+      : aggregateKey(node);
   return {
-    id: svgSemanticId("aggregate", [node.deviceUid, key]),
-    class: `symbol aggregate-symbol ${node.classification}`,
+    id: svgSemanticId(kind, [
+      node.deviceUid,
+      key,
+      ...(terminal ? ["context"] : []),
+    ]),
+    class: terminal
+      ? "symbol terminal-context"
+      : `symbol ${kind}-symbol ${node.classification}`,
     transform: `translate(${formatSvgNumber(global(origin.x))} ${formatSvgNumber(global(origin.y))})`,
     "data-symbol-id": node.symbolId,
     "data-device-uid": node.deviceUid,
-    "data-aggregate-key": sourceValue(
+    ...(terminal ? { "data-representation": "terminal" } : {}),
+    [`data-${terminal ? "terminal" : kind}-key`]: sourceValue(
       registry,
-      "aggregate.key",
+      terminal
+        ? "terminal.key"
+        : kind === "function"
+          ? "function.key"
+          : "aggregate.key",
       key,
-      `aggregate ${node.id} key`,
+      `${kind} ${node.id} key`,
     ),
   };
 }
@@ -902,6 +711,7 @@ function terminalMarkerAttributes(
       port.symbolPortId,
     ]),
     class: "terminal-marker",
+    "data-symbol-port-id": port.symbolPortId,
     "data-device-uid": port.terminal.deviceUid,
     "data-designation": sourceValue(
       registry,
@@ -944,6 +754,8 @@ function emitSymbols(
   >,
   catalog: readonly SymbolDefinition[],
   registry: RenderSourceRegistry,
+  mmPerUnit: number,
+  ir?: Readonly<ElectricalIr>,
 ): void {
   const symbols = new Map(
     catalog.map((definition) => [definition.id, definition]),
@@ -967,7 +779,51 @@ function emitSymbols(
     );
     writer.open(1, "g", symbolGroupAttributes(node, origin, registry));
     for (const primitive of definition.primitives)
-      emitPrimitive(writer, primitive, 2);
+      emitPrimitive(writer, primitive, 2, mmPerUnit);
+    const type = ir?.deviceTypes.find((t) => t.id === node.typeId);
+    const fn = ir?.functions.find((f) =>
+      node.functionIds.some(
+        (id) =>
+          id.deviceUid === f.id.deviceUid &&
+          id.functionKey === f.id.functionKey,
+      ),
+    );
+    const legends =
+      node.symbolId === "ais:motor-3ph" ||
+      node.symbolId === "ais:motor-3ph-unbonded"
+        ? motorLegend(true)
+        : node.symbolId === "ais:motor"
+          ? motorLegend(false)
+          : node.symbolId === "ais:coil" &&
+              type &&
+              fn &&
+              coilQualifier(type, fn)
+            ? [coilQualifier(type, fn)!]
+            : [];
+    const center = node.symbolId.startsWith("ais:motor-3ph")
+      ? { x: 28, y: 48 }
+      : node.symbolId === "ais:motor"
+        ? { x: 24, y: 32 }
+        : { x: 20, y: 12 };
+    const anchor =
+      node.orientation === "top-to-bottom"
+        ? { x: node.symbolSize.width - center.y, y: center.x }
+        : center;
+    for (const [i, word] of legends.entries())
+      writer.element(
+        2,
+        "text",
+        {
+          x: anchor.x,
+          y: anchor.y + (legends.length > 1 ? (i === 0 ? -2 : 10) : 3),
+          "font-family": "Thermite Sans, Thermite Math, sans-serif",
+          "font-size": word === "M" ? 12 : 10,
+          "text-anchor": "middle",
+          fill: "#17212b",
+          stroke: "none",
+        },
+        word,
+      );
     for (const port of node.ports) {
       const portLayout = required(
         portLayouts.get(port.id),
@@ -1003,60 +859,88 @@ function presentationLabelIndex(
   );
 }
 
+function assertPrintableLabel(
+  label: LayoutLabel,
+  presentation: PresentationLabel,
+  registry: RenderSourceRegistry,
+): void {
+  if (
+    presentation.text !== label.text ||
+    presentation.width !== label.width ||
+    presentation.height !== label.height
+  ) {
+    throw new Error(
+      `Layout label ${label.id} disagrees with presentation text geometry.`,
+    );
+  }
+  for (const source of presentation.textSources) {
+    sourceValue(
+      registry,
+      source.field,
+      source.value,
+      `label ${presentation.id} source`,
+    );
+  }
+}
+
 function emitLabels(
   writer: SvgWriter,
   graph: Readonly<PresentationGraph>,
   labels: readonly LayoutLabel[],
   registry: RenderSourceRegistry,
-): void {
+  layout: Readonly<NormalizedSchematicLayout>,
+  mmPerUnit: number,
+): RenderOutcome<void> {
   const semantic = presentationLabelIndex(graph);
+  const hiddenTerminalCaptions = duplicateTerminalCaptionIds(
+    graph,
+    labels,
+    indexById(layout.nodes, "layout node"),
+  );
+  const hiddenNetLabels = redundantNetLabelIds(graph, hiddenTerminalCaptions);
   for (const label of labels) {
     const presentation = required(
       semantic.get(label.id),
       `Layout label ${label.id} has no presentation label.`,
     );
-    if (
-      presentation.text !== label.text ||
-      presentation.width !== label.width ||
-      presentation.height !== label.height
-    ) {
-      throw new Error(
-        `Layout label ${label.id} disagrees with presentation text geometry.`,
+    assertPrintableLabel(label, presentation, registry);
+    if (presentation.offView) {
+      writer.lines.push(
+        offViewCardSvg(presentation, global(label.x), global(label.y)),
       );
+      continue;
     }
-    for (const source of presentation.textSources) {
-      sourceValue(
-        registry,
-        source.field,
-        source.value,
-        `label ${presentation.id} source`,
-      );
+    const printed =
+      hiddenTerminalCaptions.has(label.id) || hiddenNetLabels.has(label.id)
+        ? ""
+        : (presentation.printableText ?? label.text);
+    // Empty captions retain clip identity and the PDF label contract.
+    if (!printed) {
+      emitEmptyCaption(writer, label);
+      continue;
     }
-    writer.element(1, "rect", {
-      class: `label-background label-${label.role}`,
-      x: global(label.x),
-      y: global(label.y),
-      width: label.width,
-      height: label.height,
-    });
-    writer.element(
-      1,
-      "text",
-      {
-        class: `label-text label-${label.role}`,
-        "clip-path": `url(#${svgSemanticId("clip", [label.id])})`,
-        x: global(label.x + 3),
-        y: global(label.y + label.height / 2),
-        "font-family": "monospace",
-        "font-size": 10,
-        "text-anchor": "start",
-        "dominant-baseline": "middle",
-        textLength: presentation.textLength,
-        lengthAdjust: "spacingAndGlyphs",
-      },
-      label.text,
+    const emitted = emitLabelInk(
+      writer,
+      label,
+      printed,
+      presentation.textLength,
+      layout,
+      mmPerUnit,
+      tagLabelAttributes(presentation, graph.view),
+      graph.view,
     );
+    if (!emitted.ok) return emitted;
   }
+  return { ok: true, value: undefined };
+}
+
+function emitEmptyCaption(writer: SvgWriter, label: LayoutLabel): void {
+  writer.element(
+    1,
+    "text",
+    { "clip-path": `url(#${svgSemanticId("clip", [label.id])})` },
+    "",
+  );
 }
 
 function assertMatchingInputs(
@@ -1075,7 +959,7 @@ function assertMatchingInputs(
 }
 
 function titleTextLength(value: string): number {
-  return Number((6.2 * [...value].length).toFixed(3));
+  return boundedPrintableAdvance(value, 10, continuousLabelSlot(value) - 6);
 }
 
 function emitTitleBlock(
@@ -1105,12 +989,15 @@ function emitTitleBlock(
         x: blockX + 8,
         y: blockY + 8 + 14 * index,
         fill: "#101828",
-        "font-family": "monospace",
+        "font-family": "Thermite Sans, Thermite Math, sans-serif",
         "font-size": 10,
         "text-anchor": "start",
         "dominant-baseline": "hanging",
-        textLength: titleTextLength(line.value),
-        lengthAdjust: "spacingAndGlyphs",
+        ...printableFitAttributes(
+          line.value,
+          10,
+          continuousLabelSlot(line.value) - 6,
+        ),
       },
       line.value,
     );
@@ -1118,27 +1005,12 @@ function emitTitleBlock(
   writer.close(1, "g");
 }
 
-export function emitSchematicSvg(
-  graph: Readonly<PresentationGraph>,
-  layout: Readonly<NormalizedSchematicLayout>,
-  titleContext: Readonly<SchematicTitleContext>,
-  catalog: readonly SymbolDefinition[] = SYMBOL_CATALOG,
-  diagramOnly = false,
-): RenderOutcome<string> {
-  const titlePreflight = preflightTitleRenderText(
-    graph.view,
-    titleContext.lines,
-  );
-  if (!titlePreflight.ok) return titlePreflight;
-  const preflight = preflightRenderText(graph);
-  if (!preflight.ok) return preflight;
-  const registry = buildRenderSourceRegistry(graph);
-  assertMatchingInputs(graph, layout);
-
-  const nodeLayouts = indexById(layout.nodes, "layout node");
-  const portLayouts = indexById(layout.ports, "layout port");
-  const edgeLayouts = indexById(layout.edges, "layout edge");
-  const labels = canonicalLabels(graph, layout);
+function canvasDimensions(
+  graph: PresentationGraph,
+  layout: NormalizedSchematicLayout,
+  titleContext: SchematicTitleContext,
+  diagramOnly: boolean,
+) {
   const diagramWidth = layout.width + OUTER_SVG_PADDING * 2;
   const diagramHeight = layout.height + OUTER_SVG_PADDING * 2;
   const longestTextLength = Math.max(
@@ -1149,20 +1021,74 @@ export function emitSchematicSvg(
   const width = diagramOnly
     ? diagramWidth
     : Math.max(diagramWidth, blockWidth + 32);
+  const noticeHeight = diagramOnly
+    ? 0
+    : rootedNoticeLines(graph.view, width - 32, 12).length * 16 + 16;
   const height = diagramOnly
     ? diagramHeight
-    : diagramHeight + 16 + blockHeight + 16;
+    : diagramHeight + noticeHeight + 16 + blockHeight + 16;
   const blockX = width - blockWidth - 16;
-  const blockY = diagramHeight + 16;
-  const rootDesignation = sourceValue(
-    registry,
-    graph.view.format === "schematic-view/0.2" &&
-      graph.view.intent === "conductors"
-      ? "cable.designation"
-      : "device.designation",
-    graph.view.root.designation,
-    "root designation",
+  const blockY = diagramHeight + noticeHeight + 16;
+  return {
+    width,
+    height,
+    blockX,
+    blockY,
+    blockWidth,
+    blockHeight,
+    noticeHeight,
+  };
+}
+
+function beginDiagram(
+  writer: SvgWriter,
+  graph: PresentationGraph,
+  width: number,
+  diagramOnly: boolean,
+  noticeHeight: number,
+) {
+  if (!diagramOnly) {
+    writer.lines.push(rootedNoticeSvg(graph.view, 16, 16, width - 32, 12, 16));
+    writer.open(1, "g", {
+      transform: `translate(0 ${formatSvgNumber(noticeHeight)})`,
+    });
+  }
+}
+
+export function emitSchematicSvg(
+  graph: Readonly<PresentationGraph>,
+  layout: Readonly<NormalizedSchematicLayout>,
+  titleContext: Readonly<SchematicTitleContext>,
+  catalog: readonly SymbolDefinition[] = SYMBOL_CATALOG,
+  diagramOnly = false,
+  mmPerUnit: number = PRINTABLE_SYMBOL_POLICY.rootedMmPerUnit,
+  ir?: Readonly<ElectricalIr>,
+): RenderOutcome<string> {
+  const titlePreflight = preflightTitleRenderText(
+    graph.view,
+    titleContext.lines,
   );
+  if (!titlePreflight.ok) return titlePreflight;
+  const preflight = preflightRenderText(graph);
+  if (!preflight.ok) return preflight;
+  const registry = buildRenderSourceRegistry(graph);
+  assertMatchingInputs(graph, layout);
+  const gangs = rootedGangEmission(ir, graph, layout);
+  if (!gangs.ok) return gangs;
+
+  const nodeLayouts = indexById(layout.nodes, "layout node");
+  const portLayouts = indexById(layout.ports, "layout port");
+  const labels = canonicalLabels(graph, layout);
+  const {
+    width,
+    height,
+    blockX,
+    blockY,
+    blockWidth,
+    blockHeight,
+    noticeHeight,
+  } = canvasDimensions(graph, layout, titleContext, diagramOnly);
+  const rootDesignation = rootTitleDesignation(graph, registry);
   const title = `${graph.view.format === "schematic-view/0.2" ? graph.view.intent : graph.view.family} schematic: ${rootDesignation}`;
 
   const writer = new SvgWriter();
@@ -1212,7 +1138,7 @@ export function emitSchematicSvg(
     `Deterministic ${graph.view.flow} ${graph.view.family} electrical schematic.`,
   );
   writer.element(1, "style", {}, BUILT_IN_STYLE);
-  emitDefinitions(writer, labels);
+  emitDefinitions(writer, labels, mmPerUnit, diagramOnly ? 3 : 2);
   writer.element(1, "rect", {
     class: "canvas-background",
     x: 0,
@@ -1221,11 +1147,31 @@ export function emitSchematicSvg(
     height,
     fill: titleContext.backgroundColor,
   });
+  beginDiagram(writer, graph, width, diagramOnly, noticeHeight);
   emitFrames(writer, graph, nodeLayouts, registry);
-  emitEdges(writer, graph, edgeLayouts, registry);
+  emitEdges(writer, graph, layout, registry);
   emitJunctions(writer, graph, nodeLayouts, registry);
-  emitSymbols(writer, graph, nodeLayouts, portLayouts, catalog, registry);
-  emitLabels(writer, graph, labels, registry);
+  emitMechanicalGangs(writer, gangs.value, mmPerUnit, global);
+  emitSymbols(
+    writer,
+    graph,
+    nodeLayouts,
+    portLayouts,
+    catalog,
+    registry,
+    mmPerUnit,
+    ir,
+  );
+  const emittedLabels = emitLabels(
+    writer,
+    graph,
+    labels,
+    registry,
+    layout,
+    mmPerUnit,
+  );
+  if (!emittedLabels.ok) return emittedLabels;
+  if (!diagramOnly) writer.close(1, "g");
   if (!diagramOnly)
     emitTitleBlock(
       writer,
@@ -1237,4 +1183,19 @@ export function emitSchematicSvg(
     );
   writer.close(0, "svg");
   return { ok: true, value: writer.finish() };
+}
+
+function rootTitleDesignation(
+  graph: Readonly<PresentationGraph>,
+  registry: RenderSourceRegistry,
+) {
+  return sourceValue(
+    registry,
+    graph.view.format === "schematic-view/0.2" &&
+      graph.view.intent === "conductors"
+      ? "cable.designation"
+      : "device.designation",
+    graph.view.root.designation,
+    "root designation",
+  );
 }

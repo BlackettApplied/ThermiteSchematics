@@ -1,0 +1,157 @@
+{
+  "format": "thermite-eval-baselines/1.0",
+  "cases": [
+    {
+      "id": "authored-topology",
+      "changes": []
+    },
+    {
+      "id": "without-potentials",
+      "changes": [
+        {
+          "file": "potentials/potentials.json",
+          "pointer": "/objects",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "without-cable",
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "without-connections",
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "closed-cycle",
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/-",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000003",
+            "kind": "wire",
+            "designation": "W-CYCLE",
+            "endpoints": [
+              {
+                "device": "X2",
+                "terminal": "1"
+              },
+              {
+                "device": "PS1",
+                "terminal": "+"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "open-contact",
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/1/endpoints/1/terminal",
+          "value": "c"
+        }
+      ]
+    },
+    {
+      "id": "all-loose-cores",
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors",
+          "value": [
+            {
+              "id": "1+",
+              "endpoints": [null, null],
+              "usage": "spare"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "empty-cable",
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors",
+          "value": []
+        }
+      ]
+    },
+    {
+      "id": "reverse-wire",
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints",
+          "value": [
+            {
+              "device": "X1",
+              "terminal": "1"
+            },
+            {
+              "device": "PS1",
+              "terminal": "+"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reverse-core",
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/0/endpoints",
+          "value": [
+            {
+              "device": "X2",
+              "terminal": "1"
+            },
+            {
+              "device": "X1",
+              "terminal": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shared-landing",
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/2/endpoints/1/terminal",
+          "value": "a"
+        }
+      ]
+    },
+    {
+      "id": "spare-declaration",
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/1/usage",
+          "value": "spare"
+        }
+      ]
+    }
+  ]
+}

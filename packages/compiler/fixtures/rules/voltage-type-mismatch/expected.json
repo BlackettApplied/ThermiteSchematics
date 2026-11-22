@@ -28,5 +28,14 @@
         "note": "Terminal \"ZETA.T\" is rated for voltage type \"DC\" here."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E301 voltage-type gate: skipped E302 on 3 terminals: [\"ALPHA.T\", \"MID.T\", \"ZETA.T\"]."
   }
 ]

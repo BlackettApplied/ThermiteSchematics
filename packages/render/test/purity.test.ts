@@ -1,16 +1,14 @@
 import type { ElectricalIr } from "@thermite/compiler";
-import BundledElk from "elkjs/lib/elk.bundled.js";
 import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { createSchematicRenderer, renderSchematic } from "../src/index.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { createSchematicRendererWithDependencies } from "../src/renderer.js";
 import { SYMBOL_CATALOG } from "../src/symbols/catalog.js";
 import { CORE_DEVICE_TYPE_SYMBOL_MAPPINGS } from "../src/symbols/mappings.js";
 import type { RenderedSchematic, SchematicViewRequest } from "../src/types.js";
 import { compileCoreFixture, pnpTraceFixture } from "./fixtures.js";
-
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 
 let coreIr: ElectricalIr;
 let pnpIr: ElectricalIr;
@@ -80,6 +78,34 @@ async function valueFor(
 }
 
 describe("renderer purity and determinism", () => {
+  it("renders an IR edited in place exactly like its fresh clone", async () => {
+    const ir = structuredClone(coreIr);
+    // Prime every rooted family before reversing authored conductor order on the
+    // same object, as a library caller editing a long-lived IR can do.
+    for (const request of requests) await renderSchematic(ir, request);
+    const named = [
+      ...ir.wires,
+      ...ir.jumpers.filter((j) => j.designation !== undefined),
+      ...ir.cables,
+    ].sort((a, b) => a.designation!.localeCompare(b.designation!));
+    const renamed = new Map<string, string>();
+    named.forEach((object, i) => {
+      const designation = `X${String(named.length - i).padStart(3, "0")}-${object.designation}`;
+      renamed.set(object.designation!, designation);
+      object.designation = designation;
+    });
+    for (const entry of ir.indexes.objectRefByDesignation)
+      entry.key = renamed.get(entry.key) ?? entry.key;
+    ir.indexes.objectRefByDesignation.sort((a, b) =>
+      a.key.localeCompare(b.key),
+    );
+    for (const request of requests) {
+      const again = await renderSchematic(ir, request);
+      const fresh = await renderSchematic(structuredClone(ir), request);
+      expect(again, JSON.stringify(request)).toEqual(fresh);
+    }
+  });
+
   it("does not mutate deep-frozen IR, requests, catalog, or mappings", async () => {
     const states = [
       deepFreeze(structuredClone(coreIr)),
@@ -140,7 +166,7 @@ describe("renderer purity and determinism", () => {
   });
 
   it("gives a deliberately mutating ELK engine only a disposable graph", async () => {
-    const delegate = new ElkConstructor();
+    const delegate = createElkEngine();
     let mutations = 0;
     const engine = {
       knownLayoutOptions: () => delegate.knownLayoutOptions(),

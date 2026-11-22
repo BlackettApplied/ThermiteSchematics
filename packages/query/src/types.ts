@@ -37,6 +37,12 @@ export interface QueryError {
   readonly actualKind?: ProjectObjectKind;
   readonly deviceDesignation?: string;
   readonly terminalKey?: string;
+  /** Q004: the device's terminal keys in code-unit order (at most 50). */
+  readonly allowed?: readonly string[];
+  /** Q004: number of terminal keys the device declares. */
+  readonly allowedCount?: number;
+  /** Q004: where to read every terminal key when `allowed` is truncated. */
+  readonly allowedLookup?: string;
 }
 
 export interface ProjectObjectView {
@@ -51,8 +57,10 @@ export interface ProjectObjectView {
 export type ProjectObjectKind = ProjectObjectView["kind"];
 
 export interface DeviceView extends ProjectObjectView {
+  readonly nonProcurement?: import("@thermite/compiler").IrDevice["nonProcurement"];
   readonly connectionReview?: import("@thermite/compiler").IrDevice["connectionReview"];
   readonly io?: import("@thermite/compiler").IrDevice["io"];
+  readonly connectorIo?: import("@thermite/compiler").IrDevice["connectorIo"];
   readonly kind: "device";
   readonly designation: string;
   readonly typeId: string;

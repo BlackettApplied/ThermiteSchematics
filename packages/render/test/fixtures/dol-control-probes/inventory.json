@@ -1,0 +1,37 @@
+{
+  "wires": [
+    "W26",
+    "W27",
+    "W28",
+    "W29",
+    "W30",
+    "W31",
+    "W32",
+    "W33",
+    "W34",
+    "W35",
+    "W36",
+    "W37",
+    "W38",
+    "W39",
+    "W40",
+    "W41",
+    "W42"
+  ],
+  "functions": [
+    "F1.pole1",
+    "H1.lamp",
+    "K1.coil",
+    "OL1.aux95",
+    "PS1.ac_input",
+    "PS1.dc_output",
+    "R1.coil",
+    "R1.contact12",
+    "R1.contact14",
+    "S0.contact11",
+    "S1.contact11",
+    "S2.contact13",
+    "T1.primary",
+    "T1.secondary"
+  ]
+}

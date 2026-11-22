@@ -1,8 +1,15 @@
+import {
+  PRINTABLE_SYMBOL_POLICY,
+  sharedMarkPrimitives,
+  sourceEnclosure,
+  windingPolyline,
+} from "./printable-policy.js";
 import { validateSymbolCatalog } from "./validate.js";
 import type {
   SymbolDefinition,
   SymbolOrientation,
   SymbolPoint,
+  SymbolPolarityQualifier,
   SymbolPortDefinition,
   SymbolPrimitive,
   SymbolSide,
@@ -16,6 +23,18 @@ export const LABEL_GAP = 4;
 export const ROOT_LOCATION_SIDE_PADDING = 16;
 export const DEVICE_GROUP_SIDE_PADDING = 8;
 export const OUTER_SVG_PADDING = 20;
+const SEPARATE_STUB_GAP =
+  PRINTABLE_SYMBOL_POLICY.separateStubGapMm /
+  PRINTABLE_SYMBOL_POLICY.rootedMmPerUnit;
+const CIRCULAR_STUB_GAP =
+  PRINTABLE_SYMBOL_POLICY.circularStubGapMm /
+  PRINTABLE_SYMBOL_POLICY.rootedMmPerUnit;
+const CIRCULAR_STUB_INSET = Math.ceil(CIRCULAR_STUB_GAP);
+const LOAD_FACE_EDGE = 11;
+const LOAD_STUB_TIP = LOAD_FACE_EDGE - SEPARATE_STUB_GAP;
+const THREE_PHASE_MOTOR_SIDE_TIP = Math.floor(
+  28 - Math.sqrt((18 + CIRCULAR_STUB_GAP) ** 2 - 12 ** 2),
+);
 
 function point(x: number, y: number): SymbolPoint {
   return { x, y };
@@ -36,7 +55,7 @@ function line(
   toX: number,
   toY: number,
   style: SymbolStyle,
-): SymbolPrimitive {
+): Extract<SymbolPrimitive, { kind: "line" }> {
   return {
     kind: "line",
     from: point(fromX, fromY),
@@ -54,6 +73,34 @@ function polyline(
     points: points.map(([x, y]) => point(x, y)),
     style,
   };
+}
+
+function polarityQualifier(
+  polarity: SymbolPolarityQualifier["polarity"],
+  portId: string,
+  x: number,
+  y: number,
+  radius: number,
+): SymbolPrimitive[] {
+  const qualifier = { polarity, portId, center: point(x, y) };
+  return [
+    { ...line(x - radius, y, x + radius, y, "annotation"), qualifier },
+    ...(polarity === "positive"
+      ? [{ ...line(x, y - radius, x, y + radius, "annotation"), qualifier }]
+      : []),
+  ];
+}
+
+// The lead follows the PE port. From its inner endpoint the stem and bars
+// are drawn in page axes, with no contact to the motor body or a phase lead.
+const MOTOR_EARTH_ORIGIN = point(18, 84);
+function motorEarthBars(): SymbolPrimitive[] {
+  return [
+    line(18, 84, 18, 88, "annotation"),
+    line(13, 88, 23, 88, "annotation"),
+    line(15, 91, 21, 91, "annotation"),
+    line(17, 94, 19, 94, "annotation"),
+  ].map((stroke) => ({ ...stroke, uprightOrigin: MOTOR_EARTH_ORIGIN }));
 }
 
 function rect(
@@ -84,27 +131,6 @@ function circle(
   return { kind: "circle", center: point(x, y), radius, style };
 }
 
-function arc(
-  fromX: number,
-  fromY: number,
-  toX: number,
-  toY: number,
-  radiusX: number,
-  radiusY: number,
-  clockwise: boolean,
-  style: SymbolStyle,
-): SymbolPrimitive {
-  return {
-    kind: "arc",
-    from: point(fromX, fromY),
-    to: point(toX, toY),
-    radiusX,
-    radiusY,
-    clockwise,
-    style,
-  };
-}
-
 function symbol(
   id: SymbolDefinition["id"],
   width: number,
@@ -133,7 +159,11 @@ const CATALOG_DEFINITIONS = [
       port("PE", "east", 7 / 8, 3),
     ],
     [
-      line(8, 12, 8, 84, "body"),
+      ...sourceEnclosure(
+        { x: 2, y: 1, width: 28, height: 94 },
+        [12, 36, 60, 84].map((at) => ({ side: "east", at })),
+        3,
+      ),
       line(8, 12, 11, 12, "body"),
       circle(14, 12, 3, "operator"),
       line(17, 12, 36, 12, "body"),
@@ -154,12 +184,27 @@ const CATALOG_DEFINITIONS = [
     64,
     [port("positive", "east", 1 / 8, 0), port("return", "east", 7 / 8, 1)],
     [
-      line(8, 4, 8, 60, "body"),
+      ...sourceEnclosure(
+        { x: 2, y: 1, width: 28, height: 62 },
+        [8, 56].map((at) => ({ side: "east", at })),
+        3,
+      ),
       line(8, 8, 36, 8, "body"),
       line(8, 56, 36, 56, "body"),
-      line(13, 8, 21, 8, "annotation"),
-      line(17, 4, 17, 12, "annotation"),
-      line(13, 56, 21, 56, "annotation"),
+      // Reserve qualifier ink inside the existing size, clear of both leads
+      // and the enclosure, including after its centre rotates for vertical flow.
+      ...polarityQualifier("positive", "positive", 17, 18, 4),
+      ...polarityQualifier("negative", "return", 17, 46, 4),
+    ],
+  ),
+  symbol(
+    "ais:source-winding",
+    36,
+    64,
+    [port("feed", "east", 1 / 8, 0), port("return", "east", 7 / 8, 1)],
+    [
+      polyline(windingPolyline(12, 8, 56, 36, 6), "body"),
+      line(24, 12, 24, 52, "body"),
     ],
   ),
   symbol(
@@ -168,12 +213,11 @@ const CATALOG_DEFINITIONS = [
     64,
     [port("positive", "west", 1 / 8, 0), port("return", "west", 7 / 8, 1)],
     [
-      line(0, 8, 8, 8, "body"),
-      line(0, 56, 8, 56, "body"),
-      rect(8, 4, 24, 56, "body", 2),
-      line(13, 8, 19, 8, "annotation"),
-      line(16, 5, 16, 11, "annotation"),
-      line(13, 56, 19, 56, "annotation"),
+      line(0, 8, LOAD_STUB_TIP, 8, "body"),
+      line(0, 56, LOAD_STUB_TIP, 56, "body"),
+      rect(LOAD_FACE_EDGE, 4, 32 - LOAD_FACE_EDGE, 56, "body", 2),
+      ...polarityQualifier("positive", "positive", 20, 16, 3),
+      ...polarityQualifier("negative", "return", 20, 48, 3),
     ],
   ),
   symbol(
@@ -193,119 +237,56 @@ const CATALOG_DEFINITIONS = [
     40,
     20,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 10, 9, 10, "body"),
-      circle(12, 10, 3, "terminal"),
-      line(15, 9, 25, 5, "operator"),
-      circle(28, 10, 3, "terminal"),
-      line(31, 10, 40, 10, "body"),
-      polyline(
-        [
-          [19, 3],
-          [22, 1],
-          [25, 3],
-        ],
-        "actuator",
-      ),
-    ],
+    sharedMarkPrimitives("breaker"),
+  ),
+  symbol(
+    "ais:disconnector",
+    40,
+    20,
+    [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
+    sharedMarkPrimitives("disconnector"),
   ),
   symbol(
     "ais:contact-no",
     40,
     20,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 10, 10, 10, "body"),
-      circle(13, 10, 3, "terminal"),
-      line(16, 9, 24, 5, "operator"),
-      circle(27, 10, 3, "terminal"),
-      line(30, 10, 40, 10, "body"),
-    ],
+    sharedMarkPrimitives("contact-no"),
   ),
   symbol(
     "ais:contact-nc",
     40,
     20,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 10, 10, 10, "body"),
-      circle(13, 10, 3, "terminal"),
-      line(16, 9, 24, 10, "operator"),
-      circle(27, 10, 3, "terminal"),
-      line(30, 10, 40, 10, "body"),
-    ],
+    sharedMarkPrimitives("contact-nc"),
   ),
   symbol(
     "ais:pushbutton-no",
     40,
     28,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 14, 10, 14, "body"),
-      circle(13, 14, 3, "terminal"),
-      line(16, 13, 24, 9, "operator"),
-      circle(27, 14, 3, "terminal"),
-      line(30, 14, 40, 14, "body"),
-      line(20, 2, 20, 8, "actuator"),
-      line(15, 8, 25, 8, "actuator"),
-    ],
+    sharedMarkPrimitives("pushbutton-no"),
   ),
   symbol(
     "ais:pushbutton-nc",
     40,
     28,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 14, 10, 14, "body"),
-      circle(13, 14, 3, "terminal"),
-      line(16, 13, 24, 14, "operator"),
-      circle(27, 14, 3, "terminal"),
-      line(30, 14, 40, 14, "body"),
-      line(20, 2, 20, 8, "actuator"),
-      line(15, 8, 25, 8, "actuator"),
-    ],
+    sharedMarkPrimitives("pushbutton-nc"),
   ),
   symbol(
     "ais:switch-no",
     40,
     24,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 12, 10, 12, "body"),
-      circle(13, 12, 3, "terminal"),
-      line(16, 11, 24, 7, "operator"),
-      circle(27, 12, 3, "terminal"),
-      line(30, 12, 40, 12, "body"),
-      polyline(
-        [
-          [18, 3],
-          [21, 6],
-          [24, 3],
-        ],
-        "actuator",
-      ),
-    ],
+    sharedMarkPrimitives("switch-no"),
   ),
   symbol(
     "ais:switch-nc",
     40,
     24,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 12, 10, 12, "body"),
-      circle(13, 12, 3, "terminal"),
-      line(16, 11, 24, 12, "operator"),
-      circle(27, 12, 3, "terminal"),
-      line(30, 12, 40, 12, "body"),
-      polyline(
-        [
-          [18, 3],
-          [21, 6],
-          [24, 3],
-        ],
-        "actuator",
-      ),
-    ],
+    sharedMarkPrimitives("switch-nc"),
   ),
   symbol(
     "ais:switch-sensor-pnp",
@@ -317,9 +298,9 @@ const CATALOG_DEFINITIONS = [
       port("signal", "east", 1 / 2, 2),
     ],
     [
-      line(0, 10, 8, 10, "body"),
-      line(0, 30, 8, 30, "body"),
-      rect(8, 4, 30, 32, "body", 2),
+      line(0, 10, LOAD_STUB_TIP, 10, "body"),
+      line(0, 30, LOAD_STUB_TIP, 30, "body"),
+      rect(LOAD_FACE_EDGE, 4, 38 - LOAD_FACE_EDGE, 32, "body", 2),
       circle(21, 20, 6, "actuator"),
       line(27, 20, 48, 20, "body"),
       polyline(
@@ -337,56 +318,29 @@ const CATALOG_DEFINITIONS = [
     40,
     24,
     [port("A1", "west", 1 / 2, 0), port("A2", "east", 1 / 2, 1)],
-    [
-      line(0, 12, 8, 12, "body"),
-      rect(8, 4, 24, 16, "body", 8),
-      arc(12, 12, 20, 12, 4, 6, true, "operator"),
-      arc(20, 12, 28, 12, 4, 6, false, "operator"),
-      line(32, 12, 40, 12, "body"),
-    ],
+    sharedMarkPrimitives("coil"),
   ),
   symbol(
     "ais:overload-pole",
     40,
     20,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 10, 8, 10, "body"),
-      polyline(
-        [
-          [8, 10],
-          [13, 5],
-          [18, 15],
-          [23, 5],
-          [28, 15],
-          [32, 10],
-        ],
-        "operator",
-      ),
-      line(32, 10, 40, 10, "body"),
-    ],
+    sharedMarkPrimitives("overload"),
   ),
   symbol(
     "ais:overload-contact-nc",
     40,
     24,
     [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
-    [
-      line(0, 12, 10, 12, "body"),
-      circle(13, 12, 3, "terminal"),
-      line(16, 11, 24, 12, "operator"),
-      circle(27, 12, 3, "terminal"),
-      line(30, 12, 40, 12, "body"),
-      polyline(
-        [
-          [18, 3],
-          [20, 7],
-          [22, 3],
-          [24, 7],
-        ],
-        "actuator",
-      ),
-    ],
+    sharedMarkPrimitives("contact-nc").map((p) =>
+      p.kind === "line"
+        ? {
+            ...p,
+            from: { ...p.from, y: p.from.y + 2 },
+            to: { ...p.to, y: p.to.y + 2 },
+          }
+        : p,
+    ),
   ),
   symbol(
     "ais:motor-3ph",
@@ -403,32 +357,27 @@ const CATALOG_DEFINITIONS = [
         [
           [0, 12],
           [28, 12],
-          [28, 32],
+          [28, 30 - CIRCULAR_STUB_INSET],
         ],
         "body",
       ),
       polyline(
         [
           [0, 36],
-          [16, 36],
+          [THREE_PHASE_MOTOR_SIDE_TIP, 36],
         ],
         "body",
       ),
       polyline(
         [
           [0, 60],
-          [16, 60],
+          [THREE_PHASE_MOTOR_SIDE_TIP, 60],
         ],
         "body",
       ),
       line(0, 84, 18, 84, "body"),
       circle(28, 48, 18, "body"),
-      arc(18, 43, 38, 43, 10, 6, true, "operator"),
-      line(18, 48, 38, 48, "operator"),
-      arc(18, 53, 38, 53, 10, 6, false, "operator"),
-      line(18, 80, 18, 88, "annotation"),
-      line(13, 88, 23, 88, "annotation"),
-      line(15, 91, 21, 91, "annotation"),
+      ...motorEarthBars(),
     ],
   ),
   symbol(
@@ -507,8 +456,93 @@ function deepFreeze<Value>(value: Value, seen = new Set<object>()): Value {
 
 validateSymbolCatalog(CATALOG_DEFINITIONS);
 
-export const SYMBOL_CATALOG: readonly SymbolDefinition[] =
-  deepFreeze(CATALOG_DEFINITIONS);
+// Additional shapes have their own port inventories; no absent PE or return pin
+// is synthesized to reuse a larger symbol.
+const ADDITIONAL_DEFINITIONS: SymbolDefinition[] = [
+  ...(["estop-no", "estop-nc", "selector-no", "selector-nc"] as const).map(
+    (mark) =>
+      symbol(
+        `ais:${mark}`,
+        40,
+        mark.startsWith("estop") ? 28 : 24,
+        [port("in", "west", 1 / 2, 0), port("out", "east", 1 / 2, 1)],
+        sharedMarkPrimitives(mark),
+      ),
+  ),
+  ...(
+    [
+      ["ais:motor-3ph", "ais:motor-3ph-unbonded"],
+      ["ais:power-source-3ph", "ais:power-source-3wire"],
+    ] as const
+  ).map(([from, id]) => {
+    const base = CATALOG_DEFINITIONS.find((s) => s.id === from)!;
+    return {
+      ...base,
+      id,
+      ports: base.ports.filter((p) => p.id !== "PE"),
+      primitives:
+        from === "ais:motor-3ph"
+          ? base.primitives.filter((_, i) => i !== 3 && i < 5)
+          : [
+              ...sourceEnclosure(
+                { x: 2, y: 1, width: 28, height: 94 },
+                [12, 36, 60].map((at) => ({ side: "east" as const, at })),
+                3,
+              ),
+              ...[12, 36, 60].flatMap((y) => [
+                line(8, y, 11, y, "body"),
+                circle(14, y, 3, "operator"),
+                line(17, y, 36, y, "body"),
+              ]),
+            ],
+    };
+  }),
+  symbol(
+    "ais:ac-load",
+    40,
+    64,
+    [port("line", "west", 1 / 8, 0), port("neutral", "west", 7 / 8, 1)],
+    [
+      line(0, 8, LOAD_STUB_TIP, 8, "body"),
+      line(0, 56, LOAD_STUB_TIP, 56, "body"),
+      rect(LOAD_FACE_EDGE, 4, 36 - LOAD_FACE_EDGE, 56, "body"),
+    ],
+  ),
+  symbol(
+    "ais:motor",
+    48,
+    64,
+    [port("positive", "west", 1 / 8, 0), port("return", "west", 7 / 8, 1)],
+    [
+      line(0, 8, 24, 8, "body"),
+      line(24, 8, 24, 14 - CIRCULAR_STUB_INSET, "body"),
+      line(0, 56, 24, 56, "body"),
+      line(24, 56, 24, 50 + CIRCULAR_STUB_INSET, "body"),
+      circle(24, 32, 18, "body"),
+    ],
+  ),
+  symbol(
+    "ais:lamp",
+    48,
+    64,
+    [port("positive", "west", 1 / 8, 0), port("return", "west", 7 / 8, 1)],
+    [
+      line(0, 8, 24, 8, "body"),
+      line(24, 8, 24, 14 - CIRCULAR_STUB_INSET, "body"),
+      line(0, 56, 24, 56, "body"),
+      line(24, 56, 24, 50 + CIRCULAR_STUB_INSET, "body"),
+      circle(24, 32, 18, "body"),
+      line(12, 20, 36, 44, "operator"),
+      line(12, 44, 36, 20, "operator"),
+    ],
+  ),
+];
+validateSymbolCatalog(ADDITIONAL_DEFINITIONS);
+
+export const SYMBOL_CATALOG: readonly SymbolDefinition[] = deepFreeze([
+  ...CATALOG_DEFINITIONS,
+  ...ADDITIONAL_DEFINITIONS,
+]);
 
 export function findSymbolDefinition(
   id: SymbolDefinition["id"],
@@ -517,37 +551,78 @@ export function findSymbolDefinition(
   return catalog.find((definition) => definition.id === id);
 }
 
-function rotatePointClockwise(
-  value: SymbolPoint,
-  sourceHeight: number,
-): SymbolPoint {
-  return { x: sourceHeight - value.y, y: value.x };
+/** Only the three-phase lane families use a transposed vertical composition.
+ * Other glyphs retain their clockwise rotation, including asymmetric controls. */
+export function preservesVerticalPowerLaneOrder(
+  id: SymbolDefinition["id"] | undefined,
+): boolean {
+  return (
+    id === "ais:power-source-3ph" ||
+    id === "ais:power-source-3wire" ||
+    id === "ais:motor-3ph" ||
+    id === "ais:motor-3ph-unbonded"
+  );
 }
 
-function rotatePrimitiveClockwise(
+function verticalPoint(
+  value: SymbolPoint,
+  sourceHeight: number,
+  preserveLanes: boolean,
+): SymbolPoint {
+  return { x: preserveLanes ? value.y : sourceHeight - value.y, y: value.x };
+}
+
+function uprightLine(
+  primitive: Extract<SymbolPrimitive, { kind: "line" }>,
+  transform: (point: SymbolPoint) => SymbolPoint,
+) {
+  const origin = primitive.qualifier?.center ?? primitive.uprightOrigin;
+  if (!origin) return undefined;
+  const center = transform(origin);
+  const upright = (p: SymbolPoint) => ({
+    x: center.x + p.x - origin.x,
+    y: center.y + p.y - origin.y,
+  });
+  return {
+    ...primitive,
+    from: upright(primitive.from),
+    to: upright(primitive.to),
+    ...(primitive.qualifier
+      ? { qualifier: { ...primitive.qualifier, center } }
+      : {}),
+    ...(primitive.uprightOrigin ? { uprightOrigin: center } : {}),
+  };
+}
+
+function verticalPrimitive(
   primitive: SymbolPrimitive,
   sourceHeight: number,
+  preserveLanes: boolean,
 ): SymbolPrimitive {
+  const transform = (value: SymbolPoint) =>
+    verticalPoint(value, sourceHeight, preserveLanes);
   switch (primitive.kind) {
     case "line":
-      return {
-        kind: "line",
-        from: rotatePointClockwise(primitive.from, sourceHeight),
-        to: rotatePointClockwise(primitive.to, sourceHeight),
-        style: primitive.style,
-      };
+      return (
+        uprightLine(primitive, transform) ?? {
+          kind: "line",
+          from: transform(primitive.from),
+          to: transform(primitive.to),
+          style: primitive.style,
+        }
+      );
     case "polyline":
       return {
         kind: "polyline",
-        points: primitive.points.map((value) =>
-          rotatePointClockwise(value, sourceHeight),
-        ),
+        points: primitive.points.map(transform),
         style: primitive.style,
       };
     case "rect":
       return {
         kind: "rect",
-        x: sourceHeight - primitive.y - primitive.height,
+        x: preserveLanes
+          ? primitive.y
+          : sourceHeight - primitive.y - primitive.height,
         y: primitive.x,
         width: primitive.height,
         height: primitive.width,
@@ -557,35 +632,37 @@ function rotatePrimitiveClockwise(
     case "circle":
       return {
         kind: "circle",
-        center: rotatePointClockwise(primitive.center, sourceHeight),
+        center: transform(primitive.center),
         radius: primitive.radius,
         style: primitive.style,
       };
     case "arc":
       return {
         kind: "arc",
-        from: rotatePointClockwise(primitive.from, sourceHeight),
-        to: rotatePointClockwise(primitive.to, sourceHeight),
+        from: transform(primitive.from),
+        to: transform(primitive.to),
         radiusX: primitive.radiusY,
         radiusY: primitive.radiusX,
-        clockwise: primitive.clockwise,
+        clockwise: preserveLanes ? !primitive.clockwise : primitive.clockwise,
         style: primitive.style,
       };
   }
 }
 
-function rotatePortClockwise(
+function verticalPort(
   value: SymbolPortDefinition,
+  preserveLanes: boolean,
 ): SymbolPortDefinition {
+  const offset = preserveLanes ? value.offset : 1 - value.offset;
   switch (value.side) {
     case "west":
-      return { ...value, side: "north", offset: 1 - value.offset };
+      return { ...value, side: "north", offset };
     case "east":
-      return { ...value, side: "south", offset: 1 - value.offset };
+      return { ...value, side: "south", offset };
     case "north":
-      return { ...value, side: "east" };
+      return { ...value, side: preserveLanes ? "west" : "east" };
     case "south":
-      return { ...value, side: "west" };
+      return { ...value, side: preserveLanes ? "east" : "west" };
   }
 }
 
@@ -597,6 +674,7 @@ export function orientSymbolDefinition(
     return deepFreeze(structuredClone(definition));
   }
 
+  const preserveLanes = preservesVerticalPowerLaneOrder(definition.id);
   const rotated: SymbolDefinition = {
     format: definition.format,
     id: definition.id,
@@ -604,9 +682,9 @@ export function orientSymbolDefinition(
       width: definition.size.height,
       height: definition.size.width,
     },
-    ports: definition.ports.map(rotatePortClockwise),
+    ports: definition.ports.map((value) => verticalPort(value, preserveLanes)),
     primitives: definition.primitives.map((primitive) =>
-      rotatePrimitiveClockwise(primitive, definition.size.height),
+      verticalPrimitive(primitive, definition.size.height, preserveLanes),
     ),
   };
   validateSymbolCatalog([rotated]);

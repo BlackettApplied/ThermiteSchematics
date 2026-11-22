@@ -1,0 +1,191 @@
+{
+  "issue": 454,
+  "checker": "5.32",
+  "base": "debd2fe62a72f44ab45d2c880c820682b48262cc",
+  "originalCases": 108,
+  "originalSheets": 715,
+  "newCases": 16,
+  "newSheets": 31,
+  "cases": [
+    {
+      "case": "p03-machine-demo-tabloid-landscape-standard-left-to-right",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-machine-demo-tabloid-landscape-standard-top-to-bottom",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-machine-demo-tabloid-landscape-compact-left-to-right",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-machine-demo-tabloid-landscape-compact-top-to-bottom",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-machine-demo-letter-portrait-standard-left-to-right",
+      "sheets": 2,
+      "foldedSheets": [1, 2]
+    },
+    {
+      "case": "p03-machine-demo-letter-portrait-standard-top-to-bottom",
+      "sheets": 3,
+      "foldedSheets": []
+    },
+    {
+      "case": "p03-machine-demo-letter-portrait-compact-left-to-right",
+      "sheets": 2,
+      "foldedSheets": [1, 2]
+    },
+    {
+      "case": "p03-machine-demo-letter-portrait-compact-top-to-bottom",
+      "sheets": 3,
+      "foldedSheets": []
+    },
+    {
+      "case": "p03-conveyor-line-tabloid-landscape-standard-left-to-right",
+      "sheets": 2,
+      "foldedSheets": []
+    },
+    {
+      "case": "p03-conveyor-line-tabloid-landscape-standard-top-to-bottom",
+      "sheets": 2,
+      "foldedSheets": [1, 2]
+    },
+    {
+      "case": "p03-conveyor-line-tabloid-landscape-compact-left-to-right",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-conveyor-line-tabloid-landscape-compact-top-to-bottom",
+      "sheets": 1,
+      "foldedSheets": [1]
+    },
+    {
+      "case": "p03-conveyor-line-letter-portrait-standard-left-to-right",
+      "sheets": 3,
+      "foldedSheets": [1, 2, 3]
+    },
+    {
+      "case": "p03-conveyor-line-letter-portrait-standard-top-to-bottom",
+      "sheets": 3,
+      "foldedSheets": []
+    },
+    {
+      "case": "p03-conveyor-line-letter-portrait-compact-left-to-right",
+      "sheets": 2,
+      "foldedSheets": [1, 2]
+    },
+    {
+      "case": "p03-conveyor-line-letter-portrait-compact-top-to-bottom",
+      "sheets": 3,
+      "foldedSheets": []
+    }
+  ],
+  "exploratoryFullPackets": {
+    "addedIssuedCases": 16,
+    "addedSheets": 360,
+    "retainedBytes": 144860330,
+    "existingBudgetBytes": 100000000,
+    "strictExit": 2,
+    "findings": [
+      {
+        "dq": "DQ-02",
+        "kind": "iso-cap-height-policy",
+        "rows": 56,
+        "findings": 56,
+        "classification": "existing-policy"
+      },
+      {
+        "dq": "DQ-08",
+        "kind": "conductor-primary-alias-missing",
+        "rows": 91,
+        "findings": 280,
+        "classification": "inherited",
+        "issue": 239
+      },
+      {
+        "dq": "DQ-12",
+        "kind": "median-utilisation-below-40-percent",
+        "rows": 9,
+        "findings": 9,
+        "classification": "inherited",
+        "issue": 181
+      },
+      {
+        "dq": "DQ-15",
+        "kind": "jog-under-3mm",
+        "rows": 13,
+        "findings": 16,
+        "classification": "new-and-inherited",
+        "issue": 462
+      },
+      {
+        "dq": "DQ-15",
+        "kind": "route-detour",
+        "rows": 7,
+        "findings": 7,
+        "classification": "inherited",
+        "issue": 341
+      },
+      {
+        "dq": "DQ-18",
+        "kind": "incomplete-title-block",
+        "rows": 360,
+        "findings": 360,
+        "classification": "oracle-defect",
+        "issue": 459
+      },
+      {
+        "dq": "DQ-19",
+        "kind": "document-registry-source-mismatch",
+        "rows": 16,
+        "findings": 16,
+        "classification": "new",
+        "issue": 460,
+        "resolution": {
+          "checker": "5.36",
+          "sample": "full packets across all 16 paper, layout and flow combinations",
+          "cases": 16,
+          "sheets": 356,
+          "before": { "rows": 16, "findings": 16 },
+          "after": { "rows": 0, "findings": 0 }
+        }
+      },
+      {
+        "dq": "DQ-19",
+        "kind": "identifier-text-mismatch",
+        "rows": 128,
+        "findings": 207,
+        "classification": "oracle-defect",
+        "issue": 461,
+        "resolution": {
+          "checker": "5.36",
+          "case": "p03-machine-demo-tabloid-landscape-standard-left-to-right",
+          "sample": "full packet",
+          "before": { "rows": 9, "findings": 15 },
+          "after": { "rows": 0, "findings": 0 }
+        }
+      }
+    ],
+    "checker": "5.31"
+  },
+  "standingRep": {
+    "record": 454,
+    "scopeAdditions": 70,
+    "newDefectScopes": 9,
+    "measuredReferences": 5,
+    "affectedRows": {
+      "DQ-02": 48,
+      "DQ-08": 18,
+      "DQ-12": 7,
+      "DQ-15": 5
+    }
+  }
+}

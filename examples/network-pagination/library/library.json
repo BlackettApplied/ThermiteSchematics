@@ -1,0 +1,5 @@
+{
+  "name": "network-page-fixture",
+  "version": "0.1.0",
+  "sources": ["types.json"]
+}

@@ -7,6 +7,7 @@ import {
   createA002Error,
   createA003Error,
   createA004Error,
+  createA005Error,
 } from "../src/common/errors.js";
 import {
   detachAndFreezePlainJson,
@@ -19,9 +20,10 @@ import {
 } from "../src/common/serializer.js";
 
 describe("complete public contract", () => {
-  it("exports only the frozen Task 6 runtime surface", () => {
+  it("exports the legacy runtime surface plus request vocabulary", () => {
     expect(agentToolsPackage.AGENT_TOOLS_VERSION).toBe("agent-tools/0.1");
     expect(Object.keys(agentToolsPackage).sort()).toEqual([
+      "AGENT_REQUEST_VOCABULARY",
       "AGENT_TOOLS_VERSION",
       "createAgentTools",
       "serializeAgentToolReport",
@@ -29,7 +31,7 @@ describe("complete public contract", () => {
     ]);
   });
 
-  it("constructs the exact A001-A004 shapes and JSON-quoted messages", () => {
+  it("constructs the exact A001-A005 shapes and JSON-quoted messages", () => {
     const a001 = createA001Error(
       "create-view",
       "/spec/intent\nkind",
@@ -82,7 +84,24 @@ describe("complete public contract", () => {
       actualIntegrity: "sha256-actual=",
     });
 
-    expect([a001, a002, a003, a004].every(Object.isFrozen)).toBe(true);
+    const a005 = createA005Error(
+      '.write"lock',
+      '/project/.write"lock',
+      null,
+      null,
+      "unknown",
+    );
+    expect(a005).toMatchObject({
+      code: "A005",
+      file: '.write"lock',
+      lockPath: '/project/.write"lock',
+      owner: null,
+      ageMs: null,
+      ownerState: "unknown",
+    });
+    expect(a005).not.toHaveProperty("actualIntegrity");
+    expect(a005.message).toContain(JSON.stringify('/project/.write"lock'));
+    expect([a001, a002, a003, a004, a005].every(Object.isFrozen)).toBe(true);
   });
 
   it("serializes exact result/report bytes without failureClass", () => {

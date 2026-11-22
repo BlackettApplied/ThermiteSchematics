@@ -9,8 +9,8 @@ are explicitly unused.
 From the repository root:
 
 ```sh
-node thermite.mjs diagnostics --project packages/cli/fixtures/completeness
-node thermite.mjs diagnostics --project packages/cli/fixtures/completeness --device HMI1 --json
+bun thermite.mjs diagnostics --project packages/cli/fixtures/completeness
+bun thermite.mjs diagnostics --project packages/cli/fixtures/completeness --device HMI1 --json
 ```
 
 These generic interfaces demonstrate the feature, not manufacturer pinouts.

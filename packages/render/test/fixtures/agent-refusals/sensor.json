@@ -1,0 +1,313 @@
+{
+  "objects": [
+    {
+      "uid": "33a15867-296b-40e4-a56b-15282f131b4c",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc",
+      "description": "24 VDC control PSU; AC input feed undesigned pending input rating and branch protection selection.",
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "L": {
+            "status": "deferred",
+            "reason": "Starter AC feed is not designed; select and wire the upstream supply and protection before use."
+          },
+          "N": {
+            "status": "deferred",
+            "reason": "Starter AC return/feed is not designed; review the supply topology and wire it before use."
+          }
+        }
+      }
+    },
+    {
+      "uid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+      "kind": "device",
+      "designation": "PLC1",
+      "type": "core:plc-8di-8do-2ai",
+      "description": "Conveyor PLC, generic 8 DI / 8 DO / 2 AI substitute for two-input compact starter PLC",
+      "location": "MAIN-PANEL",
+      "io": {
+        "addressSpace": "iec",
+        "channels": {
+          "di3": {
+            "address": "%I0.3",
+            "signal": "Discharge detected",
+            "usage": "in-use"
+          }
+        }
+      }
+    },
+    {
+      "uid": "46be3efd-17b7-43ee-bb9d-a019c4fb2cdd",
+      "kind": "potential",
+      "name": "+24VDC",
+      "at": {
+        "device": "PS1",
+        "terminal": "+"
+      },
+      "electrical": {
+        "nominal_voltage": 24,
+        "voltage_type": "DC",
+        "polarity": "positive"
+      }
+    },
+    {
+      "uid": "aaccbc22-3208-42dd-ae26-54dce0250f8d",
+      "kind": "potential",
+      "name": "0VDC",
+      "at": {
+        "device": "PS1",
+        "terminal": "-"
+      },
+      "electrical": {
+        "nominal_voltage": 0,
+        "voltage_type": "DC",
+        "polarity": "return"
+      }
+    },
+    {
+      "uid": "428349d8-7565-4c75-88d4-21ac2699224d",
+      "kind": "device",
+      "designation": "B1",
+      "type": "core:prox-pnp-3wire",
+      "description": "Discharge PNP three-wire proximity sensor, 24 VDC generic interface",
+      "location": "DISCHARGE"
+    },
+    {
+      "uid": "93658771-6a90-46e3-86cb-1e6e3c96683c",
+      "kind": "device",
+      "designation": "JB1",
+      "type": "core:junction-box-8",
+      "description": "Discharge junction box, isolated terminal points",
+      "location": "DISCHARGE-JB"
+    },
+    {
+      "uid": "d270fd0a-ce6c-44f1-a349-b9d801343c27",
+      "kind": "device",
+      "designation": "TB1",
+      "type": "core:terminal-block-8",
+      "description": "Main panel field terminal block, isolated positions",
+      "location": "MAIN-PANEL"
+    },
+    {
+      "uid": "c2817c61-2fc4-40cb-8e0e-cbed3dfd2595",
+      "kind": "wire",
+      "designation": "W-FIELD+",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "TB1",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "W-FIELD+"
+      }
+    },
+    {
+      "uid": "b0e64249-1212-48c8-b41f-73ef9bb03537",
+      "kind": "wire",
+      "designation": "W-FIELD-",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "TB1",
+          "terminal": "2"
+        }
+      ],
+      "properties": {
+        "label": "W-FIELD-"
+      }
+    },
+    {
+      "uid": "13d3181c-9044-456e-afd2-3d939ed4601b",
+      "kind": "wire",
+      "designation": "W-SENSOR",
+      "endpoints": [
+        {
+          "device": "TB1",
+          "terminal": "3"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "DI3"
+        }
+      ],
+      "properties": {
+        "label": "W-SENSOR"
+      }
+    },
+    {
+      "uid": "619ec6e2-baf1-4fa5-a385-31ac8470072c",
+      "kind": "cable",
+      "designation": "CB1",
+      "type": "core:cordset-sensor-4core",
+      "description": "Four-core sensor lead to discharge junction box; generic mapping, connector hardware unselected",
+      "fromLocation": "DISCHARGE",
+      "toLocation": "DISCHARGE-JB",
+      "conductors": [
+        {
+          "id": "1",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "1"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.1"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "usage": "spare",
+          "endpoints": [null, null]
+        },
+        {
+          "id": "3",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "3"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.2"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "B1",
+              "terminal": "4"
+            },
+            {
+              "device": "JB1",
+              "terminal": "X1.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "a11b824f-162c-452d-8d24-42aa32c49131",
+      "kind": "cable",
+      "designation": "CBL1",
+      "type": "core:cordset-sensor-4core",
+      "description": "Four-core field cable junction box to main panel; spare core 2 parked on isolated points",
+      "fromLocation": "DISCHARGE-JB",
+      "toLocation": "MAIN-PANEL",
+      "conductors": [
+        {
+          "id": "1",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "JB1",
+              "terminal": "X1.1"
+            },
+            {
+              "device": "TB1",
+              "terminal": "1"
+            }
+          ]
+        },
+        {
+          "id": "2",
+          "usage": "spare",
+          "endpoints": [
+            {
+              "device": "JB1",
+              "terminal": "X1.4"
+            },
+            {
+              "device": "TB1",
+              "terminal": "4"
+            }
+          ]
+        },
+        {
+          "id": "3",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "JB1",
+              "terminal": "X1.2"
+            },
+            {
+              "device": "TB1",
+              "terminal": "2"
+            }
+          ]
+        },
+        {
+          "id": "4",
+          "usage": "in-use",
+          "endpoints": [
+            {
+              "device": "JB1",
+              "terminal": "X1.3"
+            },
+            {
+              "device": "TB1",
+              "terminal": "3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uid": "5b70d7ec-1a8f-4d53-a60b-e077a8ffb10d",
+      "kind": "wire",
+      "designation": "W-CTL-001",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "L+"
+        }
+      ],
+      "properties": {
+        "label": "+24V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "00f8fde6-55ad-4b82-8bfb-ac3a0268161a",
+      "kind": "wire",
+      "designation": "W-CTL-002",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "PLC1",
+          "terminal": "M"
+        }
+      ],
+      "properties": {
+        "label": "0V-PS1-PLC1",
+        "size": "18AWG",
+        "color": "blue/white"
+      }
+    }
+  ]
+}

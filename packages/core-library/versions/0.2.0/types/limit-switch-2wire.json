@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:limit-switch-2wire",
+      "description": "Two-wire mechanical limit switch with one normally open dry contact",
+      "terminals": {
+        "13": {
+          "role": "no_contact",
+          "required": true
+        },
+        "14": {
+          "role": "no_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact13": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:switch",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: The single normally open dry-contact pair 13/14 is modeled and both ends are required for its two-wire sensing circuit. No optional points in this interface. Unmodeled: extra contacts, powered electronics and bonding of actual limit switches; no manufacturer pinout is asserted."
+      }
+    }
+  ]
+}

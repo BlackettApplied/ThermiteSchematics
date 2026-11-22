@@ -1,0 +1,13 @@
+diff --git a/packages/query/src/ordering.ts b/packages/query/src/ordering.ts
+--- a/packages/query/src/ordering.ts
++++ b/packages/query/src/ordering.ts
+@@ -71,8 +71,8 @@
+ }
+
+ export function compareTerminalView(
++  right: TerminalView,
+   left: TerminalView,
+-  right: TerminalView,
+ ): number {
+   return (
+     compareText(left.deviceDesignation, right.deviceDesignation) ||

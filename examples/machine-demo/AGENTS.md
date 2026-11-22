@@ -5,8 +5,8 @@ This synthetic two-cabinet example uses illustrative equipment and wiring.
 # Thermite Schematics project guide
 
 This project uses the TypeScript + ELK alpha. Run the project's pinned Thermite
-checkout with `node /absolute/path/to/thermite/packages/cli/dist/thermite-bin.js`.
-The source checkout needs the supported Node runtime and `npm ci && npm run build`
+checkout with `bun /absolute/path/to/thermite/thermite.mjs`.
+The source checkout needs the Bun 1.4.2 and `bun install --frozen-lockfile && bun run build`
 once. Use that same checkout for every command; upgrade it deliberately.
 
 ## Authority and workflow
@@ -102,7 +102,8 @@ replace source/lock/presentation review or engineering judgment. Persistent UIDs
 identify devices; page numbers may change as the drawing grows.
 
 `thermite watch --project . --input packet.request.json -o drawings/packet.html`
-checks declared inputs once per second and preserves the previous packet on
-failure. Keep diagnostics visible and refresh the HTML after successful builds.
+polls declared inputs one second after work finishes and preserves the previous
+packet on failure. Keep diagnostics visible and refresh the HTML after successful
+builds.
 Use `.pdf` for direct vector PDF output with physical paper dimensions and fonts.
 Unsupported PDF glyphs fail explicitly; use supported labels or SVG/HTML.

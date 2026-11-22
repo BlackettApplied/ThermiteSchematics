@@ -1,0 +1,5 @@
+
+For packet frames, use presentation 0.3 named slots; see `docs/drawing-frames.md`.
+Enter only supplied title/revision data. Unknown fields stay labelled blank;
+unknown revision stays `UNSPECIFIED` and remains unmet at issue review.
+Preview the whole packet after frame changes; handle R006 honestly.

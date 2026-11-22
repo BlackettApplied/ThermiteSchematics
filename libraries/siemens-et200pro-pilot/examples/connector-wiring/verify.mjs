@@ -10,8 +10,19 @@ import { renderSchematicPacket } from "@thermite/render";
 const project = dirname(fileURLToPath(import.meta.url));
 const compiled = await compileProject(project);
 assert.equal(compiled.ok, true, JSON.stringify(compiled.diagnostics));
-assert(compiled.diagnostics.length > 0);
-assert(compiled.diagnostics.every((d) => d.code === "W904"));
+assert.deepEqual(
+  compiled.diagnostics
+    .filter((d) => d.severity !== "info")
+    .map((d) => `${d.severity}:${d.code}`),
+  Array(14).fill("warning:W904"),
+);
+assert.deepEqual(
+  compiled.diagnostics
+    .filter((d) => d.severity === "info")
+    .map((d) => d.code)
+    .sort(),
+  ["I304", "I305"],
+);
 const deviceFor = (ir, tag) => ir.devices.find((d) => d.designation === tag);
 const typeFor = (tag) =>
   compiled.ir.deviceTypes.find(

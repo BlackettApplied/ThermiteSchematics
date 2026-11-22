@@ -1,0 +1,33 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:selector-2pos",
+      "description": "Provisional generic two-position maintained selector with one NO contact: open in position 0, closed in position 1.",
+      "terminals": {
+        "13": {
+          "role": "no_contact",
+          "required": true
+        },
+        "14": {
+          "role": "no_contact",
+          "required": true
+        }
+      },
+      "functions": {
+        "contact13": {
+          "kind": "contact",
+          "normal_state": "open",
+          "terminals": ["13", "14"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:selector",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Single pair 13/14 is required; position 0 is the declared normal state (open), position 1 closes the maintained contact. Position retention is descriptive, not simulated. Optional: none in this interface. Unmodeled: extra poles/positions, illumination and bonding. Select hardware and add applicable ratings; markings are a generic convention, not a manufacturer pinout."
+      }
+    }
+  ]
+}

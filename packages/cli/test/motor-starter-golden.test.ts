@@ -1,3 +1,4 @@
+import { motorDiagnostics } from "./motor-starter-diagnostics.js";
 import { spawn } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
@@ -13,7 +14,11 @@ import type {
 } from "@thermite/query";
 import { describe, expect, it } from "vitest";
 
-import { runCli, type RunCliOptions } from "../src/index.js";
+import {
+  formatHumanDiagnostics,
+  runCli,
+  type RunCliOptions,
+} from "../src/index.js";
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repositoryRoot = resolve(packageRoot, "../..");
@@ -140,11 +145,13 @@ describe("Task 8 reviewed motor-starter goldens", () => {
 
         if (json) {
           expect(JSON.parse(expectedStderr.toString("utf8"))).toEqual({
-            diagnostics: [],
+            diagnostics: motorDiagnostics,
             error: null,
           });
         } else {
-          expect(expectedStderr.byteLength).toBe(0);
+          expect(expectedStderr.toString("utf8")).toBe(
+            `${formatHumanDiagnostics(motorDiagnostics)}\n`,
+          );
         }
       }
     },

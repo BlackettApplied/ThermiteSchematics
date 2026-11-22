@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/agent-tool-report.schema.json",
+  "title": "AgentToolJsonReport",
+  "description": "Agent diagnostic transport envelope, emitted on stderr for success and failure. Error payload fields depend on the selected tool.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "tool", "diagnostics", "error"],
+  "properties": {
+    "format": {
+      "const": "agent-tool-report/0.1"
+    },
+    "tool": {
+      "type": "string",
+      "enum": [
+        "resolve",
+        "inspect",
+        "query",
+        "validate",
+        "create-view",
+        "apply-source-patch"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "$ref": "https://thermiteschematics.com/schemas/0.1/diagnostic.schema.json"
+      }
+    },
+    "error": {
+      "type": ["object", "null"],
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

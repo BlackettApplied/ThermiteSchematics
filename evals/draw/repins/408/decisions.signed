@@ -1,0 +1,2879 @@
+{
+  "baselineSha256": "e743a4c1c73dc4a1b0f35cfd967c2e648d87ff7783e2cb8bb82a53d500eb935f",
+  "checkerSha256": "c740c501547f498bfabfc4b89892a7bb8946f06820741a33afa09686a0e3d21b",
+  "corpusSha256": "5e608d04fa42d877abc64ff16560933cf389d6bf01b60b6506f2d2acb2e52420",
+  "entries": [
+    {
+      "action": "envelope-drift",
+      "causeClass": "full-population-reference-change",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0,
+        0.006,
+        0.257,
+        0.4
+      ],
+      "markerId": "DQ-12/b9ed55e0314c259f",
+      "metric": "utilisation",
+      "note": "LAYOUT T4 C2 (#405, #342) packs eight native circuit parts onto four same-paper TTB sheets without deleting native part content. Full circuit-pagination utilisation range changes [0.006,0.257] to [0.257,0.341]. The existing allowed band [0,0.4] and 40% criterion are unchanged; this in-band reference update is neither a tolerance expansion nor a claim of optimal packing or density passing. Reviewer (Claude, REP4 #408 P2): from equals the registry band [0,0.006,0.257,0.4]; count [1,1] and allowed [0,0.4] are unchanged, and the marker remains xfail, so this records an improved but still failing utilisation, not a pass.",
+      "observed": [
+        0.257,
+        0.341
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      },
+      "to": [
+        0,
+        0.257,
+        0.341,
+        0.4
+      ]
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-compact-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-compact-top-to-bottom S05; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S05 to S05 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:5"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-standard-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-landscape-standard-top-to-bottom S05; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S05 to S05 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:5"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-compact-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-letter-portrait-standard-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-letter-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-tabloid-landscape-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-tabloid-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-tabloid-landscape-compact-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-tabloid-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-tabloid-landscape-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-tabloid-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/52bd13a882c22fc1",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-functional-symbols-tabloid-landscape-standard-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-functional-symbols-tabloid-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on report-filtering-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "report-filtering-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on report-filtering-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "report-filtering-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on report-filtering-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "report-filtering-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on report-filtering-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "report-filtering-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-compact-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-compact-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-standard-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-landscape-standard-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-a3-portrait-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-a3-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-letter-landscape-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-letter-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-compact-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-compact-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-standard-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-landscape-standard-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-landscape-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-compact-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-compact-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/a09d11c2df9bcbd3",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on sweep-report-filtering-tabloid-portrait-standard-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "sweep-report-filtering-tabloid-portrait-standard-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S05; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S05 to S05 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:5"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S06; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S06 to S06 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:6"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S07; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S07 to S07 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-left-to-right S08; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S08 to S08 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S05; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S05 to S05 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:5"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S06; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S06 to S06 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:6"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S07; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S07 to S07 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/aaf3b9564a056ed9",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on network-pagination-top-to-bottom S08; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S08 to S08 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "network-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-left-to-right S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-left-to-right S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-left-to-right",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C2 P2/S02 -> P2/S01.A4), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C4 P2/S08 -> P2/S04.A5), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S03 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C7 P2/S02 -> P2/S01.C5/D5 and C9 P4/S04 -> P4/S02.A4), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:3"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S02; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S04 to S02 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:4"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S05 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C11 P4/S04 -> P4/S02.C4/D4 and C13 P6/S06 -> P6/S03.A4), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:5"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S03; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S06 to S03 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:6"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S07 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C15 P6/S06 -> P6/S03.C4/D4 and C17 P8/S08 -> P8/S04.A5), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ccd32aa5f3e71359",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on circuit-pagination-top-to-bottom S04; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S08 to S04 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (C4 P2/S02 -> P2/S01.C4/D4), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ecb978cf7dbead99",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on motor-starter-documentation-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S01 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix. Reviewer (Claude, REP4 #408 P2): the printed target sheet numbers follow the same declared native-part map (PB1/OL1/K1 P2/S02 -> P2/S01.A4/A5/B4/C4), so the resolved zones are the targets' current positions, not the baseline allowedZones; the current independent native-part check accepts them with 0 findings, and every baseline zoneless reference on this scope is now printed with a zone.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:1"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "native-part-zone-resolution",
+      "classification": "drawing",
+      "markerId": "DQ-08/ecb978cf7dbead99",
+      "note": "TEXT-NAV T6 (#401, #342) resolves printed native circuit-terminal/network-port peer references to final issued sheet.zone. The compatible independent native-part check passes without findings on motor-starter-documentation-top-to-bottom S01; baseline missing-zone subjects and exact pinned source are supplied. LAYOUT T4 (#405) preserves the native parts while relocating source S02 to S01 where applicable; this declaration never treats an unmeasured ordinal as a fix.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:2"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "rename",
+      "causeClass": "physical-sheet-relocation",
+      "classification": "drawing",
+      "from": {
+        "markerId": "DQ-08/f394a414885b58c1",
+        "scope": {
+          "case": "motor-starter-documentation-top-to-bottom",
+          "medium": "svg",
+          "sheet": "sheet:5"
+        }
+      },
+      "note": "LAYOUT T4 C2 (#405, #342) packs the two circuit parts on one sheet. The CBL1 wiring view moves S05 to S04. All four #239 alias findings retain native conductor UID, actual/primary text, geometry and logical view; the explicit token pairs relocate the existing defect only, with no repair credit. Reviewer (Claude, REP4 #408 P2): official instanceInventory on both pinned reports gives exactly these four tokens as the whole S05 baseline group and the whole S04 current group; official proveMove() passes for all four pairs under the declared sheetRenames; facts and bbox are identical, and all four still fail in the current capture.",
+      "pairs": [
+        {
+          "from": "51c401da0e2512a633a1c7f301b5fcbe604fc435a46ceb83bd4a1b69e072187e",
+          "to": "27c62fd2eded97b2dc7405009a605dfea86d087307012a4e26f88970401cf7a9"
+        },
+        {
+          "from": "9b9cf311740de086ce4a252954ddae7e9da779a1a66256490f3b6d03e710dcb5",
+          "to": "5ee1c3452864c3b108f71736a0a76d6ae24d6e51dc586d2a2baf114b2c909bc3"
+        },
+        {
+          "from": "409ca4feb10fbba0dcb09a344e6392344f9d5da3c141605c79e37c1bb37efb16",
+          "to": "bf946b104b8af8bd49ea11e6d6bdc3efb4c9ea5184e3124043cd44a7ce004449"
+        },
+        {
+          "from": "b4b265f68025a78c0849a8d8d3a6e7e089ece86b864507e9a7967216b615a6c2",
+          "to": "ae4550f8873d22c9de3f5f737d7d16cc2042a15e297b692f0060d28e667c3505"
+        }
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      },
+      "to": {
+        "markerId": "DQ-08/f394a414885b58c1",
+        "scope": {
+          "case": "motor-starter-documentation-top-to-bottom",
+          "medium": "svg",
+          "sheet": "sheet:4"
+        }
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/7ee84b8ad37f6876",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/7ee84b8ad37f6876",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/7ee84b8ad37f6876",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/7ee84b8ad37f6876",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/9fa3f439bc7a032a",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/d9a0887eee3ff510",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/d9a0887eee3ff510",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/d9a0887eee3ff510",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/d9a0887eee3ff510",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-09/f8bf84763404ab86",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/26e31ea7bf491a98",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-left-to-right",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/26e31ea7bf491a98",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/28a2d0660917c3b8",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-left-to-right",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/28a2d0660917c3b8",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/2f06a00f54beee31",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-left-to-right",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "fixed",
+      "causeClass": "independent-native-circuit-landings",
+      "classification": "drawing",
+      "markerId": "DQ-14/2f06a00f54beee31",
+      "note": "LAYOUT T4 C1 (#405; triage4 V01, related #337 class) gives the distinct authored conductors and self-loop separate ELK fixed-port approaches to D1.I2, retaining native endpoints and connectivity. The remote filled tee disappears and clear gap is restored; current independent physical-landing/ray checks pass. This is the circuit residual, not the earlier wiring repair; no dot-only or net-edit credit is asserted.",
+      "reviewed": true,
+      "scope": {
+        "case": "self-loop-labels-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:circuit/Nested external bridges"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/0f5aa83c012b0dd9",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2168a93037c672b9",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2168a93037c672b9",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2168a93037c672b9",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2168a93037c672b9",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/264df2aafc6a91e4",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/264df2aafc6a91e4",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/264df2aafc6a91e4",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/264df2aafc6a91e4",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2a97fe0ecf7fbf3f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2a97fe0ecf7fbf3f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2a97fe0ecf7fbf3f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/2a97fe0ecf7fbf3f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/3e2bb7892f508f2f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/783580308c492e23",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/783580308c492e23",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/783580308c492e23",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/783580308c492e23",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/99b87e6cd6e0dd64",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/a3277c1622b44586",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/a3277c1622b44586",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/a3277c1622b44586",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/a3277c1622b44586",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/c203cbfb53cc3cc0",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/cd7563990ef51fde",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/cd7563990ef51fde",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/cd7563990ef51fde",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/cd7563990ef51fde",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/d67d19d9e6a828bc",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/ead6c1fbda52a709",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces motor-starter-documentation-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "motor-starter-documentation-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/ef17280b5258193f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S10 field/zone scope is intentionally removed; native page content is retained at S06. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:10"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/ef17280b5258193f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S07 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:7"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/ef17280b5258193f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S08 field/zone scope is intentionally removed; native page content is retained at S04. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:8"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    },
+    {
+      "action": "retire",
+      "cause": "removed",
+      "causeClass": "intentional-physical-sheet-removal",
+      "classification": "drawing",
+      "markerId": "DQ-18/ef17280b5258193f",
+      "note": "LAYOUT T4 C2 (#405, #342) reduces circuit-pagination-top-to-bottom by native-part packing. The old physical S09 field/zone scope is intentionally removed; native page content is retained at S05. Missing furniture remains pinned on surviving sheets. This is a removed scope, not a repaired field or approval, and earns no repair credit.",
+      "reviewed": true,
+      "scope": {
+        "case": "circuit-pagination-top-to-bottom",
+        "medium": "svg",
+        "sheet": "sheet:9"
+      },
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, REP4 #408 P2",
+        "kind": "agent"
+      }
+    }
+  ],
+  "evalsVersion": "5.23",
+  "format": "thermite-draw-decisions/1.0",
+  "pr": "#408",
+  "registrySha256": "1107a68d81b6349555da6f65617cb347b38d7ebd0c97153e94d98bd8224711ee",
+  "sheetRenames": [
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:2",
+      "medium": "svg",
+      "to": "sheet:1"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:3",
+      "medium": "svg",
+      "to": "sheet:2"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:4",
+      "medium": "svg",
+      "to": "sheet:2"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:5",
+      "medium": "svg",
+      "to": "sheet:3"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:6",
+      "medium": "svg",
+      "to": "sheet:3"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:7",
+      "medium": "svg",
+      "to": "sheet:4"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:8",
+      "medium": "svg",
+      "to": "sheet:4"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:9",
+      "medium": "svg",
+      "to": "sheet:5"
+    },
+    {
+      "case": "circuit-pagination-top-to-bottom",
+      "from": "sheet:10",
+      "medium": "svg",
+      "to": "sheet:6"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:2",
+      "medium": "svg",
+      "to": "sheet:1"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:3",
+      "medium": "svg",
+      "to": "sheet:2"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:4",
+      "medium": "svg",
+      "to": "sheet:3"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:5",
+      "medium": "svg",
+      "to": "sheet:4"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:6",
+      "medium": "svg",
+      "to": "sheet:5"
+    },
+    {
+      "case": "motor-starter-documentation-top-to-bottom",
+      "from": "sheet:7",
+      "medium": "svg",
+      "to": "sheet:6"
+    }
+  ],
+  "summarySha256": "2552c554d6f3c997284ca9fa925e3b48cac629d8a45fa39bf94cfbc4da9cd93c"
+}

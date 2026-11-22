@@ -1,5 +1,4 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
 import { createQueryEngine } from "@thermite/query";
 import { beforeAll, describe, expect, it } from "vitest";
@@ -8,6 +7,7 @@ import {
   buildElkAdapterGraph,
   layoutPresentationGraph,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import {
   MAX_SVG_MAGNITUDE,
   normalizeAndValidateLayout,
@@ -20,6 +20,8 @@ import type { SymbolDefinition } from "../src/symbols/types.js";
 import type {
   NormalizedSchematicLayout,
   PresentationGraph,
+  PresentationNode,
+  PresentationLabel,
   SchematicFlow,
   SchematicViewFamily,
 } from "../src/types.js";
@@ -28,8 +30,6 @@ import {
   required,
   selectCoreSubgraph,
 } from "./fixtures.js";
-
-const ElkConstructor = BundledElk as unknown as { new (): ELK };
 
 let coreIr: ElectricalIr;
 
@@ -55,6 +55,7 @@ function loadsPresentation(
   ir: ElectricalIr,
   flow: SchematicFlow,
   catalog: readonly SymbolDefinition[] = SYMBOL_CATALOG,
+  authoredOmissions = true,
 ): PresentationGraph {
   const root = required(
     ir.devices.find(({ designation }) => designation === "PS1"),
@@ -71,8 +72,19 @@ function loadsPresentation(
     catalog,
   });
   if (!selected.ok) throw new Error(JSON.stringify(selected.error));
+  // The historical B1 coordinate witness isolates port geometry. Other tests
+  // exercise the same loads view with all authored incidences and reserved cards.
+  const ids = new Set(selected.value.conductiveElementIds.map((id) => id.uid));
   const built = buildPresentationGraph({
-    ir,
+    ir: authoredOmissions
+      ? ir
+      : {
+          ...ir,
+          wires: ir.wires.filter((w) => ids.has(w.uid)),
+          jumpers: [],
+          cableConductors: [],
+          cables: [],
+        },
     selected: selected.value,
     catalog,
   });
@@ -196,12 +208,44 @@ async function rawLayout(graph: PresentationGraph): Promise<{
   readonly output: ElkNode;
 }> {
   const input = buildElkAdapterGraph(graph).graph;
-  const output = await new ElkConstructor().layout(structuredClone(input));
+  const output = await createElkEngine().layout(structuredClone(input));
   return { input, output };
 }
 
 function allNodes(root: ElkNode): ElkNode[] {
   return (root.children ?? []).flatMap((child) => [child, ...allNodes(child)]);
+}
+
+function reservedHeaderPosition(
+  leaf: Exclude<PresentationNode, { kind: "junction" }>,
+  header: PresentationLabel,
+  input: ElkNode,
+  flow: SchematicFlow,
+) {
+  if (
+    leaf.kind === "symbol" &&
+    (flow === "top-to-bottom" || leaf.mechanicalGangId !== undefined) &&
+    header.role === "function" &&
+    ["NO", "NC"].includes(header.printableText ?? "")
+  ) {
+    const slot = required(
+      required(allNodes(input).find((n) => n.id === leaf.id)).labels?.find(
+        (l) => l.id === header.id,
+      ),
+    );
+    return { x: required(slot.x), y: required(slot.y) };
+  }
+  return {
+    x:
+      flow === "top-to-bottom"
+        ? (leaf.contentBox?.x ?? 0) + (leaf.kind === "rail" ? 5 : 8)
+        : quantizeLayoutNumber(
+            (leaf.contentBox?.x ?? 0) +
+              ((leaf.contentBox?.width ?? leaf.width) - header.width) / 2,
+            `${header.id} frozen x`,
+          ),
+    y: (leaf.contentBox?.y ?? 0) + (leaf.kind === "rail" ? 5 : 4),
+  };
 }
 
 function rawLeafLabelPositions(
@@ -289,7 +333,11 @@ function r004Message(
   expect(result.ok).toBe(false);
   if (result.ok) throw new Error("Expected layout validation to fail.");
   expect(result.error.code).toBe("R004");
-  return result.error.message;
+  // Geometry assertions retain the exact source identities that caused the
+  // refusal; the public message now uses device and conductor names.
+  return typeof result.error.details?.originalMessage === "string"
+    ? result.error.details.originalMessage
+    : result.error.message;
 }
 
 function expectGeometryContract(layout: NormalizedSchematicLayout): void {
@@ -494,7 +542,12 @@ describe("real pinned ELK layouts", () => {
     };
 
     const oldCatalog = oldDcCatalog();
-    const oldGraph = loadsPresentation(coreIr, "top-to-bottom", oldCatalog);
+    const oldGraph = loadsPresentation(
+      coreIr,
+      "top-to-bottom",
+      oldCatalog,
+      false,
+    );
     const old = await rawLayout(oldGraph);
     expect({
       sourcePositive: portPosition(old.input, oldGraph, "PS1", "positive"),
@@ -529,7 +582,12 @@ describe("real pinned ELK layouts", () => {
     expect(oldResult.ok).toBe(false);
     if (!oldResult.ok) expect(oldResult.error.code).toBe("R004");
 
-    const graph = loadsPresentation(coreIr, "top-to-bottom");
+    const graph = loadsPresentation(
+      coreIr,
+      "top-to-bottom",
+      SYMBOL_CATALOG,
+      false,
+    );
     const current = await rawLayout(graph);
     expect({
       width: current.output.width,
@@ -602,7 +660,13 @@ describe("real pinned ELK layouts", () => {
           output,
           new Set(leaves.map(({ id }) => id)),
         );
-        expect(rawLabels.size).toBe(leaves.length);
+        expect(rawLabels.size).toBe(
+          leaves.length +
+            leaves.reduce(
+              (n, leaf) => n + leaf.labels.filter((l) => l.offView).length,
+              0,
+            ),
+        );
         for (const leaf of leaves) {
           const header = required(
             leaf.labels.find(
@@ -612,18 +676,12 @@ describe("real pinned ELK layouts", () => {
           );
           const raw = required(rawLabels.get(header.id));
           expect(raw.nodeId).toBe(leaf.id);
+          const expected = reservedHeaderPosition(leaf, header, input, flow);
           expect(quantizeLayoutNumber(raw.localX, `${header.id} raw x`)).toBe(
-            flow === "top-to-bottom"
-              ? leaf.kind === "rail"
-                ? 5
-                : 8
-              : quantizeLayoutNumber(
-                  (leaf.width - header.width) / 2,
-                  `${header.id} frozen x`,
-                ),
+            expected.x,
           );
           expect(quantizeLayoutNumber(raw.localY, `${header.id} raw y`)).toBe(
-            leaf.kind === "rail" ? 5 : 4,
+            expected.y,
           );
           const copied = required(
             normalized.value.labels.find(({ id }) => id === header.id),
@@ -1236,16 +1294,23 @@ describe("post-layout rejection", () => {
     const symbolCollision = structuredClone(output);
     const primitive = required(
       baseline.value.nodes.find(
-        ({ kind, primitiveOrigin }) =>
-          kind === "symbol" && primitiveOrigin !== undefined,
+        (node) =>
+          node.kind === "symbol" &&
+          node.primitiveOrigin !== undefined &&
+          graph.nodes.some(
+            (n) =>
+              n.id === node.id &&
+              n.kind === "symbol" &&
+              n.symbolId === "ais:breaker-pole",
+          ),
       )?.primitiveOrigin,
     );
     const symbolLabel = required(
       symbolCollision.edges?.find(({ id }) => id === edgeWithLabel.id)
         ?.labels?.[0],
     );
-    symbolLabel.x = primitive.x;
-    symbolLabel.y = primitive.y;
+    symbolLabel.x = primitive.x + 7;
+    symbolLabel.y = primitive.y + 5;
     expectR004(graph, input, symbolCollision);
 
     const ownEdgeCollision = structuredClone(output);

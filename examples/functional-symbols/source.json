@@ -1,0 +1,298 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000001",
+      "designation": "AC1",
+      "type": "functional-symbols:supply"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000002",
+      "designation": "T1",
+      "type": "functional-symbols:dual-primary"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000003",
+      "designation": "PS1",
+      "type": "functional-symbols:conversion"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000004",
+      "designation": "SP1",
+      "type": "functional-symbols:pressure"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000005",
+      "designation": "SL1",
+      "type": "functional-symbols:float"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000006",
+      "designation": "LS1",
+      "type": "functional-symbols:level"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000007",
+      "designation": "CP1",
+      "type": "functional-symbols:conductivity"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000008",
+      "designation": "SO1",
+      "type": "functional-symbols:outlet"
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000009",
+      "designation": "X1",
+      "type": "functional-symbols:interface12"
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000010",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "AC1",
+          "terminal": "L"
+        },
+        {
+          "device": "T1",
+          "terminal": "H1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000011",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "AC1",
+          "terminal": "N"
+        },
+        {
+          "device": "T1",
+          "terminal": "H4"
+        }
+      ]
+    },
+    {
+      "kind": "jumper",
+      "uid": "80000000-0000-4000-8000-000000000012",
+      "designation": "J1",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "H2"
+        },
+        {
+          "device": "T1",
+          "terminal": "H3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000013",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X1"
+        },
+        {
+          "device": "PS1",
+          "terminal": "L"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000014",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "X2"
+        },
+        {
+          "device": "PS1",
+          "terminal": "N"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000015",
+      "designation": "W5",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "SP1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000016",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "SP1",
+          "terminal": "2"
+        },
+        {
+          "device": "SL1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000017",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "SL1",
+          "terminal": "2"
+        },
+        {
+          "device": "X1",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000018",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "+"
+        },
+        {
+          "device": "LS1",
+          "terminal": "+"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000019",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "PS1",
+          "terminal": "-"
+        },
+        {
+          "device": "LS1",
+          "terminal": "-"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000020",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "LS1",
+          "terminal": "S"
+        },
+        {
+          "device": "X1",
+          "terminal": "2"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000021",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "CP1",
+          "terminal": "A"
+        },
+        {
+          "device": "X1",
+          "terminal": "3"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000022",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "CP1",
+          "terminal": "B"
+        },
+        {
+          "device": "X1",
+          "terminal": "4"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000023",
+      "designation": "W13",
+      "endpoints": [
+        {
+          "device": "AC1",
+          "terminal": "L"
+        },
+        {
+          "device": "SO1",
+          "terminal": "L"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "80000000-0000-4000-8000-000000000024",
+      "designation": "W14",
+      "endpoints": [
+        {
+          "device": "AC1",
+          "terminal": "N"
+        },
+        {
+          "device": "SO1",
+          "terminal": "N"
+        }
+      ]
+    },
+    {
+      "kind": "device",
+      "uid": "80000000-0000-4000-8000-000000000025",
+      "designation": "LD1",
+      "type": "functional-symbols:level-output",
+      "io": {
+        "addressSpace": "Field",
+        "channels": {
+          "output": {
+            "address": "OUT",
+            "signal": "Level detected"
+          }
+        }
+      }
+    }
+  ]
+}

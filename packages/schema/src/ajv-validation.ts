@@ -6,6 +6,12 @@ import {
 } from "ajv/dist/2020.js";
 
 import {
+  boundedAlternatives,
+  formatAllowedValues,
+  type DiagnosticAllowedValue,
+  type DiagnosticAlternatives,
+} from "./diagnostic-alternatives.js";
+import {
   DIAGNOSTIC_CATALOG,
   type DiagnosticCode,
 } from "./diagnostic-catalog.js";
@@ -15,6 +21,7 @@ import {
   type Diagnostic,
 } from "./diagnostics.js";
 import { appendJsonPointer, splitJsonPointer } from "./json-pointer.js";
+import { describeSchemaPattern } from "./pattern-descriptions.js";
 import type {
   JsonNodeLocation,
   JsonPointerNodeMap,
@@ -32,6 +39,7 @@ export const AJV_KEYWORD_TO_CODE = {
   maxLength: "E013",
   enum: "E014",
   const: "E014",
+  anyOf: "E014",
   minItems: "E015",
   maxItems: "E015",
   minimum: "E015",
@@ -105,6 +113,15 @@ function propertyNameFromError(error: ErrorObject): string | undefined {
 }
 
 function targetForError(error: ErrorObject): ErrorTarget {
+  const discriminator = stringParameter(error, "discriminator");
+  if (error.keyword === "anyOf" && discriminator !== undefined) {
+    return {
+      pointer: appendJsonPointer(error.instancePath, discriminator),
+      anchor: "key",
+      fallbackPointer: error.instancePath,
+    };
+  }
+
   if (error.keyword === "required") {
     const missingProperty = stringParameter(error, "missingProperty") ?? "";
     return {
@@ -193,13 +210,48 @@ function describeExpectedType(error: ErrorObject): string {
   return typeof expected === "string" ? expected : "the required type";
 }
 
+function isAllowedValue(value: unknown): value is DiagnosticAllowedValue {
+  return (
+    value === null ||
+    typeof value === "string" ||
+    typeof value === "boolean" ||
+    (typeof value === "number" && Number.isFinite(value))
+  );
+}
+
+/** The schema's complete valid set for an enum or const failure. */
+function alternativesForError(
+  error: ErrorObject,
+  keyword: MappedAjvKeyword,
+): DiagnosticAlternatives | undefined {
+  const params = error.params as Record<string, unknown>;
+  const values =
+    keyword === "enum" || keyword === "anyOf"
+      ? params.allowedValues
+      : keyword === "const"
+        ? [params.allowedValue]
+        : undefined;
+
+  return Array.isArray(values) && values.every(isAllowedValue)
+    ? boundedAlternatives(
+        values,
+        `the "${keyword}" at schema path ${error.schemaPath}`,
+      )
+    : undefined;
+}
+
 function messageForError(
   error: ErrorObject,
   keyword: MappedAjvKeyword,
   target: ErrorTarget,
+  alternatives: DiagnosticAlternatives | undefined,
 ): string {
   if (target.propertyName !== undefined && keyword !== "additionalProperties") {
-    return `Malformed property name ${JSON.stringify(target.propertyName)}.`;
+    const pattern =
+      keyword === "pattern" ? stringParameter(error, "pattern") : undefined;
+    return pattern === undefined
+      ? `Malformed property name ${JSON.stringify(target.propertyName)}.`
+      : `Malformed property name ${JSON.stringify(target.propertyName)}; expected ${describeSchemaPattern(pattern)}.`;
   }
 
   switch (keyword) {
@@ -213,8 +265,12 @@ function messageForError(
       return `Unknown property ${JSON.stringify(
         stringParameter(error, "additionalProperty") ?? "",
       )}.`;
-    case "pattern":
-      return "String value does not match the required pattern.";
+    case "pattern": {
+      const pattern = stringParameter(error, "pattern");
+      return pattern === undefined
+        ? "String value does not match the required pattern."
+        : `String value does not match the required pattern: ${describeSchemaPattern(pattern)}.`;
+    }
     case "format":
       return `String value does not match required format ${JSON.stringify(
         stringParameter(error, "format") ?? "",
@@ -226,9 +282,17 @@ function messageForError(
     case "maxLength":
       return "String value is longer than allowed.";
     case "enum":
-      return "Value is not one of the allowed values.";
+      return alternatives === undefined
+        ? "Value is not one of the allowed values."
+        : `Value is not one of the allowed values: ${formatAllowedValues(alternatives)}.`;
+    case "anyOf":
+      return alternatives === undefined
+        ? "Value must match an accepted schema alternative."
+        : `Expected ${JSON.stringify(stringParameter(error, "discriminator") ?? "value")} to be one of: ${formatAllowedValues(alternatives)}.`;
     case "const":
-      return "Value does not equal the required constant.";
+      return alternatives === undefined
+        ? "Value does not equal the required constant."
+        : `Value does not equal the required constant ${JSON.stringify(alternatives.allowed[0])}.`;
     case "minItems":
       return "Array has fewer items than allowed.";
     case "maxItems":
@@ -290,16 +354,21 @@ export function mapAjvErrors(
       context.value === undefined
         ? undefined
         : nearestUid(context.value, target.pointer);
+    const alternatives = alternativesForError(error, keyword);
+    const pattern =
+      keyword === "pattern" ? stringParameter(error, "pattern") : undefined;
 
     return {
       code,
       severity: DIAGNOSTIC_CATALOG[code].severity,
-      message: messageForError(error, keyword, target),
+      message: messageForError(error, keyword, target, alternatives),
       file,
       line: location.line,
       column: location.column,
       jsonPointer: target.pointer,
       ...(uid === undefined ? {} : { uid }),
+      ...(alternatives ?? {}),
+      ...(pattern === undefined ? {} : { pattern }),
     };
   });
 

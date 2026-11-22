@@ -1,0 +1,2222 @@
+{
+  "format": "thermite-eval-mutations/1.0",
+  "cases": [
+    {
+      "id": "missing-uid",
+      "family": "required-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/uid",
+          "op": "delete"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/uid",
+          "code": "E010",
+          "severity": "error"
+        }
+      ],
+      "predicate": "required-property"
+    },
+    {
+      "id": "missing-designation",
+      "family": "required-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/designation",
+          "op": "delete"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/designation",
+          "code": "E010",
+          "severity": "error"
+        }
+      ],
+      "predicate": "required-property"
+    },
+    {
+      "id": "missing-type",
+      "family": "required-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "delete"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E010",
+          "severity": "error"
+        }
+      ],
+      "predicate": "required-property"
+    },
+    {
+      "id": "type-description",
+      "family": "property-type",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/description",
+          "op": "set",
+          "value": 2
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/description",
+          "code": "E011",
+          "severity": "error"
+        }
+      ],
+      "predicate": "property-type"
+    },
+    {
+      "id": "type-aliases",
+      "family": "property-type",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/aliases",
+          "op": "set",
+          "value": "alias"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/aliases",
+          "code": "E011",
+          "severity": "error"
+        }
+      ],
+      "predicate": "property-type"
+    },
+    {
+      "id": "type-location",
+      "family": "property-type",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/location",
+          "op": "set",
+          "value": false
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/location",
+          "code": "E011",
+          "severity": "error"
+        }
+      ],
+      "predicate": "property-type"
+    },
+    {
+      "id": "type-type",
+      "family": "property-type",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": 3
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E011",
+          "severity": "error"
+        }
+      ],
+      "predicate": "property-type"
+    },
+    {
+      "id": "extra-device-0",
+      "family": "unknown-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/invented",
+          "op": "set",
+          "value": true
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/invented",
+          "code": "E012",
+          "severity": "error"
+        }
+      ],
+      "predicate": "unknown-property"
+    },
+    {
+      "id": "extra-device-1",
+      "family": "unknown-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/1/invented",
+          "op": "set",
+          "value": true
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/1/invented",
+          "code": "E012",
+          "severity": "error"
+        }
+      ],
+      "predicate": "unknown-property"
+    },
+    {
+      "id": "extra-device-2",
+      "family": "unknown-property",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/2/invented",
+          "op": "set",
+          "value": true
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/2/invented",
+          "code": "E012",
+          "severity": "error"
+        }
+      ],
+      "predicate": "unknown-property"
+    },
+    {
+      "id": "uuid",
+      "family": "string-pattern",
+      "provenance": ["GI F5; EA F7"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/uid",
+          "op": "set",
+          "value": "NOT-A-UUID"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/uid",
+          "code": "E013",
+          "severity": "error"
+        }
+      ],
+      "predicate": "pattern"
+    },
+    {
+      "id": "uuid-upper",
+      "family": "string-pattern",
+      "provenance": ["GI F5; EA F7"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/uid",
+          "op": "set",
+          "value": "ABCDEF00-1234-5123-8123-123456789ABC"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/uid",
+          "code": "E013",
+          "severity": "error"
+        }
+      ],
+      "predicate": "pattern"
+    },
+    {
+      "id": "tag-space",
+      "family": "string-pattern",
+      "provenance": ["GI F5; EA F7"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/designation",
+          "op": "set",
+          "value": " X1"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/designation",
+          "code": "E013",
+          "severity": "error"
+        }
+      ],
+      "predicate": "pattern"
+    },
+    {
+      "id": "type-unqualified",
+      "family": "string-pattern",
+      "provenance": ["GI F5; EA F7"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": "node"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E013",
+          "severity": "error"
+        }
+      ],
+      "predicate": "pattern"
+    },
+    {
+      "id": "tag-control",
+      "family": "string-pattern",
+      "provenance": ["GI F5; EA F7"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/designation",
+          "op": "set",
+          "value": "X\u0001"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/designation",
+          "code": "E013",
+          "severity": "error"
+        }
+      ],
+      "predicate": "pattern"
+    },
+    {
+      "id": "voltage-enum",
+      "family": "enum",
+      "provenance": ["CO/PU authoring shapes; GI F5"],
+      "changes": [
+        {
+          "file": "potentials/potentials.json",
+          "pointer": "/objects/0/electrical/voltage_type",
+          "op": "set",
+          "value": "dc"
+        }
+      ],
+      "expected": [
+        {
+          "file": "potentials/potentials.json",
+          "jsonPointer": "/objects/0/electrical/voltage_type",
+          "code": "E014",
+          "severity": "error"
+        }
+      ],
+      "predicate": "allowed",
+      "alternatives": ["AC", "DC"]
+    },
+    {
+      "id": "cable-usage",
+      "family": "enum",
+      "provenance": ["CO/PU authoring shapes; GI F5"],
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/0/usage",
+          "op": "set",
+          "value": "used"
+        }
+      ],
+      "expected": [
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/0/usage",
+          "code": "E014",
+          "severity": "error"
+        }
+      ],
+      "predicate": "allowed",
+      "alternatives": ["in-use", "spare"]
+    },
+    {
+      "id": "relation-enum",
+      "family": "enum",
+      "provenance": ["CO/PU authoring shapes; GI F5"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/4/relation",
+          "op": "set",
+          "value": "connects"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/4/relation",
+          "code": "E014",
+          "severity": "error"
+        }
+      ],
+      "predicate": "allowed",
+      "alternatives": [
+        "actuates",
+        "protects",
+        "controls",
+        "measures",
+        "monitors",
+        "feeds",
+        "associated_with"
+      ]
+    },
+    {
+      "id": "review-enum",
+      "family": "enum",
+      "provenance": ["CO/PU authoring shapes; GI F5"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/connectionReview",
+          "op": "set",
+          "value": {
+            "terminals": {
+              "L": {
+                "status": "unused",
+                "reason": "Synthetic"
+              }
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/connectionReview/terminals/L/status",
+          "code": "E014",
+          "severity": "error"
+        }
+      ],
+      "predicate": "allowed",
+      "alternatives": ["required", "intentionally-unused", "deferred"]
+    },
+    {
+      "id": "endpoint-count-0",
+      "family": "cardinality",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints",
+          "op": "set",
+          "value": []
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/0/endpoints",
+          "code": "E015",
+          "severity": "error"
+        }
+      ],
+      "predicate": "cardinality"
+    },
+    {
+      "id": "endpoint-count-1",
+      "family": "cardinality",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/1/endpoints",
+          "op": "set",
+          "value": []
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/1/endpoints",
+          "code": "E015",
+          "severity": "error"
+        }
+      ],
+      "predicate": "cardinality"
+    },
+    {
+      "id": "endpoint-count-2",
+      "family": "cardinality",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/2/endpoints",
+          "op": "set",
+          "value": []
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/2/endpoints",
+          "code": "E015",
+          "severity": "error"
+        }
+      ],
+      "predicate": "cardinality"
+    },
+    {
+      "id": "kind-0",
+      "family": "object-kind",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/kind",
+          "op": "set",
+          "value": "widget"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/kind",
+          "code": "E016",
+          "severity": "error"
+        }
+      ],
+      "predicate": "kinds",
+      "alternatives": [
+        "device",
+        "wire",
+        "jumper",
+        "cable",
+        "potential",
+        "relation"
+      ]
+    },
+    {
+      "id": "kind-1",
+      "family": "object-kind",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/1/kind",
+          "op": "set",
+          "value": "widget"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/1/kind",
+          "code": "E016",
+          "severity": "error"
+        }
+      ],
+      "predicate": "kinds",
+      "alternatives": [
+        "device",
+        "wire",
+        "jumper",
+        "cable",
+        "potential",
+        "relation"
+      ]
+    },
+    {
+      "id": "manifest-format",
+      "family": "manifest-version",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "system.json",
+          "pointer": "/format",
+          "op": "set",
+          "value": "electrical-system/99.0"
+        }
+      ],
+      "expected": [
+        {
+          "file": "system.json",
+          "jsonPointer": "/format",
+          "code": "E017",
+          "severity": "error"
+        }
+      ],
+      "predicate": "manifest-version"
+    },
+    {
+      "id": "duplicate-uid",
+      "family": "duplicate-identity",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/1/uid",
+          "op": "set",
+          "value": "@copy:/objects/0/uid"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/1/uid",
+          "code": "E020",
+          "severity": "error"
+        }
+      ],
+      "predicate": "duplicate-identity"
+    },
+    {
+      "id": "duplicate-designation",
+      "family": "duplicate-designation",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/2/designation",
+          "op": "set",
+          "value": "X1"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/2/designation",
+          "code": "E100",
+          "severity": "error"
+        },
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/0/endpoints/1/device",
+          "code": "E101",
+          "severity": "error"
+        },
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/1/endpoints/1/device",
+          "code": "E101",
+          "severity": "error"
+        },
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/2/endpoints/0/device",
+          "code": "E101",
+          "severity": "error"
+        }
+      ],
+      "predicate": "duplicate-designation"
+    },
+    {
+      "id": "missing-device-0",
+      "family": "device-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints/0/device",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/0/endpoints/0/device",
+          "code": "E101",
+          "severity": "error"
+        }
+      ],
+      "predicate": "device-reference"
+    },
+    {
+      "id": "missing-device-1",
+      "family": "device-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/1/endpoints/0/device",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/1/endpoints/0/device",
+          "code": "E101",
+          "severity": "error"
+        }
+      ],
+      "predicate": "device-reference"
+    },
+    {
+      "id": "missing-device-2",
+      "family": "device-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/2/endpoints/0/device",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/2/endpoints/0/device",
+          "code": "E101",
+          "severity": "error"
+        }
+      ],
+      "predicate": "device-reference"
+    },
+    {
+      "id": "terminal-0",
+      "family": "terminal-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints/0/terminal",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/0/endpoints/0/terminal",
+          "code": "E102",
+          "severity": "error"
+        }
+      ],
+      "predicate": "terminals",
+      "alternatives": ["L", "N", "+", "-"]
+    },
+    {
+      "id": "terminal-1",
+      "family": "terminal-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/1/endpoints/0/terminal",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/1/endpoints/0/terminal",
+          "code": "E102",
+          "severity": "error"
+        }
+      ],
+      "predicate": "terminals",
+      "alternatives": ["1", "2", "3", "4", "5", "6", "7", "8"]
+    },
+    {
+      "id": "terminal-2",
+      "family": "terminal-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/2/endpoints/0/terminal",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/2/endpoints/0/terminal",
+          "code": "E102",
+          "severity": "error"
+        }
+      ],
+      "predicate": "terminals",
+      "alternatives": ["1", "2", "3", "4", "5", "6", "7", "8"]
+    },
+    {
+      "id": "unknown-type-0",
+      "family": "type-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": "core:absent"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E103",
+          "severity": "error"
+        }
+      ],
+      "predicate": "types",
+      "alternatives": [
+        "core:breaker-3p",
+        "core:cable-2pair-shielded",
+        "core:contactor-3p-1no",
+        "core:junction-box-8",
+        "core:limit-switch-2wire",
+        "core:motor-3ph",
+        "core:overload-3p-1nc",
+        "core:plc-compact",
+        "core:prox-pnp-3wire",
+        "core:psu-24vdc",
+        "core:pushbutton-nc",
+        "core:supply-480v-3ph",
+        "core:terminal-block-8",
+        "eval:node"
+      ]
+    },
+    {
+      "id": "unknown-type-1",
+      "family": "type-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/1/type",
+          "op": "set",
+          "value": "core:absent"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/1/type",
+          "code": "E103",
+          "severity": "error"
+        }
+      ],
+      "predicate": "types",
+      "alternatives": [
+        "core:breaker-3p",
+        "core:cable-2pair-shielded",
+        "core:contactor-3p-1no",
+        "core:junction-box-8",
+        "core:limit-switch-2wire",
+        "core:motor-3ph",
+        "core:overload-3p-1nc",
+        "core:plc-compact",
+        "core:prox-pnp-3wire",
+        "core:psu-24vdc",
+        "core:pushbutton-nc",
+        "core:supply-480v-3ph",
+        "core:terminal-block-8",
+        "eval:node"
+      ]
+    },
+    {
+      "id": "wrong-device-type",
+      "family": "type-kind",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": "core:cable-2pair-shielded"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E104",
+          "severity": "error"
+        }
+      ],
+      "predicate": "type-kind"
+    },
+    {
+      "id": "wrong-cable-type",
+      "family": "type-kind",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": "core:terminal-block-8"
+        }
+      ],
+      "expected": [
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E104",
+          "severity": "error"
+        }
+      ],
+      "predicate": "type-kind"
+    },
+    {
+      "id": "duplicate-core",
+      "family": "duplicate-core",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/1/id",
+          "op": "set",
+          "value": "1+"
+        }
+      ],
+      "expected": [
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/1/id",
+          "code": "E021",
+          "severity": "error"
+        }
+      ],
+      "predicate": "duplicate-core"
+    },
+    {
+      "id": "identical-endpoints",
+      "family": "identical-endpoints",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints/1",
+          "op": "set",
+          "value": {
+            "device": "PS1",
+            "terminal": "+"
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/0/endpoints/1",
+          "code": "E024",
+          "severity": "error"
+        }
+      ],
+      "predicate": "identical-endpoints"
+    },
+    {
+      "id": "function-terminal",
+      "family": "library-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/functions/contact/terminals/0",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "library/types/node.json",
+          "jsonPointer": "/types/0/functions/contact/terminals/0",
+          "code": "E025",
+          "severity": "error"
+        }
+      ],
+      "predicate": "library-reference"
+    },
+    {
+      "id": "library-drift",
+      "family": "library-lock",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/description",
+          "op": "set",
+          "value": "Synthetic drift"
+        }
+      ],
+      "expected": [
+        {
+          "file": "library/types/node.json",
+          "jsonPointer": "",
+          "code": "E108",
+          "severity": "error"
+        }
+      ],
+      "predicate": "library-lock"
+    },
+    {
+      "id": "unknown-core-0",
+      "family": "cable-id",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/0/id",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/0",
+          "code": "E200",
+          "severity": "error"
+        }
+      ],
+      "predicate": "cable-id"
+    },
+    {
+      "id": "unknown-core-1",
+      "family": "cable-id",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/1/id",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "cables/cables.json",
+          "jsonPointer": "/objects/0/conductors/1",
+          "code": "E200",
+          "severity": "error"
+        }
+      ],
+      "predicate": "cable-id"
+    },
+    {
+      "id": "exclusive",
+      "family": "exclusive-landing",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints/1",
+          "op": "set",
+          "value": {
+            "device": "N1",
+            "terminal": "d"
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/2/endpoints/1",
+          "code": "E201",
+          "severity": "error"
+        }
+      ],
+      "predicate": "exclusive-landing"
+    },
+    {
+      "id": "voltage-type",
+      "family": "potential-rating",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "potentials/potentials.json",
+          "pointer": "/objects/0/electrical/voltage_type",
+          "op": "set",
+          "value": "AC"
+        }
+      ],
+      "expected": [
+        {
+          "file": "potentials/potentials.json",
+          "jsonPointer": "/objects/0",
+          "code": "E301",
+          "severity": "error"
+        }
+      ],
+      "predicate": "potential-rating"
+    },
+    {
+      "id": "voltage-rating",
+      "family": "potential-rating",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "potentials/potentials.json",
+          "pointer": "/objects/0/electrical/nominal_voltage",
+          "op": "set",
+          "value": 480
+        }
+      ],
+      "expected": [
+        {
+          "file": "potentials/potentials.json",
+          "jsonPointer": "/objects/0",
+          "code": "E302",
+          "severity": "error"
+        }
+      ],
+      "predicate": "potential-rating"
+    },
+    {
+      "id": "potential-conflict",
+      "family": "potential-conflict",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "potentials/potentials.json",
+          "pointer": "/objects/-",
+          "op": "set",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000001",
+            "kind": "potential",
+            "name": "OTHER",
+            "at": {
+              "device": "X1",
+              "terminal": "1"
+            },
+            "electrical": {
+              "nominal_voltage": 24,
+              "voltage_type": "DC"
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "potentials/potentials.json",
+          "jsonPointer": "/objects/1",
+          "code": "E300",
+          "severity": "error"
+        }
+      ],
+      "predicate": "potential-conflict"
+    },
+    {
+      "id": "required-terminal",
+      "family": "required-connection",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/terminals/f/required",
+          "op": "set",
+          "value": true
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/3",
+          "code": "W903",
+          "severity": "warning"
+        }
+      ],
+      "predicate": "required-connection",
+      "relock": true
+    },
+    {
+      "id": "disjoint-faults",
+      "family": "multi-fault",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/0/endpoints/0/device",
+          "op": "set",
+          "value": "ABSENT"
+        },
+        {
+          "file": "connections/wires.json",
+          "pointer": "/objects/1/endpoints/0/terminal",
+          "op": "set",
+          "value": "ABSENT"
+        }
+      ],
+      "expected": [
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/0/endpoints/0/device",
+          "code": "E101",
+          "severity": "error"
+        },
+        {
+          "file": "connections/wires.json",
+          "jsonPointer": "/objects/1/endpoints/0/terminal",
+          "code": "E102",
+          "severity": "error"
+        }
+      ],
+      "predicate": "multi-fault",
+      "alternatives": ["1", "2", "3", "4", "5", "6", "7", "8"]
+    },
+    {
+      "id": "ratings-voltage",
+      "family": "ratings-only-pair",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "objects.json",
+          "pointer": "/objects/-",
+          "op": "set",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000002",
+            "kind": "potential",
+            "name": "TEST",
+            "at": {
+              "device": "N1",
+              "terminal": "a"
+            },
+            "electrical": {
+              "nominal_voltage": 24
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "objects.json",
+          "jsonPointer": "/objects/2",
+          "code": "E302",
+          "severity": "error"
+        },
+        {
+          "file": "objects.json",
+          "jsonPointer": "/objects/1/endpoints/0",
+          "code": "W303",
+          "severity": "warning"
+        }
+      ],
+      "predicate": "potential-rating",
+      "fixture": "ratings-pair"
+    },
+    {
+      "id": "ratings-type",
+      "family": "ratings-only-pair",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "objects.json",
+          "pointer": "/objects/-",
+          "op": "set",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000002",
+            "kind": "potential",
+            "name": "TEST",
+            "at": {
+              "device": "N1",
+              "terminal": "a"
+            },
+            "electrical": {
+              "voltage_type": "DC"
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "objects.json",
+          "jsonPointer": "/objects/2",
+          "code": "E301",
+          "severity": "error"
+        }
+      ],
+      "predicate": "potential-rating",
+      "fixture": "ratings-pair"
+    },
+    {
+      "id": "partial-potential-missing-voltage_type",
+      "family": "partial-potential",
+      "provenance": [
+        "V2 #37; Helm V2 decision 1; synthetic declared ratings only"
+      ],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/terminals/b/rating",
+          "op": "set",
+          "value": {
+            "nominal_voltage": 24,
+            "voltage_type": "AC"
+          }
+        },
+        {
+          "file": "objects.json",
+          "pointer": "/objects/-",
+          "op": "set",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000003",
+            "kind": "potential",
+            "name": "PARTIAL",
+            "at": {
+              "device": "N1",
+              "terminal": "a"
+            },
+            "electrical": {
+              "nominal_voltage": 24
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "objects.json",
+          "jsonPointer": "/objects/1/endpoints/0",
+          "code": "W303",
+          "severity": "warning"
+        }
+      ],
+      "predicate": "partial-potential",
+      "fixture": "ratings-pair",
+      "relock": true,
+      "missingField": "voltage_type"
+    },
+    {
+      "id": "partial-potential-missing-nominal_voltage",
+      "family": "partial-potential",
+      "provenance": [
+        "V2 #37; Helm V2 decision 1; synthetic declared ratings only"
+      ],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/terminals/b/rating",
+          "op": "set",
+          "value": {
+            "nominal_voltage": 5,
+            "voltage_type": "DC"
+          }
+        },
+        {
+          "file": "objects.json",
+          "pointer": "/objects/-",
+          "op": "set",
+          "value": {
+            "uid": "00000000-0000-5000-8000-000000000003",
+            "kind": "potential",
+            "name": "PARTIAL",
+            "at": {
+              "device": "N1",
+              "terminal": "a"
+            },
+            "electrical": {
+              "voltage_type": "DC"
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "objects.json",
+          "jsonPointer": "/objects/1/endpoints/0",
+          "code": "W303",
+          "severity": "warning"
+        }
+      ],
+      "predicate": "partial-potential",
+      "fixture": "ratings-pair",
+      "relock": true,
+      "missingField": "nominal_voltage"
+    },
+    {
+      "id": "deferred-required-unconnected",
+      "family": "deferred-connection",
+      "provenance": [
+        "V2 #78; Helm V2 decision 3; synthetic required connection and authored deferral"
+      ],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/terminals/f/required",
+          "op": "set",
+          "value": true
+        },
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/3/connectionReview",
+          "op": "set",
+          "value": {
+            "terminals": {
+              "f": {
+                "status": "deferred",
+                "reason": "Synthetic feed design is pending."
+              }
+            }
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/3",
+          "code": "W905",
+          "severity": "warning",
+          "message": "N1: Required terminal N1.f is unconnected (has no connection). Deferred work: Synthetic feed design is pending."
+        }
+      ],
+      "predicate": "deferred-connection",
+      "relock": true
+    },
+    {
+      "id": "deferred-required-dangling",
+      "family": "deferred-connection",
+      "provenance": [
+        "V2 #78; Helm V2 decision 3; synthetic required connection and authored deferral"
+      ],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/terminals/f/required",
+          "op": "set",
+          "value": true
+        },
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/3/connectionReview",
+          "op": "set",
+          "value": {
+            "terminals": {
+              "f": {
+                "status": "deferred",
+                "reason": "Synthetic feed design is pending."
+              }
+            }
+          }
+        },
+        {
+          "file": "cables/cables.json",
+          "pointer": "/objects/0/conductors/3/endpoints/0",
+          "op": "set",
+          "value": {
+            "device": "N1",
+            "terminal": "f"
+          }
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/3",
+          "code": "W905",
+          "severity": "warning",
+          "message": "N1: Required terminal N1.f is dangling (has only a cable core with an unfinished far end). Deferred work: Synthetic feed design is pending."
+        }
+      ],
+      "predicate": "deferred-connection",
+      "relock": true
+    },
+    {
+      "id": "ratings-without-potential",
+      "family": "ratings-only",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [],
+      "expected": [],
+      "predicate": "rating-assessment",
+      "fixture": "ratings-pair"
+    },
+    {
+      "id": "unsupported-profile",
+      "family": "symbol-profile",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/0/symbol",
+          "op": "set",
+          "value": "eval:unsupported"
+        }
+      ],
+      "expected": [],
+      "predicate": "profile-assessment",
+      "relock": true
+    },
+    {
+      "id": "truncated-json",
+      "family": "json-syntax",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "raw": "{\"objects\":["
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "",
+          "code": "E002",
+          "severity": "error"
+        }
+      ],
+      "predicate": "json-syntax"
+    },
+    {
+      "id": "duplicate-member",
+      "family": "json-duplicate",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "devices/equipment.json",
+          "duplicateMember": "kind"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/kind",
+          "code": "E003",
+          "severity": "error"
+        }
+      ],
+      "predicate": "json-duplicate"
+    },
+    {
+      "id": "unknown-type-many",
+      "family": "type-reference",
+      "provenance": ["EA synthetic authoring and guard controls"],
+      "changes": [
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-0",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-1",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-2",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-3",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-4",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-5",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-6",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-7",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-8",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-9",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-10",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-11",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-12",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-13",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-14",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-15",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-16",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-17",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-18",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-19",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-20",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-21",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-22",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-23",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-24",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-25",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-26",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-27",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-28",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-29",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-30",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-31",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-32",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-33",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-34",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-35",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-36",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-37",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-38",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-39",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-40",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-41",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-42",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-43",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-44",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-45",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-46",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-47",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-48",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-49",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "library/types/node.json",
+          "pointer": "/types/-",
+          "op": "set",
+          "value": {
+            "kind": "device_type",
+            "id": "eval:extra-50",
+            "terminals": {},
+            "functions": {},
+            "internal_relations": []
+          }
+        },
+        {
+          "file": "devices/equipment.json",
+          "pointer": "/objects/0/type",
+          "op": "set",
+          "value": "core:absent"
+        }
+      ],
+      "expected": [
+        {
+          "file": "devices/equipment.json",
+          "jsonPointer": "/objects/0/type",
+          "code": "E103",
+          "severity": "error"
+        }
+      ],
+      "predicate": "types",
+      "relock": true,
+      "alternatives": [
+        "core:breaker-3p",
+        "core:cable-2pair-shielded",
+        "core:contactor-3p-1no",
+        "core:junction-box-8",
+        "core:limit-switch-2wire",
+        "core:motor-3ph",
+        "core:overload-3p-1nc",
+        "core:plc-compact",
+        "core:prox-pnp-3wire",
+        "core:psu-24vdc",
+        "core:pushbutton-nc",
+        "core:supply-480v-3ph",
+        "core:terminal-block-8",
+        "eval:extra-0",
+        "eval:extra-1",
+        "eval:extra-10",
+        "eval:extra-11",
+        "eval:extra-12",
+        "eval:extra-13",
+        "eval:extra-14",
+        "eval:extra-15",
+        "eval:extra-16",
+        "eval:extra-17",
+        "eval:extra-18",
+        "eval:extra-19",
+        "eval:extra-2",
+        "eval:extra-20",
+        "eval:extra-21",
+        "eval:extra-22",
+        "eval:extra-23",
+        "eval:extra-24",
+        "eval:extra-25",
+        "eval:extra-26",
+        "eval:extra-27",
+        "eval:extra-28",
+        "eval:extra-29",
+        "eval:extra-3",
+        "eval:extra-30",
+        "eval:extra-31",
+        "eval:extra-32",
+        "eval:extra-33",
+        "eval:extra-34",
+        "eval:extra-35",
+        "eval:extra-36",
+        "eval:extra-37",
+        "eval:extra-38",
+        "eval:extra-39",
+        "eval:extra-4",
+        "eval:extra-40",
+        "eval:extra-41",
+        "eval:extra-42",
+        "eval:extra-43",
+        "eval:extra-44",
+        "eval:extra-45",
+        "eval:extra-46",
+        "eval:extra-47",
+        "eval:extra-48",
+        "eval:extra-49",
+        "eval:extra-5",
+        "eval:extra-50",
+        "eval:extra-6",
+        "eval:extra-7",
+        "eval:extra-8",
+        "eval:extra-9",
+        "eval:node"
+      ]
+    }
+  ]
+}

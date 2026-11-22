@@ -1,7 +1,9 @@
+import { motorDiagnostics } from "./motor-starter-diagnostics.js";
+import { withSkippedChecks } from "../../compiler/src/validation-skips.js";
 import { spawn } from "node:child_process";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { createAgentTools, type AgentTools } from "@thermite/agent-tools";
@@ -142,7 +144,7 @@ const unreadableRequestReport = [
   "    {",
   '      "code": "E001",',
   '      "severity": "error",',
-  '      "message": "Unable to read agent request \\"<request>\\" (request-read/ENOENT).",',
+  '      "message": "Unable to read agent request \\"<request>\\" (file name \\"not-present.json\\"; absolute directory withheld) (request-read/ENOENT).",',
   '      "file": "<request>",',
   '      "line": 1,',
   '      "column": 1,',
@@ -199,10 +201,10 @@ const invokeInProcess: Invoke = async (args, input, options = {}) => {
   return { exitCode, stdout, stderr };
 };
 
-const invokeSubprocess: Invoke = async (args, input) =>
+const invokeSubprocess: Invoke = async (args, input, options = {}) =>
   new Promise((resolveInvocation, rejectInvocation) => {
     const child = spawn(process.execPath, [cliBin, ...args], {
-      cwd: repositoryRoot,
+      cwd: options.cwd ?? repositoryRoot,
       stdio: ["pipe", "pipe", "pipe"],
       windowsHide: true,
     });
@@ -249,6 +251,90 @@ async function writeJsonRequest(
   const path = join(root, name);
   await writeFile(path, JSON.stringify(value, undefined, 2) + "\n", "utf8");
   return path;
+}
+
+/**
+ * E001 request naming: the shown name is the file that native path rules
+ * read, and no shown candidate spells an absolute path under any host's rules.
+ */
+async function exerciseRequestNaming(
+  invoke: Invoke,
+  root: string,
+): Promise<void> {
+  await mkdir(join(root, "requests"));
+  await mkdir(join(root, "other"));
+  await writeJsonRequest(root, "requests/present.json", {
+    format: "agent-tool-request/0.1",
+    project: fixture("valid project"),
+  });
+  const run = (input: string, cwd = root) =>
+    invoke(["agent", "validate", "--input", input], undefined, { cwd });
+  const message = async (input: string, cwd = root): Promise<string> => {
+    const invocation = await run(input, cwd);
+    expect(invocation.exitCode, input).toBe(2);
+    expect(invocation.stdout).toBe("");
+    expect(invocation.stderr).not.toContain(root);
+    const report = JSON.parse(invocation.stderr) as {
+      diagnostics: { code: string; file: string; message: string }[];
+    };
+    expect(report.diagnostics.map(({ code, file }) => [code, file])).toEqual([
+      ["E001", "<request>"],
+    ]);
+    return report.diagnostics[0]!.message;
+  };
+  const withheld =
+    'Unable to read agent request "<request>" (request-read/ENOENT).';
+
+  const present = await run("requests/present.json");
+  expect(present.exitCode).toBe(0);
+  if (sep === "\\") {
+    // Native separator: both spellings name the same file.
+    expect(await run("requests\\present.json")).toEqual(present);
+    expect(await message("C:missing.json")).toBe(withheld);
+    return;
+  }
+
+  // POSIX: a backslash is part of the file name, not a separator.
+  expect(await message("requests\\present.json")).toBe(
+    'Unable to read agent request "requests\\\\present.json" (request-read/ENOENT).',
+  );
+  expect(await message(join(root, "requests", "a\\b.json"))).toBe(
+    'Unable to read agent request "requests/a\\\\b.json" (request-read/ENOENT).',
+  );
+  expect(
+    await message(join(root, "requests", "x\\y.json"), join(root, "other")),
+  ).toBe(
+    'Unable to read agent request "<request>" (file name "x\\\\y.json"; absolute directory withheld) (request-read/ENOENT).',
+  );
+
+  // A Windows absolute spelling is an ordinary POSIX name, but it is withheld
+  // wherever it would be shown: as given, below cwd, or as the file name.
+  for (const name of [
+    "C:\\Users\\alice\\request.json",
+    "\\\\server\\share\\alice\\request.json",
+    "\\Users\\alice\\request.json",
+  ]) {
+    expect(await message(name), name).toBe(withheld);
+    expect(await message(`requests/${name}`), name).toBe(withheld);
+    expect(await message(join(root, name)), name).toBe(withheld);
+    expect(await message(join(root, "requests", name)), name).toBe(withheld);
+    expect(await message(join(root, name), join(root, "other")), name).toBe(
+      withheld,
+    );
+  }
+  // A foreign spelling in a directory name withholds the directory but keeps
+  // an ordinary file name.
+  expect(await message(join(root, "C:\\Users", "request.json"))).toBe(
+    'Unable to read agent request "<request>" (file name "request.json"; absolute directory withheld) (request-read/ENOENT).',
+  );
+  expect(
+    await message(
+      join(root, "\\\\server\\share", "request.json"),
+      join(root, "other"),
+    ),
+  ).toBe(
+    'Unable to read agent request "<request>" (file name "request.json"; absolute directory withheld) (request-read/ENOENT).',
+  );
 }
 
 async function exerciseTransportContract(
@@ -362,6 +448,7 @@ async function exerciseTransportContract(
         code: "E001",
         message: "Agent validate tool failure (compile/E001).",
       },
+      { code: "I208", severity: "info" },
     ],
     error: null,
   });
@@ -407,7 +494,7 @@ async function exerciseTransportContract(
 
 describe("M7 Task 7 thermite agent command namespace", () => {
   it("serializes the exact E032 diagnostics through the agent report transport", async () => {
-    const diagnostics = [
+    const diagnostics = withSkippedChecks("project loading/structural", [
       {
         code: "E032",
         severity: "error",
@@ -421,13 +508,13 @@ describe("M7 Task 7 thermite agent command namespace", () => {
         code: "E032",
         severity: "error",
         message:
-          'Shipped library "core" does not provide version "9.9.9"; available version is "0.1.0".',
+          'Shipped library "core" does not provide version "9.9.9"; available versions are "0.1.0", "0.2.0".',
         file: "system.json",
         line: 1,
         column: 162,
         jsonPointer: "/libraries/1/version",
       },
-    ];
+    ]);
     const invocation = await invokeInProcess(
       ["agent", "validate", "--input", "-"],
       JSON.stringify({
@@ -557,7 +644,8 @@ describe("M7 Task 7 thermite agent command namespace", () => {
       expect(JSON.parse(invocation.stderr)).toEqual({
         format: "agent-tool-report/0.1",
         tool: entry.tool,
-        diagnostics: [],
+        diagnostics:
+          entry.tool === "apply-source-patch" ? [] : motorDiagnostics,
         error: null,
       });
       expect(invocation.stdout.endsWith("\n")).toBe(true);
@@ -569,6 +657,52 @@ describe("M7 Task 7 thermite agent command namespace", () => {
 
   it("covers success, warnings, expected/tool failures, parsing, I/O, usage, and help in process", async () => {
     await exerciseTransportContract(invokeInProcess, await temporaryRoot());
+  });
+
+  it("names the unreadable request path without disclosing host directories", async () => {
+    const root = await temporaryRoot();
+    const nested = join(root, "requests");
+    await mkdir(nested);
+    const message = async (
+      input: string,
+      cwd: string,
+      stdin?: InputBytes,
+    ): Promise<string> => {
+      const invocation = await invokeInProcess(
+        ["agent", "validate", "--input", input],
+        stdin,
+        { cwd },
+      );
+      expect(invocation.exitCode).toBe(2);
+      expect(invocation.stdout).toBe("");
+      const report = JSON.parse(invocation.stderr) as {
+        diagnostics: { code: string; file: string; message: string }[];
+      };
+      expect(report.diagnostics).toHaveLength(1);
+      expect(report.diagnostics[0]).toMatchObject({
+        code: "E001",
+        file: "<request>",
+      });
+      expect(invocation.stderr).not.toContain(root);
+      return report.diagnostics[0]!.message;
+    };
+
+    expect(await message("requests/missing.json", root)).toBe(
+      'Unable to read agent request "requests/missing.json" (request-read/ENOENT).',
+    );
+    expect(await message(join(nested, "missing.json"), root)).toBe(
+      'Unable to read agent request "requests/missing.json" (request-read/ENOENT).',
+    );
+    expect(await message(join(root, "outside.json"), nested)).toBe(
+      'Unable to read agent request "<request>" (file name "outside.json"; absolute directory withheld) (request-read/ENOENT).',
+    );
+    expect(await message("requests", root)).toBe(
+      'Unable to read agent request "requests" (request-read/EISDIR).',
+    );
+  });
+
+  it("names exactly the request file that native path rules read in process", async () => {
+    await exerciseRequestNaming(invokeInProcess, await temporaryRoot());
   });
 
   it("returns frozen Layer-1 bytes for 20,000-level valid JSON in process", async () => {
@@ -704,6 +838,7 @@ describe("M7 Task 7 thermite agent command namespace", () => {
   }) => {
     try {
       await exerciseTransportContract(invokeSubprocess, await temporaryRoot());
+      await exerciseRequestNaming(invokeSubprocess, await temporaryRoot());
     } catch (error) {
       if (isChildProcessDenied(error)) {
         skip("The execution sandbox denied agent CLI subprocess creation.");

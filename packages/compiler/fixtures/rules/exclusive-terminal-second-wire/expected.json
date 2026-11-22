@@ -22,5 +22,14 @@
         "note": "Earlier permitted direct assignment from wire \u0022W-FIRST\u0022 lands here."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E201 topology gate: skipped E300, E301, E302, W902, W303, I304, I305 on 1 net: [\"FIRST.T, SECOND.T, TARGET.E [net:sha256:8db87843938ddcb1105ed9a0b1489ebf4e67a234c8c0325878ffccee913cdbf5]\"]."
   }
 ]

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:pilot-light",
+      "description": "Provisional generic two-terminal pilot light; supply voltage, AC/DC class and polarity must be selected by the author.",
+      "terminals": {
+        "X1": {
+          "role": "lamp_supply",
+          "required": true
+        },
+        "X2": {
+          "role": "lamp_return",
+          "required": true
+        }
+      },
+      "functions": {
+        "lamp": {
+          "kind": "load",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:lamp",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Lamp pair X1/X2; both ends are required for the sole indication load. Optional: none in this interface. Unmodeled: additional colors, test/dimmer connections, drivers and bonding. Author must select hardware and add voltage, AC/DC class, polarity and applicable ratings; none are inferred from X1/X2. No manufacturer pinout is asserted."
+      }
+    }
+  ]
+}

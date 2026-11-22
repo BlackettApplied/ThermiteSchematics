@@ -59,8 +59,14 @@ try {
   checkValid(await lockProject(copyProject));
   const baseline = await compileProject(isolated ? copyProject : project);
   checkValid(baseline);
-  assert.equal(baseline.diagnostics.length, 3);
-  assert(baseline.diagnostics.every((d) => d.code === "W904"));
+  assert.equal(baseline.diagnostics.length, 4);
+  assert.equal(baseline.diagnostics.filter((d) => d.code === "I305").length, 1);
+  assert(
+    baseline.diagnostics
+      .find((d) => d.code === "I305")
+      .message.includes("6 nets:"),
+  );
+  assert.equal(baseline.diagnostics.filter((d) => d.code === "W904").length, 3);
   const type = baseline.ir.deviceTypes.find(
     (t) => t.id === device(baseline.ir, "XS").typeId,
   );

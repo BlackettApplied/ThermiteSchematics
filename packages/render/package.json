@@ -5,20 +5,31 @@
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
-    "node": "^22.12.0 || >=24"
+    "bun": ">=1.4.2"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./internal/printable-font": {
+      "types": "./dist/printable-font.d.ts",
+      "import": "./dist/printable-font.js"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "dependencies": {
     "@thermite/compiler": "0.2.0",
     "@thermite/query": "0.2.0",
-    "elkjs": "0.12.0"
+    "elkjs": "0.12.0",
+    "fontkit": "2.0.4",
+    "pako": "0.2.9",
+    "@thermite/schema": "0.2.0"
+  },
+  "imports": {
+    "#title-schema/*": "@thermite/schema/internal/title-data/*"
   }
 }

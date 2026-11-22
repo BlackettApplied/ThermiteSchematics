@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic assembly note bounds"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "assembly-note-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

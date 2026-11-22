@@ -2,7 +2,48 @@
   "diagnostics": [],
   "error": {
     "code": "R004",
-    "message": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.7\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal7\\\"]\"] and [\"wire\",\"e84a9629-373c-4946-8b48-184b7464d474\"] form an ambiguous intersection.",
+    "message": "Invalid layout: edges boundary segment (JB1.X1.7 / terminal7 → JB1.X1.7 / terminal7) and W-FLD-001 (TB1.3 / terminal3 → PLC1.X1.0 / di0) form an ambiguous intersection.",
+    "details": {
+      "originalMessage": "Invalid layout: edges [\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.7\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal7\\\"]\"] and [\"wire\",\"e84a9629-373c-4946-8b48-184b7464d474\"] form an ambiguous intersection.",
+      "conductors": [
+        {
+          "id": "[\"wire\",\"e84a9629-373c-4946-8b48-184b7464d474\"]",
+          "designation": "W-FLD-001",
+          "terminals": [
+            {
+              "deviceUid": "10418711-330f-4482-8dab-a274923215cb",
+              "terminalKey": "3",
+              "designation": "TB1",
+              "functionKeys": ["terminal3"]
+            },
+            {
+              "deviceUid": "81148ad3-8c03-4c8d-8c70-6b33bb3b0266",
+              "terminalKey": "X1.0",
+              "designation": "PLC1",
+              "functionKeys": ["di0"]
+            }
+          ]
+        },
+        {
+          "id": "[\"boundary-segment\",\"[\\\"junction\\\",\\\"net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"X1.7\\\"]\",\"[\\\"function\\\",\\\"c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88\\\",\\\"terminal7\\\"]\"]",
+          "designation": "boundary segment",
+          "terminals": [
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.7",
+              "designation": "JB1",
+              "functionKeys": ["terminal7"]
+            },
+            {
+              "deviceUid": "c93a0ba9-65f4-4ffa-a0a1-1fde4a511e88",
+              "terminalKey": "X1.7",
+              "designation": "JB1",
+              "functionKeys": ["terminal7"]
+            }
+          ]
+        }
+      ]
+    },
     "family": "control",
     "netId": "net:sha256:1fcf84453b5d3f3e8329a721d27507407fe5d2459f887ee0eb251aca0370d0c9",
     "root": "LS1"

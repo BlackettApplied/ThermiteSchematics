@@ -10,8 +10,32 @@ import { renderSchematicPacket } from "@thermite/render";
 const project = dirname(fileURLToPath(import.meta.url));
 const compiled = await compileProject(project);
 assert.equal(compiled.ok, true, JSON.stringify(compiled.diagnostics));
-assert.equal(compiled.diagnostics.length, 6);
-assert(compiled.diagnostics.every((d) => d.code === "W904"));
+assert.deepEqual(
+  compiled.diagnostics.filter((d) => d.code === "I304"),
+  [
+    {
+      file: "system.json",
+      line: 3,
+      column: 14,
+      jsonPointer: "/project",
+      code: "I304",
+      severity: "info",
+      message:
+        'Voltage compatibility is unassessed on rated nets without voltage facts in potentials (2 nets: ["IN.8, XP.C.P1, XP.M.P1 [net:sha256:70a20a287274644271ece8da80a27a4e4f19f1fb2265c42d946d2ee8e199b5b1]", "IN.9, XP.C.P2, XP.M.P2 [net:sha256:f49ee6d7d6b185d70a3c6640e63173ffd04a3f35d1376934aca06ad4831e7010]"]). Ratings describe equipment capability; potentials declare net intent.',
+    },
+  ],
+);
+assert.equal(compiled.diagnostics.length, 8);
+const singleRated = compiled.diagnostics.filter((d) => d.code === "I305");
+assert.equal(singleRated.length, 1);
+assert.equal(singleRated[0].severity, "info");
+assert(singleRated[0].message.includes("(10 nets:"));
+assert.deepEqual(
+  compiled.diagnostics
+    .filter((d) => d.code !== "I304" && d.code !== "I305")
+    .map((d) => d.code),
+  ["W904", "W904", "W904", "W904", "W904", "W904"],
+);
 const device = (ir, tag) => ir.devices.find((d) => d.designation === tag);
 const type = (ir, tag) =>
   ir.deviceTypes.find((t) => t.id === device(ir, tag).typeId);

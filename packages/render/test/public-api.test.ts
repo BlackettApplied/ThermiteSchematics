@@ -18,6 +18,20 @@ function TypeScriptSources(directory: string): string[] {
 }
 
 describe("render public package boundaries", () => {
+  it("emits packet modules without empty runtime imports", () => {
+    const directory = join(packageRoot, "dist", "packet");
+    const files = readdirSync(directory).filter((name) => name.endsWith(".js"));
+    expect(files.length).toBeGreaterThan(0);
+    const emptyImports = files
+      .sort()
+      .filter((name) =>
+        /\bimport\s*\{\s*\}\s*from\s*["']/u.test(
+          readFileSync(join(directory, name), "utf8"),
+        ),
+      );
+    expect(emptyImports).toEqual([]);
+  });
+
   it("uses the compiler comparator through its public export and no query deep import", () => {
     expect(compiler.compareConductiveElementId).toBeTypeOf("function");
     const sourceFiles = TypeScriptSources(join(packageRoot, "src"));
@@ -36,6 +50,7 @@ describe("render public package boundaries", () => {
     expect(Object.keys(query).sort()).toEqual([
       "InvalidElectricalIrError",
       "REPORT_KINDS",
+      "auditContinuity",
       "buildCableSchedule",
       "buildCommunicationInventory",
       "buildConnectorAssemblyInventory",
@@ -43,7 +58,12 @@ describe("render public package boundaries", () => {
       "createProjectSnapshot",
       "createQueryEngine",
       "documentationCsv",
+      "formatTerminalSet",
       "parseProjectSnapshot",
+      "printedPort",
+      "printedPortEndpoint",
+      "relationPrintIdentity",
+      "resolveDeviceFilter",
       "reviewProject",
       "serializeQueryResult",
     ]);
@@ -57,15 +77,31 @@ describe("render public package boundaries", () => {
     }
   });
 
-  it("exports only package roots for render and query", () => {
-    for (const path of [
-      join(packageRoot, "package.json"),
-      join(repositoryRoot, "packages", "query", "package.json"),
+  it("exports the package roots and the CLI's internal render font entry", () => {
+    const root = {
+      types: "./dist/index.d.ts",
+      import: "./dist/index.js",
+    };
+    for (const { path, expected } of [
+      {
+        path: join(packageRoot, "package.json"),
+        expected: {
+          ".": root,
+          "./internal/printable-font": {
+            types: "./dist/printable-font.d.ts",
+            import: "./dist/printable-font.js",
+          },
+        },
+      },
+      {
+        path: join(repositoryRoot, "packages", "query", "package.json"),
+        expected: { ".": root },
+      },
     ]) {
       const manifest = JSON.parse(readFileSync(path, "utf8")) as {
         exports: Record<string, unknown>;
       };
-      expect(Object.keys(manifest.exports)).toEqual(["."]);
+      expect(manifest.exports).toEqual(expected);
     }
   });
 });

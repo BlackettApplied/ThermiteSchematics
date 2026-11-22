@@ -1,0 +1,24 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic continuity and guards"
+  },
+  "sources": [
+    "devices/*.json",
+    "connections/*.json",
+    "cables/*.json",
+    "potentials/*.json"
+  ],
+  "presentation": "presentation.json",
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.1.0"
+    },
+    {
+      "name": "eval",
+      "version": "1.0.0",
+      "path": "library"
+    }
+  ]
+}

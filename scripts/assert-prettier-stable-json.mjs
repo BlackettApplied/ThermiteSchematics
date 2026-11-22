@@ -1,10 +1,10 @@
 import { lstat, readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { join, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 import * as prettier from "prettier";
 
-import { REPOSITORY_ROOT } from "./release-common.mjs";
+const REPOSITORY_ROOT = resolve(fileURLToPath(new URL("..", import.meta.url)));
 
 export const GOVERNED_COMMITTED_JSON_PATHS = Object.freeze([
   "examples/motor-starter/presentation.json",
@@ -19,20 +19,17 @@ export const GOVERNED_COMMITTED_JSON_PATHS = Object.freeze([
   "packages/cli/test/goldens/m8-r005/project-empty.stderr.json",
   "packages/cli/test/goldens/m8-r005/view-single-line.stderr.json",
   "scripts/m8-golden-migration.json",
-  "scripts/release-first-party-files.json",
-  "scripts/release-third-party-source-files.json",
-  "scripts/release-third-party-stage-files.json",
 ]);
 
 export async function assertPrettierStableCommittedJson(
   repositoryRoot = REPOSITORY_ROOT,
 ) {
   if (
-    GOVERNED_COMMITTED_JSON_PATHS.length !== 15 ||
-    new Set(GOVERNED_COMMITTED_JSON_PATHS).size !== 15
+    GOVERNED_COMMITTED_JSON_PATHS.length !== 12 ||
+    new Set(GOVERNED_COMMITTED_JSON_PATHS).size !== 12
   ) {
     throw new Error(
-      "The M8 governed committed-JSON path set must contain exactly 15 unique paths.",
+      "The M8 governed committed-JSON path set must contain exactly 12 unique paths.",
     );
   }
   for (const path of GOVERNED_COMMITTED_JSON_PATHS) {

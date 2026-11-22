@@ -34,5 +34,14 @@
         "note": "Terminal \"VOLTAGE.T\" is rated for nominal voltage 48 V here."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E301 voltage-type gate: skipped E302 on 1 terminal: [\"DUAL.T\"]."
   }
 ]

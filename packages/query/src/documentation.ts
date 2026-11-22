@@ -1,7 +1,25 @@
-import { buildCommunicationInventory } from "./communication.js";
-import { buildConnectorAssemblyInventory } from "./connector-assemblies.js";
+import { reportTypeProjection } from "./print-projection.js";
+import "@thermite/schema";
+import "./communication.js";
+import "./connector-assemblies.js";
 import type { ElectricalIr, TerminalId } from "@thermite/compiler";
-import { buildCableSchedule } from "./cable-schedule.js";
+import {
+  buildCableSchedule,
+  type EndpointSheetZones,
+} from "./cable-schedule.js";
+import {
+  resolveDeviceFilter,
+  type DeviceFilter,
+  type DeviceFilterSelection,
+} from "./device-filter.js";
+import { documentationIoPorts } from "./documentation/io-ports.js";
+import { documentationAssemblies } from "./documentation/assemblies.js";
+import { documentationNetwork } from "./documentation/network.js";
+import { documentationBom } from "./documentation/bom.js";
+import { documentationWires } from "./documentation/wires.js";
+import { documentationCables } from "./documentation/cables.js";
+import { documentationTerminals } from "./documentation/terminals.js";
+import { documentationIo } from "./documentation/io.js";
 
 export const REPORT_KINDS = [
   "bom",
@@ -9,6 +27,7 @@ export const REPORT_KINDS = [
   "cables",
   "terminals",
   "io",
+  "io-ports",
   "network",
   "assemblies",
 ] as const;
@@ -17,6 +36,27 @@ export interface DocumentationRequest {
   readonly format: "documentation-view-request/0.1";
   readonly kind: ReportKind;
   readonly device?: string;
+  readonly filter?: DeviceFilter;
+}
+/** Optional packet-owned locations. Keys are wire/jumper UIDs or cable UID then core ID. */
+export interface ScheduleReferences {
+  readonly conductors?: ReadonlyMap<string, EndpointSheetZones>;
+  readonly cableCores?: ReadonlyMap<
+    string,
+    ReadonlyMap<string, EndpointSheetZones>
+  >;
+}
+/** CSV keeps unabridged type text/full headers; render callers default to print. */
+export interface DocumentationOptions {
+  readonly output?: "print" | "csv";
+}
+export interface DocumentationSelection extends DeviceFilterSelection {
+  readonly format: "documentation-selection/0.1";
+  readonly totalRows: number;
+  readonly retainedRows: number;
+  readonly omittedRowKeys: readonly string[];
+  readonly boundaryDeviceUids: readonly string[];
+  readonly unscopedRowKeys: readonly string[];
 }
 export interface DocumentationTable {
   readonly kind: ReportKind | "index" | "references";
@@ -29,20 +69,108 @@ export interface DocumentationTable {
     readonly deviceUids: readonly string[];
   }[];
   readonly notes: readonly string[];
+  readonly selection?: DocumentationSelection;
 }
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
+// Numeric-aware designation order using code points, independent of the host locale.
+const compareDesignation = (left: string, right: string): number => {
+  const a = left.match(/\d+|\D+/gu) ?? [];
+  const b = right.match(/\d+|\D+/gu) ?? [];
+  for (let i = 0; i < Math.min(a.length, b.length); i++) {
+    const x = a[i]!,
+      y = b[i]!;
+    if (x === y) continue;
+    if (/^\d+$/u.test(x) && /^\d+$/u.test(y)) {
+      const nx = x.replace(/^0+(?=\d)/u, ""),
+        ny = y.replace(/^0+(?=\d)/u, "");
+      if (nx.length !== ny.length) return nx.length - ny.length;
+      if (nx !== ny) return compare(nx, ny);
+    } else return compare(x, y);
+  }
+  return a.length - b.length || compare(left, right);
+};
 const tid = (t: TerminalId) => JSON.stringify([t.deviceUid, t.terminalKey]);
+// Render-safe report text only. Keep authored source, IR and JSON query metadata intact.
+const reportText = (value: string) =>
+  value.replace(/[\u0000-\u0008\u000b-\u001f\u007f-\u009f]/gu, " ");
+// Only absence is canonicalized; keep every character of a nonblank description.
+const reportDescription = (value: string | undefined) =>
+  value !== undefined && reportText(value).trim() ? value : undefined;
 /** These are physical connection reports. Device functions never imply continuity. */
 export function buildDocumentation(
   ir: Readonly<ElectricalIr>,
   request: DocumentationRequest,
+  references?: ScheduleReferences,
+  options?: DocumentationOptions,
+): DocumentationTable {
+  const full = buildDocumentationTable(
+    ir,
+    request,
+    undefined,
+    references,
+    options,
+  );
+  if (request.filter === undefined) return full;
+  if (request.device !== undefined)
+    throw new Error(
+      "Use either device or filter in a documentation request, not both.",
+    );
+  const selection = resolveDeviceFilter(ir, request.filter);
+  const selected = new Set(selection.deviceUids);
+  const filtered = buildDocumentationTable(
+    ir,
+    request,
+    selected,
+    references,
+    options,
+  );
+  const keys = new Set(filtered.rows.map((r) => r.key));
+  const metadata: DocumentationSelection = {
+    ...selection,
+    format: "documentation-selection/0.1",
+    totalRows: full.rows.length,
+    retainedRows: filtered.rows.length,
+    omittedRowKeys: full.rows.filter((r) => !keys.has(r.key)).map((r) => r.key),
+    boundaryDeviceUids: [
+      ...new Set(
+        filtered.rows
+          .flatMap((r) => r.deviceUids)
+          .filter((id) => !selected.has(id)),
+      ),
+    ].sort(),
+    unscopedRowKeys: filtered.rows
+      .filter((r) => !r.deviceUids.length)
+      .map((r) => r.key),
+  };
+  return {
+    ...filtered,
+    title: `${filtered.title} (filtered)`,
+    selection: metadata,
+    notes: [
+      ...filtered.notes,
+      `Filtered report: ${selected.size} of ${ir.devices.length} devices selected; ${filtered.rows.length} of ${full.rows.length} source rows retained.`,
+      "Device-owned rows follow the selection; complete connection and cable rows retain peer details. Records without device endpoints remain included.",
+      ...(request.kind === "bom"
+        ? [
+            "Filtered BOM quantities count selected device instances; retained cables remain whole.",
+          ]
+        : []),
+    ],
+  };
+}
+function buildDocumentationTable(
+  ir: Readonly<ElectricalIr>,
+  request: DocumentationRequest,
+  selection?: ReadonlySet<string>,
+  references?: ScheduleReferences,
+  options?: DocumentationOptions,
 ): DocumentationTable {
   if (
     !request ||
     request.format !== "documentation-view-request/0.1" ||
     !REPORT_KINDS.includes(request.kind) ||
     Object.keys(request).some(
-      (k) => !["format", "kind", "device"].includes(k),
+      (k) => !["format", "kind", "device", "filter"].includes(k),
     ) ||
     (request.device !== undefined &&
       (typeof request.device !== "string" || !request.device.trim()))
@@ -50,10 +178,12 @@ export function buildDocumentation(
     throw new Error("Invalid documentation request.");
   if (
     request.device !== undefined &&
-    !["terminals", "io"].includes(request.kind)
+    !["terminals", "io", "io-ports"].includes(request.kind)
   )
     throw new Error("Only terminal and I/O reports accept a device selector.");
   const devices = new Map(ir.devices.map((d) => [d.uid, d]));
+  const incident = (uids: readonly string[]) =>
+    !selection || !uids.length || uids.some((uid) => selection.has(uid));
   const label = (t: TerminalId) =>
     `${devices.get(t.deviceUid)!.designation}.${t.terminalKey}`;
   const types = new Map(ir.deviceTypes.map((t) => [t.id, t]));
@@ -78,12 +208,21 @@ export function buildDocumentation(
   };
   for (const w of [...ir.wires, ...ir.jumpers]) {
     const [a, b] = w.endpoints.map((e) => e.terminal);
-    add(a!, b!, w.designation ?? `Jumper ${w.uid}`);
-    add(b!, a!, w.designation ?? `Jumper ${w.uid}`);
+    add(a!, b!, w.designation ?? "Jumper");
+    add(b!, a!, w.designation ?? "Jumper");
   }
   const cables = [...ir.cables]
     .sort((a, b) => compare(a.designation, b.designation))
-    .map((c) => buildCableSchedule(ir, c.uid));
+    .map((c) =>
+      buildCableSchedule(ir, c.uid, references?.cableCores?.get(c.uid)),
+    )
+    .filter((c) =>
+      incident(
+        c.cores.flatMap((k) =>
+          k.endpoints.flatMap((e) => (e ? [e.terminal.deviceUid] : [])),
+        ),
+      ),
+    );
   for (const c of cables)
     for (const core of c.cores) {
       const [a, b] = core.endpoints.map((e) =>
@@ -102,7 +241,7 @@ export function buildDocumentation(
   );
   const selected =
     request.device === undefined
-      ? orderedDevices
+      ? orderedDevices.filter((d) => !selection || selection.has(d.uid))
       : orderedDevices.filter(
           (d) => d.uid === request.device || d.designation === request.device,
         );
@@ -110,6 +249,9 @@ export function buildDocumentation(
     throw new Error(
       `Device ${JSON.stringify(request.device)} does not resolve uniquely.`,
     );
+  const { describe: typeDescription, note: typeNote } = reportTypeProjection(
+    options?.output,
+  );
   const rows: { key: string; cells: string[]; deviceUids: string[] }[] = [];
   const table = (
     title: string,
@@ -121,417 +263,43 @@ export function buildDocumentation(
     title,
     columns,
     widths,
-    rows,
+    rows: rows.map((row) => ({ ...row, cells: row.cells.map(reportText) })),
     notes,
   });
-  if (request.kind === "assemblies") {
-    const inventory = buildConnectorAssemblyInventory(ir);
-    for (const relation of inventory.assemblies) {
-      const a = relation.assembly,
-        from = devices.get(relation.fromDeviceUid)!,
-        to = devices.get(relation.toDeviceUid)!;
-      rows.push({
-        key: relation.uid,
-        deviceUids: [from.uid, to.uid],
-        cells: [
-          relation.designation ?? relation.uid,
-          [
-            a.kind,
-            a.cable?.specification,
-            a.cable?.manufacturer,
-            a.cable?.orderNumber,
-            a.cable?.lengthM === undefined ? undefined : `${a.cable.lengthM} m`,
-            a.cable?.route,
-            relation.description,
-          ]
-            .filter(Boolean)
-            .join("\n"),
-          `${from.designation}.${a.fromPort}\n${from.location ?? "Unspecified"}`,
-          `${to.designation}.${a.toPort}\n${to.location ?? "Unspecified"}`,
-          `${a.status ?? "Unspecified"}\nPin mapping: ${a.pinMapping.status}\n${a.pinMapping.reason}`,
-        ],
-      });
-    }
-    for (const p of inventory.ports.filter((p) => p.assemblyUid === null))
-      rows.push({
-        key: JSON.stringify([p.deviceUid, p.key]),
-        deviceUids: [p.deviceUid],
-        cells: [
-          "--",
-          p.definition.connector,
-          `${p.designation}.${p.key}\n${p.location}`,
-          "Unoccupied",
-          "No assembly declared",
-        ],
-      });
-    return table(
-      "Connector assemblies and unoccupied ports",
-      [
-        "Assembly / cable",
-        "Specification / description",
-        "End A / location",
-        "End B / location",
-        "Status / pin mapping",
-      ],
-      [13, 25, 19, 19, 24],
-      [
-        "Assembly links reserve connector ports only; they do not create physical conductors or join electrical nets.",
-        "Library pin descriptions do not supply a cable's missing pin mapping. Connector compatibility and installation remain engineering review items.",
-      ],
-    );
-  }
-  if (request.kind === "network") {
-    const inventory = buildCommunicationInventory(ir);
-    for (const link of inventory.links) {
-      const c = link.connection,
-        a = devices.get(link.fromDeviceUid)!,
-        b = devices.get(link.toDeviceUid)!;
-      rows.push({
-        key: link.uid,
-        cells: [
-          link.designation ?? link.uid,
-          [
-            c.protocol,
-            c.cable?.specification,
-            c.cable?.lengthM === undefined ? undefined : `${c.cable.lengthM} m`,
-            c.cable?.route,
-          ]
-            .filter(Boolean)
-            .join("\n"),
-          `${a.designation}.${c.fromPort}\n${a.location ?? "Unspecified"}`,
-          `${b.designation}.${c.toPort}\n${b.location ?? "Unspecified"}`,
-          c.status ?? "Unspecified",
-        ],
-        deviceUids: [a.uid, b.uid],
-      });
-    }
-    for (const port of inventory.ports.filter((p) => p.linkUid === null))
-      rows.push({
-        key: JSON.stringify([port.deviceUid, port.key]),
-        cells: [
-          "--",
-          port.definition.medium,
-          `${port.designation}.${port.key}\n${port.location}`,
-          "Unconnected",
-          "Unspecified",
-        ],
-        deviceUids: [port.deviceUid],
-      });
-    return table(
-      "Communication links and unconnected ports",
-      [
-        "Link",
-        "Protocol / medium",
-        "End A / location",
-        "End B / location",
-        "Status",
-      ],
-      [14, 18, 27, 27, 14],
-      [
-        "Port-level connections only; no pin wiring, electrical nets, or automatic protocol compatibility.",
-        "Unconnected ports are not inferred spare. Planned links require commissioning verification.",
-      ],
-    );
-  }
-  if (request.kind === "bom") {
-    const groups = new Map<string, typeof orderedDevices>();
-    for (const device of orderedDevices) {
-      const key = JSON.stringify([device.typeId, device.location ?? ""]);
-      const group = groups.get(key) ?? [];
-      group.push(device);
-      groups.set(key, group);
-    }
-    for (const [key, group] of [...groups].sort(([a], [b]) => compare(a, b))) {
-      const d = group[0]!,
-        t = types.get(d.typeId)!;
-      rows.push({
-        key,
-        cells: [
-          String(group.length),
-          group.map((d) => d.designation).join(", "),
-          d.location ?? "Unspecified",
-          t.catalog?.manufacturer ?? "Unspecified",
-          t.catalog?.orderNumber ?? "Unspecified",
-          t.description ?? t.id,
-        ],
-        deviceUids: group.map((d) => d.uid),
-      });
-    }
-    for (const cable of ir.cables)
-      rows.push({
-        key: cable.uid,
-        cells: [
-          "1",
-          cable.designation,
-          [cable.fromLocation, cable.toLocation].filter(Boolean).join(" to ") ||
-            "Unspecified",
-          "Unspecified",
-          "Unspecified",
-          cable.typeId,
-        ],
-        deviceUids: [],
-      });
-    for (const relation of ir.relations.filter(
-      (r) => r.assembly?.kind === "cable",
-    )) {
-      const cable = relation.assembly!.cable!;
-      rows.push({
-        key: relation.uid,
-        deviceUids: [relation.fromDeviceUid, relation.toDeviceUid],
-        cells: [
-          "1",
-          relation.designation ?? relation.uid,
-          [
-            devices.get(relation.fromDeviceUid)!.location,
-            devices.get(relation.toDeviceUid)!.location,
-          ]
-            .filter(Boolean)
-            .join(" to ") || "Unspecified",
-          cable.manufacturer ?? "Unspecified",
-          cable.orderNumber ?? "Unspecified",
-          [
-            cable.specification,
-            cable.lengthM === undefined ? undefined : `${cable.lengthM} m`,
-            "Assembly only; pin mapping unresolved",
-          ]
-            .filter(Boolean)
-            .join("\n"),
-        ],
-      });
-    }
-    return table(
-      "Bill of materials",
-      [
-        "Qty",
-        "Designations",
-        "Location",
-        "Manufacturer",
-        "Order number",
-        "Description / type",
-      ],
-      [0.05, 0.17, 0.16, 0.12, 0.18, 0.32],
-      [
-        "Quantities count authored instances. Cable lengths and unmodeled accessories are not estimated.",
-        "Unspecified order numbers require selection before procurement. Catalog modeling limits remain in the library.",
-      ],
-    );
-  }
-  if (request.kind === "wires") {
-    for (const w of [...ir.wires, ...ir.jumpers].sort((a, b) =>
-      compare(a.designation ?? a.uid, b.designation ?? b.uid),
-    )) {
-      const properties = (
-        "properties" in w ? w.properties : undefined
-      ) as ElectricalIr["wires"][number]["properties"];
-      rows.push({
-        key: w.uid,
-        cells: [
-          [
-            w.designation ?? "Jumper",
-            properties?.label && properties.label !== w.designation
-              ? properties.label
-              : null,
-          ]
-            .filter(Boolean)
-            .join(" / "),
-          label(w.endpoints[0].terminal),
-          label(w.endpoints[1].terminal),
-          [properties?.color, properties?.size].filter(Boolean).join(" / ") ||
-            "Unspecified",
-          "Connected",
-        ],
-        deviceUids: w.endpoints.map((e) => e.terminal.deviceUid),
-      });
-    }
-    for (const c of cables)
-      for (const core of c.cores)
-        rows.push({
-          key: JSON.stringify([c.cableUid, core.id]),
-          cells: [
-            `${c.designation}/${core.id}`,
-            core.endpoints[0]?.display ?? "Unterminated",
-            core.endpoints[1]?.display ?? "Unterminated",
-            [core.color, core.size].filter(Boolean).join(" / "),
-            `${core.usage}; ${core.status}`,
-          ],
-          deviceUids: core.endpoints.flatMap((e) =>
-            e ? [e.terminal.deviceUid] : [],
-          ),
-        });
-    return table(
-      "Wire and core schedule",
-      [
-        "Conductor / label",
-        "End A / first endpoint",
-        "End B / second endpoint",
-        "Color / size",
-        "Assignment",
-      ],
-      [0.15, 0.24, 0.24, 0.18, 0.19],
-      [
-        "Wire endpoints are canonical, not a routing or installation order. Cable end order follows the source where annotated.",
-        "Unterminated and unassigned cores do not imply a de-energized circuit.",
-      ],
-    );
-  }
-  if (request.kind === "cables") {
-    for (const c of cables)
-      rows.push({
-        key: c.cableUid,
-        cells: [
-          c.designation,
-          c.typeId,
-          c.fromLocation ?? "Unspecified",
-          c.toLocation ?? "Unspecified",
-          String(c.cores.length),
-          String(c.counts.connected),
-          String(c.counts.spare),
-          String(c.counts.unassigned),
-          c.shield === true
-            ? "Shielded; bonds not modeled"
-            : c.shield === false
-              ? "Unshielded"
-              : "Unspecified",
-        ],
-        deviceUids: c.cores.flatMap((k) =>
-          k.endpoints.flatMap((e) => (e ? [e.terminal.deviceUid] : [])),
-        ),
-      });
-    return table(
-      "Cable schedule",
-      [
-        "Cable",
-        "Type",
-        "End A location",
-        "End B location",
-        "Cores",
-        "Connected",
-        "Spare",
-        "Unassigned",
-        "Shield construction",
-      ],
-      [0.1, 0.18, 0.15, 0.15, 0.06, 0.08, 0.07, 0.08, 0.13],
-      [
-        "Connected and spare counts may overlap: a spare may be terminated. Construction does not specify shield bonding.",
-      ],
-    );
-  }
-  if (request.kind === "terminals") {
-    for (const d of selected) {
-      const type = types.get(d.typeId)!;
-      // Explicit selector supports any device. Automatic terminal plans use only declared strip types or legacy terminal symbols.
-      if (
-        !request.device &&
-        type.category !== "terminal-strip" &&
-        !["core:terminal-block-8", "core:junction-box-8"].includes(type.id)
-      )
-        continue;
-      const keys = type.terminalOrder ?? type.terminals.map((t) => t.key);
-      for (const key of keys) {
-        const terminal = { deviceUid: d.uid, terminalKey: key },
-          peers = connections.get(tid(terminal)) ?? [];
-        const display = (items: typeof peers) =>
-          items
-            .map(
-              (p) =>
-                `${p.conductor} -> ${p.peer ? label(p.peer) : "Unterminated"}`,
-            )
-            .sort(compare)
-            .join("; ") || "None";
-        const local = peers.filter(
-          (p) =>
-            p.peer &&
-            d.location !== undefined &&
-            devices.get(p.peer.deviceUid)?.location === d.location,
-        );
-        const remote = peers.filter((p) => !local.includes(p));
-        rows.push({
-          key: tid(terminal),
-          cells: [
-            d.designation,
-            d.location ?? "Unspecified",
-            key,
-            type.terminals.find((t) => t.key === key)?.description ?? "",
-            display(local),
-            display(remote),
-            peers.length ? "Terminated" : "Unconnected",
-          ],
-          deviceUids: [
-            d.uid,
-            ...peers.flatMap((p) => (p.peer ? [p.peer.deviceUid] : [])),
-          ],
-        });
-      }
-    }
-    return table(
-      request.device
-        ? `${selected[0]!.designation} terminal plan`
-        : "Terminal plans",
-      [
-        "Device",
-        "Location",
-        "Terminal",
-        "Description",
-        "Same location connections",
-        "Other / unspecified location connections",
-        "State",
-      ],
-      [0.1, 0.13, 0.09, 0.14, 0.23, 0.23, 0.08],
-      [
-        "Lists every terminal, including unconnected terminals and explicit jumpers. Internal continuity is never inferred.",
-        "Rows follow the authored terminalOrder when present. Location groups do not assert installation sides.",
-      ],
-    );
-  }
-  for (const d of selected)
-    for (const f of ir.functions
-      .filter((f) => f.id.deviceUid === d.uid && f.kind === "channel")
-      .sort((a, b) => compare(a.id.functionKey, b.id.functionKey))) {
-      const assignment = d.io?.channels[f.id.functionKey];
-      const members = new Map<string, TerminalId>();
-      for (const t of f.terminals)
-        for (const member of netMembers.get(nets.get(tid(t)) ?? "") ?? [])
-          if (member.deviceUid !== d.uid) members.set(tid(member), member);
-      const peers = [...members.values()].sort((a, b) =>
-        compare(label(a), label(b)),
-      );
-      rows.push({
-        key: JSON.stringify([d.uid, f.id.functionKey]),
-        cells: [
-          d.designation,
-          f.id.functionKey,
-          f.kind === "channel" ? f.direction : "",
-          d.io?.addressSpace ?? "Unspecified",
-          assignment?.address ?? "Unassigned",
-          assignment?.signal ?? "Unspecified",
-          f.terminals.map(label).join(", "),
-          peers.map(label).join("; ") || "None",
-          `${assignment?.usage ?? "Unspecified"}; ${f.terminals.some((t) => (connections.get(tid(t)) ?? []).length) ? "terminated" : "unconnected"}`,
-        ],
-        deviceUids: [d.uid, ...peers.map((t) => t.deviceUid)],
-      });
-    }
-  return table(
-    request.device
-      ? `${selected[0]!.designation} I/O plan`
-      : "PLC I/O schedule",
-    [
-      "Module",
-      "Channel",
-      "Direction",
-      "Address space",
-      "Address",
-      "Signal",
-      "Terminals",
-      "Connected net endpoints",
-      "Assignment / state",
-    ],
-    [0.09, 0.08, 0.07, 0.09, 0.08, 0.16, 0.1, 0.21, 0.12],
-    [
-      "Every declared channel is listed. Missing assignments remain unspecified; unconnected does not automatically mean spare.",
-      "Net endpoints show physical continuity only. Addresses are authored labels, not PLC configuration or a live PLC readback.",
-    ],
-  );
+  const context = {
+    ir,
+    request,
+    selection,
+    references,
+    options,
+    devices,
+    incident,
+    label,
+    types,
+    nets,
+    netMembers,
+    connections,
+    cables,
+    orderedDevices,
+    selected,
+    typeDescription,
+    typeNote,
+    rows,
+    table,
+    compare,
+    compareDesignation,
+    tid,
+    reportText,
+    reportDescription,
+  };
+  if (request.kind === "io-ports") return documentationIoPorts(context);
+  if (request.kind === "assemblies") return documentationAssemblies(context);
+  if (request.kind === "network") return documentationNetwork(context);
+  if (request.kind === "bom") return documentationBom(context);
+  if (request.kind === "wires") return documentationWires(context);
+  if (request.kind === "cables") return documentationCables(context);
+  if (request.kind === "terminals") return documentationTerminals(context);
+  return documentationIo(context);
 }
 
 /** Quote every field and neutralize spreadsheet formula prefixes in human-facing CSV. */

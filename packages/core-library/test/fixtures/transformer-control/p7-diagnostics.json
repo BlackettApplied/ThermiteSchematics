@@ -1,0 +1,37 @@
+[
+  {
+    "file": "system.json",
+    "line": 3,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I305",
+    "severity": "info",
+    "message": "Voltage compatibility is unassessed on connected nets with one comparable voltage-rated terminal and no voltage facts in potentials (4 nets: [\"K1.A1 rating {\\\"nominal_voltage\\\":24,\\\"voltage_type\\\":\\\"DC\\\"} [net:sha256:8601e5d40a2072cea4725f9772ce88ba51ea3eafb57a05c8ae4f0191dd2354b2]\", \"SRC1.L1 rating {\\\"nominal_voltage\\\":480,\\\"voltage_type\\\":\\\"AC\\\"} [net:sha256:e948fe2e76901e3db596a548ea54b85aa3c68e0caf4ede234caba0d06e2c0a7c]\", \"SRC1.L2 rating {\\\"nominal_voltage\\\":480,\\\"voltage_type\\\":\\\"AC\\\"} [net:sha256:cba7a541154550903c8365964012d89c4e5817e35d9235798982e221f22b58c6]\", \"SRC1.L3 rating {\\\"nominal_voltage\\\":480,\\\"voltage_type\\\":\\\"AC\\\"} [net:sha256:fbff1c2802f2f7a5916ae43817a7ecd8d8e6f535a83491f810c697585731a2b9]\"]). Ratings describe equipment capability; potentials declare net intent. No supply path was assessed.",
+    "related": [
+      {
+        "file": "@thermite/core-library/versions/0.2.0/types/contactor-3p-1no.json",
+        "line": 9,
+        "column": 15,
+        "note": "Terminal \"K1.A1\" declares rating {\"nominal_voltage\":24,\"voltage_type\":\"DC\"} here."
+      },
+      {
+        "file": "@thermite/core-library/versions/0.2.0/types/supply-480v-3ph.json",
+        "line": 9,
+        "column": 15,
+        "note": "Terminal \"SRC1.L1\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+      },
+      {
+        "file": "@thermite/core-library/versions/0.2.0/types/supply-480v-3ph.json",
+        "line": 16,
+        "column": 15,
+        "note": "Terminal \"SRC1.L2\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+      },
+      {
+        "file": "@thermite/core-library/versions/0.2.0/types/supply-480v-3ph.json",
+        "line": 23,
+        "column": 15,
+        "note": "Terminal \"SRC1.L3\" declares rating {\"nominal_voltage\":480,\"voltage_type\":\"AC\"} here."
+      }
+    ]
+  }
+]

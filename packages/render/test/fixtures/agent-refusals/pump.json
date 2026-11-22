@@ -1,0 +1,489 @@
+{
+  "objects": [
+    {
+      "uid": "288ec7a1-47ad-401a-9511-9634009a361e",
+      "kind": "device",
+      "designation": "SUP1",
+      "type": "core:supply-480v-3ph",
+      "description": "480 VAC three-phase site supply",
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "L1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "L2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "L3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "PE": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          }
+        }
+      }
+    },
+    {
+      "uid": "7300c5e3-c6f8-4fc4-b4d4-e418480ef840",
+      "kind": "device",
+      "designation": "Q1",
+      "type": "core:breaker-3p",
+      "description": "Main three-pole breaker; rating and coordination require selection",
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "1/L1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "2/T1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "3/L2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "4/T2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "5/L3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "6/T3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          }
+        }
+      }
+    },
+    {
+      "uid": "e701de76-5345-4683-b6af-e5027f088575",
+      "kind": "device",
+      "designation": "K1",
+      "type": "core:contactor-3p-1no",
+      "description": "Pump motor contactor; 24 VDC coil",
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "1/L1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "2/T1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "3/L2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "4/T2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "5/L3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "6/T3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "A1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "A2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          }
+        }
+      }
+    },
+    {
+      "uid": "be67ec3f-415f-4650-bcfe-bb95005afcdb",
+      "kind": "device",
+      "designation": "OL1",
+      "type": "core:overload-3p-1nc",
+      "description": "Pump overload; setting requires motor nameplate review",
+      "location": "MAIN-PANEL",
+      "connectionReview": {
+        "terminals": {
+          "95": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "96": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "1/L1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "2/T1": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "3/L2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "4/T2": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "5/L3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "6/T3": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          }
+        }
+      }
+    },
+    {
+      "uid": "fb2ca38a-5084-450a-bfa0-e326675e8389",
+      "kind": "device",
+      "designation": "M1",
+      "type": "core:motor-3ph",
+      "description": "5 HP pump motor; 480 VAC three-phase; nameplate review pending",
+      "location": "PUMP",
+      "connectionReview": {
+        "terminals": {
+          "PE": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "U": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "V": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          },
+          "W": {
+            "status": "required",
+            "reason": "Used connection in the pump skid application."
+          }
+        }
+      }
+    },
+    {
+      "uid": "caa9582b-9194-487f-a3a5-872bf812ecdf",
+      "kind": "wire",
+      "designation": "W101",
+      "endpoints": [
+        {
+          "device": "SUP1",
+          "terminal": "L1"
+        },
+        {
+          "device": "Q1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "101"
+      }
+    },
+    {
+      "uid": "9ada6ae8-8c35-43e0-8c4d-79b1c16ade0e",
+      "kind": "wire",
+      "designation": "W102",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "K1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "102"
+      }
+    },
+    {
+      "uid": "4a570b2c-620c-4629-bfbc-5b8dc359bec2",
+      "kind": "wire",
+      "designation": "W103",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "OL1",
+          "terminal": "1/L1"
+        }
+      ],
+      "properties": {
+        "label": "103"
+      }
+    },
+    {
+      "uid": "1e9a604f-1e09-4b72-9e77-25803d942a31",
+      "kind": "wire",
+      "designation": "W104",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "2/T1"
+        },
+        {
+          "device": "M1",
+          "terminal": "U"
+        }
+      ],
+      "properties": {
+        "label": "104"
+      }
+    },
+    {
+      "uid": "926da98a-fa5b-43db-88ff-aeecf497a74b",
+      "kind": "wire",
+      "designation": "W105",
+      "endpoints": [
+        {
+          "device": "SUP1",
+          "terminal": "L2"
+        },
+        {
+          "device": "Q1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "105"
+      }
+    },
+    {
+      "uid": "b72d477c-11b4-49de-bd4f-7db5ee251aef",
+      "kind": "wire",
+      "designation": "W106",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "K1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "106"
+      }
+    },
+    {
+      "uid": "d82dfa3a-b36c-4c0e-aa46-bbbb87241f53",
+      "kind": "wire",
+      "designation": "W107",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "OL1",
+          "terminal": "3/L2"
+        }
+      ],
+      "properties": {
+        "label": "107"
+      }
+    },
+    {
+      "uid": "e2eee7ef-a9c7-4a54-9844-6501f8221a03",
+      "kind": "wire",
+      "designation": "W108",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "4/T2"
+        },
+        {
+          "device": "M1",
+          "terminal": "V"
+        }
+      ],
+      "properties": {
+        "label": "108"
+      }
+    },
+    {
+      "uid": "b6c1b0a0-c372-460b-826a-cb24f79c592f",
+      "kind": "wire",
+      "designation": "W109",
+      "endpoints": [
+        {
+          "device": "SUP1",
+          "terminal": "L3"
+        },
+        {
+          "device": "Q1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "109"
+      }
+    },
+    {
+      "uid": "8a5f5620-4a9a-4ec2-8808-2a2b7a8a8293",
+      "kind": "wire",
+      "designation": "W110",
+      "endpoints": [
+        {
+          "device": "Q1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "K1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "110"
+      }
+    },
+    {
+      "uid": "8f5fe5e3-d3e0-45d7-8e44-e61d92a48a77",
+      "kind": "wire",
+      "designation": "W111",
+      "endpoints": [
+        {
+          "device": "K1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "OL1",
+          "terminal": "5/L3"
+        }
+      ],
+      "properties": {
+        "label": "111"
+      }
+    },
+    {
+      "uid": "977f7d19-cc63-4efc-b947-38da3dc8f5ba",
+      "kind": "wire",
+      "designation": "W112",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "6/T3"
+        },
+        {
+          "device": "M1",
+          "terminal": "W"
+        }
+      ],
+      "properties": {
+        "label": "112"
+      }
+    },
+    {
+      "uid": "09206853-0a8d-470e-931d-d64554608b72",
+      "kind": "wire",
+      "designation": "W113",
+      "endpoints": [
+        {
+          "device": "SUP1",
+          "terminal": "PE"
+        },
+        {
+          "device": "M1",
+          "terminal": "PE"
+        }
+      ],
+      "properties": {
+        "label": "113",
+        "color": "green/yellow"
+      }
+    },
+    {
+      "uid": "02b0890f-fd7c-41db-a095-a2661eac328c",
+      "kind": "wire",
+      "designation": "W208",
+      "endpoints": [
+        {
+          "device": "OL1",
+          "terminal": "96"
+        },
+        {
+          "device": "K1",
+          "terminal": "A1"
+        }
+      ],
+      "properties": {
+        "label": "208",
+        "color": "blue"
+      }
+    },
+    {
+      "uid": "70651c5b-8da7-4fb4-bd93-e8ed8e9160d7",
+      "kind": "potential",
+      "name": "L1 480VAC",
+      "at": {
+        "device": "SUP1",
+        "terminal": "L1"
+      },
+      "electrical": {
+        "nominal_voltage": 480,
+        "voltage_type": "AC"
+      }
+    },
+    {
+      "uid": "1caff82f-4e07-4eda-9f8e-72124ac142c4",
+      "kind": "potential",
+      "name": "L2 480VAC",
+      "at": {
+        "device": "SUP1",
+        "terminal": "L2"
+      },
+      "electrical": {
+        "nominal_voltage": 480,
+        "voltage_type": "AC"
+      }
+    },
+    {
+      "uid": "394b73c4-34b8-4f79-8b07-3e8b63278aec",
+      "kind": "potential",
+      "name": "L3 480VAC",
+      "at": {
+        "device": "SUP1",
+        "terminal": "L3"
+      },
+      "electrical": {
+        "nominal_voltage": 480,
+        "voltage_type": "AC"
+      }
+    },
+    {
+      "uid": "24fbe255-519c-47fb-8c42-81c627fe5fca",
+      "kind": "potential",
+      "name": "PE",
+      "at": {
+        "device": "SUP1",
+        "terminal": "PE"
+      },
+      "electrical": {
+        "polarity": "protective_earth"
+      }
+    }
+  ]
+}

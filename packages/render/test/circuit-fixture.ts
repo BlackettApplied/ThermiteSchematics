@@ -11,7 +11,7 @@ const functions = (device: string, ...keys: string[]) =>
   }));
 
 /** Portable core fixture: no machine-project, scanned PDF, or local path dependency. */
-export function motorCircuitView(): CircuitViewRequest {
+export function motorCircuitView(motor = true): CircuitViewRequest {
   return {
     format: "circuit-view-request/0.1",
     title: "Motor circuit",
@@ -25,10 +25,10 @@ export function motorCircuitView(): CircuitViewRequest {
           ...functions("CB1", "pole1", "pole2", "pole3"),
           ...functions("K1", "pole1", "pole2", "pole3"),
           ...functions("OL1", "pole1", "pole2", "pole3"),
-          ...functions("M1", "motor_load", "protective_earth"),
+          ...(motor ? functions("M1", "motor_load", "protective_earth") : []),
         ],
         conductors: Array.from(
-          { length: 13 },
+          { length: motor ? 13 : 9 },
           (_, i) => `W-PWR-${String(i + 1).padStart(3, "0")}`,
         ),
       },

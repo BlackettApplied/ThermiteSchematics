@@ -101,7 +101,7 @@ describe("operator console wiring", () => {
     const rendered = await renderSchematicPacket(c.ir, request);
     expect(rendered.ok).toBe(true);
     if (!rendered.ok) return;
-    expect(rendered.value.sheets).toHaveLength(11);
+    expect(rendered.value.sheets).toHaveLength(18);
     for (const [i, sheet] of rendered.value.sheets.entries()) {
       const view = request.views[i]!;
       if (!view || view.format !== "wiring-view-request/0.1") continue;
@@ -153,12 +153,20 @@ describe("operator console wiring", () => {
         })
       ).ok,
     ).toBe(false);
-    const hostile = structuredClone(c.ir);
-    hostile.deviceTypes.find(
-      (t) => t.id === "console-planning:dc-feed",
-    )!.description = "bad\u0000text";
-    expect(
-      (await renderSchematicPacket(hostile, { ...request, views: [view] })).ok,
-    ).toBe(false);
+    for (const field of ["type", "instance"] as const) {
+      const hostile = structuredClone(c.ir);
+      if (field === "type")
+        hostile.deviceTypes.find(
+          (t) => t.id === "console-planning:dc-feed",
+        )!.description = "bad\u0000text";
+      else
+        hostile.devices.find(
+          (d) => d.typeId === "console-planning:dc-feed",
+        )!.description = "bad\u0000text";
+      expect(
+        (await renderSchematicPacket(hostile, { ...request, views: [view] }))
+          .ok,
+      ).toBe(false);
+    }
   });
 });

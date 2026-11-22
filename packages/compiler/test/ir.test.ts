@@ -365,6 +365,38 @@ describe("D9 electrical IR assembly and serialization", () => {
     });
   });
 
+  it("retains optional device procurement metadata through IR serialization without changing format or topology", async () => {
+    const loaded = await loadProject(motorStarterRoot);
+    if (!loaded.ok) throw Error("motor-starter failed structural loading");
+    const changed = structuredClone(loaded.project);
+    const device = changed.sources
+      .flatMap(({ value }) => value.objects)
+      .find((object) => object.kind === "device");
+    if (device?.kind !== "device") throw Error("device not found");
+    device.nonProcurement = {
+      reason: "Existing equipment; outside purchasing scope",
+    };
+    const compiled = compileLoadedProject(changed);
+    if (!compiled.ok) throw Error(JSON.stringify(compiled.diagnostics));
+    const expected = structuredClone(motorIr);
+    expected.devices.find(({ uid }) => uid === device.uid)!.nonProcurement = {
+      ...device.nonProcurement,
+    };
+    expect(compiled.ir).toEqual(expected);
+    const serialized = serializeIr(compiled.ir);
+    expect(JSON.parse(serialized)).toHaveProperty(
+      "format",
+      "electrical-ir/0.1",
+    );
+    expect(
+      JSON.parse(serialized).devices.find(
+        (d: { uid: string }) => d.uid === device.uid,
+      ),
+    ).toHaveProperty("nonProcurement", device.nonProcurement);
+    expect(serializeIr(compiled.ir)).toBe(serialized);
+    expect(motorBytes).not.toContain("nonProcurement");
+  });
+
   it("keeps semantic tables equal across authored file/object/key reordering after excluding provenance and fingerprints", async () => {
     const project = await copyValidFixture();
     const sourcePath = join(project, "sources", "devices.json");
@@ -421,9 +453,12 @@ describe("D3 compiler failure gating", () => {
     expect(compiled).toMatchObject({
       ok: false,
       toolFailure: false,
-      diagnostics: [{ code: "E105" }],
+      diagnostics: [{ code: "E105" }, { code: "I208" }],
     });
-    expect(compiled.diagnostics.map(({ code }) => code)).toEqual(["E105"]);
+    expect(compiled.diagnostics.map(({ code }) => code)).toEqual([
+      "E105",
+      "I208",
+    ]);
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
   });
 
@@ -440,7 +475,7 @@ describe("D3 compiler failure gating", () => {
     expect(compiled).toMatchObject({
       ok: false,
       toolFailure: false,
-      diagnostics: [{ code: "E103" }],
+      diagnostics: [{ code: "E103" }, { code: "I208" }],
     });
     expect(Object.hasOwn(compiled, "ir")).toBe(false);
   });

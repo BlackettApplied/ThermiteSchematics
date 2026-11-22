@@ -16,5 +16,14 @@
         "note": "Earlier potential declaration uid \"30300000-0000-4000-8000-000000000002\" conflicts here in field \"nominal_voltage\"."
       }
     ]
+  },
+  {
+    "file": "system.json",
+    "line": 4,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I208",
+    "severity": "info",
+    "message": "Checks not completed: E300 potential-conflict gate: skipped E301, E302 on 1 net: [\"NODE.T [net:sha256:0ca9f2d64ba21a72fb2229d10a6ec626990ce562d6a03a49afb8d7f55eb729a5]\"]."
   }
 ]

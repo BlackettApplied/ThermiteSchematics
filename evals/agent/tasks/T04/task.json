@@ -1,0 +1,43 @@
+{
+  "id": "T04",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Connect the supplied PX1 PNP sensor signal to PLC1 DI0. Preserve its unknown return. In your final message, say that PX1's 0 V terminal has no destination and ask where it should connect.",
+  "requiredTopics": [
+    {
+      "topic": "modeling",
+      "beforeCommand": "agent",
+      "before": "source-change"
+    },
+    {
+      "topic": "completeness",
+      "beforeCommand": "agent",
+      "before": "source-change",
+      "equivalents": ["project-workflows"]
+    }
+  ],
+  "expectedWarnings": [
+    {
+      "anyOf": [
+        {
+          "code": "W903",
+          "designation": "PX1"
+        },
+        {
+          "code": "W904",
+          "designation": "PX1"
+        },
+        {
+          "code": "W905",
+          "designation": "PX1"
+        }
+      ]
+    }
+  ],
+  "reference": "reference.mjs",
+  "rubric": [
+    "Final message says PX1's 0 V terminal has no destination and asks the user where it should connect.",
+    "No invented return or intentionally-unused disposition."
+  ]
+}

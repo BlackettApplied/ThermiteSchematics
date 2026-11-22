@@ -1,3 +1,7 @@
+import {
+  expectFunctionFacts,
+  validateFunctionSymbolFacts,
+} from "./function-facts.js";
 import type {
   IrDeviceType,
   IrDeviceTypeFunction,
@@ -52,20 +56,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function isPlainObject(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function isArrayValue(value: unknown): boolean {
-  return Array.isArray(value);
-}
-
+const isArrayValue: (value: unknown) => boolean = Array.isArray;
 function hasExactKeys(value: object, expected: readonly string[]): boolean {
-  const actual = Object.keys(value).sort();
-  const wanted = [...expected].sort();
   return (
-    actual.length === wanted.length &&
-    actual.every((key, index) => key === wanted[index])
+    Object.keys(value).length === expected.length &&
+    expected.every((key) =>
+      Object.prototype.propertyIsEnumerable.call(value, key),
+    )
   );
 }
 
@@ -100,6 +97,56 @@ function validatePoint(
   );
 }
 
+function validateLinePrimitive(
+  primitive: Extract<SymbolPrimitive, { kind: "line" }>,
+  width: number,
+  height: number,
+  context: string,
+): void {
+  const { qualifier: q, uprightOrigin } = primitive;
+  assertCatalog(
+    hasExactKeys(primitive, [
+      "kind",
+      "from",
+      "to",
+      "style",
+      ...(q === undefined ? [] : ["qualifier"]),
+      ...(uprightOrigin === undefined ? [] : ["uprightOrigin"]),
+    ]),
+    `${context} has unknown fields.`,
+  );
+  validatePoint(primitive.from, width, height, `${context}.from`);
+  validatePoint(primitive.to, width, height, `${context}.to`);
+  if (q !== undefined) {
+    assertCatalog(
+      primitive.style === "annotation" &&
+        isRecord(q) &&
+        hasExactKeys(q, ["polarity", "portId", "center"]),
+      `${context}.qualifier must be owned annotation geometry.`,
+    );
+    assertCatalog(
+      q.polarity === "positive" || q.polarity === "negative",
+      `${context}.qualifier has unknown polarity.`,
+    );
+    assertCatalog(
+      typeof q.portId === "string" && q.portId.length > 0,
+      `${context}.qualifier requires a port ID.`,
+    );
+    validatePoint(q.center, width, height, `${context}.qualifier.center`);
+  }
+  if (uprightOrigin !== undefined) {
+    assertCatalog(
+      q === undefined && primitive.style === "annotation",
+      `${context}.uprightOrigin must be annotation geometry.`,
+    );
+    validatePoint(uprightOrigin, width, height, `${context}.uprightOrigin`);
+  }
+  assertCatalog(
+    primitive.from.x !== primitive.to.x || primitive.from.y !== primitive.to.y,
+    `${context} must have distinct endpoints.`,
+  );
+}
+
 function validatePrimitive(
   primitive: SymbolPrimitive,
   width: number,
@@ -113,17 +160,7 @@ function validatePrimitive(
   );
   switch (primitive.kind) {
     case "line":
-      assertCatalog(
-        hasExactKeys(primitive, ["kind", "from", "to", "style"]),
-        `${context} has unknown fields.`,
-      );
-      validatePoint(primitive.from, width, height, `${context}.from`);
-      validatePoint(primitive.to, width, height, `${context}.to`);
-      assertCatalog(
-        primitive.from.x !== primitive.to.x ||
-          primitive.from.y !== primitive.to.y,
-        `${context} must have distinct endpoints.`,
-      );
+      validateLinePrimitive(primitive, width, height, context);
       return;
     case "polyline":
       assertCatalog(
@@ -229,6 +266,27 @@ function validatePrimitive(
   }
 }
 
+function validateCatalogPrimitives(
+  definition: SymbolDefinition,
+  portIds: ReadonlySet<string>,
+  context: string,
+): void {
+  definition.primitives.forEach((primitive, index) => {
+    validatePrimitive(
+      primitive,
+      definition.size.width,
+      definition.size.height,
+      `${context}.primitives[${index}]`,
+    );
+    if (primitive.kind === "line" && primitive.qualifier) {
+      assertCatalog(
+        portIds.has(primitive.qualifier.portId),
+        `${context} qualifier owns an unknown port.`,
+      );
+    }
+  });
+}
+
 export function validateSymbolCatalog(
   catalog: readonly SymbolDefinition[],
 ): readonly SymbolDefinition[] {
@@ -238,7 +296,7 @@ export function validateSymbolCatalog(
   catalog.forEach((definition, symbolIndex) => {
     const context = `symbols[${symbolIndex}]`;
     assertCatalog(
-      isPlainObject(definition) &&
+      isRecord(definition) &&
         hasExactKeys(definition, [
           "format",
           "id",
@@ -263,7 +321,7 @@ export function validateSymbolCatalog(
     );
     symbolIds.add(definition.id);
     assertCatalog(
-      isPlainObject(definition.size) &&
+      isRecord(definition.size) &&
         hasExactKeys(definition.size, ["width", "height"]),
       `${context}.size must have width and height.`,
     );
@@ -283,8 +341,7 @@ export function validateSymbolCatalog(
     definition.ports.forEach((port, portIndex) => {
       const portContext = `${context}.ports[${portIndex}]`;
       assertCatalog(
-        isPlainObject(port) &&
-          hasExactKeys(port, ["id", "side", "offset", "order"]),
+        isRecord(port) && hasExactKeys(port, ["id", "side", "offset", "order"]),
         `${portContext} must have the exact port fields.`,
       );
       assertCatalog(
@@ -317,14 +374,7 @@ export function validateSymbolCatalog(
       );
       portOrders.add(port.order);
     });
-    definition.primitives.forEach((primitive, primitiveIndex) =>
-      validatePrimitive(
-        primitive,
-        definition.size.width,
-        definition.size.height,
-        `${context}.primitives[${primitiveIndex}]`,
-      ),
-    );
+    validateCatalogPrimitives(definition, portIds, context);
   });
   return catalog;
 }
@@ -428,77 +478,6 @@ function findTerminalRole(
     `${context} references unknown or duplicate terminal ${JSON.stringify(terminalKey)}.`,
   );
   return matches[0]!.role;
-}
-
-function expectFunctionFacts(
-  definition: IrDeviceTypeFunction,
-  expectedKind: IrDeviceTypeFunction["kind"],
-  context: string,
-  expectedState?: "open" | "closed",
-  expectedDirection?: "input" | "output",
-): void {
-  assertMapping(
-    definition.kind === expectedKind,
-    `${context} expected kind ${expectedKind}; received ${definition.kind}.`,
-  );
-  if (expectedState !== undefined) {
-    assertMapping(
-      definition.kind === "contact" &&
-        definition.normal_state === expectedState,
-      `${context} expected contact state ${expectedState}.`,
-    );
-  }
-  if (expectedDirection !== undefined) {
-    assertMapping(
-      definition.kind === "channel" &&
-        definition.direction === expectedDirection,
-      `${context} expected channel direction ${expectedDirection}.`,
-    );
-  }
-}
-
-function validateFunctionSymbolFacts(
-  definition: IrDeviceTypeFunction,
-  symbolId: SymbolDefinition["id"],
-  context: string,
-): void {
-  switch (symbolId) {
-    case "ais:power-source-dc":
-      expectFunctionFacts(definition, "source", context);
-      return;
-    case "ais:dc-load":
-      expectFunctionFacts(definition, "load", context);
-      return;
-    case "ais:breaker-pole":
-      expectFunctionFacts(definition, "contact", context, "closed");
-      return;
-    case "ais:contact-no":
-    case "ais:pushbutton-no":
-    case "ais:switch-no":
-      expectFunctionFacts(definition, "contact", context, "open");
-      return;
-    case "ais:contact-nc":
-    case "ais:pushbutton-nc":
-    case "ais:switch-nc":
-    case "ais:overload-contact-nc":
-    case "ais:overload-pole":
-      expectFunctionFacts(definition, "contact", context, "closed");
-      return;
-    case "ais:coil":
-      expectFunctionFacts(definition, "coil", context);
-      return;
-    case "ais:terminal":
-      expectFunctionFacts(definition, "bus", context);
-      return;
-    case "ais:plc-di":
-      expectFunctionFacts(definition, "channel", context, undefined, "input");
-      return;
-    case "ais:plc-do":
-      expectFunctionFacts(definition, "channel", context, undefined, "output");
-      return;
-    default:
-      invalidMapping(`${context} uses a non-function symbol ${symbolId}.`);
-  }
 }
 
 function symbolById(
@@ -615,24 +594,42 @@ function validateAggregateMemberFacts(
   member: IrDeviceTypeFunction,
   context: string,
 ): void {
-  if (rule.symbolId === "ais:power-source-3ph") {
+  if (
+    rule.symbolId === "ais:power-source-3ph" ||
+    rule.symbolId === "ais:power-source-3wire"
+  ) {
     expectFunctionFacts(
       member,
-      member.key === "protective_earth" ? "bus" : "source",
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "PE",
+      )
+        ? "bus"
+        : "source",
       context,
     );
     return;
   }
-  if (rule.symbolId === "ais:motor-3ph") {
+  if (
+    rule.symbolId === "ais:motor-3ph" ||
+    rule.symbolId === "ais:motor-3ph-unbonded"
+  ) {
     expectFunctionFacts(
       member,
-      member.key === "protective_earth" ? "bus" : "load",
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "PE",
+      )
+        ? "bus"
+        : "load",
       context,
     );
     return;
   }
   if (rule.symbolId === "ais:switch-sensor-pnp") {
-    if (member.key === "output") {
+    if (
+      rule.bindings.some(
+        (b) => b.memberFunctionKey === member.key && b.portId === "signal",
+      )
+    ) {
       expectFunctionFacts(member, "channel", context, undefined, "output");
     } else {
       expectFunctionFacts(member, "load", context);

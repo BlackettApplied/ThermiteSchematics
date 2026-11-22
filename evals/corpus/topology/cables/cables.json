@@ -1,0 +1,56 @@
+{
+  "objects": [
+    {
+      "uid": "57314412-cbe8-5616-ba88-d98844a0a9e2",
+      "kind": "cable",
+      "designation": "C1",
+      "type": "core:cable-2pair-shielded",
+      "conductors": [
+        {
+          "id": "1+",
+          "endpoints": [
+            {
+              "device": "X1",
+              "terminal": "3"
+            },
+            {
+              "device": "X2",
+              "terminal": "1"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "1-",
+          "endpoints": [
+            {
+              "device": "X1",
+              "terminal": "4"
+            },
+            {
+              "device": "X2",
+              "terminal": "2"
+            }
+          ],
+          "usage": "in-use"
+        },
+        {
+          "id": "2+",
+          "endpoints": [
+            {
+              "device": "X2",
+              "terminal": "3"
+            },
+            null
+          ],
+          "usage": "spare"
+        },
+        {
+          "id": "2-",
+          "endpoints": [null, null],
+          "usage": "spare"
+        }
+      ]
+    }
+  ]
+}

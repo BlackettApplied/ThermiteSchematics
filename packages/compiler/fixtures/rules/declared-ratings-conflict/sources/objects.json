@@ -1,0 +1,25 @@
+{
+  "objects": [
+    {
+      "uid": "8f000000-0000-4000-8000-000000000001",
+      "kind": "device",
+      "designation": "N1",
+      "type": "assessment:node"
+    },
+    {
+      "uid": "8f000000-0000-4000-8000-000000000002",
+      "kind": "wire",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "N1",
+          "terminal": "ac"
+        },
+        {
+          "device": "N1",
+          "terminal": "dc"
+        }
+      ]
+    }
+  ]
+}

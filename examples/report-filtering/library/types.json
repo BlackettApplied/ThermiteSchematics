@@ -1,0 +1,110 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "filter-fixture:controller",
+      "description": "Generic controller interface",
+      "terminals": {
+        "I0": {},
+        "M": {}
+      },
+      "functions": {
+        "di1": {
+          "kind": "channel",
+          "direction": "input",
+          "terminals": ["I0"]
+        }
+      },
+      "ports": {
+        "ETH": {
+          "medium": "ethernet",
+          "connector": "Generic Ethernet"
+        }
+      },
+      "connectorPorts": {
+        "X1": {
+          "connector": "Generic field socket"
+        },
+        "X2": {
+          "connector": "Generic field socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic test model; ratings, installed supply and pin mapping are not established."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "filter-fixture:field",
+      "description": "Generic field interface",
+      "terminals": {
+        "P": {},
+        "M": {}
+      },
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "Generic field socket"
+        },
+        "SPARE": {
+          "connector": "Generic field socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic test model; ratings, installed supply and pin mapping are not established."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "filter-fixture:documentary",
+      "description": "Documentary boundary node",
+      "terminals": {
+        "N": {}
+      },
+      "functions": {},
+      "ports": {
+        "IN": {
+          "medium": "ethernet",
+          "connector": "Logical test reservation"
+        },
+        "OUT": {
+          "medium": "ethernet",
+          "connector": "Logical test reservation"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic test model; ratings, installed supply and pin mapping are not established."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "filter-fixture:strip",
+      "description": "Generic terminal strip",
+      "category": "terminal-strip",
+      "terminals": {
+        "1": {},
+        "2": {}
+      },
+      "terminalOrder": ["2", "1"],
+      "functions": {}
+    },
+    {
+      "kind": "cable_type",
+      "id": "filter-fixture:cable",
+      "description": "Generic two-core test cable",
+      "conductors": [
+        {
+          "id": "1",
+          "color": "blue"
+        },
+        {
+          "id": "2",
+          "color": "white"
+        }
+      ]
+    }
+  ]
+}

@@ -176,6 +176,7 @@ export interface SelectedPathEndpoint {
 export interface SelectedPath {
   readonly id: string;
   readonly lane: string;
+  readonly powerRole?: "non-pe" | "protective-earth";
   readonly start: SelectedPathEndpoint;
   readonly steps: readonly (SelectedConductorStep | SelectedFunctionStep)[];
   readonly end: SelectedPathEndpoint;
@@ -189,6 +190,15 @@ export interface SelectedSubgraph {
   readonly functionIds: readonly FunctionId[];
   readonly conductiveElementIds: readonly ConductiveElementId[];
   readonly netIds: readonly string[];
+  /** Terminal context only; owner functions are not selected or covered. */
+  readonly terminalOwners?: readonly SelectedTerminalOwner[];
+  /** Selected terminals with authored role "protective_earth". */
+  readonly protectiveEarthTerminals?: readonly TerminalId[];
+}
+
+export interface SelectedTerminalOwner {
+  readonly terminal: TerminalId;
+  readonly ownerFunctionIds: readonly FunctionId[];
 }
 
 export type LocationIdentity =
@@ -209,18 +219,23 @@ export type PresentationLabelRole =
   | "rail"
   | "terminal"
   | "conductor"
-  | "net";
+  | "net"
+  | "reference"
+  | "off-view";
 
 export type PresentationLabelOwnerKind =
   "location" | "device" | "symbol" | "rail" | "port" | "edge";
 
 export interface PresentationLabel {
+  readonly offView?: import("./off-view/model.js").OffViewCard;
   readonly id: string;
   readonly ownerKind: PresentationLabelOwnerKind;
   readonly ownerId: string;
   readonly role: PresentationLabelRole;
   readonly text: string;
   readonly textSources: readonly RenderTextSource[];
+  /** Printable facts may differ from the original caption reserved for layout. */
+  readonly printableText?: string;
   readonly width: number;
   readonly height: number;
   readonly textLength: number;
@@ -255,7 +270,7 @@ export interface PresentationPort {
 }
 
 export type SemanticAttachmentKind =
-  "function" | "channel" | "aggregate" | "collapsed-boundary";
+  "function" | "channel" | "aggregate" | "collapsed-boundary" | "terminal";
 
 export interface SemanticAttachment {
   readonly kind: SemanticAttachmentKind;
@@ -266,8 +281,16 @@ export interface SemanticAttachment {
 }
 
 export interface SymbolPresentationNode {
+  /** Authored visible gang; reserve its annotation band before ELK. */
+  readonly mechanicalGangId?: string;
+  readonly contentBox?: Readonly<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>;
   readonly kind: "symbol";
-  readonly representation: "function" | "aggregate";
+  readonly representation: "function" | "aggregate" | "terminal";
   readonly id: string;
   readonly deviceUid: string;
   readonly designation: string;
@@ -290,6 +313,12 @@ export interface SymbolPresentationNode {
 }
 
 export interface RailPresentationNode {
+  readonly contentBox?: Readonly<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>;
   readonly kind: "rail";
   readonly id: string;
   readonly parentId: "root";
@@ -325,6 +354,8 @@ export type PresentationNode =
   SymbolPresentationNode | RailPresentationNode | JunctionPresentationNode;
 
 export interface PresentationEdge {
+  /** Authored source tie-break for an unnamed physical element. */
+  readonly authoredOrderKey?: string;
   readonly id: string;
   readonly parentId: "root";
   readonly kind: "conductor" | "boundary-segment";
@@ -357,6 +388,8 @@ export interface PresentationEdge {
 
 export interface PresentationGraph {
   readonly format: "schematic-presentation/0.1";
+  /** Computed once from the selected paths; shared by ordering and recovery. */
+  readonly directLoadPair: boolean;
   readonly view: NormalizedSchematicView;
   readonly locationGroups: readonly LocationGroup[];
   readonly deviceGroups: readonly DeviceGroup[];
@@ -428,6 +461,17 @@ export interface LayoutCrossing {
   readonly point: LayoutPoint;
 }
 
+/** Two local ink marks for a semantic association; never a routed conductor. */
+export interface LayoutContextReference {
+  readonly id: string;
+  readonly sourcePortId: string;
+  readonly targetPortId: string;
+  readonly leaders: readonly [
+    readonly [LayoutPoint, LayoutPoint],
+    readonly [LayoutPoint, LayoutPoint],
+  ];
+}
+
 export interface NormalizedSchematicLayout {
   readonly format: "schematic-layout/0.1";
   readonly view: NormalizedSchematicView;
@@ -438,4 +482,5 @@ export interface NormalizedSchematicLayout {
   readonly labels: readonly LayoutLabel[];
   readonly edges: readonly LayoutEdge[];
   readonly crossings: readonly LayoutCrossing[];
+  readonly contextReferences?: readonly LayoutContextReference[];
 }

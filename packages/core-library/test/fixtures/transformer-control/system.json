@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Unrated transformer secondary control",
+    "description": "Synthetic drawing fixture with an external primary interface."
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

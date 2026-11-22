@@ -1,0 +1,1044 @@
+[
+  {
+    "label": "r6 review r5 arbitrary Bun fetch tail",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'console.log(await (await fetch(\"https://raw.github\"+\"usercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts\")).text())' "
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 review r5 literal tab in raw host",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.git\thubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+        "prompt": "Read"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 review r5 dynamic GH_HOST",
+    "event": {
+      "name": "command_execution",
+      "input": "GH_HOST=$H gh api repos/3MUl0R/ThermiteSchematics/contents/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 review r5 backticks with printf and quote-spliced host",
+    "event": {
+      "name": "command_execution",
+      "input": "curl \"https://`printf raw.git''hubusercontent.com`/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 review r5 github-mcp-server get_file_contents",
+    "event": {
+      "name": "github-mcp-server.get_file_contents",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "path": "packages/compiler/src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 review r5 github-mcp-server search_code",
+    "event": {
+      "name": "github-mcp-server.search_code",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "path": "packages/compiler/src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling mcp__GiTHuB__get_file_contents",
+    "event": {
+      "name": "mcp__GiTHuB__get_file_contents",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling myGitHubServer/get_file_contents",
+    "event": {
+      "name": "myGitHubServer/get_file_contents",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling github-client:get_file_contents",
+    "event": {
+      "name": "github-client:get_file_contents",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling readGITHUBget_file_contents",
+    "event": {
+      "name": "readGITHUBget_file_contents",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling mcp__GiTHuB__search_code",
+    "event": {
+      "name": "mcp__GiTHuB__search_code",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling myGitHubServer/search_code",
+    "event": {
+      "name": "myGitHubServer/search_code",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling github-client:search_code",
+    "event": {
+      "name": "github-client:search_code",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP spelling readGITHUBsearch_code",
+    "event": {
+      "name": "readGITHUBsearch_code",
+      "input": {
+        "owner": "o",
+        "repo": "r",
+        "path": "src/index.ts",
+        "query": "compileProject"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP explicit server property",
+    "event": {
+      "name": "get_file_contents",
+      "input": {
+        "owner": "o",
+        "repo": "r"
+      },
+      "server": "aGitHubServer"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP explicit tool property",
+    "event": {
+      "name": "opaque",
+      "input": {
+        "owner": "o",
+        "repo": "r"
+      },
+      "tool": "getGithubFile"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 fixed MCP fetch github-mcp-server.fetch",
+    "event": {
+      "name": "github-mcp-server.fetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 fixed MCP fetch mcp__GITHUB-MCP-SERVER__fetch",
+    "event": {
+      "name": "mcp__GITHUB-MCP-SERVER__fetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 fixed MCP fetch xGitHub.fetch",
+    "event": {
+      "name": "xGitHub.fetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 MCP issue_read conversation",
+    "event": {
+      "name": "github-mcp-server.issue_read",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "issue_number": 367,
+        "method": "get"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 MCP issue_read comments",
+    "event": {
+      "name": "mcp__github__issue_read",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "issue_number": 367,
+        "method": "get_comments"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 MCP pull conversation",
+    "event": {
+      "name": "github-mcp-server.pull_request_read",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "pullNumber": 372,
+        "method": "get"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 MCP file method refused",
+    "event": {
+      "name": "github-mcp-server.pull_request_read",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "pullNumber": 372,
+        "method": "get_files"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP unknown operation suffix refused",
+    "event": {
+      "name": "github-mcp-server.unknown_issue_read",
+      "input": {
+        "owner": "3MUl0R",
+        "repo": "ThermiteSchematics",
+        "issue_number": 367,
+        "method": "get"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 MCP header override refused",
+    "event": {
+      "name": "github-mcp-server.fetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+        "headers": {
+          "Accept": "application/vnd.github.diff"
+        }
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 native fetch unknown header refused",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+        "headers": {
+          "Accept": "application/vnd.github.diff"
+        }
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 regression/simple positive gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression/simple positive gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json=title,body,comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json=title,body,comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression/simple positive gh issue view 367 -R 3MUl0R/ThermiteSchematics --json=title,body,comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view 367 -R 3MUl0R/ThermiteSchematics --json=title,body,comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression/simple positive gh pr view https://github.com/3MUl0R/ThermiteSchematics/pull/372 --json=title,body,comments",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view https://github.com/3MUl0R/ThermiteSchematics/pull/372 --json=title,body,comments"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression/simple positive curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression/simple positive gh api repos/3MUl0R/ThermiteSchematics/issues/367/comments > /tmp/issue.json",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues/367/comments > /tmp/issue.json"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 regression negative gh pr view https://github.com/3MUl0R/ThermiteSchematics/pull/372 --json=files",
+    "event": {
+      "name": "command_execution",
+      "input": "gh pr view https://github.com/3MUl0R/ThermiteSchematics/pull/372 --json=files"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 regression negative gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json=title,body,unknown",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json=title,body,unknown"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 regression negative gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json=",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367 --json="
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 regression negative gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits --json=title",
+    "event": {
+      "name": "command_execution",
+      "input": "gh issue view https://github.com/3MUl0R/ThermiteSchematics/issues/367/../commits --json=title"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 regression negative curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && cat /tmp/issue.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && cat /tmp/issue.json"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound '&&'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound '||'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' || echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound ';'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' ; echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound '|'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' | echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound '&'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' & echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 compound '\\n'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' \n echo done"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 unsafe shell (curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367')",
+    "event": {
+      "name": "command_execution",
+      "input": "(curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367')"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' | bun",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' | bun"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' > >(node)",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' > >(node)"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' <<'EOF'\nbody\nEOF",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' <<'EOF'\nbody\nEOF"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 unsafe shell HOST=github.com curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'",
+    "event": {
+      "name": "command_execution",
+      "input": "HOST=github.com curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'console.log(1)'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'console.log(1)'"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'const d=await Bun.file(\"/tmp/other.json\").json(); console.log(JSON.stringify(d.map(x=>({name:x.name}))))'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'const d=await Bun.file(\"/tmp/other.json\").json(); console.log(JSON.stringify(d.map(x=>({name:x.name}))))'"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 unsafe shell curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' -o /tmp/out.json && bun -e 'const d=await Bun.file(\"/tmp/out.json\").json(); console.log(JSON.stringify(d.map(x=>({name:x.name})))); fetch(\"https://example.com\")'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' -o /tmp/out.json && bun -e 'const d=await Bun.file(\"/tmp/out.json\").json(); console.log(JSON.stringify(d.map(x=>({name:x.name})))); fetch(\"https://example.com\")'"
+    },
+    "class": "source-read",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback.",
+    "classAt117": "issue-lookup",
+    "r8Reason": "Literal interpreter fetch uses the same remote default as curl; source tail dominates issue credit."
+  },
+  {
+    "label": "r6 dynamic/unknown shell curl \"$URL\"",
+    "event": {
+      "name": "command_execution",
+      "input": "curl \"$URL\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell curl \"https://$HOST/source\"",
+    "event": {
+      "name": "command_execution",
+      "input": "curl \"https://$HOST/source\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell wget `printf https://example.com/source`",
+    "event": {
+      "name": "command_execution",
+      "input": "wget `printf https://example.com/source`"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell gh api \"$ENDPOINT\"",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api \"$ENDPOINT\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell git clone \"$REMOTE\"",
+    "event": {
+      "name": "command_execution",
+      "input": "git clone \"$REMOTE\""
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell curl https://raw.git''hubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+    "event": {
+      "name": "command_execution",
+      "input": "curl https://raw.git''hubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell curl 'https://example.com/unterminated",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://example.com/unterminated"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell echo ready && curl https://example.com/data",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && curl https://example.com/data"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell curl https://example.com/data --config /tmp/unknown",
+    "event": {
+      "name": "command_execution",
+      "input": "curl https://example.com/data --config /tmp/unknown"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 dynamic/unknown shell $CLIENT \"$URL\"",
+    "event": {
+      "name": "command_execution",
+      "input": "$CLIENT \"$URL\""
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback bun",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && bun -e 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback node",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && node -e 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback python",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && python -c 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback python3",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && python3 -c 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback ruby",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && ruby -e 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback perl",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && perl -e 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback deno",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && deno eval 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback sh",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && sh -c 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 interpreter network fallback bash",
+    "event": {
+      "name": "command_execution",
+      "input": "echo ready && bash -c 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 local-only compound/data echo done && printf '%s' ok",
+    "event": {
+      "name": "command_execution",
+      "input": "echo done && printf '%s' ok"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 local-only compound/data command -v gh && command -v curl",
+    "event": {
+      "name": "command_execution",
+      "input": "command -v gh && command -v curl"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 local-only compound/data echo 'curl'",
+    "event": {
+      "name": "command_execution",
+      "input": "echo 'curl'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 local-only compound/data printf '%s' gh",
+    "event": {
+      "name": "command_execution",
+      "input": "printf '%s' gh"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 local-only compound/data cat notes.txt",
+    "event": {
+      "name": "command_execution",
+      "input": "cat notes.txt"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 WHATWG host whitespace issue '\\t'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://git\thub.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG host whitespace source '\\t'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.git\thubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+        "prompt": "Read"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 WHATWG host whitespace issue '\\n'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://git\nhub.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG host whitespace source '\\n'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.git\nhubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+        "prompt": "Read"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 WHATWG host whitespace issue '\\r'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://git\rhub.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG host whitespace source '\\r'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.git\rhubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+        "prompt": "Read"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 WHATWG host whitespace issue '\\t\\n\\r'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://git\t\n\rhub.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG host whitespace source '\\t\\n\\r'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://raw.git\t\n\rhubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts",
+        "prompt": "Read"
+      }
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 WHATWG trim C0 '\\x00'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "\u0000https://github.com/3MUl0R/ThermiteSchematics/issues/367\u0000",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG trim C0 '\\x01'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "\u0001https://github.com/3MUl0R/ThermiteSchematics/issues/367\u0001",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG trim C0 '\\x0b'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "\u000bhttps://github.com/3MUl0R/ThermiteSchematics/issues/367\u000b",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG trim C0 '\\x1f'",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "\u001fhttps://github.com/3MUl0R/ThermiteSchematics/issues/367\u001f",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG trim C0 ' '",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": " https://github.com/3MUl0R/ThermiteSchematics/issues/367 ",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 WHATWG interior space stays invalid",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://git hub.com/3MUl0R/ThermiteSchematics/issues/367",
+        "prompt": "Summarize"
+      }
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 shell URL newline cannot get exemption",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://git\nhub.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 opaque address/redirector: no exemption https://192.0.2.1/o/r/issues/1",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://192.0.2.1/o/r/issues/1",
+        "prompt": "Read"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 opaque address/redirector: no exemption https://[2001:db8::1]/o/r/issues/1",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://[2001:db8::1]/o/r/issues/1",
+        "prompt": "Read"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 opaque address/redirector: no exemption https://redirect.example/o/r/issues/1",
+    "event": {
+      "name": "WebFetch",
+      "input": {
+        "url": "https://redirect.example/o/r/issues/1",
+        "prompt": "Read"
+      }
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 exact JSON formatter suffix ''",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' -o /tmp/issue.json && bun -e 'const d=await Bun.file(\"/tmp/issue.json\").json(); console.log(JSON.stringify(d.map(x=>({number:x.number,title:x.title,body:x.body})),null,2))'"
+    },
+    "class": "issue-lookup"
+  },
+  {
+    "label": "r6 exact JSON formatter suffix '; fetch(\"https://example.com\")'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' -o /tmp/issue.json && bun -e 'const d=await Bun.file(\"/tmp/issue.json\").json(); console.log(JSON.stringify(d.map(x=>({number:x.number,title:x.title,body:x.body})),null,2)); fetch(\"https://example.com\")'"
+    },
+    "class": "source-read",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback.",
+    "classAt117": "issue-lookup",
+    "r8Reason": "Literal interpreter fetch uses the same remote default as curl; source tail dominates issue credit."
+  },
+  {
+    "label": "r6 exact JSON formatter suffix ' && curl https://example.com'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' -o /tmp/issue.json && bun -e 'const d=await Bun.file(\"/tmp/issue.json\").json(); console.log(JSON.stringify(d.map(x=>({number:x.number,title:x.title,body:x.body})),null,2)) && curl https://example.com'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r6 literal transport pwd remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "/bin/zsh -lc pwd"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 built CLI simple transport remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "/bin/zsh -lc 'bun /tmp/runtime/thermite.mjs agent query --input request.json'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r6 unknown shell c program defaults to source",
+    "event": {
+      "name": "command_execution",
+      "input": "sh -c 'unknown_program()'"
+    },
+    "class": "other",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 quote-spliced issue host refuses exemption",
+    "event": {
+      "name": "command_execution",
+      "input": "curl https://git''hub.com/3MUl0R/ThermiteSchematics/issues/367"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 quote-spliced relative issue URL refuses exemption",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/iss''ues/367"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 variables in otherwise accepted argv refuse exemption",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues/367 --jq '$unknown'"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  },
+  {
+    "label": "r6 formatter input must equal downloaded output",
+    "event": {
+      "name": "command_execution",
+      "input": "curl https://github.com/3MUl0R/ThermiteSchematics/issues/367 -o /tmp/output.json && bun -e 'const d=await Bun.file(\"/tmp/other.json\").json(); console.log(JSON.stringify(d.map(x=>({title:x.title}))))'"
+    },
+    "class": "issue-lookup",
+    "classAt116": "source-read",
+    "r7Reason": "Static parts aggregate after local-only code/data is classified other; no capability-based fallback."
+  }
+]

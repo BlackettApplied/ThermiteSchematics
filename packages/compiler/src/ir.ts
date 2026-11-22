@@ -1,3 +1,5 @@
+import { sourceRef } from "./source-ref.js";
+import { compareConductiveElementId } from "./ordering.js";
 import { posix } from "node:path";
 
 import {
@@ -20,7 +22,6 @@ import type {
 } from "./expansion.js";
 import type {
   CableConductorId,
-  ConductiveElementId,
   GraphNormalizationResult,
   InstanceRef,
   IrCableConductor,
@@ -112,40 +113,6 @@ function compareCableConductorId(
   );
 }
 
-const CONDUCTIVE_KIND_ORDER: Record<ConductiveElementId["kind"], number> = {
-  wire: 0,
-  jumper: 1,
-  cable_conductor: 2,
-};
-
-export function compareConductiveElementId(
-  left: ConductiveElementId,
-  right: ConductiveElementId,
-): number {
-  const kindOrder =
-    CONDUCTIVE_KIND_ORDER[left.kind] - CONDUCTIVE_KIND_ORDER[right.kind];
-
-  if (kindOrder !== 0) {
-    return kindOrder;
-  }
-
-  if (left.kind === "cable_conductor") {
-    const rightConductor = right as Extract<
-      ConductiveElementId,
-      { kind: "cable_conductor" }
-    >;
-    return (
-      compareText(left.cableUid, rightConductor.cableUid) ||
-      compareText(left.conductorId, rightConductor.conductorId)
-    );
-  }
-
-  return compareText(
-    left.uid,
-    (right as Extract<ConductiveElementId, { kind: typeof left.kind }>).uid,
-  );
-}
-
 export function compareSourceRef(left: SourceRef, right: SourceRef): number {
   return (
     compareText(left.file, right.file) ||
@@ -159,19 +126,6 @@ function compareInstanceRef(left: InstanceRef, right: InstanceRef): number {
   const kindOrder =
     (left.kind === "device" ? 0 : 1) - (right.kind === "device" ? 0 : 1);
   return kindOrder || compareText(left.uid, right.uid);
-}
-
-function sourceRef(
-  document: LoadedDocument<unknown>,
-  jsonPointer: string,
-): SourceRef {
-  const location = document.nodes.get(jsonPointer)?.value;
-  return {
-    file: normalizeDiagnosticFile(document.file),
-    line: location?.line ?? 1,
-    column: location?.column ?? 1,
-    jsonPointer,
-  };
 }
 
 function libraryFilePath(
@@ -706,3 +660,5 @@ export function serializeIr(ir: ElectricalIr): string {
   const canonical = canonicalizeIr(ir);
   return `${stringifyJson(canonical, irKeyOrder)}\n`;
 }
+
+export { compareConductiveElementId } from "./ordering.js";

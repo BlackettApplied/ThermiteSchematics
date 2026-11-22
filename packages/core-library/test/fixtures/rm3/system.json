@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "RM3 generic interface inventory",
+    "description": "Synthetic inventory and wiring samples, not a selected, rated or operational machine design."
+  },
+  "sources": ["starter.json", "automation.json", "specimens.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

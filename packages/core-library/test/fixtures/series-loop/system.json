@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Synthetic series-powered RM3 copy",
+    "description": "Separate powered copy of the generic RM3 inventory. No selected hardware, input mode, isolation, bonding suitability or loop voltage budget is assessed."
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "core",
+      "version": "0.2.0"
+    }
+  ]
+}

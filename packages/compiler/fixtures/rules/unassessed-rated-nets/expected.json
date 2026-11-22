@@ -1,0 +1,11 @@
+[
+  {
+    "file": "system.json",
+    "line": 3,
+    "column": 14,
+    "jsonPointer": "/project",
+    "code": "I304",
+    "severity": "info",
+    "message": "Voltage compatibility is unassessed on rated nets without voltage facts in potentials (1 net: [\"N1.ac, N1.ac2 [net:sha256:ddb6e17c5cb627ba84f149821c3f51ea8fbe64fa4ae4aee14309c20974fd988b]\"]). Ratings describe equipment capability; potentials declare net intent."
+  }
+]

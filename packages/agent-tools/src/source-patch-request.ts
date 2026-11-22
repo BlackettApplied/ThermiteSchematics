@@ -1,3 +1,4 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import { Buffer } from "node:buffer";
 
 import { appendJsonPointer } from "@thermite/schema";
@@ -17,10 +18,8 @@ import {
   recordValue,
   requiredArray,
   requiredBoolean,
-  requiredRecord,
   requiredString,
   requiredValue,
-  type JsonRecord,
 } from "./common/request-validation.js";
 
 export type SourcePatchOperation =
@@ -65,9 +64,15 @@ const REQUEST_FIELDS = new Set([
 const FILE_FIELDS = new Set(["path", "expectedIntegrity", "operations"]);
 const VALUE_OPERATION_FIELDS = new Set(["op", "path", "value"]);
 const REMOVE_OPERATION_FIELDS = new Set(["op", "path"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
-const PATCH_FORMATS = new Set(["json-patch/0.1"]);
-const PATCH_OPERATIONS = new Set(["test", "add", "remove", "replace"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["apply-source-patch"]["/format"],
+);
+const PATCH_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["apply-source-patch"]["/patchFormat"],
+);
+const PATCH_OPERATIONS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["apply-source-patch"]["/files/*/operations/*/op"],
+);
 const CONTROL_CHARACTER_PATTERN = /[\u0000-\u001f\u007f-\u009f]/u;
 const DRIVE_PREFIX_PATTERN = /^[A-Za-z]:/u;
 

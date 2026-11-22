@@ -1,0 +1,28 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:terminal-pe",
+      "description": "Provisional generic single protective-earth terminal point; the project must wire the actual protective bonding path.",
+      "terminals": {
+        "PE": {
+          "role": "protective_earth",
+          "required": true
+        }
+      },
+      "functions": {
+        "earth": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "internal_relations": [],
+      "symbol": "thermite:terminal-strip",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: One PE landing point is required for the sole protective bonding interface. Multiple wires on PE share that same physical point. Optional: none in this interface. Unmodeled: separate landings, rail/chassis bonds, jumpers and shields; no automatic bond or commoning to another terminal is implied. Select hardware and add bonding, conductor and current suitability data. PE is a generic protective-earth label, not a manufacturer pinout."
+      }
+    }
+  ]
+}

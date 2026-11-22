@@ -1,0 +1,359 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:dual-primary",
+      "symbol": "thermite:transformer",
+      "terminals": {
+        "H1": {
+          "connection_policy": "shared"
+        },
+        "H2": {
+          "connection_policy": "shared"
+        },
+        "H3": {
+          "connection_policy": "shared"
+        },
+        "H4": {
+          "connection_policy": "shared"
+        },
+        "X1": {
+          "connection_policy": "shared"
+        },
+        "X2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "primary1": {
+          "kind": "load",
+          "terminals": ["H1", "H2"]
+        },
+        "primary2": {
+          "kind": "load",
+          "terminals": ["H3", "H4"]
+        },
+        "secondary": {
+          "kind": "source",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "primary1",
+          "to": "secondary"
+        },
+        {
+          "relation": "feeds_internal",
+          "from": "primary2",
+          "to": "secondary"
+        }
+      ]
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:pressure",
+      "symbol": "thermite:pressure-switch",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "contact": {
+          "kind": "contact",
+          "terminals": ["1", "2"],
+          "normal_state": "open"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:float",
+      "symbol": "thermite:level-switch",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "contact": {
+          "kind": "contact",
+          "terminals": ["1", "2"],
+          "normal_state": "closed"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:level",
+      "symbol": "thermite:level-sensor",
+      "terminals": {
+        "+": {
+          "connection_policy": "shared"
+        },
+        "-": {
+          "connection_policy": "shared"
+        },
+        "S": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "sensor": {
+          "kind": "other",
+          "terminals": ["+", "-", "S"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:conductivity",
+      "symbol": "thermite:conductivity-probe",
+      "terminals": {
+        "A": {
+          "connection_policy": "shared"
+        },
+        "B": {
+          "connection_policy": "shared"
+        },
+        "C": {
+          "connection_policy": "shared"
+        },
+        "D": {
+          "connection_policy": "shared"
+        },
+        "E": {
+          "connection_policy": "shared"
+        },
+        "F": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "probe": {
+          "kind": "other",
+          "terminals": ["A", "B", "C", "D", "E", "F"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:outlet",
+      "symbol": "thermite:receptacle",
+      "terminals": {
+        "L": {
+          "connection_policy": "shared"
+        },
+        "N": {
+          "connection_policy": "shared"
+        },
+        "PE": {
+          "connection_policy": "shared",
+          "role": "protective_earth"
+        }
+      },
+      "functions": {
+        "power": {
+          "kind": "load",
+          "terminals": ["L", "N"]
+        },
+        "bond": {
+          "kind": "bus",
+          "terminals": ["PE"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:conversion",
+      "symbol": "thermite:dc-supply",
+      "terminals": {
+        "L": {
+          "connection_policy": "shared"
+        },
+        "N": {
+          "connection_policy": "shared"
+        },
+        "+": {
+          "connection_policy": "shared"
+        },
+        "-": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "input": {
+          "kind": "load",
+          "terminals": ["L", "N"]
+        },
+        "output": {
+          "kind": "source",
+          "terminals": ["+", "-"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      },
+      "circuitSymbols": {
+        "input": "ac-input"
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "input",
+          "to": "output"
+        }
+      ]
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:interface12",
+      "symbol": "thermite:io-module",
+      "terminals": {
+        "1": {
+          "connection_policy": "shared"
+        },
+        "2": {
+          "connection_policy": "shared"
+        },
+        "3": {
+          "connection_policy": "shared"
+        },
+        "4": {
+          "connection_policy": "shared"
+        },
+        "5": {
+          "connection_policy": "shared"
+        },
+        "6": {
+          "connection_policy": "shared"
+        },
+        "7": {
+          "connection_policy": "shared"
+        },
+        "8": {
+          "connection_policy": "shared"
+        },
+        "9": {
+          "connection_policy": "shared"
+        },
+        "10": {
+          "connection_policy": "shared"
+        },
+        "11": {
+          "connection_policy": "shared"
+        },
+        "12": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "connector": {
+          "kind": "other",
+          "terminals": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"
+          ]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:supply",
+      "symbol": "thermite:power-source",
+      "terminals": {
+        "L": {
+          "connection_policy": "shared"
+        },
+        "N": {
+          "connection_policy": "shared"
+        }
+      },
+      "functions": {
+        "source": {
+          "kind": "source",
+          "terminals": ["L", "N"]
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Ratings, housing and optional interfaces are unspecified."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "functional-symbols:level-output",
+      "symbol": "thermite:level-sensor",
+      "terminals": {
+        "P": {},
+        "N": {},
+        "Q": {}
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["P", "N"]
+        },
+        "output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["Q"]
+        }
+      },
+      "circuitSymbols": {
+        "supply": "load"
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Original generic teaching interface; not an exact manufacturer pinout. Optional interfaces and sensor behavior are unspecified."
+      }
+    }
+  ]
+}

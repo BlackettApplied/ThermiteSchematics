@@ -1,0 +1,45 @@
+{
+  "remove": ["W31"],
+  "endpoints": {
+    "W30": [
+      {
+        "device": "PS1",
+        "terminal": "+"
+      },
+      {
+        "device": "S0",
+        "terminal": "11"
+      }
+    ],
+    "W36": [
+      {
+        "device": "S2",
+        "terminal": "14"
+      },
+      {
+        "device": "K1",
+        "terminal": "A1"
+      }
+    ],
+    "W37": [
+      {
+        "device": "R1",
+        "terminal": "14"
+      },
+      {
+        "device": "S2",
+        "terminal": "14"
+      }
+    ],
+    "W38": [
+      {
+        "device": "K1",
+        "terminal": "A1"
+      },
+      {
+        "device": "R1",
+        "terminal": "A1"
+      }
+    ]
+  }
+}

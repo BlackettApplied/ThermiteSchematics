@@ -1,0 +1,527 @@
+{
+  "objects": [
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000001",
+      "designation": "C1",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000002",
+      "designation": "C2",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000003",
+      "designation": "C3",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000004",
+      "designation": "C4",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000005",
+      "designation": "C5",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000006",
+      "designation": "C6",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000007",
+      "designation": "C7",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000008",
+      "designation": "C8",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000009",
+      "designation": "C9",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000010",
+      "designation": "C10",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000011",
+      "designation": "C11",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000012",
+      "designation": "C12",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000013",
+      "designation": "C13",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000014",
+      "designation": "C14",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000015",
+      "designation": "C15",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000016",
+      "designation": "C16",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000017",
+      "designation": "C17",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000018",
+      "designation": "C18",
+      "type": "circuit-pagination-fixture:contact"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000051",
+      "designation": "T1",
+      "type": "circuit-pagination-fixture:terminal"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000052",
+      "designation": "T2",
+      "type": "circuit-pagination-fixture:terminal"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000053",
+      "designation": "T3",
+      "type": "circuit-pagination-fixture:terminal"
+    },
+    {
+      "kind": "device",
+      "uid": "73000000-0000-4000-8000-000000000054",
+      "designation": "L1",
+      "type": "circuit-pagination-fixture:lamp"
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000101",
+      "designation": "W1",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "1"
+        },
+        {
+          "device": "C1",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "200",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000102",
+      "designation": "W2",
+      "endpoints": [
+        {
+          "device": "C1",
+          "terminal": "2"
+        },
+        {
+          "device": "C2",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "201",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000103",
+      "designation": "W3",
+      "endpoints": [
+        {
+          "device": "C2",
+          "terminal": "2"
+        },
+        {
+          "device": "C3",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "202",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000104",
+      "designation": "W4",
+      "endpoints": [
+        {
+          "device": "C3",
+          "terminal": "2"
+        },
+        {
+          "device": "C4",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "203",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "cable",
+      "uid": "73000000-0000-4000-8000-000000000105",
+      "designation": "CBL1",
+      "type": "circuit-pagination-fixture:cord",
+      "conductors": [
+        {
+          "id": "1",
+          "endpoints": [
+            {
+              "device": "C4",
+              "terminal": "2"
+            },
+            {
+              "device": "C5",
+              "terminal": "1"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000106",
+      "designation": "W6",
+      "endpoints": [
+        {
+          "device": "C5",
+          "terminal": "2"
+        },
+        {
+          "device": "C6",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "205",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000107",
+      "designation": "W7",
+      "endpoints": [
+        {
+          "device": "C6",
+          "terminal": "2"
+        },
+        {
+          "device": "C7",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "206",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000108",
+      "designation": "W8",
+      "endpoints": [
+        {
+          "device": "C7",
+          "terminal": "2"
+        },
+        {
+          "device": "C8",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "207",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000109",
+      "designation": "W9",
+      "endpoints": [
+        {
+          "device": "C8",
+          "terminal": "2"
+        },
+        {
+          "device": "C9",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "208",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000110",
+      "designation": "W10",
+      "endpoints": [
+        {
+          "device": "C9",
+          "terminal": "2"
+        },
+        {
+          "device": "C10",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "209",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000111",
+      "designation": "W11",
+      "endpoints": [
+        {
+          "device": "C10",
+          "terminal": "2"
+        },
+        {
+          "device": "C11",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "210",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000112",
+      "designation": "W12",
+      "endpoints": [
+        {
+          "device": "C11",
+          "terminal": "2"
+        },
+        {
+          "device": "C12",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "211",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000113",
+      "designation": "W13",
+      "endpoints": [
+        {
+          "device": "C12",
+          "terminal": "2"
+        },
+        {
+          "device": "C13",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "212",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000114",
+      "designation": "W14",
+      "endpoints": [
+        {
+          "device": "C13",
+          "terminal": "2"
+        },
+        {
+          "device": "C14",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "213",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000115",
+      "designation": "W15",
+      "endpoints": [
+        {
+          "device": "C14",
+          "terminal": "2"
+        },
+        {
+          "device": "C15",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "214",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000116",
+      "designation": "W16",
+      "endpoints": [
+        {
+          "device": "C15",
+          "terminal": "2"
+        },
+        {
+          "device": "C16",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "215",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000117",
+      "designation": "W17",
+      "endpoints": [
+        {
+          "device": "C16",
+          "terminal": "2"
+        },
+        {
+          "device": "C17",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "216",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000118",
+      "designation": "W18",
+      "endpoints": [
+        {
+          "device": "C17",
+          "terminal": "2"
+        },
+        {
+          "device": "C18",
+          "terminal": "1"
+        }
+      ],
+      "properties": {
+        "label": "217",
+        "size": "18 AWG",
+        "color": "Blue"
+      }
+    },
+    {
+      "kind": "jumper",
+      "uid": "73000000-0000-4000-8000-000000000119",
+      "designation": "JP1",
+      "endpoints": [
+        {
+          "device": "C18",
+          "terminal": "2"
+        },
+        {
+          "device": "T2",
+          "terminal": "1"
+        }
+      ]
+    },
+    {
+      "kind": "wire",
+      "uid": "73000000-0000-4000-8000-000000000180",
+      "designation": "W-OUTSIDE",
+      "endpoints": [
+        {
+          "device": "T1",
+          "terminal": "1"
+        },
+        {
+          "device": "T3",
+          "terminal": "1"
+        }
+      ]
+    }
+  ]
+}

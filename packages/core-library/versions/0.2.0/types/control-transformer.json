@@ -1,0 +1,48 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:control-transformer",
+      "description": "Provisional generic control transformer with one primary and one secondary winding; voltage ratio and VA are unspecified.",
+      "terminals": {
+        "H1": {
+          "role": "primary",
+          "required": true
+        },
+        "H2": {
+          "role": "primary",
+          "required": true
+        },
+        "X1": {
+          "role": "secondary"
+        },
+        "X2": {
+          "role": "secondary"
+        }
+      },
+      "functions": {
+        "primary": {
+          "kind": "load",
+          "terminals": ["H1", "H2"]
+        },
+        "secondary": {
+          "kind": "source",
+          "terminals": ["X1", "X2"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "primary",
+          "to": "secondary"
+        }
+      ],
+      "symbol": "thermite:transformer",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Primary H1/H2 and secondary X1/X2 winding pairs are modeled. Primary H1/H2 are required for the modeled supply. The feeds_internal relation is non-conductive; it does not short either winding or infer a secondary bond. Optional: secondary output use is application-dependent; require both X1/X2 for each used output circuit in project review. Unmodeled: taps, multiple windings, electrostatic shield and frame/bond terminals. Author must select hardware and add voltages, frequency, VA, protection and bonding arrangements. Markings use a generic H/X winding convention, not a manufacturer pinout."
+      }
+    }
+  ]
+}

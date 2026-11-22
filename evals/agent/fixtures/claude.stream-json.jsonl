@@ -1,0 +1,6 @@
+{"type":"system","subtype":"init","session_id":"fixture"}
+{"type":"assistant","message":{"id":"m1","usage":{"input_tokens":10,"cache_read_input_tokens":4,"output_tokens":2},"content":[{"type":"tool_use","id":"t1","name":"Read","input":{"file_path":"/engine/docs/modeling.md"}}]}}
+{"type":"assistant","message":{"id":"m1","usage":{"input_tokens":10,"cache_read_input_tokens":4,"output_tokens":2},"content":[{"type":"tool_use","id":"t1","name":"Read","input":{"file_path":"/engine/docs/modeling.md"}}]}}
+{"type":"user","message":{"content":[{"type":"tool_result","tool_use_id":"t1","content":"Modeling guide fixture"}]}}
+{"type":"assistant","message":{"id":"m2","usage":{"input_tokens":20,"output_tokens":3},"content":[{"type":"text","text":"Missing return remains deferred."}]}}
+{"type":"result","result":"Missing return remains deferred.","usage":{"input_tokens":30,"cache_read_input_tokens":4,"output_tokens":5}}

@@ -8,13 +8,13 @@ contact naming and remaining physical-model gaps.
 Run from the repository root after building:
 
 ```sh
-node libraries/stahl-pilot/examples/8570-12-407/verify.mjs --isolated
+bun libraries/stahl-pilot/examples/8570-12-407/verify.mjs --isolated
 ```
 
 After the full library manifest and this project's lock have been integrated:
 
 ```sh
-node libraries/stahl-pilot/examples/8570-12-407/verify.mjs
+bun libraries/stahl-pilot/examples/8570-12-407/verify.mjs
 ```
 
 Add `--output-dir <directory>` to save the generated `plug.svg` and diagnostic

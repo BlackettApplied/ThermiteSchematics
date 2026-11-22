@@ -114,12 +114,13 @@ describe("presentation grouping and labels", () => {
         "device",
         "function",
         "rail",
+        "off-view",
         "terminal",
         "conductor",
         "net",
       ]),
     );
-    for (const label of labels) {
+    for (const label of labels.filter((l) => l.role !== "off-view")) {
       const width = Math.max(
         12,
         Number((6 + 6.2 * [...label.text].length).toFixed(3)),

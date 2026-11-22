@@ -1,0 +1,121 @@
+import { expect, it } from "vitest";
+import {
+  allocateNavigationSlots,
+  type SheetSlotRequest,
+} from "../src/packet/navigation-slots.js";
+const shape = (id: string, mode: "local" | "self-located", w: number) => ({
+  id,
+  mode,
+  inkMm: { x: 0, y: 0, w, h: 6 },
+  maximumForms: ["100.D1"],
+  wrapWidthMm: w - 2,
+});
+function request(): SheetSlotRequest {
+  return {
+    owner: { x: 40, y: 30, w: 20, h: 20 },
+    locality: {
+      anchorMm: { x: 50, y: 40 },
+      frameMm: { x: 40, y: 30, w: 20, h: 20 },
+      framesMm: [],
+      ownerLocation: { sheet: 1, zone: "C3" },
+    },
+    reservation: {
+      id: "shapes",
+      ownerOccurrence: "owner",
+      ownerAppearance: "owner",
+      profileId: "literal-shapes",
+      space: "sheet-slot",
+      inkMm: { x: 0, y: 0, w: 200, h: 6 },
+      maximumForms: ["100.D1"],
+      shapes: [
+        shape("local-wide", "local", 200),
+        shape("self-first", "self-located", 20),
+        shape("local-narrow", "local", 20),
+        shape("local-last", "local", 18),
+      ],
+    },
+  } as SheetSlotRequest;
+}
+const svg =
+  '<svg viewBox="0 0 300 80"><rect class="device-frame" x="40" y="30" width="20" height="20" fill="black"/></svg>';
+it("tries every local shape before any self-located envelope", () => {
+  const r = allocateNavigationSlots(
+    [request()],
+    { x: 0, y: 0, w: 120, h: 80 },
+    svg,
+    1,
+  )[0]!;
+  expect(r.allocatedMm).toMatchObject({
+    placement: "local",
+    shapeId: "local-narrow",
+    rect: { w: 20, h: 6 },
+  });
+  expect(r.inkMm).toEqual({ x: 0, y: 0, w: 20, h: 6 });
+});
+it("uses a self-located envelope only after no local shape fits", () => {
+  const r = allocateNavigationSlots(
+    [request()],
+    { x: 200, y: 0, w: 40, h: 80 },
+    svg,
+    1,
+  )[0]!;
+  expect(r.allocatedMm).toMatchObject({
+    placement: "self-located",
+    shapeId: "self-first",
+    rect: { x: 200, w: 20, h: 6 },
+  });
+});
+it("uses fixed shape order and returns identical allocations on repeated runs", () => {
+  const r = request();
+  r.reservation.inkMm = { x: 0, y: 0, w: 20, h: 6 };
+  const shapes = (
+    r.reservation as unknown as { shapes: ReturnType<typeof shape>[] }
+  ).shapes;
+  shapes[0] = shape("local-wide", "local", 20);
+  const first = allocateNavigationSlots(
+    [r],
+    { x: 0, y: 0, w: 120, h: 80 },
+    svg,
+    1,
+  );
+  expect(first[0]!.allocatedMm).toMatchObject({
+    shapeId: "local-wide",
+    rect: { w: 20 },
+  });
+  expect(
+    allocateNavigationSlots([r], { x: 0, y: 0, w: 120, h: 80 }, svg, 1),
+  ).toEqual(first);
+  expect(
+    allocateNavigationSlots([r], { x: 0, y: 0, w: 120, h: 80 }, svg, 1),
+  ).toEqual(first);
+});
+
+import { maximumRepeatForms } from "../src/packet/navigation-labels.js";
+import { printableTextMetrics } from "../src/text-metrics.js";
+it("reserves fixed maximum tokens and multiplicity in every mode and shape", () => {
+  const r = maximumRepeatForms("SRC1", "functions", [3, 2], "100.D1");
+  expect(
+    r.shapes.filter((s) => s.mode === "local").map((s) => s.wrapWidthMm),
+  ).toEqual([79.843, 70, 56, 42, 28]);
+  expect(
+    r.shapes.filter((s) => s.mode === "self-located").map((s) => s.wrapWidthMm),
+  ).toEqual([94.362, 84, 70, 56, 42, 28]);
+  for (const s of r.shapes) {
+    const prefix = s.mode === "local" ? "SRC1: " : "SRC1 (100.D1): ";
+    expect(s.maximumForms.map((f) => f.replace(/\n/g, " "))).toEqual([
+      prefix + "Also shown 100.D1, 100.D1, 100.D1",
+      prefix + "Repeat of 100.D1, 100.D1 (same functions)",
+      prefix + "Also shown 100.D1, 100.D1 Repeat of 100.D1 (same function)",
+    ]);
+    for (const form of s.maximumForms)
+      for (const line of form.split("\n")) {
+        const m = printableTextMetrics(line, 3.502);
+        expect(
+          Math.max(m.advance, m.right) - Math.min(m.left, 0) + 2,
+        ).toBeLessThanOrEqual(s.inkMm.w + 0.000001);
+      }
+    expect(s.inkMm.h).toBe(
+      Math.max(...s.maximumForms.map((f) => f.split("\n").length)) * 4.8 + 1,
+    );
+  }
+});

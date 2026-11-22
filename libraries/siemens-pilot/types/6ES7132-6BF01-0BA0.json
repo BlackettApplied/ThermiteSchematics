@@ -7,6 +7,10 @@
       "description": "ET 200SP DQ 8 x 24 V DC / 0.5 A ST",
       "category": "io-module",
       "symbol": "thermite:io-module",
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Represents the DQ module field terminals on the documented type A0 BaseUnit arrangement without AUX terminals. BaseUnit/backplane P1/P2/AUX contacts and distribution are outside the model. Select and review the actual module/BaseUnit assembly; this field-interface abstraction is not a complete physical connection inventory."
+      },
       "catalog": {
         "manufacturer": "Siemens",
         "orderNumber": "6ES7132-6BF01-0BA0",

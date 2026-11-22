@@ -1,0 +1,272 @@
+[
+  {
+    "source": "examples/machine-demo/libraries/core/types/breaker-3p.json",
+    "typeId": "core:breaker-3p",
+    "kind": "power"
+  },
+  {
+    "source": "examples/machine-demo/libraries/core/types/contactor-3p-1no.json",
+    "typeId": "core:contactor-3p-1no",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/1sca022456r9710.json",
+    "typeId": "abb-pilot:1sca022456r9710",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/1sca022710r0100.json",
+    "typeId": "abb-pilot:1sca022710r0100",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds200936r0001.json",
+    "typeId": "abb-pilot:2cds200936r0001",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds272001r0024.json",
+    "typeId": "abb-pilot:2cds272001r0024",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds272001r0044.json",
+    "typeId": "abb-pilot:2cds272001r0044",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds272001r0064.json",
+    "typeId": "abb-pilot:2cds272001r0064",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds272001r0164.json",
+    "typeId": "abb-pilot:2cds272001r0164",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2cds272001r0204.json",
+    "typeId": "abb-pilot:2cds272001r0204",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/abb-pilot/types/2csr272140r1164.json",
+    "typeId": "abb-pilot:2csr272140r1164",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24264.json",
+    "typeId": "schneider-pilot:24264",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24266.json",
+    "typeId": "schneider-pilot:24266",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24267.json",
+    "typeId": "schneider-pilot:24267",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24268.json",
+    "typeId": "schneider-pilot:24268",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24270.json",
+    "typeId": "schneider-pilot:24270",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24280.json",
+    "typeId": "schneider-pilot:24280",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24284.json",
+    "typeId": "schneider-pilot:24284",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24287.json",
+    "typeId": "schneider-pilot:24287",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24290.json",
+    "typeId": "schneider-pilot:24290",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/24587.json",
+    "typeId": "schneider-pilot:24587",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p05.json",
+    "typeId": "schneider-pilot:gv2-p05",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p06.json",
+    "typeId": "schneider-pilot:gv2-p06",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p07.json",
+    "typeId": "schneider-pilot:gv2-p07",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p08.json",
+    "typeId": "schneider-pilot:gv2-p08",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p10.json",
+    "typeId": "schneider-pilot:gv2-p10",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p14.json",
+    "typeId": "schneider-pilot:gv2-p14",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p16.json",
+    "typeId": "schneider-pilot:gv2-p16",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p20.json",
+    "typeId": "schneider-pilot:gv2-p20",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p22.json",
+    "typeId": "schneider-pilot:gv2-p22",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-p32.json",
+    "typeId": "schneider-pilot:gv2-p32",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv2-rt10.json",
+    "typeId": "schneider-pilot:gv2-rt10",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gv3-a02.json",
+    "typeId": "schneider-pilot:gv3-a02",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/gvae20.json",
+    "typeId": "schneider-pilot:gvae20",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/la-dn22.json",
+    "typeId": "schneider-pilot:la-dn22",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/lad-n22.json",
+    "typeId": "schneider-pilot:lad-n22",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/lad-n40.json",
+    "typeId": "schneider-pilot:lad-n40",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/lc1-d65p7.json",
+    "typeId": "schneider-pilot:lc1-d65p7",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/schneider-pilot/types/zbe-205.json",
+    "typeId": "schneider-pilot:zbe-205",
+    "kind": "control"
+  },
+  {
+    "source": "libraries/stahl-pilot/types/8527-21-11-0001.json",
+    "typeId": "stahl-pilot:8527-21-11-0001",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/stahl-pilot/types/8570-11-306.json",
+    "typeId": "stahl-pilot:8570-11-306",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/stahl-pilot/types/8570-11-407.json",
+    "typeId": "stahl-pilot:8570-11-407",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/stahl-pilot/types/8575-13-200.json",
+    "typeId": "stahl-pilot:8575-13-200",
+    "kind": "power"
+  },
+  {
+    "source": "libraries/stahl-pilot/types/8575-14-306.json",
+    "typeId": "stahl-pilot:8575-14-306",
+    "kind": "power"
+  },
+  {
+    "source": "packages/compiler/fixtures/device-expansion/library/types/types.json",
+    "typeId": "expansion:all-kinds",
+    "kind": "unmapped"
+  },
+  {
+    "source": "packages/core-library/library/types/breaker-3p.json",
+    "typeId": "core:breaker-3p",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/library/types/contactor-3p-1no.json",
+    "typeId": "core:contactor-3p-1no",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/versions/0.2.0/types/breaker-2p.json",
+    "typeId": "core:breaker-2p",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/versions/0.2.0/types/breaker-3p.json",
+    "typeId": "core:breaker-3p",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/versions/0.2.0/types/contactor-3p-1no.json",
+    "typeId": "core:contactor-3p-1no",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/versions/0.2.0/types/disconnect-3p.json",
+    "typeId": "core:disconnect-3p",
+    "kind": "power"
+  },
+  {
+    "source": "packages/core-library/versions/0.2.0/types/relay-1co.json",
+    "typeId": "core:relay-1co",
+    "kind": "control"
+  },
+  {
+    "source": "packages/schema/fixtures/valid/device-type-breaker-3p.json",
+    "typeId": "core:breaker-3p",
+    "kind": "power"
+  },
+  {
+    "source": "packages/schema/fixtures/valid/device-type-contactor-3p-1no.json",
+    "typeId": "core:contactor-3p-1no",
+    "kind": "power"
+  }
+]

@@ -4,6 +4,7 @@ import {
   mkdir,
   mkdtemp,
   readdir,
+  realpath,
   rm,
   writeFile,
 } from "node:fs/promises";
@@ -69,8 +70,10 @@ async function assertOrdinaryTree(path: string): Promise<void> {
 export async function createPatchProjectFixture(
   kind: PatchFixtureKind,
 ): Promise<PatchProjectFixture> {
-  const root = await mkdtemp(
-    join(resolve(tmpdir()), `thermite-schematics-m7-${kind}-`),
+  // Diagnostics name canonical paths. Resolve temporary-directory aliases
+  // (including Windows RUNNER~1) before deriving expected fixture paths.
+  const root = await realpath(
+    await mkdtemp(join(resolve(tmpdir()), `thermite-schematics-m7-${kind}-`)),
   );
   const projectRoot = join(root, "project");
   try {

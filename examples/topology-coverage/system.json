@@ -1,0 +1,14 @@
+{
+  "format": "electrical-system/0.1",
+  "project": {
+    "name": "Connector assembly fixture"
+  },
+  "sources": ["source.json"],
+  "libraries": [
+    {
+      "name": "connector-fixture",
+      "version": "0.1.0",
+      "path": "library"
+    }
+  ]
+}

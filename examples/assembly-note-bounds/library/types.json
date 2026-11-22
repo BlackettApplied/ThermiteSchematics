@@ -1,0 +1,69 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "assembly-note-fixture:rack",
+      "description": "Synthetic socket rack",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "X1": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X2": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X3": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X4": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X5": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X6": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X7": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X8": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        },
+        "X9": {
+          "connector": "Synthetic named socket",
+          "description": "Original connection point"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Generic connector inventory; no supply or terminal pinout modeled."
+      }
+    },
+    {
+      "kind": "device_type",
+      "id": "assembly-note-fixture:field",
+      "description": "Synthetic field interface",
+      "terminals": {},
+      "functions": {},
+      "connectorPorts": {
+        "P": {
+          "connector": "Synthetic socket"
+        }
+      },
+      "connectionCoverage": {
+        "status": "partial",
+        "notes": "Generic connector interface; cable pin wiring remains unresolved."
+      }
+    }
+  ]
+}

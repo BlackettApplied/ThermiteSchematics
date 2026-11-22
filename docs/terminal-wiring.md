@@ -3,6 +3,8 @@
 A packet can include `wiring-view-request/0.1` to draw a selected set of actual
 wires, jumpers and fully terminated cable cores, including branching power
 and relay wiring. ELK places terminal blocks and routes orthogonal paths.
+Its network-simplex placement keeps long branches economical when device-tag
+headers have different heights; fixed terminal sides and route validation apply.
 The original symbol renderer and six guarded agent commands remain unchanged.
 
 ```json
@@ -51,3 +53,10 @@ This optional object belongs under the relation's `connection`. Length is in met
 and the network schedule. It does not create eight electrical wire cores, assert
 shield bonding, certify route suitability or add an electrical cable to the
 wire/core inventory. The communication schedule is the Ethernet cable inventory.
+
+Terminal row ordinates are rounded to whole layout units before ELK runs;
+measured tag/header reservations and device dimensions retain their original
+precision. Circles and captions use those declared rows. Fixed-port identity
+validation rejects any returned port displacement over 0.01 layout units on
+either axis, and route endpoints must also meet the declared ports. Routes are
+never snapped after layout to repair a landing.

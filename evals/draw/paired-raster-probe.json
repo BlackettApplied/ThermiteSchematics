@@ -1,0 +1,2355 @@
+{
+  "format": "thermite-draw-residual-raster-probe/1.0",
+  "date": "2026-11-15",
+  "issue": 307,
+  "browser": "145.0.7632.6",
+  "engine": "96ed8e4",
+  "source": "Unchanged base SVG only; measureSheet was not invoked. Original lane receipts remain hash-addressed below.",
+  "configurations": 7,
+  "regions": 5,
+  "samplesPerRegionPerConfiguration": 10,
+  "totalSamples": 350,
+  "distanceReference": "Sample 0 in the same region/configuration; PNG hashes count exact byte variants.",
+  "context": {
+    "deviceScaleFactor": 3.125,
+    "viewport": {
+      "width": 1800,
+      "height": 1800
+    },
+    "offline": true,
+    "serviceWorkers": "block",
+    "javaScriptEnabled": false
+  },
+  "metadataTiming": "GPU metadata before page creation in first probe; after PNG capture in thread/Skia probes.",
+  "originalReceipts": [
+    {
+      "receipt": "gpu-residual-probe.json",
+      "sha256": "d9a660d18b5a32d03dae7bca140bbb5c4d276c6c7b3c3fd021b52c835a7707f2"
+    },
+    {
+      "receipt": "gpu-thread-probe.json",
+      "sha256": "e1a85ccd3d42ab564eb076386deda94ef59b496011e614f809b93cf4573c44f1"
+    },
+    {
+      "receipt": "gpu-skia-probe.json",
+      "sha256": "a80c5cc9cc2b454480b258d873d6560ee59391daaa98fc1ed05144d224650157"
+    }
+  ],
+  "results": [
+    {
+      "configuration": "raster-only",
+      "args": ["--disable-gpu-rasterization"],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-only",
+      "args": ["--disable-gpu-rasterization"],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-only",
+      "args": ["--disable-gpu-rasterization"],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-only",
+      "args": ["--disable-gpu-rasterization"],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "raster-only",
+      "args": ["--disable-gpu-rasterization"],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu"],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu"],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu"],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu"],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu"],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "compositor-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu-compositing"],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        }
+      ]
+    },
+    {
+      "configuration": "compositor-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu-compositing"],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        }
+      ]
+    },
+    {
+      "configuration": "compositor-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu-compositing"],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "compositor-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu-compositing"],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "compositor-disabled",
+      "args": ["--disable-gpu-rasterization", "--disable-gpu-compositing"],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-single-thread",
+      "args": ["--disable-gpu-rasterization", "--num-raster-threads=1"],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-single-thread",
+      "args": ["--disable-gpu-rasterization", "--num-raster-threads=1"],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        }
+      ]
+    },
+    {
+      "configuration": "raster-single-thread",
+      "args": ["--disable-gpu-rasterization", "--num-raster-threads=1"],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-single-thread",
+      "args": ["--disable-gpu-rasterization", "--num-raster-threads=1"],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "raster-single-thread",
+      "args": ["--disable-gpu-rasterization", "--num-raster-threads=1"],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled-single-thread",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--num-raster-threads=1"
+      ],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled-single-thread",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--num-raster-threads=1"
+      ],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled-single-thread",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--num-raster-threads=1"
+      ],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled-single-thread",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--num-raster-threads=1"
+      ],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-disabled-single-thread",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--num-raster-threads=1"
+      ],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "skia-baseline",
+      "args": ["--disable-gpu-rasterization", "--disable-skia-runtime-opts"],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "skia-baseline",
+      "args": ["--disable-gpu-rasterization", "--disable-skia-runtime-opts"],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 1,
+      "samples": [
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "skia-baseline",
+      "args": ["--disable-gpu-rasterization", "--disable-skia-runtime-opts"],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "skia-baseline",
+      "args": ["--disable-gpu-rasterization", "--disable-skia-runtime-opts"],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "skia-baseline",
+      "args": ["--disable-gpu-rasterization", "--disable-skia-runtime-opts"],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-skia-baseline",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--disable-skia-runtime-opts"
+      ],
+      "file": "operator-console-top-to-bottom/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.4,
+        "w": 7.4,
+        "x": 253.475,
+        "y": 86.3
+      },
+      "sourceSha256": "cf4e4776803dfd74bc87ca8f03b135c0de1aac718bc844f49389e97a09081944",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "cdf8592e5007cc9da5b6cdc498b7c0426f3aa4c58c5faee93aebd784a382b5bc",
+          "changedPixels": 5,
+          "maxChannelDelta": 2
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "9971cb402a4bd97d6d5bc0fbda5b59e2023439f11579b83e944d74782e6166e1",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-skia-baseline",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--disable-skia-runtime-opts"
+      ],
+      "file": "self-loop-labels-left-to-right/DQ-12-packet-ad5ecee99b.png",
+      "box": {
+        "h": 46,
+        "w": 65.658,
+        "x": 69,
+        "y": 54.982
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "3682add49b39cbc59dd434d32a69fde37d7b38c04ceaff6446fc27885b5c6830",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        },
+        {
+          "sha256": "685324f39a8c49852ce95a242227d2b540ff4f83292a0dfadda241b175b184d3",
+          "changedPixels": 31,
+          "maxChannelDelta": 3
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-skia-baseline",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--disable-skia-runtime-opts"
+      ],
+      "file": "self-loop-labels-left-to-right/sheet-001-DQ-14.png",
+      "box": {
+        "h": 7.3,
+        "w": 7.3,
+        "x": 111.675,
+        "y": 62.332
+      },
+      "sourceSha256": "53995d68914204935ab35c6768af02ca0acecda213e4aabb662e496d346b70a6",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "ddd6f73f527327723923a4382121d1eda2c2737d6d4c5dfcff2601ef0ae8c86d",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "50577e0478e7a6b2ea1f5325f0e5fa817372ca0fbe08ca3210151f8f65a9decc",
+          "changedPixels": 5,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-skia-baseline",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--disable-skia-runtime-opts"
+      ],
+      "file": "sweep-functional-symbols-a3-portrait-compact-top-to-bottom/sheet-002-DQ-15.png",
+      "box": {
+        "h": 25.8,
+        "w": 7.6,
+        "x": 43.9,
+        "y": 275.9
+      },
+      "sourceSha256": "d23e22482f65c09754acc56243fef052d447da27c3f9e13aa04f3a80cc7c8f89",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "640001875962c1f0d22cdd91eef9b109a8dca9428d88847290baec4959a43be3",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        },
+        {
+          "sha256": "73f883a58c18563d1408e2b7881fb9f33b546dee648518622e2e67508ef10fa3",
+          "changedPixels": 25,
+          "maxChannelDelta": 1
+        }
+      ]
+    },
+    {
+      "configuration": "gpu-skia-baseline",
+      "args": [
+        "--disable-gpu-rasterization",
+        "--disable-gpu",
+        "--disable-skia-runtime-opts"
+      ],
+      "file": "sweep-functional-symbols-tabloid-portrait-standard-left-to-right/DQ-12-packet-d34a507f73.png",
+      "box": {
+        "h": 299.339,
+        "w": 131.133,
+        "x": 36.667,
+        "y": 54.928
+      },
+      "sourceSha256": "47cffbd0e60aea8f6ab29365a061e63a3d41f5e22eb42c2c3fbdad2cbccd5c04",
+      "variants": 2,
+      "samples": [
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "ce4c8054e9fa2e51c2babd1de335fbb0bf0d13d08d507ba205271bb35908b1f2",
+          "changedPixels": 34,
+          "maxChannelDelta": 5
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        },
+        {
+          "sha256": "c439127bb4a88aefaa45cd2131bebc7611d324025b2423ec3abe98c9699ae4dc",
+          "changedPixels": 0,
+          "maxChannelDelta": 0
+        }
+      ]
+    }
+  ]
+}

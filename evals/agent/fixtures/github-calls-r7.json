@@ -1,0 +1,712 @@
+[
+  {
+    "label": "r7 source dominates '&&' False",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '&&' True",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts' && curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local parts retain issue '&&'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && sed -n '1,3p' evidence/guide.md"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '||' False",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' || curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '||' True",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts' || curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local parts retain issue '||'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' || sed -n '1,3p' evidence/guide.md"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates ';' False",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' ; curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates ';' True",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts' ; curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local parts retain issue ';'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' ; sed -n '1,3p' evidence/guide.md"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '|' False",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' | curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '|' True",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts' | curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local parts retain issue '|'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' | sed -n '1,3p' evidence/guide.md"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '\\n' False",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' \n curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 source dominates '\\n' True",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts' \n curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local parts retain issue '\\n'",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' \n sed -n '1,3p' evidence/guide.md"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 library local tail cat /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && cat /tmp/library.json"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1
+  },
+  {
+    "label": "r7 library source tail cat /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && cat /tmp/library.json && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 library local tail jq '.' /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && jq '.' /tmp/library.json"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1
+  },
+  {
+    "label": "r7 library source tail jq '.' /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && jq '.' /tmp/library.json && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 library local tail sed -n '1,5p' /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && sed -n '1,5p' /tmp/library.json"
+    },
+    "class": "other",
+    "libraryAcquisitions": 1
+  },
+  {
+    "label": "r7 library source tail sed -n '1,5p' /tmp/library.json",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' -o /tmp/library.json && sed -n '1,5p' /tmp/library.json && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 issue and library credits once without a source",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' && cat /tmp/library.json"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 1
+  },
+  {
+    "label": "r7 source removes both issue and library credits",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && curl 'https://raw.githubusercontent.com/BlackettApplied/ThermiteSchematics/dev/libraries/field-interfaces/library.json' && curl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local sed -n '1,215p' evidence/guide-views.md && sed -n '216,400p' evidence/guide-views.md",
+    "event": {
+      "name": "command_execution",
+      "input": "sed -n '1,215p' evidence/guide-views.md && sed -n '216,400p' evidence/guide-views.md"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun /tmp/runtime/thermite.mjs guide views > evidence/x.md && head evidence/x.md",
+    "event": {
+      "name": "command_execution",
+      "input": "bun /tmp/runtime/thermite.mjs guide views > evidence/x.md && head evidence/x.md"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun -e 'const fs=require(\"fs\"); console.log(fs.readFileSync(\"evidence/data.json\",\"utf8\"))'",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'const fs=require(\"fs\"); console.log(fs.readFileSync(\"evidence/data.json\",\"utf8\"))'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun evidence/setup.ts && bun /tmp/runtime/thermite.mjs agent validate --input request.json",
+    "event": {
+      "name": "command_execution",
+      "input": "bun evidence/setup.ts && bun /tmp/runtime/thermite.mjs agent validate --input request.json"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local cat \"$REPORT\" | sed -n \"1,3p\"",
+    "event": {
+      "name": "command_execution",
+      "input": "cat \"$REPORT\" | sed -n \"1,3p\""
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun -e 'console.log(\"https://github.com/o/r/issues/1\")'",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"https://github.com/o/r/issues/1\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun -e 'const fs=require(\"fs\");fs.writeFileSync(\"notes.md\",\"https://github.com/o/r/issues/1\")'",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'const fs=require(\"fs\");fs.writeFileSync(\"notes.md\",\"https://github.com/o/r/issues/1\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local git status --short && git diff --check",
+    "event": {
+      "name": "command_execution",
+      "input": "git status --short && git diff --check"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local rsync ./source ./copy",
+    "event": {
+      "name": "command_execution",
+      "input": "rsync ./source ./copy"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local curl --version && gh --version",
+    "event": {
+      "name": "command_execution",
+      "input": "curl --version && gh --version"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local echo 'curl; wget; gh'",
+    "event": {
+      "name": "command_execution",
+      "input": "echo 'curl; wget; gh'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun -e 'console.log(\"curl https://raw.githubusercontent.com/source\")'",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"curl https://raw.githubusercontent.com/source\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local bun -e 'const requests=[]; requests.push(1); console.log(requests)'",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'const requests=[]; requests.push(1); console.log(requests)'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 local python3 - <<'PY'\nrequests=[]\nrequests.append({'url':'https://example.com/schema'})\nprint(requests)\nPY",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 - <<'PY'\nrequests=[]\nrequests.append({'url':'https://example.com/schema'})\nprint(requests)\nPY"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation curl \"$URL\"",
+    "event": {
+      "name": "command_execution",
+      "input": "curl \"$URL\""
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation GH_HOST=$H gh api repos/3MUl0R/ThermiteSchematics/contents/source",
+    "event": {
+      "name": "command_execution",
+      "input": "GH_HOST=$H gh api repos/3MUl0R/ThermiteSchematics/contents/source"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation wget `printf https://raw.git''hubusercontent.com/o/r/main/source`",
+    "event": {
+      "name": "command_execution",
+      "input": "wget `printf https://raw.git''hubusercontent.com/o/r/main/source`"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation curl https://example.com/source",
+    "event": {
+      "name": "command_execution",
+      "input": "curl https://example.com/source"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation nc \"$HOST\" 443",
+    "event": {
+      "name": "command_execution",
+      "input": "nc \"$HOST\" 443"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation ssh user@host",
+    "event": {
+      "name": "command_execution",
+      "input": "ssh user@host"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation scp user@host:/source ./source",
+    "event": {
+      "name": "command_execution",
+      "input": "scp user@host:/source ./source"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation rsync -a user@host:/source ./source",
+    "event": {
+      "name": "command_execution",
+      "input": "rsync -a user@host:/source ./source"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation git clone \"$REMOTE\"",
+    "event": {
+      "name": "command_execution",
+      "input": "git clone \"$REMOTE\""
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation git fetch origin",
+    "event": {
+      "name": "command_execution",
+      "input": "git fetch origin"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation git pull origin dev",
+    "event": {
+      "name": "command_execution",
+      "input": "git pull origin dev"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation git ls-remote https://github.com/o/r.git",
+    "event": {
+      "name": "command_execution",
+      "input": "git ls-remote https://github.com/o/r.git"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 network invocation git archive --remote=https://github.com/o/r.git HEAD",
+    "event": {
+      "name": "command_execution",
+      "input": "git archive --remote=https://github.com/o/r.git HEAD"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence fetch(process.env.TARGET)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(process.env.TARGET)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence fetch(\"https://raw.github\"+\"usercontent.com/o/r/main/source\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'fetch(\"https://raw.github\"+\"usercontent.com/o/r/main/source\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence require(\"https\").get(process.env.TARGET)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'require(\"https\").get(process.env.TARGET)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence require(\"node:net\").connect(process.env.PORT)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'require(\"node:net\").connect(process.env.PORT)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence new WebSocket(process.env.TARGET)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'new WebSocket(process.env.TARGET)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence new XMLHttpRequest().open(\"GET\",process.env.TARGET)",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'new XMLHttpRequest().open(\"GET\",process.env.TARGET)'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence Bun.connect({hostname:process.env.HOST,port:443})",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'Bun.connect({hostname:process.env.HOST,port:443})'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter network evidence require(\"child_process\").execSync(\"curl https://raw.githubusercontent.com/o/r/main/source\")",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'require(\"child_process\").execSync(\"curl https://raw.githubusercontent.com/o/r/main/source\")'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 Python network evidence import urllib.request\nprint(urllib.request.urlopen(target).read())",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 - <<'PY'\nimport urllib.request\nprint(urllib.request.urlopen(target).read())\nPY"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 Python network evidence import requests\nprint(requests.get(target).text)",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 - <<'PY'\nimport requests\nprint(requests.get(target).text)\nPY"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 Python network evidence import socket\nsocket.create_connection(target)",
+    "event": {
+      "name": "command_execution",
+      "input": "python3 - <<'PY'\nimport socket\nsocket.create_connection(target)\nPY"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 interpreter source tail beats issue",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && bun -e 'console.log(await fetch(\"https://raw.github\"+\"usercontent.com/o/r/main/source\"))'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 quoted separator is data",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' --header 'Accept: application/json' && printf '%s' 'curl https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts && gh api source'"
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 quoted API names remain data",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"fetch(https://raw.githubusercontent.com/o/r/main/source)\")'"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 Markdown data followed by source fetch",
+    "event": {
+      "name": "command_execution",
+      "input": "cat > notes.md <<'EOF'\nExample https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts\nEOF\ncurl 'https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts'"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 literal code file data is local",
+    "event": {
+      "name": "command_execution",
+      "input": "cat > evidence/helper.mjs <<'JS'\nfetch('https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts')\nJS"
+    },
+    "class": "other",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 known code executed in same call has evidence",
+    "event": {
+      "name": "command_execution",
+      "input": "cat > evidence/helper.mjs <<'JS'\nfetch('https://raw.githubusercontent.com/3MUl0R/ThermiteSchematics/dev/packages/compiler/src/index.ts')\nJS\nbun evidence/helper.mjs"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 engine path read still dominates",
+    "event": {
+      "name": "command_execution",
+      "input": "curl 'https://github.com/3MUl0R/ThermiteSchematics/issues/367' && cat /engine/packages/query/src/index.ts"
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 jq data variable does not change URL",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/issues/367 --jq \"$FILTER\""
+    },
+    "class": "issue-lookup",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 dynamic Accept remains unlisted",
+    "event": {
+      "name": "command_execution",
+      "input": "gh api repos/3MUl0R/ThermiteSchematics/pulls/372 -H \"Accept: $MEDIA\""
+    },
+    "class": "source-read",
+    "libraryAcquisitions": 0
+  },
+  {
+    "label": "r7 unresolved GitHub fragment in unknown target",
+    "event": {
+      "name": "command_execution",
+      "input": "some-tool --target 'https://raw.git'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r7 concatenated GitHub fragment in unknown target",
+    "event": {
+      "name": "command_execution",
+      "input": "some-tool --target git'+'hub"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r7 git data filename is not a network operation",
+    "event": {
+      "name": "command_execution",
+      "input": "git diff -- clone fetch pull"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r7 git globals do not hide a remote operation",
+    "event": {
+      "name": "command_execution",
+      "input": "git -C /tmp/project fetch origin"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r7 network module printed as data remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"require(\\\"http\\\") node:net\")'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r7 child command printed as data remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"execSync(\\\"curl https://raw.githubusercontent.com/o/r/main/source\\\")\")'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r7 commented network example remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e '/* fetch(\"https://raw.githubusercontent.com/o/r/main/source\") */ console.log(1)'"
+    },
+    "class": "other"
+  },
+  {
+    "label": "r7 local script with unresolved GitHub target is evidence",
+    "event": {
+      "name": "command_execution",
+      "input": "bun evidence/helper.ts --endpoint 'https://raw.git'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r7 dynamic HTTP module import is executable API evidence",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'const h=await import(\"node:http\");h.get(process.env.TARGET)'"
+    },
+    "class": "source-read"
+  },
+  {
+    "label": "r7 module import printed as data remains local",
+    "event": {
+      "name": "command_execution",
+      "input": "bun -e 'console.log(\"import(\\\"node:http\\\")\")'"
+    },
+    "class": "other"
+  }
+]

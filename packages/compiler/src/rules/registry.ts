@@ -11,6 +11,11 @@ import { exclusiveTerminalAssignmentRule } from "./exclusive-terminal-assignment
 import { invalidCableConductorRule } from "./invalid-cable-conductor.js";
 import { nominalVoltageClassRule } from "./nominal-voltage-class.js";
 import { potentialConflictRule } from "./potential-conflict.js";
+import {
+  declaredRatingConflictRule,
+  unassessedRatedNetsRule,
+  unassessedSingleRatedNetsRule,
+} from "./potential-assessment.js";
 import type { ElectricalRule } from "./types.js";
 import { voltageTypeCompatibilityRule } from "./voltage-type-compatibility.js";
 
@@ -31,4 +36,7 @@ export const ELECTRICAL_RULES: readonly ElectricalRule[] = Object.freeze([
   completenessWarningRule("W903"),
   completenessWarningRule("W904"),
   completenessWarningRule("W905"),
+  declaredRatingConflictRule,
+  unassessedRatedNetsRule,
+  unassessedSingleRatedNetsRule,
 ]);

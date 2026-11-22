@@ -3,16 +3,37 @@ export {
   RENDERER_VERSION,
   SYMBOL_CATALOG_VERSION,
 } from "./types.js";
+export type {
+  IssuedNavigation,
+  PlacedOccurrence,
+  OccurrenceRole,
+  AnnotationReservation,
+  NavigationShape,
+  NavigationAnnotation,
+  NavigationExtension,
+} from "./packet/navigation-types.js";
+export type {
+  DocumentFact,
+  DocumentNeed,
+  DocumentDependency,
+  DocumentCaptionGroup,
+  DocumentResolution,
+  IssuedDocument,
+  IssuedDocumentRow,
+} from "./packet/document-types.js";
 export { createSchematicRenderer, renderSchematic } from "./renderer.js";
+export { renderSchematicPacket } from "./layout/circuit-packet-entry.js";
 export {
   normalizePaperPage,
   printPacketHtml,
-  renderSchematicPacket,
   renderSchematicSheets,
   type PageSettings,
   type PaperPage,
   type RenderedPacket,
   type RenderedSheet,
+  type CircuitContinuation,
+  type CommunicationContinuation,
+  type ReferenceSelection,
   type SchematicPacketRequest,
 } from "./sheets.js";
 export type {
@@ -22,6 +43,7 @@ export type {
   IncompletePathError,
   RenderError,
   RenderErrorBase,
+  UnsupportedSymbolProfile,
   RenderErrorCode,
   RenderTextField,
   RenderTextOwnerKind,
@@ -63,3 +85,19 @@ export type {
   CircuitGroupRequest,
   CircuitFunctionSelector,
 } from "./circuit.js";
+
+export type { PacketCoverage, CoverageEntry } from "./coverage.js";
+
+export type {
+  TopologyCoverage,
+  TopologyRelationEntry,
+  TopologyPortEntry,
+  TopologyAppearance,
+  PortIdentity,
+} from "./topology-coverage.js";
+
+export { describeCodePoint, supportsGlyph } from "./text-metrics.js";
+
+export { unshapedPrintableFont } from "./symbols/font-shaping.js";
+
+export type { PacketRenderOptions } from "./packet/types.js";

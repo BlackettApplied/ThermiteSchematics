@@ -1,0 +1,29 @@
+{
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "assessment:node",
+      "terminals": {
+        "ac": {
+          "rating": {
+            "nominal_voltage": 480,
+            "voltage_type": "AC"
+          }
+        },
+        "dc": {
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          }
+        },
+        "ac2": {
+          "rating": {
+            "nominal_voltage": 480,
+            "voltage_type": "AC"
+          }
+        }
+      },
+      "functions": {}
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "T05",
+  "version": "1.3.0",
+  "template": "cabinets",
+  "setup": "setup.mjs",
+  "prompt": "Produce one indexed PDF packet with TB1 terminal plan, I/O schedule and CBL1 conductor drawing. Save the input request and generated drawings/packet.json, packet.html and packet.pdf.",
+  "requiredTopics": [
+    {
+      "topic": "views",
+      "beforeCommand": "packet",
+      "before": "packet",
+      "equivalents": ["project-workflows"]
+    },
+    {
+      "topic": "report-filtering",
+      "beforeCommand": "packet",
+      "before": "packet",
+      "equivalents": ["project-workflows"]
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs"
+}

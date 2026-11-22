@@ -1,0 +1,62 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:breaker-2p",
+      "description": "Provisional generic 2-pole breaker; no selected hardware, ratings or protection suitability.",
+      "terminals": {
+        "1/L1": {
+          "role": "power_input"
+        },
+        "2/T1": {
+          "role": "power_output"
+        },
+        "3/L2": {
+          "role": "power_input"
+        },
+        "4/T2": {
+          "role": "power_output"
+        }
+      },
+      "functions": {
+        "pole1": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["1/L1", "2/T1"]
+        },
+        "pole2": {
+          "kind": "contact",
+          "normal_state": "closed",
+          "terminals": ["3/L2", "4/T2"]
+        },
+        "trip": {
+          "kind": "mechanism",
+          "terminals": []
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "trips",
+          "from": "trip",
+          "to": "pole1"
+        },
+        {
+          "relation": "trips",
+          "from": "trip",
+          "to": "pole2"
+        },
+        {
+          "relation": "ganged_with",
+          "from": "pole1",
+          "to": "pole2"
+        }
+      ],
+      "symbol": "thermite:breaker",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: 2 input/output pole pair(s), numbered by the existing core line/load convention. Closed state represents reset breaker poles with a terminal-free common trip mechanism. Optional: pole use by application; require both ends of every used pole in project review. No universal required points. Unmodeled: neutral, bonding, indicators and auxiliary interfaces. Author must select hardware and add voltage/AC/DC, current, trip characteristics, interrupting capacity and coordination data as applicable. No manufacturer pinout is asserted. L/T denote line and load side only, not phase or polarity."
+      }
+    }
+  ]
+}

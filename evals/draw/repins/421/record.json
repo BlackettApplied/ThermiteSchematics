@@ -1,0 +1,20 @@
+{
+  "baseCommit": "fb9299d01c65cb9637a3c3778d18ee8698f4bf0f",
+  "countersignMode": "sidecar",
+  "cropIndex": "crop-index.json",
+  "cropIndexSha256": "ff0191955119fe7263f90371a8a4cb250151e02db85c87ea2b239f13d3b18623",
+  "files": {
+    "crop-index.json": "ff0191955119fe7263f90371a8a4cb250151e02db85c87ea2b239f13d3b18623",
+    "decisions.signed.gz": "1a888a239d5f0acb5387996fa49a4f21ef306334d2d366fde627c5eda137c1b1",
+    "receipt.json.gz": "bf7fd1dc87097808baf3a6669910df1b1ca7c12ec088af4be268acb9fc0d7e19"
+  },
+  "format": "thermite-draw-repin-record/1.0",
+  "pathMap": {},
+  "pr": 421,
+  "receipt": "receipt.json.gz",
+  "receiptSha256": "b39387655c71499df364661a42216d0047b998565fce96f3cc8f3e3e0d2d26be",
+  "registryAfterSha256": "65be52b807dd72a586b66a21a4ca3faae1bc9c9146c784c82f6b7b8230c4bf33",
+  "registryBeforeSha256": "2e08bd40a93ad0b209562f48ee89fee4efa1a2509fb39d0e9c4847b25ed00a19",
+  "signedDecisions": "decisions.signed.gz",
+  "signedDecisionsSha256": "1b92b3f55fb5eddba6682b891268cedbb391c43bd3d85addb9b3ba486b01f0dd"
+}

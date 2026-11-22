@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thermiteschematics.com/schemas/0.1/diagnostic.schema.json",
+  "title": "Diagnostic",
+  "description": "Compiler/source diagnostic. Info is advisory and never changes exit status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "severity",
+    "message",
+    "file",
+    "line",
+    "column",
+    "jsonPointer"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[EIW][0-9]{3}$",
+      "description": "Stable diagnostic identifier; I005 identifies reviewed generic connection interfaces in completeness inventories."
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["error", "warning", "info"]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "file": {
+      "type": "string",
+      "minLength": 1
+    },
+    "line": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "column": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "jsonPointer": {
+      "type": "string",
+      "pattern": "^(?:/(?:[^~]|~[01])*)*$"
+    },
+    "uid": {
+      "type": "string"
+    },
+    "related": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "line", "column", "note"],
+        "properties": {
+          "file": {
+            "type": "string",
+            "minLength": 1
+          },
+          "line": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "column": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "allowed": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "allowedCount": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "allowedLookup": {
+      "type": "string"
+    },
+    "pattern": {
+      "type": "string"
+    },
+    "devices": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["uid", "designation", "appearance", "reportSheets"],
+        "properties": {
+          "uid": {
+            "type": "string"
+          },
+          "designation": {
+            "type": "string"
+          },
+          "appearance": {
+            "enum": ["reports-only", "absent"]
+          },
+          "reportSheets": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

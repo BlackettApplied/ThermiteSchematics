@@ -1,3 +1,8 @@
+import {
+  motorDiagnostics,
+  pnpMotorDiagnostics,
+} from "./motor-starter-diagnostics.js";
+import { withSkippedChecks } from "../../compiler/src/validation-skips.js";
 import { spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile, readdir } from "node:fs/promises";
@@ -283,15 +288,30 @@ function expectPortableStream(
   ].flatMap((path) => [path, path.replaceAll("\\", "/")])) {
     expect(text).not.toContain(path);
   }
-  expect(text).not.toMatch(
-    /(?:^|[^A-Za-z])[A-Za-z]:[\\/]|\\\\[^\\]|\/(?:home|tmp|Users)\//u,
-  );
+  // Inspect decoded JSON strings: nested rating quotes are serialization
+  // escapes, while real Windows drive/UNC and POSIX paths still fail.
+  const checkPaths = (value: unknown): void => {
+    if (typeof value === "string")
+      expect(value).not.toMatch(
+        /(?:^|[^A-Za-z])[A-Za-z]:[\\/]|\\\\[^\\]|\/(?:home|tmp|Users)\//u,
+      );
+    else if (value && typeof value === "object")
+      Object.values(value).forEach(checkPaths);
+  };
+  let decoded: unknown = text;
+  try {
+    decoded = JSON.parse(text);
+  } catch {
+    /* Raw SVG/text is already decoded. */
+  }
+  checkPaths(decoded);
 }
 
 function expectSuccess(
   invocation: Invocation,
   tool: AgentTool,
   experiment: MotorStarterPnpExperiment,
+  diagnostics = motorDiagnostics,
 ): unknown {
   expect(invocation.exitCode).toBe(0);
   const result = parseJson<JsonResultEnvelope>(invocation.stdout);
@@ -305,7 +325,7 @@ function expectSuccess(
   expect(report).toEqual({
     format: "agent-tool-report/0.1",
     tool,
-    diagnostics: [],
+    diagnostics,
     error: null,
   });
   expectPortableStream(invocation.stdout, false, experiment);
@@ -581,12 +601,12 @@ function expectViewSemantics(
   expect(rendered.summary.netIds).toHaveLength(state === "baseline" ? 2 : 3);
 
   const svg = Buffer.from(rendered.svg, "utf8");
-  expect(svg.byteLength).toBe(state === "baseline" ? 69_059 : 93_501);
-  expect(hash(svg)).toBe(
+  const expected =
     state === "baseline"
-      ? "dc7ce9dc8e0acd306bc8a85684c50d6b57bd1e9da4a9fd1c47a2e29b4fdc29ac"
-      : "bbbc377dc603bc85afe496a06f33804553ac16ce5bda44cf12462f1cbfec6fdb",
-  );
+      ? artifacts.baselineRendererSvg
+      : artifacts.pnpRendererSvg;
+  expect(svg.byteLength).toBe(expected.byteLength);
+  expect(hash(svg)).toBe(hash(expected));
   return svg;
 }
 
@@ -730,12 +750,12 @@ async function runWorkflow(
   expect(typeOnlyReport).toEqual({
     format: "agent-tool-report/0.1",
     tool: "apply-source-patch",
-    diagnostics: [
+    diagnostics: withSkippedChecks("resolution", [
       {
         code: "E102",
         severity: "error",
         message:
-          'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "13".',
+          'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "13". Declared terminal keys: ["1", "3", "4"].',
         file: "connections/field-terminations.json",
         line: 24,
         column: 40,
@@ -749,12 +769,14 @@ async function runWorkflow(
             note: 'Resolved device type "core:prox-pnp-3wire" is declared here.',
           },
         ],
+        allowed: ["1", "3", "4"],
+        allowedCount: 3,
       },
       {
         code: "E102",
         severity: "error",
         message:
-          'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "14".',
+          'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "14". Declared terminal keys: ["1", "3", "4"].',
         file: "connections/field-terminations.json",
         line: 37,
         column: 40,
@@ -768,8 +790,10 @@ async function runWorkflow(
             note: 'Resolved device type "core:prox-pnp-3wire" is declared here.',
           },
         ],
+        allowed: ["1", "3", "4"],
+        allowedCount: 3,
       },
-    ],
+    ]),
     error: null,
   });
   expectGolden("type-only-patch", typeOnlyPatch, 1);
@@ -788,7 +812,12 @@ async function runWorkflow(
     REQUESTS.completePatch,
   );
   expect(
-    expectSuccess(completePatch, "apply-source-patch", experiment),
+    expectSuccess(
+      completePatch,
+      "apply-source-patch",
+      experiment,
+      pnpMotorDiagnostics,
+    ),
   ).toEqual({
     dryRun: false,
     applied: true,
@@ -817,7 +846,9 @@ async function runWorkflow(
     "validate",
     REQUESTS.validate,
   );
-  expect(expectSuccess(finalValidate, "validate", experiment)).toEqual({
+  expect(
+    expectSuccess(finalValidate, "validate", experiment, pnpMotorDiagnostics),
+  ).toEqual({
     valid: true,
   });
   expectGolden("final-validate", finalValidate, 0);
@@ -827,7 +858,9 @@ async function runWorkflow(
     "inspect",
     REQUESTS.inspect,
   );
-  expectPnpInspect(expectSuccess(pnpInspect, "inspect", experiment));
+  expectPnpInspect(
+    expectSuccess(pnpInspect, "inspect", experiment, pnpMotorDiagnostics),
+  );
   expectGolden("pnp-inspect", pnpInspect, 0);
 
   const pnpView = await invokeAgent(
@@ -836,7 +869,7 @@ async function runWorkflow(
     REQUESTS.view,
   );
   const pnpSvg = expectViewSemantics(
-    expectSuccess(pnpView, "create-view", experiment),
+    expectSuccess(pnpView, "create-view", experiment, pnpMotorDiagnostics),
     "pnp",
   );
   expectGolden("pnp-view", pnpView, 0);

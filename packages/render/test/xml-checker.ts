@@ -41,10 +41,12 @@ const ATTRIBUTES = new Set([
   "fill",
   "stroke",
   "stroke-width",
+  "stroke-dasharray",
   "stroke-linecap",
   "stroke-linejoin",
   "font-family",
   "font-size",
+  "font-weight",
   "text-anchor",
   "dominant-baseline",
   "textLength",
@@ -116,7 +118,10 @@ function attributes(source: string): Readonly<Record<string, string>> {
     const name = match[1]!;
     const value = match[2]!;
     assert(
-      ATTRIBUTES.has(name) || name.startsWith("data-"),
+      ATTRIBUTES.has(name) ||
+        name.startsWith("data-") ||
+        (name === "xml:space" && value === "preserve") ||
+        (name === "style" && value === "white-space:pre"),
       `attribute ${name} is not whitelisted`,
     );
     assert(result[name] === undefined, `attribute ${name} is duplicated`);

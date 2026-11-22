@@ -1,0 +1,222 @@
+{
+  "baselineSha256": "57625bc04507ec08a3c315c705b1ef594e4ace3ee86743629b1a4c215bbaa12c",
+  "checkerSha256": "d246d74a95f0504d604cf3e892e4d86d37002255b313c989bbcfb0c6dcd4802f",
+  "corpusSha256": "cd67d69baa85e495b6cdd19259c629a4f75854b7b02b1471b662da5064bff2b2",
+  "entries": [
+    {
+      "action": "envelope-drift",
+      "causeClass": "functional-symbol-envelope-change",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0,
+        0.02,
+        0.242,
+        0.4
+      ],
+      "markerId": "DQ-12/116e8dde523c0393",
+      "metric": "utilisation",
+      "note": "Re-derived from every functional-symbols packet median after restoring transformer winding clearance. Small maximum utilisation decrease from 0.242 to 0.240 in both Tabloid portrait LTR densities. Exact inline conductor caption widths compact the Pressure And Float circuit group, moving W7's right endpoint from 164.800 to 163.765 mm. The sheet 1 fraction drops from 0.467 to 0.463 and sheet 2 holds at 0.017. The measured envelope is the same in round one and after the T1 correction. The 0 and 0.4 acceptance endpoints stay fixed; no repair credit.",
+      "observed": [
+        0.02,
+        0.24
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        0,
+        0.02,
+        0.24,
+        0.4
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "exact-wiring-text-width",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0,
+        0.107,
+        0.107,
+        0.4
+      ],
+      "markerId": "DQ-12/1e0b15906df7c1b8",
+      "metric": "utilisation",
+      "note": "Small utilisation decrease from 0.107 to 0.100 in both flows as exact wiring and network text widths compact the routed ink. LTR sheets 4 and 7 are the middle pair (0.076 and 0.139 to 0.070 and 0.130). Sheets 5 and 6 also contract. The 0 and 0.4 endpoints stay fixed; no repair credit.",
+      "observed": [
+        0.1,
+        0.1
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        0,
+        0.1,
+        0.1,
+        0.4
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "exact-circuit-reservation",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0,
+        0.257,
+        0.341,
+        0.4
+      ],
+      "markerId": "DQ-12/b9ed55e0314c259f",
+      "metric": "utilisation",
+      "note": "Small minimum utilisation decrease from 0.257 to 0.251 in left-to-right as exact circuit and cable caption widths compact the packet. Top-to-bottom remains at 0.341 and the 0 and 0.4 endpoints stay fixed; no repair credit.",
+      "observed": [
+        0.251,
+        0.341
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        0,
+        0.251,
+        0.341,
+        0.4
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "exact-terminal-width-landing-shift",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0.75,
+        0.8,
+        1.6,
+        1.65
+      ],
+      "markerId": "DQ-15/34b5388b095f1a7c",
+      "metric": "shortestJogMm",
+      "note": "The existing W8 shortest jog in vertical flow shrinks from 1.600 mm to 1.255 mm after a 0.345 mm landing shift. The 0.800 mm LTR witness stays put and the upper band tightens with the existing 0.05 mm margin; no repair credit.",
+      "observed": [
+        0.8,
+        1.255
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        0.75,
+        0.8,
+        1.255,
+        1.305
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "exact-terminal-width-landing-shift",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        0.75,
+        0.8,
+        1.6,
+        1.65
+      ],
+      "markerId": "DQ-15/5bcc5c0f5a405d20",
+      "metric": "shortestJogMm",
+      "note": "The existing W9 shortest jog in vertical flow shrinks from 1.600 mm to 1.255 mm after a 0.345 mm landing shift. The 0.800 mm LTR witness stays put and the upper band tightens with the existing 0.05 mm margin; no repair credit.",
+      "observed": [
+        0.8,
+        1.255
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        0.75,
+        0.8,
+        1.255,
+        1.305
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "vertical-terminal-pitch-route-change",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        1.5,
+        1.55,
+        1.55,
+        1.6
+      ],
+      "markerId": "DQ-15/8e9acc6ba6d339a1",
+      "metric": "shortestJogMm",
+      "note": "On six vertical-flow occurrences, W3's shortest jog falls from 1.550 to 1.255 mm as the reserved terminal pitch shifts the X1–L landings. The count of sub-3 mm jogs falls from two (1.600 and 1.550 mm) to one (1.255 mm). The same defect and 0.05 mm margin carry forward; no repair credit.",
+      "observed": [
+        1.255,
+        1.255
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        1.205,
+        1.255,
+        1.255,
+        1.305
+      ]
+    },
+    {
+      "action": "envelope-drift",
+      "causeClass": "inline-caption-stroke-clearance-route-change",
+      "classification": "drawing",
+      "coverage": "full",
+      "from": [
+        1.925,
+        1.975,
+        1.975,
+        2.025
+      ],
+      "markerId": "DQ-15/50d3b1df994c1af5",
+      "metric": "shortestJogMm",
+      "note": "The existing W11 out-and-back detour moves with the circuit geometry and the plate reserve for W12's painted stroke. Its shortest jog rises from 1.975 to 2.685 mm on six vertical-flow occurrences and remains below 3 mm. The 0.05 mm margin stays fixed; no repair credit.",
+      "observed": [
+        2.685,
+        2.685
+      ],
+      "reviewed": true,
+      "signOff": {
+        "by": "Claude Opus 5.5 — independent cross-model reviewer, TEXTM1 REP P2",
+        "kind": "agent"
+      },
+      "to": [
+        2.635,
+        2.685,
+        2.685,
+        2.735
+      ]
+    }
+  ],
+  "evalsVersion": "5.35",
+  "format": "thermite-draw-decisions/1.0",
+  "pr": "TEXTM1",
+  "registrySha256": "26000934cbe097a903d4bd71a75df25ac8310b932ef951186f14f9ca0c42ec2d",
+  "summarySha256": "236e0c8b4070e7437d898f10fa7959877e4508bb53a3c41d569eaa4da446dfc4"
+}

@@ -1,0 +1,3533 @@
+{
+  "crops": [
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "95a4aadeb32456e1578c99742daa8f26cf8f8ef02b8d9da128091b0b12163552",
+      "headerLines": [
+        "DQ-08/4df3d7748ba5993c | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 01cd471efc663cd2529951d3d7d30d928634afe77a93f1e3b835f35142e7c33a",
+        "Text C007 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 131.714,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/4df3d7748ba5993c",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0016.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0016.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "38c1231310c2d058081d4bea3bd01ce362aae97267fea077d08f1af3dde2d80f",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 128.714,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C007 / 04",
+      "token": "01cd471efc663cd2529951d3d7d30d928634afe77a93f1e3b835f35142e7c33a"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "78f2f4a4e2f0af3b6d1de5f5f83143bbbf8e473926c6b94c886347619b80ae65",
+      "headerLines": [
+        "DQ-08/4df3d7748ba5993c | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 5848a3c23abca9557a3c538c9edb00c92fe7a94525874a681263d994e0cb596f",
+        "Text C007 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 131.714,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/4df3d7748ba5993c",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0017.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0017.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "1c6994707998e84aa90d533830f3ed349532546a078cacdfd761455246d02173",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 128.714,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C007 / 03",
+      "token": "5848a3c23abca9557a3c538c9edb00c92fe7a94525874a681263d994e0cb596f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d8457a368baab435a1acf792d1240db1c1e0a097530be1949a439ee3ed017856",
+      "headerLines": [
+        "DQ-08/55d0962c49035c18 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K1/default | physical page 5",
+        "Report instance 0420b75486fa1a23573e632244e6c269092f87b504b06e5cdf4a3678ecd7ae91",
+        "Text C009 / 06"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.403,
+        "x": 169.664,
+        "y": 229.655
+      },
+      "markerId": "DQ-08/55d0962c49035c18",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0018.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0018.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-005",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "a0a8517a9930a66ca52cf221c6190727d333feb2552830a1574307ece928523e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.403,
+        "x": 166.664,
+        "y": 226.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-005.svg",
+        "svgSha256": "71038862ee770ef848a8e4f63c2070e08277fc811db8561f3f64be27103d155c"
+      },
+      "text": "C009 / 06",
+      "token": "0420b75486fa1a23573e632244e6c269092f87b504b06e5cdf4a3678ecd7ae91"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "9e0575efeb9d71669a5292ebbcfc19875a0a7df42a0b52fbc861dbdd23fd9363",
+      "headerLines": [
+        "DQ-08/55d0962c49035c18 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K1/default | physical page 6",
+        "Report instance 28f2dae1b8d1547c983347d531a412445735254f15a551451ab5780e5d640884",
+        "Text C009 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 169.664,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/55d0962c49035c18",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0019.png",
+      "physicalSheet": 6,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0019.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-006",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "46888cc5b99bb8bf04dbc01f0bc17ab6180fd19d752637f9d11da983466b727f",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 166.664,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-006.svg",
+        "svgSha256": "2678d18f9ea76f78d8f4cfc87efc32b2141b26791d6fb8699512370d7a9e0d32"
+      },
+      "text": "C009 / 05",
+      "token": "28f2dae1b8d1547c983347d531a412445735254f15a551451ab5780e5d640884"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "fbe0232a50c2ecfe4a83632e8d36e77a85a946f729b84dbc99716ac5e9973f51",
+      "headerLines": [
+        "DQ-08/8e4df751214e458c | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 0798179db773428f8caa398b7b9d03349078560e9349cc0b5fb262b5fa7e0f6d",
+        "Text C008 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 99.614,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/8e4df751214e458c",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0020.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0020.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "0e3f68b773765c284f771621114204a9f29e378b7b1d7ebce68c250d77b16e15",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 96.614,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C008 / 04",
+      "token": "0798179db773428f8caa398b7b9d03349078560e9349cc0b5fb262b5fa7e0f6d"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "1de052cbca17667c5f9fce6c3648a8eec9b711f59a3a89c70cc191bc44cff459",
+      "headerLines": [
+        "DQ-08/8e4df751214e458c | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 19b4bfc61aaf2d358e0a3a1278846b2039d4818532b494e58db4993315914cde",
+        "Text C008 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 99.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/8e4df751214e458c",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0021.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0021.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "ed3f6215afbad526378fbdeae3d50a2bd8bc03ed08aee70cba9b842eb1e2ed31",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 96.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C008 / 03",
+      "token": "19b4bfc61aaf2d358e0a3a1278846b2039d4818532b494e58db4993315914cde"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b16c53bca7249ad0854672859142d62c2e03b18e270ceee2574e5c970ccf9907",
+      "headerLines": [
+        "DQ-08/5e51a180abcd7e2d | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 0bd83485411a710654c57af2d153927216054e20dea93f407f16e7536edf1fdc",
+        "Text C002 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 181.814,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/5e51a180abcd7e2d",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0022.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0022.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "dba10e7b883bc15ec8a2d8ae35341438cf6311e3cd9846f3cd86b53804e987f1",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 178.814,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C002 / 02",
+      "token": "0bd83485411a710654c57af2d153927216054e20dea93f407f16e7536edf1fdc"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "7cdc56b4d867d9800080b1c25e01bdb09fa3ae3b7f639f90706e7599557c9d75",
+      "headerLines": [
+        "DQ-08/5e51a180abcd7e2d | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance d1f49dcfecbe55b22f1971592640de7adf3d9dad7f79263f726b421340a775cd",
+        "Text C002 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 181.814,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/5e51a180abcd7e2d",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0023.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0023.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "e3e762691ea4fe3cd06e29540fd1ac9a59e167f32485fae0acf125577ce9a458",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 178.814,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C002 / 01",
+      "token": "d1f49dcfecbe55b22f1971592640de7adf3d9dad7f79263f726b421340a775cd"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "e1f5a213c4b74eec673a705f2cdc780823042028cecbfc13655eb4d4bdcc7c38",
+      "headerLines": [
+        "DQ-08/e108b52a25632329 | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 7",
+        "Report instance 1ddf9faaa132d949d580b5c7bd1fc4ca9b4a554caeacd3c7a04735192ca951b0",
+        "Text C012 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 240.314,
+        "y": 229.805
+      },
+      "markerId": "DQ-08/e108b52a25632329",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0024.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0024.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "205536cece67de03a4d6ea749b4d45fda356d45a2fdb988bdd81d473be571233",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 237.314,
+        "y": 226.805
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-007.svg",
+        "svgSha256": "ff171c35a81bc7a183f44a316345b1bdde96cb50cee955888a0d9df13e1ba82c"
+      },
+      "text": "C012 / 08",
+      "token": "1ddf9faaa132d949d580b5c7bd1fc4ca9b4a554caeacd3c7a04735192ca951b0"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "bb36343619c1f4e1e3dd6004120b26e18d4bb693375171f9c68ca282aecf919c",
+      "headerLines": [
+        "DQ-08/e108b52a25632329 | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 8",
+        "Report instance fa090b40b6eef47d7991cdddf40d64eb5e45225a827ff5faed6247a2f6ad6166",
+        "Text C012 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 240.314,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/e108b52a25632329",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0025.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0025.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "56fbd69b35e6942e7af151eeedef4c256e64355842be02650f853844782c776b",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 237.314,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-008.svg",
+        "svgSha256": "34643054ced90e6ee4c18fc536fac5f0e3c4425468ac4b4da3760f9bbedfe430"
+      },
+      "text": "C012 / 07",
+      "token": "fa090b40b6eef47d7991cdddf40d64eb5e45225a827ff5faed6247a2f6ad6166"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "9bda539e275ed0b53f03df87e0b87c196124fa10f4135071303340f9812a5162",
+      "headerLines": [
+        "DQ-08/b38e293376d2414f | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/LS1/trace | physical page 9",
+        "Report instance 1f1d88a415b1c89b4f7617ba4746e9334482cd47c7147a5ae6329a05a53fc0f8",
+        "Text C011 / 10"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 98.614,
+        "y": 147.655
+      },
+      "markerId": "DQ-08/b38e293376d2414f",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0026.png",
+      "physicalSheet": 9,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0026.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-009",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "f9ddb3c9a60cf3373cd3d01267b6c835944af04508f4ed961ac9ec8d887edc68",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 95.614,
+        "y": 144.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-009.svg",
+        "svgSha256": "2a082b8c495915bba12f51a1ca1e36c30455cf2ed1ae3ee35b31bfdb4fe56d24"
+      },
+      "text": "C011 / 10",
+      "token": "1f1d88a415b1c89b4f7617ba4746e9334482cd47c7147a5ae6329a05a53fc0f8"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "96f5a615e2c743ca65863b7e0f5016134a3e076d3703abae4192d9039a53b933",
+      "headerLines": [
+        "DQ-08/b38e293376d2414f | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/LS1/trace | physical page 10",
+        "Report instance ea0aeddc393e69dff6430d0c584501080febf44e3341f22bd674a484e9493347",
+        "Text C011 / 09"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 98.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/b38e293376d2414f",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0027.png",
+      "physicalSheet": 10,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0027.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-010",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "e2c0b7420559a21561a184868e9484a6bbd6eb0bf7aff0127fd8cde3c7d46821",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 95.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-010.svg",
+        "svgSha256": "d7e64bfeb4f24cc35023fdcc9a5d2c8f3251e9ee386ac2b578c90f783d263d78"
+      },
+      "text": "C011 / 09",
+      "token": "ea0aeddc393e69dff6430d0c584501080febf44e3341f22bd674a484e9493347"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "be8534fe35b4a0818e75ee65422c1344e4ebfbcf275855bfb6cc128447133d88",
+      "headerLines": [
+        "DQ-08/5beeac3e43a27a53 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 22c767926da66472825c6c0f0f7a4fa0fb8386d61dacdbbcde22e2890b976f1f",
+        "Text C008 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 91.864,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/5beeac3e43a27a53",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0028.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0028.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "861d0035f31f4a9edea3f9ea7977b82476c7fd6af8480bce01801b942cf54f14",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 88.864,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C008 / 04",
+      "token": "22c767926da66472825c6c0f0f7a4fa0fb8386d61dacdbbcde22e2890b976f1f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d3e1874274da8197c4b5d236c94d2685340961b4f76bc34d06b65622fb368790",
+      "headerLines": [
+        "DQ-08/5beeac3e43a27a53 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 6b63e324d9cce1949866d880c707e7cb10eda2916393b6f52b35abbd5187c5d1",
+        "Text C008 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 91.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/5beeac3e43a27a53",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0029.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0029.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "69f8f0bbff49a2ab8bd7dbf7a7ac45add2d86e9ae5e14442c7ef274fd8d9d381",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 88.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C008 / 03",
+      "token": "6b63e324d9cce1949866d880c707e7cb10eda2916393b6f52b35abbd5187c5d1"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "be8534fe35b4a0818e75ee65422c1344e4ebfbcf275855bfb6cc128447133d88",
+      "headerLines": [
+        "DQ-08/4bb5f08d90b9fc86 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 2909babd3f730d52c08ba63db656c4f594bc23cd0614758d0fb1920c70e05b2f",
+        "Text C008 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 91.864,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/4bb5f08d90b9fc86",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0030.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0028.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "79d7ffa7f88fe8098cce0d51f00854a39e81a51d42ac367b37a44fb490c04ca3",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 88.864,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C008 / 04",
+      "token": "2909babd3f730d52c08ba63db656c4f594bc23cd0614758d0fb1920c70e05b2f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d3e1874274da8197c4b5d236c94d2685340961b4f76bc34d06b65622fb368790",
+      "headerLines": [
+        "DQ-08/4bb5f08d90b9fc86 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance c6e3403d8a4c8e5ec775824db68b99e08aaae6a3a668381d1110ff33084d74d5",
+        "Text C008 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 91.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/4bb5f08d90b9fc86",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0031.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0029.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "30b063299709932884a956912b41dc75af79d09ae26404fa0e068766fa49c5c1",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 88.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C008 / 03",
+      "token": "c6e3403d8a4c8e5ec775824db68b99e08aaae6a3a668381d1110ff33084d74d5"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "af759b7ddf70545124416b52bd1f9eb218f0142479dd90e041bf7a280527b795",
+      "headerLines": [
+        "DQ-08/d2f2110eb0b3c085 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 2affb80cde5ca434cce5ef72d33495fd1fca7c2a263304ecf22428d77fdc6d49",
+        "Text C003 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 141.964,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/d2f2110eb0b3c085",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0032.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0032.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "9a94c71a9c4587e96222b2c9efd59923865a6cce4f1eff89a68ec345baa17386",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 138.964,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C003 / 02",
+      "token": "2affb80cde5ca434cce5ef72d33495fd1fca7c2a263304ecf22428d77fdc6d49"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "44dfa585f3349f9cb73ae600cca85dd464c52f9b4b7bc3b6fabc1f192baea34f",
+      "headerLines": [
+        "DQ-08/d2f2110eb0b3c085 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 0259a71cbaf79051de49438a43645bc81f366a25b5c706fcfc069679d94922e3",
+        "Text C003 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 141.964,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/d2f2110eb0b3c085",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0033.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0033.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "72f31a0345e886f4013f418753708c1ac08edb9f681d3832483bd8a276697211",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 138.964,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C003 / 01",
+      "token": "0259a71cbaf79051de49438a43645bc81f366a25b5c706fcfc069679d94922e3"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c9f4ccfeb3e172cc0bb82a803e4f879a2a2ac9cd209d8bddf9ef75d78e1b023c",
+      "headerLines": [
+        "DQ-08/905827d944372df9 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 307e35fd7c0e715ed72687b1c787da5a14ffce7420730f6ccb813fdfc4d8db0b",
+        "Text C002 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 174.064,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/905827d944372df9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0034.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0034.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "0a2ef9bb81fd7a4b4772204f234b3d134319e16b4d611bf35907d42eabba0a6e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 171.064,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C002 / 02",
+      "token": "307e35fd7c0e715ed72687b1c787da5a14ffce7420730f6ccb813fdfc4d8db0b"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b724471121df2eee3760e1527dca4b7a985b1ce6563ab1101536715812dccbba",
+      "headerLines": [
+        "DQ-08/905827d944372df9 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 16d640240b4089ab75a9f3e1a0016366cea70b9eec1f25ca206a5f936cbb7007",
+        "Text C002 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 174.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/905827d944372df9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0035.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0035.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "c5df8411e66a7d52eb1acff29465e157aae76c98287ac8848234a5088aa6be07",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 171.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C002 / 01",
+      "token": "16d640240b4089ab75a9f3e1a0016366cea70b9eec1f25ca206a5f936cbb7007"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "695e845a82084af310ee1b741b103a14bfd9064daf74ad1ae381ee77847000c2",
+      "headerLines": [
+        "DQ-08/be20aa052fbc80cd | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 7",
+        "Report instance 3255994b259d77d4c164e796518963e04c0fdf2e9829c012809dcce15f6f877e",
+        "Text C014 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 207.864,
+        "y": 229.805
+      },
+      "markerId": "DQ-08/be20aa052fbc80cd",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0036.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0036.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "c1f1b63f816f9a6ffe2b40f7347c5ab8295d693a4ec560c3c93f67306b9f9552",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 204.864,
+        "y": 226.805
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-007.svg",
+        "svgSha256": "ff171c35a81bc7a183f44a316345b1bdde96cb50cee955888a0d9df13e1ba82c"
+      },
+      "text": "C014 / 08",
+      "token": "3255994b259d77d4c164e796518963e04c0fdf2e9829c012809dcce15f6f877e"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d58577d65abfcaf86adb89b0eeb92ea01fab97efb1c06d432011fcc9041ca233",
+      "headerLines": [
+        "DQ-08/be20aa052fbc80cd | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 8",
+        "Report instance e182da944415e02758e73d07f3e0d85f2cffdec14e69204192113f9004a60ef6",
+        "Text C014 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 207.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/be20aa052fbc80cd",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0037.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0037.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "2d1ff35ce72793a945f654ee82b7e59dc82131575fe87c1dd3d1ac1528d3578c",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 204.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-008.svg",
+        "svgSha256": "34643054ced90e6ee4c18fc536fac5f0e3c4425468ac4b4da3760f9bbedfe430"
+      },
+      "text": "C014 / 07",
+      "token": "e182da944415e02758e73d07f3e0d85f2cffdec14e69204192113f9004a60ef6"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "a7325cc615b7c28afee33945186d5ec4f28a4b906cee216597a0c11a3c712409",
+      "headerLines": [
+        "DQ-08/6cf1edca8ec59ee7 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 3bdd47d5f39f4b0aebcf1a063cc7c2aaac5d49d6ae9d218ab7ced1a65316353f",
+        "Text C004 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 109.864,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/6cf1edca8ec59ee7",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0038.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0038.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "2e1efb6c315da461a969c7821eaf4a5583fddfe106aacb3d808b2fd294a424df",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 106.864,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C004 / 02",
+      "token": "3bdd47d5f39f4b0aebcf1a063cc7c2aaac5d49d6ae9d218ab7ced1a65316353f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "fd3e9e9b479357c51b44da1216d747b3df8a821ca85f33c90a82904474434317",
+      "headerLines": [
+        "DQ-08/6cf1edca8ec59ee7 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 2e92973f9ff2187eac79d3101a966927289fa13b61a7e87aaf3e9f600cb0e512",
+        "Text C004 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 109.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/6cf1edca8ec59ee7",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0039.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0039.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "c4874d100944d1c2e8c25dd8664038d021131917641179b6b766e8155181e17c",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 106.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C004 / 01",
+      "token": "2e92973f9ff2187eac79d3101a966927289fa13b61a7e87aaf3e9f600cb0e512"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "e1f5a213c4b74eec673a705f2cdc780823042028cecbfc13655eb4d4bdcc7c38",
+      "headerLines": [
+        "DQ-08/a3e667d8019cb2cd | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 7",
+        "Report instance 3f3dafb73f3819f3029c6df6eaeda9b5559eca3296a9abc967548ce3b2179c3f",
+        "Text C012 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 240.314,
+        "y": 229.805
+      },
+      "markerId": "DQ-08/a3e667d8019cb2cd",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0040.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0024.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "75ed523ac636c43b21f0899caeb3f59e87f35823c78a6db79bace4924f48dec4",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 237.314,
+        "y": 226.805
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-007.svg",
+        "svgSha256": "ff171c35a81bc7a183f44a316345b1bdde96cb50cee955888a0d9df13e1ba82c"
+      },
+      "text": "C012 / 08",
+      "token": "3f3dafb73f3819f3029c6df6eaeda9b5559eca3296a9abc967548ce3b2179c3f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "bb36343619c1f4e1e3dd6004120b26e18d4bb693375171f9c68ca282aecf919c",
+      "headerLines": [
+        "DQ-08/a3e667d8019cb2cd | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 8",
+        "Report instance 5827e2bfe5a4b78eecf63212ab6c3730821a70c2c7cf580c59e2380187eab4c0",
+        "Text C012 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 240.314,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/a3e667d8019cb2cd",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0041.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0025.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "4a75eb8f17b04a4c408aeb368a3ea684f01251468da36eec90bdda8b98707ec6",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 237.314,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-008.svg",
+        "svgSha256": "34643054ced90e6ee4c18fc536fac5f0e3c4425468ac4b4da3760f9bbedfe430"
+      },
+      "text": "C012 / 07",
+      "token": "5827e2bfe5a4b78eecf63212ab6c3730821a70c2c7cf580c59e2380187eab4c0"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "95a4aadeb32456e1578c99742daa8f26cf8f8ef02b8d9da128091b0b12163552",
+      "headerLines": [
+        "DQ-08/52cfd4b771150d89 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 41f31568fdf6adc00f57deac0dcae7aece049e3ee1c80b4c7fe11508616ffcc6",
+        "Text C007 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 131.714,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/52cfd4b771150d89",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0042.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0016.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "f4f96c1b25656cd3ff4f7d00cbad846a868f6117c26884804cee45ed7025b159",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 128.714,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C007 / 04",
+      "token": "41f31568fdf6adc00f57deac0dcae7aece049e3ee1c80b4c7fe11508616ffcc6"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "78f2f4a4e2f0af3b6d1de5f5f83143bbbf8e473926c6b94c886347619b80ae65",
+      "headerLines": [
+        "DQ-08/52cfd4b771150d89 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 1ad8a50098b1d96150c3bc19b2ec039f1eea67c3221084eb020306baaf8b6990",
+        "Text C007 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 131.714,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/52cfd4b771150d89",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0043.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0017.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "5d86a7e6eb65402341525533ee9afc1532f9cc30419fe80a6f9e5a2caef1592f",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 128.714,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C007 / 03",
+      "token": "1ad8a50098b1d96150c3bc19b2ec039f1eea67c3221084eb020306baaf8b6990"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "58c7e6a29bf448f7bfffc171d648844aed74b20ed09c8f577c968ae98c84de25",
+      "headerLines": [
+        "DQ-08/aa16bff82c3006c1 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 4f9dca201fe2b9c7d4eea5243d570c6df9c7c8935e74532e3bf3a74ed1f6cbd6",
+        "Text C007 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 123.964,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/aa16bff82c3006c1",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0044.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0044.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "8fcd9cc3113667d4ac1f0c67e008781b25874c2233be143bf36de54beaded4b6",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 120.964,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C007 / 04",
+      "token": "4f9dca201fe2b9c7d4eea5243d570c6df9c7c8935e74532e3bf3a74ed1f6cbd6"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0068cdee595c5f180ec4cc1ec5ba5ac4e1f83534b2b359d00c1755c6baf3715c",
+      "headerLines": [
+        "DQ-08/aa16bff82c3006c1 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance f0b55e03f7cdf6d32e5f76984ff69d3be0b4873f6ce594ae7e9f30a607d3fc77",
+        "Text C007 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 123.964,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/aa16bff82c3006c1",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0045.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0045.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "702127ab19a1eeda216959e9075038c66bc3210bfd43465af5d7215db86dd2c3",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 120.964,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C007 / 03",
+      "token": "f0b55e03f7cdf6d32e5f76984ff69d3be0b4873f6ce594ae7e9f30a607d3fc77"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c9f4ccfeb3e172cc0bb82a803e4f879a2a2ac9cd209d8bddf9ef75d78e1b023c",
+      "headerLines": [
+        "DQ-08/5d6758392c2feeee | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 677a2c41e7f26b7c59658f7252affdd5541f0152f56f4db29443ab77bc9fc7cd",
+        "Text C002 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 174.064,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/5d6758392c2feeee",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0046.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0034.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "74d937ed042db76e3172c666bd6b19ab52e08c411335f01266c127774b1a10cd",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 171.064,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C002 / 02",
+      "token": "677a2c41e7f26b7c59658f7252affdd5541f0152f56f4db29443ab77bc9fc7cd"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b724471121df2eee3760e1527dca4b7a985b1ce6563ab1101536715812dccbba",
+      "headerLines": [
+        "DQ-08/5d6758392c2feeee | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 48ed63aebfd557c2023f576c06ecb66550b01dcbabab55868583924d7fcb3d05",
+        "Text C002 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 174.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/5d6758392c2feeee",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0047.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0035.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "00717743aace25f2cc1b57175de5cc6a208113ab06495b6f147f62dd51eeed08",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 171.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C002 / 01",
+      "token": "48ed63aebfd557c2023f576c06ecb66550b01dcbabab55868583924d7fcb3d05"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b36d2be3f4df7efc0fb6ec49f077f7c1fa60e564ded8006e3538c83b56d102c8",
+      "headerLines": [
+        "DQ-08/f7447a3954e2bf8b | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 6e3dfb49006f6137b8bc4f532b17f3e69a4df3adf56a105efa2cb7951b549ba9",
+        "Text C003 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 149.714,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/f7447a3954e2bf8b",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0048.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0048.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "a955e8c0fe2e55ec1efb955ad2b1f9eb5ca3a3c7d69070b7604f1673764a21e4",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 146.714,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C003 / 02",
+      "token": "6e3dfb49006f6137b8bc4f532b17f3e69a4df3adf56a105efa2cb7951b549ba9"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0e4283b6dd3e8393a668ee039de72d8582047ccfc0554ff7650fabc476f58ce0",
+      "headerLines": [
+        "DQ-08/f7447a3954e2bf8b | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance c4df8478ba76e1ea879d9ac11dd9d5ec47fd763f12fab342e772586ff9eec91f",
+        "Text C003 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 149.714,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/f7447a3954e2bf8b",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0049.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0049.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "317ddb84dbac9dbea13da12eaefd508e855abee3ddb1ae134c0016bd2eadfce1",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 146.714,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C003 / 01",
+      "token": "c4df8478ba76e1ea879d9ac11dd9d5ec47fd763f12fab342e772586ff9eec91f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b16c53bca7249ad0854672859142d62c2e03b18e270ceee2574e5c970ccf9907",
+      "headerLines": [
+        "DQ-08/d2e24814a2a9df38 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance 78a3174dda477b0bb74c657a5be0e42262e3a87d9bb8b4685f5364d6f2c72b1b",
+        "Text C002 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 181.814,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/d2e24814a2a9df38",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0050.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0022.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "c1e27a7407a1c66164cfa2a615a19d095a5db67eded69eb578744f6cfc0a11be",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 178.814,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C002 / 02",
+      "token": "78a3174dda477b0bb74c657a5be0e42262e3a87d9bb8b4685f5364d6f2c72b1b"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "7cdc56b4d867d9800080b1c25e01bdb09fa3ae3b7f639f90706e7599557c9d75",
+      "headerLines": [
+        "DQ-08/d2e24814a2a9df38 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 03c36561b38ed513ab9fb3f5c7025040aa5c28c642f8a84a922411c1174d697b",
+        "Text C002 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 181.814,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/d2e24814a2a9df38",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0051.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0023.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "34111d9444813b111976bdcc4ef0d1e6b148ccebb4995e666a13e602662dfc8e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 178.814,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C002 / 01",
+      "token": "03c36561b38ed513ab9fb3f5c7025040aa5c28c642f8a84a922411c1174d697b"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "8431c5fa6b292fae2759a30bd5a2f1c64222660e8f08284d102c0cd290b2d051",
+      "headerLines": [
+        "DQ-08/e488e9b05b4339c9 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K2/default | physical page 5",
+        "Report instance 7bde137ecbbb44cda3cd69419f89fc6dcf51888aa219152292ad4251cf52ed9c",
+        "Text C010 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 398.984,
+        "y": 88.205
+      },
+      "markerId": "DQ-08/e488e9b05b4339c9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0052.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0052.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "c14b151b3af51a6c0a0693bd6c67558f6b2f8eaa40b5ff08c3f6dcc79972fb26",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 395.984,
+        "y": 85.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-005.svg",
+        "svgSha256": "fc9c04c4962bba31f1003d4644f8074b289176eba0c69d26c18b29d570970d0f"
+      },
+      "text": "C010 / 05",
+      "token": "7bde137ecbbb44cda3cd69419f89fc6dcf51888aa219152292ad4251cf52ed9c"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0d88a4a58fb24d3d500cfe0ff8a97cc5bb2943a6c7c4fab132b259a7695df202",
+      "headerLines": [
+        "DQ-08/e488e9b05b4339c9 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K2/default | physical page 5",
+        "Report instance ca9411864fbc53c9a8c20db8b2a5b06b8e313c4ca6877b79f4d2cabe6a058641",
+        "Text C010 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 15.493,
+        "y": 126.205
+      },
+      "markerId": "DQ-08/e488e9b05b4339c9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0053.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0053.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "5b5785c7d1ff14d3ca0f02141781a36b01ba97121684440ec701864da17f2896",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 12.493,
+        "y": 123.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-005.svg",
+        "svgSha256": "fc9c04c4962bba31f1003d4644f8074b289176eba0c69d26c18b29d570970d0f"
+      },
+      "text": "C010 / 05",
+      "token": "ca9411864fbc53c9a8c20db8b2a5b06b8e313c4ca6877b79f4d2cabe6a058641"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "33696df63a88035eb381bc1cb54aae5f7cc6f74272312c4360f3e0ca61acd7d9",
+      "headerLines": [
+        "DQ-08/f96603e61f9227cb | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance 7df82206c03cc9a3d7f9c9cb671373e9d1126ded89c403a1c67b6f268dcb1aa1",
+        "Text C006 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 163.814,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/f96603e61f9227cb",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0054.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0054.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "39995e654690d5ff69b03cf94377c1a1af1ada8aaca4f1416142612d47cbb9cb",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 160.814,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C006 / 04",
+      "token": "7df82206c03cc9a3d7f9c9cb671373e9d1126ded89c403a1c67b6f268dcb1aa1"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d50cde850f664e5a1a7c40dacf347b72d711362661bf74711d18e16e712e97cc",
+      "headerLines": [
+        "DQ-08/f96603e61f9227cb | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 4283977a4bd1c2da71e3043c40c3694bcc986f3a3124e197667a1b2c5e4cac84",
+        "Text C006 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 163.814,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/f96603e61f9227cb",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0055.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0055.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "dea0081987822753c02b1bd7222bbb5ac83b040b22c449b4e45b154490c3a193",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 160.814,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C006 / 03",
+      "token": "4283977a4bd1c2da71e3043c40c3694bcc986f3a3124e197667a1b2c5e4cac84"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "686aba739dd85521f1089afdd2ad5bb2232b55f8a3edb024935170143964583b",
+      "headerLines": [
+        "DQ-08/2ff2d915b6b7484a | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K1/default | physical page 5",
+        "Report instance 7ffc0a87f9940281e268d04a3db690520dd77cb37041287401ba504186c7d623",
+        "Text C009 / 06"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.403,
+        "x": 104.064,
+        "y": 221.155
+      },
+      "markerId": "DQ-08/2ff2d915b6b7484a",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0056.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0056.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "9f41625d517556e8637eaaefd9ec06059fb8aa8206fdf8d60e430f07f72ae3a3",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.403,
+        "x": 101.064,
+        "y": 218.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-005.svg",
+        "svgSha256": "40544def91421e072b4a976226e71bfdcafc4948fd50bb07c872585bd8a2033a"
+      },
+      "text": "C009 / 06",
+      "token": "7ffc0a87f9940281e268d04a3db690520dd77cb37041287401ba504186c7d623"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "6cd0f1cf1a1ca537d8d965c058c16294997e7b3fe887f03cd729c085eb5f1e26",
+      "headerLines": [
+        "DQ-08/2ff2d915b6b7484a | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K1/default | physical page 6",
+        "Report instance b4a3b99662613342672d2575b3ba1e01806f6c5bda661c35c83757d16eecf66e",
+        "Text C009 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 104.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/2ff2d915b6b7484a",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0057.png",
+      "physicalSheet": 6,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0057.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-006",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "bd45632a1d6bae572b17b137e036e8d6c1fa345b064368838bb7e2ac13ce206a",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 101.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-006.svg",
+        "svgSha256": "5b11dde2138584f0b70f1e6a07a912e845d1afa10cc4942572830d3449f27e09"
+      },
+      "text": "C009 / 05",
+      "token": "b4a3b99662613342672d2575b3ba1e01806f6c5bda661c35c83757d16eecf66e"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d8457a368baab435a1acf792d1240db1c1e0a097530be1949a439ee3ed017856",
+      "headerLines": [
+        "DQ-08/165596fb108e0b17 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K1/default | physical page 5",
+        "Report instance 8837b99702fd313e54d3f532b38148c4d5d8ae5b8efa55109cdab3e73d850816",
+        "Text C009 / 06"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.403,
+        "x": 169.664,
+        "y": 229.655
+      },
+      "markerId": "DQ-08/165596fb108e0b17",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0058.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0018.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-005",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "a688cb4c38264c5d2adfddbba50ef0f84303630ad19a512c51951687eb3ad688",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.403,
+        "x": 166.664,
+        "y": 226.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-005.svg",
+        "svgSha256": "71038862ee770ef848a8e4f63c2070e08277fc811db8561f3f64be27103d155c"
+      },
+      "text": "C009 / 06",
+      "token": "8837b99702fd313e54d3f532b38148c4d5d8ae5b8efa55109cdab3e73d850816"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "9e0575efeb9d71669a5292ebbcfc19875a0a7df42a0b52fbc861dbdd23fd9363",
+      "headerLines": [
+        "DQ-08/165596fb108e0b17 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K1/default | physical page 6",
+        "Report instance b08a9bd30424e1b6b2f360b537752ea69aa5586b385598e99b36a5503a0f8d8f",
+        "Text C009 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 169.664,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/165596fb108e0b17",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0059.png",
+      "physicalSheet": 6,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0019.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-006",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "50616b5974494d862b42daf5370ae6fd5402724cd47473b0045d6fe1c08b2e0e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 166.664,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-006.svg",
+        "svgSha256": "2678d18f9ea76f78d8f4cfc87efc32b2141b26791d6fb8699512370d7a9e0d32"
+      },
+      "text": "C009 / 05",
+      "token": "b08a9bd30424e1b6b2f360b537752ea69aa5586b385598e99b36a5503a0f8d8f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c0de376be728e4bfc05555ad906e18e9ebc9fb915d1f0e8864231ea424224317",
+      "headerLines": [
+        "DQ-08/df0458d222f21305 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K2/default | physical page 7",
+        "Report instance 90f2d9df034adc5b86ca52887bc7621202deff4407c5ab0f3ed592016015bdc6",
+        "Text C010 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 104.064,
+        "y": 221.155
+      },
+      "markerId": "DQ-08/df0458d222f21305",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0060.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0060.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "1df5c48fb0d11cb89f70c9b7087e1c1a3701569b2ae8cff2707ca9be076aceb8",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 101.064,
+        "y": 218.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-007.svg",
+        "svgSha256": "b9bfb8c8fdfec919069754b40723545f538cb35d9867e179e11e9e89e397d74b"
+      },
+      "text": "C010 / 08",
+      "token": "90f2d9df034adc5b86ca52887bc7621202deff4407c5ab0f3ed592016015bdc6"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "1f384ffc52290fd1de42400c9c1448fb3f0a173384223799233c92e8dfe2d3df",
+      "headerLines": [
+        "DQ-08/df0458d222f21305 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K2/default | physical page 8",
+        "Report instance aa61541fd1f4d46994cac500a01d362e592d0bb712005e4d85378a8649426732",
+        "Text C010 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 104.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/df0458d222f21305",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0061.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0061.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "f517648c2857011dbe5f06146fb255498f45fd2b5658a036561835b1fab849cd",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 101.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-008.svg",
+        "svgSha256": "953be22c79d3a5d91cb0d7b263f76ca8da97430ecc18242a10c965fc1540a7e8"
+      },
+      "text": "C010 / 07",
+      "token": "aa61541fd1f4d46994cac500a01d362e592d0bb712005e4d85378a8649426732"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "4b34250b0c86215f620378de13f39efb730ae1e170a961df2a6afe886ba43387",
+      "headerLines": [
+        "DQ-08/f8336d2469970019 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K2/default | physical page 7",
+        "Report instance b2681c52df990ccb3134e06a118e968079ccc279964e6fece0860f6b3cf46037",
+        "Text C012 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 169.664,
+        "y": 229.655
+      },
+      "markerId": "DQ-08/f8336d2469970019",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0062.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0062.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "7c1e582f0cf504fa5748329a01b26664caa78fd0011c6b23aa09ec60cf8bee54",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 166.664,
+        "y": 226.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-007.svg",
+        "svgSha256": "61e7d4c782f171676956a47fbfe9591244cf50c38ffa915db59defa382451a8f"
+      },
+      "text": "C012 / 08",
+      "token": "b2681c52df990ccb3134e06a118e968079ccc279964e6fece0860f6b3cf46037"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d9c056aa42395e05ac231eb07b5557352982687d746448ff95fc67abd05a2352",
+      "headerLines": [
+        "DQ-08/f8336d2469970019 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K2/default | physical page 8",
+        "Report instance 3c873d8f9d7f69cbf8e54b6dc9777ded202aaeb2c5b3a1122ed125903663ab5d",
+        "Text C012 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 169.664,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/f8336d2469970019",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0063.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0063.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "e0ca533c7e4164f1f5b1264444b10132e788a12ca891d2e7343b2bb39d8a6d02",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 166.664,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-008.svg",
+        "svgSha256": "e3b9cb39484e14006725e546f32c12637c1b09f57a0ced466acb8927e998322f"
+      },
+      "text": "C012 / 07",
+      "token": "3c873d8f9d7f69cbf8e54b6dc9777ded202aaeb2c5b3a1122ed125903663ab5d"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "35f777179aada9655c5c722f4c6ff8124ca7bd33d6b4fff64e6260f062489363",
+      "headerLines": [
+        "DQ-08/f646f61ef8b745e1 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/LS1/trace | physical page 9",
+        "Report instance b714b91109df2eac8ce6ac6952c9c69cee92c30fb82b93eb2dd40fd4942af08c",
+        "Text C011 / 10"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 98.614,
+        "y": 147.655
+      },
+      "markerId": "DQ-08/f646f61ef8b745e1",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0064.png",
+      "physicalSheet": 9,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0064.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-009",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "62e5e1aaacd5902a51ee99138e13750c9291a7ba78e9151988eb133f4f648df3",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 95.614,
+        "y": 144.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-009.svg",
+        "svgSha256": "2a082b8c495915bba12f51a1ca1e36c30455cf2ed1ae3ee35b31bfdb4fe56d24"
+      },
+      "text": "C011 / 10",
+      "token": "b714b91109df2eac8ce6ac6952c9c69cee92c30fb82b93eb2dd40fd4942af08c"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "96f5a615e2c743ca65863b7e0f5016134a3e076d3703abae4192d9039a53b933",
+      "headerLines": [
+        "DQ-08/f646f61ef8b745e1 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/LS1/trace | physical page 10",
+        "Report instance 4c700dc069f8bcfa95ed9d61d8bb7d681135f056bc072f0ed68a254845589119",
+        "Text C011 / 09"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 98.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/f646f61ef8b745e1",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0065.png",
+      "physicalSheet": 10,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0027.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-010",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "4d7e5ea37a7f7962c4ca859f20182eb295d714623dcaffb89f4858848a1cdfaf",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 95.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-010.svg",
+        "svgSha256": "d7e64bfeb4f24cc35023fdcc9a5d2c8f3251e9ee386ac2b578c90f783d263d78"
+      },
+      "text": "C011 / 09",
+      "token": "4c700dc069f8bcfa95ed9d61d8bb7d681135f056bc072f0ed68a254845589119"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "b36d2be3f4df7efc0fb6ec49f077f7c1fa60e564ded8006e3538c83b56d102c8",
+      "headerLines": [
+        "DQ-08/4433a893daf4c9c9 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance c2fc50768d7e5d7dfc7104e0cadcdde68c262965cae5c8776237bc17e97403f0",
+        "Text C003 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 149.714,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/4433a893daf4c9c9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0066.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0048.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "9be153bc340be0f1f2427b86f4a93252f62a9ce74f8db8ca8858d22909cee949",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 146.714,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C003 / 02",
+      "token": "c2fc50768d7e5d7dfc7104e0cadcdde68c262965cae5c8776237bc17e97403f0"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0e4283b6dd3e8393a668ee039de72d8582047ccfc0554ff7650fabc476f58ce0",
+      "headerLines": [
+        "DQ-08/4433a893daf4c9c9 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance e49dbc84a5eaa29e10064fcd08631f972a58e05a7af2f4e8325aa316b6509ae4",
+        "Text C003 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 149.714,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/4433a893daf4c9c9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0067.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0049.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "f6c44325868cd98edd999a83a6fb32f9902eb921a604d613406d1f8361aa6e81",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 146.714,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C003 / 01",
+      "token": "e49dbc84a5eaa29e10064fcd08631f972a58e05a7af2f4e8325aa316b6509ae4"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "8431c5fa6b292fae2759a30bd5a2f1c64222660e8f08284d102c0cd290b2d051",
+      "headerLines": [
+        "DQ-08/a9cb5c3d2e1a1859 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K2/default | physical page 5",
+        "Report instance c51f535cee7229343cafe4aa14eb8e7d761b5126c22bf0c0676ca0b856115189",
+        "Text C010 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 398.984,
+        "y": 88.205
+      },
+      "markerId": "DQ-08/a9cb5c3d2e1a1859",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0068.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0052.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "783876e076baed216f9e5e9e3ba84231a70ece31530e8c9c93af0051e9253803",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 395.984,
+        "y": 85.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-005.svg",
+        "svgSha256": "fc9c04c4962bba31f1003d4644f8074b289176eba0c69d26c18b29d570970d0f"
+      },
+      "text": "C010 / 05",
+      "token": "c51f535cee7229343cafe4aa14eb8e7d761b5126c22bf0c0676ca0b856115189"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0d88a4a58fb24d3d500cfe0ff8a97cc5bb2943a6c7c4fab132b259a7695df202",
+      "headerLines": [
+        "DQ-08/a9cb5c3d2e1a1859 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K2/default | physical page 5",
+        "Report instance 9876b5acf671ab590a73e504585e93e215c9fbb00335bbb5b266df758d0f0d5d",
+        "Text C010 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 15.493,
+        "y": 126.205
+      },
+      "markerId": "DQ-08/a9cb5c3d2e1a1859",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0069.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0053.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "5cc468ee1f973d3c8adc568b2bb2fe236eb3e16e9f4ff24f3774ea4d0e2d9e8e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 12.493,
+        "y": 123.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-005.svg",
+        "svgSha256": "fc9c04c4962bba31f1003d4644f8074b289176eba0c69d26c18b29d570970d0f"
+      },
+      "text": "C010 / 05",
+      "token": "9876b5acf671ab590a73e504585e93e215c9fbb00335bbb5b266df758d0f0d5d"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d30f5adc563fd5f9b578df11a34eaa0c88d18961bf407b4aa1d8b6903d8c68fb",
+      "headerLines": [
+        "DQ-08/bf637e08fbbaa8c0 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K1/default | physical page 4",
+        "Report instance d6f48cdd0e40c8b20fc8254a6ef37a3adde10ea5ed212df1dfd4402da444145a",
+        "Text C009 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 392.784,
+        "y": 88.205
+      },
+      "markerId": "DQ-08/bf637e08fbbaa8c0",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0070.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0070.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "583a1060a484b8fe0798d902c42a9a1b78a5de9771e432bee05af84ece261b05",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 389.784,
+        "y": 85.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-004.svg",
+        "svgSha256": "ed07a64664035b2db1a02159effa33940daeb12252d0709d11b212a5328c3aba"
+      },
+      "text": "C009 / 04",
+      "token": "d6f48cdd0e40c8b20fc8254a6ef37a3adde10ea5ed212df1dfd4402da444145a"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "166b86edf79047a6fb8d8e30b581dc165d339523d672fb045a67c1c3c5cfd843",
+      "headerLines": [
+        "DQ-08/bf637e08fbbaa8c0 | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K1/default | physical page 4",
+        "Report instance e0dad2c93337ae1a972b3034f25d244dc1be6cd8b13a4ba2c4e0283cd066bf6b",
+        "Text C009 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 15.493,
+        "y": 126.205
+      },
+      "markerId": "DQ-08/bf637e08fbbaa8c0",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0071.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0071.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "e7cf59c3b482bd250bb3a1b0df520fe706a4939525d33e1ad4f614f4077c1f78",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 12.493,
+        "y": 123.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-004.svg",
+        "svgSha256": "ed07a64664035b2db1a02159effa33940daeb12252d0709d11b212a5328c3aba"
+      },
+      "text": "C009 / 04",
+      "token": "e0dad2c93337ae1a972b3034f25d244dc1be6cd8b13a4ba2c4e0283cd066bf6b"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "9895a9617442b7de9e68f8e689d66c25d49f1a951b59538060d1e64346620994",
+      "headerLines": [
+        "DQ-08/2ad7ff731099e58b | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance dae5088e893f434391de28e5c38174757b7498f9fdfccfc151e98d44346792c0",
+        "Text C006 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 156.064,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/2ad7ff731099e58b",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0072.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0072.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "35abfe608320e3f9d805c65014683dcdd5d0bc6bfd9ee98cf2ffb0621c0d3007",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 153.064,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C006 / 04",
+      "token": "dae5088e893f434391de28e5c38174757b7498f9fdfccfc151e98d44346792c0"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c0a685c17d419e089a7bdf7de3b323d981577871ae1b8f7b10c6dc1439a5577b",
+      "headerLines": [
+        "DQ-08/2ad7ff731099e58b | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 879acc4f7330b01889e0037e130ef9092cf3f5163b4e2ba01f0b99ba53f2ae64",
+        "Text C006 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 156.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/2ad7ff731099e58b",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0073.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0073.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "dc514654b6b5e5f137d023fc329a022894670df3245dceaf20a429042848a63c",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 153.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C006 / 03",
+      "token": "879acc4f7330b01889e0037e130ef9092cf3f5163b4e2ba01f0b99ba53f2ae64"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "4b34250b0c86215f620378de13f39efb730ae1e170a961df2a6afe886ba43387",
+      "headerLines": [
+        "DQ-08/80df2bf14325c9f3 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K2/default | physical page 7",
+        "Report instance ddba1d8c063c79bc4ca2a32269e462381e31a12f046f95290bc39d87a1d4be49",
+        "Text C012 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 169.664,
+        "y": 229.655
+      },
+      "markerId": "DQ-08/80df2bf14325c9f3",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0074.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0062.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "822479007b03c37daa90cd55064ef76dd1de4c9d2fa5dfdf6de8cce755b83145",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 166.664,
+        "y": 226.655
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-007.svg",
+        "svgSha256": "61e7d4c782f171676956a47fbfe9591244cf50c38ffa915db59defa382451a8f"
+      },
+      "text": "C012 / 08",
+      "token": "ddba1d8c063c79bc4ca2a32269e462381e31a12f046f95290bc39d87a1d4be49"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d9c056aa42395e05ac231eb07b5557352982687d746448ff95fc67abd05a2352",
+      "headerLines": [
+        "DQ-08/80df2bf14325c9f3 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:control/K2/default | physical page 8",
+        "Report instance 1950aad99d4d0d625b6665a3714d5bb9e7cdb0a6b6605e176afd6bc7bf49c599",
+        "Text C012 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 169.664,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/80df2bf14325c9f3",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0075.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0063.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "8bda808150df4a6c90fdd43f1cfef450dbf032d3367aa8b31472726d424ccd7d",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 166.664,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-008.svg",
+        "svgSha256": "e3b9cb39484e14006725e546f32c12637c1b09f57a0ced466acb8927e998322f"
+      },
+      "text": "C012 / 07",
+      "token": "1950aad99d4d0d625b6665a3714d5bb9e7cdb0a6b6605e176afd6bc7bf49c599"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "686aba739dd85521f1089afdd2ad5bb2232b55f8a3edb024935170143964583b",
+      "headerLines": [
+        "DQ-08/78ccf8aba57f059e | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K1/default | physical page 5",
+        "Report instance df500bffe0176e12f34a1a5bf9f227ac34fb5fe7daf6e92d7f9230f71d39fc18",
+        "Text C009 / 06"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.403,
+        "x": 104.064,
+        "y": 221.155
+      },
+      "markerId": "DQ-08/78ccf8aba57f059e",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0076.png",
+      "physicalSheet": 5,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0056.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-005",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "9e417e8af476a8cee76fcca201ecc03a61dea3b56828c6fe879adfc9cfc445d7",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.403,
+        "x": 101.064,
+        "y": 218.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-005.svg",
+        "svgSha256": "40544def91421e072b4a976226e71bfdcafc4948fd50bb07c872585bd8a2033a"
+      },
+      "text": "C009 / 06",
+      "token": "df500bffe0176e12f34a1a5bf9f227ac34fb5fe7daf6e92d7f9230f71d39fc18"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "6cd0f1cf1a1ca537d8d965c058c16294997e7b3fe887f03cd729c085eb5f1e26",
+      "headerLines": [
+        "DQ-08/78ccf8aba57f059e | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K1/default | physical page 6",
+        "Report instance 1861f0a98b5e0b382361b6dc8f6b10e645f7c9159e1d1f06177afbc3c2232e83",
+        "Text C009 / 05"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 104.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/78ccf8aba57f059e",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0077.png",
+      "physicalSheet": 6,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0057.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-006",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "f0b48da784151a95dc5a381ef7063795667204b121b1f6da59e619071d550c07",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 101.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-006.svg",
+        "svgSha256": "5b11dde2138584f0b70f1e6a07a912e845d1afa10cc4942572830d3449f27e09"
+      },
+      "text": "C009 / 05",
+      "token": "1861f0a98b5e0b382361b6dc8f6b10e645f7c9159e1d1f06177afbc3c2232e83"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "fbe0232a50c2ecfe4a83632e8d36e77a85a946f729b84dbc99716ac5e9973f51",
+      "headerLines": [
+        "DQ-08/9828ee4d8c1b6f5f | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance e2ca5f4928fdfab2693250b27d0670479427c52df095290e8b5c6f1b528324fd",
+        "Text C008 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 99.614,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/9828ee4d8c1b6f5f",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0078.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0020.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "d8dd31ffbe4668a01521d139d0fad654946a6c0ae9ab378bb87cc5db58396874",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 96.614,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C008 / 04",
+      "token": "e2ca5f4928fdfab2693250b27d0670479427c52df095290e8b5c6f1b528324fd"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "1de052cbca17667c5f9fce6c3648a8eec9b711f59a3a89c70cc191bc44cff459",
+      "headerLines": [
+        "DQ-08/9828ee4d8c1b6f5f | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 1bae9bdfbdf2bc507e4163e2d3de8fe1d78e9ce06cac7c41e5cae3383d48eb1f",
+        "Text C008 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 99.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/9828ee4d8c1b6f5f",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0079.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0021.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "3bee7e5240cd5f2ff9bdd0703eb96439e4f8d763fc45f6f522555f7d144011f3",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 96.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C008 / 03",
+      "token": "1bae9bdfbdf2bc507e4163e2d3de8fe1d78e9ce06cac7c41e5cae3383d48eb1f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "9895a9617442b7de9e68f8e689d66c25d49f1a951b59538060d1e64346620994",
+      "headerLines": [
+        "DQ-08/46de15813d099163 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance e55424aae623e46c49f5ccbc09ecac3088839a2c48611c59e9cad4d15202b6bf",
+        "Text C006 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 156.064,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/46de15813d099163",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0080.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0072.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "18fa14705010df2d5a1b3d0f5e7a5eb0808c84ff7d398402bdff3b77ec66c93e",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 153.064,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C006 / 04",
+      "token": "e55424aae623e46c49f5ccbc09ecac3088839a2c48611c59e9cad4d15202b6bf"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c0a685c17d419e089a7bdf7de3b323d981577871ae1b8f7b10c6dc1439a5577b",
+      "headerLines": [
+        "DQ-08/46de15813d099163 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance 44259df8ee402057880559754ab041954fa30d29df5d1974e95ff49bbfe667af",
+        "Text C006 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 156.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/46de15813d099163",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0081.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0073.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "5222a5732be3b4637bacd2cbde08170667e9b9e95ccc18523e5d94338979feba",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 153.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C006 / 03",
+      "token": "44259df8ee402057880559754ab041954fa30d29df5d1974e95ff49bbfe667af"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "e0919c7dc101e30a6fa4b21e6d2bce9d9b514fa9afcbe8a9b2bb62ed3d3017e3",
+      "headerLines": [
+        "DQ-08/c612165c4b110bef | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance e89b6b5c1e0e408d0bd235296195744e10db357ebb59f1bc0791f46fc71e226d",
+        "Text C007 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 123.964,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/c612165c4b110bef",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0082.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0082.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "1784d4fd4652e511ceba514656f70327b03ce327b1bed427cadca2795cd69873",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 120.964,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-003.svg",
+        "svgSha256": "55672b569a8623bb5b0a31ba23bf8a3cbb51870d7405b102e35d50bffad0ad82"
+      },
+      "text": "C007 / 04",
+      "token": "e89b6b5c1e0e408d0bd235296195744e10db357ebb59f1bc0791f46fc71e226d"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "0068cdee595c5f180ec4cc1ec5ba5ac4e1f83534b2b359d00c1755c6baf3715c",
+      "headerLines": [
+        "DQ-08/c612165c4b110bef | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance fa9366c741048af42561f855d797a5e6716b4901d45022cf4015bd7b34659c17",
+        "Text C007 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 123.964,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/c612165c4b110bef",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0083.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0045.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "fa1111a3b96bb91de34824d74efe60110611a995d6a08fef62852fb93db7486a",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 120.964,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-004.svg",
+        "svgSha256": "34f3af87a587557d7d0901e8cd9e04355b85550654cb55a7568ea45e7177b74d"
+      },
+      "text": "C007 / 03",
+      "token": "fa9366c741048af42561f855d797a5e6716b4901d45022cf4015bd7b34659c17"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "33696df63a88035eb381bc1cb54aae5f7cc6f74272312c4360f3e0ca61acd7d9",
+      "headerLines": [
+        "DQ-08/9c318317e6332c37 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 3",
+        "Report instance ea0eaafc2af62b2e1f221a35e19002d6b1cf907aaf24b329562e615019267dcd",
+        "Text C006 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 163.814,
+        "y": 196.155
+      },
+      "markerId": "DQ-08/9c318317e6332c37",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0084.png",
+      "physicalSheet": 3,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0054.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-003",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "707612f1f52d85b85fa083b7d1ff0650a9a3374feb8ad8aa2795bd00c33f9e68",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 160.814,
+        "y": 193.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-003.svg",
+        "svgSha256": "0947dcb58810cee2d8d0ef219c09d7baa946bc30b637bad3ff3c26778c2b031f"
+      },
+      "text": "C006 / 04",
+      "token": "ea0eaafc2af62b2e1f221a35e19002d6b1cf907aaf24b329562e615019267dcd"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d50cde850f664e5a1a7c40dacf347b72d711362661bf74711d18e16e712e97cc",
+      "headerLines": [
+        "DQ-08/9c318317e6332c37 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M2/default | physical page 4",
+        "Report instance f80c6b1344237e8becb37ea95276316b22f0fd094716148b7f6047c88a43b872",
+        "Text C006 / 03"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.381,
+        "x": 163.814,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/9c318317e6332c37",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0085.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0055.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M2/default"
+      },
+      "sha256": "d0368fb9ce3726401e9240eff44c94aac83c7e3f83beb04703be166593628b13",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.381,
+        "x": 160.814,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-004.svg",
+        "svgSha256": "85d24e2ae0f540875380f7479ed6f9723b321221e57e2149ad9451d46f51a5e4"
+      },
+      "text": "C006 / 03",
+      "token": "f80c6b1344237e8becb37ea95276316b22f0fd094716148b7f6047c88a43b872"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "c0de376be728e4bfc05555ad906e18e9ebc9fb915d1f0e8864231ea424224317",
+      "headerLines": [
+        "DQ-08/bf5c267e9b3f1fd5 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K2/default | physical page 7",
+        "Report instance ec4fdacbf3417e600185690416535be5e6a44efb3e9df242ef8a8153f183fab4",
+        "Text C010 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 104.064,
+        "y": 221.155
+      },
+      "markerId": "DQ-08/bf5c267e9b3f1fd5",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0086.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0060.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "530319f3cc76f09ba487acb50f6cb2d0e16ec398fb63f2e87ceb258cf863e1ee",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 101.064,
+        "y": 218.155
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-007.svg",
+        "svgSha256": "b9bfb8c8fdfec919069754b40723545f538cb35d9867e179e11e9e89e397d74b"
+      },
+      "text": "C010 / 08",
+      "token": "ec4fdacbf3417e600185690416535be5e6a44efb3e9df242ef8a8153f183fab4"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "1f384ffc52290fd1de42400c9c1448fb3f0a173384223799233c92e8dfe2d3df",
+      "headerLines": [
+        "DQ-08/bf5c267e9b3f1fd5 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:control/K2/default | physical page 8",
+        "Report instance 575eef167326763216e0258528280666902a6546c1153af6ce6def86d924a761",
+        "Text C010 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 104.064,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/bf5c267e9b3f1fd5",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0087.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0061.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/K2/default"
+      },
+      "sha256": "70d1561742eb81ed092cf4348e05fcc35d691396ba553eadb9fbc2f56eed99d8",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 101.064,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-008.svg",
+        "svgSha256": "953be22c79d3a5d91cb0d7b263f76ca8da97430ecc18242a10c965fc1540a7e8"
+      },
+      "text": "C010 / 07",
+      "token": "575eef167326763216e0258528280666902a6546c1153af6ce6def86d924a761"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "2c003b182d496d9b061e1fc3ee4b39e6a85517d0f3f3fc147558d0120d74e459",
+      "headerLines": [
+        "DQ-08/9a9bf6cf0c2a7892 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance ec6a74c009ca0ce7b3ba23f6fbbe7cc8199eea6255bcb19b1e69e56dfb249490",
+        "Text C004 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 117.614,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/9a9bf6cf0c2a7892",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0088.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0088.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "6724172b1aac7a39cefa2779731ea763f417360caf7f76d3170e955167d4484d",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 114.614,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C004 / 02",
+      "token": "ec6a74c009ca0ce7b3ba23f6fbbe7cc8199eea6255bcb19b1e69e56dfb249490"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "3ee62b9a83f285fd92a73aec420f7dfa8a78ff2694638dd603386f642f9c0f95",
+      "headerLines": [
+        "DQ-08/9a9bf6cf0c2a7892 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance d7a0991bf6ef16a7e18318746070491f3d26fe63cfcac3da9142c4f12ce7869c",
+        "Text C004 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 117.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/9a9bf6cf0c2a7892",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0089.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0089.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "14777b177f46a33cf9b66ae32df0f264f747295b21a61c6e57055867eaf9d6d1",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 114.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C004 / 01",
+      "token": "d7a0991bf6ef16a7e18318746070491f3d26fe63cfcac3da9142c4f12ce7869c"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "695e845a82084af310ee1b741b103a14bfd9064daf74ad1ae381ee77847000c2",
+      "headerLines": [
+        "DQ-08/cbee207f16107ff4 | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 7",
+        "Report instance f36243701e7ec4f4c666b89f9909c240cb4e16a38497d7eaf7da7079a80508fd",
+        "Text C014 / 08"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.397,
+        "x": 207.864,
+        "y": 229.805
+      },
+      "markerId": "DQ-08/cbee207f16107ff4",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0090.png",
+      "physicalSheet": 7,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0036.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-007",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "dfd70362e6c7e4877dbb33be407ca43314a6db96fdb0eaadd97c073ccc5c3c38",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.397,
+        "x": 204.864,
+        "y": 226.805
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-007.svg",
+        "svgSha256": "ff171c35a81bc7a183f44a316345b1bdde96cb50cee955888a0d9df13e1ba82c"
+      },
+      "text": "C014 / 08",
+      "token": "f36243701e7ec4f4c666b89f9909c240cb4e16a38497d7eaf7da7079a80508fd"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d58577d65abfcaf86adb89b0eeb92ea01fab97efb1c06d432011fcc9041ca233",
+      "headerLines": [
+        "DQ-08/cbee207f16107ff4 | SVG | 300 dpi",
+        "motor-starter-top-to-bottom | view:control/LS1/trace | physical page 8",
+        "Report instance da486050b8565edae0e37a02d64de5c664da7261b43b0d125a59ce7cd8eecfe2",
+        "Text C014 / 07"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.399,
+        "x": 207.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/cbee207f16107ff4",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0091.png",
+      "physicalSheet": 8,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0037.png",
+      "row": "motor-starter-top-to-bottom/DQ-08/sheet-008",
+      "scope": {
+        "case": "motor-starter-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:control/LS1/trace"
+      },
+      "sha256": "bb334b0d8302b03a1adff3e1c2d6c9923c3fdf1bcfbb7cd4845a0549863dc652",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.399,
+        "x": 204.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "motor-starter-top-to-bottom/sheet-008.svg",
+        "svgSha256": "34643054ced90e6ee4c18fc536fac5f0e3c4425468ac4b4da3760f9bbedfe430"
+      },
+      "text": "C014 / 07",
+      "token": "da486050b8565edae0e37a02d64de5c664da7261b43b0d125a59ce7cd8eecfe2"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "2c003b182d496d9b061e1fc3ee4b39e6a85517d0f3f3fc147558d0120d74e459",
+      "headerLines": [
+        "DQ-08/a9c29d859377fa78 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance fb34de8c9351a8a6bbb389084279bab1f85cf657bd2fada81d2b6fb13fd2ef1f",
+        "Text C004 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 117.614,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/a9c29d859377fa78",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0092.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0088.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "2b72cd043b5140a4947dae52ec5555e1a5d518d25cec12648e90ab7e1d9d79db",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 114.614,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-001.svg",
+        "svgSha256": "167b6add4c70e925dd827783e9e5e446a699bc159c415f6cbd02ac8eb8881771"
+      },
+      "text": "C004 / 02",
+      "token": "fb34de8c9351a8a6bbb389084279bab1f85cf657bd2fada81d2b6fb13fd2ef1f"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "3ee62b9a83f285fd92a73aec420f7dfa8a78ff2694638dd603386f642f9c0f95",
+      "headerLines": [
+        "DQ-08/a9c29d859377fa78 | SVG | 300 dpi",
+        "machine-demo-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 9179f8e1fcb714918315639c98bbaba751f641fd3bea3c1a79e4b523ef4e6742",
+        "Text C004 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 117.614,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/a9c29d859377fa78",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0093.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0089.png",
+      "row": "machine-demo-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "machine-demo-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "5cefb87b92c062f19fb56fb41cb8e754b5366f8d624affbb7e6f4a4e98ebe4e2",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 114.614,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-top-to-bottom/sheet-002.svg",
+        "svgSha256": "83e805f0146c1a7195db1979cc0d7c054f16aa9e725764a7d7ae256aba34e4c7"
+      },
+      "text": "C004 / 01",
+      "token": "9179f8e1fcb714918315639c98bbaba751f641fd3bea3c1a79e4b523ef4e6742"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "af759b7ddf70545124416b52bd1f9eb218f0142479dd90e041bf7a280527b795",
+      "headerLines": [
+        "DQ-08/98b07002b8b743b9 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance fc2d5e47633a5f2f26be465cf294e697caee229552a5d8e8324b30aad7bc4fd1",
+        "Text C003 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 141.964,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/98b07002b8b743b9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0094.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0032.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "47ba89eaf57f54b33044ba9946769453c7e79c6d6fff9e9304b7d902c34cd3ef",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 138.964,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C003 / 02",
+      "token": "fc2d5e47633a5f2f26be465cf294e697caee229552a5d8e8324b30aad7bc4fd1"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "44dfa585f3349f9cb73ae600cca85dd464c52f9b4b7bc3b6fabc1f192baea34f",
+      "headerLines": [
+        "DQ-08/98b07002b8b743b9 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance 4eba77f3eac6d53826cd4ff021aad1adeba4fedcd3cc9744cbc089df79320e64",
+        "Text C003 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 141.964,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/98b07002b8b743b9",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0095.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0033.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "fe6a8a6fca7b8b5030bda4020e6e5abb745cb8febafa1eb9faadf84b53da94be",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 138.964,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C003 / 01",
+      "token": "4eba77f3eac6d53826cd4ff021aad1adeba4fedcd3cc9744cbc089df79320e64"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "a7325cc615b7c28afee33945186d5ec4f28a4b906cee216597a0c11a3c712409",
+      "headerLines": [
+        "DQ-08/dbee082b14d527e2 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 1",
+        "Report instance fc4a38084e775c15a9db3cb4ec99566f960c4fb726f98146ff621421e0b46f08",
+        "Text C004 / 02"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.392,
+        "x": 109.864,
+        "y": 197.905
+      },
+      "markerId": "DQ-08/dbee082b14d527e2",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0096.png",
+      "physicalSheet": 1,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0038.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-001",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "35a62702ce573632ace70baf03dec4f4e47f2eb2a47e401e705bdd77008ac9a5",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.392,
+        "x": 106.864,
+        "y": 194.905
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-001.svg",
+        "svgSha256": "21a14e6e9ea47f34a94db2fef92915a10ddebf032f2c1cb07314e5686ba8a212"
+      },
+      "text": "C004 / 02",
+      "token": "fc4a38084e775c15a9db3cb4ec99566f960c4fb726f98146ff621421e0b46f08"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "fd3e9e9b479357c51b44da1216d747b3df8a821ca85f33c90a82904474434317",
+      "headerLines": [
+        "DQ-08/dbee082b14d527e2 | SVG | 300 dpi",
+        "conveyor-line-top-to-bottom | view:power/M1/default | physical page 2",
+        "Report instance fc2596a500cd73aa5744ccdc8a2e072a1023c711142eaf43c7df7ca242db2e6b",
+        "Text C004 / 01"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.029,
+        "x": 109.864,
+        "y": 41.405
+      },
+      "markerId": "DQ-08/dbee082b14d527e2",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0097.png",
+      "physicalSheet": 2,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0039.png",
+      "row": "conveyor-line-top-to-bottom/DQ-08/sheet-002",
+      "scope": {
+        "case": "conveyor-line-top-to-bottom",
+        "medium": "svg",
+        "sheet": "view:power/M1/default"
+      },
+      "sha256": "ab381fec709aec1164bd90eb76763f7c079d109b66dad0a5b5c407ca6939158a",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.029,
+        "x": 106.864,
+        "y": 38.405
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "conveyor-line-top-to-bottom/sheet-002.svg",
+        "svgSha256": "906c2d59aa4d3f74a94d471ea0d6f53c12d27c7a6a9b5e9f1e22051373999a6c"
+      },
+      "text": "C004 / 01",
+      "token": "fc2596a500cd73aa5744ccdc8a2e072a1023c711142eaf43c7df7ca242db2e6b"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "d30f5adc563fd5f9b578df11a34eaa0c88d18961bf407b4aa1d8b6903d8c68fb",
+      "headerLines": [
+        "DQ-08/491e33f5ff22243d | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K1/default | physical page 4",
+        "Report instance fc7bfa949b4433a9c70f0647597a0bf0ab76722c2b5d5e2139c12d40c486592a",
+        "Text C009 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 392.784,
+        "y": 88.205
+      },
+      "markerId": "DQ-08/491e33f5ff22243d",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0098.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0070.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "a236569d6ff599888c974b2954a327fbdd637eaca684c227f8e7e4233d4d55df",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 389.784,
+        "y": 85.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-004.svg",
+        "svgSha256": "ed07a64664035b2db1a02159effa33940daeb12252d0709d11b212a5328c3aba"
+      },
+      "text": "C009 / 04",
+      "token": "fc7bfa949b4433a9c70f0647597a0bf0ab76722c2b5d5e2139c12d40c486592a"
+    },
+    {
+      "capture": "fresh-source",
+      "drawingSha256": "166b86edf79047a6fb8d8e30b581dc165d339523d672fb045a67c1c3c5cfd843",
+      "headerLines": [
+        "DQ-08/491e33f5ff22243d | SVG | 300 dpi",
+        "machine-demo-left-to-right | view:control/K1/default | physical page 4",
+        "Report instance a7db7f0cd4c1b472250b3c43e97106abc9f1571e3803134a9e9a917c352bb189",
+        "Text C009 / 04"
+      ],
+      "headerPixels": 86,
+      "instanceBbox": {
+        "h": 1.617,
+        "w": 9.463,
+        "x": 15.493,
+        "y": 126.205
+      },
+      "markerId": "DQ-08/491e33f5ff22243d",
+      "path": "evals/out/draw-samples/consolidated-84-p2b/entry-0099.png",
+      "physicalSheet": 4,
+      "reportSha256": "f326c8b3a8d3ba14f5838c79fba5dd2ee0408b72609341af1874c8ddfb28075d",
+      "retained": "crops/entry-0071.png",
+      "row": "machine-demo-left-to-right/DQ-08/sheet-004",
+      "scope": {
+        "case": "machine-demo-left-to-right",
+        "medium": "svg",
+        "sheet": "view:control/K1/default"
+      },
+      "sha256": "fcc3cd0dc21feeede51788204d829d3adc966afd032790fe0d12496782767399",
+      "sourceBbox": {
+        "h": 7.617,
+        "w": 15.463,
+        "x": 12.493,
+        "y": 123.205
+      },
+      "sourceRender": {
+        "medium": "svg",
+        "svg": "machine-demo-left-to-right/sheet-004.svg",
+        "svgSha256": "ed07a64664035b2db1a02159effa33940daeb12252d0709d11b212a5328c3aba"
+      },
+      "text": "C009 / 04",
+      "token": "a7db7f0cd4c1b472250b3c43e97106abc9f1571e3803134a9e9a917c352bb189"
+    }
+  ],
+  "format": "thermite-draw-crop-index/2.0"
+}

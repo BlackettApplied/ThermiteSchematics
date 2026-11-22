@@ -1,11 +1,34 @@
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type { ELK, ElkNode } from "elkjs/lib/elk-api.js";
+import { circuitTextLines } from "./symbols/circuit-text.js";
+import { printableTextWidth } from "./text-metrics.js";
+import { assemblyDocumentNeeds } from "./connector-assembly/document-needs.js";
+import type { DocumentNeedSeed } from "./packet/document-types.js";
+import { assemblyMappingNote } from "./connector-assembly/mapping-note.js";
+import {
+  routePortAttributes,
+  terminalPortAttribute,
+} from "./layout/port-attributes.js";
+import {
+  drawingDeviceTag,
+  deviceHeaderSvg,
+  deviceHeaderHeight,
+} from "./device-tag-svg.js";
+import type { DeviceTagPlan } from "./device-tags.js";
+import {
+  assertTopologyIdentities,
+  assertTopologyRouteEndpoints,
+} from "./layout/topology-conservation.js";
+import type { TopologyDrawingCoverage } from "./topology-coverage.js";
+import type { ElkNode } from "elkjs/lib/elk-api.js";
 import type { ElectricalIr } from "@thermite/compiler";
-import { buildConnectorAssemblyInventory } from "@thermite/query";
+import {
+  buildConnectorAssemblyInventory,
+  relationPrintIdentity,
+} from "@thermite/query";
 import {
   escapeXmlText as xml,
   escapeXmlAttribute as attr,
 } from "./svg/escape.js";
+import { createElkEngine } from "./layout/elk-runtime.js";
 
 export interface ConnectorAssemblyViewRequest {
   readonly format: "connector-assembly-view-request/0.1";
@@ -26,47 +49,16 @@ export interface ConnectorAssemblyDrawing {
     y: number;
   }[];
   note: string;
+  deviceTags?: readonly DeviceTagPlan[];
+  topologyCoverage?: TopologyDrawingCoverage;
+  documentNeeds?: readonly DocumentNeedSeed[];
+  paginated?: boolean;
 }
-const Constructor = BundledElk as unknown as { new (): ELK };
 const n = (x: number) => String(Number(x.toFixed(3)));
 const compare = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
-const width = (s: string) =>
-  [...s].reduce(
-    (v, c) =>
-      v +
-      (/[MW@%]/u.test(c)
-        ? 1
-        : /[ilI1 .,:;'|!]/u.test(c)
-          ? 0.4
-          : c.codePointAt(0)! > 127
-            ? 1.2
-            : 0.75) *
-        2.7,
-    0,
-  );
 const text = (x: number, y: number, s: string, bold = false) =>
-  `<text x="${n(x)}" y="${n(y)}" font-family="Arial, Helvetica, sans-serif" font-size="2.7" font-weight="${bold ? 700 : 400}" fill="#17212b">${xml(s)}</text>`;
-function wrap(value: string, max = 48): string[] {
-  const lines: string[] = [];
-  let line = "";
-  for (const word of value.split(/\s+/u)) {
-    if (line && width(line + " " + word) > max) {
-      lines.push(line);
-      line = "";
-    }
-    if (width(word) > max) {
-      for (const c of word) {
-        if (width(line + c) > max) {
-          lines.push(line);
-          line = "";
-        }
-        line += c;
-      }
-    } else line += (line ? " " : "") + word;
-  }
-  if (line) lines.push(line);
-  return lines;
-}
+  `<text x="${n(x)}" y="${n(y)}" font-family="Thermite Sans, Thermite Math, sans-serif" font-size="2.7" font-weight="${bold ? 700 : 400}" fill="#17212b">${xml(s)}</text>`;
+const wrap = (value: string, max = 48) => circuitTextLines(value, max, 2.7);
 const strings = (v: unknown, maxCount: number, maxLength: number) =>
   Array.isArray(v) &&
   v.length > 0 &&
@@ -85,6 +77,13 @@ export async function prepareConnectorAssemblyDrawing(
   ir: Readonly<ElectricalIr>,
   request: ConnectorAssemblyViewRequest,
 ): Promise<ConnectorAssemblyDrawing> {
+  return layoutAssemblyDrawing(request, selectAssemblyView(ir, request));
+}
+
+function selectAssemblyView(
+  ir: Readonly<ElectricalIr>,
+  request: ConnectorAssemblyViewRequest,
+) {
   if (
     !request ||
     request.format !== "connector-assembly-view-request/0.1" ||
@@ -142,26 +141,102 @@ export async function prepareConnectorAssemblyDrawing(
     throw new Error(
       "Connector assembly view requires 1–80 devices; select a smaller assembly subset.",
     );
+  return { inventory, devices, types, selected, exact, links, included };
+}
+
+interface AssemblyProjection {
+  relations: ReadonlySet<string>;
+  devices: ReadonlySet<string>;
+  ports: ReadonlySet<string>;
+  part: number;
+  total: number;
+  authoredNotes: boolean;
+}
+type AssemblyLayoutState = ReturnType<typeof assemblyLayoutState>;
+type AssemblyRenderState = ReturnType<typeof assemblyRoutes>;
+type AssemblyLink = ReturnType<
+  typeof buildConnectorAssemblyInventory
+>["assemblies"][number];
+type AssemblyEdge = NonNullable<ElkNode["edges"]>[number];
+type AssemblyPoint = { x: number; y: number };
+type AssemblyBox = { x: number; y: number; width: number; height: number };
+type AssemblyLabelBox = AssemblyBox & { edge: number };
+type AssemblySegment = { a: AssemblyPoint; b: AssemblyPoint; edge: number };
+type AssemblyRow = {
+  key: string;
+  connector: string;
+  side: "WEST" | "EAST";
+  y: number;
+  status: string;
+  lines: string[];
+};
+
+async function layoutAssemblyDrawing(
+  request: ConnectorAssemblyViewRequest,
+  selection: ReturnType<typeof selectAssemblyView>,
+  projection?: AssemblyProjection,
+): Promise<ConnectorAssemblyDrawing> {
+  const state = assemblyLayoutState(request, selection, projection);
+  const children = state.ordered.map((uid) => assemblyNode(uid, state));
+  const input = assemblyGraphInput(children, state);
+  const expected = structuredClone(input);
+  const graph = await createElkEngine().layout(input);
+  assertTopologyIdentities(graph, expected);
+  if (![graph.width, graph.height].every(Number.isFinite))
+    throw new Error("Invalid assembly layout bounds.");
+  const draw = assemblyRoutes(graph, state);
+  assertAssemblyLabels(draw);
+  assertAssemblyRouteSeparation(draw.segments);
+  const references = appendAssemblyDevices(draw);
+  assertTopologyRouteEndpoints(graph);
+  return assemblyDrawing(graph, draw, references);
+}
+
+function assemblyLayoutState(
+  request: ConnectorAssemblyViewRequest,
+  selection: ReturnType<typeof selectAssemblyView>,
+  projection?: AssemblyProjection,
+) {
+  const { inventory, devices, types, selected, exact } = selection;
+  const links = projection
+    ? selection.links.filter((r) => projection.relations.has(r.uid))
+    : selection.links;
+  const included = projection?.devices ?? selection.included;
   const ordered = [...included].sort((a, b) =>
     compare(devices.get(a)!.designation, devices.get(b)!.designation),
   );
   const ids = new Map(ordered.map((uid, i) => [uid, `d${i}`]));
   const portIds = new Map<string, string>(),
     captions = new Map<string, string[]>(),
-    rows = new Map<
-      string,
-      {
-        key: string;
-        connector: string;
-        side: "WEST" | "EAST";
-        y: number;
-        status: string;
-        lines: string[];
-      }[]
-    >();
-  const nodeWidth = 58;
-  const edgeCaptions = links.map((r) => [
-    r.designation ?? r.uid,
+    rows = new Map<string, AssemblyRow[]>();
+  const tags = new Map<string, DeviceTagPlan>();
+  const edgeCaptions = links.map((r) => assemblyEdgeCaption(r, devices));
+  return {
+    request,
+    selection,
+    projection,
+    inventory,
+    devices,
+    types,
+    selected,
+    exact,
+    links,
+    ordered,
+    ids,
+    portIds,
+    captions,
+    rows,
+    tags,
+    edgeCaptions,
+  };
+}
+
+function assemblyEdgeCaption(
+  r: AssemblyLink,
+  devices: ReadonlyMap<string, ElectricalIr["devices"][number]>,
+) {
+  return [
+    relationPrintIdentity(r, devices).text || "Assembly reference needs review",
     ...wrap(
       r.assembly.cable?.specification ??
         (r.assembly.kind === "cap" ? "Protective cap" : "Direct mating"),
@@ -180,91 +255,136 @@ export async function prepareConnectorAssemblyDrawing(
     ...(r.description ? wrap(r.description) : []),
     ...(r.assembly.status ? [`Status: ${r.assembly.status}`] : []),
     `Pin mapping: ${r.assembly.pinMapping.status}`,
-  ]);
-  const children: ElkNode[] = ordered.map((uid) => {
-    const device = devices.get(uid)!,
-      type = types.get(device.typeId)!;
-    const caption = [
-      device.designation,
-      ...wrap(device.description ?? type.description ?? type.id, nodeWidth - 6),
-      ...wrap(type.catalog?.orderNumber ?? "", nodeWidth - 6),
-      ...wrap(device.location ?? "Location unspecified", nodeWidth - 6),
-    ];
-    if (caption.some((s) => width(s) > nodeWidth - 6))
-      throw new Error(
-        `Assembly device designation ${device.designation} is too wide.`,
-      );
-    captions.set(uid, caption);
-    const available = inventory.ports.filter((p) => p.deviceUid === uid);
-    const ports = available.filter(
-      (p) =>
-        !exact.size ||
-        selected.has(uid) ||
-        links.some(
-          (a) =>
-            (a.fromDeviceUid === uid && a.assembly.fromPort === p.key) ||
-            (a.toDeviceUid === uid && a.assembly.toPort === p.key),
-        ),
-    );
-    if (ports.length < available.length)
-      caption.push(
-        ...wrap(
-          `${available.length - ports.length} other ports: schedule`,
-          nodeWidth - 6,
-        ),
-      );
-    let y = 5 + caption.length * 3.6;
-    const list = ports.map((p, i) => {
-      const incoming = links.some(
-        (a) => a.toDeviceUid === uid && a.assembly.toPort === p.key,
-      );
-      const selectedLink = links.find(
+  ];
+}
+
+function assemblyNode(uid: string, state: AssemblyLayoutState): ElkNode {
+  const { devices, types, tags, captions, rows, ids, portIds } = state;
+  const device = devices.get(uid)!,
+    type = types.get(device.typeId)!;
+  const tag = drawingDeviceTag(device, type, 58);
+  tags.set(uid, tag);
+  const nodeWidth = tag.widthMm;
+  const caption = device.location?.trim()
+    ? wrap(device.location, nodeWidth - 6)
+    : [];
+  captions.set(uid, caption);
+  const ports = assemblyPorts(uid, state, caption, nodeWidth);
+  const { list, y } = assemblyRows(
+    ports,
+    uid,
+    state,
+    nodeWidth,
+    deviceHeaderHeight(tag, caption) + 5,
+  );
+  rows.set(uid, list);
+  return {
+    id: ids.get(uid)!,
+    width: nodeWidth,
+    height: y + 2,
+    layoutOptions: { "elk.portConstraints": "FIXED_POS" },
+    ports: list.map((p) => ({
+      id: portIds.get(JSON.stringify([uid, p.key]))!,
+      width: 0,
+      height: 0,
+      x: p.side === "WEST" ? 0 : nodeWidth,
+      y: p.y,
+      layoutOptions: { "elk.port.side": p.side },
+    })),
+  };
+}
+
+function assemblyPorts(
+  uid: string,
+  state: AssemblyLayoutState,
+  caption: string[],
+  nodeWidth: number,
+) {
+  const { inventory, exact, selected, selection, projection } = state;
+  const available = inventory.ports.filter((p) => p.deviceUid === uid);
+  const originalPorts = available.filter(
+    (p) =>
+      !exact.size ||
+      selected.has(uid) ||
+      selection.links.some(
         (a) =>
           (a.fromDeviceUid === uid && a.assembly.fromPort === p.key) ||
           (a.toDeviceUid === uid && a.assembly.toPort === p.key),
-      );
-      const status = selectedLink
-        ? selectedLink.assembly.kind
-        : p.assemblyUid
-          ? "outside view"
-          : "unoccupied";
-      const lines = [
-        ...wrap(p.key, nodeWidth - 6),
-        ...wrap(p.definition.connector, nodeWidth - 6),
-        ...(p.definition.description
-          ? wrap(p.definition.description, nodeWidth - 6)
-          : []),
-        ...(!selectedLink ? [status] : []),
-      ];
-      const row = {
-        key: p.key,
-        connector: p.definition.connector,
-        side: incoming ? ("WEST" as const) : ("EAST" as const),
-        y: y + 3,
-        status,
-        lines,
-      };
-      y += Math.max(10, lines.length * 3.6 + 4);
-      portIds.set(JSON.stringify([uid, p.key]), `${ids.get(uid)}p${i}`);
-      return row;
-    });
-    rows.set(uid, list);
-    return {
-      id: ids.get(uid)!,
-      width: nodeWidth,
-      height: y + 2,
-      layoutOptions: { "elk.portConstraints": "FIXED_POS" },
-      ports: list.map((p) => ({
-        id: portIds.get(JSON.stringify([uid, p.key]))!,
-        width: 0,
-        height: 0,
-        x: p.side === "WEST" ? 0 : nodeWidth,
-        y: p.y,
-        layoutOptions: { "elk.port.side": p.side },
-      })),
+      ),
+  );
+  const ports = projection
+    ? originalPorts.filter((p) =>
+        projection.ports.has(JSON.stringify([uid, p.key])),
+      )
+    : originalPorts;
+  if (ports.length < originalPorts.length)
+    caption.push(
+      ...wrap(
+        `${originalPorts.length - ports.length} ports on other parts`,
+        nodeWidth - 6,
+      ),
+    );
+  if (originalPorts.length < available.length)
+    caption.push(
+      ...wrap(
+        `${available.length - originalPorts.length} additional connector ports`,
+        nodeWidth - 6,
+      ),
+    );
+  return ports;
+}
+
+function assemblyRows(
+  ports: ReturnType<typeof buildConnectorAssemblyInventory>["ports"],
+  uid: string,
+  state: AssemblyLayoutState,
+  nodeWidth: number,
+  y: number,
+) {
+  const { links, portIds, ids } = state;
+  const list = ports.map((p, i) => {
+    const incoming = links.some(
+      (a) => a.toDeviceUid === uid && a.assembly.toPort === p.key,
+    );
+    const selectedLink = links.find(
+      (a) =>
+        (a.fromDeviceUid === uid && a.assembly.fromPort === p.key) ||
+        (a.toDeviceUid === uid && a.assembly.toPort === p.key),
+    );
+    const status = selectedLink
+      ? selectedLink.assembly.kind
+      : p.assemblyUid
+        ? "outside view"
+        : "unoccupied";
+    const lines = [
+      ...wrap(p.key, nodeWidth - 6),
+      ...wrap(p.definition.connector, nodeWidth - 6),
+      ...(p.definition.description
+        ? wrap(p.definition.description, nodeWidth - 6)
+        : []),
+      ...(!selectedLink ? [status] : []),
+    ];
+    const row = {
+      key: p.key,
+      connector: p.definition.connector,
+      side: incoming ? ("WEST" as const) : ("EAST" as const),
+      y: y + 3,
+      status,
+      lines,
     };
+    y += Math.max(10, lines.length * 3.6 + 4);
+    portIds.set(JSON.stringify([uid, p.key]), `${ids.get(uid)}p${i}`);
+    return row;
   });
-  const graph: ElkNode = await new Constructor().layout({
+  return { list, y };
+}
+
+function assemblyGraphInput(
+  children: ElkNode[],
+  state: AssemblyLayoutState,
+): ElkNode {
+  const { links, portIds, edgeCaptions } = state;
+  const input: ElkNode = {
     id: "connector-assembly",
     layoutOptions: {
       "elk.algorithm": "layered",
@@ -292,114 +412,137 @@ export async function prepareConnectorAssemblyDrawing(
       labels: [
         {
           text: edgeCaptions[i]!.join("\n"),
-          width: Math.max(...edgeCaptions[i]!.map(width)) + 2,
+          width:
+            Math.max(
+              ...edgeCaptions[i]!.map((line) => printableTextWidth(line, 2.7)),
+            ) + 2,
           height: edgeCaptions[i]!.length * 3.6 + 1,
         },
       ],
     })),
-  });
-  if (![graph.width, graph.height].every(Number.isFinite))
-    throw new Error("Invalid assembly layout bounds.");
+  };
+  return input;
+}
+
+function assemblyRoutes(graph: ElkNode, state: AssemblyLayoutState) {
+  const { links } = state;
   const nodes = graph.children ?? [],
     out: string[] = [],
-    labelBoxes: {
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-      edge: number;
-    }[] = [],
-    segments: {
-      a: { x: number; y: number };
-      b: { x: number; y: number };
-      edge: number;
-    }[] = [];
-  const overlap = (
-    a: { x: number; y: number; width: number; height: number },
-    b: { x: number; y: number; width: number; height: number },
-  ) =>
+    labelBoxes: AssemblyLabelBox[] = [],
+    segments: AssemblySegment[] = [];
+  const overlap = (a: AssemblyBox, b: AssemblyBox) =>
     a.x < b.x + b.width - 0.01 &&
     a.x + a.width > b.x + 0.01 &&
     a.y < b.y + b.height - 0.01 &&
     a.y + a.height > b.y + 0.01;
   if (graph.edges?.length !== links.length)
     throw new Error("Incomplete assembly coverage.");
-  for (const edge of graph.edges ?? []) {
-    const index = Number(edge.id.slice(1)),
-      r = links[index]!;
-    if (edge.sections?.length !== 1)
-      throw new Error("Incomplete assembly route.");
-    const section = edge.sections[0]!,
-      points = [
-        section.startPoint,
-        ...(section.bendPoints ?? []),
-        section.endPoint,
-      ].map((p) => ({ x: Number(n(p.x)), y: Number(n(p.y)) }));
-    const endpoints = [
-      { deviceUid: r.fromDeviceUid, portKey: r.assembly.fromPort },
-      { deviceUid: r.toDeviceUid, portKey: r.assembly.toPort },
-    ];
-    const actual = endpoints.map((e) => {
-      const node = nodes.find((n) => n.id === ids.get(e.deviceUid))!,
-        port = node.ports!.find(
-          (p) => p.id === portIds.get(JSON.stringify([e.deviceUid, e.portKey])),
-        )!;
-      return { x: node.x! + port.x!, y: node.y! + port.y! };
-    });
+  const draw = { state, nodes, out, labelBoxes, segments, overlap };
+  for (const edge of graph.edges ?? []) appendAssemblyRoute(edge, draw);
+  return draw;
+}
+
+function appendAssemblyRoute(edge: AssemblyEdge, draw: AssemblyRenderState) {
+  const { links, ids, portIds } = draw.state;
+  const { nodes, out } = draw;
+  const index = Number(edge.id.slice(1)),
+    r = links[index]!;
+  if (edge.sections?.length !== 1)
+    throw new Error("Incomplete assembly route.");
+  const section = edge.sections[0]!,
+    points = [
+      section.startPoint,
+      ...(section.bendPoints ?? []),
+      section.endPoint,
+    ].map((p) => ({ x: Number(n(p.x)), y: Number(n(p.y)) }));
+  const endpoints = [
+    { deviceUid: r.fromDeviceUid, portKey: r.assembly.fromPort },
+    { deviceUid: r.toDeviceUid, portKey: r.assembly.toPort },
+  ];
+  const actual = endpoints.map((e) => {
+    const node = nodes.find((n) => n.id === ids.get(e.deviceUid))!,
+      port = node.ports!.find(
+        (p) => p.id === portIds.get(JSON.stringify([e.deviceUid, e.portKey])),
+      )!;
+    return { x: node.x! + port.x!, y: node.y! + port.y! };
+  });
+  if (
+    Math.hypot(points[0]!.x - actual[0]!.x, points[0]!.y - actual[0]!.y) >
+      0.01 ||
+    Math.hypot(
+      points.at(-1)!.x - actual[1]!.x,
+      points.at(-1)!.y - actual[1]!.y,
+    ) > 0.01
+  )
+    throw new Error("Assembly route moved away from its source ports.");
+  appendAssemblySegments(points, index, draw);
+  out.push(
+    `<g ${routePortAttributes(edge)} data-connector-assembly="${attr(r.uid)}" data-assembly-designation="${attr(r.designation ?? r.uid)}" data-assembly-endpoints="${attr(JSON.stringify(endpoints))}" data-pin-mapping="${r.assembly.pinMapping.status}"><title>${xml(r.assembly.pinMapping.reason)}</title><path d="${points.map((p, i) => `${i ? "L" : "M"} ${n(p.x)} ${n(p.y)}`).join(" ")}" fill="none" stroke="white" stroke-width="1.8"/><path d="${points.map((p, i) => `${i ? "L" : "M"} ${n(p.x)} ${n(p.y)}`).join(" ")}" fill="none" stroke="#4f5964" stroke-width="0.65"${r.assembly.kind === "cap" ? ' stroke-dasharray="1.5 1"' : ""}/></g>`,
+  );
+  appendAssemblyEdgeLabels(edge, index, r, draw);
+}
+
+function appendAssemblySegments(
+  points: AssemblyPoint[],
+  index: number,
+  draw: AssemblyRenderState,
+) {
+  const { nodes, overlap, segments } = draw;
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1]!,
+      b = points[i]!;
     if (
-      Math.hypot(points[0]!.x - actual[0]!.x, points[0]!.y - actual[0]!.y) >
-        0.01 ||
-      Math.hypot(
-        points.at(-1)!.x - actual[1]!.x,
-        points.at(-1)!.y - actual[1]!.y,
-      ) > 0.01
+      ![a.x, a.y, b.x, b.y].every(Number.isFinite) ||
+      (a.x !== b.x && a.y !== b.y)
     )
-      throw new Error("Assembly route moved away from its source ports.");
-    for (let i = 1; i < points.length; i++) {
-      const a = points[i - 1]!,
-        b = points[i]!;
-      if (
-        ![a.x, a.y, b.x, b.y].every(Number.isFinite) ||
-        (a.x !== b.x && a.y !== b.y)
+      throw new Error("Invalid assembly route.");
+    const rect = {
+      x: Math.min(a.x, b.x),
+      y: Math.min(a.y, b.y),
+      width: Math.abs(a.x - b.x),
+      height: Math.abs(a.y - b.y),
+    };
+    if (
+      nodes.some((n) =>
+        overlap(rect, {
+          x: n.x!,
+          y: n.y!,
+          width: n.width!,
+          height: n.height!,
+        }),
       )
-        throw new Error("Invalid assembly route.");
-      const rect = {
-        x: Math.min(a.x, b.x),
-        y: Math.min(a.y, b.y),
-        width: Math.abs(a.x - b.x),
-        height: Math.abs(a.y - b.y),
-      };
-      if (
-        nodes.some((n) =>
-          overlap(rect, {
-            x: n.x!,
-            y: n.y!,
-            width: n.width!,
-            height: n.height!,
-          }),
-        )
-      )
-        throw new Error("Assembly route crosses a device body.");
-      segments.push({ a, b, edge: index });
-    }
-    out.push(
-      `<g data-connector-assembly="${attr(r.uid)}" data-assembly-designation="${attr(r.designation ?? r.uid)}" data-assembly-endpoints="${attr(JSON.stringify(endpoints))}" data-pin-mapping="${r.assembly.pinMapping.status}"><title>${xml(r.assembly.pinMapping.reason)}</title><path d="${points.map((p, i) => `${i ? "L" : "M"} ${n(p.x)} ${n(p.y)}`).join(" ")}" fill="none" stroke="white" stroke-width="1.8"/><path d="${points.map((p, i) => `${i ? "L" : "M"} ${n(p.x)} ${n(p.y)}`).join(" ")}" fill="none" stroke="#4f5964" stroke-width="0.65"${r.assembly.kind === "cap" ? ' stroke-dasharray="1.5 1"' : ""}/></g>`,
-    );
-    for (const label of edge.labels ?? []) {
-      if (![label.x, label.y, label.width, label.height].every(Number.isFinite))
-        throw new Error("Unplaced assembly label.");
-      labelBoxes.push({
-        x: label.x!,
-        y: label.y!,
-        width: label.width!,
-        height: label.height!,
-        edge: index,
-      });
-      out.push(
-        `<g data-assembly-label="${attr(r.uid)}"><rect x="${n(label.x!)}" y="${n(label.y!)}" width="${n(label.width!)}" height="${n(label.height!)}" fill="white"/>${edgeCaptions[index]!.map((s, j) => text(label.x! + 1, label.y! + 3 + j * 3.6, s, j === 0)).join("")}</g>`,
-      );
-    }
+    )
+      throw new Error("Assembly route crosses a device body.");
+    segments.push({ a, b, edge: index });
   }
+}
+
+function appendAssemblyEdgeLabels(
+  edge: AssemblyEdge,
+  index: number,
+  r: AssemblyLink,
+  draw: AssemblyRenderState,
+) {
+  const { edgeCaptions } = draw.state;
+  const { labelBoxes, out } = draw;
+  for (const label of edge.labels ?? []) {
+    if (![label.x, label.y, label.width, label.height].every(Number.isFinite))
+      throw new Error("Unplaced assembly label.");
+    labelBoxes.push({
+      x: label.x!,
+      y: label.y!,
+      width: label.width!,
+      height: label.height!,
+      edge: index,
+    });
+    out.push(
+      `<g data-assembly-label="${attr(r.uid)}"><rect x="${n(label.x!)}" y="${n(label.y!)}" width="${n(label.width!)}" height="${n(label.height!)}" fill="white"/>${edgeCaptions[index]!.map((s, j) => text(label.x! + 1, label.y! + 3 + j * 3.6, s, j === 0)).join("")}</g>`,
+    );
+  }
+}
+
+function assertAssemblyLabels(draw: AssemblyRenderState) {
+  const { labelBoxes, nodes, segments, overlap } = draw;
   for (let i = 0; i < labelBoxes.length; i++) {
     const label = labelBoxes[i]!;
     if (
@@ -427,7 +570,11 @@ export async function prepareConnectorAssemblyDrawing(
         "Assembly label overlaps drawing content; select a smaller assembly subset.",
       );
   }
-  assertAssemblyRouteSeparation(segments);
+}
+
+function appendAssemblyDevices(draw: AssemblyRenderState) {
+  const { ordered, devices, tags, captions, rows, portIds } = draw.state;
+  const { nodes, out } = draw;
   const references: ConnectorAssemblyDrawing["references"] = [];
   for (const node of nodes) {
     const uid = ordered[Number(node.id.slice(1))]!,
@@ -435,17 +582,9 @@ export async function prepareConnectorAssemblyDrawing(
     if (![node.x, node.y, node.width, node.height].every(Number.isFinite))
       throw new Error("Invalid assembly node bounds.");
     out.push(
-      `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})"><rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#fafafa" stroke="#344054" stroke-width=".35"/>${captions
-        .get(uid)!
-        .map((s, i) => text(3, 5 + i * 3.6, s, i === 0))
-        .join("")}`,
+      `<g data-device-uid="${attr(uid)}" transform="translate(${n(node.x!)} ${n(node.y!)})"><rect width="${n(node.width!)}" height="${n(node.height!)}" rx="1" fill="#fafafa" stroke="#344054" stroke-width=".35"/>${deviceHeaderSvg(tags.get(uid), captions.get(uid)!)}`,
     );
-    for (const p of rows.get(uid)!) {
-      const x = p.side === "WEST" ? 0 : node.width!;
-      out.push(
-        `<g data-connector-port="${attr(p.key)}" data-connector-definition="${attr(p.connector)}" data-port-occupancy="${p.status}"><circle cx="${n(x)}" cy="${n(p.y)}" r="1.1" fill="white" stroke="#344054" stroke-width=".4"/>${p.lines.map((s, i) => text(3, p.y + 1 + i * 3.6, s, i === 0)).join("")}</g>`,
-      );
-    }
+    out.push(...assemblyPortSvg(node, rows.get(uid)!, portIds, uid));
     out.push("</g>");
     references.push({
       deviceUid: uid,
@@ -454,17 +593,167 @@ export async function prepareConnectorAssemblyDrawing(
       y: node.y! + node.height! / 2,
     });
   }
+  return references;
+}
+
+function assemblyDrawing(
+  graph: ElkNode,
+  draw: AssemblyRenderState,
+  references: ConnectorAssemblyDrawing["references"],
+): ConnectorAssemblyDrawing {
+  const { links, ordered, rows, request, projection, selection, tags } =
+    draw.state;
+  const { out } = draw;
   return {
-    title: request.title ?? "Connector and cable assemblies",
+    documentNeeds: assemblyDocumentNeeds(
+      selection.inventory,
+      links,
+      ordered,
+      ordered.flatMap((deviceUid) =>
+        (rows.get(deviceUid) ?? []).map((p) => ({ deviceUid, portKey: p.key })),
+      ),
+    ),
+    topologyCoverage: {
+      kind: "connector-assembly",
+      relationIds: links.map((l) => l.uid),
+      deviceUids: ordered,
+      ports: ordered.flatMap((deviceUid) =>
+        (rows.get(deviceUid) ?? []).map((p) => ({ deviceUid, portKey: p.key })),
+      ),
+    },
+    title: `${request.title ?? "Connector and cable assemblies"}${projection ? ` - Part ${projection.part}/${projection.total}` : ""}`,
+    ...(projection ? { paginated: true } : {}),
     content: out.join("\n"),
     width: graph.width!,
     height: graph.height!,
     references,
+    deviceTags: [...tags.values()],
     note: [
-      `${links.length} authored assemblies. Lines connect named connectors, not electrical pins; cable pin mapping is unresolved. See assembly schedule for specifications and mapping reasons.`,
-      ...(request.notes ?? []),
+      projection
+        ? `${links.length} of ${selection.links.length} selected cap assemblies in this part. Complete named connector reservations; pin mapping not applicable. Repeated device bodies show different ports.`
+        : `${links.length} selected assembl${links.length === 1 ? "y" : "ies"}. Lines connect named connectors, not electrical pins; ${assemblyMappingNote(links)}.`,
+      ...(!projection || projection.authoredNotes ? (request.notes ?? []) : []),
     ].join("\n"),
   };
+}
+/** Keep fitting views intact; paginate only complete protective-cap assemblies. */
+export async function prepareConnectorAssemblyPages(
+  ir: Readonly<ElectricalIr>,
+  request: ConnectorAssemblyViewRequest,
+  fits: (drawing: ConnectorAssemblyDrawing) => boolean,
+  unfit = (_drawing: ConnectorAssemblyDrawing, message: string): Error =>
+    new Error(message),
+): Promise<ConnectorAssemblyDrawing[]> {
+  const selection = selectAssemblyView(ir, request);
+  const full = await layoutAssemblyDrawing(request, selection);
+  if (fits(full)) return [full];
+  if (
+    selection.links.length < 2 ||
+    selection.links.some((r) => r.assembly.kind !== "cap")
+  )
+    return [full];
+
+  const identity = (deviceUid: string, portKey: string) =>
+    JSON.stringify([deviceUid, portKey]);
+  type Unit = { relations: string[]; devices: string[]; ports: string[] };
+  const usedPorts = new Set<string>();
+  const units: Unit[] = selection.links.map((r) => {
+    const ports = [
+      identity(r.fromDeviceUid, r.assembly.fromPort),
+      identity(r.toDeviceUid, r.assembly.toPort),
+    ];
+    ports.forEach((p) => usedPorts.add(p));
+    return {
+      relations: [r.uid],
+      devices: [r.fromDeviceUid, r.toDeviceUid],
+      ports,
+    };
+  });
+  for (const p of full.topologyCoverage!.ports) {
+    const id = identity(p.deviceUid, p.portKey);
+    if (!usedPorts.has(id))
+      units.push({ relations: [], devices: [p.deviceUid], ports: [id] });
+  }
+  // Trial headings reserve the widest possible part numbers; final headings
+  // can only get narrower. Reserve authored notes in trials, emit them once.
+  const widestPart = Number("8".repeat(String(units.length).length));
+  const draw = (items: Unit[], part: number, total: number, notes: boolean) =>
+    layoutAssemblyDrawing(request, selection, {
+      relations: new Set(items.flatMap((u) => u.relations)),
+      devices: new Set(items.flatMap((u) => u.devices)),
+      ports: new Set(items.flatMap((u) => u.ports)),
+      part,
+      total,
+      authoredNotes: notes,
+    });
+  const parts: Unit[][] = [];
+  let current: Unit[] = [];
+  for (const unit of units) {
+    const candidate = [...current, unit];
+    const trial = await draw(candidate, widestPart, widestPart, true);
+    if (fits(trial)) {
+      current = candidate;
+      continue;
+    }
+    if (!current.length)
+      throw unfit(
+        trial,
+        "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
+      );
+    parts.push(current);
+    current = [unit];
+    const single = await draw(current, widestPart, widestPart, true);
+    if (!fits(single))
+      throw unfit(
+        single,
+        "A complete cap assembly or selected port cannot fit at readable size; use larger paper or shorter notes.",
+      );
+  }
+  parts.push(current);
+  const drawings: ConnectorAssemblyDrawing[] = [];
+  for (const [i, part] of parts.entries()) {
+    const drawing = await draw(
+      part,
+      i + 1,
+      parts.length,
+      i === parts.length - 1,
+    );
+    if (!fits(drawing))
+      throw unfit(
+        drawing,
+        "A cap pagination part exceeds the readable sheet bounds.",
+      );
+    drawings.push(drawing);
+  }
+  assertAssemblyPageCoverage(drawings, full.topologyCoverage!, identity);
+  return drawings;
+}
+
+function assertAssemblyPageCoverage(
+  drawings: ConnectorAssemblyDrawing[],
+  original: NonNullable<ConnectorAssemblyDrawing["topologyCoverage"]>,
+  identity: (deviceUid: string, portKey: string) => string,
+) {
+  const coverage = drawings.map((d) => d.topologyCoverage!);
+  const equal = (a: string[], b: readonly string[]) =>
+    JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
+  if (
+    !equal(
+      coverage.flatMap((c) => c.relationIds),
+      original.relationIds,
+    ) ||
+    !equal(
+      coverage.flatMap((c) =>
+        c.ports.map((p) => identity(p.deviceUid, p.portKey)),
+      ),
+      original.ports.map((p) => identity(p.deviceUid, p.portKey)),
+    ) ||
+    !equal(
+      [...new Set(coverage.flatMap((c) => c.deviceUids))],
+      original.deviceUids,
+    )
+  )
+    throw new Error("Cap pagination did not conserve the original selection.");
 }
 
 /** Separate point-to-point assemblies may cross, but may not share a drawn segment. */
@@ -504,4 +793,27 @@ export function assertAssemblyRouteSeparation(
           "Distinct connector assemblies share a drawn segment; select a smaller assembly subset.",
         );
     }
+}
+
+function assemblyPortSvg(
+  node: ElkNode,
+  ports: readonly {
+    key: string;
+    connector: string;
+    side: "WEST" | "EAST";
+    y: number;
+    status: string;
+    lines: string[];
+  }[],
+  portIds: ReadonlyMap<string, string>,
+  deviceUid: string,
+) {
+  const result: string[] = [];
+  for (const p of ports) {
+    const x = p.side === "WEST" ? 0 : node.width!;
+    result.push(
+      `<g ${terminalPortAttribute(portIds.get(JSON.stringify([deviceUid, p.key]))!)} data-connector-port="${attr(p.key)}" data-connector-definition="${attr(p.connector)}" data-port-occupancy="${p.status}"><circle cx="${n(x)}" cy="${n(p.y)}" r="1.1" fill="white" stroke="#344054" stroke-width=".4"/>${p.lines.map((s, i) => text(3, p.y + 1 + i * 3.6, s, i === 0)).join("")}</g>`,
+    );
+  }
+  return result;
 }

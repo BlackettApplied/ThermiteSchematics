@@ -1,0 +1,29 @@
+{
+  "objects": [
+    {
+      "uid": "dd36e10a-5f88-5c56-9aa2-82ae95b0ce16",
+      "kind": "device",
+      "designation": "PS1",
+      "type": "core:psu-24vdc",
+      "description": "Synthetic control source"
+    },
+    {
+      "uid": "3f43323a-7e88-5242-8d5b-a0ec8c247762",
+      "kind": "device",
+      "designation": "X1",
+      "type": "core:terminal-block-8"
+    },
+    {
+      "uid": "0341988b-2913-5831-b488-2660ba12b1b5",
+      "kind": "device",
+      "designation": "X2",
+      "type": "core:terminal-block-8"
+    },
+    {
+      "uid": "89df5e84-55d1-5c3e-b2b7-6d75e1823116",
+      "kind": "device",
+      "designation": "N1",
+      "type": "eval:node"
+    }
+  ]
+}

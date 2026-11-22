@@ -1,12 +1,14 @@
-import Elk from "elkjs/lib/elk.bundled.js";
+import { motorDiagnostics } from "../../cli/test/motor-starter-diagnostics.js";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { evaluateRules, type ElectricalIr } from "@thermite/compiler";
 
 import {
   buildElkAdapterGraph,
+  layoutPresentationGraph,
   serializeElkAdapterForTest,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { normalizeAndValidateLayout } from "../src/layout/validate-output.js";
 import {
   buildPresentationGraph,
@@ -279,6 +281,7 @@ function tier1Fixture(
 
   const graph = {
     format: "schematic-presentation/0.1",
+    directLoadPair: false,
     view: {
       format: "schematic-view/0.2",
       family: "control",
@@ -1413,8 +1416,10 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
           serializeElkAdapterForTest(build),
         );
 
-        const output = await new Elk().layout(structuredClone(build.graph));
-        const reversedOutput = await new Elk().layout(
+        const output = await createElkEngine().layout(
+          structuredClone(build.graph),
+        );
+        const reversedOutput = await createElkEngine().layout(
           structuredClone(reversedBuild.graph),
         );
         expect(canonicalElkOutput(reversedOutput)).toBe(
@@ -1470,8 +1475,8 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
     it(`round-9 M3 ${flow} stays on the full compiled production pipeline and reproduces the frozen table`, async () => {
       const ir = b4Round9Fixture(coreIr);
       const reorderedIr = reorderedRound9Ir(ir);
-      expect(evaluateRules(ir)).toEqual([]);
-      expect(evaluateRules(reorderedIr)).toEqual([]);
+      expect(evaluateRules(ir)).toEqual(motorDiagnostics);
+      expect(evaluateRules(reorderedIr)).toEqual(evaluateRules(ir));
       const selected = selectB4Trace(ir, flow);
       const reorderedSelected = selectB4Trace(reorderedIr, flow);
       expect(reorderedSelected).toEqual(selected);
@@ -1520,7 +1525,7 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
           presented.value.graph,
           { deviceUid: ROUND9_DEVICE_UIDS.TB1, terminalKey },
           flow,
-          [["S", "R", "Q", "P"]],
+          [["R", "S", "Q", "P"]],
         );
       }
       const build = buildElkAdapterGraph(presented.value.graph, selected);
@@ -1540,29 +1545,37 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
           )
           .map(({ id }) => id),
       ).toEqual([ROUND9_PRIORITY_EDGE_ID]);
-      const output = await new Elk().layout(structuredClone(build.graph));
-      const valid = normalizeAndValidateLayout(
-        presented.value.graph,
-        build.graph,
-        output,
-        SYMBOL_CATALOG,
-      );
+      // The source's old branch enumeration depended on UIDs. The semantic
+      // order uses validated side alternatives to keep this topology drawable.
+      const engine = createElkEngine(),
+        layout = engine.layout.bind(engine);
+      let attempts = 0;
+      engine.layout = async (...args) => {
+        attempts++;
+        return layout(...args);
+      };
+      const valid = await layoutPresentationGraph(presented.value.graph, {
+        selected,
+        engine,
+      });
+      expect(attempts).toBeGreaterThanOrEqual(1);
+      expect(attempts).toBeLessThanOrEqual(279);
       expect(valid.ok, valid.ok ? "" : valid.error.message).toBe(true);
       if (!valid.ok) return;
       const expectedSize =
-        flow === "left-to-right" ? [1315, 537] : [792.8, 1032];
+        flow === "left-to-right" ? [1607.8, 627] : [960.2, 1036];
       expect([valid.value.width, valid.value.height]).toEqual(expectedSize);
       const expectedCenters =
         flow === "left-to-right"
           ? [
-              [393.2, 425],
-              [641.2, 393],
-              [790, 319],
+              [605.6, 477],
+              [853.6, 445],
+              [1002.4, 323],
             ]
           : [
-              [294.4, 396],
-              [342.2, 528],
-              [489.2, 660],
+              [249.4, 400],
+              [249.4, 532],
+              [566, 664],
             ];
       const terminalKeys = new Set([
         JSON.stringify([ROUND9_DEVICE_UIDS.LS1, "4"]),
@@ -1642,7 +1655,7 @@ describe("Amendment B4 v23 Tier 1 evidence matrix", () => {
       expect(secondJsonBytes).toBe(firstJsonBytes);
       expect(reorderedJsonBytes).toBe(firstJsonBytes);
       const expectedSvgSize =
-        flow === "left-to-right" ? [1355, 681] : [832.8, 1176];
+        flow === "left-to-right" ? [1647.8, 819] : [1000.2, 1228];
       expect(firstProduct.value.svg).toContain(
         `viewBox="0 0 ${expectedSvgSize[0]} ${expectedSvgSize[1]}" width="${expectedSvgSize[0]}" height="${expectedSvgSize[1]}"`,
       );

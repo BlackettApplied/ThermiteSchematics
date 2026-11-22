@@ -1,3 +1,4 @@
+import { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 import type { AgentToolRequestBase, JsonValue } from "./common/contracts.js";
 import { detachAndFreezePlainJson } from "./common/plain-json.js";
 import {
@@ -14,7 +15,9 @@ export interface ValidateProjectValue {
 }
 
 const REQUEST_FIELDS = new Set(["format", "project"]);
-const REQUEST_FORMATS = new Set(["agent-tool-request/0.1"]);
+const REQUEST_FORMATS = new Set<string>(
+  AGENT_REQUEST_VOCABULARY["validate"]["/format"],
+);
 
 export function validateValidateProjectRequest(
   request: unknown,

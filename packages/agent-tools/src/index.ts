@@ -1,4 +1,5 @@
 export { AGENT_TOOLS_VERSION } from "./version.js";
+export { AGENT_REQUEST_VOCABULARY } from "./request-vocabulary.js";
 export {
   serializeAgentToolReport,
   serializeAgentToolResult,
@@ -24,6 +25,10 @@ export type {
   A003Error,
   A003Reason,
   A004Error,
+  A005Error,
+  A006Error,
+  ProjectWriteOwner,
+  ProjectWriteOwnerState,
   AgentToolError,
   AgentToolErrorCode,
   AgentToolFailure,
@@ -52,3 +57,11 @@ export type {
 export type { AppliedSourceFile } from "./source-serializer.js";
 export { createAgentTools } from "./toolbox.js";
 export type { AgentTools, CreateAgentToolsOptions } from "./toolbox.js";
+
+export type {
+  ObjectSource,
+  SourceAnnotated,
+  SourceFileIntegrity,
+  SourceMetadataRequest,
+  SourceMetadataResult,
+} from "./source-metadata.js";

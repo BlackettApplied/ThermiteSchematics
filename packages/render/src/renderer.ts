@@ -1,3 +1,9 @@
+import { addContinuousLegend } from "./device-legend.js";
+import { initialCardLayout, rememberDrawing } from "./off-view/prepared.js";
+import { diagnoseRooted } from "./rooted-diagnostics.js";
+import { renderErrorContext } from "./render-error-context.js";
+import { renderDiagnosticContext } from "./render-diagnostic-context.js";
+import { compareText, functionIdKey } from "./ordering.js";
 import type {
   CompiledProjectPresentation,
   ElectricalIr,
@@ -5,7 +11,7 @@ import type {
 import type { ELK as ElkApi } from "elkjs/lib/elk-api.js";
 import type { QueryEngine } from "@thermite/query";
 
-import { layoutPresentationGraph } from "./layout/elk-adapter.js";
+import { deepFreeze } from "./internal.js";
 import { buildPresentationGraph } from "./presentation.js";
 import {
   selectCableConductorSubgraph,
@@ -13,9 +19,9 @@ import {
   selectSemanticSubgraph,
   selectTraceSubgraph,
 } from "./selection.js";
+import { orientSourceWindingMappings } from "./symbols/source-winding.js";
 import { SYMBOL_CATALOG } from "./symbols/catalog.js";
 import {
-  CORE_DEVICE_TYPE_SYMBOL_MAPPINGS,
   projectDeviceTypeSymbolMappings,
   type DeviceTypeSymbolMapping,
 } from "./symbols/mappings.js";
@@ -31,22 +37,17 @@ import type {
   SchematicViewRequest,
 } from "./types.js";
 import { normalizeSchematicView } from "./view-spec.js";
+import { traceRootRuleForType } from "./intent-rules.js";
+import { offViewLayoutFailure } from "./off-view/presentation.js";
 
 export interface SchematicRendererDependencies {
+  readonly packetContinuations?: boolean;
   readonly mappings?: readonly DeviceTypeSymbolMapping[];
   readonly catalog?: readonly SymbolDefinition[];
   readonly queryEngineFactory?: (ir: Readonly<ElectricalIr>) => QueryEngine;
   readonly layoutEngine?: ElkApi;
   readonly spacingProfile?: "compact" | "dense";
-}
-
-function deepFreeze<Value>(value: Value, seen = new Set<object>()): Value {
-  if (typeof value !== "object" || value === null || seen.has(value)) {
-    return value;
-  }
-  seen.add(value);
-  for (const member of Object.values(value)) deepFreeze(member, seen);
-  return Object.freeze(value);
+  readonly offViewPlacements?: Readonly<Record<string, number>>;
 }
 
 function detachedFrozen<Value>(value: Value): Value {
@@ -86,7 +87,7 @@ export async function prepareSchematicDrawing(
         ? {}
         : { queryEngineFactory: dependencies.queryEngineFactory }),
     });
-  if (!normalized.ok) return failed(normalized.error);
+  if (!normalized.ok) return failed(renderErrorContext(ir, normalized.error));
 
   const titleContext = prepareSchematicTitleContext(
     ir.project.name,
@@ -94,6 +95,11 @@ export async function prepareSchematicDrawing(
     presentation,
   );
   if (!titleContext.ok) return failed(titleContext.error);
+
+  // Diagnose only actual failures: profile metadata cannot turn a successful
+  // traversal or layout into an error (including unsupported side branches).
+  const diagnose = (error: RenderFailure): RenderFailure =>
+    diagnoseRooted(ir, normalized.value.view, mappings, error);
 
   const selected =
     normalized.value.view.format === "schematic-view/0.1"
@@ -134,20 +140,30 @@ export async function prepareSchematicDrawing(
                       );
                     })(),
             });
-  if (!selected.ok) return failed(selected.error);
+  if (!selected.ok) return failed(diagnose(selected.error));
 
+  const presentationMappings = orientSourceWindingMappings(
+    ir,
+    selected.value,
+    mappings,
+  );
   const presented = buildPresentationGraph({
     ir,
     selected: selected.value,
-    mappings,
+    mappings: presentationMappings,
+    ...(dependencies.offViewPlacements
+      ? { offViewPlacements: dependencies.offViewPlacements }
+      : {}),
     catalog,
   });
-  if (!presented.ok) return failed(presented.error);
+  if (!presented.ok) return failed(diagnose(presented.error));
 
   const preflight = preflightRenderText(presented.value.graph);
-  if (!preflight.ok) return failed(preflight.error);
+  if (!preflight.ok) return failed(renderErrorContext(ir, preflight.error));
 
-  const laidOut = await layoutPresentationGraph(presented.value.graph, {
+  let graph = presented.value.graph;
+  const layoutOptions = {
+    ...(dependencies.packetContinuations ? { packetContinuations: true } : {}),
     catalog,
     selected: selected.value,
     ...(dependencies.spacingProfile
@@ -156,18 +172,78 @@ export async function prepareSchematicDrawing(
     ...(dependencies.layoutEngine === undefined
       ? {}
       : { engine: dependencies.layoutEngine }),
-  });
-  if (!laidOut.ok) return failed(laidOut.error);
+  };
+  const sourceContext = {
+    ir,
+    selected: selected.value,
+    mappings: presentationMappings,
+    options: layoutOptions,
+  };
+  const initial = await initialCardLayout(
+    graph,
+    sourceContext,
+    !dependencies.offViewPlacements,
+  );
+  graph = initial.graph;
+  const laidOut = initial.layout;
+  if (!laidOut.ok) {
+    let error = offViewLayoutFailure(graph, laidOut.error);
+    if (
+      error.code === "R004" &&
+      normalized.value.view.format === "schematic-view/0.2" &&
+      normalized.value.view.intent === "loads"
+    ) {
+      const selectedIds = new Set(
+        selected.value.functionIds.map(functionIdKey),
+      );
+      const loadFunctions = ir.functions.filter(
+        (f) => f.kind === "load" && selectedIds.has(functionIdKey(f.id)),
+      );
+      const loads = ir.devices
+        .filter((device) =>
+          loadFunctions.some((f) => f.id.deviceUid === device.uid),
+        )
+        .map((device) => ({
+          deviceUid: device.uid,
+          designation: device.designation,
+          functionIds: loadFunctions
+            .filter((f) => f.id.deviceUid === device.uid)
+            .map((f) => f.id),
+        }))
+        .sort((a, b) => compareText(a.designation, b.designation));
+      if (loads.length >= 2) {
+        const traceRoots = loads.filter((load) => {
+          const device = ir.devices.find((d) => d.uid === load.deviceUid)!;
+          return (
+            traceRootRuleForType(
+              device.typeId,
+              ir.deviceTypes.find((t) => t.id === device.typeId),
+              mappings.find((m) => m.typeId === device.typeId),
+            ) !== undefined
+          );
+        });
+        error = {
+          ...error,
+          message: `${error.message} Selected loads: ${loads.map((load) => load.designation).join(", ")}. Draw these loads in a circuit view built from details.loads with thermite packet --input.${traceRoots.map((load) => ` A trace can also start at ${load.designation}; choose its connected input target with --to and add --include-power.`).join("")}`,
+          details: { ...error.details, loads },
+        };
+      }
+    }
+    return failed(renderErrorContext(ir, error));
+  }
 
   return {
     ok: true,
-    value: {
-      graph: presented.value.graph,
-      layout: laidOut.value,
-      titleContext: titleContext.value,
-      summary: presented.value.summary,
-      view: normalized.value.view,
-    },
+    value: rememberDrawing(
+      {
+        graph,
+        layout: laidOut.value,
+        titleContext: titleContext.value,
+        summary: presented.value.summary,
+        view: normalized.value.view,
+      },
+      sourceContext,
+    ),
   };
 }
 
@@ -186,7 +262,8 @@ export function createSchematicRendererWithDependencies(
           ? {}
           : { queryEngineFactory: dependencies.queryEngineFactory }),
       });
-      if (!normalized.ok) return failed(normalized.error);
+      if (!normalized.ok)
+        return failed(renderErrorContext(ir, normalized.error));
       const view = normalized.value.view;
       if (
         view.format === "schematic-view/0.2" &&
@@ -204,8 +281,7 @@ export function createSchematicRendererWithDependencies(
               code: "R006",
               root: cable.designation,
               reason: "unprintable-layout",
-              message:
-                "This cable inventory needs multiple sheets. Use thermite view --conductors with HTML or JSON output to retain every core.",
+              message: `Cable ${JSON.stringify(cable.designation)} inventory needs multiple sheets. Use thermite view --conductors with HTML or JSON output to retain every core.`,
             });
           const terminals = new Map(
             cable.assignments.flatMap((core) =>
@@ -265,21 +341,25 @@ export function createSchematicRendererWithDependencies(
         normalized,
       );
       if (!prepared.ok) return failed(prepared.error);
-      const { graph, layout, titleContext, summary } = prepared.value;
-      const emitted = emitSchematicSvg(
-        graph,
-        layout,
-        titleContext,
-        dependencies.catalog ?? SYMBOL_CATALOG,
-      );
-      if (!emitted.ok) return failed(emitted.error);
-      return succeeded({ view, summary, svg: emitted.value });
+      return finishSchematic(ir, prepared.value, dependencies);
     },
   });
 }
 
 export function createSchematicRenderer(): SchematicRenderer {
-  return createSchematicRendererWithDependencies();
+  const renderer = createSchematicRendererWithDependencies();
+  return Object.freeze({
+    async render(
+      ir: Readonly<ElectricalIr>,
+      request: Readonly<SchematicViewRequest>,
+      presentation?: Readonly<CompiledProjectPresentation>,
+    ) {
+      const result = await renderer.render(ir, request, presentation);
+      if (result.ok) return result;
+      const error = renderDiagnosticContext(ir, request, result.error);
+      return error === result.error ? result : failed(error);
+    },
+  });
 }
 
 export function renderSchematic(
@@ -288,4 +368,26 @@ export function renderSchematic(
   presentation?: Readonly<CompiledProjectPresentation>,
 ): Promise<RenderOutcome<RenderedSchematic>> {
   return createSchematicRenderer().render(ir, request, presentation);
+}
+
+function finishSchematic(
+  ir: Readonly<ElectricalIr>,
+  p: PreparedSchematicDrawing,
+  dependencies: Readonly<SchematicRendererDependencies>,
+): RenderOutcome<RenderedSchematic> {
+  const { graph, layout, titleContext, summary, view } = p;
+  const emitted = emitSchematicSvg(
+    graph,
+    layout,
+    titleContext,
+    dependencies.catalog ?? SYMBOL_CATALOG,
+    false,
+    undefined,
+    ir,
+  );
+  if (!emitted.ok) return failed(renderErrorContext(ir, emitted.error));
+  const legend = addContinuousLegend(ir, emitted.value, view);
+  return legend.ok
+    ? succeeded({ view, summary, svg: legend.value })
+    : failed(renderErrorContext(ir, legend.error));
 }

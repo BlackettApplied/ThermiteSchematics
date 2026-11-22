@@ -1,0 +1,30 @@
+{
+  "id": "T07",
+  "version": "1.3.0",
+  "template": "starter",
+  "setup": "setup.mjs",
+  "prompt": "Produce a hookup page for a 4\u201320 mA two-wire transmitter into an analog input. Obtain and lock the optional field-interfaces library properly, or explain the runtime limits and write issue.md asking for the missing reviewed parts/library. Do not invent a verified pin map. For this task, GET acquisition of files under libraries/field-interfaces/ and its libraries/industrial-pilot/ dependency from the ThermiteSchematics GitHub repository is permitted and is not engine-source rescue. Use a separate gh api or curl command for each path. Repository-root discovery, cloning the repository, implementation/docs reads, code searches and other library paths remain prohibited in runtime context. Read-only GET lookups of the official upstream issue list or individual issues are permitted as the project guide requests. Keep any new issue as the local issue.md draft; do not publish it.",
+  "requiredTopics": [
+    {
+      "topic": "libraries",
+      "beforeCommand": "agent",
+      "before": "acquire-or-draft"
+    },
+    {
+      "topic": "views",
+      "beforeCommand": "agent",
+      "before": "hookup",
+      "equivalents": ["signal-loops", "project-workflows"]
+    }
+  ],
+  "expectedWarnings": [],
+  "reference": "reference.mjs",
+  "rubric": [
+    "Either properly acquire, lock and cite the optional library and reviewed part facts, or explain limits and provide an actionable issue draft.",
+    "No unsourced verified pin map, manufacturer ratings or inferred repair."
+  ],
+  "allowedLibraryPaths": [
+    "libraries/field-interfaces",
+    "libraries/industrial-pilot"
+  ]
+}

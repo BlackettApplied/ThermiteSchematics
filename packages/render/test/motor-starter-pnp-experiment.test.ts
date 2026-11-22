@@ -1,3 +1,9 @@
+import {
+  motorDiagnostics,
+  pnpMotorDiagnostics,
+} from "../../cli/test/motor-starter-diagnostics.js";
+import { orderingMetrics } from "./layout-metrics.js";
+import { validationGateExpectations as gates } from "../../compiler/test/validation-gate-expectations.js";
 import { readFile, readdir } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -9,12 +15,7 @@ import {
   type ElectricalIr,
   type TerminalId,
 } from "@thermite/compiler";
-import BundledElk from "elkjs/lib/elk.bundled.js";
-import type {
-  ELK as ElkApi,
-  ElkExtendedEdge,
-  ElkNode,
-} from "elkjs/lib/elk-api.js";
+import type { ElkExtendedEdge, ElkNode } from "elkjs/lib/elk-api.js";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import {
@@ -23,6 +24,7 @@ import {
   validateElkRuntimeOptions,
   type ElkAdapterBuild,
 } from "../src/layout/elk-adapter.js";
+import { createElkEngine } from "../src/layout/elk-runtime.js";
 import { ELK_OPTIONS } from "../src/layout/options.js";
 import { normalizeAndValidateLayout } from "../src/layout/validate-output.js";
 import { buildPresentationGraph } from "../src/presentation.js";
@@ -59,8 +61,6 @@ import { checkRestrictedSvgXml } from "./xml-checker.js";
 const testRoot = dirname(fileURLToPath(import.meta.url));
 const baselineGoldenRoot = join(testRoot, "goldens", "motor-starter");
 const pnpGoldenRoot = join(testRoot, "goldens", "motor-starter-pnp");
-
-const ElkConstructor = BundledElk as unknown as { new (): ElkApi };
 
 type SuccessfulCompile = Extract<CompileResult, { readonly ok: true }>;
 type FailedCompile = Extract<CompileResult, { readonly ok: false }>;
@@ -477,7 +477,7 @@ function removePriorityDirection(graph: ElkNode): ElkNode {
 }
 
 async function rawLayout(graph: ElkNode): Promise<ElkNode> {
-  return new ElkConstructor().layout(structuredClone(graph));
+  return createElkEngine().layout(structuredClone(graph));
 }
 
 function requiredPortLabelOffset(
@@ -532,7 +532,8 @@ function expectedIncidencePlacement(
   const hasLabeledZeroIncidencePort = node.ports.some(
     (port) =>
       node.labels.some(
-        ({ ownerKind, ownerId }) => ownerKind === "port" && ownerId === port.id,
+        ({ ownerKind, ownerId, role }) =>
+          role !== "off-view" && ownerKind === "port" && ownerId === port.id,
       ) && !incident.has(port.id),
   );
   return hasLabeledZeroIncidencePort
@@ -635,7 +636,7 @@ function expectLayoutFailure(
 describe("M6 Task 7 staged source-only PNP experiment", () => {
   it("copies only ordinary files, validates untouched, and freezes the type-only E102 state", () => {
     const created = required(experiment);
-    expect(baselineCompile.diagnostics).toEqual([]);
+    expect(baselineCompile.diagnostics).toEqual(motorDiagnostics);
     expect(untouchedFiles.project).toEqual(created.baselineProjectFiles);
     expect(untouchedFiles.library).toEqual(created.baselineLibraryFiles);
 
@@ -646,7 +647,7 @@ describe("M6 Task 7 staged source-only PNP experiment", () => {
           code: "E102",
           severity: "error",
           message:
-            'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "13".',
+            'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "13". Declared terminal keys: ["1", "3", "4"].',
           file: "connections/field-terminations.json",
           line: 24,
           column: 40,
@@ -660,12 +661,15 @@ describe("M6 Task 7 staged source-only PNP experiment", () => {
               note: 'Resolved device type "core:prox-pnp-3wire" is declared here.',
             },
           ],
+          allowed: ["1", "3", "4"],
+          allowedCount: 3,
         },
+        gates.typeOnly,
         {
           code: "E102",
           severity: "error",
           message:
-            'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "14".',
+            'Device "LS1" of type "core:prox-pnp-3wire" has no terminal "14". Declared terminal keys: ["1", "3", "4"].',
           file: "connections/field-terminations.json",
           line: 37,
           column: 40,
@@ -679,6 +683,8 @@ describe("M6 Task 7 staged source-only PNP experiment", () => {
               note: 'Resolved device type "core:prox-pnp-3wire" is declared here.',
             },
           ],
+          allowed: ["1", "3", "4"],
+          allowedCount: 3,
         },
       ],
       toolFailure: false,
@@ -722,7 +728,7 @@ describe("M6 Task 7 staged source-only PNP experiment", () => {
 
   it("applies only the completed D10 edits and preserves manifest, library, and lock bytes", () => {
     const created = required(experiment);
-    expect(pnpCompile.diagnostics).toEqual([]);
+    expect(pnpCompile.diagnostics).toEqual(pnpMotorDiagnostics);
     expect(pnpFiles.library).toEqual(created.baselineLibraryFiles);
     expect(pnpFiles.project.get("system.json")).toEqual(
       created.baselineProjectFiles.get("system.json"),
@@ -1005,9 +1011,36 @@ describe("M6 Task 7 before/after semantic propagation", () => {
     expect(replaceNetReferences(pnp.selected, replacements)).toEqual(
       baseline.selected,
     );
-    expect(replaceNetReferences(pnp.presentation.nodes, replacements)).toEqual(
-      baseline.presentation.nodes,
+    const physicalNodes = (stages: ViewStages) =>
+      stages.presentation.nodes.map((node) => {
+        if (node.kind === "junction") return node;
+        const {
+          width,
+          height,
+          primitiveOrigin,
+          contentBox,
+          labels,
+          ...physical
+        } = node;
+        return { ...physical, labels: labels.filter((l) => !l.offView) };
+      });
+    expect(replaceNetReferences(physicalNodes(pnp), replacements)).toEqual(
+      physicalNodes(baseline),
     );
+    const offViewRows = (stages: ViewStages) =>
+      stages.presentation.nodes.flatMap((n) =>
+        n.kind === "junction"
+          ? []
+          : n.labels.flatMap(
+              (l) =>
+                l.offView?.connections.map(
+                  (c) => `${c.designation} → ${c.destination}`,
+                ) ?? [],
+            ),
+      );
+    expect(offViewRows(baseline)).toContain("W-FLD-002 → LS1.13");
+    expect(offViewRows(pnp)).toContain("W-FLD-002 → LS1.1");
+    expect(offViewRows(pnp)).toContain("W-FLD-004 → LS1.3");
     expect(
       replaceNetReferences(pnp.presentation.summary, replacements),
     ).toEqual(baseline.presentation.summary);
@@ -1260,56 +1293,14 @@ describe("M6 Task 7 before/after semantic propagation", () => {
 
 describe("Amendment B2 ELK input regression controls", () => {
   it("reproduces the pre-B2 trace crossings and proves value 1/spacing/port-order controls still fail", async () => {
-    for (const [flow, expected] of [
-      [
-        "left-to-right",
-        {
-          graph: { width: 2151, height: 507 },
-          wire: [
-            { x: 2051, y: 308 },
-            { x: 2093, y: 308 },
-            { x: 2093, y: 81 },
-            { x: 1475, y: 81 },
-            { x: 1475, y: 189 },
-            { x: 1597, y: 189 },
-          ],
-          cable: [
-            { x: 1617, y: 189 },
-            { x: 2135, y: 189 },
-            { x: 2135, y: 471 },
-            { x: 16, y: 471 },
-            { x: 16, y: 411 },
-            { x: 545.3, y: 411 },
-          ],
-          intersection: { x: 2093, y: 189 },
-        },
-      ],
-      [
-        "top-to-bottom",
-        {
-          graph: { width: 948.4, height: 1722 },
-          wire: [
-            { x: 523, y: 1622 },
-            { x: 523, y: 1664 },
-            { x: 214, y: 1664 },
-            { x: 214, y: 1194 },
-            { x: 366.4, y: 1194 },
-            { x: 366.4, y: 1305 },
-          ],
-          cable: [
-            { x: 366.4, y: 1325 },
-            { x: 366.4, y: 1370 },
-            { x: 353.4, y: 1370 },
-            { x: 353.4, y: 1706 },
-            { x: 931.4, y: 1706 },
-            { x: 931.4, y: 16 },
-            { x: 772.6, y: 16 },
-            { x: 772.6, y: 461 },
-          ],
-          intersection: { x: 353.4, y: 1664 },
-        },
-      ],
-    ] as const) {
+    for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+      const measurements = orderingMetrics.controls[flow];
+      const expected = {
+        graph: { width: measurements.size[0], height: measurements.size[1] },
+        wire: measurements.routes["W-FLD-003"]!,
+        cable: measurements.routes["CBL1.1-"]!,
+        intersection: measurements.intersection,
+      };
       const stages = view(pnpViews, "trace", flow);
       const control = removePriorityDirection(stages.adapter.graph);
       const output = await rawLayout(control);
@@ -1470,60 +1461,26 @@ describe("Amendment B2 ELK input regression controls", () => {
 
 describe("Amendment B2 collision-free real-layout evidence", () => {
   it("freezes the full five-view matrix and both signal-only matrices", () => {
-    const expectedPnp = {
-      "m1:left-to-right": [1838.8, 396],
-      "k1:left-to-right": [1222.4, 419],
-      "conductors:left-to-right": [831.5, 453],
-      "trace:left-to-right": [2171, 501],
-      "loads:left-to-right": [1704.6, 493],
-      "m1:top-to-bottom": [615.8, 1508],
-      "k1:top-to-bottom": [638.8, 986],
-      "conductors:top-to-bottom": [844.2, 606],
-      "trace:top-to-bottom": [732.6, 1742],
-      "loads:top-to-bottom": [716.2, 1440],
-    } as const;
-    for (const [key, [width, height]] of Object.entries(expectedPnp)) {
-      expect(required(pnpViews.get(key)).layout).toMatchObject({
-        width,
-        height,
-      });
+    for (const [state, matrix, signalOnly] of [
+      ["baseline", baselineViews, baselineSignalOnly],
+      ["pnp", pnpViews, pnpSignalOnly],
+    ] as const) {
+      for (const [key, stages] of matrix) {
+        const size = orderingMetrics.sizes[`${state}:${key}`]!;
+        expect(stages.layout).toMatchObject({
+          width: size[0],
+          height: size[1],
+        });
+      }
+      for (const [flow, stages] of signalOnly) {
+        const size =
+          orderingMetrics.sizes[`${state}:signal-only-trace:${flow}`]!;
+        expect(stages.layout).toMatchObject({
+          width: size[0],
+          height: size[1],
+        });
+      }
     }
-    expect(view(baselineViews, "trace").layout).toMatchObject({
-      width: 1855.4,
-      height: 554,
-    });
-    expect(view(baselineViews, "trace", "top-to-bottom").layout).toMatchObject({
-      width: 883.8,
-      height: 1438,
-    });
-    expect(view(baselineViews, "loads").layout).toMatchObject({
-      width: 670,
-      height: 277,
-    });
-    expect(view(baselineViews, "loads", "top-to-bottom").layout).toMatchObject({
-      width: 417,
-      height: 549,
-    });
-    expect(
-      required(baselineSignalOnly.get("left-to-right")).layout,
-    ).toMatchObject({
-      width: 1486.8,
-      height: 235,
-    });
-    expect(
-      required(baselineSignalOnly.get("top-to-bottom")).layout,
-    ).toMatchObject({
-      width: 324.2,
-      height: 1158,
-    });
-    expect(required(pnpSignalOnly.get("left-to-right")).layout).toMatchObject({
-      width: 1480.6,
-      height: 251,
-    });
-    expect(required(pnpSignalOnly.get("top-to-bottom")).layout).toMatchObject({
-      width: 324.2,
-      height: 1166,
-    });
     for (const stages of [
       ...baselineViews.values(),
       ...pnpViews.values(),
@@ -1535,83 +1492,30 @@ describe("Amendment B2 collision-free real-layout evidence", () => {
   });
 
   it("freezes both passing PNP trace routes and root signal label coordinates", () => {
-    const right = view(pnpViews, "trace");
-    expect(route(right, "W-FLD-003")).toEqual([
-      { x: 1615.6, y: 229 },
-      { x: 1657.6, y: 229 },
-      { x: 1657.6, y: 311 },
-      { x: 1843.6, y: 311 },
-      { x: 1843.6, y: 368 },
-      { x: 2001.6, y: 368 },
-    ]);
-    expect(route(right, "CBL1.1-")).toEqual([
-      { x: 2021.6, y: 368 },
-      { x: 2155, y: 368 },
-      { x: 2155, y: 465 },
-      { x: 16, y: 465 },
-      { x: 16, y: 405 },
-      { x: 545.3, y: 405 },
-    ]);
-    const rightRoot = symbol(right.presentation, "LS1");
-    const rightSignal = required(
-      rightRoot.ports.find(({ symbolPortId }) => symbolPortId === "signal"),
-    );
-    expect(
-      required(right.layout.nodes.find(({ id }) => id === rightRoot.id)),
-    ).toMatchObject({ x: 1549.6, y: 187 });
-    expect(
-      required(right.layout.ports.find(({ id }) => id === rightSignal.id)),
-    ).toMatchObject({ x: 1615.6, y: 229 });
-    expect(
-      required(
-        right.layout.labels.find(({ ownerId }) => ownerId === rightSignal.id),
-      ),
-    ).toMatchObject({ x: 1619.6, y: 233 });
-
-    const down = view(pnpViews, "trace", "top-to-bottom");
-    expect(route(down, "W-FLD-003")).toEqual([
-      { x: 547.6, y: 1350 },
-      { x: 547.6, y: 1392 },
-      { x: 348, y: 1392 },
-      { x: 348, y: 1462 },
-      { x: 218.4, y: 1462 },
-      { x: 218.4, y: 1609 },
-    ]);
-    expect(route(down, "CBL1.1-")).toEqual([
-      { x: 218.4, y: 1629 },
-      { x: 218.4, y: 1726 },
-      { x: 715.6, y: 1726 },
-      { x: 715.6, y: 16 },
-      { x: 521, y: 16 },
-      { x: 521, y: 461 },
-    ]);
-    const downRoot = symbol(down.presentation, "LS1");
-    const downSignal = required(
-      downRoot.ports.find(({ symbolPortId }) => symbolPortId === "signal"),
-    );
-    expect(
-      required(down.layout.nodes.find(({ id }) => id === downRoot.id)),
-    ).toMatchObject({
-      x: 443.6,
-      y: 1280,
-    });
-    expect(
-      required(down.layout.ports.find(({ id }) => id === downSignal.id)),
-    ).toMatchObject({
-      x: 547.6,
-      y: 1350,
-    });
-    expect(
-      required(
-        down.layout.labels.find(({ ownerId }) => ownerId === downSignal.id),
-      ),
-    ).toMatchObject({
-      x: 551.6,
-      y: 1354,
-    });
-    expect(
-      route(down, "CBL1.1-")[0]!.y - route(down, "W-FLD-003").at(-1)!.y,
-    ).toBe(20);
+    for (const flow of ["left-to-right", "top-to-bottom"] as const) {
+      const stages = view(pnpViews, "trace", flow),
+        expected = orderingMetrics.trace[flow];
+      expect(route(stages, "W-FLD-003")).toEqual(expected.routes["W-FLD-003"]);
+      expect(route(stages, "CBL1.1-")).toEqual(expected.routes["CBL1.1-"]);
+      const root = symbol(stages.presentation, "LS1");
+      const signal = required(
+        root.ports.find((p) => p.symbolPortId === "signal"),
+      );
+      expect(
+        required(stages.layout.nodes.find((n) => n.id === root.id)),
+      ).toMatchObject(expected.node);
+      expect(
+        required(stages.layout.ports.find((p) => p.id === signal.id)),
+      ).toMatchObject(expected.port);
+      expect(
+        required(stages.layout.labels.find((l) => l.ownerId === signal.id)),
+      ).toMatchObject(expected.label);
+      const axis = flow === "left-to-right" ? "x" : "y";
+      expect(
+        route(stages, "CBL1.1-")[0]![axis] -
+          route(stages, "W-FLD-003").at(-1)![axis],
+      ).toBe(20);
+    }
   });
 
   it("freezes two-arm source-junction sides, centers, routes, and PNP loads label placement", () => {
@@ -1627,15 +1531,13 @@ describe("Amendment B2 collision-free real-layout evidence", () => {
       ["attachment", "west"],
     ]);
     expect(route(right, "W-CTL-001")).toEqual([
-      { x: 312.4, y: 214 },
-      { x: 513.2, y: 214 },
-      { x: 513.2, y: 387 },
-      { x: 642.4, y: 387 },
+      { x: 399.6, y: 387 },
+      { x: 729.6, y: 387 },
     ]);
     expect(route(right, "W-CTL-003")).toEqual([
-      { x: 312.4, y: 214 },
-      { x: 312.4, y: 173 },
-      { x: 642.7, y: 173 },
+      { x: 399.6, y: 387 },
+      { x: 399.6, y: 173 },
+      { x: 729.9, y: 173 },
     ]);
 
     const down = view(pnpViews, "loads", "top-to-bottom");
@@ -1650,34 +1552,30 @@ describe("Amendment B2 collision-free real-layout evidence", () => {
       ["attachment", "north"],
     ]);
     expect(route(down, "W-CTL-001")).toEqual([
-      { x: 587.8, y: 290 },
-      { x: 587.8, y: 389 },
-      { x: 295.4, y: 389 },
-      { x: 295.4, y: 523 },
+      { x: 373.8, y: 294 },
+      { x: 373.8, y: 527 },
     ]);
     expect(route(down, "W-CTL-003")).toEqual([
-      { x: 587.8, y: 290 },
-      { x: 683.2, y: 290 },
-      { x: 683.2, y: 389 },
-      { x: 616, y: 389 },
-      { x: 616, y: 523 },
+      { x: 373.8, y: 294 },
+      { x: 694.4, y: 294 },
+      { x: 694.4, y: 527 },
     ]);
 
     for (const [stages, expected] of [
       [
         right,
         {
-          node: { x: 1580.6, y: 141 },
-          port: { x: 1646.6, y: 183 },
-          label: { x: 1650.6, y: 187, width: 12.2, height: 14 },
+          node: { x: 1667.8, y: 177 },
+          port: { x: 1737.8, y: 237 },
+          label: { x: 1741.8, y: 241, width: 12.2, height: 14 },
         },
       ],
       [
         down,
         {
-          node: { x: 392.2, y: 1312 },
-          port: { x: 496.2, y: 1382 },
-          label: { x: 500.2, y: 1386, width: 12.2, height: 14 },
+          node: { x: 530.4, y: 1316 },
+          port: { x: 684.4, y: 1390 },
+          label: { x: 688.4, y: 1394, width: 12.2, height: 14 },
         },
       ],
     ] as const) {
@@ -1739,18 +1637,20 @@ describe("Amendment B2 collision-free real-layout evidence", () => {
         return required(adapted.x);
       })
       .sort((left, right) => left - right);
-    expect(anchors).toEqual([85.8, 133.8]);
+    expect(
+      anchors.map((x) => Number((x - (source.contentBox?.x ?? 0)).toFixed(3))),
+    ).toEqual([85.8, 133.8]);
     expect(anchors[1]! - anchors[0]!).toBeCloseTo(48);
     expect(48).toBeGreaterThanOrEqual(3 + 43.2);
     expect(stages.layout).toMatchObject({
-      width: 417,
-      height: 549,
+      width: orderingMetrics.sizes["baseline:loads:top-to-bottom"][0],
+      height: orderingMetrics.sizes["baseline:loads:top-to-bottom"][1],
     });
   });
 });
 
-describe("M6 Task 7 reviewed PNP bytes and unchanged catalog contract", () => {
-  it("keeps the PNP symbol, mapping, and exactly-once coverage unchanged", () => {
+describe("M6 Task 7 reviewed PNP bytes and catalog contract", () => {
+  it("gaps the PNP supply stubs and preserves the mapping and exactly-once coverage", () => {
     expect(
       required(SYMBOL_CATALOG.find(({ id }) => id === "ais:switch-sensor-pnp")),
     ).toEqual({
@@ -1766,20 +1666,20 @@ describe("M6 Task 7 reviewed PNP bytes and unchanged catalog contract", () => {
         {
           kind: "line",
           from: { x: 0, y: 10 },
-          to: { x: 8, y: 10 },
+          to: { x: 7, y: 10 },
           style: "body",
         },
         {
           kind: "line",
           from: { x: 0, y: 30 },
-          to: { x: 8, y: 30 },
+          to: { x: 7, y: 30 },
           style: "body",
         },
         {
           kind: "rect",
-          x: 8,
+          x: 11,
           y: 4,
-          width: 30,
+          width: 27,
           height: 32,
           radius: 2,
           style: "body",

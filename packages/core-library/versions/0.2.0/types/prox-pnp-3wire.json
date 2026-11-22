@@ -1,0 +1,50 @@
+{
+  "$schema": "https://thermiteschematics.com/schemas/0.1/library-file.schema.json",
+  "types": [
+    {
+      "kind": "device_type",
+      "id": "core:prox-pnp-3wire",
+      "description": "Three-wire PNP proximity sensor",
+      "terminals": {
+        "1": {
+          "role": "supply_positive",
+          "rating": {
+            "nominal_voltage": 24,
+            "voltage_type": "DC"
+          },
+          "required": true
+        },
+        "3": {
+          "role": "supply_return",
+          "required": true
+        },
+        "4": {
+          "role": "signal_output"
+        }
+      },
+      "functions": {
+        "supply": {
+          "kind": "load",
+          "terminals": ["1", "3"]
+        },
+        "output": {
+          "kind": "channel",
+          "direction": "output",
+          "terminals": ["4"]
+        }
+      },
+      "internal_relations": [
+        {
+          "relation": "feeds_internal",
+          "from": "supply",
+          "to": "output"
+        }
+      ],
+      "symbol": "thermite:sensor-3wire",
+      "connectionCoverage": {
+        "status": "generic",
+        "notes": "Reviewed generic interface: Positive supply 1 and return 3 are required. Output 4 is modeled and optional by application, including a powered spare sensor; require it in the project when used. Unmodeled: shields, configuration pins and bonding of actual sensors. The existing generic PNP description is retained; no manufacturer pinout or new ratings are asserted."
+      }
+    }
+  ]
+}
