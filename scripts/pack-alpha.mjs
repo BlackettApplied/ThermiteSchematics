@@ -30,8 +30,6 @@ export function sourceArchiveDescriptor(commit, digest = "") {
 }
 
 if (isMainModule(import.meta, process.argv[1])) {
-  if (process.argv.slice(2).length)
-    throw new Error("Usage: bun run alpha:pack");
   const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
   const git = (...args) =>
     execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
