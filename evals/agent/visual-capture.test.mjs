@@ -881,6 +881,43 @@ if (process.platform !== "win32") {
     expect(lstatSync(linkPath, { throwIfNoEntry: false })).toBeUndefined();
   });
 
+  it("preserves a replacement symlink during POSIX setup rollback", async () => {
+    const { workspace, project, evidence, outside, link: linkPath } = fixture();
+    const outputs = join(evidence, "visual-captures");
+    const workSource = projectReader(workspace);
+    const projectSource = projectReader(project);
+    try {
+      const realSymlinkLink = workSource.symlinkLink.bind(workSource);
+      let replacementStat;
+      vi.spyOn(workSource, "symlinkLink").mockImplementation((name, target) => {
+        const snapshot = realSymlinkLink(name, target);
+        const created = lstatSync(linkPath, { bigint: true });
+        expect(sameEntry(snapshot, created)).toBe(true);
+        unlinkSync(linkPath);
+        link(outside, linkPath);
+        replacementStat = lstatSync(linkPath, { bigint: true });
+        expect(sameEntry(replacementStat, snapshot)).toBe(false);
+        return snapshot;
+      });
+      await expect(
+        visualBroker({ visualCapture: true }, project, evidence, undefined, {
+          workspace: workSource,
+          project: projectSource,
+        }),
+      ).rejects.toThrow(/target changed during setup/i);
+      expect(lstatSync(outputs, { throwIfNoEntry: false })).toBeUndefined();
+      const after = lstatSync(linkPath, {
+        bigint: true,
+        throwIfNoEntry: false,
+      });
+      expect(after?.isSymbolicLink()).toBe(true);
+      expect(sameEntry(after, replacementStat)).toBe(true);
+    } finally {
+      projectSource.close();
+      workSource.close();
+    }
+  });
+
   // M1: the receipt is written only after every PNG matches it.
   it("publishes an error when an earlier PNG changes before the receipt", async () => {
     const { project, evidence, link } = fixture();
