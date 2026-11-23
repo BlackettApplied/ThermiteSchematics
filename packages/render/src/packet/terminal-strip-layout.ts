@@ -1,11 +1,9 @@
 import type { TerminalId } from "@thermite/compiler";
-import { measureText } from "../text-metrics.js";
+import { measureText, printableTextRightExtent } from "../text-metrics.js";
 import { wrapReportCell } from "./report-wrapping.js";
-import { fieldTextLeft, fieldTextLeftShift } from "./svg.js";
+import { fieldTextLeft } from "./svg.js";
 import { stripTerminalKey, type StripFacts } from "./terminal-strip-facts.js";
 import type { DrawingBounds } from "./types.js";
-
-const STRIP_AREA_INSET_MM = 0.5;
 
 export type StripGroup = StripFacts["groups"][number];
 export type StripTerminal = StripGroup["terminals"][number];
@@ -20,7 +18,37 @@ export function stripFieldTextX(
 ): number {
   return Math.max(x, fieldTextLeft(fieldLeft, line, size, bold));
 }
-export const stripFieldLines = (value: string, width: number, bold = false) =>
+export function stripFieldTextShift(
+  x: number,
+  fieldLeft: number,
+  line: string,
+  size: number,
+  bold = false,
+): number {
+  return stripFieldTextX(x, fieldLeft, line, size, bold) - x;
+}
+export const stripHeadingLines = (
+  value: string,
+  width: number,
+  x: number,
+  fieldLeft: number,
+) =>
+  wrapReportCell(
+    value,
+    width,
+    2.5,
+    [],
+    [],
+    (line) =>
+      stripFieldTextShift(x, fieldLeft, line, 2.5, true) +
+      printableTextRightExtent(line, 2.5, true),
+  );
+export const stripMarkerLines = (
+  value: string,
+  width: number,
+  x: number,
+  fieldLeft: number,
+) =>
   wrapReportCell(
     value,
     width,
@@ -29,7 +57,7 @@ export const stripFieldLines = (value: string, width: number, bold = false) =>
     [],
     (line) =>
       measureText(line, 2.5).width +
-      Math.max(0, fieldTextLeftShift(line, 2.5, bold) - STRIP_AREA_INSET_MM),
+      stripFieldTextShift(x, fieldLeft, line, 2.5, false),
   );
 export interface StripLabel {
   identity: string;
@@ -53,15 +81,15 @@ export interface StripModel {
   bridgeCapacity: number;
   labelW: number;
   bridges: StripFacts["bridges"];
-  heading: string[];
+  headingText: string;
   sideHeadings: string[][];
   rows: StripRow[];
-  headerH: number;
-  markerH: number;
-  height: number;
 }
 export interface StripFragment {
   model: StripModel;
+  heading: string[];
+  headerH: number;
+  markerH: number;
   rows: StripRow[];
   x: number;
   y: number;
@@ -145,33 +173,11 @@ function measuredModel(
   const gutter = Math.min(bridges.length, bridgeCapacity) * laneStep + 4,
     labelW = (width - terminalW - gutter - 20) / 2;
   if (labelW < 12) throw Error("Strip labels do not fit this column width.");
-  const heading = stripFieldLines(
-    `${group.device.designation} — ${group.ordered ? "authored order" : "order unspecified; declaration listing"}`,
-    width,
-    true,
-  );
+  const headingText = `${group.device.designation} — ${group.ordered ? "authored order" : "order unspecified; declaration listing"}`;
   const sideHeadings = [
     stripLines("Same location", labelW),
     stripLines("Other / unknown location", labelW),
   ];
-  const headerH =
-    heading.length * 3.5 +
-    Math.max(...sideHeadings.map((h) => h.length)) * 3.5 +
-    5;
-  const markerH =
-    Math.max(
-      1,
-      ...group.terminals.map(
-        (t) =>
-          stripFieldLines(
-            `${group.device.designation} continued from sheet 888.D6 at terminal ${t.id.terminalKey}`,
-            width,
-            false,
-          ).length,
-      ),
-    ) *
-      3.5 +
-    2;
   const rows = measuredRows(group, bridges, labelW);
   return {
     group,
@@ -182,13 +188,38 @@ function measuredModel(
     bridgeCapacity,
     labelW,
     bridges,
-    heading,
+    headingText,
     rows,
     sideHeadings,
-    headerH,
-    markerH,
-    height: headerH + rows.reduce((sum, r) => sum + r.height, 0) + 4,
   };
+}
+function fragmentMetrics(model: StripModel, x: number, fieldLeft: number) {
+  const heading = stripHeadingLines(
+    model.headingText,
+    model.width,
+    x,
+    fieldLeft,
+  );
+  const headerH =
+    heading.length * 3.5 +
+    Math.max(...model.sideHeadings.map((h) => h.length)) * 3.5 +
+    5;
+  const markerH =
+    Math.max(
+      1,
+      ...model.group.terminals.map(
+        (t) =>
+          stripMarkerLines(
+            `${model.group.device.designation} continued from sheet 888.D6 at terminal ${t.id.terminalKey}`,
+            model.width,
+            x,
+            fieldLeft,
+          ).length,
+      ),
+    ) *
+      3.5 +
+    2;
+  return { heading, headerH, markerH };
 }
 function fragment(
   model: StripModel,
@@ -196,7 +227,9 @@ function fragment(
   end: number,
   x: number,
   y: number,
+  fieldLeft: number,
 ): StripFragment {
+  const { heading, headerH, markerH } = fragmentMetrics(model, x, fieldLeft);
   const selected = model.rows.slice(first, end);
   const keys = new Set(selected.map((r) => r.terminal.key));
   const rows = selected.map((row) => {
@@ -222,6 +255,9 @@ function fragment(
     ).length > model.bridgeCapacity;
   return {
     model,
+    heading,
+    headerH,
+    markerH,
     rows,
     x,
     y,
@@ -229,16 +265,17 @@ function fragment(
     to,
     height: bridgeOverflow
       ? Infinity
-      : model.headerH +
+      : headerH +
         rows.reduce((s, r) => s + r.height, 0) +
-        (from ? model.markerH : 0) +
-        (to ? model.markerH : 0) +
+        (from ? markerH : 0) +
+        (to ? markerH : 0) +
         4,
   };
 }
 function packModels(
   models: StripModel[],
   area: DrawingBounds,
+  fieldLeft: number,
   columns: number,
 ) {
   const pages: StripFragment[][] = [[]];
@@ -253,22 +290,28 @@ function packModels(
     }
   };
   for (const model of models) {
-    if (
-      model.height <= area.h &&
-      model.bridges.length <= model.bridgeCapacity
-    ) {
-      if (y + model.height > area.y + area.h) advance();
-      pages[pages.length - 1]?.push(
-        fragment(
-          model,
-          0,
-          model.rows.length,
-          area.x + column * (model.width + 8),
-          y,
-        ),
+    const wholeAt = (col: number, top: number) =>
+      fragment(
+        model,
+        0,
+        model.rows.length,
+        area.x + col * (model.width + 8),
+        top,
+        fieldLeft,
       );
-      y += model.height + 5;
-      continue;
+    if (model.bridges.length <= model.bridgeCapacity) {
+      let whole = wholeAt(column, y);
+      if (whole.height <= area.h) {
+        if (y + whole.height > area.y + area.h) {
+          advance();
+          whole = wholeAt(column, y);
+        }
+        if (whole.height <= area.h) {
+          pages[pages.length - 1]?.push(whole);
+          y += whole.height + 5;
+          continue;
+        }
+      }
     }
     if (y !== area.y) advance();
     let first = 0;
@@ -280,13 +323,13 @@ function packModels(
         candidate <= model.rows.length;
         candidate++
       )
-        if (fragment(model, first, candidate, x, y).height <= area.h)
+        if (fragment(model, first, candidate, x, y, fieldLeft).height <= area.h)
           end = candidate;
       if (end === first)
         throw Error(
           `Terminal ${model.group.device.designation}.${model.rows[first]?.terminal.id.terminalKey}: one row with its stubs cannot fit ${area.h.toFixed(3)} mm at 2.5 mm.`,
         );
-      const part = fragment(model, first, end, x, y);
+      const part = fragment(model, first, end, x, y, fieldLeft);
       pages[pages.length - 1]?.push(part);
       y += part.height + 5;
       first = end;
@@ -314,6 +357,7 @@ export function paginateStrip(facts: StripFacts, b: DrawingBounds): StripPlan {
       const pages = packModels(
         facts.groups.map((g) => measuredModel(g, facts, width)),
         area,
+        b.x,
         columns,
       );
       if (!best || pages.length < best.pages.length)
@@ -326,7 +370,7 @@ export function paginateStrip(facts: StripFacts, b: DrawingBounds): StripPlan {
   return best;
 }
 export function fragmentAnchors(part: StripFragment) {
-  let y = part.y + part.model.headerH + (part.from ? part.model.markerH : 0);
+  let y = part.y + part.headerH + (part.from ? part.markerH : 0);
   return part.rows.map((row) => {
     const anchor = {
       key: row.terminal.key,

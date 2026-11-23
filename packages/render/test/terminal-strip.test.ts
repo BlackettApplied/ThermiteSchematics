@@ -3,6 +3,12 @@ import { parseHTML } from "linkedom";
 import { buildDocumentation } from "@thermite/query";
 import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
+import { stripHeadingLines } from "../src/packet/terminal-strip-layout.js";
+import {
+  printableTextLeftOverhang,
+  printableTextMetrics,
+  printableTextRightExtent,
+} from "../src/text-metrics.js";
 import { createTerminalIr } from "../../query/test/fixtures.js";
 import { readFile } from "node:fs/promises";
 import type {
@@ -270,4 +276,35 @@ it("is deterministic and affects only terminal-plan sheets", async () => {
   expect(
     result.value.sheets.some((s) => s.svg.includes("data-strip-terminal")),
   ).toBe(false);
+});
+it("uses painted ink only for bundled glyphs and reduces strip heading wrap width only by actual left shift", () => {
+  const fallback = "Field cable 🌐 cabinet";
+  const fallbackMetrics = printableTextMetrics(fallback, 2.6);
+  expect(printableTextRightExtent(fallback, 2.6)).toBeGreaterThanOrEqual(
+    Math.max(fallbackMetrics.advance, fallbackMetrics.right),
+  );
+  expect(printableTextLeftOverhang("🌐 Field", 2.6)).toBe(0);
+  expect(printableTextLeftOverhang("𝒿 🌐", 2.6, true)).toBeGreaterThan(0);
+
+  const bundled = "Field cable cabinet";
+  const bundledMetrics = printableTextMetrics(bundled, 2.6);
+  expect(printableTextRightExtent(bundled, 2.6)).toBe(bundledMetrics.right);
+
+  const heading = "𝒿B1 — order unspecified; declaration listing";
+  const exactRight = printableTextRightExtent(heading, 2.5, true);
+  // Width between unshifted extent and column-0 shifted extent (+0.446 mm):
+  // column 0 shifts and wraps, while column 1 does not move and stays on one line.
+  const tightWidth = exactRight + 0.2;
+  const fieldLeft = 28;
+  expect(
+    stripHeadingLines(heading, tightWidth, fieldLeft + 0.5, fieldLeft).length,
+  ).toBe(2);
+  expect(
+    stripHeadingLines(
+      heading,
+      tightWidth,
+      fieldLeft + 0.5 + tightWidth + 8,
+      fieldLeft,
+    ),
+  ).toEqual([heading]);
 });

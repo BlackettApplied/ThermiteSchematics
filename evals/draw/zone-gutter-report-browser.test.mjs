@@ -522,4 +522,113 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
     }
     expect(sawOrderMarker).toBe(true);
   });
+
+  it("refuses CBL1 fallback-glyph type caption with R006 while issuing the bundled-font control", async () => {
+    const fallbackCase = {
+      description:
+        "Field cable 🌐 control wiring, junction box identification, and terminal identification label for the demonstration panel and remote cabinet",
+      marginMm: 6.8891,
+    };
+    const bundledControl = {
+      description:
+        "Field cable control wiring, junction box identification, and terminal identification label for the demonstration panel and remote cabinet",
+      marginMm: 8.0071,
+    };
+
+    const run = async ({ description, marginMm }) => {
+      const ir = structuredClone(baseIr);
+      const cable = ir.cables.find((c) => c.designation === "CBL1");
+      ir.cableTypes.find((t) => t.id === cable.typeId).description =
+        description;
+      return renderSchematicPacket(ir, {
+        format: "schematic-packet-request/0.1",
+        index: false,
+        page: { size: "letter", orientation: "portrait", marginMm },
+        views: [
+          {
+            format: "schematic-view-request/0.2",
+            root: { by: "designation", value: "CBL1" },
+            intent: { kind: "conductors" },
+            flow: "left-to-right",
+          },
+        ],
+      });
+    };
+
+    const refused = await run(fallbackCase);
+    expect(refused.ok).toBe(false);
+    if (!refused.ok) expect(refused.error.code).toBe("R006");
+
+    const issued = await run(bundledControl);
+    expect(issued.ok, JSON.stringify(issued.ok ? null : issued.error)).toBe(
+      true,
+    );
+    if (!issued.ok) return;
+    expect(issued.value.sheets.length).toBe(1);
+    const g = await measureSheet(issued.value.sheets[0].svg);
+    expect(textInZoneGutter(g)).toEqual([]);
+    expect(textBounds(g)).toEqual([]);
+    const caption = g.texts.find((t) => t.text === bundledControl.description);
+    expect(caption).toBeDefined();
+    expect(caption.bbox.x + caption.bbox.w).toBeLessThanOrEqual(
+      215.9 - bundledControl.marginMm - 18,
+    );
+  });
+
+  it("keeps letter-portrait 𝑗B1 strip heading on one line in both columns while clearing the left gutter", async () => {
+    const designation = "𝑗B1";
+    const heading = `${designation} — order unspecified; declaration listing`;
+    const marginMm = 10.47625;
+    const fieldLeft = marginMm + 18;
+    const fieldRight = 215.9 - marginMm - 18;
+    const ir = structuredClone(baseIr);
+    const dev = ir.devices.find((d) => d.designation === "JB1");
+    dev.designation = designation;
+    const type = ir.deviceTypes.find((t) => t.id === dev.typeId);
+    const sample = ir.terminals.find((t) => t.id.deviceUid === dev.uid);
+    for (let n = 1; n <= 48; n++) {
+      const key = `T${n}`;
+      if (type.terminals.some((t) => t.key === key)) continue;
+      ir.terminals.push({ ...sample, id: { ...sample.id, terminalKey: key } });
+      type.terminals.push({ ...type.terminals[0], key });
+    }
+    const packet = await renderSchematicPacket(ir, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: { size: "letter", orientation: "portrait", marginMm },
+      views: [
+        {
+          format: "documentation-view-request/0.1",
+          kind: "terminals",
+          filter: { devices: [designation] },
+        },
+      ],
+    });
+    expect(packet.ok, JSON.stringify(packet.ok ? null : packet.error)).toBe(
+      true,
+    );
+    if (!packet.ok) return;
+    expect(packet.value.sheets.length).toBe(11);
+    const stripSheets = packet.value.sheets.filter(
+      (s) => s.view.kind === "terminal-strip",
+    );
+    expect(stripSheets.length).toBe(3);
+
+    const firstStrip = await measureSheet(stripSheets[0].svg);
+    expect(textInZoneGutter(firstStrip)).toEqual([]);
+    expect(textBounds(firstStrip)).toEqual([]);
+    const headings = firstStrip.texts
+      .filter(
+        (t) =>
+          t.anchor.y > marginMm + 26 &&
+          t.anchor.y < marginMm + 40 &&
+          heading.includes(t.text),
+      )
+      .sort((a, b) => a.anchor.x - b.anchor.x);
+    expect(headings.map((t) => t.text)).toEqual([heading, heading]);
+    expect(headings[0].bbox.x).toBeGreaterThanOrEqual(fieldLeft);
+    expect(headings[1].bbox.x + headings[1].bbox.w).toBeLessThanOrEqual(
+      fieldRight,
+    );
+  });
 });

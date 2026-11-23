@@ -18,9 +18,9 @@ import {
 import {
   fragmentAnchors,
   paginateStrip,
-  stripFieldLines,
   stripFieldTextX,
   stripLines,
+  stripMarkerLines,
   type StripFragment,
   type StripLabel,
   type StripPlan,
@@ -209,13 +209,14 @@ function orderMarker(
   const value = `${part.model.group.device.designation} continued ${direction} sheet ${destination(locate(target.key))} at terminal ${target.id.terminalKey}`;
   return [
     `<g data-strip-continuation="${direction}" data-strip-at="${attr(required(at, "Missing strip boundary").key)}" data-strip-target="${attr(target.key)}" data-device-uid="${attr(part.model.group.device.uid)}">`,
-    ...stripFieldLines(value, part.model.width, false).map((line, i) =>
-      text(
-        stripFieldTextX(part.x, fieldLeft, line, 2.5),
-        y + 3 + i * 3.5,
-        line,
-        2.5,
-      ),
+    ...stripMarkerLines(value, part.model.width, part.x, fieldLeft).map(
+      (line, i) =>
+        text(
+          stripFieldTextX(part.x, fieldLeft, line, 2.5),
+          y + 3 + i * 3.5,
+          line,
+          2.5,
+        ),
     ),
     "</g>",
   ];
@@ -223,7 +224,7 @@ function orderMarker(
 function fragmentSvg(part: StripFragment, fieldLeft: number, locate: Locate) {
   const m = part.model,
     out = [`<g data-terminal-strip="${attr(m.group.device.uid)}">`];
-  m.heading.forEach((line, i) =>
+  part.heading.forEach((line, i) =>
     out.push(
       text(
         stripFieldTextX(part.x, fieldLeft, line, 2.5, true),
@@ -235,7 +236,7 @@ function fragmentSvg(part: StripFragment, fieldLeft: number, locate: Locate) {
       ),
     ),
   );
-  const headingsY = part.y + m.heading.length * 3.5 + 4;
+  const headingsY = part.y + part.heading.length * 3.5 + 4;
   m.sideHeadings.forEach((lines, side) =>
     lines.forEach((line, i) =>
       out.push(
@@ -253,9 +254,9 @@ function fragmentSvg(part: StripFragment, fieldLeft: number, locate: Locate) {
   const approaches = stripApproaches(part);
   const rightStubSegments: StripSegment[] = [];
   const terminalRects: StripRect[] = [];
-  let y = part.y + m.headerH;
+  let y = part.y + part.headerH;
   out.push(...orderMarker(part, fieldLeft, "from", y, locate));
-  if (part.from) y += m.markerH;
+  if (part.from) y += part.markerH;
   for (const row of part.rows) {
     out.push(
       terminalSvg(

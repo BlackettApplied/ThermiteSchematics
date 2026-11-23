@@ -240,17 +240,26 @@ const load = (name: string) => {
 const regular = load("NotoSans-Regular"),
   boldFace = load("NotoSans-Bold"),
   math = load("NotoSansMath-Regular");
+function normalizePrintableText(value: string, literal: boolean) {
+  return literal
+    ? value
+    : value
+        .normalize("NFC")
+        .replace(/[\t\r\n ]+/gu, " ")
+        .trim();
+}
 function printableRuns(text: string, primary: typeof regular) {
-  const runs: { face: typeof primary; text: string }[] = [];
+  const runs: { face: typeof primary; text: string; fallback: boolean }[] = [];
   for (const c of text) {
     const code = c.codePointAt(0) ?? 0;
-    const face =
-      !primary.hasGlyphForCodePoint(code) && math.hasGlyphForCodePoint(code)
-        ? math
-        : primary;
+    const inPrimary = primary.hasGlyphForCodePoint(code);
+    const inMath = !inPrimary && math.hasGlyphForCodePoint(code);
+    const face = inMath ? math : primary;
+    const fallback = !inPrimary && !inMath;
     const previous = runs.at(-1);
-    if (previous?.face === face) previous.text += c;
-    else runs.push({ face, text: c });
+    if (previous?.face === face && previous.fallback === fallback)
+      previous.text += c;
+    else runs.push({ face, text: c, fallback });
   }
   return runs;
 }
@@ -262,12 +271,7 @@ function measurePrintableText(
   bold = false,
   literal = false,
 ) {
-  const text = literal
-    ? value
-    : value
-        .normalize("NFC")
-        .replace(/[\t\r\n ]+/gu, " ")
-        .trim();
+  const text = normalizePrintableText(value, literal);
   let advance = 0,
     left = Infinity,
     right = -Infinity,
@@ -359,20 +363,16 @@ function printableInkExtents(
   literal: boolean,
 ) {
   const m = printableTextMetrics(value, size, bold, literal);
-  if (!bold) return { left: m.left, right: m.right };
-  const text = literal
-    ? value
-    : value
-        .normalize("NFC")
-        .replace(/[\t\r\n ]+/gu, " ")
-        .trim();
-  const runs = printableRuns(text, boldFace);
-  if (!runs.some((run) => run.face === math))
-    return { left: m.left, right: m.right };
+  const text = normalizePrintableText(value, literal);
+  const primary = bold ? boldFace : regular;
+  const runs = printableRuns(text, primary);
+  const hasFallback = runs.some((run) => run.fallback);
+  const hasBoldMath = bold && runs.some((run) => run.face === math);
+  if (!hasFallback && !hasBoldMath) return { left: m.left, right: m.right };
   let advance = 0,
-    left = m.left,
-    right = m.right;
-  const pad = size * MATH_FAUX_BOLD_PAD_EM;
+    left = Infinity,
+    right = -Infinity;
+  const pad = bold ? size * MATH_FAUX_BOLD_PAD_EM : 0;
   for (const run of runs) {
     const scale = size / run.face.unitsPerEm,
       layout = run.face.layout(run.text);
@@ -380,27 +380,41 @@ function printableInkExtents(
     for (const [i, g] of layout.glyphs.entries()) {
       const p = layout.positions[i];
       if (!p) throw Error("Missing printable glyph position.");
-      const box = g.bbox;
-      if (Number.isFinite(box.minX) && box.maxX > box.minX) {
-        left = Math.min(
-          left,
-          advance + (p.xOffset + box.minX) * scale - fauxBold,
-        );
-        right = Math.max(
-          right,
-          advance + (p.xOffset + box.maxX) * scale + fauxBold,
-        );
+      const step = p.xAdvance * scale;
+      if (run.fallback || g.id === 0) {
+        left = Math.min(left, advance);
+        right = Math.max(right, advance + step);
+      } else {
+        const box = g.bbox;
+        if (Number.isFinite(box.minX) && box.maxX > box.minX) {
+          left = Math.min(
+            left,
+            advance + (p.xOffset + box.minX) * scale - fauxBold,
+          );
+          right = Math.max(
+            right,
+            advance + (p.xOffset + box.maxX) * scale + fauxBold,
+          );
+        }
       }
-      advance += p.xAdvance * scale;
+      advance += step;
     }
   }
-  return { left, right };
+  const resolvedLeft = Number.isFinite(left) ? left : 0;
+  const resolvedRight = Number.isFinite(right) ? right : 0;
+  return {
+    left: hasFallback ? Math.min(0, resolvedLeft) : resolvedLeft,
+    right: hasFallback
+      ? Math.max(m.advance, m.right, resolvedRight)
+      : resolvedRight,
+  };
 }
 
 /** Leftward ink overhang past x = 0 for left-anchored printable text (mm),
  * computed deterministically from the bundled Noto Sans and Noto Sans Math
  * glyph bearings (including a 0.03 em faux-bold allowance when bold text falls
- * back to Noto Sans Math, which is embedded only at weight 400). */
+ * back to Noto Sans Math, which is embedded only at weight 400). Unknown
+ * fallback glyphs receive neither negative-bearing credit nor ink credit. */
 export function printableTextLeftOverhang(
   value: string,
   size = 10,
@@ -410,9 +424,9 @@ export function printableTextLeftOverhang(
   return Math.max(0, -printableInkExtents(value, size, bold, literal).left);
 }
 
-/** Rightward painted ink extent from x = 0 for left-anchored printable text (mm),
- * using the same glyph-bearing model as printableTextLeftOverhang without
- * counting trailing right-side-bearing advance. */
+/** Rightward extent from x = 0 for left-anchored printable text (mm): uses
+ * painted ink only when every glyph is covered by the bundled tables, and
+ * falls back to at least the conservative advance-based extent otherwise. */
 export function printableTextRightExtent(
   value: string,
   size = 10,
