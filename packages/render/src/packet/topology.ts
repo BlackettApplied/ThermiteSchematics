@@ -35,7 +35,7 @@ import type { Draft, PaperPage } from "./types.js";
 import { failure } from "./errors.js";
 import { topologySelectionContext } from "./selection-context.js";
 import { bounds, zone } from "./page.js";
-import { n, text, requestNoteText } from "./svg.js";
+import { fieldTextBounds, n, text, requestNoteText } from "./svg.js";
 import {
   communicationPartBlock,
   communicationPortSelection,
@@ -97,6 +97,28 @@ function topologyNoteSvg(
       : `<text data-document-note-replacement="${attr(v.replacement)}" `,
   );
 }
+function topologyTextLayout(
+  drawing: NotedDrawing,
+  b: ReturnType<typeof bounds>,
+  assembly: boolean,
+  request: { format: string; notes?: readonly string[] },
+  ports: ReturnType<ReturnType<typeof communicationPortSelection>>,
+) {
+  const textArea = fieldTextBounds(b);
+  const headingLines = assembly
+    ? circuitTextLines(drawing.title, textArea.w, 4)
+    : [drawing.title];
+  const partLines = communicationPartLines(drawing, textArea.w, ports);
+  const noteLines = topologyNoteLines(drawing, textArea.w, request);
+  return {
+    textArea,
+    headingLines,
+    headingHeight: 9 + (headingLines.length - 1) * 4.8,
+    partLines,
+    noteLines,
+    noteHeight: (noteLines.length + partLines.length) * 3.5,
+  };
+}
 function loopFitRefusal(
   page: PaperPage,
   request: { format: string; loopPower?: unknown },
@@ -138,29 +160,25 @@ export async function topologyDrafts(
       const capacity = headingCapacity(title, presentation);
       if (capacity) return capacity;
       const b = bounds(title, page);
-      const headingLines = assembly
-        ? circuitTextLines(drawing.title, b.w, 4)
-        : [drawing.title];
-      const headingHeight = 9 + (headingLines.length - 1) * 4.8;
-      const partLines = communicationPartLines(
+      const t = topologyTextLayout(
         drawing,
-        b.w,
+        b,
+        assembly,
+        request,
         selectedPorts(drawing),
       );
-      const noteLines = topologyNoteLines(drawing, b.w, request);
-      const noteHeight = (noteLines.length + partLines.length) * 3.5;
       const { scale, reserveNotes } = topologyScale(
         drawing,
         b,
-        headingHeight,
-        noteHeight,
+        t.headingHeight,
+        t.noteHeight,
         assembly || !!drawing.pagination || !!drawing.engineNotes,
       );
       const tagFit = topologyTagFit(
         drawing,
         b,
-        headingHeight,
-        reserveNotes ? 4 + noteHeight : 6,
+        t.headingHeight,
+        reserveNotes ? 4 + t.noteHeight : 6,
       );
       if (scale < 2.5 / 2.7 || !Number.isFinite(scale))
         return topologyFitFailure(
@@ -171,7 +189,7 @@ export async function topologyDrafts(
           tagFit,
         );
       const x = b.x + (b.w - drawing.width * scale) / 2,
-        y = b.y + headingHeight;
+        y = b.y + t.headingHeight;
       const references = drawing.references.map((r) => ({
         deviceUid: r.deviceUid,
         designation: r.designation,
@@ -180,19 +198,22 @@ export async function topologyDrafts(
         xMm: x + r.x * scale,
         yMm: y + r.y * scale,
       }));
-      const height = headingHeight + drawing.height * scale + 4 + noteHeight;
+      const height =
+        t.headingHeight + drawing.height * scale + 4 + t.noteHeight;
       if (height > b.h)
         return failure(
           "unprintable-layout",
           "Diagram notes exceed the sheet bounds.",
           { devices: drawing.references },
         );
-      const note = noteLines
+      const note = t.noteLines
         .map((v, i) =>
           topologyNoteSvg(
             v,
-            b.x,
-            b.y + height - (partLines.length + noteLines.length - 1 - i) * 3.5,
+            t.textArea.x,
+            b.y +
+              height -
+              (t.partLines.length + t.noteLines.length - 1 - i) * 3.5,
           ),
         )
         .join("\n");
@@ -220,9 +241,9 @@ export async function topologyDrafts(
             ? {
                 communicationBlock: communicationPartBlock(
                   drawing,
-                  b,
+                  t.textArea,
                   height,
-                  partLines.length,
+                  t.partLines.length,
                   selectedPorts(drawing),
                 ),
               }
@@ -247,9 +268,9 @@ export async function topologyDrafts(
             ? [drawing.topologyCoverage]
             : [],
           content:
-            headingLines
+            t.headingLines
               .map((line, i) =>
-                text(b.x, b.y + 3 + i * 4.8, line, 4, "start", 700),
+                text(t.textArea.x, b.y + 3 + i * 4.8, line, 4, "start", 700),
               )
               .join("") +
             `<g transform="translate(${n(x)} ${n(y)}) scale(${n(scale)})">${drawing.content}</g>` +

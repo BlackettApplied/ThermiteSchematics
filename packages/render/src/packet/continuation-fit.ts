@@ -18,6 +18,7 @@ import { bounds } from "./page.js";
 import {
   rootedNoticeLines,
   rootedSheetNoticeWidth,
+  rootedSheetNoticeX,
   rootedSheetView,
 } from "../off-view/notice.js";
 import { printableTextMetrics } from "../text-metrics.js";
@@ -51,7 +52,7 @@ function fixedInk(d: Draft, page: PaperPage, native: boolean): InkBox[] {
     v = rootedSheetView(d.view);
   const result = [...(d.rootedCaptionInk ?? [])];
   if (v && !native) {
-    const noticeX = Math.max(m + 18, b.x);
+    const noticeX = rootedSheetNoticeX(page, b.x);
     rootedNoticeLines(v, rootedSheetNoticeWidth(page, noticeX), 2.7).forEach(
       (l, i) =>
         result.push(textInk(l.text, noticeX, m + 19 + 4 * i, 2.7, l.bold)),

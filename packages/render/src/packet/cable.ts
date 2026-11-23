@@ -27,7 +27,7 @@ import { normalizeSchematicView } from "../view-spec.js";
 import type { Draft, PaperPage, SheetReference } from "./types.js";
 import { failure } from "./errors.js";
 import { bounds } from "./page.js";
-import { n, text, line } from "./svg.js";
+import { fieldTextBounds, n, text, line } from "./svg.js";
 import { cableEndpointCards } from "./cable-annotations.js";
 import { offViewCardSvg } from "../off-view/svg.js";
 
@@ -66,10 +66,11 @@ export async function cableDrafts(
     })),
   );
   if (!preflight.ok) return preflight;
-  const left = b.x,
-    right = b.x + b.w,
-    jacketL = left + b.w * 0.35,
-    jacketR = right - b.w * 0.35;
+  const textArea = fieldTextBounds(b),
+    left = textArea.x,
+    right = textArea.x + textArea.w,
+    jacketL = left + textArea.w * 0.35,
+    jacketR = right - textArea.w * 0.35;
   const endWidth = jacketL - left - 8;
   const annotations = cableEndpointCards(
     ir,
@@ -105,7 +106,7 @@ export async function cableDrafts(
     if (
       printableTextWidth(a, 3, true) > endWidth ||
       printableTextWidth(z, 3, true) > endWidth ||
-      printableTextWidth(typeCaption, 2.6) > b.w
+      printableTextWidth(typeCaption, 2.6) > textArea.w
     )
       return false;
     content.push(

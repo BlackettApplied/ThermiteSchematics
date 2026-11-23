@@ -1,4 +1,5 @@
 import type { NormalizedSchematicView } from "../types.js";
+import { fieldTextLeft, fieldTextWidth } from "../packet/svg.js";
 import { wrapText } from "../text-metrics.js";
 import { SvgWriter } from "../svg/writer.js";
 
@@ -88,11 +89,18 @@ export function rootedSheetView(
     : undefined;
 }
 
-export function rootedSheetNoticeWidth(
+export function rootedSheetNoticeX(
   page: import("../packet/types.js").PaperPage,
   leftX = page.marginMm + 18,
 ) {
-  const defaultWidth = page.widthMm - 2 * page.marginMm - 36;
+  return fieldTextLeft(Math.max(page.marginMm + 18, leftX));
+}
+
+export function rootedSheetNoticeWidth(
+  page: import("../packet/types.js").PaperPage,
+  leftX = rootedSheetNoticeX(page),
+) {
+  const defaultWidth = fieldTextWidth(page.widthMm - 2 * page.marginMm - 36);
   const available = page.widthMm - page.marginMm - 4 - leftX;
   return Math.max(40, Math.min(defaultWidth, available));
 }
@@ -103,7 +111,7 @@ export function rootedSheetNoticeSvg(
   leftX = page.marginMm + 18,
 ) {
   const rooted = rootedSheetView(view);
-  const x = Math.max(page.marginMm + 18, leftX);
+  const x = rootedSheetNoticeX(page, leftX);
   return rooted
     ? rootedNoticeSvg(
         rooted,

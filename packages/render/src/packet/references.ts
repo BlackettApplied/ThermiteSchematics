@@ -8,6 +8,7 @@ import type {
   ReferenceSelection,
 } from "./types.js";
 import { sheetLabel, bounds, normalizePaperPage } from "./page.js";
+import { fieldTextWidth } from "./svg.js";
 import { wrapText } from "../text-metrics.js";
 
 export const INDEX_TITLE = "Drawing index";
@@ -36,7 +37,7 @@ function referenceNotes(
   ).w;
   // The report retains its legacy character wrapping. Bound new engine lines
   // by measured width first; any further split can only make them narrower.
-  return notes.flatMap((note) => wrapText(note, width, 2.5));
+  return notes.flatMap((note) => wrapText(note, fieldTextWidth(width), 2.5));
 }
 
 const designationOrder = (

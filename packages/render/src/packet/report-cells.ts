@@ -2,7 +2,7 @@ import type { ElectricalIr } from "@thermite/compiler";
 import type { DocumentationTable } from "@thermite/query";
 import { describeCodePoint, measureText } from "../text-metrics.js";
 import { escapeXmlAttribute as attr } from "../svg/escape.js";
-import { n, text } from "./svg.js";
+import { fieldTextLeft, n, text } from "./svg.js";
 import { required } from "../presentation/util.js";
 import {
   reportColumns,
@@ -775,7 +775,7 @@ export function emitReportRow(
   });
   if (headerNote)
     content.push(
-      `<g data-report-header-note="true">${text(left, y + height - 0.8, headerNote, 2.5)}</g>`,
+      `<g data-report-header-note="true">${text(fieldTextLeft(left), y + height - 0.8, headerNote, 2.5)}</g>`,
     );
   return content;
 }

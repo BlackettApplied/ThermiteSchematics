@@ -11,6 +11,7 @@ import { wrapPrintableText, wrapText } from "../text-metrics.js";
 import {
   rootedNoticeLines,
   rootedSheetNoticeSvg,
+  rootedSheetNoticeWidth,
   rootedSheetView,
 } from "../off-view/notice.js";
 import type { NormalizedSchematicView } from "../types.js";
@@ -105,7 +106,8 @@ export function bounds(
   }
   const m = page.marginMm;
   const noticeHeight = rooted
-    ? rootedNoticeLines(rooted, page.widthMm - 2 * m - 36, 2.7).length * 4 + 4
+    ? rootedNoticeLines(rooted, rootedSheetNoticeWidth(page), 2.7).length * 4 +
+      4
     : 0;
   return {
     x: m + 18,

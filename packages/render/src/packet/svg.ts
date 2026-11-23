@@ -2,6 +2,28 @@ import { escapeXmlText as xml } from "../svg/escape.js";
 
 export const n = (value: number): string => String(Number(value.toFixed(3)));
 
+/** Horizontal inset inside the drawing field's left edge for left-anchored
+ * report/document text so negative glyph left side bearings (e.g. Noto Sans J:
+ * -0.195 mm at 2.5 mm, -0.211 mm at 2.7 mm, -0.312 mm at 4.0 mm) never paint
+ * ink into the zone-letter gutter (DQ-02). */
+export const FIELD_TEXT_LEFT_INSET_MM = 0.5;
+
+export const fieldTextLeft = (x: number): number =>
+  x + FIELD_TEXT_LEFT_INSET_MM;
+
+export const fieldTextWidth = (width: number): number =>
+  width - FIELD_TEXT_LEFT_INSET_MM;
+
+export function fieldTextBounds<T extends { x: number; w: number }>(
+  area: T,
+): T {
+  return {
+    ...area,
+    x: fieldTextLeft(area.x),
+    w: fieldTextWidth(area.w),
+  };
+}
+
 export function text(
   x: number,
   y: number,

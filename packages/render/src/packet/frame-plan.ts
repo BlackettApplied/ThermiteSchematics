@@ -2,7 +2,10 @@ import { titleFrameContext } from "../internal/title-data/frame-context.js";
 import type { SchematicTitleContext } from "../title-block.js";
 import type { NormalizedSchematicView } from "../types.js";
 import { printableTextMetrics, wrapPrintableText } from "../text-metrics.js";
-import { rootedNoticeLines } from "../off-view/notice.js";
+import {
+  rootedNoticeLines,
+  rootedSheetNoticeWidth,
+} from "../off-view/notice.js";
 import type { DrawingBounds, PaperPage } from "./types.js";
 
 export interface FrameText {
@@ -107,7 +110,7 @@ function buildCompactFramePlan(
     ) / 1000;
   const top = bottom - height;
   const notice = rooted
-    ? rootedNoticeLines(rooted, page.widthMm - 2 * m - 36, 2.7)
+    ? rootedNoticeLines(rooted, rootedSheetNoticeWidth(page), 2.7)
     : [];
   const noticeHeight = rooted ? notice.length * 4 + 4 : 0;
   const baseTop = m + 21 + noticeHeight;

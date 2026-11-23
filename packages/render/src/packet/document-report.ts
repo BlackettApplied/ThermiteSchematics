@@ -4,7 +4,7 @@ import type {
 } from "@thermite/compiler";
 import type { DocumentationTable } from "@thermite/query";
 import type { DocumentRowDraft } from "./document-types.js";
-import { text } from "./svg.js";
+import { fieldTextLeft, text } from "./svg.js";
 import { zone } from "./page.js";
 import type { DrawingBounds } from "./types.js";
 import {
@@ -19,6 +19,16 @@ export function documentReportTitle(table: DocumentationTable): string {
   return label === "inventory" || table.title === label
     ? table.title
     : `${table.title} — ${label}`;
+}
+function documentTitleSvg(table: DocumentationTable, b: DrawingBounds) {
+  return text(
+    fieldTextLeft(b.x),
+    b.y + 3,
+    documentReportTitle(table),
+    4,
+    "start",
+    700,
+  ).replace("<text ", '<text id="document-label" ');
 }
 export function reportDocumentContext(
   ir: Readonly<ElectricalIr>,
@@ -42,11 +52,7 @@ export function reportDocumentContext(
     rectMm: { x: tableBounds.x, y: b.y + 9, w: tableBounds.w, h: headerH },
   };
   return {
-    titleSvg: () =>
-      text(b.x, b.y + 3, documentReportTitle(table), 4, "start", 700).replace(
-        "<text ",
-        '<text id="document-label" ',
-      ),
+    titleSvg: () => documentTitleSvg(table, b),
     metadata: (documentRows: readonly DocumentRowDraft[]) => ({
       issuedDocument,
       documentHeader,

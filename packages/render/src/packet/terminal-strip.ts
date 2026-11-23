@@ -24,7 +24,7 @@ import {
   type StripPlan,
   type StripRow,
 } from "./terminal-strip-layout.js";
-import { n, text } from "./svg.js";
+import { fieldTextLeft, n, text } from "./svg.js";
 import { bounds, zone } from "./page.js";
 import type { DrawingBounds, Draft, PaperPage } from "./types.js";
 
@@ -267,12 +267,13 @@ function stripContent(
   locate: Locate,
 ) {
   const b = plan.bounds;
+  const textX = fieldTextLeft(b.x);
   return [
     `<g data-sheet-kind="terminal-strip">`,
-    text(b.x + 0.5, b.y + 3, `${title} — graphical strip`, 4, "start", 700),
+    text(textX, b.y + 3, `${title} — graphical strip`, 4, "start", 700),
     ...(plan.pages[page] ?? []).map((part) => fragmentSvg(part, locate)),
     ...plan.notes.map((line, i) =>
-      text(b.x + 0.5, b.y + b.h - (plan.notes.length - 1 - i) * 3.5, line, 2.5),
+      text(textX, b.y + b.h - (plan.notes.length - 1 - i) * 3.5, line, 2.5),
     ),
     "</g>",
   ].join("\n");
