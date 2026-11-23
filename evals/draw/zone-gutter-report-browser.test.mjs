@@ -18,7 +18,10 @@ beforeAll(async () => {
   const compiled = await compileProject("examples/motor-starter");
   if (!compiled.ok) throw Error(JSON.stringify(compiled.diagnostics));
   baseIr = compiled.ir;
-  browser = await launch();
+  // Accurate Canvas bounds for small-font gutter and edge checks (crbug.com/479240778).
+  browser = await launch([
+    "--enable-blink-features=CanvasTextMetricsPreciseBounds",
+  ]);
   context = await browser.newContext(drawingContextOptions);
   page = await context.newPage();
 });
