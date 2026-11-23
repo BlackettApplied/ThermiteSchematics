@@ -9,7 +9,7 @@ export function circuitTextLines(
   value: string,
   width: number,
   size = TERMINAL_TEXT_SIZE,
-  lineWidth = measure,
+  lineWidth: (value: string, size: number) => number = measure,
 ): string[] {
   const lines: string[] = [];
   let line = "";

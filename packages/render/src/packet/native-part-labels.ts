@@ -1,4 +1,5 @@
 import { printableTextMetrics } from "../text-metrics.js";
+import { fieldTextLeftShift } from "./svg.js";
 import { required } from "../presentation/util.js";
 import type { CommunicationDrawing } from "../communication.js";
 import type { PortIdentity } from "../topology-coverage.js";
@@ -56,16 +57,18 @@ export function communicationRowLayout(
     if (!port.targets.length) throw Error("Unresolved native port destination");
     const value = `${row.label} port ${port.key} → ${port.targets.map((t) => `${String(t.sheet).padStart(2, "0")}.${required(t.zone, "Unresolved native part zone")}`).join(", ")}`;
     const w = measure(value);
-    if (w > width)
+    const startShift = fieldTextLeftShift(value, 2.5);
+    if (startShift + w > width)
       throw Error("Native port entry cannot fit the reserved reference width");
     if (x > 0 && x + 2 + w > width) {
       line++;
       x = 0;
       lines.push("");
     } else if (x > 0) x += 2;
-    entries.push({ key: port.key, text: value, x, line });
+    const entryX = x === 0 ? startShift : x;
+    entries.push({ key: port.key, text: value, x: entryX, line });
     lines[line] = `${lines[line] ?? ""}${lines[line] ? "  " : ""}${value}`;
-    x += w;
+    x = entryX + w;
   }
   return { lines, entries };
 }

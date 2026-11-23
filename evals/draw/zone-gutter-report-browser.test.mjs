@@ -84,7 +84,7 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
     // Negative control: moving JB1.X1.1 back to x=28 (field left edge without inset)
     // must fail DQ-02 text-in-zone-gutter.
     const uninsetSvg = sheet.svg.replace(
-      /(<text\b[^>]*\bx=")28\.5("[^>]*>JB1\.X1\.1<\/text>)/u,
+      /(<text\b[^>]*\bx=")28\.\d+("[^>]*>JB1\.X1\.1<\/text>)/u,
       "$128$2",
     );
     expect(uninsetSvg).not.toBe(sheet.svg);
@@ -96,6 +96,9 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
         reason: "non-continuation-in-gutter",
       }),
     );
+
+    // Non-overhanging text keeps exact field.x (x="28"), unchanged from base.
+    expect(sheet.svg).toMatch(/<text\b[^>]*\bx="28"[^>]*>CABLE CBL1<\/text>/u);
   });
 
   it("keeps J-prefixed circuit headings/notes and wiring titles/notes out of the zone gutter", async () => {
@@ -223,5 +226,159 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
       expect(textBounds(g), `sheet ${sheet.number}`).toEqual([]);
     }
     expect(sawJContinuation).toBe(true);
+  });
+
+  it("keeps deep-overhang Thermite Math titles (𝒿 and bold faux-bold ∫) out of the zone gutter on tabloid", async () => {
+    for (const title of ["𝒿 Field wiring", "∫ Field wiring"]) {
+      const packet = await renderSchematicPacket(baseIr, {
+        format: "schematic-packet-request/0.1",
+        index: false,
+        page: tabloidLandscape,
+        views: [
+          {
+            format: "wiring-view-request/0.1",
+            conductors: ["W-FLD-001", "W-FLD-002"],
+            title,
+          },
+        ],
+      });
+      if (!packet.ok) throw Error(JSON.stringify(packet.error));
+      const g = await measureSheet(packet.value.sheets[0].svg);
+      expect(textInZoneGutter(g), title).toEqual([]);
+      expect(textBounds(g), title).toEqual([]);
+      const heading = g.texts.find((t) => t.text === title && t.anchor.y < 60);
+      expect(heading, title).toBeDefined();
+      expect(heading.bbox.x, title).toBeGreaterThanOrEqual(28.0);
+    }
+  });
+
+  it("preserves letter-portrait cable End B fit width (MAIN PANEL FIELD WIRING) without avoidable R006", async () => {
+    const ir = structuredClone(baseIr);
+    const cable = ir.cables.find((c) => c.designation === "CBL1");
+    cable.toLocation = "MAIN PANEL FIELD WIRING";
+    const packet = await renderSchematicPacket(ir, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: {
+        size: "letter",
+        orientation: "portrait",
+        marginMm: 20.052857,
+      },
+      views: [
+        {
+          format: "schematic-view-request/0.2",
+          root: { by: "designation", value: "CBL1" },
+          intent: { kind: "conductors" },
+          flow: "left-to-right",
+        },
+      ],
+    });
+    expect(packet.ok, JSON.stringify(packet.ok ? null : packet.error)).toBe(
+      true,
+    );
+    if (!packet.ok) return;
+    expect(packet.value.sheets.length).toBe(2);
+    const fieldRight = 215.9 - 20.052857 - 18;
+    for (const sheet of packet.value.sheets) {
+      const g = await measureSheet(sheet.svg);
+      expect(textInZoneGutter(g), `sheet ${sheet.number}`).toEqual([]);
+      expect(textBounds(g), `sheet ${sheet.number}`).toEqual([]);
+      const endB = g.texts.find((t) => t.text === "MAIN PANEL FIELD WIRING");
+      expect(endB, `sheet ${sheet.number}`).toBeDefined();
+      expect(endB.bbox.x + endB.bbox.w).toBeLessThanOrEqual(fieldRight);
+    }
+  });
+
+  it("measures and wraps wiring headings with bold metrics so they never paint past fieldRight on A4", async () => {
+    const title =
+      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring";
+    const marginMm = 10.045;
+    const fieldRight = 210 - marginMm - 18;
+    const packet = await renderSchematicPacket(baseIr, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: { size: "a4", orientation: "portrait", marginMm },
+      views: [
+        {
+          format: "wiring-view-request/0.1",
+          conductors: ["W-FLD-001", "W-FLD-002"],
+          title,
+        },
+      ],
+    });
+    if (!packet.ok) throw Error(JSON.stringify(packet.error));
+    const g = await measureSheet(packet.value.sheets[0].svg);
+    expect(textInZoneGutter(g)).toEqual([]);
+    expect(textBounds(g)).toEqual([]);
+    const headingRows = g.texts
+      .filter(
+        (t) =>
+          t.anchor.y >= 30 &&
+          t.anchor.y <= 45 &&
+          t.anchor.x >= 28 &&
+          title.includes(t.text),
+      )
+      .sort((a, b) => a.anchor.y - b.anchor.y);
+    expect(headingRows.length).toBeGreaterThanOrEqual(2);
+    expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
+    for (const row of headingRows)
+      expect(row.bbox.x + row.bbox.w).toBeLessThanOrEqual(fieldRight);
+  });
+
+  it("measures circuit headings with bold metrics so they never paint past fieldRight on A4", async () => {
+    const title =
+      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring Detail";
+    const marginMm = 14.0555;
+    const fieldRight = 210 - marginMm - 18;
+    const packet = await renderSchematicPacket(baseIr, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: { size: "a4", orientation: "portrait", marginMm },
+      views: [
+        {
+          format: "circuit-view-request/0.1",
+          title,
+          flow: "top-to-bottom",
+          groups: [
+            {
+              id: "jb1-permissive",
+              label: "JB1 permissive circuit",
+              functions: [
+                {
+                  device: { by: "designation", value: "JB1" },
+                  key: "terminal1",
+                },
+                {
+                  device: { by: "designation", value: "LS1" },
+                  key: "contact13",
+                },
+                {
+                  device: { by: "designation", value: "JB1" },
+                  key: "terminal2",
+                },
+              ],
+              conductors: ["W-FLD-001", "W-FLD-002"],
+            },
+          ],
+        },
+      ],
+    });
+    if (!packet.ok) throw Error(JSON.stringify(packet.error));
+    const g = await measureSheet(packet.value.sheets[0].svg);
+    expect(textInZoneGutter(g)).toEqual([]);
+    expect(textBounds(g)).toEqual([]);
+    const headingRows = g.texts
+      .filter(
+        (t) =>
+          t.anchor.y >= 34 &&
+          t.anchor.y <= 50 &&
+          t.anchor.x >= 32 &&
+          title.includes(t.text),
+      )
+      .sort((a, b) => a.anchor.y - b.anchor.y);
+    expect(headingRows.length).toBeGreaterThanOrEqual(2);
+    expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
+    for (const row of headingRows)
+      expect(row.bbox.x + row.bbox.w).toBeLessThanOrEqual(fieldRight);
   });
 });

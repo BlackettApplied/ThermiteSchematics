@@ -1,13 +1,16 @@
 import { circuitTextLines, type CircuitDrawing } from "../circuit.js";
 import { circuitPartHeight } from "./continuations.js";
-import { fieldTextWidth } from "./svg.js";
+import { fieldTextRightExtent } from "./svg.js";
+
+const boldFieldLineWidth = (line: string, size: number) =>
+  fieldTextRightExtent(line, size, true);
 
 export function circuitViewFootprint(
   title: string,
   width: number,
   fieldHeight: number,
 ) {
-  const headingLines = circuitTextLines(title, fieldTextWidth(width), 3.5),
+  const headingLines = circuitTextLines(title, width, 3.5, boldFieldLineWidth),
     headerHeight = headingLines.length * 4.5 + 3;
   return {
     headingLines,
@@ -26,12 +29,16 @@ export function circuitGroupLabel(group: CircuitDrawing) {
 }
 
 export function circuitGroupFootprint(group: CircuitDrawing, width: number) {
-  const inner = fieldTextWidth(width),
-    headings = circuitTextLines(circuitGroupLabel(group), inner, 2.7),
+  const headings = circuitTextLines(
+      circuitGroupLabel(group),
+      width,
+      2.7,
+      boldFieldLineWidth,
+    ),
     headHeight = headings.length * 3.5 + 1;
   return {
     headings,
     headHeight,
-    height: headHeight + group.height + circuitPartHeight(group, inner) + 3,
+    height: headHeight + group.height + circuitPartHeight(group, width) + 3,
   };
 }

@@ -7,7 +7,7 @@ import type { PaperPage, DrawingBounds } from "./types.js";
 import { reportCells, emitReportRow } from "./report-cells.js";
 import { reportNoteLines } from "./report-note-wrapping.js";
 import { reportDocumentContext } from "./document-report.js";
-import { fieldTextLeft, fieldTextWidth, text } from "./svg.js";
+import { fieldTextLeft, text } from "./svg.js";
 import { escapeXmlAttribute as attr } from "../svg/escape.js";
 import { required } from "../presentation/util.js";
 
@@ -22,9 +22,7 @@ export function inlineTablePlan(
   const headerHeight = measured.geometry(header, true).height;
   const rows = table.rows.map((r) => measured.split(r.cells, r.key, r.key));
   const heights = rows.map((cells) => measured.geometry(cells).height);
-  const notes = table.notes.flatMap((note) =>
-    reportNoteLines(note, fieldTextWidth(width)),
-  );
+  const notes = table.notes.flatMap((note) => reportNoteLines(note, width));
   return {
     table,
     measured,
@@ -101,6 +99,8 @@ export function inlineTableContent(
     y += height;
   }
   for (const [i, line] of plan.notes.entries())
-    content.push(text(fieldTextLeft(box.x), y + 4 + i * 3.5, line, 2.5));
+    content.push(
+      text(fieldTextLeft(box.x, line, 2.5), y + 4 + i * 3.5, line, 2.5),
+    );
   return { content: content.join(""), ...context.metadata(documentRows) };
 }

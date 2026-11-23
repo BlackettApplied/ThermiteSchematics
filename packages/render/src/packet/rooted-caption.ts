@@ -4,6 +4,7 @@ import {
   rootedSheetNoticeWidth,
   rootedSheetNoticeX,
 } from "../off-view/notice.js";
+import { fieldTextLeft } from "./svg.js";
 import type { NormalizedSchematicView } from "../types.js";
 import type { Draft, DrawingBounds, Link, PaperPage } from "./types.js";
 
@@ -60,7 +61,13 @@ export function continuedCaptionY(
     rootedSheetNoticeWidth(page, noticeX),
     2.7,
   ).map((l, i) =>
-    textInk(l.text, noticeX, page.marginMm + 19 + 4 * i, 2.7, l.bold),
+    textInk(
+      l.text,
+      fieldTextLeft(noticeX, l.text, 2.7, l.bold),
+      page.marginMm + 19 + 4 * i,
+      2.7,
+      l.bold,
+    ),
   );
   if (!notices.length) return preferred;
   const noticeBottom = Math.max(...notices.map((n) => n.y + n.h));
@@ -103,7 +110,13 @@ function captionInkConstraint(
     rootedSheetNoticeWidth(page, noticeX),
     2.7,
   ).map((l, i) =>
-    textInk(l.text, noticeX, page.marginMm + 19 + 4 * i, 2.7, l.bold),
+    textInk(
+      l.text,
+      fieldTextLeft(noticeX, l.text, 2.7, l.bold),
+      page.marginMm + 19 + 4 * i,
+      2.7,
+      l.bold,
+    ),
   );
   const captions = links.flatMap((l) => l.label?.rows.map((r) => r.ink) ?? []);
   if (

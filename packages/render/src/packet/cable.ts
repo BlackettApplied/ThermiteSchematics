@@ -27,7 +27,7 @@ import { normalizeSchematicView } from "../view-spec.js";
 import type { Draft, PaperPage, SheetReference } from "./types.js";
 import { failure } from "./errors.js";
 import { bounds } from "./page.js";
-import { fieldTextBounds, n, text, line } from "./svg.js";
+import { fieldTextLeft, fieldTextRightExtent, n, text, line } from "./svg.js";
 import { cableEndpointCards } from "./cable-annotations.js";
 import { offViewCardSvg } from "../off-view/svg.js";
 
@@ -66,11 +66,10 @@ export async function cableDrafts(
     })),
   );
   if (!preflight.ok) return preflight;
-  const textArea = fieldTextBounds(b),
-    left = textArea.x,
-    right = textArea.x + textArea.w,
-    jacketL = left + textArea.w * 0.35,
-    jacketR = right - textArea.w * 0.35;
+  const left = b.x,
+    right = b.x + b.w,
+    jacketL = left + b.w * 0.35,
+    jacketR = right - b.w * 0.35;
   const endWidth = jacketL - left - 8;
   const annotations = cableEndpointCards(
     ir,
@@ -91,26 +90,30 @@ export async function cableDrafts(
     first = 0;
   function header(blocks: (LegendLayout | undefined)[]) {
     refs = [];
+    const heading = `CABLE ${schedule.designation}`,
+      counts = `${schedule.counts.total} cores / ${schedule.counts.spare} spare / ${schedule.counts.unassigned} unassigned`;
     content = [
-      text(left, b.y + 4, `CABLE ${schedule.designation}`, 4, "start", 700),
-      text(left, b.y + 10, typeCaption, 2.6),
       text(
-        left,
-        b.y + 16,
-        `${schedule.counts.total} cores / ${schedule.counts.spare} spare / ${schedule.counts.unassigned} unassigned`,
-        2.6,
+        fieldTextLeft(left, heading, 4, true),
+        b.y + 4,
+        heading,
+        4,
+        "start",
+        700,
       ),
+      text(fieldTextLeft(left, typeCaption, 2.6), b.y + 10, typeCaption, 2.6),
+      text(fieldTextLeft(left, counts, 2.6), b.y + 16, counts, 2.6),
     ];
     const a = schedule.fromLocation ?? "END A",
       z = schedule.toLocation ?? "END B";
     if (
-      printableTextWidth(a, 3, true) > endWidth ||
+      fieldTextRightExtent(a, 3, true) > endWidth ||
       printableTextWidth(z, 3, true) > endWidth ||
-      printableTextWidth(typeCaption, 2.6) > textArea.w
+      fieldTextRightExtent(typeCaption, 2.6) > b.w
     )
       return false;
     content.push(
-      text(left, b.y + 25, a, 3, "start", 700),
+      text(fieldTextLeft(left, a, 3, true), b.y + 25, a, 3, "start", 700),
       text(right, b.y + 25, z, 3, "end", 700),
     );
     blocks.forEach((block, side) => {
@@ -132,22 +135,16 @@ export async function cableDrafts(
   }
   function finish(last: number) {
     const jacket = `<rect x="${n(jacketL)}" y="${n(b.y + 29)}" width="${n(jacketR - jacketL)}" height="${n(y - b.y - 24)}" rx="3" fill="none" stroke="#667085" stroke-width="0.45" stroke-dasharray="2 1"/>`;
+    const legend1 =
+      "Solid: assigned   Dashed: spare   X: unterminated   ?: unassigned";
+    const legend2 =
+      schedule.shield === true
+        ? "Shielded construction; shield terminations are not specified by this view."
+        : "Shield termination is not inferred from cable construction.";
     content.push(
       jacket,
-      text(
-        left,
-        y + 13,
-        "Solid: assigned   Dashed: spare   X: unterminated   ?: unassigned",
-        2.5,
-      ),
-      text(
-        left,
-        y + 18,
-        schedule.shield === true
-          ? "Shielded construction; shield terminations are not specified by this view."
-          : "Shield termination is not inferred from cable construction.",
-        2.5,
-      ),
+      text(fieldTextLeft(left, legend1, 2.5), y + 13, legend1, 2.5),
+      text(fieldTextLeft(left, legend2, 2.5), y + 18, legend2, 2.5),
     );
     drafts.push({
       view,

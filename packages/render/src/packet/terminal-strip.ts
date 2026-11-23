@@ -267,13 +267,25 @@ function stripContent(
   locate: Locate,
 ) {
   const b = plan.bounds;
-  const textX = fieldTextLeft(b.x);
+  const heading = `${title} — graphical strip`;
   return [
     `<g data-sheet-kind="terminal-strip">`,
-    text(textX, b.y + 3, `${title} — graphical strip`, 4, "start", 700),
+    text(
+      Math.max(b.x + 0.5, fieldTextLeft(b.x, heading, 4, true)),
+      b.y + 3,
+      heading,
+      4,
+      "start",
+      700,
+    ),
     ...(plan.pages[page] ?? []).map((part) => fragmentSvg(part, locate)),
     ...plan.notes.map((line, i) =>
-      text(textX, b.y + b.h - (plan.notes.length - 1 - i) * 3.5, line, 2.5),
+      text(
+        Math.max(b.x + 0.5, fieldTextLeft(b.x, line, 2.5)),
+        b.y + b.h - (plan.notes.length - 1 - i) * 3.5,
+        line,
+        2.5,
+      ),
     ),
     "</g>",
   ].join("\n");

@@ -1,4 +1,3 @@
-import { wrapText } from "../text-metrics.js";
 import {
   communicationPartRows,
   communicationRowLayout,
@@ -18,7 +17,15 @@ import type {
   CommunicationContinuationBlock,
   CircuitContinuationBlock,
 } from "./types.js";
-import { text } from "./svg.js";
+import {
+  fieldTextLeft,
+  fieldTextRightExtent,
+  text,
+  wrapFieldText,
+} from "./svg.js";
+
+const regularFieldLineWidth = (line: string, size: number) =>
+  fieldTextRightExtent(line, size, false);
 
 const communicationPartNotice =
   "Whole port links; repeated bodies describe the same device with other ports. P = view part, S = packet sheet.";
@@ -27,7 +34,7 @@ function communicationReferenceLines(
   targets: readonly NativePartTarget[],
   width: number,
 ): string[] {
-  return wrapText(
+  return wrapFieldText(
     `${label} -> ${targets.map(nativePartToken).join(", ")}`,
     width,
     2.5,
@@ -40,7 +47,7 @@ export function communicationPartLines(
 ): string[] {
   if (!drawing.pagination) return [];
   return [
-    ...wrapText(communicationPartNotice, width, 2.5),
+    ...wrapFieldText(communicationPartNotice, width, 2.5),
     ...communicationPartRows(drawing, selected, true).flatMap(
       (d) =>
         communicationRowLayout(
@@ -59,11 +66,13 @@ export function emitCommunicationContinuationBlock(
   block: CommunicationContinuationBlock,
 ): string {
   let y = block.y;
-  const out = wrapText(communicationPartNotice, block.width, 2.5).map((s) => {
-    const row = text(block.x, y, s, 2.5);
-    y += 3.5;
-    return row;
-  });
+  const out = wrapFieldText(communicationPartNotice, block.width, 2.5).map(
+    (s) => {
+      const row = text(fieldTextLeft(block.x, s, 2.5), y, s, 2.5);
+      y += 3.5;
+      return row;
+    },
+  );
   for (const row of block.rows) {
     out.push(
       `<g data-communication-continuation-device="${attr(row.deviceUid)}" data-communication-view="${block.view}" data-from-part="${block.part}" data-destination-parts="${attr(JSON.stringify(row.targets.map((t) => t.part)))}" data-destination-sheets="${attr(JSON.stringify(row.targets.map((t) => t.sheet)))}">`,
@@ -75,7 +84,7 @@ export function emitCommunicationContinuationBlock(
     );
     const layout = communicationRowLayout(row, block.width, summary);
     for (const [line, s] of summary.entries())
-      out.push(text(block.x, y + line * 3.5, s, 2.5));
+      out.push(text(fieldTextLeft(block.x, s, 2.5), y + line * 3.5, s, 2.5));
     for (const entry of layout.entries)
       out.push(
         `<g data-native-part-device="${attr(row.deviceUid)}" data-native-part-port="${attr(entry.key)}">${text(block.x + entry.x, y + entry.line * 3.5, entry.text, 2.5)}</g>`,
@@ -97,6 +106,8 @@ function circuitContinuationLines(
   return circuitTextLines(
     `${label} -> ${parts.map((part, i) => nativePartToken({ part, sheet: sheets[i] ?? 100, zone: zones[i] ?? "D6" })).join(", ")}`,
     width,
+    2.5,
+    regularFieldLineWidth,
   );
 }
 export function circuitPartHeight(
@@ -105,7 +116,8 @@ export function circuitPartHeight(
 ): number {
   if (!group.pagination) return 0;
   const lines =
-    circuitTextLines(circuitPartNotice, width).length +
+    circuitTextLines(circuitPartNotice, width, 2.5, regularFieldLineWidth)
+      .length +
     group.pagination.terminals.reduce(
       (count, t) =>
         count + circuitContinuationLines(t.label, t.parts, [], width).length,
@@ -119,8 +131,13 @@ export function emitCircuitContinuationBlock(
   let y = block.y;
   const out: string[] = [];
   const notice = () => {
-    for (const s of circuitTextLines(circuitPartNotice, block.width)) {
-      out.push(text(block.x, y, s, 2.5));
+    for (const s of circuitTextLines(
+      circuitPartNotice,
+      block.width,
+      2.5,
+      regularFieldLineWidth,
+    )) {
+      out.push(text(fieldTextLeft(block.x, s, 2.5), y, s, 2.5));
       y += 3.5;
     }
   };
@@ -138,7 +155,7 @@ export function emitCircuitContinuationBlock(
         required(t.zone, "Unresolved circuit destination zone"),
       ),
     )) {
-      out.push(text(block.x, y, s, 2.5));
+      out.push(text(fieldTextLeft(block.x, s, 2.5), y, s, 2.5));
       y += 3.5;
     }
     out.push("</g>");

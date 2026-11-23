@@ -1,6 +1,7 @@
 import type { buildCableSchedule } from "@thermite/query";
 import { cableUsagePlan } from "./cable-usage.js";
 import { labelRows, labelMetrics } from "./label-text.js";
+import { fieldTextRightExtent } from "./svg.js";
 import { failure } from "./errors.js";
 import {
   CABLE_ROW_PITCH,
@@ -9,17 +10,20 @@ import {
   CABLE_USAGE_BASELINE,
 } from "./cable-row-metrics.js";
 
+const endALabelWidth = (row: string) =>
+  fieldTextRightExtent(row, 2.7, false, true);
+
 type Core = ReturnType<typeof buildCableSchedule>["cores"][number];
 export function cableRowPlan(
   core: Core,
   cable: string,
   b: { left: number; right: number; jacketL: number; jacketR: number },
 ) {
-  const end = (e: Core["endpoints"][number], w: number) =>
+  const end = (e: Core["endpoints"][number], w: number, fieldLeft = false) =>
     e === null
       ? [core.status === "unassigned" ? "? UNASSIGNED" : "X UNTERMINATED"]
-      : labelRows(e.display, w, 2.7);
-  const a = end(core.endpoints[0], b.jacketL - b.left - 8),
+      : labelRows(e.display, w, 2.7, fieldLeft ? endALabelWidth : undefined);
+  const a = end(core.endpoints[0], b.jacketL - b.left - 8, true),
     z = end(core.endpoints[1], b.right - b.jacketR - 8);
   const centerRows = labelRows(
     `${core.id} / ${core.color}${core.size ? ` / ${core.size}` : ""}`,
@@ -33,6 +37,7 @@ export function cableRowPlan(
       width: b.jacketL - b.left - 8,
       size: 2.7,
       base: CABLE_ENDPOINT_BASELINE,
+      fieldLeft: true,
     },
     {
       rows: z,
@@ -89,13 +94,20 @@ function groupBottom(g: {
 }
 
 function rowConstraint(
-  groups: readonly { rows: readonly string[]; width: number; size: number }[],
+  groups: readonly {
+    rows: readonly string[];
+    width: number;
+    size: number;
+    fieldLeft?: boolean;
+  }[],
   cable: string,
   core: string,
 ) {
   for (const g of groups)
     for (const row of g.rows) {
-      const required = labelMetrics(row, g.size).width;
+      const required = g.fieldLeft
+        ? fieldTextRightExtent(row, g.size, false, true)
+        : labelMetrics(row, g.size).width;
       if (required > g.width + 0.001)
         return `Cable ${cable}.${core} label ${JSON.stringify(row)} needs ${required.toFixed(2)} mm; ${g.width.toFixed(2)} mm available, short by ${(required - g.width).toFixed(2)} mm. Use a larger sheet or landscape.`;
     }

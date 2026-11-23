@@ -21,10 +21,11 @@ export function documentReportTitle(table: DocumentationTable): string {
     : `${table.title} — ${label}`;
 }
 function documentTitleSvg(table: DocumentationTable, b: DrawingBounds) {
+  const title = documentReportTitle(table);
   return text(
-    fieldTextLeft(b.x),
+    fieldTextLeft(b.x, title, 4, true),
     b.y + 3,
-    documentReportTitle(table),
+    title,
     4,
     "start",
     700,

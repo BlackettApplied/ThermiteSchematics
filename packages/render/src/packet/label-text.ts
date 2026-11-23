@@ -21,6 +21,11 @@ export function labelMetrics(value: string, size = 2.5) {
 }
 
 /** No inserted hyphens, discarded spaces or split combining characters. */
-export function labelRows(value: string, width: number, size = 2.5): string[] {
-  return wrapIdentity(value, width, (text) => labelMetrics(text, size).width);
+export function labelRows(
+  value: string,
+  width: number,
+  size = 2.5,
+  measure = (text: string) => labelMetrics(text, size).width,
+): string[] {
+  return wrapIdentity(value, width, measure);
 }

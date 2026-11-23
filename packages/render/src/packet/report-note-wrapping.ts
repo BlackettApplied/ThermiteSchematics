@@ -1,13 +1,10 @@
-import {
-  describeCodePoint,
-  measureText,
-  textClusters,
-} from "../text-metrics.js";
+import { describeCodePoint, textClusters } from "../text-metrics.js";
+import { fieldTextMeasureWidth } from "./svg.js";
 
 /** Keep original code points, whitespace and explicit paragraph separators. */
 export function reportNoteLines(value: string, width: number) {
   const lines: string[] = [];
-  const fits = (text: string) => measureText(text, 2.5).width <= width;
+  const fits = (text: string) => fieldTextMeasureWidth(text, 2.5) <= width;
   let line = "";
   for (const token of value.match(
     /\r\n|[\n\r\u2028\u2029]|[^\S\n\r\u2028\u2029]+|\S+/gu,

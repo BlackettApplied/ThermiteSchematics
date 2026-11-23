@@ -175,7 +175,7 @@ export function wrapPrintableText(
   );
 }
 
-function wrapMeasuredText(
+export function wrapMeasuredText(
   value: string,
   maxWidth: number,
   size: number,
@@ -348,6 +348,76 @@ export function printableFitAttributes(
         textLength: boundedPrintableAdvance(text, size, capacity),
         lengthAdjust: "spacingAndGlyphs" as const,
       };
+}
+
+const MATH_FAUX_BOLD_PAD_EM = 0.03;
+
+function printableInkExtents(
+  value: string,
+  size: number,
+  bold: boolean,
+  literal: boolean,
+) {
+  const m = printableTextMetrics(value, size, bold, literal);
+  if (!bold) return { left: m.left, right: Math.max(m.advance, m.right) };
+  const text = literal
+    ? value
+    : value
+        .normalize("NFC")
+        .replace(/[\t\r\n ]+/gu, " ")
+        .trim();
+  const runs = printableRuns(text, boldFace);
+  if (!runs.some((run) => run.face === math))
+    return { left: m.left, right: Math.max(m.advance, m.right) };
+  let advance = 0,
+    left = m.left,
+    right = Math.max(m.advance, m.right);
+  const pad = size * MATH_FAUX_BOLD_PAD_EM;
+  for (const run of runs) {
+    const scale = size / run.face.unitsPerEm,
+      layout = run.face.layout(run.text);
+    const fauxBold = run.face === math ? pad : 0;
+    for (const [i, g] of layout.glyphs.entries()) {
+      const p = layout.positions[i];
+      if (!p) throw Error("Missing printable glyph position.");
+      const box = g.bbox;
+      if (Number.isFinite(box.minX) && box.maxX > box.minX) {
+        left = Math.min(
+          left,
+          advance + (p.xOffset + box.minX) * scale - fauxBold,
+        );
+        right = Math.max(
+          right,
+          advance + (p.xOffset + box.maxX) * scale + fauxBold,
+        );
+      }
+      advance += p.xAdvance * scale;
+    }
+  }
+  return { left, right };
+}
+
+/** Leftward ink overhang past x = 0 for left-anchored printable text (mm),
+ * computed deterministically from the bundled Noto Sans and Noto Sans Math
+ * glyph bearings (including a 0.03 em faux-bold allowance when bold text falls
+ * back to Noto Sans Math, which is embedded only at weight 400). */
+export function printableTextLeftOverhang(
+  value: string,
+  size = 10,
+  bold = false,
+  literal = false,
+): number {
+  return Math.max(0, -printableInkExtents(value, size, bold, literal).left);
+}
+
+/** Rightward ink/advance extent from x = 0 for left-anchored printable text (mm). */
+export function printableTextRightExtent(
+  value: string,
+  size = 10,
+  bold = false,
+  literal = false,
+): number {
+  return printableInkExtents(value, size, bold, literal).right;
 }
 
 /** Natural horizontal extent, including glyph bearings outside the advance. */

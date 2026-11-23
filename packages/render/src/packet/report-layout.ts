@@ -3,7 +3,6 @@ import type { DocumentationTable } from "@thermite/query";
 import type { PaperPage } from "./types.js";
 import { reportCells, wireColumnProbe } from "./report-cells.js";
 import { reportNoteLines } from "./report-note-wrapping.js";
-import { fieldTextWidth } from "./svg.js";
 import { denserAssemblyCells } from "./report-assembly-columns.js";
 import {
   reportPaginator,
@@ -114,7 +113,7 @@ export function reportPaginations(
   top = 0,
 ): WirePagination {
   const noteLines = table.notes.flatMap((note) =>
-    reportNoteLines(note, fieldTextWidth(width)),
+    reportNoteLines(note, width),
   ).length;
   return {
     measured: (measured, limit) =>
@@ -145,9 +144,7 @@ export function reportPagination(
   top = 0,
   pageLimit = Infinity,
 ): ReportPagination {
-  const notes = table.notes.flatMap((note) =>
-    reportNoteLines(note, fieldTextWidth(width)),
-  );
+  const notes = table.notes.flatMap((note) => reportNoteLines(note, width));
   const header = measured.geometry(
     measured.split(table.columns, "header"),
     true,

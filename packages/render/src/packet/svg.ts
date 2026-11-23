@@ -1,27 +1,82 @@
 import { escapeXmlText as xml } from "../svg/escape.js";
+import {
+  measureText,
+  printableTextLeftOverhang,
+  printableTextRightExtent,
+  wrapMeasuredText,
+  type TextFamily,
+} from "../text-metrics.js";
 
 export const n = (value: number): string => String(Number(value.toFixed(3)));
 
-/** Horizontal inset inside the drawing field's left edge for left-anchored
- * report/document text so negative glyph left side bearings (e.g. Noto Sans J:
- * -0.195 mm at 2.5 mm, -0.211 mm at 2.7 mm, -0.312 mm at 4.0 mm) never paint
- * ink into the zone-letter gutter (DQ-02). */
-export const FIELD_TEXT_LEFT_INSET_MM = 0.5;
+/** Safety margin added ONLY when left-anchored text at the drawing field's
+ * left edge has a negative left side bearing (overhang > 0): 0.17 mm covers
+ * the calibrated two-pixel 300 dpi Chromium/PDF.js ink accuracy bound
+ * (INK_ACCURACY_MM), plus 0.01 mm for DQ-02's coordinate/serialization
+ * epsilon. Text with zero overhang receives zero shift so its start x and
+ * available width remain unchanged. */
+export const FIELD_TEXT_LEFT_SAFETY_MM = 0.18;
 
-export const fieldTextLeft = (x: number): number =>
-  x + FIELD_TEXT_LEFT_INSET_MM;
+export function fieldTextLeftShift(
+  value: string,
+  size: number,
+  bold = false,
+  literal = false,
+): number {
+  const overhang = printableTextLeftOverhang(value, size, bold, literal);
+  return overhang > 0
+    ? Math.ceil((overhang + FIELD_TEXT_LEFT_SAFETY_MM) * 1000) / 1000
+    : 0;
+}
 
-export const fieldTextWidth = (width: number): number =>
-  width - FIELD_TEXT_LEFT_INSET_MM;
+export function fieldTextLeft(
+  x: number,
+  value: string,
+  size: number,
+  bold = false,
+  literal = false,
+): number {
+  return x + fieldTextLeftShift(value, size, bold, literal);
+}
 
-export function fieldTextBounds<T extends { x: number; w: number }>(
-  area: T,
-): T {
-  return {
-    ...area,
-    x: fieldTextLeft(area.x),
-    w: fieldTextWidth(area.w),
-  };
+/** Total horizontal extent from field.x for left-anchored printable text,
+ * including any ink-aware left shift (zero when the text has no overhang). */
+export function fieldTextRightExtent(
+  value: string,
+  size: number,
+  bold = false,
+  literal = false,
+): number {
+  return (
+    fieldTextLeftShift(value, size, bold, literal) +
+    printableTextRightExtent(value, size, bold, literal)
+  );
+}
+
+/** Envelope width from field.x for multi-face wrapped text, adding only the
+ * ink-aware left shift for lines whose first glyph overhangs field.x. */
+export function fieldTextMeasureWidth(
+  value: string,
+  size: number,
+  bold = false,
+  family: TextFamily = "sans-serif",
+): number {
+  return (
+    fieldTextLeftShift(value, size, bold) +
+    measureText(value, size, family).width
+  );
+}
+
+export function wrapFieldText(
+  value: string,
+  maxWidth: number,
+  size: number,
+  bold = false,
+  family: TextFamily = "sans-serif",
+): string[] {
+  return wrapMeasuredText(value, maxWidth, size, (line) =>
+    fieldTextMeasureWidth(line, size, bold, family),
+  );
 }
 
 export function text(

@@ -1,5 +1,5 @@
 import type { NormalizedSchematicView } from "../types.js";
-import { fieldTextLeft, fieldTextWidth } from "../packet/svg.js";
+import { fieldTextLeft, wrapFieldText } from "../packet/svg.js";
 import { wrapText } from "../text-metrics.js";
 import { SvgWriter } from "../svg/writer.js";
 
@@ -25,7 +25,10 @@ export function rootedNoticeLines(
     view.format === "schematic-view/0.2" && view.intent === "conductors";
   const heading = `${cable ? "SELECTED CABLE VIEW" : "SELECTED PATH VIEW"} — ${rootedViewTitle(view)}.`;
   return [
-    ...wrapText(heading, width, size).map((text) => ({ text, bold: true })),
+    ...wrapFieldText(heading, width, size, true).map((text) => ({
+      text,
+      bold: true,
+    })),
     ...wrapText(
       "Other authored connections may be outside this view. See circuit views or packet coverage.",
       width,
@@ -66,7 +69,7 @@ export function rootedNoticeSvg(
       2,
       "text",
       {
-        x,
+        x: fieldTextLeft(x, line.text, size, line.bold),
         y: y + index * pitch,
         "font-family": "Thermite Sans, Thermite Math, sans-serif",
         "font-size": size,
@@ -93,14 +96,14 @@ export function rootedSheetNoticeX(
   page: import("../packet/types.js").PaperPage,
   leftX = page.marginMm + 18,
 ) {
-  return fieldTextLeft(Math.max(page.marginMm + 18, leftX));
+  return Math.max(page.marginMm + 18, leftX);
 }
 
 export function rootedSheetNoticeWidth(
   page: import("../packet/types.js").PaperPage,
-  leftX = rootedSheetNoticeX(page),
+  leftX = page.marginMm + 18,
 ) {
-  const defaultWidth = fieldTextWidth(page.widthMm - 2 * page.marginMm - 36);
+  const defaultWidth = page.widthMm - 2 * page.marginMm - 36;
   const available = page.widthMm - page.marginMm - 4 - leftX;
   return Math.max(40, Math.min(defaultWidth, available));
 }

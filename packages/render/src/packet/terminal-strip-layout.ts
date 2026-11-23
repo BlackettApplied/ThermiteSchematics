@@ -1,7 +1,6 @@
 import type { TerminalId } from "@thermite/compiler";
 import { measureText } from "../text-metrics.js";
 import { wrapReportCell } from "./report-wrapping.js";
-import { fieldTextBounds } from "./svg.js";
 import { stripTerminalKey, type StripFacts } from "./terminal-strip-facts.js";
 import type { DrawingBounds } from "./types.js";
 
@@ -272,13 +271,14 @@ function packModels(
   return pages;
 }
 export function paginateStrip(facts: StripFacts, b: DrawingBounds): StripPlan {
-  const textArea = fieldTextBounds(b);
   const notes = stripLines(
     "Schematic projection; hardware unspecified; dimensions unspecified. Location groups do not assign installation sides. Tn/Rn: inventory row; Bn: jumper bridge.",
-    textArea.w,
+    b.w - 0.5,
   );
   const area = {
-    ...textArea,
+    ...b,
+    x: b.x + 0.5,
+    w: b.w - 0.5,
     y: b.y + 9,
     h: b.h - 13 - notes.length * 3.5,
   };

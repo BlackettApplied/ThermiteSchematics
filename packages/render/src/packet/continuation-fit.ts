@@ -22,6 +22,7 @@ import {
   rootedSheetView,
 } from "../off-view/notice.js";
 import { printableTextMetrics } from "../text-metrics.js";
+import { fieldTextLeft } from "./svg.js";
 import type { InkBox } from "./rooted-ink.js";
 
 export const LEFT_CONTINUATION_RULE_CLEARANCE_MM = 1.5;
@@ -55,7 +56,15 @@ function fixedInk(d: Draft, page: PaperPage, native: boolean): InkBox[] {
     const noticeX = rootedSheetNoticeX(page, b.x);
     rootedNoticeLines(v, rootedSheetNoticeWidth(page, noticeX), 2.7).forEach(
       (l, i) =>
-        result.push(textInk(l.text, noticeX, m + 19 + 4 * i, 2.7, l.bold)),
+        result.push(
+          textInk(
+            l.text,
+            fieldTextLeft(noticeX, l.text, 2.7, l.bold),
+            m + 19 + 4 * i,
+            2.7,
+            l.bold,
+          ),
+        ),
     );
   }
   if (hasCompactFrame(page)) return result;

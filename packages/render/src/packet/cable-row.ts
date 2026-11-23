@@ -1,4 +1,4 @@
-import { text } from "./svg.js";
+import { fieldTextLeft, text } from "./svg.js";
 import {
   CABLE_USAGE_EM,
   CABLE_USAGE_PITCH,
@@ -29,7 +29,7 @@ export function cableRowLabels(
   a.forEach((row, index) =>
     result.push(
       text(
-        left,
+        fieldTextLeft(left, row, 2.7, false, true),
         y +
           index * CABLE_ROW_PITCH +
           CABLE_ENDPOINT_BASELINE -

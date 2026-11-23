@@ -6,7 +6,6 @@ import {
 import { deviceTagFitDetails } from "./device-tag-fit.js";
 import { escapeXmlAttribute as attr } from "../svg/escape.js";
 import { CircuitRenderError } from "../render-error-context.js";
-import { wrapText } from "../text-metrics.js";
 import { prepareWiringDrawing, type WiringViewRequest } from "../wiring.js";
 import { circuitTextLines } from "../circuit.js";
 import {
@@ -35,7 +34,14 @@ import type { Draft, PaperPage } from "./types.js";
 import { failure } from "./errors.js";
 import { topologySelectionContext } from "./selection-context.js";
 import { bounds, zone } from "./page.js";
-import { fieldTextBounds, n, text, requestNoteText } from "./svg.js";
+import {
+  fieldTextLeft,
+  fieldTextRightExtent,
+  n,
+  text,
+  requestNoteText,
+  wrapFieldText,
+} from "./svg.js";
 import {
   communicationPartBlock,
   communicationPortSelection,
@@ -63,7 +69,7 @@ function topologyNoteLines(
   return drawing.note.split("\n").flatMap((line) => {
     const authored = offset >= authoredStart;
     offset += line.length + 1;
-    const split = (value: string) => wrapText(value, width, 2.5);
+    const split = (value: string) => wrapFieldText(value, width, 2.5);
     const replacement =
       !authored && drawing.documentNeeds?.length
         ? line
@@ -97,21 +103,32 @@ function topologyNoteSvg(
       : `<text data-document-note-replacement="${attr(v.replacement)}" `,
   );
 }
+function topologyHeadingSvg(lines: readonly string[], x: number, y: number) {
+  return lines
+    .map((line, i) =>
+      text(
+        fieldTextLeft(x, line, 4, true),
+        y + 3 + i * 4.8,
+        line,
+        4,
+        "start",
+        700,
+      ),
+    )
+    .join("");
+}
 function topologyTextLayout(
   drawing: NotedDrawing,
   b: ReturnType<typeof bounds>,
-  assembly: boolean,
   request: { format: string; notes?: readonly string[] },
   ports: ReturnType<ReturnType<typeof communicationPortSelection>>,
 ) {
-  const textArea = fieldTextBounds(b);
-  const headingLines = assembly
-    ? circuitTextLines(drawing.title, textArea.w, 4)
-    : [drawing.title];
-  const partLines = communicationPartLines(drawing, textArea.w, ports);
-  const noteLines = topologyNoteLines(drawing, textArea.w, request);
+  const headingLines = circuitTextLines(drawing.title, b.w, 4, (line, size) =>
+    fieldTextRightExtent(line, size, true),
+  );
+  const partLines = communicationPartLines(drawing, b.w, ports);
+  const noteLines = topologyNoteLines(drawing, b.w, request);
   return {
-    textArea,
     headingLines,
     headingHeight: 9 + (headingLines.length - 1) * 4.8,
     partLines,
@@ -160,13 +177,7 @@ export async function topologyDrafts(
       const capacity = headingCapacity(title, presentation);
       if (capacity) return capacity;
       const b = bounds(title, page);
-      const t = topologyTextLayout(
-        drawing,
-        b,
-        assembly,
-        request,
-        selectedPorts(drawing),
-      );
+      const t = topologyTextLayout(drawing, b, request, selectedPorts(drawing));
       const { scale, reserveNotes } = topologyScale(
         drawing,
         b,
@@ -210,7 +221,7 @@ export async function topologyDrafts(
         .map((v, i) =>
           topologyNoteSvg(
             v,
-            t.textArea.x,
+            fieldTextLeft(b.x, v.text, 2.5),
             b.y +
               height -
               (t.partLines.length + t.noteLines.length - 1 - i) * 3.5,
@@ -241,7 +252,7 @@ export async function topologyDrafts(
             ? {
                 communicationBlock: communicationPartBlock(
                   drawing,
-                  t.textArea,
+                  b,
                   height,
                   t.partLines.length,
                   selectedPorts(drawing),
@@ -268,11 +279,7 @@ export async function topologyDrafts(
             ? [drawing.topologyCoverage]
             : [],
           content:
-            t.headingLines
-              .map((line, i) =>
-                text(t.textArea.x, b.y + 3 + i * 4.8, line, 4, "start", 700),
-              )
-              .join("") +
+            topologyHeadingSvg(t.headingLines, b.x, b.y) +
             `<g transform="translate(${n(x)} ${n(y)}) scale(${n(scale)})">${drawing.content}</g>` +
             (drawing.engineNotes
               ? `<g data-engine-notes="true">${note}</g>`
