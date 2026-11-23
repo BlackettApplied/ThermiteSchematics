@@ -631,4 +631,116 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
       fieldRight,
     );
   });
+
+  function make48TerminalStripIr(designation) {
+    const ir = structuredClone(baseIr);
+    const dev = ir.devices.find((d) => d.designation === "JB1");
+    dev.designation = designation;
+    const type = ir.deviceTypes.find((t) => t.id === dev.typeId);
+    const sample = ir.terminals.find((t) => t.id.deviceUid === dev.uid);
+    for (let n = 1; n <= 48; n++) {
+      const key = `T${n}`;
+      if (type.terminals.some((t) => t.key === key)) continue;
+      ir.terminals.push({ ...sample, id: { ...sample.id, terminalKey: key } });
+      type.terminals.push({ ...type.terminals[0], key });
+    }
+    return ir;
+  }
+
+  async function assertWrappedStripSheet(
+    s,
+    {
+      designation,
+      heading,
+      marginMm,
+      fieldLeft,
+      fieldRight,
+      nominalLeft,
+      columnWidth,
+    },
+  ) {
+    const g = await measureSheet(s.svg);
+    expect(textInZoneGutter(g), `sheet ${s.number}`).toEqual([]);
+    expect(
+      textBounds(g).filter((f) => f.kind !== "text-text-overlap"),
+      `sheet ${s.number}`,
+    ).toEqual([]);
+    const headings = g.texts.filter(
+      (t) =>
+        t.anchor.y > marginMm + 26 &&
+        t.anchor.y < marginMm + 40 &&
+        heading.includes(t.text),
+    );
+    for (const h of headings) {
+      expect(h.bbox.x).toBeGreaterThanOrEqual(fieldLeft);
+      expect(h.bbox.x + h.bbox.w).toBeLessThanOrEqual(fieldRight);
+    }
+    const expected = [
+      `${designation} — order unspecified;`,
+      "declaration listing",
+    ];
+    const col = (pred) =>
+      headings.filter(pred).sort((a, b) => a.anchor.y - b.anchor.y);
+    const leftCol = col((t) => t.anchor.x < nominalLeft + columnWidth);
+    expect(leftCol.map((t) => t.text)).toEqual(expected);
+    for (const h of leftCol)
+      expect(h.bbox.x + h.bbox.w).toBeLessThanOrEqual(
+        nominalLeft + columnWidth,
+      );
+    if (s.number <= 12)
+      expect(
+        col((t) => t.anchor.x >= nominalLeft + columnWidth).map((t) => t.text),
+      ).toEqual(expected);
+  }
+
+  it("wraps 𝒿B1WWWWWW🌐🌐🌐 strip headings inside both columns using the measureText fallback budget", async () => {
+    const designation = "𝒿B1WWWWWW🌐🌐🌐";
+    const heading = `${designation} — order unspecified; declaration listing`;
+    const marginMm = 12.284;
+    const fieldLeft = marginMm + 18;
+    const fieldRight = 215.9 - marginMm - 18;
+    const nominalLeft = fieldLeft + 0.5;
+    const columnWidth = (fieldRight - nominalLeft - 8) / 2;
+    const packet = await renderSchematicPacket(
+      make48TerminalStripIr(designation),
+      {
+        format: "schematic-packet-request/0.1",
+        index: false,
+        page: { size: "letter", orientation: "portrait", marginMm },
+        views: [
+          {
+            format: "documentation-view-request/0.1",
+            kind: "terminals",
+            filter: { devices: [designation] },
+          },
+        ],
+      },
+    );
+    expect(packet.ok, JSON.stringify(packet.ok ? null : packet.error)).toBe(
+      true,
+    );
+    if (!packet.ok) return;
+    expect(packet.value.sheets.length).toBe(13);
+    const stripSheets = packet.value.sheets.filter(
+      (s) => s.view.kind === "terminal-strip",
+    );
+    expect(stripSheets.length).toBe(3);
+    expect(
+      stripSheets.reduce(
+        (sum, s) =>
+          sum + [...s.svg.matchAll(/data-strip-continuation="/g)].length,
+        0,
+      ),
+    ).toBe(8);
+    const ctx = {
+      designation,
+      heading,
+      marginMm,
+      fieldLeft,
+      fieldRight,
+      nominalLeft,
+      columnWidth,
+    };
+    for (const s of stripSheets) await assertWrappedStripSheet(s, ctx);
+  });
 });

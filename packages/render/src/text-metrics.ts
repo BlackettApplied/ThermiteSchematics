@@ -366,7 +366,7 @@ function printableInkExtents(
   const text = normalizePrintableText(value, literal);
   const primary = bold ? boldFace : regular;
   const runs = printableRuns(text, primary);
-  const hasFallback = runs.some((run) => run.fallback);
+  let hasFallback = runs.some((run) => run.fallback);
   const hasBoldMath = bold && runs.some((run) => run.face === math);
   if (!hasFallback && !hasBoldMath) return { left: m.left, right: m.right };
   let advance = 0,
@@ -382,6 +382,7 @@ function printableInkExtents(
       if (!p) throw Error("Missing printable glyph position.");
       const step = p.xAdvance * scale;
       if (run.fallback || g.id === 0) {
+        hasFallback = true;
         left = Math.min(left, advance);
         right = Math.max(right, advance + step);
       } else {
@@ -405,7 +406,12 @@ function printableInkExtents(
   return {
     left: hasFallback ? Math.min(0, resolvedLeft) : resolvedLeft,
     right: hasFallback
-      ? Math.max(m.advance, m.right, resolvedRight)
+      ? Math.max(
+          m.advance,
+          m.right,
+          resolvedRight,
+          measureText(value, size).width,
+        )
       : resolvedRight,
   };
 }
@@ -426,7 +432,8 @@ export function printableTextLeftOverhang(
 
 /** Rightward extent from x = 0 for left-anchored printable text (mm): uses
  * painted ink only when every glyph is covered by the bundled tables, and
- * falls back to at least the conservative advance-based extent otherwise. */
+ * falls back to at least measureText(value, size).width (the documented
+ * multi-face fallback budget) otherwise. */
 export function printableTextRightExtent(
   value: string,
   size = 10,

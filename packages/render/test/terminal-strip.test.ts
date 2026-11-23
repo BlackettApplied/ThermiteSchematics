@@ -4,7 +4,9 @@ import { buildDocumentation } from "@thermite/query";
 import { compileProject } from "@thermite/compiler";
 import { renderSchematicPacket } from "../src/sheets.js";
 import { stripHeadingLines } from "../src/packet/terminal-strip-layout.js";
+import { fieldTextLeftShift, fieldTextRightExtent } from "../src/packet/svg.js";
 import {
+  measureText,
   printableTextLeftOverhang,
   printableTextMetrics,
   printableTextRightExtent,
@@ -307,4 +309,230 @@ it("uses painted ink only for bundled glyphs and reduces strip heading wrap widt
       fieldLeft,
     ),
   ).toEqual([heading]);
+
+  // Fallback-face clusters keep the measureText budget in strip headings so
+  // both columns wrap cleanly inside the 73.416 mm column width.
+  const fallbackHeading =
+    "𝒿B1WWWWWW🌐🌐🌐 — order unspecified; declaration listing";
+  const colWidth = 73.416;
+  expect(stripHeadingLines(fallbackHeading, colWidth, 30.784, 30.284)).toEqual([
+    "𝒿B1WWWWWW🌐🌐🌐 — order unspecified;",
+    "declaration listing",
+  ]);
+  expect(stripHeadingLines(fallbackHeading, colWidth, 112.2, 30.284)).toEqual([
+    "𝒿B1WWWWWW🌐🌐🌐 — order unspecified;",
+    "declaration listing",
+  ]);
+});
+
+const bundledRound4Probes: readonly {
+  value: string;
+  size: number;
+  bold: boolean;
+  literal?: boolean;
+  leftOverhang: number;
+  rightExtent: number;
+  shift: number;
+  fieldRight: number;
+}[] = [
+  {
+    value: "𝒿 Field wiring",
+    size: 4,
+    bold: true,
+    leftOverhang: 1.2240000000000002,
+    rightExtent: 25.435999999999996,
+    shift: 1.405,
+    fieldRight: 26.840999999999998,
+  },
+  {
+    value: "∫ Field wiring",
+    size: 4,
+    bold: true,
+    leftOverhang: 0.09999999999999999,
+    rightExtent: 25.687999999999995,
+    shift: 0.28,
+    fieldRight: 25.967999999999996,
+  },
+  {
+    value: "JB1.X1.1",
+    size: 2.7,
+    bold: false,
+    literal: true,
+    leftOverhang: 0.2106,
+    rightExtent: 9.568800000000001,
+    shift: 0.391,
+    fieldRight: 9.959800000000001,
+  },
+  {
+    value: "JB1.X1.1 -> P4/S15.B1",
+    size: 2.5,
+    bold: false,
+    leftOverhang: 0.195,
+    rightExtent: 24.224999999999998,
+    shift: 0.375,
+    fieldRight: 24.599999999999998,
+  },
+  {
+    value: "MAIN PANEL FIELD WIRING",
+    size: 3,
+    bold: true,
+    leftOverhang: 0,
+    rightExtent: 40.608000000000004,
+    shift: 0,
+    fieldRight: 40.608000000000004,
+  },
+  {
+    value:
+      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring",
+    size: 4,
+    bold: true,
+    leftOverhang: 0,
+    rightExtent: 153.66,
+    shift: 0,
+    fieldRight: 153.66,
+  },
+  {
+    value:
+      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring Detail",
+    size: 3.5,
+    bold: true,
+    leftOverhang: 0,
+    rightExtent: 145.78899999999993,
+    shift: 0,
+    fieldRight: 145.78899999999993,
+  },
+  {
+    value:
+      "Field Terminal Connection Schedule for the Main Panel and Junction Box 1 / Cabinet Local and Remote Field Panel",
+    size: 4,
+    bold: true,
+    leftOverhang: 0,
+    rightExtent: 225.66399999999993,
+    shift: 0,
+    fieldRight: 225.66399999999993,
+  },
+  {
+    value:
+      "Field Terminal Connection Schedule for the Main Panel and Junction Box 1 / Cabinet Local and Remote Field Box",
+    size: 4,
+    bold: true,
+    leftOverhang: 0,
+    rightExtent: 222.29199999999992,
+    shift: 0,
+    fieldRight: 222.29199999999992,
+  },
+  {
+    value:
+      "Field cable control wiring, junction box identification, and terminal identification label for the demonstration panel and remote cabinet",
+    size: 2.6,
+    bold: false,
+    leftOverhang: 0,
+    rightExtent: 163.85719999999992,
+    shift: 0,
+    fieldRight: 163.85719999999992,
+  },
+  {
+    value: "𝒿B1 — order unspecified; declaration listing",
+    size: 2.5,
+    bold: true,
+    leftOverhang: 0.765,
+    rightExtent: 53.629999999999995,
+    shift: 0.946,
+    fieldRight: 54.57599999999999,
+  },
+  {
+    value: "𝑗B1 — order unspecified; declaration listing",
+    size: 2.5,
+    bold: true,
+    leftOverhang: 0.435,
+    rightExtent: 53.467499999999994,
+    shift: 0.615,
+    fieldRight: 54.082499999999996,
+  },
+  {
+    value: "𝒿B1 test",
+    size: 2.5,
+    bold: false,
+    leftOverhang: 0.6900000000000001,
+    rightExtent: 8.8725,
+    shift: 0.871,
+    fieldRight: 9.743500000000001,
+  },
+  {
+    value: "𝒿B1 test",
+    size: 2.5,
+    bold: true,
+    leftOverhang: 0.765,
+    rightExtent: 9.38,
+    shift: 0.946,
+    fieldRight: 10.326,
+  },
+  {
+    value: "JB1 port Ethernet uplink to remote panel A → 100.D6",
+    size: 2.5,
+    bold: false,
+    leftOverhang: 0.195,
+    rightExtent: 61.20250000000001,
+    shift: 0.375,
+    fieldRight: 61.57750000000001,
+  },
+];
+
+it("keeps exact round-4 extents for bundled-only probe strings (#551)", () => {
+  for (const probe of bundledRound4Probes) {
+    const literal = probe.literal ?? false;
+    expect(
+      printableTextLeftOverhang(probe.value, probe.size, probe.bold, literal),
+      probe.value,
+    ).toBe(probe.leftOverhang);
+    expect(
+      printableTextRightExtent(probe.value, probe.size, probe.bold, literal),
+      probe.value,
+    ).toBe(probe.rightExtent);
+    expect(
+      fieldTextLeftShift(probe.value, probe.size, probe.bold, literal),
+      probe.value,
+    ).toBe(probe.shift);
+    expect(
+      fieldTextRightExtent(probe.value, probe.size, probe.bold, literal),
+      probe.value,
+    ).toBe(probe.fieldRight);
+  }
+});
+
+it("keeps at least measureText width for every mixed string with fallback clusters (#551)", () => {
+  const mixedStrings = [
+    "🌐 test",
+    "🌐 Field wiring",
+    "漢 Terminal",
+    "Field test 🌐",
+    "TB1 — order unspecified 🌐",
+    "Field cable 🌐 control wiring",
+    "👨‍👩‍👧‍👦 family",
+    "A 👩\u200d🔧 B",
+    "❤️ heart",
+    "⚠\ufe0f warn",
+    "1\ufe0f\u20e3 keycap",
+    "🇺🇸 flag",
+    "👋🏽 wave",
+    "𝒿B1 test 🌐",
+    "𝒿B1 🌐 test",
+    "𝒿B1WWWWWW🌐🌐🌐 — order unspecified; declaration listing",
+    "𝒿 中文 test",
+    "𝒿 👩\u200d👩\u200d👧\u200d👧 ⚠\ufe0f panel",
+  ];
+  for (const value of mixedStrings)
+    for (const size of [2.5, 3.5])
+      for (const bold of [false, true]) {
+        const budget = measureText(value, size).width;
+        const shift = fieldTextLeftShift(value, size, bold);
+        expect(
+          printableTextRightExtent(value, size, bold),
+          `${value} @ ${size} ${bold ? "bold" : "regular"}`,
+        ).toBeGreaterThanOrEqual(budget);
+        expect(
+          fieldTextRightExtent(value, size, bold),
+          `${value} @ ${size} ${bold ? "bold" : "regular"}`,
+        ).toBeGreaterThanOrEqual(shift + budget);
+      }
 });

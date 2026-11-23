@@ -1,4 +1,7 @@
-import { printableTextMetrics } from "../text-metrics.js";
+import {
+  printableTextMetrics,
+  printableTextRightExtent,
+} from "../text-metrics.js";
 import { fieldTextLeftShift } from "./svg.js";
 import { required } from "../presentation/util.js";
 import type { CommunicationDrawing } from "../communication.js";
@@ -44,7 +47,7 @@ export function communicationRowLayout(
     entries: { key: string; text: string; x: number; line: number }[] = [];
   const metrics = (s: string) => {
     const m = printableTextMetrics(s, 2.5);
-    const right = Math.max(m.advance, m.right);
+    const right = Math.max(m.advance, printableTextRightExtent(s, 2.5));
     return { right, width: right - Math.min(0, m.left) };
   };
   let line = Math.max(0, lines.length - 1),
