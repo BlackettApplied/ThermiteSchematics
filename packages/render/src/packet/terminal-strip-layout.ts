@@ -1,13 +1,36 @@
 import type { TerminalId } from "@thermite/compiler";
 import { measureText } from "../text-metrics.js";
 import { wrapReportCell } from "./report-wrapping.js";
+import { fieldTextLeft, fieldTextLeftShift } from "./svg.js";
 import { stripTerminalKey, type StripFacts } from "./terminal-strip-facts.js";
 import type { DrawingBounds } from "./types.js";
+
+const STRIP_AREA_INSET_MM = 0.5;
 
 export type StripGroup = StripFacts["groups"][number];
 export type StripTerminal = StripGroup["terminals"][number];
 export const stripLines = (value: string, width: number) =>
   wrapReportCell(value, width, 2.5, [], []);
+export function stripFieldTextX(
+  x: number,
+  fieldLeft: number,
+  line: string,
+  size: number,
+  bold = false,
+): number {
+  return Math.max(x, fieldTextLeft(fieldLeft, line, size, bold));
+}
+export const stripFieldLines = (value: string, width: number, bold = false) =>
+  wrapReportCell(
+    value,
+    width,
+    2.5,
+    [],
+    [],
+    (line) =>
+      measureText(line, 2.5).width +
+      Math.max(0, fieldTextLeftShift(line, 2.5, bold) - STRIP_AREA_INSET_MM),
+  );
 export interface StripLabel {
   identity: string;
   label: string;
@@ -122,9 +145,10 @@ function measuredModel(
   const gutter = Math.min(bridges.length, bridgeCapacity) * laneStep + 4,
     labelW = (width - terminalW - gutter - 20) / 2;
   if (labelW < 12) throw Error("Strip labels do not fit this column width.");
-  const heading = stripLines(
+  const heading = stripFieldLines(
     `${group.device.designation} — ${group.ordered ? "authored order" : "order unspecified; declaration listing"}`,
     width,
+    true,
   );
   const sideHeadings = [
     stripLines("Same location", labelW),
@@ -139,9 +163,10 @@ function measuredModel(
       1,
       ...group.terminals.map(
         (t) =>
-          stripLines(
+          stripFieldLines(
             `${group.device.designation} continued from sheet 888.D6 at terminal ${t.id.terminalKey}`,
             width,
+            false,
           ).length,
       ),
     ) *

@@ -18,13 +18,15 @@ import {
 import {
   fragmentAnchors,
   paginateStrip,
+  stripFieldLines,
+  stripFieldTextX,
   stripLines,
   type StripFragment,
   type StripLabel,
   type StripPlan,
   type StripRow,
 } from "./terminal-strip-layout.js";
-import { fieldTextLeft, n, text } from "./svg.js";
+import { n, text } from "./svg.js";
 import { bounds, zone } from "./page.js";
 import type { DrawingBounds, Draft, PaperPage } from "./types.js";
 
@@ -195,6 +197,7 @@ function bridgeSvg(
 }
 function orderMarker(
   part: StripFragment,
+  fieldLeft: number,
   direction: "from" | "on",
   y: number,
   locate: Locate,
@@ -206,17 +209,31 @@ function orderMarker(
   const value = `${part.model.group.device.designation} continued ${direction} sheet ${destination(locate(target.key))} at terminal ${target.id.terminalKey}`;
   return [
     `<g data-strip-continuation="${direction}" data-strip-at="${attr(required(at, "Missing strip boundary").key)}" data-strip-target="${attr(target.key)}" data-device-uid="${attr(part.model.group.device.uid)}">`,
-    ...stripLines(value, part.model.width).map((line, i) =>
-      text(part.x, y + 3 + i * 3.5, line, 2.5),
+    ...stripFieldLines(value, part.model.width, false).map((line, i) =>
+      text(
+        stripFieldTextX(part.x, fieldLeft, line, 2.5),
+        y + 3 + i * 3.5,
+        line,
+        2.5,
+      ),
     ),
     "</g>",
   ];
 }
-function fragmentSvg(part: StripFragment, locate: Locate) {
+function fragmentSvg(part: StripFragment, fieldLeft: number, locate: Locate) {
   const m = part.model,
     out = [`<g data-terminal-strip="${attr(m.group.device.uid)}">`];
   m.heading.forEach((line, i) =>
-    out.push(text(part.x, part.y + 3 + i * 3.5, line, 2.5, "start", 700)),
+    out.push(
+      text(
+        stripFieldTextX(part.x, fieldLeft, line, 2.5, true),
+        part.y + 3 + i * 3.5,
+        line,
+        2.5,
+        "start",
+        700,
+      ),
+    ),
   );
   const headingsY = part.y + m.heading.length * 3.5 + 4;
   m.sideHeadings.forEach((lines, side) =>
@@ -237,7 +254,7 @@ function fragmentSvg(part: StripFragment, locate: Locate) {
   const rightStubSegments: StripSegment[] = [];
   const terminalRects: StripRect[] = [];
   let y = part.y + m.headerH;
-  out.push(...orderMarker(part, "from", y, locate));
+  out.push(...orderMarker(part, fieldLeft, "from", y, locate));
   if (part.from) y += m.markerH;
   for (const row of part.rows) {
     out.push(
@@ -255,7 +272,7 @@ function fragmentSvg(part: StripFragment, locate: Locate) {
   }
   out.push(
     bridgeSvg(part, approaches, rightStubSegments, terminalRects),
-    ...orderMarker(part, "on", y + 1, locate),
+    ...orderMarker(part, fieldLeft, "on", y + 1, locate),
     "</g>",
   );
   return out.join("\n");
@@ -271,17 +288,17 @@ function stripContent(
   return [
     `<g data-sheet-kind="terminal-strip">`,
     text(
-      Math.max(b.x + 0.5, fieldTextLeft(b.x, heading, 4, true)),
+      stripFieldTextX(b.x + 0.5, b.x, heading, 4, true),
       b.y + 3,
       heading,
       4,
       "start",
       700,
     ),
-    ...(plan.pages[page] ?? []).map((part) => fragmentSvg(part, locate)),
+    ...(plan.pages[page] ?? []).map((part) => fragmentSvg(part, b.x, locate)),
     ...plan.notes.map((line, i) =>
       text(
-        Math.max(b.x + 0.5, fieldTextLeft(b.x, line, 2.5)),
+        stripFieldTextX(b.x + 0.5, b.x, line, 2.5),
         b.y + b.h - (plan.notes.length - 1 - i) * 3.5,
         line,
         2.5,

@@ -42,12 +42,13 @@ export function communicationRowLayout(
 ) {
   const lines = [...summary],
     entries: { key: string; text: string; x: number; line: number }[] = [];
-  const measure = (s: string) => {
+  const metrics = (s: string) => {
     const m = printableTextMetrics(s, 2.5);
-    return Math.max(m.advance, m.right) - Math.min(0, m.left);
+    const right = Math.max(m.advance, m.right);
+    return { right, width: right - Math.min(0, m.left) };
   };
   let line = Math.max(0, lines.length - 1),
-    x = measure(lines[line] ?? "");
+    x = metrics(lines[line] ?? "").width;
   if (row.ports?.length && lines.length > 0 && lines[line]) {
     line = lines.length;
     x = 0;
@@ -56,9 +57,9 @@ export function communicationRowLayout(
   for (const port of row.ports ?? []) {
     if (!port.targets.length) throw Error("Unresolved native port destination");
     const value = `${row.label} port ${port.key} → ${port.targets.map((t) => `${String(t.sheet).padStart(2, "0")}.${required(t.zone, "Unresolved native part zone")}`).join(", ")}`;
-    const w = measure(value);
+    const { right, width: w } = metrics(value);
     const startShift = fieldTextLeftShift(value, 2.5);
-    if (startShift + w > width)
+    if (startShift + right > width)
       throw Error("Native port entry cannot fit the reserved reference width");
     if (x > 0 && x + 2 + w > width) {
       line++;
@@ -68,7 +69,7 @@ export function communicationRowLayout(
     const entryX = x === 0 ? startShift : x;
     entries.push({ key: port.key, text: value, x: entryX, line });
     lines[line] = `${lines[line] ?? ""}${lines[line] ? "  " : ""}${value}`;
-    x = entryX + w;
+    x = entryX + right;
   }
   return { lines, entries };
 }

@@ -359,7 +359,7 @@ function printableInkExtents(
   literal: boolean,
 ) {
   const m = printableTextMetrics(value, size, bold, literal);
-  if (!bold) return { left: m.left, right: Math.max(m.advance, m.right) };
+  if (!bold) return { left: m.left, right: m.right };
   const text = literal
     ? value
     : value
@@ -368,10 +368,10 @@ function printableInkExtents(
         .trim();
   const runs = printableRuns(text, boldFace);
   if (!runs.some((run) => run.face === math))
-    return { left: m.left, right: Math.max(m.advance, m.right) };
+    return { left: m.left, right: m.right };
   let advance = 0,
     left = m.left,
-    right = Math.max(m.advance, m.right);
+    right = m.right;
   const pad = size * MATH_FAUX_BOLD_PAD_EM;
   for (const run of runs) {
     const scale = size / run.face.unitsPerEm,
@@ -410,7 +410,9 @@ export function printableTextLeftOverhang(
   return Math.max(0, -printableInkExtents(value, size, bold, literal).left);
 }
 
-/** Rightward ink/advance extent from x = 0 for left-anchored printable text (mm). */
+/** Rightward painted ink extent from x = 0 for left-anchored printable text (mm),
+ * using the same glyph-bearing model as printableTextLeftOverhang without
+ * counting trailing right-side-bearing advance. */
 export function printableTextRightExtent(
   value: string,
   size = 10,

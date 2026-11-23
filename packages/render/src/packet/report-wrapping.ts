@@ -13,8 +13,9 @@ function wrapParagraph(
   size: number,
   names: readonly ReportName[],
   identifiers: readonly string[],
+  measureWidth: (line: string) => number = (s) => measureText(s, size).width,
 ) {
-  const fits = (s: string) => measureText(s.trim(), size).width <= width;
+  const fits = (s: string) => measureWidth(s.trim()) <= width;
   const blocked = new Uint8Array(paragraph.length + 1),
     aspect = new Set<number>();
   for (const hit of reportTokens(paragraph, names)) {
@@ -110,11 +111,12 @@ export function wrapReportCell(
   size: number,
   names: readonly ReportName[],
   identifiers: readonly string[] = [],
+  measureWidth?: (line: string) => number,
 ): string[] {
   return value
     .normalize("NFC")
     .split(/\r\n|[\n\r\u2028\u2029]/u)
     .flatMap((paragraph) =>
-      wrapParagraph(paragraph, width, size, names, identifiers),
+      wrapParagraph(paragraph, width, size, names, identifiers, measureWidth),
     );
 }

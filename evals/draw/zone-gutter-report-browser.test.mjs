@@ -289,96 +289,237 @@ describe("DQ-02 zone-gutter inset for cable and report/document views (#551)", (
     }
   });
 
-  it("measures and wraps wiring headings with bold metrics so they never paint past fieldRight on A4", async () => {
+  it("measures and wraps wiring headings with bold painted ink so they never paint past fieldRight on A4", async () => {
     const title =
       "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring";
-    const marginMm = 10.045;
-    const fieldRight = 210 - marginMm - 18;
+    for (const [marginMm, expectWrap] of [
+      [10.045, false],
+      [10.5, true],
+    ]) {
+      const fieldRight = 210 - marginMm - 18;
+      const packet = await renderSchematicPacket(baseIr, {
+        format: "schematic-packet-request/0.1",
+        index: false,
+        page: { size: "a4", orientation: "portrait", marginMm },
+        views: [
+          {
+            format: "wiring-view-request/0.1",
+            conductors: ["W-FLD-001", "W-FLD-002"],
+            title,
+          },
+        ],
+      });
+      if (!packet.ok) throw Error(JSON.stringify(packet.error));
+      const g = await measureSheet(packet.value.sheets[0].svg);
+      expect(textInZoneGutter(g), `margin=${marginMm}`).toEqual([]);
+      expect(textBounds(g), `margin=${marginMm}`).toEqual([]);
+      const headingRows = g.texts
+        .filter(
+          (t) =>
+            t.anchor.y >= 30 &&
+            t.anchor.y <= 45 &&
+            t.anchor.x >= 28 &&
+            title.includes(t.text),
+        )
+        .sort((a, b) => a.anchor.y - b.anchor.y);
+      expect(headingRows.length, `margin=${marginMm}`).toBeGreaterThanOrEqual(
+        expectWrap ? 2 : 1,
+      );
+      expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
+      for (const row of headingRows)
+        expect(
+          row.bbox.x + row.bbox.w,
+          `margin=${marginMm}`,
+        ).toBeLessThanOrEqual(fieldRight);
+    }
+  });
+
+  it("measures circuit headings with bold painted ink so they never paint past fieldRight on A4", async () => {
+    const title =
+      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring Detail";
+    for (const [marginMm, expectWrap] of [
+      [14.0555, false],
+      [14.2, true],
+    ]) {
+      const fieldRight = 210 - marginMm - 18;
+      const packet = await renderSchematicPacket(baseIr, {
+        format: "schematic-packet-request/0.1",
+        index: false,
+        page: { size: "a4", orientation: "portrait", marginMm },
+        views: [
+          {
+            format: "circuit-view-request/0.1",
+            title,
+            flow: "top-to-bottom",
+            groups: [
+              {
+                id: "jb1-permissive",
+                label: "JB1 permissive circuit",
+                functions: [
+                  {
+                    device: { by: "designation", value: "JB1" },
+                    key: "terminal1",
+                  },
+                  {
+                    device: { by: "designation", value: "LS1" },
+                    key: "contact13",
+                  },
+                  {
+                    device: { by: "designation", value: "JB1" },
+                    key: "terminal2",
+                  },
+                ],
+                conductors: ["W-FLD-001", "W-FLD-002"],
+              },
+            ],
+          },
+        ],
+      });
+      if (!packet.ok) throw Error(JSON.stringify(packet.error));
+      const g = await measureSheet(packet.value.sheets[0].svg);
+      expect(textInZoneGutter(g), `margin=${marginMm}`).toEqual([]);
+      expect(textBounds(g), `margin=${marginMm}`).toEqual([]);
+      const headingRows = g.texts
+        .filter(
+          (t) =>
+            t.anchor.y >= 34 &&
+            t.anchor.y <= 50 &&
+            t.anchor.x >= 32 &&
+            title.includes(t.text),
+        )
+        .sort((a, b) => a.anchor.y - b.anchor.y);
+      expect(headingRows.length, `margin=${marginMm}`).toBeGreaterThanOrEqual(
+        expectWrap ? 2 : 1,
+      );
+      expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
+      for (const row of headingRows)
+        expect(
+          row.bbox.x + row.bbox.w,
+          `margin=${marginMm}`,
+        ).toBeLessThanOrEqual(fieldRight);
+    }
+  });
+
+  it("fits letter-landscape wiring title by painted ink without trailing-advance R006 refusal", async () => {
+    const title =
+      "Field Terminal Connection Schedule for the Main Panel and Junction Box 1 / Cabinet Local and Remote Field Panel";
+    const marginMm = 8.7666;
+    const fieldRight = 279.4 - marginMm - 18;
     const packet = await renderSchematicPacket(baseIr, {
       format: "schematic-packet-request/0.1",
       index: false,
-      page: { size: "a4", orientation: "portrait", marginMm },
+      page: { size: "letter", orientation: "landscape", marginMm },
       views: [
         {
           format: "wiring-view-request/0.1",
+          title,
           conductors: ["W-FLD-001", "W-FLD-002"],
-          title,
-        },
-      ],
-    });
-    if (!packet.ok) throw Error(JSON.stringify(packet.error));
-    const g = await measureSheet(packet.value.sheets[0].svg);
-    expect(textInZoneGutter(g)).toEqual([]);
-    expect(textBounds(g)).toEqual([]);
-    const headingRows = g.texts
-      .filter(
-        (t) =>
-          t.anchor.y >= 30 &&
-          t.anchor.y <= 45 &&
-          t.anchor.x >= 28 &&
-          title.includes(t.text),
-      )
-      .sort((a, b) => a.anchor.y - b.anchor.y);
-    expect(headingRows.length).toBeGreaterThanOrEqual(2);
-    expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
-    for (const row of headingRows)
-      expect(row.bbox.x + row.bbox.w).toBeLessThanOrEqual(fieldRight);
-  });
-
-  it("measures circuit headings with bold metrics so they never paint past fieldRight on A4", async () => {
-    const title =
-      "Field Terminal Connection Schedule for Main Panel and Junction Box 1 Wiring Detail";
-    const marginMm = 14.0555;
-    const fieldRight = 210 - marginMm - 18;
-    const packet = await renderSchematicPacket(baseIr, {
-      format: "schematic-packet-request/0.1",
-      index: false,
-      page: { size: "a4", orientation: "portrait", marginMm },
-      views: [
-        {
-          format: "circuit-view-request/0.1",
-          title,
-          flow: "top-to-bottom",
-          groups: [
-            {
-              id: "jb1-permissive",
-              label: "JB1 permissive circuit",
-              functions: [
-                {
-                  device: { by: "designation", value: "JB1" },
-                  key: "terminal1",
-                },
-                {
-                  device: { by: "designation", value: "LS1" },
-                  key: "contact13",
-                },
-                {
-                  device: { by: "designation", value: "JB1" },
-                  key: "terminal2",
-                },
-              ],
-              conductors: ["W-FLD-001", "W-FLD-002"],
-            },
+          notes: [
+            "Inspect the field panel and junction box terminal identification against the drawing. Inspect the field panel and junction box terminal identification against the drawing. Inspect the field panel and junction box terminal identification against the drawing.",
           ],
         },
       ],
     });
-    if (!packet.ok) throw Error(JSON.stringify(packet.error));
+    expect(packet.ok, JSON.stringify(packet.ok ? null : packet.error)).toBe(
+      true,
+    );
+    if (!packet.ok) return;
+    expect(packet.value.sheets.length).toBe(5);
     const g = await measureSheet(packet.value.sheets[0].svg);
     expect(textInZoneGutter(g)).toEqual([]);
     expect(textBounds(g)).toEqual([]);
-    const headingRows = g.texts
-      .filter(
-        (t) =>
-          t.anchor.y >= 34 &&
-          t.anchor.y <= 50 &&
-          t.anchor.x >= 32 &&
-          title.includes(t.text),
-      )
-      .sort((a, b) => a.anchor.y - b.anchor.y);
-    expect(headingRows.length).toBeGreaterThanOrEqual(2);
-    expect(headingRows.map((t) => t.text).join(" ")).toBe(title);
-    for (const row of headingRows)
-      expect(row.bbox.x + row.bbox.w).toBeLessThanOrEqual(fieldRight);
+    const heading = g.texts.find((t) => t.text === title && t.anchor.y < 60);
+    expect(heading).toBeDefined();
+    expect(heading.bbox.x + heading.bbox.w).toBeLessThanOrEqual(fieldRight);
+  });
+
+  it("keeps graphical terminal-strip fragment headings starting with 𝒿 out of the zone gutter", async () => {
+    const ir = structuredClone(baseIr);
+    ir.devices.find((d) => d.designation === "JB1").designation = "𝒿B1";
+    const packet = await renderSchematicPacket(ir, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: tabloidLandscape,
+      views: [
+        {
+          format: "documentation-view-request/0.1",
+          kind: "terminals",
+          device: "𝒿B1",
+        },
+      ],
+    });
+    if (!packet.ok) throw Error(JSON.stringify(packet.error));
+    const stripSheet = packet.value.sheets.find(
+      (s) => s.view.kind === "terminal-strip",
+    );
+    expect(stripSheet).toBeDefined();
+    const g = await measureSheet(stripSheet.svg);
+    expect(textInZoneGutter(g)).toEqual([]);
+    expect(textBounds(g)).toEqual([]);
+    const fragmentHeading = g.texts.find((t) => t.text.startsWith("𝒿B1 —"));
+    expect(fragmentHeading).toBeDefined();
+    expect(fragmentHeading.bbox.x).toBeGreaterThanOrEqual(28.0);
+  });
+
+  it("keeps paginated graphical terminal-strip order markers starting with 𝒿 out of the zone gutter", async () => {
+    const longIr = structuredClone(baseIr);
+    const stripDev = longIr.devices.find((d) => d.designation === "JB1");
+    stripDev.designation = "𝒿B1";
+    const stripType = longIr.deviceTypes.find((t) => t.id === stripDev.typeId);
+    const baseTerm = longIr.terminals.find(
+      (t) => t.id.deviceUid === stripDev.uid,
+    );
+    const baseTypeTerm = stripType?.terminals[0];
+    const existing = new Set(
+      longIr.terminals
+        .filter((t) => t.id.deviceUid === stripDev.uid)
+        .map((t) => t.id.terminalKey),
+    );
+    for (let n = 1; n <= 48; n++) {
+      const key = `T${n}`;
+      if (existing.has(key)) continue;
+      const term = structuredClone(baseTerm);
+      term.id.terminalKey = key;
+      longIr.terminals.push(term);
+      if (baseTypeTerm) {
+        const tt = structuredClone(baseTypeTerm);
+        tt.key = key;
+        stripType.terminals.push(tt);
+      }
+    }
+    const longPacket = await renderSchematicPacket(longIr, {
+      format: "schematic-packet-request/0.1",
+      index: false,
+      page: { size: "letter", orientation: "portrait", marginMm: 10 },
+      views: [
+        {
+          format: "documentation-view-request/0.1",
+          kind: "terminals",
+          device: "𝒿B1",
+        },
+      ],
+    });
+    if (!longPacket.ok) throw Error(JSON.stringify(longPacket.error));
+    const longStrips = longPacket.value.sheets.filter(
+      (s) => s.view.kind === "terminal-strip",
+    );
+    expect(longStrips.length).toBeGreaterThanOrEqual(2);
+    let sawOrderMarker = false;
+    for (const s of longStrips) {
+      const mg = await measureSheet(s.svg);
+      const markers = mg.texts.filter((t) =>
+        /^𝒿B1 continued (?:on|from) sheet /u.test(t.text),
+      );
+      if (markers.length) {
+        sawOrderMarker = true;
+        for (const m of markers)
+          expect(m.bbox.x, `strip sheet ${s.number}`).toBeGreaterThanOrEqual(
+            28.0,
+          );
+      }
+      expect(textInZoneGutter(mg), `strip sheet ${s.number}`).toEqual([]);
+      expect(textBounds(mg), `strip sheet ${s.number}`).toEqual([]);
+    }
+    expect(sawOrderMarker).toBe(true);
   });
 });
