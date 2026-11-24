@@ -315,9 +315,24 @@ export function printableTextMetrics(
     measurePrintableText(value, size, bold, literal),
   );
 }
+function measuredPrintableText(
+  value: string,
+  size: number,
+  preserveSpace: boolean,
+) {
+  return preserveSpace
+    ? printableTextMetrics(value.normalize("NFC"), size, false, true)
+    : printableTextMetrics(value, size);
+}
+
 /** Keep reservations where possible. Single glyphs print uncompressed. */
-export function printableSlotWidth(text: string, oldWidth: number, size = 10) {
-  const m = printableTextMetrics(text, size),
+export function printableSlotWidth(
+  text: string,
+  oldWidth: number,
+  size = 10,
+  preserveSpace = false,
+) {
+  const m = measuredPrintableText(text, size, preserveSpace),
     minimum = [...text].length === 1 ? m.advance : m.advance * 0.91;
   return Math.max(
     oldWidth,
@@ -329,8 +344,9 @@ export function boundedPrintableAdvance(
   value: string,
   size: number,
   capacity: number,
+  preserveSpace = false,
 ) {
-  const m = printableTextMetrics(value, size);
+  const m = measuredPrintableText(value, size, preserveSpace);
   const advance = Math.min(m.advance, capacity);
   if (advance + 0.002 < m.advance * 0.91)
     throw Error("Printable text slot is too narrow");
@@ -344,12 +360,18 @@ export function printableFitAttributes(
   text: string,
   size: number,
   capacity: number,
+  preserveSpace = false,
 ) {
-  const natural = printableTextMetrics(text, size).advance;
+  const natural = measuredPrintableText(text, size, preserveSpace).advance;
   return Number(natural.toFixed(3)) <= Number(capacity.toFixed(3))
     ? {}
     : {
-        textLength: boundedPrintableAdvance(text, size, capacity),
+        textLength: boundedPrintableAdvance(
+          text,
+          size,
+          capacity,
+          preserveSpace,
+        ),
         lengthAdjust: "spacingAndGlyphs" as const,
       };
 }
@@ -451,7 +473,12 @@ export function printableTextWidth(value: string, size: number, bold = false) {
 
 /** The original continuous schematic reserves a 6.2-unit slot per code point.
  * Preserve that layout contract and expand the slot for wider pinned ink. */
-export function continuousLabelSlot(value: string) {
+export function continuousLabelSlot(value: string, preserveSpace = false) {
   const reserved = Math.max(12, 6 + 6.2 * [...value].length);
-  return printableSlotWidth(value, Number(reserved.toFixed(3)));
+  return printableSlotWidth(
+    value,
+    Number(reserved.toFixed(3)),
+    10,
+    preserveSpace,
+  );
 }

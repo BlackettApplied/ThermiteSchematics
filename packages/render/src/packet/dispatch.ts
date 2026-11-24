@@ -27,11 +27,19 @@ export async function viewDrafts(
   layout: SchematicPacketRequest["layout"],
   circuitAppearances: Map<string, string[]>,
   referenceOffset = 0,
+  singleViewPacket = true,
 ): Promise<RenderOutcome<Draft[]>> {
   return cachedCircuitView(
     ir,
     presentation,
-    [view, page, layout, [...circuitAppearances], referenceOffset],
+    [
+      view,
+      page,
+      layout,
+      [...circuitAppearances],
+      referenceOffset,
+      singleViewPacket,
+    ],
     () =>
       dispatchView(
         ir,
@@ -41,6 +49,7 @@ export async function viewDrafts(
         layout,
         circuitAppearances,
         referenceOffset,
+        singleViewPacket,
       ),
     page,
   );
@@ -54,6 +63,7 @@ async function dispatchView(
   layout: SchematicPacketRequest["layout"],
   circuitAppearances: Map<string, string[]>,
   referenceOffset: number,
+  singleViewPacket: boolean,
 ): Promise<RenderOutcome<Draft[]>> {
   return record(view) && view.format === "circuit-view-request/0.1"
     ? await circuitDrafts(
@@ -101,5 +111,6 @@ async function dispatchView(
               page,
               layout,
               referenceOffset,
+              singleViewPacket,
             );
 }

@@ -3,51 +3,14 @@ import {
   verticalSourcePortSpacing,
 } from "../symbols/catalog.js";
 import type { SymbolDefinition } from "../symbols/types.js";
-import {
-  boundedPrintableAdvance,
-  printableTextMetrics,
-} from "../text-metrics.js";
-import type {
-  PresentationEdge,
-  PresentationGraph,
-  PresentationLabel,
-  SymbolPresentationNode,
-} from "../types.js";
+import { labelInkWidth, originatingSymbolPortId } from "./net-label-wrap.js";
+import type { PresentationGraph, SymbolPresentationNode } from "../types.js";
+
+export { originatingSymbolPortId };
 
 // Own-wire label offset (~3-4 units) plus DQ-16 foreign-wire ownership margin (>0.5 mm at 0.25 mm/unit).
-const MIN_PITCH_CLEARANCE = 12;
+export const MIN_PITCH_CLEARANCE = 12;
 const COMPACT_HEADER_MARGIN = 8;
-
-function printableInkWidth(label: PresentationLabel): number {
-  const text = label.printableText ?? label.text;
-  const metrics = printableTextMetrics(text, 10);
-  const advance = boundedPrintableAdvance(text, 10, label.textLength);
-  const scale = metrics.advance ? advance / metrics.advance : 1;
-  return (metrics.right - metrics.left) * scale;
-}
-
-function originatingSymbolPortId(
-  graph: Readonly<PresentationGraph>,
-  edge: PresentationEdge,
-): string {
-  let portId = edge.sourcePortId;
-  const visited = new Set<string>();
-  while (!visited.has(portId)) {
-    visited.add(portId);
-    const owner = graph.nodes.find((node) =>
-      node.ports.some((port) => port.id === portId),
-    );
-    if (owner === undefined || owner.kind !== "junction") return portId;
-    const incoming = graph.edges.find(
-      (candidate) =>
-        candidate.kind === "boundary-segment" &&
-        owner.ports.some((port) => port.id === candidate.targetPortId),
-    );
-    if (incoming === undefined) return portId;
-    portId = incoming.sourcePortId;
-  }
-  return portId;
-}
 
 function collidingSourceInkWidth(
   graph: Readonly<PresentationGraph>,
@@ -67,7 +30,7 @@ function collidingSourceInkWidth(
       if (edge.netLabel === undefined) continue;
       if (originatingSymbolPortId(graph, edge) !== port.id) continue;
       if (collidingNetLabelIds.has(edge.netLabel.id)) hasCollision = true;
-      maxInkWidth = Math.max(maxInkWidth, printableInkWidth(edge.netLabel));
+      maxInkWidth = Math.max(maxInkWidth, labelInkWidth(edge.netLabel));
     }
   }
   return hasCollision ? maxInkWidth : 0;

@@ -42,6 +42,10 @@ import { withCircuitLayoutCache } from "../layout/circuit-inline-context.js";
 import type { RootedPaginationRetry } from "./rooted-pagination-retry.js";
 
 type Profile = "compact" | "dense" | undefined;
+export interface RootedNetLabelOptions {
+  readonly wrapNetLabelIds?: ReadonlySet<string>;
+  readonly omitNetLabelIds?: ReadonlySet<string>;
+}
 export interface RootedSearch {
   elkWork?: ElkWorkLedger;
   diagnostics?: RootedDiagnostic[];
@@ -70,15 +74,18 @@ async function initial(
   page: PaperPage,
   profile: Profile,
   run: RootedSearch,
+  netLabelOptions?: RootedNetLabelOptions,
 ) {
-  const result = await prepareSchematicDrawing(
-    ir,
-    request,
-    presentation,
-    profile
-      ? { spacingProfile: profile, packetContinuations: true }
-      : { packetContinuations: true },
-  );
+  const result = await prepareSchematicDrawing(ir, request, presentation, {
+    packetContinuations: true,
+    ...(profile ? { spacingProfile: profile } : {}),
+    ...(netLabelOptions?.wrapNetLabelIds?.size
+      ? { wrapNetLabelIds: netLabelOptions.wrapNetLabelIds }
+      : {}),
+    ...(netLabelOptions?.omitNetLabelIds?.size
+      ? { omitNetLabelIds: netLabelOptions.omitNetLabelIds }
+      : {}),
+  });
   if (!result.ok) {
     run.errors.push(result.error);
     return;
@@ -187,6 +194,7 @@ export async function searchRootedCandidates(
   page: PaperPage,
   compact: boolean,
   referenceOffset = 0,
+  netLabelOptions?: RootedNetLabelOptions,
 ) {
   const legacy = () =>
     elkWorkScope.exit(() =>
@@ -197,6 +205,7 @@ export async function searchRootedCandidates(
         page,
         compact,
         referenceOffset,
+        netLabelOptions,
       ),
     );
   return withFontMetricCache(async () => {
@@ -246,6 +255,7 @@ async function runRootedSearch(
   page: PaperPage,
   compact: boolean,
   referenceOffset: number,
+  netLabelOptions?: RootedNetLabelOptions,
 ) {
   const run: RootedSearch = {
     standardEconomy: !compact,
@@ -260,7 +270,15 @@ async function runRootedSearch(
     tried: new Set(),
   };
   for (const profile of compact ? ROOTED_COMPACT_PROFILES : [undefined]) {
-    await initial(ir, request, presentation, page, profile, run);
+    await initial(
+      ir,
+      request,
+      presentation,
+      page,
+      profile,
+      run,
+      netLabelOptions,
+    );
   }
   const reference =
     run.prepared[0] && frameContext(page, run.prepared[0].p.view)?.reference;

@@ -236,6 +236,8 @@ export interface PresentationLabel {
   readonly textSources: readonly RenderTextSource[];
   /** Printable facts may differ from the original caption reserved for layout. */
   readonly printableText?: string;
+  /** Optional two-line split of an edge net label; concatenating gives exact text. */
+  readonly lines?: readonly [string, string];
   readonly width: number;
   readonly height: number;
   readonly textLength: number;

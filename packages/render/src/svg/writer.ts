@@ -53,6 +53,7 @@ type SvgAttributeName =
   | "x"
   | "x1"
   | "x2"
+  | "xml:space"
   | "xmlns"
   | "y"
   | "y1"
@@ -100,6 +101,7 @@ const FIXED_ATTRIBUTE_ORDER = Object.freeze([
   "dominant-baseline",
   "textLength",
   "lengthAdjust",
+  "xml:space",
   "role",
   "aria-label",
 ] as const satisfies readonly Exclude<SvgAttributeName, `data-${string}`>[]);
