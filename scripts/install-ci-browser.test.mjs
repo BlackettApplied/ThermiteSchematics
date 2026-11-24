@@ -10,9 +10,9 @@ const isLockProbe = (command, args) =>
   command === "sudo" && args[1] === "timeout" && args[4] === "fuser";
 
 describe("CI browser installer", () => {
-  it("keeps worst-case retries, kill-after, backoff, and lock waits inside the 20-minute step timeout", () => {
+  it("keeps worst-case retries, kill-after, backoff, and lock waits (with probe grace) inside the 20-minute step timeout", () => {
     const worst = worstCaseSeconds(INSTALL_BUDGET);
-    expect(worst).toBe(1065);
+    expect(worst).toBe(1069);
     expect(worst).toBeLessThan(INSTALL_BUDGET.stepTimeoutSeconds);
     expect(INSTALL_BUDGET.stepTimeoutSeconds - worst).toBeGreaterThanOrEqual(
       60,
@@ -361,46 +361,65 @@ describe("CI browser installer", () => {
     );
   });
 
-  it("treats status 1 with missing-command stderr as a probe failure and never logs cleared", async () => {
-    const logs = [];
-    const waits = [];
-    let clock = 0;
-    let installs = 0;
-    let lockPolls = 0;
-    await installCiBrowser({
-      platform: "linux",
-      execPath: "bun",
-      hasFile: (file) => file === "/var/lib/dpkg/lock-frontend",
-      now: () => clock,
-      run: (command, args) => {
-        if (command === "timeout") {
-          installs++;
-          return installs === 1 ? { status: 124 } : { status: 0 };
-        }
-        if (isLockProbe(command, args)) {
-          lockPolls++;
-          return lockPolls === 1
-            ? { status: 0, stderr: "" }
-            : { status: 1, stderr: "sudo: fuser: command not found\n" };
-        }
-        return { status: 0 };
+  it.each([
+    [
+      "missing timeout under sudo (exit 1 with stderr)",
+      { status: 1, stderr: "sudo: timeout: command not found\n" },
+      "Warning: apt/dpkg lock file check failed (exit 1: sudo: timeout: command not found); continuing.",
+    ],
+    [
+      "missing fuser under GNU timeout (exit 127 with stderr)",
+      {
+        status: 127,
+        stderr:
+          "timeout: failed to run command 'fuser': No such file or directory\n",
       },
-      pause: async (ms) => {
-        waits.push(ms);
-        clock += ms;
-      },
-      log: (message) => logs.push(message),
-    });
-    expect(installs).toBe(2);
-    expect(lockPolls).toBe(2);
-    expect(waits).toEqual([5_000, 5_000]);
-    expect(logs).toContain(
-      "Warning: apt/dpkg lock file check failed (exit 1: sudo: fuser: command not found); continuing.",
-    );
-    expect(logs.some((line) => /released|no longer in use/.test(line))).toBe(
-      false,
-    );
-  });
+      "Warning: apt/dpkg lock file check failed (exit 127: timeout: failed to run command 'fuser': No such file or directory); continuing.",
+    ],
+    [
+      "signal-only SIGKILL from the outer backstop",
+      { status: null, signal: "SIGKILL" },
+      "Warning: apt/dpkg lock file check failed (signal SIGKILL); continuing.",
+    ],
+  ])(
+    "treats %s as a probe failure, proceeds to retry without further probes, and never logs cleared",
+    async (_label, failure, expectedLog) => {
+      const logs = [];
+      const waits = [];
+      let clock = 0;
+      let installs = 0;
+      let lockPolls = 0;
+      await installCiBrowser({
+        platform: "linux",
+        execPath: "bun",
+        hasFile: (file) => file === "/var/lib/dpkg/lock-frontend",
+        now: () => clock,
+        run: (command, args) => {
+          if (command === "timeout") {
+            installs++;
+            return installs === 1 ? { status: 124 } : { status: 0 };
+          }
+          if (isLockProbe(command, args)) {
+            lockPolls++;
+            return lockPolls === 1 ? { status: 0, stderr: "" } : failure;
+          }
+          return { status: 0 };
+        },
+        pause: async (ms) => {
+          waits.push(ms);
+          clock += ms;
+        },
+        log: (message) => logs.push(message),
+      });
+      expect(installs).toBe(2);
+      expect(lockPolls).toBe(2);
+      expect(waits).toEqual([5_000, 5_000]);
+      expect(logs).toContain(expectedLog);
+      expect(logs.some((line) => /released|no longer in use/.test(line))).toBe(
+        false,
+      );
+    },
+  );
 
   it("continues immediately if sudo fuser fails during a Linux lock check", async () => {
     const logs = [];

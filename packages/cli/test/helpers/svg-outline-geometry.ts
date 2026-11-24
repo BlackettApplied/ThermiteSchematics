@@ -106,6 +106,150 @@ export const inside = (a: Box, b: Box) =>
   a.top >= b.top &&
   a.bottom <= b.bottom;
 
+type ElementIdentity = {
+  wire: string | null | undefined;
+  device: string | null | undefined;
+  mark: number;
+};
+type RawOutlineText = ElementIdentity & {
+  text: string;
+  x: number;
+  y: number;
+  size: number;
+  bold: boolean;
+  family: string;
+  anchor: string;
+  baseline: string;
+  length: number | undefined;
+  lengthAdjust: string | null;
+  matrix: Matrix;
+  clips: Point[][];
+  plate: Point[] | undefined;
+  caption: boolean;
+  owner: number;
+};
+type RawOutlineShape = ElementIdentity & {
+  points: Point[];
+  stroke: number;
+};
+type RawOutlineGeometry = {
+  texts: RawOutlineText[];
+  shapes: RawOutlineShape[];
+  marks: ElementIdentity[];
+};
+
+const withIdentity = <T extends ElementIdentity>(item: T): T => ({
+  wire: item.wire,
+  device: item.device,
+  ...item,
+});
+
+function createOutlineJsonEncoder() {
+  const tagKey = /^_*__n$/;
+  return (value: unknown): string =>
+    JSON.stringify(value, (_key, v: unknown) => {
+      if (typeof v === "number" && (!Number.isFinite(v) || Object.is(v, -0)))
+        return { __n: Object.is(v, -0) ? "-0" : String(v) };
+      if (typeof v === "object" && v !== null && !Array.isArray(v)) {
+        const keys = Object.keys(v);
+        if (keys.some((k) => tagKey.test(k)))
+          return Object.fromEntries(
+            Object.entries(v).map(([k, item]) => [
+              tagKey.test(k) ? `_${k}` : k,
+              item,
+            ]),
+          );
+      }
+      return v;
+    });
+}
+
+export const encodeOutlineJson = createOutlineJsonEncoder();
+
+const ESCAPED_TAG_KEY = /^_+__n$/;
+
+export function decodeOutlineJson<T = unknown>(serialized: string): T {
+  return JSON.parse(serialized, (_key, v: unknown) => {
+    if (typeof v !== "object" || v === null || Array.isArray(v)) return v;
+    const keys = Object.keys(v);
+    if (keys.length === 1 && keys[0] === "__n" && "__n" in v) {
+      if (v.__n === "NaN") return NaN;
+      if (v.__n === "Infinity") return Infinity;
+      if (v.__n === "-Infinity") return -Infinity;
+      if (v.__n === "-0") return -0;
+      return v;
+    }
+    if (keys.some((k) => ESCAPED_TAG_KEY.test(k)))
+      return Object.fromEntries(
+        Object.entries(v).map(([k, item]) => [
+          ESCAPED_TAG_KEY.test(k) ? k.slice(1) : k,
+          item,
+        ]),
+      );
+    return v;
+  });
+}
+
+function measureOutlineTexts(rawTexts: RawOutlineText[], legacyFont: boolean) {
+  return rawTexts.map((t) => {
+    if (
+      !legacyFont &&
+      !t.family.startsWith('"Thermite Sans"') &&
+      !t.family.startsWith("Thermite Sans")
+    )
+      throw Error(`Expected pinned printable font: ${t.family}`);
+    const m = printableTextMetrics(t.text, t.size, t.bold),
+      advance = t.length ?? m.advance,
+      sx = advance / m.advance,
+      anchor =
+        t.anchor === "middle" ? advance / 2 : t.anchor === "end" ? advance : 0;
+    if (t.length !== undefined && t.lengthAdjust !== "spacingAndGlyphs")
+      throw Error("Unsupported textLength adjustment");
+    if (!["auto", "alphabetic", "middle"].includes(t.baseline))
+      throw Error(`Unsupported SVG baseline: ${t.baseline}`);
+    const y = t.y + (t.baseline === "middle" ? m.middleBaseline : 0),
+      box = transformBox(
+        {
+          left: t.x - anchor + m.left * sx,
+          right: t.x - anchor + m.right * sx,
+          top: y - m.top,
+          bottom: y - m.bottom,
+        },
+        t.matrix,
+      );
+    const painted = t.clips.every((points) => {
+      const b = bounds(points);
+      return (
+        Math.min(box.right, b.right) > Math.max(box.left, b.left) &&
+        Math.min(box.bottom, b.bottom) > Math.max(box.top, b.top)
+      );
+    });
+    const [plate] = (t.plate ? [t.plate] : []).map(bounds);
+    return {
+      wire: t.wire,
+      device: t.device,
+      mark: t.mark,
+      text: t.text,
+      x: t.x,
+      y: t.y,
+      size: t.size,
+      bold: t.bold,
+      family: t.family,
+      anchor: t.anchor,
+      baseline: t.baseline,
+      length: t.length,
+      lengthAdjust: t.lengthAdjust,
+      matrix: t.matrix,
+      clips: t.clips,
+      plate,
+      caption: t.caption,
+      owner: t.owner,
+      box,
+      painted,
+    };
+  });
+}
+
 /** Chromium supplies only affine transforms and primitive paths. Never ask it
  * for glyph bounds, advances, character positions or canvas text measurements.
  * Preserve explicit M/L wiring vertices. Coordinates are in the sheet viewBox (mm). */
@@ -116,7 +260,11 @@ export async function svgOutlineGeometry(
   legacyFont = false,
 ) {
   if (svg !== undefined) await page.setContent(svg);
-  const raw = await page.evaluate((wiringOnly) => {
+  // Return JSON over CDP so large sheets stay under Chrome 158's
+  // Runtime.callFunctionOn returnByValue object-tree cap (#582).
+  const encoder = await page.evaluateHandle(createOutlineJsonEncoder);
+  const arg = { wiringOnly, encode: encoder };
+  const evaluation = page.evaluate(({ wiringOnly, encode }) => {
     const root = document.querySelector("svg")!,
       inverse = root.getScreenCTM()!.inverse(),
       marks = [...document.querySelectorAll("[data-circuit-mark]")];
@@ -277,45 +425,15 @@ export async function svgOutlineGeometry(
             css.stroke === "none" ? 0 : parseFloat(css.strokeWidth) * scale,
         };
       });
-    return { texts, shapes, marks: marks.map((e) => identity(e)) };
-  }, wiringOnly);
-  const texts = raw.texts.map((t) => {
-    if (
-      !legacyFont &&
-      !t.family.startsWith('"Thermite Sans"') &&
-      !t.family.startsWith("Thermite Sans")
-    )
-      throw Error(`Expected pinned printable font: ${t.family}`);
-    const m = printableTextMetrics(t.text, t.size, t.bold),
-      advance = t.length ?? m.advance,
-      sx = advance / m.advance,
-      anchor =
-        t.anchor === "middle" ? advance / 2 : t.anchor === "end" ? advance : 0;
-    if (t.length !== undefined && t.lengthAdjust !== "spacingAndGlyphs")
-      throw Error("Unsupported textLength adjustment");
-    if (!["auto", "alphabetic", "middle"].includes(t.baseline))
-      throw Error(`Unsupported SVG baseline: ${t.baseline}`);
-    const y = t.y + (t.baseline === "middle" ? m.middleBaseline : 0),
-      box = transformBox(
-        {
-          left: t.x - anchor + m.left * sx,
-          right: t.x - anchor + m.right * sx,
-          top: y - m.top,
-          bottom: y - m.bottom,
-        },
-        t.matrix,
-      );
-    const painted = t.clips.every((points) => {
-      const b = bounds(points);
-      return (
-        Math.min(box.right, b.right) > Math.max(box.left, b.left) &&
-        Math.min(box.bottom, b.bottom) > Math.max(box.top, b.top)
-      );
-    });
-    const [plate] = (t.plate ? [t.plate] : []).map(bounds);
-    return { ...t, box, painted, plate };
-  });
-  return { ...raw, texts };
+    return encode({ texts, shapes, marks: marks.map(identity) });
+  }, arg);
+  const serialized = await evaluation.finally(() => encoder.dispose());
+  const raw = decodeOutlineJson<RawOutlineGeometry>(serialized);
+  return {
+    texts: measureOutlineTexts(raw.texts, legacyFont),
+    shapes: raw.shapes.map(withIdentity),
+    marks: raw.marks.map(withIdentity),
+  };
 }
 
 async function wiringLeaderEndpoints(page: Page) {

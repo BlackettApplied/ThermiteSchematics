@@ -24,8 +24,8 @@ const APT_LOCKS = [
   "/var/lib/apt/lists/lock",
 ];
 export const PROBE_GRACE_MS = 2_000;
-// Worst case: 3 * (240s + 30s) + (5s + 10s) + 2 * 120s = 1065s
-// (+ at most 2s probe grace per lock wait = 1069s) < 1200s (20 min).
+// Worst case: 3 * (240s + 30s) + (5s + 10s) + 2 * (120s + 2s) = 1069s
+// < 1200s (20 min).
 export const INSTALL_BUDGET = Object.freeze({
   stepTimeoutSeconds: 20 * 60,
   attempts: 3,
@@ -39,7 +39,10 @@ export const INSTALL_BUDGET = Object.freeze({
 export function worstCaseSeconds(b = INSTALL_BUDGET) {
   const retries = b.attempts - 1;
   const backoff = (b.backoffBaseSeconds * b.attempts * retries) / 2;
-  const lockWait = retries * (b.lockWaitSeconds ?? 0);
+  const lockWait =
+    b.lockWaitSeconds > 0
+      ? retries * (b.lockWaitSeconds + PROBE_GRACE_MS / 1_000)
+      : 0;
   return (
     b.attempts * (b.attemptTimeoutSeconds + b.killAfterSeconds) +
     backoff +

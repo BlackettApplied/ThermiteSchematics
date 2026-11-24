@@ -147,27 +147,30 @@ or root privileges; omit that option if those libraries are already installed.
 To find that installation's executable, run
 `bun -e "import { chromium } from 'playwright-core'; console.log(chromium.executablePath())"`.
 Set both `THERMITE_TEST_BROWSER` and `THERMITE_DRAW_CHROMIUM` to that path.
-When `THERMITE_TEST_BROWSER` is unset, installed system Chrome/Chromium takes
-precedence over the pinned cached build. Explicit overrides select the CI
-binary, including on Windows or with a custom `PLAYWRIGHT_BROWSERS_PATH`. CI
-caches the browser outside the checkout and exports both overrides from
-`chromium.executablePath()`; the two discovery helpers do not read
-`PLAYWRIGHT_BROWSERS_PATH` themselves.
+When `THERMITE_TEST_BROWSER` is unset, the Playwright-managed cached build
+takes precedence over installed system Chrome/Chromium. Explicit overrides
+select the CI binary, including on Windows or with a custom
+`PLAYWRIGHT_BROWSERS_PATH`. CI caches the browser outside the checkout and
+exports both overrides from `chromium.executablePath()`; the two discovery
+helpers do not read `PLAYWRIGHT_BROWSERS_PATH` themselves.
 
 The helpers have separate discovery orders:
 
 - The PDF/browser test harness (`packages/cli/test/helpers/pdf-raster.ts`)
   uses `THERMITE_TEST_BROWSER` when defined. An invalid or empty override
-  disables the helper's discovery fallback. Otherwise it tries macOS Google Chrome
-  (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`),
-  `/usr/bin/chromium`, `/usr/bin/chromium-browser`, `/usr/bin/google-chrome`,
-  then `%PROGRAMFILES%/Google/Chrome/Application/chrome.exe`. It next searches
+  disables the helper's discovery fallback. Otherwise it searches
   `~/Library/Caches/ms-playwright`, `~/.cache/ms-playwright`, then
   `%LOCALAPPDATA%/ms-playwright`, ignoring absent roots. Within each root,
   `chromium-*` directories are tried in reverse lexical order, with executable
   suffixes in this order: `chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`,
+  `chrome-mac-x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`,
   `chrome-mac/Chromium.app/Contents/MacOS/Chromium`, `chrome-linux64/chrome`,
-  `chrome-linux/chrome`, `chrome-win/chrome.exe`, `chrome-win64/chrome.exe`.
+  `chrome-linux-arm64/chrome`, `chrome-linux/chrome`, `chrome-win/chrome.exe`,
+  `chrome-win64/chrome.exe`.
+  If no Playwright-managed build is found, it falls back to macOS Google Chrome
+  (`/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`),
+  `/usr/bin/chromium`, `/usr/bin/chromium-browser`, `/usr/bin/google-chrome`,
+  then `%PROGRAMFILES%/Google/Chrome/Application/chrome.exe`.
 - The draw checker (`evals/draw/chromium-path.mjs`) uses a nonempty
   `THERMITE_DRAW_CHROMIUM` first; an inaccessible override throws without
   fallback. Otherwise it searches `~/Library/Caches/ms-playwright` on macOS,
@@ -176,7 +179,8 @@ The helpers have separate discovery orders:
   `chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`,
   `chrome-mac-x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`,
   `chrome-mac/Chromium.app/Contents/MacOS/Chromium`, `chrome-linux64/chrome`,
-  `chrome-linux/chrome`, then `chrome-win/chrome.exe`. It does not search
+  `chrome-linux-arm64/chrome`, `chrome-linux/chrome`, then
+  `chrome-win/chrome.exe`. It does not search
   system Chrome paths or `%LOCALAPPDATA%`.
 
 Locally, without `THERMITE_REQUIRE_BROWSER=1`, only browser cases guarded with

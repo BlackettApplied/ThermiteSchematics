@@ -106,6 +106,7 @@ it.each([
   "5.32",
   "5.33",
   "5.35",
+  "5.44",
 ])("preserves exact complete-summary baseline support for %s", (version) => {
   const c = fixture(),
     baseline = [...c.baselines.values()][0];

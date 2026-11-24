@@ -51,16 +51,16 @@ omit it if those libraries are already installed.
 Print its executable with
 `bun -e "import { chromium } from 'playwright-core'; console.log(chromium.executablePath())"`
 and set both browser overrides to that path. Without `THERMITE_TEST_BROWSER`,
-system Chrome/Chromium is chosen before the pinned cached build. CI exports
-both overrides from `chromium.executablePath()`.
+the pinned Playwright-managed cached build is chosen before system
+Chrome/Chromium. CI exports both overrides from `chromium.executablePath()`.
 
 - `THERMITE_TEST_BROWSER` selects the PDF/browser test harness executable.
   A defined override, even an invalid or empty one, disables the helper's
-  discovery fallback. Without
-  it, discovery tries macOS Google Chrome, `/usr/bin/chromium`,
-  `/usr/bin/chromium-browser`, `/usr/bin/google-chrome`, then Chrome under
-  `%PROGRAMFILES%`. It next searches `~/Library/Caches/ms-playwright`,
-  `~/.cache/ms-playwright`, then `%LOCALAPPDATA%/ms-playwright`.
+  discovery fallback. Without it, discovery searches
+  `~/Library/Caches/ms-playwright`, `~/.cache/ms-playwright`, then
+  `%LOCALAPPDATA%/ms-playwright`, falling back to macOS Google Chrome,
+  `/usr/bin/chromium`, `/usr/bin/chromium-browser`, `/usr/bin/google-chrome`,
+  then Chrome under `%PROGRAMFILES%`.
 - `THERMITE_DRAW_CHROMIUM` selects the draw checker executable. A nonempty
   inaccessible override fails without fallback. Otherwise discovery searches
   `~/Library/Caches/ms-playwright` on macOS or `~/.cache/ms-playwright` on

@@ -87,45 +87,58 @@ export function pixelDifference(a: Canvas, b: Canvas) {
       changed++;
   return changed;
 }
-const candidates = [
-  process.env.THERMITE_TEST_BROWSER,
-  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-  "/usr/bin/chromium",
-  "/usr/bin/chromium-browser",
-  "/usr/bin/google-chrome",
-  process.env.PROGRAMFILES &&
-    join(process.env.PROGRAMFILES, "Google/Chrome/Application/chrome.exe"),
-];
-for (const cache of [
-  join(homedir(), "Library/Caches/ms-playwright"),
-  join(homedir(), ".cache/ms-playwright"),
-  process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, "ms-playwright"),
-]) {
-  if (!cache || !existsSync(cache)) continue;
-  for (const entry of readdirSync(cache)
-    .filter((name) => name.startsWith("chromium-"))
-    .sort()
-    .reverse())
-    for (const suffix of [
-      "chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
-      "chrome-mac/Chromium.app/Contents/MacOS/Chromium",
-      "chrome-linux64/chrome",
-      "chrome-linux/chrome",
-      "chrome-win/chrome.exe",
-      "chrome-win64/chrome.exe",
-    ])
-      candidates.push(join(cache, entry, suffix));
+const PLAYWRIGHT_BROWSER_SUFFIXES = [
+  "chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "chrome-mac-x64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+  "chrome-mac/Chromium.app/Contents/MacOS/Chromium",
+  "chrome-linux64/chrome",
+  "chrome-linux-arm64/chrome",
+  "chrome-linux/chrome",
+  "chrome-win/chrome.exe",
+  "chrome-win64/chrome.exe",
+] as const;
+
+export function discoverBrowserPath(opts?: {
+  env?: NodeJS.ProcessEnv;
+  home?: string;
+  exists?: (path: string) => boolean;
+  readdir?: (path: string) => string[];
+}): string | undefined {
+  const env = opts?.env ?? process.env;
+  const exists = opts?.exists ?? existsSync;
+  // An explicit invalid override simulates a browser-less host for policy tests.
+  if (env.THERMITE_TEST_BROWSER !== undefined)
+    return env.THERMITE_TEST_BROWSER && exists(env.THERMITE_TEST_BROWSER)
+      ? env.THERMITE_TEST_BROWSER
+      : undefined;
+  const home = opts?.home ?? homedir();
+  const listDir = opts?.readdir ?? ((dir: string) => readdirSync(dir));
+  const candidates: (string | undefined)[] = [];
+  for (const cache of [
+    join(home, "Library/Caches/ms-playwright"),
+    join(home, ".cache/ms-playwright"),
+    env.LOCALAPPDATA && join(env.LOCALAPPDATA, "ms-playwright"),
+  ]) {
+    if (!cache || !exists(cache)) continue;
+    for (const entry of listDir(cache)
+      .filter((name) => name.startsWith("chromium-"))
+      .sort()
+      .reverse())
+      for (const suffix of PLAYWRIGHT_BROWSER_SUFFIXES)
+        candidates.push(join(cache, entry, suffix));
+  }
+  candidates.push(
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/usr/bin/chromium",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/google-chrome",
+    env.PROGRAMFILES &&
+      join(env.PROGRAMFILES, "Google/Chrome/Application/chrome.exe"),
+  );
+  return candidates.find((path): path is string => !!path && exists(path));
 }
-const detectedBrowser = candidates.find(
-  (path): path is string => !!path && existsSync(path),
-);
-// An explicit invalid override simulates a browser-less host for policy tests.
-export const browserPath =
-  process.env.THERMITE_TEST_BROWSER !== undefined
-    ? existsSync(process.env.THERMITE_TEST_BROWSER)
-      ? process.env.THERMITE_TEST_BROWSER
-      : undefined
-    : detectedBrowser;
+
+export const browserPath = discoverBrowserPath();
 if (process.env.THERMITE_REQUIRE_BROWSER === "1" && !browserPath)
   throw Error(
     "THERMITE_REQUIRE_BROWSER=1 requires Chrome/Chromium. Set THERMITE_TEST_BROWSER to its executable.",
