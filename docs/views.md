@@ -348,7 +348,21 @@ widths; only in top-to-bottom flow when measured edge net-label ink collides
 with an adjacent conductor, non-owner device frame or terminal marking does the
 owning registered multi-port source symbol expand its horizontal port pitch by
 the minimum catalog-grid width needed for glyph ink clearance and retry once
-with all net labels still at `TAIL`.
+with all net labels still at `TAIL`. In single-view paged top-to-bottom packets, only when
+single-line source-label widening is the binding cause of a protected-width
+refusal and wrapping the blocking source net labels makes the protected width
+fit with at least 45% median visible drawing-area utilisation, those labels
+split onto two lines stacked beside their conductors at the route source with
+preserved whitespace (`xml:space="preserve"`), breaking only at an existing authored separator (`-`, `_`, `.`, `/`, or space) closest to the
+middle while keeping whitespace runs attached to the end of the first line
+without shrinking text, abbreviating, or changing net identity; candidate splits
+with fewer than four non-space characters on either row or matching a terminal
+caption/key at that source symbol are rejected. Labels that fit on one line stay
+single-line and byte-identical. When source net labels are the binding cause and
+no valid split makes the drawing fit, rendering refuses with R006 naming the
+potential, the required and available width, and suggesting a shorter potential
+name or a larger sheet; otherwise, and on multi-view packet requests, the
+original R006 refusal is preserved unchanged.
 
 A supported unselected two-terminal coil can contribute an intermediate input-path
 terminal as context only. The mark says “coil outside view”; it does not select

@@ -14,6 +14,10 @@ import type { QueryEngine } from "@thermite/query";
 import { deepFreeze } from "./internal.js";
 import { buildPresentationGraph } from "./presentation.js";
 import {
+  omitPresentationNetLabels,
+  wrapPresentationNetLabels,
+} from "./presentation/net-label-wrap.js";
+import {
   selectCableConductorSubgraph,
   selectLoadsSubgraph,
   selectSemanticSubgraph,
@@ -48,6 +52,8 @@ export interface SchematicRendererDependencies {
   readonly layoutEngine?: ElkApi;
   readonly spacingProfile?: "compact" | "dense";
   readonly offViewPlacements?: Readonly<Record<string, number>>;
+  readonly wrapNetLabelIds?: ReadonlySet<string>;
+  readonly omitNetLabelIds?: ReadonlySet<string>;
 }
 
 function detachedFrozen<Value>(value: Value): Value {
@@ -68,6 +74,20 @@ export interface PreparedSchematicDrawing {
   readonly titleContext: import("./title-block.js").SchematicTitleContext;
   readonly summary: import("./types.js").RenderSummary;
   readonly view: import("./types.js").NormalizedSchematicView;
+}
+
+function wrapNetLabels(
+  graph: import("./types.js").PresentationGraph,
+  dependencies: Readonly<SchematicRendererDependencies>,
+) {
+  const withoutOmitted = omitPresentationNetLabels(
+    graph,
+    dependencies.omitNetLabelIds,
+  );
+  return wrapPresentationNetLabels(
+    withoutOmitted,
+    dependencies.wrapNetLabelIds,
+  );
 }
 
 export async function prepareSchematicDrawing(
@@ -161,7 +181,7 @@ export async function prepareSchematicDrawing(
   const preflight = preflightRenderText(presented.value.graph);
   if (!preflight.ok) return failed(renderErrorContext(ir, preflight.error));
 
-  let graph = presented.value.graph;
+  let graph = wrapNetLabels(presented.value.graph, dependencies);
   const layoutOptions = {
     ...(dependencies.packetContinuations ? { packetContinuations: true } : {}),
     catalog,

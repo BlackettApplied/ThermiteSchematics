@@ -24,5 +24,8 @@ export function layoutLabelInk(
     label.ownerKind === "edge"
       ? [edges.get(label.ownerId)?.points ?? []]
       : undefined,
+    10,
+    true,
+    caption.lines,
   ).ink;
 }
