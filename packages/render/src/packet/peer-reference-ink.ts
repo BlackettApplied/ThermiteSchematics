@@ -26,8 +26,12 @@ export interface PeerReference {
   destination: string;
   owner: Rect;
   owners?: readonly Rect[];
+  paintedOwners?: readonly Rect[];
   foreignOwners?: readonly Rect[];
+  foreignConductors?: readonly Rect[];
+  siblingOwners?: readonly Rect[];
   along?: readonly Rect[];
+  paintedAlong?: readonly Rect[];
   captions?: readonly Rect[];
   terminalLabels?: readonly Rect[];
   ownerLabel?: string;

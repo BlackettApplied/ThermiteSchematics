@@ -100,7 +100,10 @@ export function testPeerOwnerPacket(project) {
         designation,
       ]),
     };
-    browser = await launch();
+    // Accurate Canvas bounds for small-font clearance checks (crbug.com/479240778).
+    browser = await launch([
+      "--enable-blink-features=CanvasTextMetricsPreciseBounds",
+    ]);
     page = await browser.newPage(drawingContextOptions);
   }, 30_000);
   afterAll(async () => browser?.close());

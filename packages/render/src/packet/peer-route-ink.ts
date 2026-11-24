@@ -14,11 +14,11 @@ import { conductorEndpoints, pathElement } from "./navigation-incidence.js";
 import { boxDistance } from "./navigation-symbols.js";
 import type { NavigationGeometry } from "./navigation-walk.js";
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
-interface RouteSegment {
+export interface RouteSegment {
   a: Point;
   b: Point;
   strokeWidth: number;
@@ -36,6 +36,7 @@ interface JunctionCover {
 }
 interface RouteInk {
   runs: Rect[];
+  reachRuns: Rect[];
   tips: Rect[];
 }
 
@@ -43,7 +44,7 @@ const ANGLE_SIN_TOL = 0.02;
 const FLOAT_TOL = 1e-3;
 const EPS = 1e-4;
 
-function transformPoint(p: Point, m: Matrix): Point {
+export function transformPoint(p: Point, m: Matrix): Point {
   return {
     x: m[0] * p.x + m[2] * p.y + m[4],
     y: m[1] * p.x + m[3] * p.y + m[5],
@@ -158,7 +159,7 @@ function parsePathPieces(d: string): RoutePiece[] {
   return out;
 }
 
-function subtractSpan(
+export function subtractSpan(
   spans: readonly (readonly [number, number])[],
   cut0: number,
   cut1: number,
@@ -175,7 +176,7 @@ function subtractSpan(
   return next;
 }
 
-function clipIntervalToRect(
+export function clipIntervalToRect(
   a: Point,
   b: Point,
   rect: Rect,
@@ -203,7 +204,11 @@ function clipIntervalToRect(
   return [t0, t1];
 }
 
-function sliceSegment(seg: RouteSegment, t0: number, t1: number): RouteSegment {
+export function sliceSegment(
+  seg: RouteSegment,
+  t0: number,
+  t1: number,
+): RouteSegment {
   return {
     a: {
       x: seg.a.x + (seg.b.x - seg.a.x) * t0,
@@ -217,7 +222,7 @@ function sliceSegment(seg: RouteSegment, t0: number, t1: number): RouteSegment {
   };
 }
 
-function clipSegmentToRect(
+export function clipSegmentToRect(
   seg: RouteSegment,
   rect: Rect,
 ): RouteSegment | undefined {
@@ -226,7 +231,7 @@ function clipSegmentToRect(
   return sliceSegment(seg, interval[0], interval[1]);
 }
 
-function subtractRectFromSegment(
+export function subtractRectFromSegment(
   seg: RouteSegment,
   rect: Rect,
 ): RouteSegment[] {
@@ -314,13 +319,21 @@ function junctionDotCover(
 }
 
 function segmentToBox(seg: RouteSegment, clip: Rect): Rect | undefined {
-  const raw = {
-    x: Math.min(seg.a.x, seg.b.x),
-    y: Math.min(seg.a.y, seg.b.y),
-    w: Math.abs(seg.b.x - seg.a.x),
-    h: Math.abs(seg.b.y - seg.a.y),
-  };
-  return intersection(expand(raw, 0.01), clip);
+  const half = seg.strokeWidth > 0 ? seg.strokeWidth / 2 : 0;
+  const dx = Math.abs(seg.b.x - seg.a.x);
+  const dy = Math.abs(seg.b.y - seg.a.y);
+  const len = Math.hypot(dx, dy);
+  const padX = len > EPS ? (half * dy) / len : half;
+  const padY = len > EPS ? (half * dx) / len : half;
+  return intersection(
+    {
+      x: Math.min(seg.a.x, seg.b.x) - padX,
+      y: Math.min(seg.a.y, seg.b.y) - padY,
+      w: dx + 2 * padX,
+      h: dy + 2 * padY,
+    },
+    clip,
+  );
 }
 
 function paintedPieces(
@@ -355,7 +368,10 @@ function paintedPieces(
       for (const seg of segs) out.push({ segment: seg });
     } else if (piece.hull) {
       const box = intersection(
-        expand(project(piece.hull, g.matrix), 0.01),
+        expand(
+          project(piece.hull, g.matrix),
+          strokeWidth > 0 ? strokeWidth / 2 : 0,
+        ),
         g.clip,
       );
       if (!box) continue;
@@ -459,12 +475,23 @@ function collectRouteState(geometry: readonly NavigationGeometry[]) {
   return { rectMasks, dotMasks, index };
 }
 
+function reachSegmentToBox(seg: RouteSegment, clip: Rect): Rect | undefined {
+  const raw = {
+    x: Math.min(seg.a.x, seg.b.x),
+    y: Math.min(seg.a.y, seg.b.y),
+    w: Math.abs(seg.b.x - seg.a.x),
+    h: Math.abs(seg.b.y - seg.a.y),
+  };
+  return intersection(expand(raw, 0.01), clip);
+}
+
 function boxesFromPieces(
   items: readonly { piece: RoutePiece; clip: Rect }[],
+  boxOf: (seg: RouteSegment, clip: Rect) => Rect | undefined = segmentToBox,
 ): Rect[] {
   return items.flatMap(({ piece, clip }) => {
     if (piece.segment) {
-      const box = segmentToBox(piece.segment, clip);
+      const box = boxOf(piece.segment, clip);
       return box ? [box] : [];
     }
     return piece.hull ? [piece.hull] : [];
@@ -504,8 +531,10 @@ export function peerRouteIndex(
   return {
     route: (element: ConductiveElementId): RouteInk => {
       const key = routeKey(element);
+      const pieces = piecesForKey(key);
       return {
-        runs: boxesFromPieces(piecesForKey(key)),
+        runs: boxesFromPieces(pieces),
+        reachRuns: boxesFromPieces(pieces, reachSegmentToBox),
         tips: tipsForKey(key),
       };
     },
@@ -541,3 +570,23 @@ export function landsOnMarks(route: RouteInk, marks: readonly Rect[] = []) {
       route.runs.some((run) => boxDistance(run, marker) <= 0.25),
   );
 }
+
+export function markerRegion(mark: NavigationGeometry, includeStroke = false) {
+  const { cx, cy, r } = mark.node.attrs;
+  const sw =
+    includeStroke && paintedStroke(mark)
+      ? Number((mark.style ?? mark.node.attrs)["stroke-width"] ?? 1)
+      : 0;
+  const rad = Number(r) + (Number.isFinite(sw) && sw > 0 ? sw / 2 : 0);
+  return project(
+    {
+      x: Number(cx ?? 0) - rad,
+      y: Number(cy ?? 0) - rad,
+      w: 2 * rad,
+      h: 2 * rad,
+    },
+    mark.matrix,
+  );
+}
+
+export { attachmentRouteEnds } from "./peer-attachment-ink.js";

@@ -686,5 +686,7 @@ it("peerRouteIndex.foreignRuns stops at painted junction dots to remove the s07 
   const noDotForeignGap = Math.min(
     ...withoutDot.foreignRuns(w12).map((r) => boxDistance(note, r)),
   );
-  expect(noDotForeignGap - noDotOwnGap).toBeCloseTo(0, 3);
+  // Perpendicular half-stroke inflation (0.35 / 2 = 0.175 mm) widens horizontal w12
+  // vertically toward the note while w10's vertical branch butt-ends at y = 96.
+  expect(noDotForeignGap - noDotOwnGap).toBeCloseTo(0.175, 3);
 });

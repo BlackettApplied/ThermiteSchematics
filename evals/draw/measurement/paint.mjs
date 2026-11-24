@@ -44,6 +44,7 @@ export function strokeIntervals(c) {
     filled,
     length,
     count,
+    stepMm,
     clips,
     orders,
     occluders,
@@ -57,10 +58,18 @@ export function strokeIntervals(c) {
     previousPainted = false;
   const order = orders.get(e);
   const covers = occluders.filter((o) => o.order > order);
+  const maxJump = stepMm !== undefined ? stepMm + 0.05 : Infinity;
   for (let i = 0; i <= count; i++) {
     const local = e.getPointAtLength((length * i) / count),
       q = local.matrixTransform(matrix),
       p = point(q.x, q.y);
+    const jumped =
+      previous !== undefined &&
+      Math.hypot(p.x - previous.x, p.y - previous.y) > maxJump;
+    if (jumped && start) {
+      intervals.push([start, previous]);
+      start = undefined;
+    }
     const painted =
       ((strokePainted && e.isPointInStroke(local)) ||
         (filled && e.isPointInFill(local))) &&
@@ -71,7 +80,8 @@ export function strokeIntervals(c) {
           o.clips.every((b) => contains(b, p)) &&
           o.e.isPointInFill(new DOMPoint(q.x, q.y).matrixTransform(o.inverse)),
       );
-    if (subdivide && painted && previousPainted) pieces.push([previous, p]);
+    if (subdivide && painted && previousPainted && !jumped)
+      pieces.push([previous, p]);
     previousPainted = painted;
     if (painted && !start) start = p;
     if ((!painted || i === count) && start) {
@@ -569,6 +579,7 @@ export const strokeInk = (
     filled,
     length,
     count,
+    stepMm: (length * scale) / count,
     clips,
     orders,
     occluders,
