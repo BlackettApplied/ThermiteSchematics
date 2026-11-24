@@ -1,6 +1,11 @@
 import { extent, painted } from "./review-geometry.mjs";
 import { elementKey, routeKey } from "./tranche4-source.mjs";
 
+// Shared with packages/render/src/packet/navigation-slot-search.ts
+// (OWNER_MARGIN_MM = 0.5, CONDUCTOR_OWNER_MARGIN_MM = 0.25).
+export const OWNER_MARGIN_MM = 0.5;
+export const CONDUCTOR_OWNER_MARGIN_MM = 0.25;
+
 export function boxGap(a, b) {
   return Math.hypot(
     Math.max(0, b.x - a.x - a.w, a.x - b.x - b.w),
@@ -25,6 +30,21 @@ function boundRoute(s, key) {
   return routeIdentity(s) === key;
 }
 
+function strokeSegmentBox(a, b, strokeWidth) {
+  const half = strokeWidth > 0 ? strokeWidth / 2 : 0;
+  const dx = Math.abs(b.x - a.x);
+  const dy = Math.abs(b.y - a.y);
+  const len = Math.hypot(dx, dy);
+  const padX = len > EPS ? (half * dy) / len : half;
+  const padY = len > EPS ? (half * dx) / len : half;
+  return {
+    x: Math.min(a.x, b.x) - padX,
+    y: Math.min(a.y, b.y) - padY,
+    w: dx + 2 * padX,
+    h: dy + 2 * padY,
+  };
+}
+
 export function conductorInk(g, element) {
   const key = elementKey(element);
   const shapes = (g.shapes ?? []).filter(
@@ -32,6 +52,12 @@ export function conductorInk(g, element) {
   );
   return {
     runs: shapes.flatMap((s) => g.tranche3.routeInk[s.element]),
+    boxes: shapes.flatMap((s) => {
+      const w = s.stroke > 0 ? s.stroke : 0;
+      return g.tranche3.routeInk[s.element].map(([a, b]) =>
+        strokeSegmentBox(a, b, w),
+      );
+    }),
     tips: shapes.flatMap((s) =>
       s.points?.length ? [s.points[0], s.points.at(-1)] : [],
     ),
@@ -308,13 +334,13 @@ export function foreignConductorBoxes(
     const wf = s.stroke > 0 ? s.stroke : 0;
     for (const run of runs)
       for (const piece of nonCoincidentRunPieces(run, wf, ownSegs))
-        boxes.push(extent(piece));
+        boxes.push(strokeSegmentBox(piece[0], piece[1], wf));
   }
   return boxes;
 }
 
-export function paintedToBothEnds({ runs, tips }, a, b) {
-  const ink = runs.map(extent);
+export function paintedToBothEnds({ runs, boxes, tips }, a, b) {
+  const ink = boxes ?? runs.map(extent);
   return [a, b].every((marks) =>
     marks?.some(
       (m) =>
@@ -322,6 +348,149 @@ export function paintedToBothEnds({ runs, tips }, a, b) {
         ink.some((stroke) => boxGap(stroke, m) <= 0.25),
     ),
   );
+}
+
+function parseAttachmentKey(raw) {
+  if (typeof raw !== "string") return undefined;
+  try {
+    const parsed = JSON.parse(raw);
+    if (
+      Array.isArray(parsed) &&
+      parsed.length === 2 &&
+      typeof parsed[0] === "string" &&
+      typeof parsed[1] === "string"
+    )
+      return JSON.stringify([parsed[0], parsed[1]]);
+  } catch {
+    return undefined;
+  }
+  return undefined;
+}
+
+function hasDashArray(raw) {
+  const trimmed = typeof raw === "string" ? raw.trim().toLowerCase() : "";
+  if (!trimmed || trimmed === "none") return false;
+  const parts = trimmed.split(/[\s,]+/u).filter(Boolean);
+  if (!parts.length) return false;
+  let total = 0;
+  for (const part of parts) {
+    const value = Number.parseFloat(part);
+    if (!Number.isFinite(value) || value < 0) return true;
+    total += value;
+  }
+  return total > 0;
+}
+
+function readPathNumber(d, state, flag) {
+  while (state.i < d.length && /[\s,]/.test(d[state.i])) state.i++;
+  const match = d
+    .slice(state.i)
+    .match(flag ? /^[01]/ : /^[-+]?(?:\d*\.\d+|\d+\.?\d*)(?:[eE][-+]?\d+)?/);
+  if (!match || !Number.isFinite(Number(match[0]))) return null;
+  state.i += match[0].length;
+  return Number(match[0]);
+}
+
+/** Reject a multi-subpath lead if any M/m move jumps > 0.05 mm from the prior end. */
+function subpathsContinuous(d, m) {
+  const sizes = { M: 2, L: 2, H: 1, V: 1, C: 6, S: 4, Q: 4, T: 2, A: 7 };
+  const state = { i: 0 };
+  const project = (px, py) =>
+    m
+      ? { x: m[0] * px + m[2] * py + m[4], y: m[1] * px + m[3] * py + m[5] }
+      : { x: px, y: py };
+  let cmd = "",
+    x = 0,
+    y = 0,
+    sx = 0,
+    sy = 0,
+    lastEnd = null;
+  while (state.i < d.length) {
+    while (state.i < d.length && /[\s,]/.test(d[state.i])) state.i++;
+    if (state.i === d.length) break;
+    if (/^[a-zA-Z]$/.test(d[state.i])) cmd = d[state.i++];
+    const kind = cmd.toUpperCase(),
+      rel = cmd !== kind;
+    if (kind === "Z") {
+      x = sx;
+      y = sy;
+      lastEnd = project(x, y);
+      cmd = "";
+      continue;
+    }
+    const count = sizes[kind];
+    if (!count) return false;
+    const vals = [];
+    for (let j = 0; j < count; j++) {
+      const v = readPathNumber(d, state, kind === "A" && (j === 3 || j === 4));
+      if (v === null) return false;
+      vals.push(v);
+    }
+    if (kind === "H") x = rel ? x + vals[0] : vals[0];
+    else if (kind === "V") y = rel ? y + vals[0] : vals[0];
+    else {
+      x = (rel ? x : 0) + vals.at(-2);
+      y = (rel ? y : 0) + vals.at(-1);
+    }
+    const pt = project(x, y);
+    if (kind === "M") {
+      if (lastEnd && Math.hypot(pt.x - lastEnd.x, pt.y - lastEnd.y) > 0.05)
+        return false;
+      sx = x;
+      sy = y;
+      cmd = rel ? "l" : "L";
+    }
+    lastEnd = pt;
+  }
+  return lastEnd !== null;
+}
+
+function inkIntervalConnects(intervals, marker, tip) {
+  return intervals.some(([a, b]) => {
+    const aBox = { ...a, w: 0, h: 0 };
+    const bBox = { ...b, w: 0, h: 0 };
+    return (
+      (boxGap(aBox, marker) <= 0.25 && boxGap(bBox, tip) <= 0.05) ||
+      (boxGap(bBox, marker) <= 0.25 && boxGap(aBox, tip) <= 0.05)
+    );
+  });
+}
+
+/** Drawn attachment-lead endpoints that bridge a physical terminal marker to a route tip. */
+export function attachmentLeadEnds(g, terminals) {
+  const out = new Map();
+  for (const s of g.shapes ?? []) {
+    if (
+      !s.attachment ||
+      !(s.stroke > 0) ||
+      hasDashArray(s.dash) ||
+      !["path", "line", "polyline"].includes(s.shapeTag) ||
+      (s.shapeTag === "path" &&
+        typeof s.routePath === "string" &&
+        !subpathsContinuous(s.routePath, s.routeMatrix)) ||
+      !s.points?.length ||
+      !s.inkSegments?.length
+    )
+      continue;
+    const key = parseAttachmentKey(s.attachment);
+    const region = key && terminals.get(key);
+    if (!region?.boxes.length) continue;
+    const ends = [s.points[0], s.points.at(-1)];
+    for (const [markEnd, tipEnd] of [
+      [ends[0], ends[1]],
+      [ends[1], ends[0]],
+    ]) {
+      const markBox = { ...markEnd, w: 0, h: 0 };
+      const tipBox = { ...tipEnd, w: 0, h: 0 };
+      const marker = region.boxes.find((m) => boxGap(markBox, m) <= 0.05);
+      if (!marker || !inkIntervalConnects(s.inkSegments, marker, tipBox))
+        continue;
+      const list = out.get(key) ?? [];
+      list.push(tipBox);
+      out.set(key, list);
+    }
+  }
+  return out;
 }
 
 export function continuationInk(sheet, g, element, runs) {
@@ -359,6 +528,16 @@ export function noteOwnerGap(lines, obligation, named) {
   const supports = named
     ? [...obligation.owners, ...(obligation.supports ?? [])]
     : obligation.owners;
+  return Math.min(...supports.map((owner) => boxGap(region, owner)));
+}
+
+export function notePaintedOwnerGap(lines, obligation, named) {
+  if (!lines.every((t) => t.bbox)) return Infinity;
+  const region = noteRegion(lines);
+  const owners = obligation.paintedOwners ?? obligation.owners;
+  const supports = named
+    ? [...owners, ...(obligation.paintedSupports ?? obligation.supports ?? [])]
+    : owners;
   return Math.min(...supports.map((owner) => boxGap(region, owner)));
 }
 

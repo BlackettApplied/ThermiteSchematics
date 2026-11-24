@@ -28,7 +28,12 @@ import {
 import { destinationToken, navigationZone } from "./navigation-location.js";
 import { textInk } from "../device-legend/svg-ink.js";
 import { bounds } from "./page.js";
-import { peerRouteIndex, landsOnMarks } from "./peer-route-ink.js";
+import {
+  attachmentRouteEnds,
+  landsOnMarks,
+  markerRegion,
+  peerRouteIndex,
+} from "./peer-route-ink.js";
 import { paintedStroke } from "./document-assembly-geometry.js";
 import {
   emitPeerReferences,
@@ -41,6 +46,7 @@ interface Landing {
   point: Rect;
   owner: Rect;
   marks: Rect[];
+  paintedMarks: Rect[];
   routeMarks: Rect[];
 }
 function paintedFill(g: NavigationGeometry) {
@@ -52,20 +58,6 @@ function paintedFill(g: NavigationGeometry) {
     !["none", "transparent", "white", "#fff", "#ffffff"].includes(
       s.fill ?? "black",
     )
-  );
-}
-
-function markerRegion(mark: NavigationGeometry) {
-  const { cx, cy, r } = mark.node.attrs;
-  const radius = Number(r);
-  return project(
-    {
-      x: Number(cx ?? 0) - radius,
-      y: Number(cy ?? 0) - radius,
-      w: 2 * radius,
-      h: 2 * radius,
-    },
-    mark.matrix,
   );
 }
 
@@ -87,9 +79,11 @@ function terminalLandings(
     const point = drawnTerminalAnchor(mark);
     if (!inside(point, mark.clip) || !inside(point, field)) continue;
     const owner = circle ? markerRegion(mark) : point;
+    const paintedMark = circle ? markerRegion(mark, true) : point;
     const existing = terminals.get(key);
     if (existing) {
       existing.marks.push(owner);
+      existing.paintedMarks.push(paintedMark);
       existing.routeMarks.push(owner);
       continue;
     }
@@ -99,10 +93,16 @@ function terminalLandings(
       point,
       owner,
       marks: [owner],
+      paintedMarks: [paintedMark],
       routeMarks: [owner],
     });
   }
+  const marksByKey = new Map(
+    [...terminals.entries()].map(([k, l]) => [k, [...l.routeMarks]]),
+  );
   addBranchRouteMarks(geometry, field, terminals);
+  for (const [key, ends] of attachmentRouteEnds(geometry, field, marksByKey))
+    terminals.get(key)?.routeMarks.push(...ends);
   return terminals;
 }
 
@@ -202,11 +202,16 @@ function conductorCaptions(part: TerminalSheet, element: ConductiveElementId) {
   });
 }
 
-function foreignTerminalOwners(part: TerminalSheet, own: TerminalId): Rect[] {
+function foreignTerminalOwners(
+  part: TerminalSheet,
+  own: TerminalId,
+  sameFunction?: ReadonlySet<string>,
+): Rect[] {
   const ownKey = terminalIdKey(own);
   const out: Rect[] = [];
   for (const [key, landing] of part.landings)
-    if (key !== ownKey) out.push(...landing.marks);
+    if (key !== ownKey && !sameFunction?.has(key))
+      out.push(...landing.paintedMarks);
   return out;
 }
 
@@ -295,16 +300,17 @@ function finalizeConductorPeers(
       }
       const destination = formatPeerDestination(destinations);
       const terminalLabels = terminalLabelBoxes(part, from);
+      const paintedMarks = fromLanding?.paintedMarks;
       part.entries.push({
         kind: "conductor-peer",
         identity: [from, elementId, to],
         owner,
         ...(marks && marks.length > 1 ? { owners: marks } : {}),
-        foreignOwners: [
-          ...foreignTerminalOwners(part, from),
-          ...part.route.foreignRuns(elementId),
-        ],
-        along: route.runs,
+        ...(paintedMarks?.length ? { paintedOwners: paintedMarks } : {}),
+        foreignOwners: foreignTerminalOwners(part, from),
+        foreignConductors: part.route.foreignRuns(elementId),
+        along: route.reachRuns,
+        paintedAlong: route.runs,
         captions: conductorCaptions(part, elementId),
         ...(terminalLabels.length ? { terminalLabels } : {}),
         ownerLabel: name(from),
@@ -425,12 +431,20 @@ function interfaceAppearances(
       )
       .flatMap((other) => other.terminals.map(terminalIdKey)),
   );
+  const shared = new Set(
+    ir.functions
+      .filter((other) => other !== fn && other.id.deviceUid === fn.id.deviceUid)
+      .flatMap((other) => other.terminals.map(terminalIdKey)),
+  );
+  const ownKeys = new Set(
+    fn.terminals.map(terminalIdKey).filter((k) => !shared.has(k)),
+  );
   return wiring.flatMap((part) => {
     for (const terminal of fn.terminals) {
       const key = terminalIdKey(terminal);
       if (others.has(key)) continue;
       const landing = part.landings.get(key);
-      if (landing) return [{ part, terminal, landing, kind: fn.kind }];
+      if (landing) return [{ part, terminal, landing, kind: fn.kind, ownKeys }];
     }
     return [];
   });
@@ -466,7 +480,17 @@ function interfacePeers(
           kind: "terminal-interface",
           identity: [origin.terminal, target.terminal],
           owner: origin.landing.owner,
-          foreignOwners: foreignTerminalOwners(origin.part, origin.terminal),
+          paintedOwners: origin.landing.paintedMarks,
+          foreignOwners: foreignTerminalOwners(
+            origin.part,
+            origin.terminal,
+            origin.ownKeys,
+          ),
+          siblingOwners: [...origin.part.landings].flatMap(([k, l]) =>
+            k !== terminalIdKey(origin.terminal) && origin.ownKeys.has(k)
+              ? l.paintedMarks
+              : [],
+          ),
           ownerLabel: `${names.get(relay.deviceUid)} ${origin.terminal.terminalKey}`,
           value: `${names.get(relay.deviceUid)} · ${origin.kind} terminal ${origin.terminal.terminalKey} → ${target.kind} terminal ${target.terminal.terminalKey} ${destinationToken(target.landing)}`,
           compact: `→ ${names.get(relay.deviceUid)} ${target.kind} terminal ${target.terminal.terminalKey} ${destinationToken(target.landing)}`,

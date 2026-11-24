@@ -204,7 +204,7 @@ export function wireTerminalIdentity(e, attr, h) {
 }
 
 export function collectWireTerminals(c) {
-  const { attr, h, identity, ids, root, shapeClips, visible } = c;
+  const { attr, h, identity, ids, root, shapeClips, sx, sy, visible } = c;
   const wireTerminals = Array.from(
     root.querySelectorAll(
       "circle[data-terminal-key],circle[data-loop-terminal],g[data-terminal-id] > circle[data-terminal-marker],g[data-loop-terminal] > circle[data-terminal-marker],g[data-layout-port][data-terminal-key] > circle[data-terminal-marker],g[data-cable-uid][data-conductor-id] > circle",
@@ -215,6 +215,16 @@ export function collectWireTerminals(c) {
     if (!v) return [];
     const terminal = h.wireTerminalIdentity(e, attr, h);
     if (terminal === null) return [];
+    const css = getComputedStyle(e),
+      m = e.getScreenCTM();
+    const stroke =
+      h.paintColorAlpha(css.stroke) > 0 && parseFloat(css.strokeWidth) > 0
+        ? parseFloat(css.strokeWidth) *
+          Math.max(
+            Math.hypot(m.a * sx, m.b * sy),
+            Math.hypot(m.c * sx, m.d * sy),
+          )
+        : 0;
     const cable = e.parentElement;
     const circles = Array.from(cable.children).filter(
       (n) => n.tagName.toLowerCase() === "circle",
@@ -224,6 +234,7 @@ export function collectWireTerminals(c) {
         ...identity(e),
         terminal,
         bbox: v.b,
+        stroke,
         point: { x: v.b.x + v.b.w / 2, y: v.b.y + v.b.h / 2 },
         cableScope: ids.get(cable),
         cableUid: cable.getAttribute("data-cable-uid"),

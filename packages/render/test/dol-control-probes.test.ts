@@ -115,7 +115,7 @@ it.each(
   }
 });
 
-it("fits the named W35 peer beside its grouped circuit route", async () => {
+it("suppresses W35 conductor-peer notes on sheet 4 while keeping sheets 1-2 off-view destinations (#571)", async () => {
   const fixture = await dolProbeFixture("p6");
   try {
     const w35 = required(
@@ -128,17 +128,29 @@ it("fits the named W35 peer beside its grouped circuit route", async () => {
     if (!outcome.ok) throw Error(outcome.error.message);
     const { svg } = required(outcome.value.sheets[3]);
     const drawing = parseSvg(svg);
+    // #571: W35 is fully drawn between OL1.96 (via its solid attachment lead)
+    // and R1.11 on sheet 4, so no conductor-peer note is emitted for W35 there.
     expect(
       drawing.querySelector(
         `[data-circuit-conductor="${w35.uid}"] path[stroke="#17212b"]`,
       ),
     ).not.toBeNull();
-    const note = [
+    const s4W35Notes = [
       ...drawing.querySelectorAll('[data-peer-reference="conductor-peer"]'),
-    ].find((note) => note.getAttribute("data-peer-source")?.includes(w35.uid));
-    expect(note?.textContent).toMatch(
-      /^W35 · R1\.11 → OL1\.96 01\.[A-D][1-6](?: \(also shown 02\.[A-D][1-6]\))?$/u,
+    ].filter((note) =>
+      note.getAttribute("data-peer-source")?.includes(w35.uid),
     );
+    expect(s4W35Notes).toHaveLength(0);
+    // Sheets 1-2 still carry W35's off-view destination note(s) pointing to sheet 4.
+    for (const sheetIndex of [0, 1]) {
+      const sheetCards = cards(required(outcome.value.sheets[sheetIndex]).svg);
+      const w35Rows = sheetCards.flatMap((card) =>
+        card.rows.filter((row) => row.startsWith("W35 → R1.11 ")),
+      );
+      expect(w35Rows.length).toBeGreaterThan(0);
+      for (const row of w35Rows)
+        expect(row).toMatch(/^W35 → R1\.11 04\.[A-D][1-6]$/u);
+    }
   } finally {
     await fixture.dispose();
   }

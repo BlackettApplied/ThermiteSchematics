@@ -815,8 +815,8 @@ it("5.44 excludes coincident shared-stem foreign runs while flagging distinct ne
     owners: [{ x: 70, y: 95.35, w: 1.3, h: 1.3 }],
     supports: [{ x: 72, y: 96, w: 31, h: 0 }],
     foreignConductors: [
-      { x: 72, y: 96, w: 4, h: 0 },
-      { x: 76, y: 65, w: 0, h: 31 },
+      { x: 72, y: 96, w: 5, h: 0 },
+      { x: 77, y: 65, w: 0, h: 31 },
     ],
     values: ["W-CTL-012 · PS1.+ → S2.11 07.B2"],
     compactValues: ["→ S2.11 07.B2"],
@@ -829,8 +829,8 @@ it("5.44 excludes coincident shared-stem foreign runs while flagging distinct ne
     fontSize: 2.5,
     bbox,
   });
-  // Bare-compact note 1.74 mm from owner terminal and 1.0 mm from the shared stem [72, 76]:
-  // shared stem is excluded, while distinct vertical run at x=76 is 1.80 mm away -> passes.
+  // Bare-compact note 1.74 mm from owner terminal and 1.0 mm from the shared stem [72, 77]:
+  // shared stem is excluded, while distinct vertical run at x=77 is 2.69 mm away (>= 0.5 mm margin) -> passes.
   expect(
     peerReferenceFindings(
       7,
@@ -842,7 +842,7 @@ it("5.44 excludes coincident shared-stem foreign runs while flagging distinct ne
   expect(
     peerReferenceFindings(
       7,
-      { texts: [compact({ x: 76.5, y: 94.0, w: 4.0, h: 1.8 })] },
+      { texts: [compact({ x: 77.5, y: 94.0, w: 4.0, h: 1.8 })] },
       [base],
     ).map((f) => f.kind),
   ).toContain("issued-peer-reference-foreign-owner");
