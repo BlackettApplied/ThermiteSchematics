@@ -6,6 +6,7 @@ import {
 } from "./navigation-slots.js";
 import {
   NAVIGATION_CLEARANCE_MM,
+  OWNER_MARGIN_MM,
   searchNavigationSlot,
 } from "./navigation-slot-search.js";
 import { boxDistance } from "./navigation-symbols.js";
@@ -65,12 +66,18 @@ function searchPeerSlot(
       ownerTargets: ownerTargetsFor(shape),
       gap: reachMm(shape),
       textVerticalClearanceMm: NAVIGATION_CLEARANCE_MM,
-      ...(hasForeign ? { requireOwnerNearest: true } : {}),
+      requireOwnerNearest: true,
       ...(preferAnchorDistance ? { preferAnchorDistance: true } : {}),
       ...(fallback === "terminal-label-anchor"
-        ? { requireOwnerNearest: true, maxOwnerGapMm: PEER_REACH_MM }
+        ? { maxOwnerGapMm: PEER_REACH_MM }
         : {}),
       ...(hasForeign ? { foreignOwners: entry.foreignOwners } : {}),
+      ...(entry.foreignConductors?.length
+        ? { foreignConductors: entry.foreignConductors }
+        : {}),
+      ...(entry.siblingOwners?.length
+        ? { siblingOwners: entry.siblingOwners }
+        : {}),
     }),
   );
   return (
@@ -83,6 +90,23 @@ function searchPeerSlot(
   );
 }
 
+function peerTargetSets(entry: PeerReference) {
+  const ownReachMarks = entry.owners?.length ? entry.owners : [entry.owner];
+  const ownPaintedMarks = entry.paintedOwners?.length
+    ? entry.paintedOwners
+    : ownReachMarks;
+  const reachSupports = [...(entry.along ?? []), ...(entry.captions ?? [])];
+  const paintedSupports = [
+    ...(entry.paintedAlong ?? entry.along ?? []),
+    ...(entry.captions ?? []),
+  ];
+  return {
+    ownPaintedMarks,
+    reachSupports,
+    namedTargets: [...ownPaintedMarks, ...paintedSupports],
+  };
+}
+
 function place(
   entry: PeerReference,
   shapes: readonly NavigationShape[],
@@ -92,11 +116,10 @@ function place(
 ): PeerNotePlacement | undefined {
   const reachFor = (form: NavigationShape) =>
     unnamed.has(form.id) ? UNNAMED_REACH_MM : PEER_REACH_MM;
-  const ownMarks = entry.owners?.length ? entry.owners : [entry.owner];
-  const supports = [...(entry.along ?? []), ...(entry.captions ?? [])];
-  const namedTargets = [...ownMarks, ...supports];
+  const { ownPaintedMarks, reachSupports, namedTargets } =
+    peerTargetSets(entry);
   const ownerTargetsFor = (form: NavigationShape) =>
-    unnamed.has(form.id) ? ownMarks : namedTargets;
+    unnamed.has(form.id) ? ownPaintedMarks : namedTargets;
   const near = searchPeerSlot(
     entry,
     shapes,
@@ -120,7 +143,7 @@ function place(
       )
     : undefined;
   if (alt) return alt;
-  if (supports.length) {
+  if (reachSupports.length) {
     const named = alongPreference.flatMap((id) =>
       shapes.filter((s) => s.id === id),
     );
@@ -129,7 +152,7 @@ function place(
       named,
       field,
       ink,
-      supports,
+      reachSupports,
       () => namedTargets,
       () => PEER_REACH_MM,
       undefined,
@@ -205,18 +228,28 @@ function withPlacedInk(
   return { ink: [...ink.ink, ...boxes], texts: [...ink.texts, ...boxes] };
 }
 
-const COMFORTABLE_FOREIGN_MARGIN_MM = 0.5;
+const COMFORTABLE_FOREIGN_MARGIN_MM = OWNER_MARGIN_MM;
 
 function entryScore(entry: PeerReference, placed: PeerNotePlacement) {
-  const ownMarks = entry.owners?.length ? entry.owners : [entry.owner];
-  const supports = [...(entry.along ?? []), ...(entry.captions ?? [])];
+  const ownMarks = entry.paintedOwners?.length
+    ? entry.paintedOwners
+    : entry.owners?.length
+      ? entry.owners
+      : [entry.owner];
+  const supports = [
+    ...(entry.paintedAlong ?? entry.along ?? []),
+    ...(entry.captions ?? []),
+  ];
   const targets = unnamed.has(placed.shapeId)
     ? ownMarks
     : [...ownMarks, ...supports];
   const ownerGap = Math.min(...targets.map((t) => boxDistance(placed.box, t)));
-  const margin = entry.foreignOwners?.length
-    ? Math.min(...entry.foreignOwners.map((f) => boxDistance(placed.box, f))) -
-      ownerGap
+  const foreign = [
+    ...(entry.foreignOwners ?? []),
+    ...(entry.foreignConductors ?? []),
+  ];
+  const margin = foreign.length
+    ? Math.min(...foreign.map((f) => boxDistance(placed.box, f))) - ownerGap
     : Infinity;
   return { margin, ownerGap };
 }

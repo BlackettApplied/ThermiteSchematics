@@ -24,6 +24,13 @@ import {
   navigationPlacementInk,
   type NavigationPlacementFamily,
 } from "./navigation-placement.js";
+
+// Shared with evals/draw/peer-owner-ink.mjs
+// (OWNER_MARGIN_MM = 0.5, CONDUCTOR_OWNER_MARGIN_MM = 0.25).
+export const OWNER_MARGIN_MM = 0.5;
+export const CONDUCTOR_OWNER_MARGIN_MM = 0.25;
+const COMFORTABLE_FOREIGN_MARGIN_MM = 2.0;
+
 function slotAxes(
   size: Rect,
   area: Rect,
@@ -32,6 +39,7 @@ function slotAxes(
   texts: readonly Rect[],
   textVerticalClearanceMm = 0,
   tieBreakAnchor?: { x: number; y: number },
+  requireOwnerNearest = false,
 ) {
   const { w, h } = size;
   const xs = [
@@ -40,6 +48,9 @@ function slotAxes(
       area.x + area.w - w,
       owner.x,
       owner.x + owner.w - w,
+      ...(requireOwnerNearest
+        ? [owner.x + owner.w / 2 - w / 2, owner.x - w, owner.x + owner.w]
+        : []),
       ...(tieBreakAnchor
         ? [
             owner.x + 1.51,
@@ -84,6 +95,8 @@ export interface SlotReach {
   gap: number;
   textVerticalClearanceMm?: number;
   foreignOwners?: readonly Rect[];
+  foreignConductors?: readonly Rect[];
+  siblingOwners?: readonly Rect[];
   tieBreakAnchor?: { x: number; y: number };
   requireOwnerNearest?: boolean;
   preferAnchorDistance?: boolean;
@@ -104,6 +117,12 @@ function reachableAxes(
   };
 }
 
+function minBoxDistance(box: Rect, rects?: readonly Rect[]) {
+  return rects?.length
+    ? Math.min(...rects.map((r) => boxDistance(r, box)))
+    : Infinity;
+}
+
 function scoreSlotCandidate(
   box: Rect,
   owner: Rect,
@@ -120,26 +139,42 @@ function scoreSlotCandidate(
   const distance = locality
     ? anchorDistance(locality.anchorMm, printed)
     : (anchorGap ?? boxDistance(owner, box));
-  const foreignOwners = reach?.foreignOwners;
-  const hasForeign = Boolean(foreignOwners?.length);
-  const foreignDistance = hasForeign
-    ? Math.min(...(foreignOwners ?? []).map((f) => boxDistance(f, box)))
-    : Infinity;
-  const ownerGap = hasForeign
-    ? reach?.ownerTargets?.length
-      ? Math.min(...reach.ownerTargets.map((a) => boxDistance(box, a)))
-      : reach?.requireOwnerNearest
-        ? boxDistance(owner, box)
-        : reach?.anchors.length
-          ? Math.min(...reach.anchors.map((a) => boxDistance(box, a)))
-          : locality
-            ? boxDistance(owner, box)
-            : distance
-    : 0;
+  const foreignOwnerDist = minBoxDistance(box, reach?.foreignOwners);
+  const foreignConductorDist = minBoxDistance(box, reach?.foreignConductors);
+  const siblingDist = minBoxDistance(box, reach?.siblingOwners);
+  const foreignDistance = Math.min(foreignOwnerDist, foreignConductorDist);
+  const hasForeign = Number.isFinite(foreignDistance);
+  const ownerGap =
+    hasForeign || Number.isFinite(siblingDist)
+      ? reach?.ownerTargets?.length
+        ? Math.min(...reach.ownerTargets.map((a) => boxDistance(box, a)))
+        : reach?.requireOwnerNearest
+          ? boxDistance(owner, box)
+          : reach?.anchors.length
+            ? Math.min(...reach.anchors.map((a) => boxDistance(box, a)))
+            : locality
+              ? boxDistance(owner, box)
+              : distance
+      : 0;
+  const requireNearest = Boolean(reach?.requireOwnerNearest);
+  const margin = requireNearest ? OWNER_MARGIN_MM : -0.02;
+  const conductorMargin = requireNearest ? CONDUCTOR_OWNER_MARGIN_MM : -0.02;
+  const siblingMargin = requireNearest ? 0 : -0.02;
+  const rivalCloser =
+    siblingDist + 1e-6 < ownerGap + siblingMargin ||
+    foreignOwnerDist + 1e-6 < ownerGap + margin ||
+    foreignConductorDist + 1e-6 < ownerGap + conductorMargin;
   return {
     box,
     distance,
-    foreignCloser: hasForeign ? Number(foreignDistance + 0.02 < ownerGap) : 0,
+    foreignCloser: Number(rivalCloser),
+    comfortableForeign:
+      requireNearest && hasForeign
+        ? Math.min(foreignDistance, ownerGap + COMFORTABLE_FOREIGN_MARGIN_MM)
+        : foreignDistance,
+    ownerAnchorOffset: requireNearest
+      ? Math.abs(box.x + box.w / 2 - (owner.x + owner.w / 2))
+      : 0,
     foreignDistance,
     tieDistance: reach?.tieBreakAnchor
       ? anchorDistance(reach.tieBreakAnchor, printed)
@@ -172,6 +207,7 @@ function slotCandidates(
     texts,
     textVerticalClearanceMm,
     reach?.tieBreakAnchor,
+    Boolean(reach?.requireOwnerNearest),
   );
   const localAxes =
     withinLocalSources && locality
@@ -210,6 +246,8 @@ function slotCandidates(
         a.foreignCloser - b.foreignCloser ||
         a.distance - b.distance ||
         a.tieDistance - b.tieDistance ||
+        b.comfortableForeign - a.comfortableForeign ||
+        a.ownerAnchorOffset - b.ownerAnchorOffset ||
         b.foreignDistance - a.foreignDistance ||
         a.box.y - b.box.y ||
         a.box.x - b.box.x,

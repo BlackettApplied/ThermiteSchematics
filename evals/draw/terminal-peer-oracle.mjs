@@ -4,6 +4,7 @@ import { cableEndBindings } from "./cable-end-identities.mjs";
 import { extent, painted } from "./review-geometry.mjs";
 import { elementKey } from "./tranche4-source.mjs";
 import {
+  attachmentLeadEnds,
   conductorInk,
   continuationInk,
   foreignConductorBoxes,
@@ -15,6 +16,16 @@ const functionKey = (f) => JSON.stringify([f.deviceUid, f.functionKey]);
 const loc = (s, zone) => `${String(s).padStart(2, "0")}.${zone}`;
 const center = (b) => ({ x: b.x + b.w / 2, y: b.y + b.h / 2 });
 
+function paintedCircleBox(bbox, stroke) {
+  if (!bbox || !(stroke > 0)) return bbox;
+  return {
+    x: bbox.x - stroke / 2,
+    y: bbox.y - stroke / 2,
+    w: bbox.w + stroke,
+    h: bbox.h + stroke,
+  };
+}
+
 function observedTerminals(ir, g, cableOwners) {
   const real = new Set(ir.terminals.map((t) => terminalKey(t.id)));
   const markers = (g.tranche4?.markers ?? [])
@@ -23,31 +34,49 @@ function observedTerminals(ir, g, cableOwners) {
       key: JSON.stringify([m.deviceUid, m.terminal]),
       p: m.point,
       bbox: m.bbox,
+      paintedBbox: paintedCircleBox(m.bbox, m.stroke),
     }));
   const wire = (g.wireTerminals ?? []).flatMap((m) => {
     const binding = m.cableUid ? cableOwners.get(m) : m.terminal;
     return binding
-      ? [{ key: JSON.stringify(binding), p: m.point, bbox: m.bbox }]
+      ? [
+          {
+            key: JSON.stringify(binding),
+            p: m.point,
+            bbox: m.bbox,
+            paintedBbox: paintedCircleBox(m.bbox, m.stroke),
+          },
+        ]
       : [];
   });
   const pins = pinListAppearances(g, ir).map((p) => ({
     key: JSON.stringify(p.terminal),
     p: center(p.bbox),
     bbox: p.bbox,
+    paintedBbox: p.bbox,
   }));
   const result = new Map();
-  for (const { key, p, bbox } of [...markers, ...wire, ...pins]) {
+  for (const { key, p, bbox, paintedBbox } of [...markers, ...wire, ...pins]) {
     if (!real.has(key) || !p) continue;
     const zone = measuredZone(g, p);
     if (!zone) continue;
     if (!result.has(key))
-      result.set(key, { zones: new Set(), boxes: [], routeBoxes: [] });
+      result.set(key, {
+        zones: new Set(),
+        boxes: [],
+        paintedBoxes: [],
+        routeBoxes: [],
+      });
     const region = result.get(key);
     const box = bbox ?? { ...p, w: 0, h: 0 };
     region.zones.add(zone);
     region.boxes.push(box);
+    region.paintedBoxes.push(paintedBbox ?? box);
     region.routeBoxes.push(box);
   }
+  const physical = new Map(
+    [...result.entries()].map(([k, r]) => [k, { boxes: [...r.routeBoxes] }]),
+  );
   // Branch dots on sheets that also draw the physical terminal receive fanned-out
   // wire endpoints for connectivity checks without supplying zones or owners.
   for (const m of g.tranche4?.markers ?? []) {
@@ -55,6 +84,8 @@ function observedTerminals(ir, g, cableOwners) {
     const region = result.get(JSON.stringify([m.deviceUid, m.terminal]));
     if (region) region.routeBoxes.push(m.bbox ?? { ...m.point, w: 0, h: 0 });
   }
+  for (const [key, ends] of attachmentLeadEnds(g, physical))
+    result.get(key)?.routeBoxes.push(...ends);
   return result;
 }
 
@@ -67,11 +98,12 @@ function conductorName(ir, row) {
     : row.name;
 }
 
-function foreignTerminalBoxes(part, ownTerminal) {
+function foreignTerminalBoxes(part, ownTerminal, sameFunction) {
   const ownKey = terminalKey(ownTerminal);
   const out = [];
   for (const [key, region] of part.terminals)
-    if (key !== ownKey) out.push(...region.boxes);
+    if (key !== ownKey && !sameFunction?.has(key))
+      out.push(...region.paintedBoxes);
   return out;
 }
 
@@ -87,11 +119,16 @@ function canonicalDestination(destinations) {
 function conductorNote(src, dest, wire, a, b, label, name, cardInfo) {
   const from = src.terminals.get(terminalKey(a));
   const to = src.terminals.get(terminalKey(b));
-  const marks = from.boxes;
   const ink = conductorInk(src.geometry, wire.element);
   if (paintedToBothEnds(ink, from.routeBoxes, to?.routeBoxes)) return;
-  const { runs } = ink;
+  const { runs, boxes } = ink;
   const { zones } = dest.terminals.get(terminalKey(b));
+  const continuations = continuationInk(
+    src.sheet,
+    src.geometry,
+    wire.element,
+    runs,
+  );
   return {
     sheet: src.sheet.number,
     kind: "conductor-peer",
@@ -99,13 +136,12 @@ function conductorNote(src, dest, wire, a, b, label, name, cardInfo) {
     label,
     peerName: name(b),
     ownerLabel: name(a),
-    owners: cardInfo ? [cardInfo.bbox] : marks,
+    owners: cardInfo ? [cardInfo.bbox] : [...from.boxes],
+    paintedOwners: cardInfo ? [cardInfo.bbox] : [...from.paintedBoxes],
     foreignOwners: foreignTerminalBoxes(src, a),
     foreignConductors: foreignConductorBoxes(src.geometry, wire.element, runs),
-    supports: [
-      ...runs.map(extent),
-      ...continuationInk(src.sheet, src.geometry, wire.element, runs),
-    ],
+    supports: [...runs.map(extent), ...continuations],
+    paintedSupports: [...(boxes ?? runs.map(extent)), ...continuations],
     card: cardInfo,
     targets: new Map([[dest.sheet.number, new Set(zones)]]),
   };
@@ -119,7 +155,9 @@ function mergeCardRecords(records) {
     if (previous) {
       if (r.card && !previous.card) previous.card = r.card;
       previous.owners.push(...r.owners);
+      previous.paintedOwners.push(...r.paintedOwners);
       previous.supports.push(...r.supports);
+      previous.paintedSupports.push(...r.paintedSupports);
       for (const [sheet, zones] of r.targets) {
         if (!previous.targets.has(sheet))
           previous.targets.set(sheet, new Set());
@@ -140,9 +178,11 @@ function mergeCardRecords(records) {
       peerName: r.peerName,
       ownerLabel: r.ownerLabel,
       owners: r.owners,
+      paintedOwners: r.paintedOwners,
       foreignOwners: r.foreignOwners,
       foreignConductors: r.foreignConductors,
       supports: r.supports,
+      paintedSupports: r.paintedSupports,
       card: r.card,
       destinations,
       values: [
@@ -254,12 +294,20 @@ function functionTerminals(ir, parts, fn) {
       )
       .flatMap((f) => f.terminals.map(terminalKey)),
   );
+  const shared = new Set(
+    ir.functions
+      .filter((f) => f !== fn && f.id.deviceUid === fn.id.deviceUid)
+      .flatMap((f) => f.terminals.map(terminalKey)),
+  );
+  const ownKeys = new Set(
+    fn.terminals.map(terminalKey).filter((k) => !shared.has(k)),
+  );
   return parts.flatMap((part) => {
     const terminal = fn.terminals.find(
       (t) =>
         !ambiguous.has(terminalKey(t)) && part.terminals.has(terminalKey(t)),
     );
-    return terminal ? [{ part, terminal, kind: fn.kind }] : [];
+    return terminal ? [{ part, terminal, kind: fn.kind, ownKeys }] : [];
   });
 }
 
@@ -292,7 +340,14 @@ function interfaceObligations(ir, parts, names) {
             source: [p.terminal, q.terminal],
             ownerLabel: `${names.get(r.deviceUid)} ${p.terminal.terminalKey}`,
             owners: p.part.terminals.get(terminalKey(p.terminal)).boxes,
-            foreignOwners: foreignTerminalBoxes(p.part, p.terminal),
+            paintedOwners: p.part.terminals.get(terminalKey(p.terminal))
+              .paintedBoxes,
+            foreignOwners: foreignTerminalBoxes(p.part, p.terminal, p.ownKeys),
+            siblingOwners: [...p.part.terminals].flatMap(([key, region]) =>
+              key !== terminalKey(p.terminal) && p.ownKeys.has(key)
+                ? region.paintedBoxes
+                : [],
+            ),
             values: [...zones].map(
               (z) =>
                 `${names.get(r.deviceUid)} · ${p.kind} terminal ${p.terminal.terminalKey} → ${q.kind} terminal ${q.terminal.terminalKey} ${loc(q.part.sheet.number, z)}`,

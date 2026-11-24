@@ -614,15 +614,9 @@ it("DQ-19 paint helpers parse alpha across all computed-colour and percentage-op
 });
 
 it.each([
-  ["parallel-0.1", "M 20 30 H 40", "M 20 30.1 H 40", true, false],
-  ["parallel-0.06", "M 20 30 H 40", "M 20 30.06 H 40", true, false],
-  [
-    "parallel-0.04-disjoint-ink",
-    "M 20 30 H 40",
-    "M 20 30.04 H 40",
-    true,
-    false,
-  ],
+  ["parallel-0.1", "M 20 30 H 40", "M 20 30.1 H 40", true, true],
+  ["parallel-0.06", "M 20 30 H 40", "M 20 30.06 H 40", true, true],
+  ["parallel-0.04-disjoint-ink", "M 20 30 H 40", "M 20 30.04 H 40", true, true],
   ["coincident-0.04-short", "M 20 30 H 40", "M 24 30 H 24.04", false, false],
   [
     "adjacent-perpendicular-0.05",
