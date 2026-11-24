@@ -229,6 +229,7 @@ async function renderPacket(
       request.layout,
       appearances.value,
       referenceNumber,
+      request.views.length === 1,
     );
     if (!result.ok || result.value[0]?.rootedPaginationFailure) {
       const refusal = result.ok

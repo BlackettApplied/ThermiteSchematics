@@ -56,19 +56,49 @@ export function recordRootedDiagnostic(
   });
 }
 
+function withSourcePotentialMessage(
+  message: string,
+  sourcePotentials?: readonly string[],
+): string {
+  if (!sourcePotentials?.length) return message;
+  const note = ` (source net label${sourcePotentials.length > 1 ? "s" : ""} ${sourcePotentials.map((name) => JSON.stringify(name)).join(", ")})`;
+  const withAdvice = message.replace(
+    ". Use a larger sheet or landscape.",
+    () => ". Use a shorter potential name, a larger sheet, or landscape.",
+  );
+  return withAdvice.replace(
+    /protected width [0-9.]+ mm exceeds [0-9.]+ mm by [0-9.]+ mm/u,
+    (match) => `${match}${note}`,
+  );
+}
+
 export function rootedDiagnosticError(
   error: RenderFailure,
   diagnostics: readonly RootedDiagnostic[] = [],
+  sourcePotentials?: readonly string[],
 ): RenderFailure {
-  const constraint = leastRootedConstraint(
-    diagnostics.map((d) => d.constraint),
-  );
-  if (!constraint) return error;
+  const base = leastRootedConstraint(diagnostics.map((d) => d.constraint));
+  if (!base) return error;
+  const constraint =
+    sourcePotentials?.length &&
+    base.kind === "protected-span" &&
+    base.spans.some((c) => c.axis === "width")
+      ? {
+          ...base,
+          message: withSourcePotentialMessage(base.message, sourcePotentials),
+        }
+      : base;
   const grid = diagnostics.find(
     (d) => d.gridFailure?.error === error,
   )?.gridFailure;
-  return grid
-    ? { ...error, message: constraint.message + grid.suffix }
+  const nextMessage = grid
+    ? constraint.message + grid.suffix
+    : sourcePotentials?.length &&
+        !(error.code === "R006" && error.details?.continuationIdentity)
+      ? withSourcePotentialMessage(error.message, sourcePotentials)
+      : undefined;
+  return nextMessage !== undefined
+    ? { ...error, message: nextMessage }
     : withRootedConstraint(error, constraint);
 }
 

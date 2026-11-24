@@ -916,6 +916,7 @@ function emitLabels(
       mmPerUnit,
       tagLabelAttributes(presentation, graph.view),
       graph.view,
+      presentation.lines,
     );
     if (!emitted.ok) return emitted;
   }

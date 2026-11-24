@@ -58,29 +58,46 @@ function proposals(
   ink: InkBox,
   own: readonly (readonly LayoutPoint[])[],
   distance: number,
+  reservation?: InkBox,
 ) {
   const width = ink.right - ink.left,
     height = ink.bottom - ink.top;
   return own.flatMap((route) =>
     routeSegments(route).flatMap(({ a, b }) => {
       if (Math.abs(a.x - b.x) < 1e-7) {
-        const y = Math.max(
+        const y0 = Math.max(
           Math.min(a.y, b.y) - height / 2,
           Math.min(Math.max(a.y, b.y) - height / 2, ink.top),
         );
-        return [
+        const ys = [y0];
+        if (reservation) {
+          const topY = Math.max(
+            Math.min(a.y, b.y) - height / 2,
+            Math.min(Math.max(a.y, b.y) - height / 2, reservation.top),
+          );
+          if (Math.abs(topY - y0) > 1e-7) ys.push(topY);
+        }
+        return ys.flatMap((y) => [
           translated(ink, a.x - distance - width, y),
           translated(ink, a.x + distance, y),
-        ];
+        ]);
       }
-      const x = Math.max(
+      const x0 = Math.max(
         Math.min(a.x, b.x) - width / 2,
         Math.min(Math.max(a.x, b.x) - width / 2, ink.left),
       );
-      return [
+      const xs = [x0];
+      if (reservation) {
+        const leftX = Math.max(
+          Math.min(a.x, b.x) - width / 2,
+          Math.min(Math.max(a.x, b.x) - width / 2, reservation.left),
+        );
+        if (Math.abs(leftX - x0) > 1e-7) xs.push(leftX);
+      }
+      return xs.flatMap((x) => [
         translated(ink, x, a.y - distance - height),
         translated(ink, x, a.y + distance),
-      ];
+      ]);
     }),
   );
 }
@@ -121,24 +138,33 @@ export function besideCaption(
   mmPerUnit: number,
   stroke: number,
   ownershipMarginMm = 0,
+  admissible?: (candidate: InkBox) => boolean,
 ) {
+  const allowed = (candidate: InkBox) => !admissible || admissible(candidate);
   const reach = 2 / mmPerUnit,
     margin = ownershipMarginMm / mmPerUnit,
     current = evaluateCandidate(ink, own, context, stroke, reach, margin);
   if (
+    allowed(ink) &&
     horizontalLabelSupport(ink, own, 0, context.foreign) &&
     clearOwnedPlate(ink, own, stroke / 2 + 0.01 / mmPerUnit, true) &&
     current.foreign > 0
   )
     return { ink, inline: true, needsLeader: false };
   if (
+    allowed(ink) &&
     current.owner >= 0.5 / mmPerUnit - 1e-7 &&
     current.owner <= 1 / mmPerUnit + 1e-7 &&
     !current.needsLeader
   )
     return { ink, inline: false, needsLeader: false };
-  const options = proposals(ink, own, 0.75 / mmPerUnit + stroke / 2)
-    .filter((p) => clear(p, reservation, context))
+  const options = proposals(
+    ink,
+    own,
+    0.75 / mmPerUnit + stroke / 2,
+    admissible ? reservation : undefined,
+  )
+    .filter((p) => allowed(p) && clear(p, reservation, context))
     .map((p) => evaluateCandidate(p, own, context, stroke, reach, margin))
     .filter((p) => p.owner > 1e-7 && p.foreign > 1e-7)
     .sort(
@@ -150,6 +176,7 @@ export function besideCaption(
   const found = options[0];
   if (found) return found;
   if (
+    allowed(ink) &&
     current.owner > 0 &&
     current.foreign > 0 &&
     clear(ink, reservation, context)
@@ -158,7 +185,16 @@ export function besideCaption(
   // Last, try the fixed nine corners/edge-centres of the existing clip. This
   // handles a foreign corner crossing without enlarging the reservation. A
   // remote or ambiguous result still requires a checked leader at emission.
-  return clippedCaption(ink, reservation, own, context, stroke, reach, margin);
+  return clippedCaption(
+    ink,
+    reservation,
+    own,
+    context,
+    stroke,
+    reach,
+    margin,
+    admissible,
+  );
 }
 function clippedCaption(
   ink: InkBox,
@@ -168,6 +204,7 @@ function clippedCaption(
   stroke: number,
   reach: number,
   margin = 0,
+  admissible?: (candidate: InkBox) => boolean,
 ) {
   const right = reservation.right - (ink.right - ink.left),
     bottom = reservation.bottom - (ink.bottom - ink.top);
@@ -178,7 +215,9 @@ function clippedCaption(
         translated(ink, x, y),
       ),
     )
-    .filter((p) => clear(p, reservation, context))
+    .filter(
+      (p) => (!admissible || admissible(p)) && clear(p, reservation, context),
+    )
     .map((p) => {
       const a = captionAssociation(
         p,
